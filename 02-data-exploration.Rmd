@@ -1,0 +1,321 @@
+---
+title: "Joshua French"
+date: "`r format(Sys.time(), '%Y-%m-%d')`"
+output: html_notebook
+---
+
+# Data exploration (a.k.a., exploratory data analysis)
+
+Based on Chapter 1 of LMWR2, Chapter 1 of ALR4
+
+## Data analysis process
+
+1. Define a question of interest.
+2. Collect relevant data.
+3. Analyze the data.
+4. Interpret your analysis.
+5. Make a decision.
+
+"The formulation of a problem is often more essential than its solution, which may be merely a matter of mathematical or experimental skill" - Albert Einstein
+
+### Problem Formulation
+
+* Understand the physical background.
+  * Statisticians often work in collaboration with others and need to understand something about the subject area.
+* Understand the objective.
+  * What are your goals?
+  * Make sure you know what the client wants.
+* Put the problem into statistical terms.
+  * This is often the most challenging step and where irreparable errors are sometimes made.
+  * That a statistical method can read in and process the data is not enough. The results of an inapt analysis may be meaningless.
+
+### Data collection
+
+Data collection:
+* How the data were collected has a crucial impact on what conclusions can be made.
+  * Are the data observational or experimental?
+  * Are the data a sample of convenience or were they obtained via a designed sample survey?
+* Is there nonresponse bias?
+  * The data you do not see may be just as important as the data you do see.
+* Are there missing values?
+  * This is a common problem that is troublesome and time consuming to handle.
+  * How are the data coded? How are the qualitative variables represented?
+* What are the units of measurement?
+* Beware of data entry errors and other corruption of the data.
+  * Perform some data sanity checks.
+
+## Data exploration
+
+An initial exploration of the data should be performed prior to any formal analysis or modeling.
+
+Initial data analysis should consist of numerical summaries and appropriate plots.
+
+### Numerical summaries of data
+
+Statistics can be used to numerically summarize aspects of the data:
+
+* mean
+* standard deviation (SD)
+* maximum and minimum
+* correlation
+* other measures, as appropriate
+
+### Visual summaries of data
+
+Plots can provide a useful visual summary of the data.
+
+* For one numerical variable: boxplots, histograms, density plots, etc.
+* For two numerical variables: scatterplots.
+* For three or more variables, construct interactive and dynamic graphics.
+* For one categorial variable: bar charts
+
+Good graphics are essential in data analysis.
+
+* They help us avoid mistakes.
+* They help us decide on a model.
+* They help communicate the results of our analysis.
+* Graphics can be more convincing than text at times.
+
+### What to look for
+When summarizing the data, look for:
+
+* outliers
+* data-entry errors
+* skewness
+* unusual distributions
+* patterns or structure
+
+## Kidney Example
+
+The National Institute of Diabetes and Digestive and Kidney Diseases conducted a study on 768 adult female Pima Indians living near Phoenix. The following variables were recorded:
+* `pregnant` - number of times pregnant
+* `glucose` - plasma glucose concentration at 2 hours in an oral glucose tolerance test
+* `diastolic` - diastolic blood pressure (mm Hg)
+* `triceps` - triceps skin fold thickness (mm)
+* `insulin` - 2-hour serum insulin (mu U/ml)
+* `bmi` - body mass index (weight in kg/(height in m2))
+* `diabetes` - diabetes pedigree function
+* `age` - age (years)
+* `test` - test whether the patient showed signs of diabetes (coded zero if negative, one if positive).
+
+The data may be obtained from the UCI Repository of machine learning databases at https://archive.ics.uci.edu/ml.
+
+Let's load and examine the structure of the data
+```{r}
+data(pima, package = "faraway")
+str(pima) # structure
+head(pima) # first six rows
+tail(pima) # last six rows
+```
+### Numerically summarizing the data
+The `summary` command is a useful way to numerically summarize a data frame.
+
+The `summary` function will compute the minimum, 0.25 quantile, mean, median, 0.75 quantile, and maximum of a `numeric` variable.
+
+The `summary` function will count the number of values of each level of a `factor` variable.
+
+Let's summarize the `pima` data frame.
+
+```{r}
+summary(pima)
+```
+### Cleaning the data
+
+Cleaning data involves finding and correcting data quality issues.
+
+Some odd things about the `pima` data
+
+* The minimum blood pressue is zero.
+  * That's generally an indication of a health problem.
+* The test variable appears to be numerical but should be a categorical variable.
+* Many other variables have unusual zeros.
+-	Look for anything unusual or unexpected, perhaps indicating a data-entry error.
+
+Let's look at the sorted `diastolic` values.
+```{r, echo=T}
+sort(pima$diastolic)
+```
+
+The first 35 values of `diastolic` are zero. That's a problem.  
+* It seems that 0 was used in place of a missing value.
+* This is very bad since 0 is a real number and this problem may be overlooked, which can lead to faulty analysis!
+* This is why we must check our data carefully for things that don’t make sense.
+
+The value for missing data in R is `NA`.
+
+Several variables share this problem.  Let’s set the 0s that should be missing values to `NA`.
+
+```{r, echo=T}
+pima$diastolic[pima$diastolic == 0]  <- NA
+pima$glucose[pima$glucose == 0] <- NA
+pima$triceps[pima$triceps == 0]  <- NA
+pima$insulin[pima$insulin == 0] <- NA
+pima$bmi[pima$bmi == 0] <- NA
+```
+
+The `test` variable is a categorical variable, not numerical.  
+
+* R thinks the `test` variable is `numeric`.
+* In R, a categorical variable is a `factor`.
+* We need to convert the `test` variable to a `factor`.
+
+Let's convert `test` to a factor.
+```{r, echo=T}
+ pima$test <- factor(pima$test)
+ summary(pima$test)
+```
+
+500 of the cases were negative and 268 were positive.  We can provide more descriptive labels using the `levels` function.
+
+```{r, echo=T}
+levels(pima$test) <- c("negative","positive")
+```
+
+## Visualizing the data with **base** graphics
+
+### Histograms
+The `hist` command can be used create a histogram of a numerical vector.
+
+* The labels of the plot can be customized using the `xlab` and `ylab` arguments.
+* The main title of the plot can be customized using the `main` argument.
+  
+  
+Here is a slightly customized histogram of diastolic blood pressure.
+```{r}
+hist(pima$dias, xlab = "diastolic blood pressure" , main="")
+```
+The histogram is approximately bell-shaped and centered around 70.
+
+We can change the number of breaks in the histogram by specifying the `breaks` argument of the `hist` function.
+
+Consider how the plot changes below.
+
+```{r}
+hist(pima$dias, xlab = "diastolic blood pressure", main = "", breaks = 20)
+```
+
+### Density plots
+
+Many people prefer the density plot over the histogram because the histogram is more sensitive to its options.  
+
+A density plot is essentially a smoothed version of a histogram.
+  * It isn't as blocky.
+  * It sometimes has weird things happen at the boundaries.
+
+
+The `plot` and `density` function can be combined to construct a density plot.
+```{r}
+plot(density(pima$diastolic, na.rm=TRUE), main = "")
+```
+In the example above, we have to specify `na.rm = TRUE` so that the density is only computed using the non-missing values.
+
+### Scatter plots
+
+A scatter plot of the sorted numerical values versus their index can be used to identify outliers and see whether the data has many repeated values.
+
+```{r}
+plot(sort(pima$diastolic), ylab = "sorted diastolic bp")
+```
+The flat spots in the plot above show that the `diastolic` variable has mean repeated values.
+
+### Bivariate scatter plots
+
+Bivariate scatter plots can be used to idenify the relationship between two numerical variables.
+
+A scatter plot of diabetes vs diastolic blood pressure.
+```{r}
+plot(diabetes ~ diastolic, data = pima)
+```
+There is no clear pattern in the points, so it's difficult to claim a relationship between the two variables.
+
+### Bivariate boxplots
+
+A parallel boxplot of `diabetes` score versus `test` result.
+```{r}
+plot(diabetes ~ test, data = pima)
+```
+The median `diabetes` score seems to be a bit higher for positive tests in comparison to the negative tests.
+
+### Multiple plots in one figure
+
+The `par` function can be used to construct multiple plots in one figure. 
+
+* The `mfrow` argument can be used to specify the number of rows and columns of plots you need.
+
+A 1 by 2 set of plots is shown below.
+```{r}
+par(mfrow = c(1, 2))
+plot(diabetes ~ diastolic, data = pima)
+plot(diabetes ~ test, data = pima)
+```
+## Visualizing the data with **ggplot2**
+
+The plots we have just created are using the base graphics system in R.
+* These are very fast, simple, and professional.
+
+A fancier alternative is to construct plots using the **ggplot2** package.
+
+In its simplest form, **ggplot2** requires you to provide:
+
+* A `ggplot` object that includes the data frame holding the data.
+* A mapping arguments that specifies the plot aesthetics (essentially, how the data that will be used in the plot).
+* A geometry object that specifies how the aesthetics are used in a plot.
+
+### A **ggplot2** histogram
+```{r}
+library(ggplot2)
+ggpima <-  ggplot(pima)
+ggpima + geom_histogram(aes(x=diastolic))
+```
+
+### A **ggplot2** density plot
+```{r}
+ggpima + geom_density(aes(x = diastolic))
+```
+
+## A **ggplot2** scatter plot
+```{r}
+ggpima + geom_point(aes(x = diastolic, y = diabetes))
+```
+
+### Customizing **ggplot2** plots 
+
+We can customize our ggplots in numerous ways. Some examples:
+* Change the point shapes based on a categorical variable..
+* Change the location and orientation of the legend.
+
+```{r}
+ggpima + 
+  geom_point(aes(x = diastolic, y = diabetes, shape = test)) + 
+  theme(legend.position = "top", legend.direction = "horizontal")
+```
+
+### Facetting in `ggplot2` 
+
+Facetting creates separate plots (facets) of a data frame based on one or more facetting variables.
+
+Below, we facet the data by the `test` result.
+
+```{r}
+ggpima +
+  geom_point(aes(x = diastolic, y = diabetes)) +
+  facet_grid(~ test)
+```
+
+### Summary of **ggplot2**
+
+* Create a `ggplot` object using the `ggplot` function.
+  * Specify the data frame the data is contained in (e.g., the data frame is `pima`). 
+  * Specify the geometry for the plot (the kind of plot you want to produce)
+  * Specify the aesthetics using `aes`.
+    * The aesthetic specifies what you see, such as position in the $x$ or $y$ direction or aspects such as shape or color.
+    * The aesthetic can be specifed in the geometry, or if you have consistent aesthetics across multiple geometries, in the ``ggplot` statement.
+* The advantage of **ggplot2** is more apparent in producing complex plots involving more than two variables.
+* A `theme` specifies options for the appearance of the plot.
+  * We specified where the `legend` should appear in one plot and to use more than one panel (`facets`) in another. 
+
+## Summary of data exploration
+
+Data exploration helps us to understand the data, identify problems or unusual features of our data, decide on a modeling approach for the data, etc.
+
+You should use both numerical and graphical summaries of data **prior** to modeling the data.
