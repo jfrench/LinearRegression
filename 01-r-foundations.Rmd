@@ -1,6 +1,5 @@
 ---
-title: " "
-author: Joshua French
+title: "Joshua French"
 date: "`r format(Sys.time(), '%Y-%m-%d')`"
 output: html_notebook
 ---
@@ -40,7 +39,7 @@ R Studio Desktop has four panes:
 3. Environment/History: the pane where you can see all the objects in your workspace, your command history, and other things.
 4. The Files/Plot/Packages/Help: the pane where you navigate between directories, where plots can be viewed, where you can see the packages available to be loaded, and where you can get help.
 
-![RStudio panes](./pictures/rstudio_panes.png)
+![RStudio panes](https://github.com/jfrench/LinearRegression/blob/main/pictures/rstudio_panes.png)
 
 ## Running code, scripts, and comments
 Code is executed in R by typing it in the Console and hitting enter.
@@ -179,10 +178,33 @@ knitr::kable(data.frame(dimensionality = c("1d", "2d", "nd"),
                         heterogeneous = c("list", "data frame", "")))
 ```
 
-## Vectors: creation, assignment, and factors
+## Assignment
+
+To store a data structure in the computer’s memory we must assign it a name.
+
+Data structures can be stored using the assignment operator `<-` or `=`.
+
+Some comments:
+  
+* In general, both `<-` and `=` can be used for assignment.
+* Pressing the "Alt" and "-" keys simultaneously on a PC or Linux machine (Option and - on a Mac) will insert `<-` into the R console and script files (but not in R Markdown for some reason).
+* `<-` and `=` are NOT synonyms, but can be used identically most of the time. It's safest to use `<-` for assignment.
+
+Once an object has been assigned a name, it can be printed by executing the name of the object or using the `print` function.
+
+### Example
+In the following code, we compute the mean of a vector and print the result.
+```{r}
+# compute the mean of 1, 2, ..., 10 and assign the name m
+m <- mean(1:10) 
+m # print m
+print(m) # print m a different way
+```
+
+## Vectors
 A *vector* is a single-dimensional set of data of the same type.
 
-### Vector creation
+### Creation
 The most basic way to create a vector is the `c` function.
 
 The `c` function combines values into a vector or list.
@@ -233,20 +255,6 @@ rep(c("trt1", "trt2", "trt3"), times = 1:3)
 rep(1:3, each = 3)
 ```
 
-### Assignment
-
-To store a data structure in the computer’s memory we must assign it a name.
-
-Data structures can be stored using the assignment operator `<-` or `=`.
-
-Some comments:
-  
-* In general, both `<-` and `=` can be used for assignment.
-* Pressing the "Alt" and "-" keys simultaneously on a PC or Linux machine (Option and - on a Mac) will insert `<-` into the R console and script files (but not in R Markdown for some reason).
-* `<-` and `=` are NOT synonyms, but can be used identically most of the time. It's safest to use `<-` for assignment.
-
-Once an object has been assigned a name, it can be printed by executing the name of the object or using the `print` function.
-
 Vectors can be combined into a new object using the `c`.
 
 ### Example {.example}
@@ -279,6 +287,30 @@ f2
 
 Create a vector named `grp` that has two levels: `a` and `b`, where the first 7 values are `a` and the second 4 values are `b`.
 
+### Extracting parts of a vector
+Subsets of the elements of a vector can be extracted by appending an index vector in square brackets `[]` to the name of the vector .
+
+Let's create the numeric vector 2, 4, 6, 8, 10, 12, 14, 16.
+
+```{r}
+a <- seq(2, 16, by = 2)
+a
+``` 
+
+Let's access the 2nd, 4th, and 6th elements of `a`.
+```{r}
+a[c(2, 4, 6)]
+```
+
+Let's access all elements in `a` EXCEPT the 2nd, 4th, and 6th using the minus (`-`) sign in front of the index vector.
+```{r}
+a[-c(2, 4, 6)]
+```
+
+Let's access all elements in `a` except elements 3 through 6.
+```{r}
+a[-(3:6)]
+```
 
 ## Helpful functions
 
@@ -337,7 +369,7 @@ rchisq(100, df = 5)
 
 * `pnorm(1.96, mean = 0, sd = 1)` returns the probability that a standard normal random variable is less than or equal to 1.96, i.e., $P(X \leq 1.96)$.
 * `qunif(0.6, min = 0, max = 1)` returns the value $x$ such that $P(X\leq x) = 0.6$ for a uniform random variable on the interval $[0, 1]$.
-* `dbinom(2, size = 20, prob = .2)` returns the probability that $P(X=2)$) for $X∼\textrm{Binom}(n=20,\pi=0.2)$.
+* `dbinom(2, size = 20, prob = .2)` returns the probability that $P(X=2)$ for $X∼\textrm{Binom}(n=20,\pi=0.2)$.
 * `dexp(1, rate = 2)` evaluates the density of an exponential random variable with mean = 1/2 at $x=1$.
 * `rchisq(100, df = 5)` returns a sample of 100 observations from a chi-squared random variable with 5 degrees of freedom.
 
@@ -347,6 +379,7 @@ Data frames are two-dimensional data objects. Each column of a data frame is a v
 
 In general, I recommend *tidy data*, which means that each variable forms a column of the data frame, and each observation forms a row.
 
+### Creation
 Data frames are created by passing vectors into the `data.frame` function.
 
 The names of the columns in the data frame are the names of the vectors you give the `data.frame` function.
@@ -374,23 +407,34 @@ df2 <- data.frame(ID = d, Color = e, Passed = f)
 df2
 ```
 
-The column vectors of a data frame may be accessed using `$` and specifying the name of the desired vector. 
+### Extracting parts of a data frame
+The column vectors of a data frame may be extracted using `$` and specifying the name of the desired vector.
 
-Part of a data frame can also be access by thinking of at as a general matrix and specifying the desired rows or columns in square brackets after the object name. For example, if we had a data frame named `df`:
+* `df$Color` would access the `Color` column of data frame `df`.
+
+Part of a data frame can also be extracted by thinking of at as a general matrix and specifying the desired rows or columns in square brackets after the object name. For example, if we had a data frame named `df`:
 
 * `df[1,]` would access the first row of `df`.
 * `df[1:2,]` would access the first two rows of `df`.
 * `df[,2]` would access the second column of `df`.
 * `df[1:2, 2:3]` would access the information in rows 1 and 2 of columns 2 and 3 of `df`.
 
+If you need to select multiple columns of a data frame by name, you can pass a character vector with column names in the column position of `[]`.
+
+* `df[, c("Color", "Passed")]` would extract the `Color` and `Passed` columns of df.
 ### Example {.example}
 
 Execute the following commands in the Console:
-```{r, eval=FALSE}
-df3 <- data.frame(numbers = 1:5, characters = letters[1:5], logicals = c(TRUE, TRUE, FALSE, TRUE, FALSE))
+```{r, eval=FALSE, paged.print=FALSE}
+df3 <- data.frame(numbers = 1:5,
+                  characters = letters[1:5],
+                  logicals = c(TRUE, TRUE, FALSE, TRUE, FALSE))
+df3 # print df
 df3$logicals # access the logicals vector of df3
-df3[1,] # access the first column of df3
-df3[,3] # access the third column of df3
+df3[1, ] # access the first column of df3
+df3[, 3] # access the third column of df3
+df3[, 2:3] # access the column 2 and 3 of df3
+df3[, c("numbers", "logicals")] # access the numbers and logical columns of df3
 ```
 
 Students often can work more conveniently with vectors, so it is sometimes desirable to access a part of a data frame and assign it a new name for later use. For example, to access the `ID` column of `df2` and assign it the name `newID`, we could execute `newID <- df2$ID`.
@@ -402,14 +446,14 @@ The `read.table` function imports data from file into R as a data frame.
 Usage: `read.table(file, header = TRUE, sep = ",")`
 
 * `file` is the file path and name of the file you want to import into R.
-* If you don’t know the file path, set `file = file.choose()` will bring up a dialog box asking you to locate the file you want to import.
+  * If you don’t know the file path, set `file = file.choose()` will bring up a dialog box asking you to locate the file you want to import.
 * `header` specifies whether the data file has a header (variable labels for each column of data in the first row of the data file).
-* If you don't specify this option in R or use `header = FALSE`, then R will assume the file doesn't have any headings.
-* `header = TRUE` tells R to read in the data as a data frame with column names taken from the first row of the data file.
+  * If you don't specify this option in R or use `header = FALSE`, then R will assume the file doesn't have any headings.
+  * `header = TRUE` tells R to read in the data as a data frame with column names taken from the first row of the data file.
 * `sep` specifies the delimiter separating elements in the file.
-* If each column of data in the file is separated by a space, then use `sep = " "`
-* If each column of data in the file is separated by a comma, then use `sep = ","`
-* If each column of data in the file is separated by a tab, then use `sep = "\t"`.
+  * If each column of data in the file is separated by a space, then use `sep = " "`
+  * If each column of data in the file is separated by a comma, then use `sep = ","`
+  * If each column of data in the file is separated by a tab, then use `sep = "\t"`.
 
 Here is an example reading a csv (comma separated file) with a header:
   
@@ -422,41 +466,21 @@ str(dtf)
 
 Note that the `read_table` function in the **readr** package and the `fread` function in the **data.table** package are perhaps better ways of reading in tabular data and use similar syntax.
 
-## Accessing elements of a data structure with logical statements
+## Logical statements
 
-Subsets of the elements of a vector may be selected by appending to the name of the vector an index vector in square brackets `[]`.
-
-Let's create the numeric vector 2, 4, 6, 8, 10, 12, 14, 16.
-
-```{r}
-a <- seq(2, 16, by = 2)
-a
-``` 
-
-Let's access the 2nd, 4th, and 6th elements of `a`.
-```{r}
-a[c(2, 4, 6)]
-```
-
-Let's access all elements in `a` EXCEPT the 2nd, 4th, and 6th using the minus (`-`) sign in front of the index vector.
-```{r}
-a[-c(2, 4, 6)]
-```
-
-Let's access all elements in `a` except elements 3 through 6.
-```{r}
-a[-(3:6)]
-```
-
+### Basic comparisons
 Sometimes we need to know if the elements of an object satisfy certain conditions.  This can be determined using the logical operators `<`, `<=`, `>`, `>=`, `==`, `!=`.
 
-Note that `==` means equal to and `!=` means not equal to.
+* `==` means equal to.
+* `!=` means NOT equal to.
 
 ### Example {.example}
 
 Execute the following commands in R and see what you get. What is each statement performing?
 
 ```{r, eval=FALSE}
+# a <- seq(2, 16, by = 2) # creating the vector a
+a
 a > 10
 a <= 4
 a == 10
@@ -477,7 +501,7 @@ Execute the following commands in R and see what you get.
 (a <= 4) | (a >= 12)
 ```
 
-## Logical statements and subsetting
+## Subsetting with logical statements
 
 Logical statements can be used to return parts of an object satisfying the appropriate criteria. Specifically, we pass logical statements within the square brackets used to access part of a data structure.
 
@@ -486,8 +510,12 @@ Logical statements can be used to return parts of an object satisfying the appro
 Execute the following code:
   
 ```{r, eval = FALSE}
+a
+a < 6
 a[a < 6]
+a == 10
 a[a == 10]
+(a < 6) | ( a == 10)
 a[(a < 6) | ( a == 10)]
 ```
 
@@ -498,5 +526,3 @@ We will typically work with base R, which are commands and functions R offers by
 The `tidyverse` (www.tidyverse.org) is a collection of R packages that provides a unified framework for data manipulation and visualization.
 
 Since this course focuses more on modeling than data manipulation, I will typically focus on approaches in base R. I will use functions from the **tidyverse** when it greatly simplifies analysis, data manipulation, or visualization.
-
-
