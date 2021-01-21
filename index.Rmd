@@ -10,21 +10,29 @@ link-citations: yes
 description: "This is a minimal example of using the bookdown package to write a book. The output format for this example is bookdown::gitbook."
 ---
 
-# Prerequisites
+# Preliminaries
 
-This is a _sample_ book written in **Markdown**. You can use anything that Pandoc's Markdown supports, e.g., a math equation $a^2 + b^2 = c^2$.
+I recommend you execute the following commands install packages we may use in this course.
 
-The **bookdown** package can be installed from CRAN or Github:
-
-```{r eval=FALSE}
-install.packages("bookdown")
-# or the development version
-# devtools::install_github("rstudio/bookdown")
+```{r, eval = FALSE}
+# packages related to books
+books = c("faraway", "alr4", "car", "rms")
+install.packages(books)
+# packages related to tidy/tidying data
+tidy = c("broom", "tidyr", "dplyr")
+install.packages(tidy)
+# packages related to plotting
+moreplots = c("ggplot2", "ggthemes", "lattice", "HH")
+install.packages(moreplots)
+# packages related to model diagnostics
+diag = c("leaps", "lmtest", "gvlma", "caret", "perturb")
+install.packages(diag)
 ```
 
-Remember each Rmd file contains one and only one chapter, and a chapter is defined by the first-level heading `#`.
+*Acknowledgments*
 
-To compile this example to PDF, you need XeLaTeX. You are recommended to install TinyTeX (which includes XeLaTeX): <https://yihui.org/tinytex/>.
+The **bookdown** package [@R-bookdown] was used to generate this book.
+
 
 ```{r include=FALSE}
 # automatically create a bib database for R packages

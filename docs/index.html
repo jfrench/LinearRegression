@@ -136,7 +136,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <li><a href="./">Data Analysis with Linear Regression</a></li>
 
 <li class="divider"></li>
-<li class="chapter" data-level="1" data-path="index.html"><a href="index.html"><i class="fa fa-check"></i><b>1</b> Prerequisites</a></li>
+<li class="chapter" data-level="1" data-path="index.html"><a href="index.html"><i class="fa fa-check"></i><b>1</b> Preliminaries</a></li>
 <li class="chapter" data-level="2" data-path="intro.html"><a href="intro.html"><i class="fa fa-check"></i><b>2</b> Introduction</a></li>
 <li class="chapter" data-level="3" data-path="literature.html"><a href="literature.html"><i class="fa fa-check"></i><b>3</b> Literature</a></li>
 <li class="chapter" data-level="4" data-path="methods.html"><a href="methods.html"><i class="fa fa-check"></i><b>4</b> Methods</a></li>
@@ -171,16 +171,30 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <p class="author"><em>Yihui Xie</em></p>
 <p class="date"><em>2021-01-21</em></p>
 </div>
-<div id="prerequisites" class="section level1">
-<h1><span class="header-section-number">Chapter 1</span> Prerequisites</h1>
-<p>This is a <em>sample</em> book written in <strong>Markdown</strong>. You can use anything that Pandoc’s Markdown supports, e.g., a math equation <span class="math inline">\(a^2 + b^2 = c^2\)</span>.</p>
-<p>The <strong>bookdown</strong> package can be installed from CRAN or Github:</p>
-<div class="sourceCode" id="cb1"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb1-1"><a href="index.html#cb1-1"></a><span class="kw">install.packages</span>(<span class="st">&quot;bookdown&quot;</span>)</span>
-<span id="cb1-2"><a href="index.html#cb1-2"></a><span class="co"># or the development version</span></span>
-<span id="cb1-3"><a href="index.html#cb1-3"></a><span class="co"># devtools::install_github(&quot;rstudio/bookdown&quot;)</span></span></code></pre></div>
-<p>Remember each Rmd file contains one and only one chapter, and a chapter is defined by the first-level heading <code>#</code>.</p>
-<p>To compile this example to PDF, you need XeLaTeX. You are recommended to install TinyTeX (which includes XeLaTeX): <a href="https://yihui.org/tinytex/" class="uri">https://yihui.org/tinytex/</a>.</p>
+<div id="preliminaries" class="section level1">
+<h1><span class="header-section-number">Chapter 1</span> Preliminaries</h1>
+<p>I recommend you execute the following commands install packages we may use in this course.</p>
+<div class="sourceCode" id="cb1"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb1-1"><a href="index.html#cb1-1"></a><span class="co"># packages related to books</span></span>
+<span id="cb1-2"><a href="index.html#cb1-2"></a>books =<span class="st"> </span><span class="kw">c</span>(<span class="st">&quot;faraway&quot;</span>, <span class="st">&quot;alr4&quot;</span>, <span class="st">&quot;car&quot;</span>, <span class="st">&quot;rms&quot;</span>)</span>
+<span id="cb1-3"><a href="index.html#cb1-3"></a><span class="kw">install.packages</span>(books)</span>
+<span id="cb1-4"><a href="index.html#cb1-4"></a><span class="co"># packages related to tidy/tidying data</span></span>
+<span id="cb1-5"><a href="index.html#cb1-5"></a>tidy =<span class="st"> </span><span class="kw">c</span>(<span class="st">&quot;broom&quot;</span>, <span class="st">&quot;tidyr&quot;</span>, <span class="st">&quot;dplyr&quot;</span>)</span>
+<span id="cb1-6"><a href="index.html#cb1-6"></a><span class="kw">install.packages</span>(tidy)</span>
+<span id="cb1-7"><a href="index.html#cb1-7"></a><span class="co"># packages related to plotting</span></span>
+<span id="cb1-8"><a href="index.html#cb1-8"></a>moreplots =<span class="st"> </span><span class="kw">c</span>(<span class="st">&quot;ggplot2&quot;</span>, <span class="st">&quot;ggthemes&quot;</span>, <span class="st">&quot;lattice&quot;</span>, <span class="st">&quot;HH&quot;</span>)</span>
+<span id="cb1-9"><a href="index.html#cb1-9"></a><span class="kw">install.packages</span>(moreplots)</span>
+<span id="cb1-10"><a href="index.html#cb1-10"></a><span class="co"># packages related to model diagnostics</span></span>
+<span id="cb1-11"><a href="index.html#cb1-11"></a>diag =<span class="st"> </span><span class="kw">c</span>(<span class="st">&quot;leaps&quot;</span>, <span class="st">&quot;lmtest&quot;</span>, <span class="st">&quot;gvlma&quot;</span>, <span class="st">&quot;caret&quot;</span>, <span class="st">&quot;perturb&quot;</span>)</span>
+<span id="cb1-12"><a href="index.html#cb1-12"></a><span class="kw">install.packages</span>(diag)</span></code></pre></div>
+<p><em>Acknowledgments</em></p>
+<p>The <strong>bookdown</strong> package <span class="citation">(Xie <a href="#ref-R-bookdown" role="doc-biblioref">2020</a>)</span> was used to generate this book.</p>
 
+</div>
+<h3>References</h3>
+<div id="refs" class="references">
+<div id="ref-R-bookdown">
+<p>Xie, Yihui. 2020. <em>Bookdown: Authoring Books and Technical Documents with R Markdown</em>. <a href="https://github.com/rstudio/bookdown">https://github.com/rstudio/bookdown</a>.</p>
+</div>
 </div>
             </section>
 
@@ -238,20 +252,6 @@ gitbook.start({
 });
 </script>
 
-<!-- dynamically load mathjax for compatibility with self-contained -->
-<script>
-  (function () {
-    var script = document.createElement("script");
-    script.type = "text/javascript";
-    var src = "true";
-    if (src === "" || src === "true") src = "https://mathjax.rstudio.com/latest/MathJax.js?config=TeX-MML-AM_CHTML";
-    if (location.protocol !== "file:")
-      if (/^https?:/.test(src))
-        src = src.replace(/^https?:/, '');
-    script.src = src;
-    document.getElementsByTagName("head")[0].appendChild(script);
-  })();
-</script>
 </body>
 
 </html>
