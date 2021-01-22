@@ -171,7 +171,7 @@ Let's convert `test` to a factor.
 levels(pima$test) <- c("negative","positive")
 ```
 
-## Visualizing the data with **base** graphics
+## Visualizing data with **base** graphics
 
 ### Histograms
 The `hist` command can be used create a histogram of a numerical vector.
@@ -248,7 +248,8 @@ par(mfrow = c(1, 2))
 plot(diabetes ~ diastolic, data = pima)
 plot(diabetes ~ test, data = pima)
 ```
-## Visualizing the data with **ggplot2**
+
+## Visualizing data with **ggplot2**
 
 The plots we have just created are using the base graphics system in R.
 * These are very fast, simple, and professional.
@@ -273,7 +274,7 @@ ggpima + geom_histogram(aes(x=diastolic))
 ggpima + geom_density(aes(x = diastolic))
 ```
 
-## A **ggplot2** scatter plot
+### A **ggplot2** scatter plot
 ```{r}
 ggpima + geom_point(aes(x = diastolic, y = diabetes))
 ```
