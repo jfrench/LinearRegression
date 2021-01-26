@@ -1,7 +1,11 @@
 ---
 title: "Joshua French"
 date: "`r format(Sys.time(), '%Y-%m-%d')`"
-output: html_notebook
+output:
+  pdf_document: default
+  html_notebook: default
+editor_options:
+  chunk_output_type: console
 ---
 
 # Data exploration (a.k.a., exploratory data analysis)
@@ -88,6 +92,7 @@ When summarizing the data, look for:
 ## Kidney Example
 
 The National Institute of Diabetes and Digestive and Kidney Diseases conducted a study on 768 adult female Pima Indians living near Phoenix. The following variables were recorded:
+
 * `pregnant` - number of times pregnant
 * `glucose` - plasma glucose concentration at 2 hours in an oral glucose tolerance test
 * `diastolic` - diastolic blood pressure (mm Hg)
@@ -129,21 +134,22 @@ Some odd things about the `pima` data
   * That's generally an indication of a health problem.
 * The test variable appears to be numerical but should be a categorical variable.
 * Many other variables have unusual zeros.
--	Look for anything unusual or unexpected, perhaps indicating a data-entry error.
+  * Look for anything unusual or unexpected, perhaps indicating a data-entry error.
 
 Let's look at the sorted `diastolic` values.
 ```{r, echo=T}
 sort(pima$diastolic)
 ```
 
-The first 35 values of `diastolic` are zero. That's a problem.  
+The first 35 values of `diastolic` are zero. That's a problem.
+
 * It seems that 0 was used in place of a missing value.
 * This is very bad since 0 is a real number and this problem may be overlooked, which can lead to faulty analysis!
-* This is why we must check our data carefully for things that don’t make sense.
+* This is why we must check our data carefully for things that don't make sense.
 
 The value for missing data in R is `NA`.
 
-Several variables share this problem.  Let’s set the 0s that should be missing values to `NA`.
+Several variables share this problem.  Let's set the 0s that should be missing values to `NA`.
 
 ```{r, echo=T}
 pima$diastolic[pima$diastolic == 0]  <- NA
@@ -310,10 +316,10 @@ ggpima +
   * Specify the geometry for the plot (the kind of plot you want to produce)
   * Specify the aesthetics using `aes`.
     * The aesthetic specifies what you see, such as position in the $x$ or $y$ direction or aspects such as shape or color.
-    * The aesthetic can be specifed in the geometry, or if you have consistent aesthetics across multiple geometries, in the ``ggplot` statement.
+    * The aesthetic can be specifed in the geometry, or if you have consistent aesthetics across multiple geometries, in the `ggplot` statement.
 * The advantage of **ggplot2** is more apparent in producing complex plots involving more than two variables.
 * A `theme` specifies options for the appearance of the plot.
-  * We specified where the `legend` should appear in one plot and to use more than one panel (`facets`) in another. 
+  * We specified where the `legend` should appear in one plot and to use more than one panel (**facets**) in another. 
 
 ## Summary of data exploration
 

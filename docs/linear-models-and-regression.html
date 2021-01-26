@@ -24,7 +24,7 @@
 <meta name="author" content="Joshua French" />
 
 
-<meta name="date" content="2021-01-21" />
+<meta name="date" content="2021-01-26" />
 
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <meta name="apple-mobile-web-app-capable" content="yes" />
@@ -361,34 +361,34 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <li>Do taller mothers tend to have taller daughters</li>
 <li>Do shorter mothers tend to have shorter daughters?</li>
 </ul>
-<div class="sourceCode" id="cb85"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb85-1"><a href="linear-models-and-regression.html#cb85-1"></a><span class="kw">data</span>(Heights, <span class="dt">package =</span> <span class="st">&quot;alr4&quot;</span>)</span>
-<span id="cb85-2"><a href="linear-models-and-regression.html#cb85-2"></a><span class="kw">str</span>(Heights)</span></code></pre></div>
-<pre><code>## &#39;data.frame&#39;:	1375 obs. of  2 variables:
-##  $ mheight: num  59.7 58.2 60.6 60.7 61.8 55.5 55.4 56.8 57.5 57.3 ...
-##  $ dheight: num  55.1 56.5 56 56.8 56 57.9 57.1 57.6 57.2 57.1 ...</code></pre>
-<div class="sourceCode" id="cb87"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb87-1"><a href="linear-models-and-regression.html#cb87-1"></a><span class="kw">plot</span>(dheight <span class="op">~</span><span class="st"> </span>mheight, <span class="dt">data =</span> Heights,</span>
-<span id="cb87-2"><a href="linear-models-and-regression.html#cb87-2"></a>     <span class="dt">xlab =</span> <span class="st">&quot;mother&#39;s height (in)&quot;</span>,</span>
-<span id="cb87-3"><a href="linear-models-and-regression.html#cb87-3"></a>     <span class="dt">ylab =</span> <span class="st">&quot;daughter&#39;s height (in)&quot;</span>,</span>
-<span id="cb87-4"><a href="linear-models-and-regression.html#cb87-4"></a>     <span class="dt">xlim =</span> <span class="kw">c</span>(<span class="dv">55</span>, <span class="dv">75</span>), <span class="dt">ylim =</span> <span class="kw">c</span>(<span class="dv">55</span>, <span class="dv">75</span>))</span></code></pre></div>
-<p><img src="bookdown_test_files/figure-html/unnamed-chunk-42-1.png" width="672" />
+<div class="sourceCode" id="cb41"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb41-1"><a href="linear-models-and-regression.html#cb41-1"></a><span class="kw">data</span>(Heights, <span class="dt">package =</span> <span class="st">&quot;alr4&quot;</span>)</span>
+<span id="cb41-2"><a href="linear-models-and-regression.html#cb41-2"></a><span class="kw">str</span>(Heights)</span>
+<span id="cb41-3"><a href="linear-models-and-regression.html#cb41-3"></a><span class="co">#&gt; &#39;data.frame&#39;:	1375 obs. of  2 variables:</span></span>
+<span id="cb41-4"><a href="linear-models-and-regression.html#cb41-4"></a><span class="co">#&gt;  $ mheight: num  59.7 58.2 60.6 60.7 61.8 55.5 55.4 56.8 57.5 57.3 ...</span></span>
+<span id="cb41-5"><a href="linear-models-and-regression.html#cb41-5"></a><span class="co">#&gt;  $ dheight: num  55.1 56.5 56 56.8 56 57.9 57.1 57.6 57.2 57.1 ...</span></span>
+<span id="cb41-6"><a href="linear-models-and-regression.html#cb41-6"></a><span class="kw">plot</span>(dheight <span class="op">~</span><span class="st"> </span>mheight, <span class="dt">data =</span> Heights,</span>
+<span id="cb41-7"><a href="linear-models-and-regression.html#cb41-7"></a>     <span class="dt">xlab =</span> <span class="st">&quot;mother&#39;s height (in)&quot;</span>,</span>
+<span id="cb41-8"><a href="linear-models-and-regression.html#cb41-8"></a>     <span class="dt">ylab =</span> <span class="st">&quot;daughter&#39;s height (in)&quot;</span>,</span>
+<span id="cb41-9"><a href="linear-models-and-regression.html#cb41-9"></a>     <span class="dt">xlim =</span> <span class="kw">c</span>(<span class="dv">55</span>, <span class="dv">75</span>), <span class="dt">ylim =</span> <span class="kw">c</span>(<span class="dv">55</span>, <span class="dv">75</span>))</span></code></pre></div>
+<p><img src="bookdown_test_files/figure-html/unnamed-chunk-44-1.png" width="672" />
 There seems to be a clear trend between mother’s heights and daughter’s heights. The taller the mother, the taller the daughter <em>tends</em> to be.</p>
 </div>
 <div id="predicting-snowfall" class="section level3">
 <h3><span class="header-section-number">4.5.2</span> Predicting snowfall</h3>
 <p>The <code>ftcollinssnow</code> data set in the <strong>alr4</strong> package measures late (September 1st until December 31st) and early (January 1st to June 30th) season snowfall for Fort Collins, CO between Late 1900 and Early 1993.</p>
 <p>Question of interest: Can late season snowfall predict snowfall in the early part of the next year?</p>
-<div class="sourceCode" id="cb88"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb88-1"><a href="linear-models-and-regression.html#cb88-1"></a><span class="kw">data</span>(<span class="st">&quot;ftcollinssnow&quot;</span>, <span class="dt">package =</span> <span class="st">&quot;alr4&quot;</span>) <span class="co"># load data</span></span>
-<span id="cb88-2"><a href="linear-models-and-regression.html#cb88-2"></a><span class="kw">str</span>(ftcollinssnow) <span class="co"># examine structure</span></span></code></pre></div>
-<pre><code>## &#39;data.frame&#39;:	93 obs. of  3 variables:
-##  $ YR1  : int  1900 1901 1902 1903 1904 1905 1906 1907 1908 1909 ...
-##  $ Early: num  3 15.8 13.1 4 1 10.5 27.5 7 28.7 19.9 ...
-##  $ Late : num  44.5 12.5 36.8 7.6 28.7 28.3 49.7 15.1 51.2 5.9 ...</code></pre>
-<div class="sourceCode" id="cb90"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb90-1"><a href="linear-models-and-regression.html#cb90-1"></a><span class="kw">plot</span>(Late <span class="op">~</span><span class="st"> </span>Early, <span class="dt">data =</span> ftcollinssnow) <span class="co"># plot data</span></span>
-<span id="cb90-2"><a href="linear-models-and-regression.html#cb90-2"></a><span class="co"># add &quot;line of best fit&quot;</span></span>
-<span id="cb90-3"><a href="linear-models-and-regression.html#cb90-3"></a><span class="kw">abline</span>(<span class="kw">lm</span>(Late <span class="op">~</span><span class="st"> </span>Early, <span class="dt">data =</span> ftcollinssnow), <span class="dt">lty =</span> <span class="dv">2</span>)</span>
-<span id="cb90-4"><a href="linear-models-and-regression.html#cb90-4"></a><span class="co"># sample mean line</span></span>
-<span id="cb90-5"><a href="linear-models-and-regression.html#cb90-5"></a><span class="kw">abline</span>(<span class="kw">mean</span>(ftcollinssnow<span class="op">$</span>Late), <span class="dv">0</span>)</span></code></pre></div>
-<p><img src="bookdown_test_files/figure-html/unnamed-chunk-43-1.png" width="672" /></p>
+<div class="sourceCode" id="cb42"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb42-1"><a href="linear-models-and-regression.html#cb42-1"></a><span class="kw">data</span>(<span class="st">&quot;ftcollinssnow&quot;</span>, <span class="dt">package =</span> <span class="st">&quot;alr4&quot;</span>) <span class="co"># load data</span></span>
+<span id="cb42-2"><a href="linear-models-and-regression.html#cb42-2"></a><span class="kw">str</span>(ftcollinssnow) <span class="co"># examine structure</span></span>
+<span id="cb42-3"><a href="linear-models-and-regression.html#cb42-3"></a><span class="co">#&gt; &#39;data.frame&#39;:	93 obs. of  3 variables:</span></span>
+<span id="cb42-4"><a href="linear-models-and-regression.html#cb42-4"></a><span class="co">#&gt;  $ YR1  : int  1900 1901 1902 1903 1904 1905 1906 1907 1908 1909 ...</span></span>
+<span id="cb42-5"><a href="linear-models-and-regression.html#cb42-5"></a><span class="co">#&gt;  $ Early: num  3 15.8 13.1 4 1 10.5 27.5 7 28.7 19.9 ...</span></span>
+<span id="cb42-6"><a href="linear-models-and-regression.html#cb42-6"></a><span class="co">#&gt;  $ Late : num  44.5 12.5 36.8 7.6 28.7 28.3 49.7 15.1 51.2 5.9 ...</span></span>
+<span id="cb42-7"><a href="linear-models-and-regression.html#cb42-7"></a><span class="kw">plot</span>(Late <span class="op">~</span><span class="st"> </span>Early, <span class="dt">data =</span> ftcollinssnow) <span class="co"># plot data</span></span>
+<span id="cb42-8"><a href="linear-models-and-regression.html#cb42-8"></a><span class="co"># add &quot;line of best fit&quot;</span></span>
+<span id="cb42-9"><a href="linear-models-and-regression.html#cb42-9"></a><span class="kw">abline</span>(<span class="kw">lm</span>(Late <span class="op">~</span><span class="st"> </span>Early, <span class="dt">data =</span> ftcollinssnow), <span class="dt">lty =</span> <span class="dv">2</span>)</span>
+<span id="cb42-10"><a href="linear-models-and-regression.html#cb42-10"></a><span class="co"># sample mean line</span></span>
+<span id="cb42-11"><a href="linear-models-and-regression.html#cb42-11"></a><span class="kw">abline</span>(<span class="kw">mean</span>(ftcollinssnow<span class="op">$</span>Late), <span class="dv">0</span>)</span></code></pre></div>
+<p><img src="bookdown_test_files/figure-html/unnamed-chunk-45-1.png" width="672" /></p>
 <p>A plot of the snowfall data for the two time periods suggest that this relationship is weak or they may be uncorrelated.<br />
 * The dashed line indicates the “linear of best fit” , while the solid line indicates the average of the Late snowfall.</p>
 </div>
@@ -401,46 +401,46 @@ There seems to be a clear trend between mother’s heights and daughter’s heig
 <li>Does the source of the methionine impact the weight gain of the turkeys?</li>
 </ul>
 <p>Consider a plot of the average <code>Weight</code> gain (g) of the turkeys as a function of the <code>Dose</code> amount (% of diet), separating the groups by the <code>Source</code> of the methionine.</p>
-<div class="sourceCode" id="cb91"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb91-1"><a href="linear-models-and-regression.html#cb91-1"></a><span class="kw">data</span>(turkey, <span class="dt">package =</span> <span class="st">&quot;alr4&quot;</span>)</span>
-<span id="cb91-2"><a href="linear-models-and-regression.html#cb91-2"></a><span class="kw">str</span>(turkey)</span></code></pre></div>
-<pre><code>## &#39;data.frame&#39;:	13 obs. of  5 variables:
-##  $ A   : num  0 0.04 0.1 0.16 0.28 0.04 0.1 0.16 0.28 0.04 ...
-##  $ Gain: num  623 680 721 750 789 ...
-##  $ S   : int  1 1 1 1 1 2 2 2 2 3 ...
-##  $ m   : int  10 5 5 5 5 5 5 5 5 5 ...
-##  $ SD  : num  19.46 7.19 21.45 17.49 14.67 ...</code></pre>
-<div class="sourceCode" id="cb93"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb93-1"><a href="linear-models-and-regression.html#cb93-1"></a><span class="kw">summary</span>(turkey) <span class="co"># the source factor (S) is not a factor</span></span></code></pre></div>
-<pre><code>##        A               Gain             S               m         
-##  Min.   :0.0000   Min.   :623.0   Min.   :1.000   Min.   : 5.000  
-##  1st Qu.:0.0400   1st Qu.:680.2   1st Qu.:1.000   1st Qu.: 5.000  
-##  Median :0.1000   Median :721.4   Median :2.000   Median : 5.000  
-##  Mean   :0.1338   Mean   :720.4   Mean   :1.923   Mean   : 5.385  
-##  3rd Qu.:0.1600   3rd Qu.:750.4   3rd Qu.:3.000   3rd Qu.: 5.000  
-##  Max.   :0.2800   Max.   :794.0   Max.   :3.000   Max.   :10.000  
-##        SD       
-##  Min.   : 7.19  
-##  1st Qu.:14.67  
-##  Median :17.71  
-##  Mean   :17.68  
-##  3rd Qu.:21.45  
-##  Max.   :26.51</code></pre>
-<div class="sourceCode" id="cb95"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb95-1"><a href="linear-models-and-regression.html#cb95-1"></a>turkey<span class="op">$</span>S =<span class="st"> </span><span class="kw">factor</span>(turkey<span class="op">$</span>S)</span>
-<span id="cb95-2"><a href="linear-models-and-regression.html#cb95-2"></a><span class="kw">levels</span>(turkey<span class="op">$</span>S) &lt;-<span class="st"> </span><span class="kw">c</span>(<span class="st">&quot;control&quot;</span>, <span class="st">&quot;new source a&quot;</span>, <span class="st">&quot;new source b&quot;</span>)</span>
-<span id="cb95-3"><a href="linear-models-and-regression.html#cb95-3"></a><span class="kw">names</span>(turkey) &lt;-<span class="st"> </span><span class="kw">c</span>(<span class="st">&quot;Dose&quot;</span>, <span class="st">&quot;Gain&quot;</span>, <span class="st">&quot;Source&quot;</span>, <span class="st">&quot;Replications&quot;</span>, <span class="st">&quot;SD&quot;</span>) <span class="co"># rename variables</span></span>
-<span id="cb95-4"><a href="linear-models-and-regression.html#cb95-4"></a><span class="co"># create turkey data ggplot</span></span>
-<span id="cb95-5"><a href="linear-models-and-regression.html#cb95-5"></a><span class="kw">library</span>(ggplot2) <span class="co"># load ggplot2 package</span></span>
-<span id="cb95-6"><a href="linear-models-and-regression.html#cb95-6"></a>gg_turkey &lt;-<span class="st"> </span><span class="kw">ggplot</span>(turkey,</span>
-<span id="cb95-7"><a href="linear-models-and-regression.html#cb95-7"></a>                    <span class="dt">mapping =</span> <span class="kw">aes</span>(<span class="dt">x =</span> Dose, <span class="dt">y =</span> Gain,</span>
-<span id="cb95-8"><a href="linear-models-and-regression.html#cb95-8"></a>                                  <span class="dt">color =</span> Source, <span class="dt">shape =</span> Source))</span>
-<span id="cb95-9"><a href="linear-models-and-regression.html#cb95-9"></a>gg_turkey <span class="op">+</span><span class="st"> </span><span class="kw">geom_point</span>() <span class="op">+</span><span class="st"> </span><span class="kw">geom_line</span>()</span></code></pre></div>
-<p><img src="bookdown_test_files/figure-html/unnamed-chunk-44-1.png" width="672" /></p>
+<div class="sourceCode" id="cb43"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb43-1"><a href="linear-models-and-regression.html#cb43-1"></a><span class="kw">data</span>(turkey, <span class="dt">package =</span> <span class="st">&quot;alr4&quot;</span>)</span>
+<span id="cb43-2"><a href="linear-models-and-regression.html#cb43-2"></a><span class="kw">str</span>(turkey)</span>
+<span id="cb43-3"><a href="linear-models-and-regression.html#cb43-3"></a><span class="co">#&gt; &#39;data.frame&#39;:	13 obs. of  5 variables:</span></span>
+<span id="cb43-4"><a href="linear-models-and-regression.html#cb43-4"></a><span class="co">#&gt;  $ A   : num  0 0.04 0.1 0.16 0.28 0.04 0.1 0.16 0.28 0.04 ...</span></span>
+<span id="cb43-5"><a href="linear-models-and-regression.html#cb43-5"></a><span class="co">#&gt;  $ Gain: num  623 680 721 750 789 ...</span></span>
+<span id="cb43-6"><a href="linear-models-and-regression.html#cb43-6"></a><span class="co">#&gt;  $ S   : int  1 1 1 1 1 2 2 2 2 3 ...</span></span>
+<span id="cb43-7"><a href="linear-models-and-regression.html#cb43-7"></a><span class="co">#&gt;  $ m   : int  10 5 5 5 5 5 5 5 5 5 ...</span></span>
+<span id="cb43-8"><a href="linear-models-and-regression.html#cb43-8"></a><span class="co">#&gt;  $ SD  : num  19.46 7.19 21.45 17.49 14.67 ...</span></span>
+<span id="cb43-9"><a href="linear-models-and-regression.html#cb43-9"></a><span class="kw">summary</span>(turkey) <span class="co"># the source factor (S) is not a factor</span></span>
+<span id="cb43-10"><a href="linear-models-and-regression.html#cb43-10"></a><span class="co">#&gt;        A               Gain             S               m         </span></span>
+<span id="cb43-11"><a href="linear-models-and-regression.html#cb43-11"></a><span class="co">#&gt;  Min.   :0.0000   Min.   :623.0   Min.   :1.000   Min.   : 5.000  </span></span>
+<span id="cb43-12"><a href="linear-models-and-regression.html#cb43-12"></a><span class="co">#&gt;  1st Qu.:0.0400   1st Qu.:680.2   1st Qu.:1.000   1st Qu.: 5.000  </span></span>
+<span id="cb43-13"><a href="linear-models-and-regression.html#cb43-13"></a><span class="co">#&gt;  Median :0.1000   Median :721.4   Median :2.000   Median : 5.000  </span></span>
+<span id="cb43-14"><a href="linear-models-and-regression.html#cb43-14"></a><span class="co">#&gt;  Mean   :0.1338   Mean   :720.4   Mean   :1.923   Mean   : 5.385  </span></span>
+<span id="cb43-15"><a href="linear-models-and-regression.html#cb43-15"></a><span class="co">#&gt;  3rd Qu.:0.1600   3rd Qu.:750.4   3rd Qu.:3.000   3rd Qu.: 5.000  </span></span>
+<span id="cb43-16"><a href="linear-models-and-regression.html#cb43-16"></a><span class="co">#&gt;  Max.   :0.2800   Max.   :794.0   Max.   :3.000   Max.   :10.000  </span></span>
+<span id="cb43-17"><a href="linear-models-and-regression.html#cb43-17"></a><span class="co">#&gt;        SD       </span></span>
+<span id="cb43-18"><a href="linear-models-and-regression.html#cb43-18"></a><span class="co">#&gt;  Min.   : 7.19  </span></span>
+<span id="cb43-19"><a href="linear-models-and-regression.html#cb43-19"></a><span class="co">#&gt;  1st Qu.:14.67  </span></span>
+<span id="cb43-20"><a href="linear-models-and-regression.html#cb43-20"></a><span class="co">#&gt;  Median :17.71  </span></span>
+<span id="cb43-21"><a href="linear-models-and-regression.html#cb43-21"></a><span class="co">#&gt;  Mean   :17.68  </span></span>
+<span id="cb43-22"><a href="linear-models-and-regression.html#cb43-22"></a><span class="co">#&gt;  3rd Qu.:21.45  </span></span>
+<span id="cb43-23"><a href="linear-models-and-regression.html#cb43-23"></a><span class="co">#&gt;  Max.   :26.51</span></span>
+<span id="cb43-24"><a href="linear-models-and-regression.html#cb43-24"></a>turkey<span class="op">$</span>S =<span class="st"> </span><span class="kw">factor</span>(turkey<span class="op">$</span>S)</span>
+<span id="cb43-25"><a href="linear-models-and-regression.html#cb43-25"></a><span class="kw">levels</span>(turkey<span class="op">$</span>S) &lt;-<span class="st"> </span><span class="kw">c</span>(<span class="st">&quot;control&quot;</span>, <span class="st">&quot;new source a&quot;</span>, <span class="st">&quot;new source b&quot;</span>)</span>
+<span id="cb43-26"><a href="linear-models-and-regression.html#cb43-26"></a><span class="kw">names</span>(turkey) &lt;-<span class="st"> </span><span class="kw">c</span>(<span class="st">&quot;Dose&quot;</span>, <span class="st">&quot;Gain&quot;</span>, <span class="st">&quot;Source&quot;</span>, <span class="st">&quot;Replications&quot;</span>, <span class="st">&quot;SD&quot;</span>) <span class="co"># rename variables</span></span>
+<span id="cb43-27"><a href="linear-models-and-regression.html#cb43-27"></a><span class="co"># create turkey data ggplot</span></span>
+<span id="cb43-28"><a href="linear-models-and-regression.html#cb43-28"></a><span class="kw">library</span>(ggplot2) <span class="co"># load ggplot2 package</span></span>
+<span id="cb43-29"><a href="linear-models-and-regression.html#cb43-29"></a>gg_turkey &lt;-<span class="st"> </span><span class="kw">ggplot</span>(turkey,</span>
+<span id="cb43-30"><a href="linear-models-and-regression.html#cb43-30"></a>                    <span class="dt">mapping =</span> <span class="kw">aes</span>(<span class="dt">x =</span> Dose, <span class="dt">y =</span> Gain,</span>
+<span id="cb43-31"><a href="linear-models-and-regression.html#cb43-31"></a>                                  <span class="dt">color =</span> Source, <span class="dt">shape =</span> Source))</span>
+<span id="cb43-32"><a href="linear-models-and-regression.html#cb43-32"></a>gg_turkey <span class="op">+</span><span class="st"> </span><span class="kw">geom_point</span>() <span class="op">+</span><span class="st"> </span><span class="kw">geom_line</span>()</span></code></pre></div>
+<p><img src="bookdown_test_files/figure-html/unnamed-chunk-46-1.png" width="672" /></p>
 <p>Weight gain increases with dose amount, but doesn’t appear to be linear.</p>
 <p>The amino acid source may slightly affect the growth trajectory of the turkeys.</p>
 <p>An alternative version of the previous plot using the <strong>lattice</strong> package</p>
-<div class="sourceCode" id="cb96"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb96-1"><a href="linear-models-and-regression.html#cb96-1"></a><span class="kw">library</span>(lattice) <span class="co"># load lattice package</span></span>
-<span id="cb96-2"><a href="linear-models-and-regression.html#cb96-2"></a><span class="kw">xyplot</span>(Gain <span class="op">~</span><span class="st"> </span>Dose, <span class="dt">data =</span> turkey, <span class="dt">groups =</span> Source,</span>
-<span id="cb96-3"><a href="linear-models-and-regression.html#cb96-3"></a>       <span class="dt">auto.key =</span> <span class="ot">TRUE</span>, <span class="dt">type =</span> <span class="st">&quot;b&quot;</span>)</span></code></pre></div>
-<p><img src="bookdown_test_files/figure-html/unnamed-chunk-45-1.png" width="672" /></p>
+<div class="sourceCode" id="cb44"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb44-1"><a href="linear-models-and-regression.html#cb44-1"></a><span class="kw">library</span>(lattice) <span class="co"># load lattice package</span></span>
+<span id="cb44-2"><a href="linear-models-and-regression.html#cb44-2"></a><span class="kw">xyplot</span>(Gain <span class="op">~</span><span class="st"> </span>Dose, <span class="dt">data =</span> turkey, <span class="dt">groups =</span> Source,</span>
+<span id="cb44-3"><a href="linear-models-and-regression.html#cb44-3"></a>       <span class="dt">auto.key =</span> <span class="ot">TRUE</span>, <span class="dt">type =</span> <span class="st">&quot;b&quot;</span>)</span></code></pre></div>
+<p><img src="bookdown_test_files/figure-html/unnamed-chunk-47-1.png" width="672" /></p>
 
 </div>
 </div>
