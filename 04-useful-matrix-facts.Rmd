@@ -1,0 +1,81 @@
+---
+title: "Joshua French"
+date: "`r format(Sys.time(), '%Y-%m-%d')`"
+output:
+  html_document:
+    df_print: paged
+---
+
+# Useful matrix facts
+
+<!-- ## Matrix differentiation -->
+
+<!-- Let $\mathbf{y} = (y_1, y_2, \ldots, y_n) -->
+
+<!-- ## Matrix Differentiation 1 -->
+
+<!-- Let $$\mathbf{y=Ax},$$ -->
+<!-- where $\mathbf{y}$ is $m\times 1$, $\mathbf{x}$ is $n\times 1$ , $\mathbf{A}$ is $m\times n$, and $\mathbf{A}$ does not depend on $\mathbf{x}$, then  -->
+<!-- $$\frac{\partial \mathbf{y}}{\partial \mathbf{x}}=A$$ -->
+
+<!-- ## Matrix Differentiation 1 (Proof) -->
+
+<!-- Since $i$th element of $\mathbf{y}$ is given by  -->
+<!-- $$y_i=\sum\limits_{k=1}^{n}a_{ik}x_k,$$ -->
+<!-- it follows that  -->
+<!-- $$\frac{\partial y_i}{\partial x_j}=a_{ij}$$ -->
+<!-- for all $i=1,\dots ,m,\quad j=1,\dots ,n$. Hence -->
+<!-- $$\frac{\partial \mathbf{y}}{\partial \mathbf{x}}=A$$ -->
+
+
+<!-- ## Matrix Differentiation 2 -->
+
+<!-- Let the scalar $\alpha$ be defined by $$\alpha =\mathbf{y}^T\mathbf{Ax},$$ -->
+<!-- 	where $\mathbf{y}$ is $m\times 1$, $\mathbf{x}$ is $n\times 1$ , $\mathbf{A}$ is $m\times n$, and $\mathbf{A}$ does not depend on $\mathbf{x}$ and $\mathbf{y}$, then -->
+<!-- 	$$\frac{\partial \alpha }{\partial \mathbf{x}}=\mathbf{y}^T\mathbf{A}$$ -->
+<!-- 	$$\frac{\partial \alpha }{\partial \mathbf{y}}=\mathbf{x}^T\mathbf{A}^T$$ -->
+
+<!-- ## Matrix Differentiation 2 (Proof)	 -->
+
+<!-- Define $\mathbf{w}^T=\mathbf{y}^T\mathbf{A}$ -->
+<!-- 	and note that $\alpha =\mathbf{w}^T\mathbf{x}$ -->
+
+<!-- Hence,  -->
+<!-- 	$$\frac{\partial \alpha}{\partial \mathbf{x}}=\mathbf{w}^T=\mathbf{y}^T\mathbf{A}.$$ -->
+<!-- 	Since $\alpha$ is a scalar we can write -->
+<!-- 	$$\alpha =\alpha^T=\mathbf{x}^T\mathbf{A}^T\mathbf{y}$$ -->
+<!-- 	hence,  -->
+<!-- 	$$\frac{\partial \alpha }{\partial \mathbf{y}}=\mathbf{x}^T\mathbf{A}^T$$ -->
+
+<!-- ## Matrix Differentiation 3 -->
+<!-- For the special case in which the scalar $\alpha$ is given by the quadratic form$$\alpha=\mathbf{x}^T\mathbf{A}\mathbf{x}$$ -->
+<!-- 	where  $\mathbf{x}$ is $n\times 1$ , $\mathbf{A}$ is $n\times n$, and $\mathbf{A}$ does not depend on $\mathbf{x}$, then  -->
+<!-- 	$$\frac{\partial \alpha}{\partial \mathbf{x}}=\mathbf{x}^T(\mathbf{A}+\mathbf{A}^T)$$ -->
+
+<!-- ## Matrix Differentiation 3 (Proof) -->
+<!-- By definition,$$\alpha =\sum\limits_{j=1}^{n}\sum\limits_{i=1}^{n}a_{ij}x_ix_j$$ -->
+<!-- 	Differentiating with respect to the $k$th element of $x$ we have -->
+<!-- 	$$\frac{\partial \alpha}{\partial x_k}=\sum\limits_{j=1}^{n}a_{kj}x_j+\sum\limits_{i=1}^{n}a_{ik}x_i$$ -->
+<!-- 	for all $k=1,\dots ,n$, and consequently, -->
+<!-- 	$$\frac{\partial \alpha }{\partial \mathbf{x}}=\mathbf{x}^T\mathbf{A}^T+\mathbf{x}^T\mathbf{A}=\mathbf{x}^T(A^T+A)$$ -->
+
+<!-- ## Matrix Differentiation 3.5 -->
+
+<!-- For the special case where $\mathbb{A}$ is a symmetric matrix and  -->
+<!-- 	$$\alpha=\mathbf{x}^T\mathbf{A}\mathbf{x}$$ -->
+<!-- 	where  $\mathbf{x}$ is $n\times 1$ , $\mathbf{A}$ is $n\times n$, and $\mathbf{A}$ does not depend on $\mathbf{x}$, then  -->
+<!-- 	$$\frac{\partial \alpha}{\partial \mathbf{x}}=2\mathbf{x}^T\mathbb{A}.$$ -->
+
+<!-- ## Matrix Differentiation 4 -->
+
+<!-- Let the scalar $\alpha$ be defined by$$\alpha =\mathbf{y}^T\mathbf{x}$$ -->
+<!-- 	where $\mathbf{y}$ is $n\times 1$, $\mathbf{x}$ is $n\times 1$, and both $\mathbf{y}$ and $\mathbf{x}$ are functions of the vector $\mathbf{z}$. Then -->
+<!-- 	$$\frac{\partial \alpha}{\partial \mathbf{z}}=\mathbf{x}^T\frac{\partial \mathbf{y}}{\partial \mathbf{z}}+\mathbf{y}^T\frac{\partial \mathbf{x}}{\partial \mathbf{z}}$$ -->
+
+<!-- ## Matrix Differentiation 4.5 -->
+
+<!-- Let the scalar $\alpha$ be defined by -->
+<!-- 	$$\alpha =\mathbf{x}^T\mathbf{x}$$ -->
+<!-- 	where $\mathbf{x}$ is $n\times 1$, and $\mathbf{x}$ is a function of the vector $\mathbf{z}$. Then -->
+<!-- 	$$\frac{\partial \alpha }{\partial \mathbf{z}}=2\mathbf{x}^T\frac{\partial \mathbf{x}}{\partial \mathbf{z}}.$$ -->
+

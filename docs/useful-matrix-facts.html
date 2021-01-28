@@ -4,11 +4,11 @@
 
   <meta charset="utf-8" />
   <meta http-equiv="X-UA-Compatible" content="IE=edge" />
-  <title>Chapter 5 Linear models and regression | Joshua French</title>
+  <title>Chapter 4 Useful matrix facts | Joshua French</title>
   <meta name="description" content="A collection of R notebooks demonstrating how to perform data analysis with linear regression." />
   <meta name="generator" content="bookdown 0.20 and GitBook 2.6.7" />
 
-  <meta property="og:title" content="Chapter 5 Linear models and regression | Joshua French" />
+  <meta property="og:title" content="Chapter 4 Useful matrix facts | Joshua French" />
   <meta property="og:type" content="book" />
   
   
@@ -16,12 +16,12 @@
   
 
   <meta name="twitter:card" content="summary" />
-  <meta name="twitter:title" content="Chapter 5 Linear models and regression | Joshua French" />
+  <meta name="twitter:title" content="Chapter 4 Useful matrix facts | Joshua French" />
   
   <meta name="twitter:description" content="A collection of R notebooks demonstrating how to perform data analysis with linear regression." />
   
 
-<meta name="author" content="Chapter 5 Linear models and regression | Joshua French" />
+<meta name="author" content="Chapter 4 Useful matrix facts | Joshua French" />
 
 
 <meta name="date" content="2021-01-28" />
@@ -31,8 +31,8 @@
   <meta name="apple-mobile-web-app-status-bar-style" content="black" />
   
   
-<link rel="prev" href="useful-matrix-facts.html"/>
-<link rel="next" href="fitting-a-linear-model.html"/>
+<link rel="prev" href="review-of-probability-random-variables-and-random-vectors.html"/>
+<link rel="next" href="linear-models-and-regression.html"/>
 <script src="libs/header-attrs-2.5/header-attrs.js"></script>
 <script src="libs/jquery-2.2.3/jquery.min.js"></script>
 <link href="libs/gitbook-2.6.7/css/style.css" rel="stylesheet" />
@@ -316,159 +316,68 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
           <div class="page-inner">
 
             <section class="normal" id="section-">
-<div id="linear-models-and-regression" class="section level1" number="5">
-<h1><span class="header-section-number">Chapter 5</span> Linear models and regression</h1>
-<div id="regression-models" class="section level2" number="5.1">
-<h2><span class="header-section-number">5.1</span> Regression models</h2>
-<p>Regression models are used to model the relationship between:</p>
-<ul>
-<li>a single variable <span class="math inline">\(Y\)</span>, called the <em>response</em>, <em>outcome</em>, <em>output</em>, or <em>dependent</em> variable.</li>
-<li>one or more <em>predictor</em>, <em>input</em>, <em>independent</em>, <em>explanatory</em>, or <em>feature</em> variables.</li>
-</ul>
-<p>Note: the descriptions of independent and dependent variables are vague and are best avoided.</p>
-<p>A distinction is sometimes made between <em>regression</em> and <em>classification</em> models. In that case:</p>
-<ul>
-<li>Regression models attempt to predict the numerical response.</li>
-<li>Classification models attempt to predict the category level a response will have.</li>
-</ul>
-<p>A <em>linear model</em> is a regression model in which the regression coefficients (to be discussed later) enter the model linearly.</p>
-<ul>
-<li>A linear model is just a specific type of regression model.</li>
-</ul>
-</div>
-<div id="common-types-of-regression-models" class="section level2" number="5.2">
-<h2><span class="header-section-number">5.2</span> Common types of regression models</h2>
-<ul>
-<li><em>Simple</em> regression model: a regression model with one constant predictor and one non-constant predictor.</li>
-<li><em>Multiple</em> regression model: a regression model with more than one non-constant predictor.</li>
-<li><em>Multivariate</em> regression model: a regression model with more than one response variable.</li>
-<li><em>Linear</em> regression model: a regression model in which the regression coefficients enter the model linearly.</li>
-<li><em>Analysis of variance (ANOVA)</em> model: a linear regression model with one or more categorical predictors.</li>
-<li><em>Analysis of covariance (ANCOVA)</em>: a linear regression model with a quantitative predictor and a categorical predictor.</li>
-<li><em>Generalized linear model (GLM)</em>: a type of “generalized” regression model when the responses do not come from a normal distribution.</li>
-</ul>
-</div>
-<div id="basic-assumptions-of-linear-models" class="section level2" number="5.3">
-<h2><span class="header-section-number">5.3</span> Basic assumptions of linear models</h2>
-<p>The most basic assumptions of linear regression models:</p>
-<ul>
-<li>The response variable <span class="math inline">\(Y\)</span> is continuous.</li>
-<li>The regression coefficients enter the model linearly.</li>
-</ul>
-<p>Predictors can be continuous, discrete, or categorical.</p>
-</div>
-<div id="goals-of-regression" class="section level2" number="5.4">
-<h2><span class="header-section-number">5.4</span> Goals of regression</h2>
-<ol style="list-style-type: decimal">
-<li>Prediction of future or unseen responses given specified values of the predictors.</li>
-<li>Assessments of the effect of, or relationship between, explanatory variables and the response. We would like to infer causal relationships if possible.</li>
-</ol>
-<p>Be clear of your objective! Your choice of analysis may differ depending on the objective.</p>
-<p>There is no such thing as a “true model” for real data.</p>
-<p>We want to find a model that adequately describes the relationship between the response and relevant predictor variables, allows us to make good predictions, infer causality, etc.</p>
-</div>
-<div id="scatter-plots-and-linear-regression" class="section level2" number="5.5">
-<h2><span class="header-section-number">5.5</span> Scatter plots and linear regression</h2>
-<p>Scatter plots are a convenient way to study the potential relationship between a single response and a single predictor variable.</p>
-<div id="height-inheritability" class="section level3" number="5.5.1">
-<h3><span class="header-section-number">5.5.1</span> Height inheritability</h3>
-<p>Karl Pearson (1857-1936) organized the collection of <span class="math inline">\(n=1375\)</span> heights of mothers in the United Kingdom under the age of 65 and one of their adult daughters over the age of 18. These data are available in the <code>Heights</code> data set in the <strong>alr4</strong> package. We are interested in the inheritance from the mother to the daughter, so the mother’s height (<code>mheight</code>) is used as the predictor variable and the daughter’s height (<code>dheight</code>) is used as the response variable.</p>
-<p>Questions of interest:</p>
-<ul>
-<li>Do taller mothers tend to have taller daughters</li>
-<li>Do shorter mothers tend to have shorter daughters?</li>
-</ul>
-<div class="sourceCode" id="cb41"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb41-1"><a href="linear-models-and-regression.html#cb41-1" aria-hidden="true" tabindex="-1"></a><span class="fu">data</span>(Heights, <span class="at">package =</span> <span class="st">&quot;alr4&quot;</span>)</span>
-<span id="cb41-2"><a href="linear-models-and-regression.html#cb41-2" aria-hidden="true" tabindex="-1"></a><span class="fu">str</span>(Heights)</span>
-<span id="cb41-3"><a href="linear-models-and-regression.html#cb41-3" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; &#39;data.frame&#39;:	1375 obs. of  2 variables:</span></span>
-<span id="cb41-4"><a href="linear-models-and-regression.html#cb41-4" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;  $ mheight: num  59.7 58.2 60.6 60.7 61.8 55.5 55.4 56.8 57.5 57.3 ...</span></span>
-<span id="cb41-5"><a href="linear-models-and-regression.html#cb41-5" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;  $ dheight: num  55.1 56.5 56 56.8 56 57.9 57.1 57.6 57.2 57.1 ...</span></span>
-<span id="cb41-6"><a href="linear-models-and-regression.html#cb41-6" aria-hidden="true" tabindex="-1"></a><span class="fu">plot</span>(dheight <span class="sc">~</span> mheight, <span class="at">data =</span> Heights,</span>
-<span id="cb41-7"><a href="linear-models-and-regression.html#cb41-7" aria-hidden="true" tabindex="-1"></a>     <span class="at">xlab =</span> <span class="st">&quot;mother&#39;s height (in)&quot;</span>,</span>
-<span id="cb41-8"><a href="linear-models-and-regression.html#cb41-8" aria-hidden="true" tabindex="-1"></a>     <span class="at">ylab =</span> <span class="st">&quot;daughter&#39;s height (in)&quot;</span>,</span>
-<span id="cb41-9"><a href="linear-models-and-regression.html#cb41-9" aria-hidden="true" tabindex="-1"></a>     <span class="at">xlim =</span> <span class="fu">c</span>(<span class="dv">55</span>, <span class="dv">75</span>), <span class="at">ylim =</span> <span class="fu">c</span>(<span class="dv">55</span>, <span class="dv">75</span>))</span></code></pre></div>
-<p><img src="bookdown_test_files/figure-html/unnamed-chunk-44-1.png" width="672" />
-There seems to be a clear trend between mother’s heights and daughter’s heights. The taller the mother, the taller the daughter <em>tends</em> to be.</p>
-</div>
-<div id="predicting-snowfall" class="section level3" number="5.5.2">
-<h3><span class="header-section-number">5.5.2</span> Predicting snowfall</h3>
-<p>The <code>ftcollinssnow</code> data set in the <strong>alr4</strong> package measures late (September 1st until December 31st) and early (January 1st to June 30th) season snowfall for Fort Collins, CO between Late 1900 and Early 1993.</p>
-<p>Question of interest: Can late season snowfall predict snowfall in the early part of the next year?</p>
-<div class="sourceCode" id="cb42"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb42-1"><a href="linear-models-and-regression.html#cb42-1" aria-hidden="true" tabindex="-1"></a><span class="fu">data</span>(<span class="st">&quot;ftcollinssnow&quot;</span>, <span class="at">package =</span> <span class="st">&quot;alr4&quot;</span>) <span class="co"># load data</span></span>
-<span id="cb42-2"><a href="linear-models-and-regression.html#cb42-2" aria-hidden="true" tabindex="-1"></a><span class="fu">str</span>(ftcollinssnow) <span class="co"># examine structure</span></span>
-<span id="cb42-3"><a href="linear-models-and-regression.html#cb42-3" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; &#39;data.frame&#39;:	93 obs. of  3 variables:</span></span>
-<span id="cb42-4"><a href="linear-models-and-regression.html#cb42-4" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;  $ YR1  : int  1900 1901 1902 1903 1904 1905 1906 1907 1908 1909 ...</span></span>
-<span id="cb42-5"><a href="linear-models-and-regression.html#cb42-5" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;  $ Early: num  3 15.8 13.1 4 1 10.5 27.5 7 28.7 19.9 ...</span></span>
-<span id="cb42-6"><a href="linear-models-and-regression.html#cb42-6" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;  $ Late : num  44.5 12.5 36.8 7.6 28.7 28.3 49.7 15.1 51.2 5.9 ...</span></span>
-<span id="cb42-7"><a href="linear-models-and-regression.html#cb42-7" aria-hidden="true" tabindex="-1"></a><span class="fu">plot</span>(Late <span class="sc">~</span> Early, <span class="at">data =</span> ftcollinssnow) <span class="co"># plot data</span></span>
-<span id="cb42-8"><a href="linear-models-and-regression.html#cb42-8" aria-hidden="true" tabindex="-1"></a><span class="co"># add &quot;line of best fit&quot;</span></span>
-<span id="cb42-9"><a href="linear-models-and-regression.html#cb42-9" aria-hidden="true" tabindex="-1"></a><span class="fu">abline</span>(<span class="fu">lm</span>(Late <span class="sc">~</span> Early, <span class="at">data =</span> ftcollinssnow), <span class="at">lty =</span> <span class="dv">2</span>)</span>
-<span id="cb42-10"><a href="linear-models-and-regression.html#cb42-10" aria-hidden="true" tabindex="-1"></a><span class="co"># sample mean line</span></span>
-<span id="cb42-11"><a href="linear-models-and-regression.html#cb42-11" aria-hidden="true" tabindex="-1"></a><span class="fu">abline</span>(<span class="fu">mean</span>(ftcollinssnow<span class="sc">$</span>Late), <span class="dv">0</span>)</span></code></pre></div>
-<p><img src="bookdown_test_files/figure-html/unnamed-chunk-45-1.png" width="672" /></p>
-<p>A plot of the snowfall data for the two time periods suggest that this relationship is weak or they may be uncorrelated.<br />
-* The dashed line indicates the “linear of best fit” , while the solid line indicates the average of the Late snowfall.</p>
-</div>
-<div id="turkey-growth" class="section level3" number="5.5.3">
-<h3><span class="header-section-number">5.5.3</span> Turkey growth</h3>
-<p>Pens of turkeys were fed the same diet, except that each pen was supplemented with a <code>Dose</code> of amino acid methionine as a percentage of the total diet of the birds. The amino acid methionine was provided using three different <code>Source</code>s (one standard and two experimental). The <code>Weight</code> gain (g) of the turkeys was measured. These data are available in the <code>turkey</code> data in the <strong>alr4</strong> package.</p>
-<p>Questions of interest:</p>
-<ul>
-<li>Is there a relationship between weight gain of the turkeys and the dose amount? If so, is the relationship linear?</li>
-<li>Does the source of the methionine impact the weight gain of the turkeys?</li>
-</ul>
-<p>Consider a plot of the average <code>Weight</code> gain (g) of the turkeys as a function of the <code>Dose</code> amount (% of diet), separating the groups by the <code>Source</code> of the methionine.</p>
-<div class="sourceCode" id="cb43"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb43-1"><a href="linear-models-and-regression.html#cb43-1" aria-hidden="true" tabindex="-1"></a><span class="fu">data</span>(turkey, <span class="at">package =</span> <span class="st">&quot;alr4&quot;</span>)</span>
-<span id="cb43-2"><a href="linear-models-and-regression.html#cb43-2" aria-hidden="true" tabindex="-1"></a><span class="fu">str</span>(turkey)</span>
-<span id="cb43-3"><a href="linear-models-and-regression.html#cb43-3" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; &#39;data.frame&#39;:	13 obs. of  5 variables:</span></span>
-<span id="cb43-4"><a href="linear-models-and-regression.html#cb43-4" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;  $ A   : num  0 0.04 0.1 0.16 0.28 0.04 0.1 0.16 0.28 0.04 ...</span></span>
-<span id="cb43-5"><a href="linear-models-and-regression.html#cb43-5" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;  $ Gain: num  623 680 721 750 789 ...</span></span>
-<span id="cb43-6"><a href="linear-models-and-regression.html#cb43-6" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;  $ S   : int  1 1 1 1 1 2 2 2 2 3 ...</span></span>
-<span id="cb43-7"><a href="linear-models-and-regression.html#cb43-7" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;  $ m   : int  10 5 5 5 5 5 5 5 5 5 ...</span></span>
-<span id="cb43-8"><a href="linear-models-and-regression.html#cb43-8" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;  $ SD  : num  19.46 7.19 21.45 17.49 14.67 ...</span></span>
-<span id="cb43-9"><a href="linear-models-and-regression.html#cb43-9" aria-hidden="true" tabindex="-1"></a><span class="fu">summary</span>(turkey) <span class="co"># the source factor (S) is not a factor</span></span>
-<span id="cb43-10"><a href="linear-models-and-regression.html#cb43-10" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;        A               Gain             S               m         </span></span>
-<span id="cb43-11"><a href="linear-models-and-regression.html#cb43-11" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;  Min.   :0.0000   Min.   :623.0   Min.   :1.000   Min.   : 5.000  </span></span>
-<span id="cb43-12"><a href="linear-models-and-regression.html#cb43-12" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;  1st Qu.:0.0400   1st Qu.:680.2   1st Qu.:1.000   1st Qu.: 5.000  </span></span>
-<span id="cb43-13"><a href="linear-models-and-regression.html#cb43-13" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;  Median :0.1000   Median :721.4   Median :2.000   Median : 5.000  </span></span>
-<span id="cb43-14"><a href="linear-models-and-regression.html#cb43-14" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;  Mean   :0.1338   Mean   :720.4   Mean   :1.923   Mean   : 5.385  </span></span>
-<span id="cb43-15"><a href="linear-models-and-regression.html#cb43-15" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;  3rd Qu.:0.1600   3rd Qu.:750.4   3rd Qu.:3.000   3rd Qu.: 5.000  </span></span>
-<span id="cb43-16"><a href="linear-models-and-regression.html#cb43-16" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;  Max.   :0.2800   Max.   :794.0   Max.   :3.000   Max.   :10.000  </span></span>
-<span id="cb43-17"><a href="linear-models-and-regression.html#cb43-17" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;        SD       </span></span>
-<span id="cb43-18"><a href="linear-models-and-regression.html#cb43-18" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;  Min.   : 7.19  </span></span>
-<span id="cb43-19"><a href="linear-models-and-regression.html#cb43-19" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;  1st Qu.:14.67  </span></span>
-<span id="cb43-20"><a href="linear-models-and-regression.html#cb43-20" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;  Median :17.71  </span></span>
-<span id="cb43-21"><a href="linear-models-and-regression.html#cb43-21" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;  Mean   :17.68  </span></span>
-<span id="cb43-22"><a href="linear-models-and-regression.html#cb43-22" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;  3rd Qu.:21.45  </span></span>
-<span id="cb43-23"><a href="linear-models-and-regression.html#cb43-23" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;  Max.   :26.51</span></span>
-<span id="cb43-24"><a href="linear-models-and-regression.html#cb43-24" aria-hidden="true" tabindex="-1"></a>turkey<span class="sc">$</span>S <span class="ot">=</span> <span class="fu">factor</span>(turkey<span class="sc">$</span>S)</span>
-<span id="cb43-25"><a href="linear-models-and-regression.html#cb43-25" aria-hidden="true" tabindex="-1"></a><span class="fu">levels</span>(turkey<span class="sc">$</span>S) <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="st">&quot;control&quot;</span>, <span class="st">&quot;new source a&quot;</span>, <span class="st">&quot;new source b&quot;</span>)</span>
-<span id="cb43-26"><a href="linear-models-and-regression.html#cb43-26" aria-hidden="true" tabindex="-1"></a><span class="fu">names</span>(turkey) <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="st">&quot;Dose&quot;</span>, <span class="st">&quot;Gain&quot;</span>, <span class="st">&quot;Source&quot;</span>, <span class="st">&quot;Replications&quot;</span>, <span class="st">&quot;SD&quot;</span>) <span class="co"># rename variables</span></span>
-<span id="cb43-27"><a href="linear-models-and-regression.html#cb43-27" aria-hidden="true" tabindex="-1"></a><span class="co"># create turkey data ggplot</span></span>
-<span id="cb43-28"><a href="linear-models-and-regression.html#cb43-28" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(ggplot2) <span class="co"># load ggplot2 package</span></span>
-<span id="cb43-29"><a href="linear-models-and-regression.html#cb43-29" aria-hidden="true" tabindex="-1"></a>gg_turkey <span class="ot">&lt;-</span> <span class="fu">ggplot</span>(turkey,</span>
-<span id="cb43-30"><a href="linear-models-and-regression.html#cb43-30" aria-hidden="true" tabindex="-1"></a>                    <span class="at">mapping =</span> <span class="fu">aes</span>(<span class="at">x =</span> Dose, <span class="at">y =</span> Gain,</span>
-<span id="cb43-31"><a href="linear-models-and-regression.html#cb43-31" aria-hidden="true" tabindex="-1"></a>                                  <span class="at">color =</span> Source, <span class="at">shape =</span> Source))</span>
-<span id="cb43-32"><a href="linear-models-and-regression.html#cb43-32" aria-hidden="true" tabindex="-1"></a>gg_turkey <span class="sc">+</span> <span class="fu">geom_point</span>() <span class="sc">+</span> <span class="fu">geom_line</span>()</span></code></pre></div>
-<p><img src="bookdown_test_files/figure-html/unnamed-chunk-46-1.png" width="672" /></p>
-<p>Weight gain increases with dose amount, but doesn’t appear to be linear.</p>
-<p>The amino acid source may slightly affect the growth trajectory of the turkeys.</p>
-<p>An alternative version of the previous plot using the <strong>lattice</strong> package</p>
-<div class="sourceCode" id="cb44"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb44-1"><a href="linear-models-and-regression.html#cb44-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(lattice) <span class="co"># load lattice package</span></span>
-<span id="cb44-2"><a href="linear-models-and-regression.html#cb44-2" aria-hidden="true" tabindex="-1"></a><span class="fu">xyplot</span>(Gain <span class="sc">~</span> Dose, <span class="at">data =</span> turkey, <span class="at">groups =</span> Source,</span>
-<span id="cb44-3"><a href="linear-models-and-regression.html#cb44-3" aria-hidden="true" tabindex="-1"></a>       <span class="at">auto.key =</span> <span class="cn">TRUE</span>, <span class="at">type =</span> <span class="st">&quot;b&quot;</span>)</span></code></pre></div>
-<p><img src="bookdown_test_files/figure-html/unnamed-chunk-47-1.png" width="672" /></p>
+<div id="useful-matrix-facts" class="section level1" number="4">
+<h1><span class="header-section-number">Chapter 4</span> Useful matrix facts</h1>
+<!-- ## Matrix differentiation -->
+<!-- Let $\mathbf{y} = (y_1, y_2, \ldots, y_n) -->
+<!-- ## Matrix Differentiation 1 -->
+<!-- Let $$\mathbf{y=Ax},$$ -->
+<!-- where $\mathbf{y}$ is $m\times 1$, $\mathbf{x}$ is $n\times 1$ , $\mathbf{A}$ is $m\times n$, and $\mathbf{A}$ does not depend on $\mathbf{x}$, then  -->
+<!-- $$\frac{\partial \mathbf{y}}{\partial \mathbf{x}}=A$$ -->
+<!-- ## Matrix Differentiation 1 (Proof) -->
+<!-- Since $i$th element of $\mathbf{y}$ is given by  -->
+<!-- $$y_i=\sum\limits_{k=1}^{n}a_{ik}x_k,$$ -->
+<!-- it follows that  -->
+<!-- $$\frac{\partial y_i}{\partial x_j}=a_{ij}$$ -->
+<!-- for all $i=1,\dots ,m,\quad j=1,\dots ,n$. Hence -->
+<!-- $$\frac{\partial \mathbf{y}}{\partial \mathbf{x}}=A$$ -->
+<!-- ## Matrix Differentiation 2 -->
+<!-- Let the scalar $\alpha$ be defined by $$\alpha =\mathbf{y}^T\mathbf{Ax},$$ -->
+<!-- 	where $\mathbf{y}$ is $m\times 1$, $\mathbf{x}$ is $n\times 1$ , $\mathbf{A}$ is $m\times n$, and $\mathbf{A}$ does not depend on $\mathbf{x}$ and $\mathbf{y}$, then -->
+<!-- 	$$\frac{\partial \alpha }{\partial \mathbf{x}}=\mathbf{y}^T\mathbf{A}$$ -->
+<!-- 	$$\frac{\partial \alpha }{\partial \mathbf{y}}=\mathbf{x}^T\mathbf{A}^T$$ -->
+<!-- ## Matrix Differentiation 2 (Proof)	 -->
+<!-- Define $\mathbf{w}^T=\mathbf{y}^T\mathbf{A}$ -->
+<!-- 	and note that $\alpha =\mathbf{w}^T\mathbf{x}$ -->
+<!-- Hence,  -->
+<!-- 	$$\frac{\partial \alpha}{\partial \mathbf{x}}=\mathbf{w}^T=\mathbf{y}^T\mathbf{A}.$$ -->
+<!-- 	Since $\alpha$ is a scalar we can write -->
+<!-- 	$$\alpha =\alpha^T=\mathbf{x}^T\mathbf{A}^T\mathbf{y}$$ -->
+<!-- 	hence,  -->
+<!-- 	$$\frac{\partial \alpha }{\partial \mathbf{y}}=\mathbf{x}^T\mathbf{A}^T$$ -->
+<!-- ## Matrix Differentiation 3 -->
+<!-- For the special case in which the scalar $\alpha$ is given by the quadratic form$$\alpha=\mathbf{x}^T\mathbf{A}\mathbf{x}$$ -->
+<!-- 	where  $\mathbf{x}$ is $n\times 1$ , $\mathbf{A}$ is $n\times n$, and $\mathbf{A}$ does not depend on $\mathbf{x}$, then  -->
+<!-- 	$$\frac{\partial \alpha}{\partial \mathbf{x}}=\mathbf{x}^T(\mathbf{A}+\mathbf{A}^T)$$ -->
+<!-- ## Matrix Differentiation 3 (Proof) -->
+<!-- By definition,$$\alpha =\sum\limits_{j=1}^{n}\sum\limits_{i=1}^{n}a_{ij}x_ix_j$$ -->
+<!-- 	Differentiating with respect to the $k$th element of $x$ we have -->
+<!-- 	$$\frac{\partial \alpha}{\partial x_k}=\sum\limits_{j=1}^{n}a_{kj}x_j+\sum\limits_{i=1}^{n}a_{ik}x_i$$ -->
+<!-- 	for all $k=1,\dots ,n$, and consequently, -->
+<!-- 	$$\frac{\partial \alpha }{\partial \mathbf{x}}=\mathbf{x}^T\mathbf{A}^T+\mathbf{x}^T\mathbf{A}=\mathbf{x}^T(A^T+A)$$ -->
+<!-- ## Matrix Differentiation 3.5 -->
+<!-- For the special case where $\mathbb{A}$ is a symmetric matrix and  -->
+<!-- 	$$\alpha=\mathbf{x}^T\mathbf{A}\mathbf{x}$$ -->
+<!-- 	where  $\mathbf{x}$ is $n\times 1$ , $\mathbf{A}$ is $n\times n$, and $\mathbf{A}$ does not depend on $\mathbf{x}$, then  -->
+<!-- 	$$\frac{\partial \alpha}{\partial \mathbf{x}}=2\mathbf{x}^T\mathbb{A}.$$ -->
+<!-- ## Matrix Differentiation 4 -->
+<!-- Let the scalar $\alpha$ be defined by$$\alpha =\mathbf{y}^T\mathbf{x}$$ -->
+<!-- 	where $\mathbf{y}$ is $n\times 1$, $\mathbf{x}$ is $n\times 1$, and both $\mathbf{y}$ and $\mathbf{x}$ are functions of the vector $\mathbf{z}$. Then -->
+<!-- 	$$\frac{\partial \alpha}{\partial \mathbf{z}}=\mathbf{x}^T\frac{\partial \mathbf{y}}{\partial \mathbf{z}}+\mathbf{y}^T\frac{\partial \mathbf{x}}{\partial \mathbf{z}}$$ -->
+<!-- ## Matrix Differentiation 4.5 -->
+<!-- Let the scalar $\alpha$ be defined by -->
+<!-- 	$$\alpha =\mathbf{x}^T\mathbf{x}$$ -->
+<!-- 	where $\mathbf{x}$ is $n\times 1$, and $\mathbf{x}$ is a function of the vector $\mathbf{z}$. Then -->
+<!-- 	$$\frac{\partial \alpha }{\partial \mathbf{z}}=2\mathbf{x}^T\frac{\partial \mathbf{x}}{\partial \mathbf{z}}.$$ -->
 
-</div>
-</div>
 </div>
             </section>
 
           </div>
         </div>
       </div>
-<a href="useful-matrix-facts.html" class="navigation navigation-prev " aria-label="Previous page"><i class="fa fa-angle-left"></i></a>
-<a href="fitting-a-linear-model.html" class="navigation navigation-next " aria-label="Next page"><i class="fa fa-angle-right"></i></a>
+<a href="review-of-probability-random-variables-and-random-vectors.html" class="navigation navigation-prev " aria-label="Previous page"><i class="fa fa-angle-left"></i></a>
+<a href="linear-models-and-regression.html" class="navigation navigation-next " aria-label="Next page"><i class="fa fa-angle-right"></i></a>
     </div>
   </div>
 <script src="libs/gitbook-2.6.7/js/app.min.js"></script>

@@ -4,11 +4,11 @@
 
   <meta charset="utf-8" />
   <meta http-equiv="X-UA-Compatible" content="IE=edge" />
-  <title>Chapter 3 Data exploration (a.k.a., exploratory data analysis) | Data Analysis with Linear Regression</title>
+  <title>Chapter 2 Data exploration (a.k.a., exploratory data analysis) | Joshua French</title>
   <meta name="description" content="A collection of R notebooks demonstrating how to perform data analysis with linear regression." />
   <meta name="generator" content="bookdown 0.20 and GitBook 2.6.7" />
 
-  <meta property="og:title" content="Chapter 3 Data exploration (a.k.a., exploratory data analysis) | Data Analysis with Linear Regression" />
+  <meta property="og:title" content="Chapter 2 Data exploration (a.k.a., exploratory data analysis) | Joshua French" />
   <meta property="og:type" content="book" />
   
   
@@ -16,15 +16,15 @@
   
 
   <meta name="twitter:card" content="summary" />
-  <meta name="twitter:title" content="Chapter 3 Data exploration (a.k.a., exploratory data analysis) | Data Analysis with Linear Regression" />
+  <meta name="twitter:title" content="Chapter 2 Data exploration (a.k.a., exploratory data analysis) | Joshua French" />
   
   <meta name="twitter:description" content="A collection of R notebooks demonstrating how to perform data analysis with linear regression." />
   
 
-<meta name="author" content="Joshua French" />
+<meta name="author" content="Chapter 2 Data exploration (a.k.a., exploratory data analysis) | Joshua French" />
 
 
-<meta name="date" content="2021-01-26" />
+<meta name="date" content="2021-01-28" />
 
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <meta name="apple-mobile-web-app-capable" content="yes" />
@@ -32,7 +32,8 @@
   
   
 <link rel="prev" href="r-foundations.html"/>
-<link rel="next" href="linear-models-and-regression.html"/>
+<link rel="next" href="review-of-probability-random-variables-and-random-vectors.html"/>
+<script src="libs/header-attrs-2.5/header-attrs.js"></script>
 <script src="libs/jquery-2.2.3/jquery.min.js"></script>
 <link href="libs/gitbook-2.6.7/css/style.css" rel="stylesheet" />
 <link href="libs/gitbook-2.6.7/css/plugin-table.css" rel="stylesheet" />
@@ -50,24 +51,22 @@
 
 
 
-<script src="libs/accessible-code-block-0.0.1/empty-anchor.js"></script>
 <link href="libs/anchor-sections-1.0/anchor-sections.css" rel="stylesheet" />
 <script src="libs/anchor-sections-1.0/anchor-sections.js"></script>
 
 
 <style type="text/css">
-code.sourceCode > span { display: inline-block; line-height: 1.25; }
+pre > code.sourceCode { white-space: pre; position: relative; }
+pre > code.sourceCode > span { display: inline-block; line-height: 1.25; }
+pre > code.sourceCode > span:empty { height: 1.2em; }
 code.sourceCode > span { color: inherit; text-decoration: inherit; }
-code.sourceCode > span:empty { height: 1.2em; }
-.sourceCode { overflow: visible; }
-code.sourceCode { white-space: pre; position: relative; }
 pre.sourceCode { margin: 0; }
 @media screen {
 div.sourceCode { overflow: auto; }
 }
 @media print {
-code.sourceCode { white-space: pre-wrap; }
-code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
+pre > code.sourceCode { white-space: pre-wrap; }
+pre > code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
 }
 pre.numberSource code
   { counter-reset: source-line 0; }
@@ -87,7 +86,7 @@ pre.numberSource { margin-left: 3em; border-left: 1px solid #aaaaaa;  padding-le
 div.sourceCode
   {   }
 @media screen {
-code.sourceCode > span > a:first-child::before { text-decoration: underline; }
+pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
 }
 code span.al { color: #ff0000; font-weight: bold; } /* Alert */
 code span.an { color: #60a0b0; font-weight: bold; font-style: italic; } /* Annotation */
@@ -136,146 +135,164 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <li><a href="./">Data Analysis with Linear Regression</a></li>
 
 <li class="divider"></li>
-<li class="chapter" data-level="1" data-path="index.html"><a href="index.html"><i class="fa fa-check"></i><b>1</b> Preliminaries</a></li>
-<li class="chapter" data-level="2" data-path="r-foundations.html"><a href="r-foundations.html"><i class="fa fa-check"></i><b>2</b> R Foundations</a><ul>
-<li class="chapter" data-level="2.1" data-path="r-foundations.html"><a href="r-foundations.html#what-is-r"><i class="fa fa-check"></i><b>2.1</b> What is R?</a></li>
-<li class="chapter" data-level="2.2" data-path="r-foundations.html"><a href="r-foundations.html#where-to-get-r-and-r-studio-desktop"><i class="fa fa-check"></i><b>2.2</b> Where to get R (and R Studio Desktop)</a></li>
-<li class="chapter" data-level="2.3" data-path="r-foundations.html"><a href="r-foundations.html#r-studio-layout"><i class="fa fa-check"></i><b>2.3</b> R Studio Layout</a></li>
-<li class="chapter" data-level="2.4" data-path="r-foundations.html"><a href="r-foundations.html#running-code-scripts-and-comments"><i class="fa fa-check"></i><b>2.4</b> Running code, scripts, and comments</a><ul>
-<li class="chapter" data-level="2.4.1" data-path="r-foundations.html"><a href="r-foundations.html#example"><i class="fa fa-check"></i><b>2.4.1</b> Example</a></li>
+<li class="chapter" data-level="" data-path="index.html"><a href="index.html"><i class="fa fa-check"></i>Preliminaries</a></li>
+<li class="chapter" data-level="1" data-path="r-foundations.html"><a href="r-foundations.html"><i class="fa fa-check"></i><b>1</b> R Foundations</a>
+<ul>
+<li class="chapter" data-level="1.1" data-path="r-foundations.html"><a href="r-foundations.html#what-is-r"><i class="fa fa-check"></i><b>1.1</b> What is R?</a></li>
+<li class="chapter" data-level="1.2" data-path="r-foundations.html"><a href="r-foundations.html#where-to-get-r-and-r-studio-desktop"><i class="fa fa-check"></i><b>1.2</b> Where to get R (and R Studio Desktop)</a></li>
+<li class="chapter" data-level="1.3" data-path="r-foundations.html"><a href="r-foundations.html#r-studio-layout"><i class="fa fa-check"></i><b>1.3</b> R Studio Layout</a></li>
+<li class="chapter" data-level="1.4" data-path="r-foundations.html"><a href="r-foundations.html#running-code-scripts-and-comments"><i class="fa fa-check"></i><b>1.4</b> Running code, scripts, and comments</a>
+<ul>
+<li class="chapter" data-level="1.4.1" data-path="r-foundations.html"><a href="r-foundations.html#example"><i class="fa fa-check"></i><b>1.4.1</b> Example</a></li>
 </ul></li>
-<li class="chapter" data-level="2.5" data-path="r-foundations.html"><a href="r-foundations.html#packages"><i class="fa fa-check"></i><b>2.5</b> Packages</a><ul>
-<li class="chapter" data-level="2.5.1" data-path="r-foundations.html"><a href="r-foundations.html#example-1"><i class="fa fa-check"></i><b>2.5.1</b> Example</a></li>
+<li class="chapter" data-level="1.5" data-path="r-foundations.html"><a href="r-foundations.html#packages"><i class="fa fa-check"></i><b>1.5</b> Packages</a>
+<ul>
+<li class="chapter" data-level="1.5.1" data-path="r-foundations.html"><a href="r-foundations.html#example-1"><i class="fa fa-check"></i><b>1.5.1</b> Example</a></li>
 </ul></li>
-<li class="chapter" data-level="2.6" data-path="r-foundations.html"><a href="r-foundations.html#getting-help"><i class="fa fa-check"></i><b>2.6</b> Getting help</a><ul>
-<li class="chapter" data-level="2.6.1" data-path="r-foundations.html"><a href="r-foundations.html#example-2"><i class="fa fa-check"></i><b>2.6.1</b> Example</a></li>
+<li class="chapter" data-level="1.6" data-path="r-foundations.html"><a href="r-foundations.html#getting-help"><i class="fa fa-check"></i><b>1.6</b> Getting help</a>
+<ul>
+<li class="chapter" data-level="1.6.1" data-path="r-foundations.html"><a href="r-foundations.html#example-2"><i class="fa fa-check"></i><b>1.6.1</b> Example</a></li>
 </ul></li>
-<li class="chapter" data-level="2.7" data-path="r-foundations.html"><a href="r-foundations.html#data-types-and-structures"><i class="fa fa-check"></i><b>2.7</b> Data types and structures</a><ul>
-<li class="chapter" data-level="2.7.1" data-path="r-foundations.html"><a href="r-foundations.html#basic-data-types"><i class="fa fa-check"></i><b>2.7.1</b> Basic data types</a></li>
-<li class="chapter" data-level="2.7.2" data-path="r-foundations.html"><a href="r-foundations.html#other-important-object-types"><i class="fa fa-check"></i><b>2.7.2</b> Other important object types</a></li>
-<li class="chapter" data-level="2.7.3" data-path="r-foundations.html"><a href="r-foundations.html#data-structures"><i class="fa fa-check"></i><b>2.7.3</b> Data structures</a></li>
+<li class="chapter" data-level="1.7" data-path="r-foundations.html"><a href="r-foundations.html#data-types-and-structures"><i class="fa fa-check"></i><b>1.7</b> Data types and structures</a>
+<ul>
+<li class="chapter" data-level="1.7.1" data-path="r-foundations.html"><a href="r-foundations.html#basic-data-types"><i class="fa fa-check"></i><b>1.7.1</b> Basic data types</a></li>
+<li class="chapter" data-level="1.7.2" data-path="r-foundations.html"><a href="r-foundations.html#other-important-object-types"><i class="fa fa-check"></i><b>1.7.2</b> Other important object types</a></li>
+<li class="chapter" data-level="1.7.3" data-path="r-foundations.html"><a href="r-foundations.html#data-structures"><i class="fa fa-check"></i><b>1.7.3</b> Data structures</a></li>
 </ul></li>
-<li class="chapter" data-level="2.8" data-path="r-foundations.html"><a href="r-foundations.html#assignment"><i class="fa fa-check"></i><b>2.8</b> Assignment</a><ul>
-<li class="chapter" data-level="2.8.1" data-path="r-foundations.html"><a href="r-foundations.html#example-3"><i class="fa fa-check"></i><b>2.8.1</b> Example</a></li>
+<li class="chapter" data-level="1.8" data-path="r-foundations.html"><a href="r-foundations.html#assignment"><i class="fa fa-check"></i><b>1.8</b> Assignment</a>
+<ul>
+<li class="chapter" data-level="1.8.1" data-path="r-foundations.html"><a href="r-foundations.html#example-3"><i class="fa fa-check"></i><b>1.8.1</b> Example</a></li>
 </ul></li>
-<li class="chapter" data-level="2.9" data-path="r-foundations.html"><a href="r-foundations.html#vectors"><i class="fa fa-check"></i><b>2.9</b> Vectors</a><ul>
-<li class="chapter" data-level="2.9.1" data-path="r-foundations.html"><a href="r-foundations.html#creation"><i class="fa fa-check"></i><b>2.9.1</b> Creation</a></li>
-<li class="chapter" data-level="2.9.2" data-path="r-foundations.html"><a href="r-foundations.html#creating-patterned-vectors"><i class="fa fa-check"></i><b>2.9.2</b> Creating patterned vectors</a></li>
-<li class="chapter" data-level="2.9.3" data-path="r-foundations.html"><a href="r-foundations.html#example-4"><i class="fa fa-check"></i><b>2.9.3</b> Example</a></li>
-<li class="chapter" data-level="2.9.4" data-path="r-foundations.html"><a href="r-foundations.html#example-5"><i class="fa fa-check"></i><b>2.9.4</b> Example</a></li>
-<li class="chapter" data-level="2.9.5" data-path="r-foundations.html"><a href="r-foundations.html#categorical-vectors"><i class="fa fa-check"></i><b>2.9.5</b> Categorical vectors</a></li>
-<li class="chapter" data-level="2.9.6" data-path="r-foundations.html"><a href="r-foundations.html#example-6"><i class="fa fa-check"></i><b>2.9.6</b> Example</a></li>
-<li class="chapter" data-level="2.9.7" data-path="r-foundations.html"><a href="r-foundations.html#extracting-parts-of-a-vector"><i class="fa fa-check"></i><b>2.9.7</b> Extracting parts of a vector</a></li>
+<li class="chapter" data-level="1.9" data-path="r-foundations.html"><a href="r-foundations.html#vectors"><i class="fa fa-check"></i><b>1.9</b> Vectors</a>
+<ul>
+<li class="chapter" data-level="1.9.1" data-path="r-foundations.html"><a href="r-foundations.html#creation"><i class="fa fa-check"></i><b>1.9.1</b> Creation</a></li>
+<li class="chapter" data-level="1.9.2" data-path="r-foundations.html"><a href="r-foundations.html#creating-patterned-vectors"><i class="fa fa-check"></i><b>1.9.2</b> Creating patterned vectors</a></li>
+<li class="chapter" data-level="1.9.3" data-path="r-foundations.html"><a href="r-foundations.html#example-4"><i class="fa fa-check"></i><b>1.9.3</b> Example</a></li>
+<li class="chapter" data-level="1.9.4" data-path="r-foundations.html"><a href="r-foundations.html#example-5"><i class="fa fa-check"></i><b>1.9.4</b> Example</a></li>
+<li class="chapter" data-level="1.9.5" data-path="r-foundations.html"><a href="r-foundations.html#categorical-vectors"><i class="fa fa-check"></i><b>1.9.5</b> Categorical vectors</a></li>
+<li class="chapter" data-level="1.9.6" data-path="r-foundations.html"><a href="r-foundations.html#example-6"><i class="fa fa-check"></i><b>1.9.6</b> Example</a></li>
+<li class="chapter" data-level="1.9.7" data-path="r-foundations.html"><a href="r-foundations.html#extracting-parts-of-a-vector"><i class="fa fa-check"></i><b>1.9.7</b> Extracting parts of a vector</a></li>
 </ul></li>
-<li class="chapter" data-level="2.10" data-path="r-foundations.html"><a href="r-foundations.html#helpful-functions"><i class="fa fa-check"></i><b>2.10</b> Helpful functions</a><ul>
-<li class="chapter" data-level="2.10.1" data-path="r-foundations.html"><a href="r-foundations.html#general-functions"><i class="fa fa-check"></i><b>2.10.1</b> General functions</a></li>
-<li class="chapter" data-level="2.10.2" data-path="r-foundations.html"><a href="r-foundations.html#example-7"><i class="fa fa-check"></i><b>2.10.2</b> Example</a></li>
-<li class="chapter" data-level="2.10.3" data-path="r-foundations.html"><a href="r-foundations.html#functions-related-to-statistical-distributions"><i class="fa fa-check"></i><b>2.10.3</b> Functions related to statistical distributions</a></li>
-<li class="chapter" data-level="2.10.4" data-path="r-foundations.html"><a href="r-foundations.html#example-8"><i class="fa fa-check"></i><b>2.10.4</b> Example</a></li>
+<li class="chapter" data-level="1.10" data-path="r-foundations.html"><a href="r-foundations.html#helpful-functions"><i class="fa fa-check"></i><b>1.10</b> Helpful functions</a>
+<ul>
+<li class="chapter" data-level="1.10.1" data-path="r-foundations.html"><a href="r-foundations.html#general-functions"><i class="fa fa-check"></i><b>1.10.1</b> General functions</a></li>
+<li class="chapter" data-level="1.10.2" data-path="r-foundations.html"><a href="r-foundations.html#example-7"><i class="fa fa-check"></i><b>1.10.2</b> Example</a></li>
+<li class="chapter" data-level="1.10.3" data-path="r-foundations.html"><a href="r-foundations.html#functions-related-to-statistical-distributions"><i class="fa fa-check"></i><b>1.10.3</b> Functions related to statistical distributions</a></li>
+<li class="chapter" data-level="1.10.4" data-path="r-foundations.html"><a href="r-foundations.html#example-8"><i class="fa fa-check"></i><b>1.10.4</b> Example</a></li>
 </ul></li>
-<li class="chapter" data-level="2.11" data-path="r-foundations.html"><a href="r-foundations.html#data-frames"><i class="fa fa-check"></i><b>2.11</b> Data Frames</a><ul>
-<li class="chapter" data-level="2.11.1" data-path="r-foundations.html"><a href="r-foundations.html#creation-1"><i class="fa fa-check"></i><b>2.11.1</b> Creation</a></li>
-<li class="chapter" data-level="2.11.2" data-path="r-foundations.html"><a href="r-foundations.html#extracting-parts-of-a-data-frame"><i class="fa fa-check"></i><b>2.11.2</b> Extracting parts of a data frame</a></li>
-<li class="chapter" data-level="2.11.3" data-path="r-foundations.html"><a href="r-foundations.html#importing-data"><i class="fa fa-check"></i><b>2.11.3</b> Importing Data</a></li>
+<li class="chapter" data-level="1.11" data-path="r-foundations.html"><a href="r-foundations.html#data-frames"><i class="fa fa-check"></i><b>1.11</b> Data Frames</a>
+<ul>
+<li class="chapter" data-level="1.11.1" data-path="r-foundations.html"><a href="r-foundations.html#creation-1"><i class="fa fa-check"></i><b>1.11.1</b> Creation</a></li>
+<li class="chapter" data-level="1.11.2" data-path="r-foundations.html"><a href="r-foundations.html#extracting-parts-of-a-data-frame"><i class="fa fa-check"></i><b>1.11.2</b> Extracting parts of a data frame</a></li>
+<li class="chapter" data-level="1.11.3" data-path="r-foundations.html"><a href="r-foundations.html#importing-data"><i class="fa fa-check"></i><b>1.11.3</b> Importing Data</a></li>
 </ul></li>
-<li class="chapter" data-level="2.12" data-path="r-foundations.html"><a href="r-foundations.html#logical-statements"><i class="fa fa-check"></i><b>2.12</b> Logical statements</a><ul>
-<li class="chapter" data-level="2.12.1" data-path="r-foundations.html"><a href="r-foundations.html#basic-comparisons"><i class="fa fa-check"></i><b>2.12.1</b> Basic comparisons</a></li>
-<li class="chapter" data-level="2.12.2" data-path="r-foundations.html"><a href="r-foundations.html#example-9"><i class="fa fa-check"></i><b>2.12.2</b> Example</a></li>
-<li class="chapter" data-level="2.12.3" data-path="r-foundations.html"><a href="r-foundations.html#and-and-or-statements"><i class="fa fa-check"></i><b>2.12.3</b> And and Or statements</a></li>
-<li class="chapter" data-level="2.12.4" data-path="r-foundations.html"><a href="r-foundations.html#example-10"><i class="fa fa-check"></i><b>2.12.4</b> Example</a></li>
+<li class="chapter" data-level="1.12" data-path="r-foundations.html"><a href="r-foundations.html#logical-statements"><i class="fa fa-check"></i><b>1.12</b> Logical statements</a>
+<ul>
+<li class="chapter" data-level="1.12.1" data-path="r-foundations.html"><a href="r-foundations.html#basic-comparisons"><i class="fa fa-check"></i><b>1.12.1</b> Basic comparisons</a></li>
+<li class="chapter" data-level="1.12.2" data-path="r-foundations.html"><a href="r-foundations.html#example-9"><i class="fa fa-check"></i><b>1.12.2</b> Example</a></li>
+<li class="chapter" data-level="1.12.3" data-path="r-foundations.html"><a href="r-foundations.html#and-and-or-statements"><i class="fa fa-check"></i><b>1.12.3</b> And and Or statements</a></li>
+<li class="chapter" data-level="1.12.4" data-path="r-foundations.html"><a href="r-foundations.html#example-10"><i class="fa fa-check"></i><b>1.12.4</b> Example</a></li>
 </ul></li>
-<li class="chapter" data-level="2.13" data-path="r-foundations.html"><a href="r-foundations.html#subsetting-with-logical-statements"><i class="fa fa-check"></i><b>2.13</b> Subsetting with logical statements</a><ul>
-<li class="chapter" data-level="2.13.1" data-path="r-foundations.html"><a href="r-foundations.html#example-11"><i class="fa fa-check"></i><b>2.13.1</b> Example</a></li>
+<li class="chapter" data-level="1.13" data-path="r-foundations.html"><a href="r-foundations.html#subsetting-with-logical-statements"><i class="fa fa-check"></i><b>1.13</b> Subsetting with logical statements</a>
+<ul>
+<li class="chapter" data-level="1.13.1" data-path="r-foundations.html"><a href="r-foundations.html#example-11"><i class="fa fa-check"></i><b>1.13.1</b> Example</a></li>
 </ul></li>
-<li class="chapter" data-level="2.14" data-path="r-foundations.html"><a href="r-foundations.html#ecosystem-debate"><i class="fa fa-check"></i><b>2.14</b> Ecosystem debate</a></li>
+<li class="chapter" data-level="1.14" data-path="r-foundations.html"><a href="r-foundations.html#ecosystem-debate"><i class="fa fa-check"></i><b>1.14</b> Ecosystem debate</a></li>
 </ul></li>
-<li class="chapter" data-level="3" data-path="data-exploration-a-k-a-exploratory-data-analysis.html"><a href="data-exploration-a-k-a-exploratory-data-analysis.html"><i class="fa fa-check"></i><b>3</b> Data exploration (a.k.a., exploratory data analysis)</a><ul>
-<li class="chapter" data-level="3.1" data-path="data-exploration-a-k-a-exploratory-data-analysis.html"><a href="data-exploration-a-k-a-exploratory-data-analysis.html#data-analysis-process"><i class="fa fa-check"></i><b>3.1</b> Data analysis process</a><ul>
-<li class="chapter" data-level="3.1.1" data-path="data-exploration-a-k-a-exploratory-data-analysis.html"><a href="data-exploration-a-k-a-exploratory-data-analysis.html#problem-formulation"><i class="fa fa-check"></i><b>3.1.1</b> Problem Formulation</a></li>
-<li class="chapter" data-level="3.1.2" data-path="data-exploration-a-k-a-exploratory-data-analysis.html"><a href="data-exploration-a-k-a-exploratory-data-analysis.html#data-collection"><i class="fa fa-check"></i><b>3.1.2</b> Data collection</a></li>
+<li class="chapter" data-level="2" data-path="data-exploration-a-k-a-exploratory-data-analysis.html"><a href="data-exploration-a-k-a-exploratory-data-analysis.html"><i class="fa fa-check"></i><b>2</b> Data exploration (a.k.a., exploratory data analysis)</a>
+<ul>
+<li class="chapter" data-level="2.1" data-path="data-exploration-a-k-a-exploratory-data-analysis.html"><a href="data-exploration-a-k-a-exploratory-data-analysis.html#data-analysis-process"><i class="fa fa-check"></i><b>2.1</b> Data analysis process</a>
+<ul>
+<li class="chapter" data-level="2.1.1" data-path="data-exploration-a-k-a-exploratory-data-analysis.html"><a href="data-exploration-a-k-a-exploratory-data-analysis.html#problem-formulation"><i class="fa fa-check"></i><b>2.1.1</b> Problem Formulation</a></li>
+<li class="chapter" data-level="2.1.2" data-path="data-exploration-a-k-a-exploratory-data-analysis.html"><a href="data-exploration-a-k-a-exploratory-data-analysis.html#data-collection"><i class="fa fa-check"></i><b>2.1.2</b> Data collection</a></li>
 </ul></li>
-<li class="chapter" data-level="3.2" data-path="data-exploration-a-k-a-exploratory-data-analysis.html"><a href="data-exploration-a-k-a-exploratory-data-analysis.html#data-exploration"><i class="fa fa-check"></i><b>3.2</b> Data exploration</a><ul>
-<li class="chapter" data-level="3.2.1" data-path="data-exploration-a-k-a-exploratory-data-analysis.html"><a href="data-exploration-a-k-a-exploratory-data-analysis.html#numerical-summaries-of-data"><i class="fa fa-check"></i><b>3.2.1</b> Numerical summaries of data</a></li>
-<li class="chapter" data-level="3.2.2" data-path="data-exploration-a-k-a-exploratory-data-analysis.html"><a href="data-exploration-a-k-a-exploratory-data-analysis.html#visual-summaries-of-data"><i class="fa fa-check"></i><b>3.2.2</b> Visual summaries of data</a></li>
-<li class="chapter" data-level="3.2.3" data-path="data-exploration-a-k-a-exploratory-data-analysis.html"><a href="data-exploration-a-k-a-exploratory-data-analysis.html#what-to-look-for"><i class="fa fa-check"></i><b>3.2.3</b> What to look for</a></li>
+<li class="chapter" data-level="2.2" data-path="data-exploration-a-k-a-exploratory-data-analysis.html"><a href="data-exploration-a-k-a-exploratory-data-analysis.html#data-exploration"><i class="fa fa-check"></i><b>2.2</b> Data exploration</a>
+<ul>
+<li class="chapter" data-level="2.2.1" data-path="data-exploration-a-k-a-exploratory-data-analysis.html"><a href="data-exploration-a-k-a-exploratory-data-analysis.html#numerical-summaries-of-data"><i class="fa fa-check"></i><b>2.2.1</b> Numerical summaries of data</a></li>
+<li class="chapter" data-level="2.2.2" data-path="data-exploration-a-k-a-exploratory-data-analysis.html"><a href="data-exploration-a-k-a-exploratory-data-analysis.html#visual-summaries-of-data"><i class="fa fa-check"></i><b>2.2.2</b> Visual summaries of data</a></li>
+<li class="chapter" data-level="2.2.3" data-path="data-exploration-a-k-a-exploratory-data-analysis.html"><a href="data-exploration-a-k-a-exploratory-data-analysis.html#what-to-look-for"><i class="fa fa-check"></i><b>2.2.3</b> What to look for</a></li>
 </ul></li>
-<li class="chapter" data-level="3.3" data-path="data-exploration-a-k-a-exploratory-data-analysis.html"><a href="data-exploration-a-k-a-exploratory-data-analysis.html#kidney-example"><i class="fa fa-check"></i><b>3.3</b> Kidney Example</a><ul>
-<li class="chapter" data-level="3.3.1" data-path="data-exploration-a-k-a-exploratory-data-analysis.html"><a href="data-exploration-a-k-a-exploratory-data-analysis.html#numerically-summarizing-the-data"><i class="fa fa-check"></i><b>3.3.1</b> Numerically summarizing the data</a></li>
-<li class="chapter" data-level="3.3.2" data-path="data-exploration-a-k-a-exploratory-data-analysis.html"><a href="data-exploration-a-k-a-exploratory-data-analysis.html#cleaning-the-data"><i class="fa fa-check"></i><b>3.3.2</b> Cleaning the data</a></li>
+<li class="chapter" data-level="2.3" data-path="data-exploration-a-k-a-exploratory-data-analysis.html"><a href="data-exploration-a-k-a-exploratory-data-analysis.html#kidney-example"><i class="fa fa-check"></i><b>2.3</b> Kidney Example</a>
+<ul>
+<li class="chapter" data-level="2.3.1" data-path="data-exploration-a-k-a-exploratory-data-analysis.html"><a href="data-exploration-a-k-a-exploratory-data-analysis.html#numerically-summarizing-the-data"><i class="fa fa-check"></i><b>2.3.1</b> Numerically summarizing the data</a></li>
+<li class="chapter" data-level="2.3.2" data-path="data-exploration-a-k-a-exploratory-data-analysis.html"><a href="data-exploration-a-k-a-exploratory-data-analysis.html#cleaning-the-data"><i class="fa fa-check"></i><b>2.3.2</b> Cleaning the data</a></li>
 </ul></li>
-<li class="chapter" data-level="3.4" data-path="data-exploration-a-k-a-exploratory-data-analysis.html"><a href="data-exploration-a-k-a-exploratory-data-analysis.html#visualizing-data-with-base-graphics"><i class="fa fa-check"></i><b>3.4</b> Visualizing data with <strong>base</strong> graphics</a><ul>
-<li class="chapter" data-level="3.4.1" data-path="data-exploration-a-k-a-exploratory-data-analysis.html"><a href="data-exploration-a-k-a-exploratory-data-analysis.html#histograms"><i class="fa fa-check"></i><b>3.4.1</b> Histograms</a></li>
-<li class="chapter" data-level="3.4.2" data-path="data-exploration-a-k-a-exploratory-data-analysis.html"><a href="data-exploration-a-k-a-exploratory-data-analysis.html#density-plots"><i class="fa fa-check"></i><b>3.4.2</b> Density plots</a></li>
-<li class="chapter" data-level="3.4.3" data-path="data-exploration-a-k-a-exploratory-data-analysis.html"><a href="data-exploration-a-k-a-exploratory-data-analysis.html#scatter-plots"><i class="fa fa-check"></i><b>3.4.3</b> Scatter plots</a></li>
-<li class="chapter" data-level="3.4.4" data-path="data-exploration-a-k-a-exploratory-data-analysis.html"><a href="data-exploration-a-k-a-exploratory-data-analysis.html#bivariate-scatter-plots"><i class="fa fa-check"></i><b>3.4.4</b> Bivariate scatter plots</a></li>
-<li class="chapter" data-level="3.4.5" data-path="data-exploration-a-k-a-exploratory-data-analysis.html"><a href="data-exploration-a-k-a-exploratory-data-analysis.html#bivariate-boxplots"><i class="fa fa-check"></i><b>3.4.5</b> Bivariate boxplots</a></li>
-<li class="chapter" data-level="3.4.6" data-path="data-exploration-a-k-a-exploratory-data-analysis.html"><a href="data-exploration-a-k-a-exploratory-data-analysis.html#multiple-plots-in-one-figure"><i class="fa fa-check"></i><b>3.4.6</b> Multiple plots in one figure</a></li>
+<li class="chapter" data-level="2.4" data-path="data-exploration-a-k-a-exploratory-data-analysis.html"><a href="data-exploration-a-k-a-exploratory-data-analysis.html#visualizing-data-with-base-graphics"><i class="fa fa-check"></i><b>2.4</b> Visualizing data with <strong>base</strong> graphics</a>
+<ul>
+<li class="chapter" data-level="2.4.1" data-path="data-exploration-a-k-a-exploratory-data-analysis.html"><a href="data-exploration-a-k-a-exploratory-data-analysis.html#histograms"><i class="fa fa-check"></i><b>2.4.1</b> Histograms</a></li>
+<li class="chapter" data-level="2.4.2" data-path="data-exploration-a-k-a-exploratory-data-analysis.html"><a href="data-exploration-a-k-a-exploratory-data-analysis.html#density-plots"><i class="fa fa-check"></i><b>2.4.2</b> Density plots</a></li>
+<li class="chapter" data-level="2.4.3" data-path="data-exploration-a-k-a-exploratory-data-analysis.html"><a href="data-exploration-a-k-a-exploratory-data-analysis.html#scatter-plots"><i class="fa fa-check"></i><b>2.4.3</b> Scatter plots</a></li>
+<li class="chapter" data-level="2.4.4" data-path="data-exploration-a-k-a-exploratory-data-analysis.html"><a href="data-exploration-a-k-a-exploratory-data-analysis.html#bivariate-scatter-plots"><i class="fa fa-check"></i><b>2.4.4</b> Bivariate scatter plots</a></li>
+<li class="chapter" data-level="2.4.5" data-path="data-exploration-a-k-a-exploratory-data-analysis.html"><a href="data-exploration-a-k-a-exploratory-data-analysis.html#bivariate-boxplots"><i class="fa fa-check"></i><b>2.4.5</b> Bivariate boxplots</a></li>
+<li class="chapter" data-level="2.4.6" data-path="data-exploration-a-k-a-exploratory-data-analysis.html"><a href="data-exploration-a-k-a-exploratory-data-analysis.html#multiple-plots-in-one-figure"><i class="fa fa-check"></i><b>2.4.6</b> Multiple plots in one figure</a></li>
 </ul></li>
-<li class="chapter" data-level="3.5" data-path="data-exploration-a-k-a-exploratory-data-analysis.html"><a href="data-exploration-a-k-a-exploratory-data-analysis.html#visualizing-data-with-ggplot2"><i class="fa fa-check"></i><b>3.5</b> Visualizing data with <strong>ggplot2</strong></a><ul>
-<li class="chapter" data-level="3.5.1" data-path="data-exploration-a-k-a-exploratory-data-analysis.html"><a href="data-exploration-a-k-a-exploratory-data-analysis.html#a-ggplot2-histogram"><i class="fa fa-check"></i><b>3.5.1</b> A <strong>ggplot2</strong> histogram</a></li>
-<li class="chapter" data-level="3.5.2" data-path="data-exploration-a-k-a-exploratory-data-analysis.html"><a href="data-exploration-a-k-a-exploratory-data-analysis.html#a-ggplot2-density-plot"><i class="fa fa-check"></i><b>3.5.2</b> A <strong>ggplot2</strong> density plot</a></li>
-<li class="chapter" data-level="3.5.3" data-path="data-exploration-a-k-a-exploratory-data-analysis.html"><a href="data-exploration-a-k-a-exploratory-data-analysis.html#a-ggplot2-scatter-plot"><i class="fa fa-check"></i><b>3.5.3</b> A <strong>ggplot2</strong> scatter plot</a></li>
-<li class="chapter" data-level="3.5.4" data-path="data-exploration-a-k-a-exploratory-data-analysis.html"><a href="data-exploration-a-k-a-exploratory-data-analysis.html#customizing-ggplot2-plots"><i class="fa fa-check"></i><b>3.5.4</b> Customizing <strong>ggplot2</strong> plots</a></li>
-<li class="chapter" data-level="3.5.5" data-path="data-exploration-a-k-a-exploratory-data-analysis.html"><a href="data-exploration-a-k-a-exploratory-data-analysis.html#facetting-in-ggplot2"><i class="fa fa-check"></i><b>3.5.5</b> Facetting in <code>ggplot2</code></a></li>
-<li class="chapter" data-level="3.5.6" data-path="data-exploration-a-k-a-exploratory-data-analysis.html"><a href="data-exploration-a-k-a-exploratory-data-analysis.html#summary-of-ggplot2"><i class="fa fa-check"></i><b>3.5.6</b> Summary of <strong>ggplot2</strong></a></li>
+<li class="chapter" data-level="2.5" data-path="data-exploration-a-k-a-exploratory-data-analysis.html"><a href="data-exploration-a-k-a-exploratory-data-analysis.html#visualizing-data-with-ggplot2"><i class="fa fa-check"></i><b>2.5</b> Visualizing data with <strong>ggplot2</strong></a>
+<ul>
+<li class="chapter" data-level="2.5.1" data-path="data-exploration-a-k-a-exploratory-data-analysis.html"><a href="data-exploration-a-k-a-exploratory-data-analysis.html#a-ggplot2-histogram"><i class="fa fa-check"></i><b>2.5.1</b> A <strong>ggplot2</strong> histogram</a></li>
+<li class="chapter" data-level="2.5.2" data-path="data-exploration-a-k-a-exploratory-data-analysis.html"><a href="data-exploration-a-k-a-exploratory-data-analysis.html#a-ggplot2-density-plot"><i class="fa fa-check"></i><b>2.5.2</b> A <strong>ggplot2</strong> density plot</a></li>
+<li class="chapter" data-level="2.5.3" data-path="data-exploration-a-k-a-exploratory-data-analysis.html"><a href="data-exploration-a-k-a-exploratory-data-analysis.html#a-ggplot2-scatter-plot"><i class="fa fa-check"></i><b>2.5.3</b> A <strong>ggplot2</strong> scatter plot</a></li>
+<li class="chapter" data-level="2.5.4" data-path="data-exploration-a-k-a-exploratory-data-analysis.html"><a href="data-exploration-a-k-a-exploratory-data-analysis.html#customizing-ggplot2-plots"><i class="fa fa-check"></i><b>2.5.4</b> Customizing <strong>ggplot2</strong> plots</a></li>
+<li class="chapter" data-level="2.5.5" data-path="data-exploration-a-k-a-exploratory-data-analysis.html"><a href="data-exploration-a-k-a-exploratory-data-analysis.html#facetting-in-ggplot2"><i class="fa fa-check"></i><b>2.5.5</b> Facetting in <code>ggplot2</code></a></li>
+<li class="chapter" data-level="2.5.6" data-path="data-exploration-a-k-a-exploratory-data-analysis.html"><a href="data-exploration-a-k-a-exploratory-data-analysis.html#summary-of-ggplot2"><i class="fa fa-check"></i><b>2.5.6</b> Summary of <strong>ggplot2</strong></a></li>
 </ul></li>
-<li class="chapter" data-level="3.6" data-path="data-exploration-a-k-a-exploratory-data-analysis.html"><a href="data-exploration-a-k-a-exploratory-data-analysis.html#summary-of-data-exploration"><i class="fa fa-check"></i><b>3.6</b> Summary of data exploration</a></li>
+<li class="chapter" data-level="2.6" data-path="data-exploration-a-k-a-exploratory-data-analysis.html"><a href="data-exploration-a-k-a-exploratory-data-analysis.html#summary-of-data-exploration"><i class="fa fa-check"></i><b>2.6</b> Summary of data exploration</a></li>
 </ul></li>
-<li class="chapter" data-level="4" data-path="linear-models-and-regression.html"><a href="linear-models-and-regression.html"><i class="fa fa-check"></i><b>4</b> Linear models and regression</a><ul>
-<li class="chapter" data-level="4.1" data-path="linear-models-and-regression.html"><a href="linear-models-and-regression.html#regression-models"><i class="fa fa-check"></i><b>4.1</b> Regression models</a></li>
-<li class="chapter" data-level="4.2" data-path="linear-models-and-regression.html"><a href="linear-models-and-regression.html#common-types-of-regression-models"><i class="fa fa-check"></i><b>4.2</b> Common types of regression models</a></li>
-<li class="chapter" data-level="4.3" data-path="linear-models-and-regression.html"><a href="linear-models-and-regression.html#basic-assumptions-of-linear-models"><i class="fa fa-check"></i><b>4.3</b> Basic assumptions of linear models</a></li>
-<li class="chapter" data-level="4.4" data-path="linear-models-and-regression.html"><a href="linear-models-and-regression.html#goals-of-regression"><i class="fa fa-check"></i><b>4.4</b> Goals of regression</a></li>
-<li class="chapter" data-level="4.5" data-path="linear-models-and-regression.html"><a href="linear-models-and-regression.html#scatter-plots-and-linear-regression"><i class="fa fa-check"></i><b>4.5</b> Scatter plots and linear regression</a><ul>
-<li class="chapter" data-level="4.5.1" data-path="linear-models-and-regression.html"><a href="linear-models-and-regression.html#height-inheritability"><i class="fa fa-check"></i><b>4.5.1</b> Height inheritability</a></li>
-<li class="chapter" data-level="4.5.2" data-path="linear-models-and-regression.html"><a href="linear-models-and-regression.html#predicting-snowfall"><i class="fa fa-check"></i><b>4.5.2</b> Predicting snowfall</a></li>
-<li class="chapter" data-level="4.5.3" data-path="linear-models-and-regression.html"><a href="linear-models-and-regression.html#turkey-growth"><i class="fa fa-check"></i><b>4.5.3</b> Turkey growth</a></li>
+<li class="chapter" data-level="3" data-path="review-of-probability-random-variables-and-random-vectors.html"><a href="review-of-probability-random-variables-and-random-vectors.html"><i class="fa fa-check"></i><b>3</b> Review of probability, random variables, and random vectors</a>
+<ul>
+<li class="chapter" data-level="3.1" data-path="review-of-probability-random-variables-and-random-vectors.html"><a href="review-of-probability-random-variables-and-random-vectors.html#probability-basics"><i class="fa fa-check"></i><b>3.1</b> Probability Basics</a>
+<ul>
+<li class="chapter" data-level="3.1.1" data-path="review-of-probability-random-variables-and-random-vectors.html"><a href="review-of-probability-random-variables-and-random-vectors.html#definitions"><i class="fa fa-check"></i><b>3.1.1</b> Definitions</a></li>
+</ul></li>
+<li class="chapter" data-level="3.2" data-path="review-of-probability-random-variables-and-random-vectors.html"><a href="review-of-probability-random-variables-and-random-vectors.html#random-variables"><i class="fa fa-check"></i><b>3.2</b> Random Variables</a>
+<ul>
+<li class="chapter" data-level="3.2.1" data-path="review-of-probability-random-variables-and-random-vectors.html"><a href="review-of-probability-random-variables-and-random-vectors.html#discrete-random-variables"><i class="fa fa-check"></i><b>3.2.1</b> Discrete random variables</a></li>
+<li class="chapter" data-level="3.2.2" data-path="review-of-probability-random-variables-and-random-vectors.html"><a href="review-of-probability-random-variables-and-random-vectors.html#continuous-random-variables"><i class="fa fa-check"></i><b>3.2.2</b> Continuous random variables</a></li>
+<li class="chapter" data-level="3.2.3" data-path="review-of-probability-random-variables-and-random-vectors.html"><a href="review-of-probability-random-variables-and-random-vectors.html#useful-facts-for-transformation-of-random-variables"><i class="fa fa-check"></i><b>3.2.3</b> Useful facts for transformation of random variables</a></li>
+</ul></li>
+<li class="chapter" data-level="3.3" data-path="review-of-probability-random-variables-and-random-vectors.html"><a href="review-of-probability-random-variables-and-random-vectors.html#multivariate-distributions"><i class="fa fa-check"></i><b>3.3</b> Multivariate distributions</a>
+<ul>
+<li class="chapter" data-level="3.3.1" data-path="review-of-probability-random-variables-and-random-vectors.html"><a href="review-of-probability-random-variables-and-random-vectors.html#basic-properties"><i class="fa fa-check"></i><b>3.3.1</b> Basic properties</a></li>
+<li class="chapter" data-level="3.3.2" data-path="review-of-probability-random-variables-and-random-vectors.html"><a href="review-of-probability-random-variables-and-random-vectors.html#marginal-distributions"><i class="fa fa-check"></i><b>3.3.2</b> Marginal distributions</a></li>
+<li class="chapter" data-level="3.3.3" data-path="review-of-probability-random-variables-and-random-vectors.html"><a href="review-of-probability-random-variables-and-random-vectors.html#independence-of-random-variables"><i class="fa fa-check"></i><b>3.3.3</b> Independence of random variables</a></li>
+<li class="chapter" data-level="3.3.4" data-path="review-of-probability-random-variables-and-random-vectors.html"><a href="review-of-probability-random-variables-and-random-vectors.html#conditional-distributions"><i class="fa fa-check"></i><b>3.3.4</b> Conditional distributions</a></li>
+<li class="chapter" data-level="3.3.5" data-path="review-of-probability-random-variables-and-random-vectors.html"><a href="review-of-probability-random-variables-and-random-vectors.html#useful-facts-for-transformations-of-multiple-random-variables"><i class="fa fa-check"></i><b>3.3.5</b> Useful facts for transformations of multiple random variables</a></li>
+</ul></li>
+<li class="chapter" data-level="3.4" data-path="review-of-probability-random-variables-and-random-vectors.html"><a href="review-of-probability-random-variables-and-random-vectors.html#random-vectors"><i class="fa fa-check"></i><b>3.4</b> Random vectors</a>
+<ul>
+<li class="chapter" data-level="3.4.1" data-path="review-of-probability-random-variables-and-random-vectors.html"><a href="review-of-probability-random-variables-and-random-vectors.html#definition"><i class="fa fa-check"></i><b>3.4.1</b> Definition</a></li>
+<li class="chapter" data-level="3.4.2" data-path="review-of-probability-random-variables-and-random-vectors.html"><a href="review-of-probability-random-variables-and-random-vectors.html#mean-variance-and-covariance"><i class="fa fa-check"></i><b>3.4.2</b> Mean, variance, and covariance</a></li>
+</ul></li>
+<li class="chapter" data-level="3.5" data-path="review-of-probability-random-variables-and-random-vectors.html"><a href="review-of-probability-random-variables-and-random-vectors.html#multivariate-normal-gaussian-distribution"><i class="fa fa-check"></i><b>3.5</b> Multivariate normal (Gaussian) distribution</a>
+<ul>
+<li class="chapter" data-level="3.5.1" data-path="review-of-probability-random-variables-and-random-vectors.html"><a href="review-of-probability-random-variables-and-random-vectors.html#definition-1"><i class="fa fa-check"></i><b>3.5.1</b> Definition</a></li>
+</ul></li>
+<li class="chapter" data-level="3.6" data-path="r-foundations.html"><a href="r-foundations.html#example"><i class="fa fa-check"></i><b>3.6</b> Example</a>
+<ul>
+<li class="chapter" data-level="3.6.1" data-path="review-of-probability-random-variables-and-random-vectors.html"><a href="review-of-probability-random-variables-and-random-vectors.html#problem-1"><i class="fa fa-check"></i><b>3.6.1</b> Problem 1</a></li>
+<li class="chapter" data-level="3.6.2" data-path="review-of-probability-random-variables-and-random-vectors.html"><a href="review-of-probability-random-variables-and-random-vectors.html#problem-2"><i class="fa fa-check"></i><b>3.6.2</b> Problem 2</a></li>
+<li class="chapter" data-level="3.6.3" data-path="review-of-probability-random-variables-and-random-vectors.html"><a href="review-of-probability-random-variables-and-random-vectors.html#problem-3"><i class="fa fa-check"></i><b>3.6.3</b> Problem 3</a></li>
+<li class="chapter" data-level="3.6.4" data-path="review-of-probability-random-variables-and-random-vectors.html"><a href="review-of-probability-random-variables-and-random-vectors.html#problem-4"><i class="fa fa-check"></i><b>3.6.4</b> Problem 4</a></li>
+<li class="chapter" data-level="3.6.5" data-path="review-of-probability-random-variables-and-random-vectors.html"><a href="review-of-probability-random-variables-and-random-vectors.html#problem-5"><i class="fa fa-check"></i><b>3.6.5</b> Problem 5</a></li>
+<li class="chapter" data-level="3.6.6" data-path="review-of-probability-random-variables-and-random-vectors.html"><a href="review-of-probability-random-variables-and-random-vectors.html#problem-6"><i class="fa fa-check"></i><b>3.6.6</b> Problem 6</a></li>
+<li class="chapter" data-level="3.6.7" data-path="review-of-probability-random-variables-and-random-vectors.html"><a href="review-of-probability-random-variables-and-random-vectors.html#problem-7"><i class="fa fa-check"></i><b>3.6.7</b> Problem 7</a></li>
 </ul></li>
 </ul></li>
-<li class="chapter" data-level="5" data-path="review-of-probability-random-variables-and-random-vectors.html"><a href="review-of-probability-random-variables-and-random-vectors.html"><i class="fa fa-check"></i><b>5</b> Review of probability, random variables, and random vectors</a><ul>
-<li class="chapter" data-level="5.1" data-path="review-of-probability-random-variables-and-random-vectors.html"><a href="review-of-probability-random-variables-and-random-vectors.html#probability-basics"><i class="fa fa-check"></i><b>5.1</b> Probability Basics</a></li>
-<li class="chapter" data-level="5.2" data-path="review-of-probability-random-variables-and-random-vectors.html"><a href="review-of-probability-random-variables-and-random-vectors.html#independence"><i class="fa fa-check"></i><b>5.2</b> Independence</a></li>
-<li class="chapter" data-level="5.3" data-path="review-of-probability-random-variables-and-random-vectors.html"><a href="review-of-probability-random-variables-and-random-vectors.html#random-variables"><i class="fa fa-check"></i><b>5.3</b> Random Variables</a><ul>
-<li class="chapter" data-level="5.3.1" data-path="review-of-probability-random-variables-and-random-vectors.html"><a href="review-of-probability-random-variables-and-random-vectors.html#discrete-random-variables"><i class="fa fa-check"></i><b>5.3.1</b> Discrete random variables</a></li>
-<li class="chapter" data-level="5.3.2" data-path="review-of-probability-random-variables-and-random-vectors.html"><a href="review-of-probability-random-variables-and-random-vectors.html#bernoulli-random-variables"><i class="fa fa-check"></i><b>5.3.2</b> Bernoulli random variables</a></li>
-<li class="chapter" data-level="5.3.3" data-path="review-of-probability-random-variables-and-random-vectors.html"><a href="review-of-probability-random-variables-and-random-vectors.html#continuous-random-variables"><i class="fa fa-check"></i><b>5.3.3</b> Continuous random variables</a></li>
-<li class="chapter" data-level="5.3.4" data-path="review-of-probability-random-variables-and-random-vectors.html"><a href="review-of-probability-random-variables-and-random-vectors.html#useful-facts-for-simple-random-variable-transformations"><i class="fa fa-check"></i><b>5.3.4</b> Useful facts for simple random variable transformations</a></li>
+<li class="chapter" data-level="4" data-path="useful-matrix-facts.html"><a href="useful-matrix-facts.html"><i class="fa fa-check"></i><b>4</b> Useful matrix facts</a></li>
+<li class="chapter" data-level="5" data-path="linear-models-and-regression.html"><a href="linear-models-and-regression.html"><i class="fa fa-check"></i><b>5</b> Linear models and regression</a>
+<ul>
+<li class="chapter" data-level="5.1" data-path="linear-models-and-regression.html"><a href="linear-models-and-regression.html#regression-models"><i class="fa fa-check"></i><b>5.1</b> Regression models</a></li>
+<li class="chapter" data-level="5.2" data-path="linear-models-and-regression.html"><a href="linear-models-and-regression.html#common-types-of-regression-models"><i class="fa fa-check"></i><b>5.2</b> Common types of regression models</a></li>
+<li class="chapter" data-level="5.3" data-path="linear-models-and-regression.html"><a href="linear-models-and-regression.html#basic-assumptions-of-linear-models"><i class="fa fa-check"></i><b>5.3</b> Basic assumptions of linear models</a></li>
+<li class="chapter" data-level="5.4" data-path="linear-models-and-regression.html"><a href="linear-models-and-regression.html#goals-of-regression"><i class="fa fa-check"></i><b>5.4</b> Goals of regression</a></li>
+<li class="chapter" data-level="5.5" data-path="linear-models-and-regression.html"><a href="linear-models-and-regression.html#scatter-plots-and-linear-regression"><i class="fa fa-check"></i><b>5.5</b> Scatter plots and linear regression</a>
+<ul>
+<li class="chapter" data-level="5.5.1" data-path="linear-models-and-regression.html"><a href="linear-models-and-regression.html#height-inheritability"><i class="fa fa-check"></i><b>5.5.1</b> Height inheritability</a></li>
+<li class="chapter" data-level="5.5.2" data-path="linear-models-and-regression.html"><a href="linear-models-and-regression.html#predicting-snowfall"><i class="fa fa-check"></i><b>5.5.2</b> Predicting snowfall</a></li>
+<li class="chapter" data-level="5.5.3" data-path="linear-models-and-regression.html"><a href="linear-models-and-regression.html#turkey-growth"><i class="fa fa-check"></i><b>5.5.3</b> Turkey growth</a></li>
 </ul></li>
-<li class="chapter" data-level="5.4" data-path="review-of-probability-random-variables-and-random-vectors.html"><a href="review-of-probability-random-variables-and-random-vectors.html#multivariate-distributions"><i class="fa fa-check"></i><b>5.4</b> Multivariate distributions</a><ul>
-<li class="chapter" data-level="5.4.1" data-path="review-of-probability-random-variables-and-random-vectors.html"><a href="review-of-probability-random-variables-and-random-vectors.html#basic-properties"><i class="fa fa-check"></i><b>5.4.1</b> Basic properties</a></li>
-<li class="chapter" data-level="5.4.2" data-path="review-of-probability-random-variables-and-random-vectors.html"><a href="review-of-probability-random-variables-and-random-vectors.html#marginal-distributions"><i class="fa fa-check"></i><b>5.4.2</b> Marginal distributions</a></li>
 </ul></li>
-<li class="chapter" data-level="5.5" data-path="review-of-probability-random-variables-and-random-vectors.html"><a href="review-of-probability-random-variables-and-random-vectors.html#joint-of-continuous-rv"><i class="fa fa-check"></i><b>5.5</b> Joint of continuous RV</a></li>
-<li class="chapter" data-level="5.6" data-path="review-of-probability-random-variables-and-random-vectors.html"><a href="review-of-probability-random-variables-and-random-vectors.html#covariance"><i class="fa fa-check"></i><b>5.6</b> Covariance</a></li>
-<li class="chapter" data-level="5.7" data-path="review-of-probability-random-variables-and-random-vectors.html"><a href="review-of-probability-random-variables-and-random-vectors.html#properties-of-variance-and-covariance"><i class="fa fa-check"></i><b>5.7</b> Properties of Variance and Covariance</a></li>
-<li class="chapter" data-level="5.8" data-path="review-of-probability-random-variables-and-random-vectors.html"><a href="review-of-probability-random-variables-and-random-vectors.html#independence-1"><i class="fa fa-check"></i><b>5.8</b> Independence</a></li>
-<li class="chapter" data-level="5.9" data-path="review-of-probability-random-variables-and-random-vectors.html"><a href="review-of-probability-random-variables-and-random-vectors.html#properties-of-random-vectors"><i class="fa fa-check"></i><b>5.9</b> Properties of random vectors</a></li>
-<li class="chapter" data-level="5.10" data-path="review-of-probability-random-variables-and-random-vectors.html"><a href="review-of-probability-random-variables-and-random-vectors.html#properties-of-random-vectors-1"><i class="fa fa-check"></i><b>5.10</b> Properties of random vectors</a></li>
-<li class="chapter" data-level="5.11" data-path="review-of-probability-random-variables-and-random-vectors.html"><a href="review-of-probability-random-variables-and-random-vectors.html#important-properties"><i class="fa fa-check"></i><b>5.11</b> Important Properties</a></li>
-<li class="chapter" data-level="5.12" data-path="review-of-probability-random-variables-and-random-vectors.html"><a href="review-of-probability-random-variables-and-random-vectors.html#important-properties-1"><i class="fa fa-check"></i><b>5.12</b> Important Properties</a></li>
-<li class="chapter" data-level="5.13" data-path="review-of-probability-random-variables-and-random-vectors.html"><a href="review-of-probability-random-variables-and-random-vectors.html#important-properties-2"><i class="fa fa-check"></i><b>5.13</b> Important Properties</a></li>
-<li class="chapter" data-level="5.14" data-path="review-of-probability-random-variables-and-random-vectors.html"><a href="review-of-probability-random-variables-and-random-vectors.html#multivariate-normal-gaussian-distribution"><i class="fa fa-check"></i><b>5.14</b> Multivariate normal (Gaussian) distribution</a></li>
-<li class="chapter" data-level="5.15" data-path="review-of-probability-random-variables-and-random-vectors.html"><a href="review-of-probability-random-variables-and-random-vectors.html#properties"><i class="fa fa-check"></i><b>5.15</b> Properties</a></li>
-<li class="chapter" data-level="5.16" data-path="r-foundations.html"><a href="r-foundations.html#example"><i class="fa fa-check"></i><b>5.16</b> Example</a></li>
-<li class="chapter" data-level="5.17" data-path="review-of-probability-random-variables-and-random-vectors.html"><a href="review-of-probability-random-variables-and-random-vectors.html#problem-1"><i class="fa fa-check"></i><b>5.17</b> Problem 1</a></li>
-<li class="chapter" data-level="5.18" data-path="review-of-probability-random-variables-and-random-vectors.html"><a href="review-of-probability-random-variables-and-random-vectors.html#problem-2"><i class="fa fa-check"></i><b>5.18</b> Problem 2</a></li>
-<li class="chapter" data-level="5.19" data-path="review-of-probability-random-variables-and-random-vectors.html"><a href="review-of-probability-random-variables-and-random-vectors.html#problem-3"><i class="fa fa-check"></i><b>5.19</b> Problem 3</a></li>
-<li class="chapter" data-level="5.20" data-path="review-of-probability-random-variables-and-random-vectors.html"><a href="review-of-probability-random-variables-and-random-vectors.html#problem-4"><i class="fa fa-check"></i><b>5.20</b> Problem 4</a></li>
-<li class="chapter" data-level="5.21" data-path="review-of-probability-random-variables-and-random-vectors.html"><a href="review-of-probability-random-variables-and-random-vectors.html#problem-5"><i class="fa fa-check"></i><b>5.21</b> Problem 5</a></li>
-<li class="chapter" data-level="5.22" data-path="review-of-probability-random-variables-and-random-vectors.html"><a href="review-of-probability-random-variables-and-random-vectors.html#problem-6"><i class="fa fa-check"></i><b>5.22</b> Problem 6</a></li>
-<li class="chapter" data-level="5.23" data-path="review-of-probability-random-variables-and-random-vectors.html"><a href="review-of-probability-random-variables-and-random-vectors.html#problem-7"><i class="fa fa-check"></i><b>5.23</b> Problem 7</a></li>
-<li class="chapter" data-level="5.24" data-path="review-of-probability-random-variables-and-random-vectors.html"><a href="review-of-probability-random-variables-and-random-vectors.html#matrix-differentiation"><i class="fa fa-check"></i><b>5.24</b> Matrix Differentiation</a></li>
-<li class="chapter" data-level="5.25" data-path="review-of-probability-random-variables-and-random-vectors.html"><a href="review-of-probability-random-variables-and-random-vectors.html#matrix-differentiation-1"><i class="fa fa-check"></i><b>5.25</b> Matrix Differentiation 1</a></li>
-<li class="chapter" data-level="5.26" data-path="review-of-probability-random-variables-and-random-vectors.html"><a href="review-of-probability-random-variables-and-random-vectors.html#matrix-differentiation-1-proof"><i class="fa fa-check"></i><b>5.26</b> Matrix Differentiation 1 (Proof)</a></li>
-<li class="chapter" data-level="5.27" data-path="review-of-probability-random-variables-and-random-vectors.html"><a href="review-of-probability-random-variables-and-random-vectors.html#matrix-differentiation-2"><i class="fa fa-check"></i><b>5.27</b> Matrix Differentiation 2</a></li>
-<li class="chapter" data-level="5.28" data-path="review-of-probability-random-variables-and-random-vectors.html"><a href="review-of-probability-random-variables-and-random-vectors.html#matrix-differentiation-2-proof"><i class="fa fa-check"></i><b>5.28</b> Matrix Differentiation 2 (Proof)</a></li>
-<li class="chapter" data-level="5.29" data-path="review-of-probability-random-variables-and-random-vectors.html"><a href="review-of-probability-random-variables-and-random-vectors.html#matrix-differentiation-3"><i class="fa fa-check"></i><b>5.29</b> Matrix Differentiation 3</a></li>
-<li class="chapter" data-level="5.30" data-path="review-of-probability-random-variables-and-random-vectors.html"><a href="review-of-probability-random-variables-and-random-vectors.html#matrix-differentiation-3-proof"><i class="fa fa-check"></i><b>5.30</b> Matrix Differentiation 3 (Proof)</a></li>
-<li class="chapter" data-level="5.31" data-path="review-of-probability-random-variables-and-random-vectors.html"><a href="review-of-probability-random-variables-and-random-vectors.html#matrix-differentiation-3.5"><i class="fa fa-check"></i><b>5.31</b> Matrix Differentiation 3.5</a></li>
-<li class="chapter" data-level="5.32" data-path="review-of-probability-random-variables-and-random-vectors.html"><a href="review-of-probability-random-variables-and-random-vectors.html#matrix-differentiation-4"><i class="fa fa-check"></i><b>5.32</b> Matrix Differentiation 4</a></li>
-<li class="chapter" data-level="5.33" data-path="review-of-probability-random-variables-and-random-vectors.html"><a href="review-of-probability-random-variables-and-random-vectors.html#matrix-differentiation-4.5"><i class="fa fa-check"></i><b>5.33</b> Matrix Differentiation 4.5</a></li>
-</ul></li>
-<li class="chapter" data-level="6" data-path="fitting-a-linear-model.html"><a href="fitting-a-linear-model.html"><i class="fa fa-check"></i><b>6</b> Fitting a linear model</a><ul>
+<li class="chapter" data-level="6" data-path="fitting-a-linear-model.html"><a href="fitting-a-linear-model.html"><i class="fa fa-check"></i><b>6</b> Fitting a linear model</a>
+<ul>
 <li class="chapter" data-level="6.1" data-path="fitting-a-linear-model.html"><a href="fitting-a-linear-model.html#simple-linear-regression"><i class="fa fa-check"></i><b>6.1</b> Simple Linear Regression</a></li>
 </ul></li>
 <li class="chapter" data-level="" data-path="references.html"><a href="references.html"><i class="fa fa-check"></i>References</a></li>
@@ -291,7 +308,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
       <div class="body-inner">
         <div class="book-header" role="navigation">
           <h1>
-            <i class="fa fa-circle-o-notch fa-spin"></i><a href="./">Data Analysis with Linear Regression</a>
+            <i class="fa fa-circle-o-notch fa-spin"></i><a href="./">Joshua French</a>
           </h1>
         </div>
 
@@ -299,11 +316,11 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
           <div class="page-inner">
 
             <section class="normal" id="section-">
-<div id="data-exploration-a.k.a.-exploratory-data-analysis" class="section level1">
-<h1><span class="header-section-number">Chapter 3</span> Data exploration (a.k.a., exploratory data analysis)</h1>
+<div id="data-exploration-a.k.a.-exploratory-data-analysis" class="section level1" number="2">
+<h1><span class="header-section-number">Chapter 2</span> Data exploration (a.k.a., exploratory data analysis)</h1>
 <p>Based on Chapter 1 of LMWR2, Chapter 1 of ALR4</p>
-<div id="data-analysis-process" class="section level2">
-<h2><span class="header-section-number">3.1</span> Data analysis process</h2>
+<div id="data-analysis-process" class="section level2" number="2.1">
+<h2><span class="header-section-number">2.1</span> Data analysis process</h2>
 <ol style="list-style-type: decimal">
 <li>Define a question of interest.</li>
 <li>Collect relevant data.</li>
@@ -312,8 +329,8 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <li>Make a decision.</li>
 </ol>
 <p>“The formulation of a problem is often more essential than its solution, which may be merely a matter of mathematical or experimental skill” - Albert Einstein</p>
-<div id="problem-formulation" class="section level3">
-<h3><span class="header-section-number">3.1.1</span> Problem Formulation</h3>
+<div id="problem-formulation" class="section level3" number="2.1.1">
+<h3><span class="header-section-number">2.1.1</span> Problem Formulation</h3>
 <ul>
 <li>Understand the physical background.
 <ul>
@@ -331,8 +348,8 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 </ul></li>
 </ul>
 </div>
-<div id="data-collection" class="section level3">
-<h3><span class="header-section-number">3.1.2</span> Data collection</h3>
+<div id="data-collection" class="section level3" number="2.1.2">
+<h3><span class="header-section-number">2.1.2</span> Data collection</h3>
 <p>Data collection:
 * How the data were collected has a crucial impact on what conclusions can be made.
 * Are the data observational or experimental?
@@ -347,12 +364,12 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 * Perform some data sanity checks.</p>
 </div>
 </div>
-<div id="data-exploration" class="section level2">
-<h2><span class="header-section-number">3.2</span> Data exploration</h2>
+<div id="data-exploration" class="section level2" number="2.2">
+<h2><span class="header-section-number">2.2</span> Data exploration</h2>
 <p>An initial exploration of the data should be performed prior to any formal analysis or modeling.</p>
 <p>Initial data analysis should consist of numerical summaries and appropriate plots.</p>
-<div id="numerical-summaries-of-data" class="section level3">
-<h3><span class="header-section-number">3.2.1</span> Numerical summaries of data</h3>
+<div id="numerical-summaries-of-data" class="section level3" number="2.2.1">
+<h3><span class="header-section-number">2.2.1</span> Numerical summaries of data</h3>
 <p>Statistics can be used to numerically summarize aspects of the data:</p>
 <ul>
 <li>mean</li>
@@ -362,8 +379,8 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <li>other measures, as appropriate</li>
 </ul>
 </div>
-<div id="visual-summaries-of-data" class="section level3">
-<h3><span class="header-section-number">3.2.2</span> Visual summaries of data</h3>
+<div id="visual-summaries-of-data" class="section level3" number="2.2.2">
+<h3><span class="header-section-number">2.2.2</span> Visual summaries of data</h3>
 <p>Plots can provide a useful visual summary of the data.</p>
 <ul>
 <li>For one numerical variable: boxplots, histograms, density plots, etc.</li>
@@ -379,8 +396,8 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <li>Graphics can be more convincing than text at times.</li>
 </ul>
 </div>
-<div id="what-to-look-for" class="section level3">
-<h3><span class="header-section-number">3.2.3</span> What to look for</h3>
+<div id="what-to-look-for" class="section level3" number="2.2.3">
+<h3><span class="header-section-number">2.2.3</span> What to look for</h3>
 <p>When summarizing the data, look for:</p>
 <ul>
 <li>outliers</li>
@@ -391,8 +408,8 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 </ul>
 </div>
 </div>
-<div id="kidney-example" class="section level2">
-<h2><span class="header-section-number">3.3</span> Kidney Example</h2>
+<div id="kidney-example" class="section level2" number="2.3">
+<h2><span class="header-section-number">2.3</span> Kidney Example</h2>
 <p>The National Institute of Diabetes and Digestive and Kidney Diseases conducted a study on 768 adult female Pima Indians living near Phoenix. The following variables were recorded:</p>
 <ul>
 <li><code>pregnant</code> - number of times pregnant</li>
@@ -407,65 +424,65 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 </ul>
 <p>The data may be obtained from the UCI Repository of machine learning databases at <a href="https://archive.ics.uci.edu/ml" class="uri">https://archive.ics.uci.edu/ml</a>.</p>
 <p>Let’s load and examine the structure of the data</p>
-<div class="sourceCode" id="cb23"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb23-1"><a href="data-exploration-a-k-a-exploratory-data-analysis.html#cb23-1"></a><span class="kw">data</span>(pima, <span class="dt">package =</span> <span class="st">&quot;faraway&quot;</span>)</span>
-<span id="cb23-2"><a href="data-exploration-a-k-a-exploratory-data-analysis.html#cb23-2"></a><span class="kw">str</span>(pima) <span class="co"># structure</span></span>
-<span id="cb23-3"><a href="data-exploration-a-k-a-exploratory-data-analysis.html#cb23-3"></a><span class="co">#&gt; &#39;data.frame&#39;:	768 obs. of  9 variables:</span></span>
-<span id="cb23-4"><a href="data-exploration-a-k-a-exploratory-data-analysis.html#cb23-4"></a><span class="co">#&gt;  $ pregnant : int  6 1 8 1 0 5 3 10 2 8 ...</span></span>
-<span id="cb23-5"><a href="data-exploration-a-k-a-exploratory-data-analysis.html#cb23-5"></a><span class="co">#&gt;  $ glucose  : int  148 85 183 89 137 116 78 115 197 125 ...</span></span>
-<span id="cb23-6"><a href="data-exploration-a-k-a-exploratory-data-analysis.html#cb23-6"></a><span class="co">#&gt;  $ diastolic: int  72 66 64 66 40 74 50 0 70 96 ...</span></span>
-<span id="cb23-7"><a href="data-exploration-a-k-a-exploratory-data-analysis.html#cb23-7"></a><span class="co">#&gt;  $ triceps  : int  35 29 0 23 35 0 32 0 45 0 ...</span></span>
-<span id="cb23-8"><a href="data-exploration-a-k-a-exploratory-data-analysis.html#cb23-8"></a><span class="co">#&gt;  $ insulin  : int  0 0 0 94 168 0 88 0 543 0 ...</span></span>
-<span id="cb23-9"><a href="data-exploration-a-k-a-exploratory-data-analysis.html#cb23-9"></a><span class="co">#&gt;  $ bmi      : num  33.6 26.6 23.3 28.1 43.1 25.6 31 35.3 30.5 0 ...</span></span>
-<span id="cb23-10"><a href="data-exploration-a-k-a-exploratory-data-analysis.html#cb23-10"></a><span class="co">#&gt;  $ diabetes : num  0.627 0.351 0.672 0.167 2.288 ...</span></span>
-<span id="cb23-11"><a href="data-exploration-a-k-a-exploratory-data-analysis.html#cb23-11"></a><span class="co">#&gt;  $ age      : int  50 31 32 21 33 30 26 29 53 54 ...</span></span>
-<span id="cb23-12"><a href="data-exploration-a-k-a-exploratory-data-analysis.html#cb23-12"></a><span class="co">#&gt;  $ test     : int  1 0 1 0 1 0 1 0 1 1 ...</span></span>
-<span id="cb23-13"><a href="data-exploration-a-k-a-exploratory-data-analysis.html#cb23-13"></a><span class="kw">head</span>(pima) <span class="co"># first six rows</span></span>
-<span id="cb23-14"><a href="data-exploration-a-k-a-exploratory-data-analysis.html#cb23-14"></a><span class="co">#&gt;   pregnant glucose diastolic triceps insulin  bmi diabetes age test</span></span>
-<span id="cb23-15"><a href="data-exploration-a-k-a-exploratory-data-analysis.html#cb23-15"></a><span class="co">#&gt; 1        6     148        72      35       0 33.6    0.627  50    1</span></span>
-<span id="cb23-16"><a href="data-exploration-a-k-a-exploratory-data-analysis.html#cb23-16"></a><span class="co">#&gt; 2        1      85        66      29       0 26.6    0.351  31    0</span></span>
-<span id="cb23-17"><a href="data-exploration-a-k-a-exploratory-data-analysis.html#cb23-17"></a><span class="co">#&gt; 3        8     183        64       0       0 23.3    0.672  32    1</span></span>
-<span id="cb23-18"><a href="data-exploration-a-k-a-exploratory-data-analysis.html#cb23-18"></a><span class="co">#&gt; 4        1      89        66      23      94 28.1    0.167  21    0</span></span>
-<span id="cb23-19"><a href="data-exploration-a-k-a-exploratory-data-analysis.html#cb23-19"></a><span class="co">#&gt; 5        0     137        40      35     168 43.1    2.288  33    1</span></span>
-<span id="cb23-20"><a href="data-exploration-a-k-a-exploratory-data-analysis.html#cb23-20"></a><span class="co">#&gt; 6        5     116        74       0       0 25.6    0.201  30    0</span></span>
-<span id="cb23-21"><a href="data-exploration-a-k-a-exploratory-data-analysis.html#cb23-21"></a><span class="kw">tail</span>(pima) <span class="co"># last six rows</span></span>
-<span id="cb23-22"><a href="data-exploration-a-k-a-exploratory-data-analysis.html#cb23-22"></a><span class="co">#&gt;     pregnant glucose diastolic triceps insulin  bmi diabetes age test</span></span>
-<span id="cb23-23"><a href="data-exploration-a-k-a-exploratory-data-analysis.html#cb23-23"></a><span class="co">#&gt; 763        9      89        62       0       0 22.5    0.142  33    0</span></span>
-<span id="cb23-24"><a href="data-exploration-a-k-a-exploratory-data-analysis.html#cb23-24"></a><span class="co">#&gt; 764       10     101        76      48     180 32.9    0.171  63    0</span></span>
-<span id="cb23-25"><a href="data-exploration-a-k-a-exploratory-data-analysis.html#cb23-25"></a><span class="co">#&gt; 765        2     122        70      27       0 36.8    0.340  27    0</span></span>
-<span id="cb23-26"><a href="data-exploration-a-k-a-exploratory-data-analysis.html#cb23-26"></a><span class="co">#&gt; 766        5     121        72      23     112 26.2    0.245  30    0</span></span>
-<span id="cb23-27"><a href="data-exploration-a-k-a-exploratory-data-analysis.html#cb23-27"></a><span class="co">#&gt; 767        1     126        60       0       0 30.1    0.349  47    1</span></span>
-<span id="cb23-28"><a href="data-exploration-a-k-a-exploratory-data-analysis.html#cb23-28"></a><span class="co">#&gt; 768        1      93        70      31       0 30.4    0.315  23    0</span></span></code></pre></div>
-<div id="numerically-summarizing-the-data" class="section level3">
-<h3><span class="header-section-number">3.3.1</span> Numerically summarizing the data</h3>
+<div class="sourceCode" id="cb23"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb23-1"><a href="data-exploration-a-k-a-exploratory-data-analysis.html#cb23-1" aria-hidden="true" tabindex="-1"></a><span class="fu">data</span>(pima, <span class="at">package =</span> <span class="st">&quot;faraway&quot;</span>)</span>
+<span id="cb23-2"><a href="data-exploration-a-k-a-exploratory-data-analysis.html#cb23-2" aria-hidden="true" tabindex="-1"></a><span class="fu">str</span>(pima) <span class="co"># structure</span></span>
+<span id="cb23-3"><a href="data-exploration-a-k-a-exploratory-data-analysis.html#cb23-3" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; &#39;data.frame&#39;:	768 obs. of  9 variables:</span></span>
+<span id="cb23-4"><a href="data-exploration-a-k-a-exploratory-data-analysis.html#cb23-4" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;  $ pregnant : int  6 1 8 1 0 5 3 10 2 8 ...</span></span>
+<span id="cb23-5"><a href="data-exploration-a-k-a-exploratory-data-analysis.html#cb23-5" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;  $ glucose  : int  148 85 183 89 137 116 78 115 197 125 ...</span></span>
+<span id="cb23-6"><a href="data-exploration-a-k-a-exploratory-data-analysis.html#cb23-6" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;  $ diastolic: int  72 66 64 66 40 74 50 0 70 96 ...</span></span>
+<span id="cb23-7"><a href="data-exploration-a-k-a-exploratory-data-analysis.html#cb23-7" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;  $ triceps  : int  35 29 0 23 35 0 32 0 45 0 ...</span></span>
+<span id="cb23-8"><a href="data-exploration-a-k-a-exploratory-data-analysis.html#cb23-8" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;  $ insulin  : int  0 0 0 94 168 0 88 0 543 0 ...</span></span>
+<span id="cb23-9"><a href="data-exploration-a-k-a-exploratory-data-analysis.html#cb23-9" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;  $ bmi      : num  33.6 26.6 23.3 28.1 43.1 25.6 31 35.3 30.5 0 ...</span></span>
+<span id="cb23-10"><a href="data-exploration-a-k-a-exploratory-data-analysis.html#cb23-10" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;  $ diabetes : num  0.627 0.351 0.672 0.167 2.288 ...</span></span>
+<span id="cb23-11"><a href="data-exploration-a-k-a-exploratory-data-analysis.html#cb23-11" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;  $ age      : int  50 31 32 21 33 30 26 29 53 54 ...</span></span>
+<span id="cb23-12"><a href="data-exploration-a-k-a-exploratory-data-analysis.html#cb23-12" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;  $ test     : int  1 0 1 0 1 0 1 0 1 1 ...</span></span>
+<span id="cb23-13"><a href="data-exploration-a-k-a-exploratory-data-analysis.html#cb23-13" aria-hidden="true" tabindex="-1"></a><span class="fu">head</span>(pima) <span class="co"># first six rows</span></span>
+<span id="cb23-14"><a href="data-exploration-a-k-a-exploratory-data-analysis.html#cb23-14" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;   pregnant glucose diastolic triceps insulin  bmi diabetes age test</span></span>
+<span id="cb23-15"><a href="data-exploration-a-k-a-exploratory-data-analysis.html#cb23-15" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; 1        6     148        72      35       0 33.6    0.627  50    1</span></span>
+<span id="cb23-16"><a href="data-exploration-a-k-a-exploratory-data-analysis.html#cb23-16" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; 2        1      85        66      29       0 26.6    0.351  31    0</span></span>
+<span id="cb23-17"><a href="data-exploration-a-k-a-exploratory-data-analysis.html#cb23-17" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; 3        8     183        64       0       0 23.3    0.672  32    1</span></span>
+<span id="cb23-18"><a href="data-exploration-a-k-a-exploratory-data-analysis.html#cb23-18" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; 4        1      89        66      23      94 28.1    0.167  21    0</span></span>
+<span id="cb23-19"><a href="data-exploration-a-k-a-exploratory-data-analysis.html#cb23-19" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; 5        0     137        40      35     168 43.1    2.288  33    1</span></span>
+<span id="cb23-20"><a href="data-exploration-a-k-a-exploratory-data-analysis.html#cb23-20" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; 6        5     116        74       0       0 25.6    0.201  30    0</span></span>
+<span id="cb23-21"><a href="data-exploration-a-k-a-exploratory-data-analysis.html#cb23-21" aria-hidden="true" tabindex="-1"></a><span class="fu">tail</span>(pima) <span class="co"># last six rows</span></span>
+<span id="cb23-22"><a href="data-exploration-a-k-a-exploratory-data-analysis.html#cb23-22" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;     pregnant glucose diastolic triceps insulin  bmi diabetes age test</span></span>
+<span id="cb23-23"><a href="data-exploration-a-k-a-exploratory-data-analysis.html#cb23-23" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; 763        9      89        62       0       0 22.5    0.142  33    0</span></span>
+<span id="cb23-24"><a href="data-exploration-a-k-a-exploratory-data-analysis.html#cb23-24" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; 764       10     101        76      48     180 32.9    0.171  63    0</span></span>
+<span id="cb23-25"><a href="data-exploration-a-k-a-exploratory-data-analysis.html#cb23-25" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; 765        2     122        70      27       0 36.8    0.340  27    0</span></span>
+<span id="cb23-26"><a href="data-exploration-a-k-a-exploratory-data-analysis.html#cb23-26" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; 766        5     121        72      23     112 26.2    0.245  30    0</span></span>
+<span id="cb23-27"><a href="data-exploration-a-k-a-exploratory-data-analysis.html#cb23-27" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; 767        1     126        60       0       0 30.1    0.349  47    1</span></span>
+<span id="cb23-28"><a href="data-exploration-a-k-a-exploratory-data-analysis.html#cb23-28" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; 768        1      93        70      31       0 30.4    0.315  23    0</span></span></code></pre></div>
+<div id="numerically-summarizing-the-data" class="section level3" number="2.3.1">
+<h3><span class="header-section-number">2.3.1</span> Numerically summarizing the data</h3>
 <p>The <code>summary</code> command is a useful way to numerically summarize a data frame.</p>
 <p>The <code>summary</code> function will compute the minimum, 0.25 quantile, mean, median, 0.75 quantile, and maximum of a <code>numeric</code> variable.</p>
 <p>The <code>summary</code> function will count the number of values of each level of a <code>factor</code> variable.</p>
 <p>Let’s summarize the <code>pima</code> data frame.</p>
-<div class="sourceCode" id="cb24"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb24-1"><a href="data-exploration-a-k-a-exploratory-data-analysis.html#cb24-1"></a><span class="kw">summary</span>(pima)</span>
-<span id="cb24-2"><a href="data-exploration-a-k-a-exploratory-data-analysis.html#cb24-2"></a><span class="co">#&gt;     pregnant         glucose        diastolic         triceps     </span></span>
-<span id="cb24-3"><a href="data-exploration-a-k-a-exploratory-data-analysis.html#cb24-3"></a><span class="co">#&gt;  Min.   : 0.000   Min.   :  0.0   Min.   :  0.00   Min.   : 0.00  </span></span>
-<span id="cb24-4"><a href="data-exploration-a-k-a-exploratory-data-analysis.html#cb24-4"></a><span class="co">#&gt;  1st Qu.: 1.000   1st Qu.: 99.0   1st Qu.: 62.00   1st Qu.: 0.00  </span></span>
-<span id="cb24-5"><a href="data-exploration-a-k-a-exploratory-data-analysis.html#cb24-5"></a><span class="co">#&gt;  Median : 3.000   Median :117.0   Median : 72.00   Median :23.00  </span></span>
-<span id="cb24-6"><a href="data-exploration-a-k-a-exploratory-data-analysis.html#cb24-6"></a><span class="co">#&gt;  Mean   : 3.845   Mean   :120.9   Mean   : 69.11   Mean   :20.54  </span></span>
-<span id="cb24-7"><a href="data-exploration-a-k-a-exploratory-data-analysis.html#cb24-7"></a><span class="co">#&gt;  3rd Qu.: 6.000   3rd Qu.:140.2   3rd Qu.: 80.00   3rd Qu.:32.00  </span></span>
-<span id="cb24-8"><a href="data-exploration-a-k-a-exploratory-data-analysis.html#cb24-8"></a><span class="co">#&gt;  Max.   :17.000   Max.   :199.0   Max.   :122.00   Max.   :99.00  </span></span>
-<span id="cb24-9"><a href="data-exploration-a-k-a-exploratory-data-analysis.html#cb24-9"></a><span class="co">#&gt;     insulin           bmi           diabetes           age       </span></span>
-<span id="cb24-10"><a href="data-exploration-a-k-a-exploratory-data-analysis.html#cb24-10"></a><span class="co">#&gt;  Min.   :  0.0   Min.   : 0.00   Min.   :0.0780   Min.   :21.00  </span></span>
-<span id="cb24-11"><a href="data-exploration-a-k-a-exploratory-data-analysis.html#cb24-11"></a><span class="co">#&gt;  1st Qu.:  0.0   1st Qu.:27.30   1st Qu.:0.2437   1st Qu.:24.00  </span></span>
-<span id="cb24-12"><a href="data-exploration-a-k-a-exploratory-data-analysis.html#cb24-12"></a><span class="co">#&gt;  Median : 30.5   Median :32.00   Median :0.3725   Median :29.00  </span></span>
-<span id="cb24-13"><a href="data-exploration-a-k-a-exploratory-data-analysis.html#cb24-13"></a><span class="co">#&gt;  Mean   : 79.8   Mean   :31.99   Mean   :0.4719   Mean   :33.24  </span></span>
-<span id="cb24-14"><a href="data-exploration-a-k-a-exploratory-data-analysis.html#cb24-14"></a><span class="co">#&gt;  3rd Qu.:127.2   3rd Qu.:36.60   3rd Qu.:0.6262   3rd Qu.:41.00  </span></span>
-<span id="cb24-15"><a href="data-exploration-a-k-a-exploratory-data-analysis.html#cb24-15"></a><span class="co">#&gt;  Max.   :846.0   Max.   :67.10   Max.   :2.4200   Max.   :81.00  </span></span>
-<span id="cb24-16"><a href="data-exploration-a-k-a-exploratory-data-analysis.html#cb24-16"></a><span class="co">#&gt;       test      </span></span>
-<span id="cb24-17"><a href="data-exploration-a-k-a-exploratory-data-analysis.html#cb24-17"></a><span class="co">#&gt;  Min.   :0.000  </span></span>
-<span id="cb24-18"><a href="data-exploration-a-k-a-exploratory-data-analysis.html#cb24-18"></a><span class="co">#&gt;  1st Qu.:0.000  </span></span>
-<span id="cb24-19"><a href="data-exploration-a-k-a-exploratory-data-analysis.html#cb24-19"></a><span class="co">#&gt;  Median :0.000  </span></span>
-<span id="cb24-20"><a href="data-exploration-a-k-a-exploratory-data-analysis.html#cb24-20"></a><span class="co">#&gt;  Mean   :0.349  </span></span>
-<span id="cb24-21"><a href="data-exploration-a-k-a-exploratory-data-analysis.html#cb24-21"></a><span class="co">#&gt;  3rd Qu.:1.000  </span></span>
-<span id="cb24-22"><a href="data-exploration-a-k-a-exploratory-data-analysis.html#cb24-22"></a><span class="co">#&gt;  Max.   :1.000</span></span></code></pre></div>
+<div class="sourceCode" id="cb24"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb24-1"><a href="data-exploration-a-k-a-exploratory-data-analysis.html#cb24-1" aria-hidden="true" tabindex="-1"></a><span class="fu">summary</span>(pima)</span>
+<span id="cb24-2"><a href="data-exploration-a-k-a-exploratory-data-analysis.html#cb24-2" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;     pregnant         glucose        diastolic         triceps     </span></span>
+<span id="cb24-3"><a href="data-exploration-a-k-a-exploratory-data-analysis.html#cb24-3" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;  Min.   : 0.000   Min.   :  0.0   Min.   :  0.00   Min.   : 0.00  </span></span>
+<span id="cb24-4"><a href="data-exploration-a-k-a-exploratory-data-analysis.html#cb24-4" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;  1st Qu.: 1.000   1st Qu.: 99.0   1st Qu.: 62.00   1st Qu.: 0.00  </span></span>
+<span id="cb24-5"><a href="data-exploration-a-k-a-exploratory-data-analysis.html#cb24-5" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;  Median : 3.000   Median :117.0   Median : 72.00   Median :23.00  </span></span>
+<span id="cb24-6"><a href="data-exploration-a-k-a-exploratory-data-analysis.html#cb24-6" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;  Mean   : 3.845   Mean   :120.9   Mean   : 69.11   Mean   :20.54  </span></span>
+<span id="cb24-7"><a href="data-exploration-a-k-a-exploratory-data-analysis.html#cb24-7" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;  3rd Qu.: 6.000   3rd Qu.:140.2   3rd Qu.: 80.00   3rd Qu.:32.00  </span></span>
+<span id="cb24-8"><a href="data-exploration-a-k-a-exploratory-data-analysis.html#cb24-8" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;  Max.   :17.000   Max.   :199.0   Max.   :122.00   Max.   :99.00  </span></span>
+<span id="cb24-9"><a href="data-exploration-a-k-a-exploratory-data-analysis.html#cb24-9" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;     insulin           bmi           diabetes           age       </span></span>
+<span id="cb24-10"><a href="data-exploration-a-k-a-exploratory-data-analysis.html#cb24-10" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;  Min.   :  0.0   Min.   : 0.00   Min.   :0.0780   Min.   :21.00  </span></span>
+<span id="cb24-11"><a href="data-exploration-a-k-a-exploratory-data-analysis.html#cb24-11" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;  1st Qu.:  0.0   1st Qu.:27.30   1st Qu.:0.2437   1st Qu.:24.00  </span></span>
+<span id="cb24-12"><a href="data-exploration-a-k-a-exploratory-data-analysis.html#cb24-12" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;  Median : 30.5   Median :32.00   Median :0.3725   Median :29.00  </span></span>
+<span id="cb24-13"><a href="data-exploration-a-k-a-exploratory-data-analysis.html#cb24-13" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;  Mean   : 79.8   Mean   :31.99   Mean   :0.4719   Mean   :33.24  </span></span>
+<span id="cb24-14"><a href="data-exploration-a-k-a-exploratory-data-analysis.html#cb24-14" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;  3rd Qu.:127.2   3rd Qu.:36.60   3rd Qu.:0.6262   3rd Qu.:41.00  </span></span>
+<span id="cb24-15"><a href="data-exploration-a-k-a-exploratory-data-analysis.html#cb24-15" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;  Max.   :846.0   Max.   :67.10   Max.   :2.4200   Max.   :81.00  </span></span>
+<span id="cb24-16"><a href="data-exploration-a-k-a-exploratory-data-analysis.html#cb24-16" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;       test      </span></span>
+<span id="cb24-17"><a href="data-exploration-a-k-a-exploratory-data-analysis.html#cb24-17" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;  Min.   :0.000  </span></span>
+<span id="cb24-18"><a href="data-exploration-a-k-a-exploratory-data-analysis.html#cb24-18" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;  1st Qu.:0.000  </span></span>
+<span id="cb24-19"><a href="data-exploration-a-k-a-exploratory-data-analysis.html#cb24-19" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;  Median :0.000  </span></span>
+<span id="cb24-20"><a href="data-exploration-a-k-a-exploratory-data-analysis.html#cb24-20" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;  Mean   :0.349  </span></span>
+<span id="cb24-21"><a href="data-exploration-a-k-a-exploratory-data-analysis.html#cb24-21" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;  3rd Qu.:1.000  </span></span>
+<span id="cb24-22"><a href="data-exploration-a-k-a-exploratory-data-analysis.html#cb24-22" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;  Max.   :1.000</span></span></code></pre></div>
 </div>
-<div id="cleaning-the-data" class="section level3">
-<h3><span class="header-section-number">3.3.2</span> Cleaning the data</h3>
+<div id="cleaning-the-data" class="section level3" number="2.3.2">
+<h3><span class="header-section-number">2.3.2</span> Cleaning the data</h3>
 <p>Cleaning data involves finding and correcting data quality issues.</p>
 <p>Some odd things about the <code>pima</code> data</p>
 <ul>
@@ -480,50 +497,50 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 </ul></li>
 </ul>
 <p>Let’s look at the sorted <code>diastolic</code> values.</p>
-<div class="sourceCode" id="cb25"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb25-1"><a href="data-exploration-a-k-a-exploratory-data-analysis.html#cb25-1"></a><span class="kw">sort</span>(pima<span class="op">$</span>diastolic)</span>
-<span id="cb25-2"><a href="data-exploration-a-k-a-exploratory-data-analysis.html#cb25-2"></a><span class="co">#&gt;   [1]   0   0   0   0   0   0   0   0   0   0   0   0   0   0   0   0   0   0</span></span>
-<span id="cb25-3"><a href="data-exploration-a-k-a-exploratory-data-analysis.html#cb25-3"></a><span class="co">#&gt;  [19]   0   0   0   0   0   0   0   0   0   0   0   0   0   0   0   0   0  24</span></span>
-<span id="cb25-4"><a href="data-exploration-a-k-a-exploratory-data-analysis.html#cb25-4"></a><span class="co">#&gt;  [37]  30  30  38  40  44  44  44  44  46  46  48  48  48  48  48  50  50  50</span></span>
-<span id="cb25-5"><a href="data-exploration-a-k-a-exploratory-data-analysis.html#cb25-5"></a><span class="co">#&gt;  [55]  50  50  50  50  50  50  50  50  50  50  52  52  52  52  52  52  52  52</span></span>
-<span id="cb25-6"><a href="data-exploration-a-k-a-exploratory-data-analysis.html#cb25-6"></a><span class="co">#&gt;  [73]  52  52  52  54  54  54  54  54  54  54  54  54  54  54  55  55  56  56</span></span>
-<span id="cb25-7"><a href="data-exploration-a-k-a-exploratory-data-analysis.html#cb25-7"></a><span class="co">#&gt;  [91]  56  56  56  56  56  56  56  56  56  56  58  58  58  58  58  58  58  58</span></span>
-<span id="cb25-8"><a href="data-exploration-a-k-a-exploratory-data-analysis.html#cb25-8"></a><span class="co">#&gt; [109]  58  58  58  58  58  58  58  58  58  58  58  58  58  60  60  60  60  60</span></span>
-<span id="cb25-9"><a href="data-exploration-a-k-a-exploratory-data-analysis.html#cb25-9"></a><span class="co">#&gt; [127]  60  60  60  60  60  60  60  60  60  60  60  60  60  60  60  60  60  60</span></span>
-<span id="cb25-10"><a href="data-exploration-a-k-a-exploratory-data-analysis.html#cb25-10"></a><span class="co">#&gt; [145]  60  60  60  60  60  60  60  60  60  60  60  60  60  60  61  62  62  62</span></span>
-<span id="cb25-11"><a href="data-exploration-a-k-a-exploratory-data-analysis.html#cb25-11"></a><span class="co">#&gt; [163]  62  62  62  62  62  62  62  62  62  62  62  62  62  62  62  62  62  62</span></span>
-<span id="cb25-12"><a href="data-exploration-a-k-a-exploratory-data-analysis.html#cb25-12"></a><span class="co">#&gt; [181]  62  62  62  62  62  62  62  62  62  62  62  62  62  64  64  64  64  64</span></span>
-<span id="cb25-13"><a href="data-exploration-a-k-a-exploratory-data-analysis.html#cb25-13"></a><span class="co">#&gt; [199]  64  64  64  64  64  64  64  64  64  64  64  64  64  64  64  64  64  64</span></span>
-<span id="cb25-14"><a href="data-exploration-a-k-a-exploratory-data-analysis.html#cb25-14"></a><span class="co">#&gt; [217]  64  64  64  64  64  64  64  64  64  64  64  64  64  64  64  64  64  64</span></span>
-<span id="cb25-15"><a href="data-exploration-a-k-a-exploratory-data-analysis.html#cb25-15"></a><span class="co">#&gt; [235]  64  64  65  65  65  65  65  65  65  66  66  66  66  66  66  66  66  66</span></span>
-<span id="cb25-16"><a href="data-exploration-a-k-a-exploratory-data-analysis.html#cb25-16"></a><span class="co">#&gt; [253]  66  66  66  66  66  66  66  66  66  66  66  66  66  66  66  66  66  66</span></span>
-<span id="cb25-17"><a href="data-exploration-a-k-a-exploratory-data-analysis.html#cb25-17"></a><span class="co">#&gt; [271]  66  66  66  68  68  68  68  68  68  68  68  68  68  68  68  68  68  68</span></span>
-<span id="cb25-18"><a href="data-exploration-a-k-a-exploratory-data-analysis.html#cb25-18"></a><span class="co">#&gt; [289]  68  68  68  68  68  68  68  68  68  68  68  68  68  68  68  68  68  68</span></span>
-<span id="cb25-19"><a href="data-exploration-a-k-a-exploratory-data-analysis.html#cb25-19"></a><span class="co">#&gt; [307]  68  68  68  68  68  68  68  68  68  68  68  68  70  70  70  70  70  70</span></span>
-<span id="cb25-20"><a href="data-exploration-a-k-a-exploratory-data-analysis.html#cb25-20"></a><span class="co">#&gt; [325]  70  70  70  70  70  70  70  70  70  70  70  70  70  70  70  70  70  70</span></span>
-<span id="cb25-21"><a href="data-exploration-a-k-a-exploratory-data-analysis.html#cb25-21"></a><span class="co">#&gt; [343]  70  70  70  70  70  70  70  70  70  70  70  70  70  70  70  70  70  70</span></span>
-<span id="cb25-22"><a href="data-exploration-a-k-a-exploratory-data-analysis.html#cb25-22"></a><span class="co">#&gt; [361]  70  70  70  70  70  70  70  70  70  70  70  70  70  70  70  72  72  72</span></span>
-<span id="cb25-23"><a href="data-exploration-a-k-a-exploratory-data-analysis.html#cb25-23"></a><span class="co">#&gt; [379]  72  72  72  72  72  72  72  72  72  72  72  72  72  72  72  72  72  72</span></span>
-<span id="cb25-24"><a href="data-exploration-a-k-a-exploratory-data-analysis.html#cb25-24"></a><span class="co">#&gt; [397]  72  72  72  72  72  72  72  72  72  72  72  72  72  72  72  72  72  72</span></span>
-<span id="cb25-25"><a href="data-exploration-a-k-a-exploratory-data-analysis.html#cb25-25"></a><span class="co">#&gt; [415]  72  72  72  72  72  74  74  74  74  74  74  74  74  74  74  74  74  74</span></span>
-<span id="cb25-26"><a href="data-exploration-a-k-a-exploratory-data-analysis.html#cb25-26"></a><span class="co">#&gt; [433]  74  74  74  74  74  74  74  74  74  74  74  74  74  74  74  74  74  74</span></span>
-<span id="cb25-27"><a href="data-exploration-a-k-a-exploratory-data-analysis.html#cb25-27"></a><span class="co">#&gt; [451]  74  74  74  74  74  74  74  74  74  74  74  74  74  74  74  74  74  74</span></span>
-<span id="cb25-28"><a href="data-exploration-a-k-a-exploratory-data-analysis.html#cb25-28"></a><span class="co">#&gt; [469]  74  74  74  75  75  75  75  75  75  75  75  76  76  76  76  76  76  76</span></span>
-<span id="cb25-29"><a href="data-exploration-a-k-a-exploratory-data-analysis.html#cb25-29"></a><span class="co">#&gt; [487]  76  76  76  76  76  76  76  76  76  76  76  76  76  76  76  76  76  76</span></span>
-<span id="cb25-30"><a href="data-exploration-a-k-a-exploratory-data-analysis.html#cb25-30"></a><span class="co">#&gt; [505]  76  76  76  76  76  76  76  76  76  76  76  76  76  76  78  78  78  78</span></span>
-<span id="cb25-31"><a href="data-exploration-a-k-a-exploratory-data-analysis.html#cb25-31"></a><span class="co">#&gt; [523]  78  78  78  78  78  78  78  78  78  78  78  78  78  78  78  78  78  78</span></span>
-<span id="cb25-32"><a href="data-exploration-a-k-a-exploratory-data-analysis.html#cb25-32"></a><span class="co">#&gt; [541]  78  78  78  78  78  78  78  78  78  78  78  78  78  78  78  78  78  78</span></span>
-<span id="cb25-33"><a href="data-exploration-a-k-a-exploratory-data-analysis.html#cb25-33"></a><span class="co">#&gt; [559]  78  78  78  78  78  80  80  80  80  80  80  80  80  80  80  80  80  80</span></span>
-<span id="cb25-34"><a href="data-exploration-a-k-a-exploratory-data-analysis.html#cb25-34"></a><span class="co">#&gt; [577]  80  80  80  80  80  80  80  80  80  80  80  80  80  80  80  80  80  80</span></span>
-<span id="cb25-35"><a href="data-exploration-a-k-a-exploratory-data-analysis.html#cb25-35"></a><span class="co">#&gt; [595]  80  80  80  80  80  80  80  80  80  82  82  82  82  82  82  82  82  82</span></span>
-<span id="cb25-36"><a href="data-exploration-a-k-a-exploratory-data-analysis.html#cb25-36"></a><span class="co">#&gt; [613]  82  82  82  82  82  82  82  82  82  82  82  82  82  82  82  82  82  82</span></span>
-<span id="cb25-37"><a href="data-exploration-a-k-a-exploratory-data-analysis.html#cb25-37"></a><span class="co">#&gt; [631]  82  82  82  84  84  84  84  84  84  84  84  84  84  84  84  84  84  84</span></span>
-<span id="cb25-38"><a href="data-exploration-a-k-a-exploratory-data-analysis.html#cb25-38"></a><span class="co">#&gt; [649]  84  84  84  84  84  84  84  84  85  85  85  85  85  85  86  86  86  86</span></span>
-<span id="cb25-39"><a href="data-exploration-a-k-a-exploratory-data-analysis.html#cb25-39"></a><span class="co">#&gt; [667]  86  86  86  86  86  86  86  86  86  86  86  86  86  86  86  86  86  88</span></span>
-<span id="cb25-40"><a href="data-exploration-a-k-a-exploratory-data-analysis.html#cb25-40"></a><span class="co">#&gt; [685]  88  88  88  88  88  88  88  88  88  88  88  88  88  88  88  88  88  88</span></span>
-<span id="cb25-41"><a href="data-exploration-a-k-a-exploratory-data-analysis.html#cb25-41"></a><span class="co">#&gt; [703]  88  88  88  88  88  88  90  90  90  90  90  90  90  90  90  90  90  90</span></span>
-<span id="cb25-42"><a href="data-exploration-a-k-a-exploratory-data-analysis.html#cb25-42"></a><span class="co">#&gt; [721]  90  90  90  90  90  90  90  90  90  90  92  92  92  92  92  92  92  92</span></span>
-<span id="cb25-43"><a href="data-exploration-a-k-a-exploratory-data-analysis.html#cb25-43"></a><span class="co">#&gt; [739]  94  94  94  94  94  94  95  96  96  96  96  98  98  98 100 100 100 102</span></span>
-<span id="cb25-44"><a href="data-exploration-a-k-a-exploratory-data-analysis.html#cb25-44"></a><span class="co">#&gt; [757] 104 104 106 106 106 108 108 110 110 110 114 122</span></span></code></pre></div>
+<div class="sourceCode" id="cb25"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb25-1"><a href="data-exploration-a-k-a-exploratory-data-analysis.html#cb25-1" aria-hidden="true" tabindex="-1"></a><span class="fu">sort</span>(pima<span class="sc">$</span>diastolic)</span>
+<span id="cb25-2"><a href="data-exploration-a-k-a-exploratory-data-analysis.html#cb25-2" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;   [1]   0   0   0   0   0   0   0   0   0   0   0   0   0   0   0   0   0   0</span></span>
+<span id="cb25-3"><a href="data-exploration-a-k-a-exploratory-data-analysis.html#cb25-3" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;  [19]   0   0   0   0   0   0   0   0   0   0   0   0   0   0   0   0   0  24</span></span>
+<span id="cb25-4"><a href="data-exploration-a-k-a-exploratory-data-analysis.html#cb25-4" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;  [37]  30  30  38  40  44  44  44  44  46  46  48  48  48  48  48  50  50  50</span></span>
+<span id="cb25-5"><a href="data-exploration-a-k-a-exploratory-data-analysis.html#cb25-5" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;  [55]  50  50  50  50  50  50  50  50  50  50  52  52  52  52  52  52  52  52</span></span>
+<span id="cb25-6"><a href="data-exploration-a-k-a-exploratory-data-analysis.html#cb25-6" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;  [73]  52  52  52  54  54  54  54  54  54  54  54  54  54  54  55  55  56  56</span></span>
+<span id="cb25-7"><a href="data-exploration-a-k-a-exploratory-data-analysis.html#cb25-7" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;  [91]  56  56  56  56  56  56  56  56  56  56  58  58  58  58  58  58  58  58</span></span>
+<span id="cb25-8"><a href="data-exploration-a-k-a-exploratory-data-analysis.html#cb25-8" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; [109]  58  58  58  58  58  58  58  58  58  58  58  58  58  60  60  60  60  60</span></span>
+<span id="cb25-9"><a href="data-exploration-a-k-a-exploratory-data-analysis.html#cb25-9" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; [127]  60  60  60  60  60  60  60  60  60  60  60  60  60  60  60  60  60  60</span></span>
+<span id="cb25-10"><a href="data-exploration-a-k-a-exploratory-data-analysis.html#cb25-10" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; [145]  60  60  60  60  60  60  60  60  60  60  60  60  60  60  61  62  62  62</span></span>
+<span id="cb25-11"><a href="data-exploration-a-k-a-exploratory-data-analysis.html#cb25-11" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; [163]  62  62  62  62  62  62  62  62  62  62  62  62  62  62  62  62  62  62</span></span>
+<span id="cb25-12"><a href="data-exploration-a-k-a-exploratory-data-analysis.html#cb25-12" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; [181]  62  62  62  62  62  62  62  62  62  62  62  62  62  64  64  64  64  64</span></span>
+<span id="cb25-13"><a href="data-exploration-a-k-a-exploratory-data-analysis.html#cb25-13" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; [199]  64  64  64  64  64  64  64  64  64  64  64  64  64  64  64  64  64  64</span></span>
+<span id="cb25-14"><a href="data-exploration-a-k-a-exploratory-data-analysis.html#cb25-14" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; [217]  64  64  64  64  64  64  64  64  64  64  64  64  64  64  64  64  64  64</span></span>
+<span id="cb25-15"><a href="data-exploration-a-k-a-exploratory-data-analysis.html#cb25-15" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; [235]  64  64  65  65  65  65  65  65  65  66  66  66  66  66  66  66  66  66</span></span>
+<span id="cb25-16"><a href="data-exploration-a-k-a-exploratory-data-analysis.html#cb25-16" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; [253]  66  66  66  66  66  66  66  66  66  66  66  66  66  66  66  66  66  66</span></span>
+<span id="cb25-17"><a href="data-exploration-a-k-a-exploratory-data-analysis.html#cb25-17" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; [271]  66  66  66  68  68  68  68  68  68  68  68  68  68  68  68  68  68  68</span></span>
+<span id="cb25-18"><a href="data-exploration-a-k-a-exploratory-data-analysis.html#cb25-18" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; [289]  68  68  68  68  68  68  68  68  68  68  68  68  68  68  68  68  68  68</span></span>
+<span id="cb25-19"><a href="data-exploration-a-k-a-exploratory-data-analysis.html#cb25-19" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; [307]  68  68  68  68  68  68  68  68  68  68  68  68  70  70  70  70  70  70</span></span>
+<span id="cb25-20"><a href="data-exploration-a-k-a-exploratory-data-analysis.html#cb25-20" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; [325]  70  70  70  70  70  70  70  70  70  70  70  70  70  70  70  70  70  70</span></span>
+<span id="cb25-21"><a href="data-exploration-a-k-a-exploratory-data-analysis.html#cb25-21" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; [343]  70  70  70  70  70  70  70  70  70  70  70  70  70  70  70  70  70  70</span></span>
+<span id="cb25-22"><a href="data-exploration-a-k-a-exploratory-data-analysis.html#cb25-22" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; [361]  70  70  70  70  70  70  70  70  70  70  70  70  70  70  70  72  72  72</span></span>
+<span id="cb25-23"><a href="data-exploration-a-k-a-exploratory-data-analysis.html#cb25-23" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; [379]  72  72  72  72  72  72  72  72  72  72  72  72  72  72  72  72  72  72</span></span>
+<span id="cb25-24"><a href="data-exploration-a-k-a-exploratory-data-analysis.html#cb25-24" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; [397]  72  72  72  72  72  72  72  72  72  72  72  72  72  72  72  72  72  72</span></span>
+<span id="cb25-25"><a href="data-exploration-a-k-a-exploratory-data-analysis.html#cb25-25" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; [415]  72  72  72  72  72  74  74  74  74  74  74  74  74  74  74  74  74  74</span></span>
+<span id="cb25-26"><a href="data-exploration-a-k-a-exploratory-data-analysis.html#cb25-26" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; [433]  74  74  74  74  74  74  74  74  74  74  74  74  74  74  74  74  74  74</span></span>
+<span id="cb25-27"><a href="data-exploration-a-k-a-exploratory-data-analysis.html#cb25-27" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; [451]  74  74  74  74  74  74  74  74  74  74  74  74  74  74  74  74  74  74</span></span>
+<span id="cb25-28"><a href="data-exploration-a-k-a-exploratory-data-analysis.html#cb25-28" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; [469]  74  74  74  75  75  75  75  75  75  75  75  76  76  76  76  76  76  76</span></span>
+<span id="cb25-29"><a href="data-exploration-a-k-a-exploratory-data-analysis.html#cb25-29" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; [487]  76  76  76  76  76  76  76  76  76  76  76  76  76  76  76  76  76  76</span></span>
+<span id="cb25-30"><a href="data-exploration-a-k-a-exploratory-data-analysis.html#cb25-30" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; [505]  76  76  76  76  76  76  76  76  76  76  76  76  76  76  78  78  78  78</span></span>
+<span id="cb25-31"><a href="data-exploration-a-k-a-exploratory-data-analysis.html#cb25-31" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; [523]  78  78  78  78  78  78  78  78  78  78  78  78  78  78  78  78  78  78</span></span>
+<span id="cb25-32"><a href="data-exploration-a-k-a-exploratory-data-analysis.html#cb25-32" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; [541]  78  78  78  78  78  78  78  78  78  78  78  78  78  78  78  78  78  78</span></span>
+<span id="cb25-33"><a href="data-exploration-a-k-a-exploratory-data-analysis.html#cb25-33" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; [559]  78  78  78  78  78  80  80  80  80  80  80  80  80  80  80  80  80  80</span></span>
+<span id="cb25-34"><a href="data-exploration-a-k-a-exploratory-data-analysis.html#cb25-34" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; [577]  80  80  80  80  80  80  80  80  80  80  80  80  80  80  80  80  80  80</span></span>
+<span id="cb25-35"><a href="data-exploration-a-k-a-exploratory-data-analysis.html#cb25-35" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; [595]  80  80  80  80  80  80  80  80  80  82  82  82  82  82  82  82  82  82</span></span>
+<span id="cb25-36"><a href="data-exploration-a-k-a-exploratory-data-analysis.html#cb25-36" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; [613]  82  82  82  82  82  82  82  82  82  82  82  82  82  82  82  82  82  82</span></span>
+<span id="cb25-37"><a href="data-exploration-a-k-a-exploratory-data-analysis.html#cb25-37" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; [631]  82  82  82  84  84  84  84  84  84  84  84  84  84  84  84  84  84  84</span></span>
+<span id="cb25-38"><a href="data-exploration-a-k-a-exploratory-data-analysis.html#cb25-38" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; [649]  84  84  84  84  84  84  84  84  85  85  85  85  85  85  86  86  86  86</span></span>
+<span id="cb25-39"><a href="data-exploration-a-k-a-exploratory-data-analysis.html#cb25-39" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; [667]  86  86  86  86  86  86  86  86  86  86  86  86  86  86  86  86  86  88</span></span>
+<span id="cb25-40"><a href="data-exploration-a-k-a-exploratory-data-analysis.html#cb25-40" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; [685]  88  88  88  88  88  88  88  88  88  88  88  88  88  88  88  88  88  88</span></span>
+<span id="cb25-41"><a href="data-exploration-a-k-a-exploratory-data-analysis.html#cb25-41" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; [703]  88  88  88  88  88  88  90  90  90  90  90  90  90  90  90  90  90  90</span></span>
+<span id="cb25-42"><a href="data-exploration-a-k-a-exploratory-data-analysis.html#cb25-42" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; [721]  90  90  90  90  90  90  90  90  90  90  92  92  92  92  92  92  92  92</span></span>
+<span id="cb25-43"><a href="data-exploration-a-k-a-exploratory-data-analysis.html#cb25-43" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; [739]  94  94  94  94  94  94  95  96  96  96  96  98  98  98 100 100 100 102</span></span>
+<span id="cb25-44"><a href="data-exploration-a-k-a-exploratory-data-analysis.html#cb25-44" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; [757] 104 104 106 106 106 108 108 110 110 110 114 122</span></span></code></pre></div>
 <p>The first 35 values of <code>diastolic</code> are zero. That’s a problem.</p>
 <ul>
 <li>It seems that 0 was used in place of a missing value.</li>
@@ -532,11 +549,11 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 </ul>
 <p>The value for missing data in R is <code>NA</code>.</p>
 <p>Several variables share this problem. Let’s set the 0s that should be missing values to <code>NA</code>.</p>
-<div class="sourceCode" id="cb26"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb26-1"><a href="data-exploration-a-k-a-exploratory-data-analysis.html#cb26-1"></a>pima<span class="op">$</span>diastolic[pima<span class="op">$</span>diastolic <span class="op">==</span><span class="st"> </span><span class="dv">0</span>]  &lt;-<span class="st"> </span><span class="ot">NA</span></span>
-<span id="cb26-2"><a href="data-exploration-a-k-a-exploratory-data-analysis.html#cb26-2"></a>pima<span class="op">$</span>glucose[pima<span class="op">$</span>glucose <span class="op">==</span><span class="st"> </span><span class="dv">0</span>] &lt;-<span class="st"> </span><span class="ot">NA</span></span>
-<span id="cb26-3"><a href="data-exploration-a-k-a-exploratory-data-analysis.html#cb26-3"></a>pima<span class="op">$</span>triceps[pima<span class="op">$</span>triceps <span class="op">==</span><span class="st"> </span><span class="dv">0</span>]  &lt;-<span class="st"> </span><span class="ot">NA</span></span>
-<span id="cb26-4"><a href="data-exploration-a-k-a-exploratory-data-analysis.html#cb26-4"></a>pima<span class="op">$</span>insulin[pima<span class="op">$</span>insulin <span class="op">==</span><span class="st"> </span><span class="dv">0</span>] &lt;-<span class="st"> </span><span class="ot">NA</span></span>
-<span id="cb26-5"><a href="data-exploration-a-k-a-exploratory-data-analysis.html#cb26-5"></a>pima<span class="op">$</span>bmi[pima<span class="op">$</span>bmi <span class="op">==</span><span class="st"> </span><span class="dv">0</span>] &lt;-<span class="st"> </span><span class="ot">NA</span></span></code></pre></div>
+<div class="sourceCode" id="cb26"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb26-1"><a href="data-exploration-a-k-a-exploratory-data-analysis.html#cb26-1" aria-hidden="true" tabindex="-1"></a>pima<span class="sc">$</span>diastolic[pima<span class="sc">$</span>diastolic <span class="sc">==</span> <span class="dv">0</span>]  <span class="ot">&lt;-</span> <span class="cn">NA</span></span>
+<span id="cb26-2"><a href="data-exploration-a-k-a-exploratory-data-analysis.html#cb26-2" aria-hidden="true" tabindex="-1"></a>pima<span class="sc">$</span>glucose[pima<span class="sc">$</span>glucose <span class="sc">==</span> <span class="dv">0</span>] <span class="ot">&lt;-</span> <span class="cn">NA</span></span>
+<span id="cb26-3"><a href="data-exploration-a-k-a-exploratory-data-analysis.html#cb26-3" aria-hidden="true" tabindex="-1"></a>pima<span class="sc">$</span>triceps[pima<span class="sc">$</span>triceps <span class="sc">==</span> <span class="dv">0</span>]  <span class="ot">&lt;-</span> <span class="cn">NA</span></span>
+<span id="cb26-4"><a href="data-exploration-a-k-a-exploratory-data-analysis.html#cb26-4" aria-hidden="true" tabindex="-1"></a>pima<span class="sc">$</span>insulin[pima<span class="sc">$</span>insulin <span class="sc">==</span> <span class="dv">0</span>] <span class="ot">&lt;-</span> <span class="cn">NA</span></span>
+<span id="cb26-5"><a href="data-exploration-a-k-a-exploratory-data-analysis.html#cb26-5" aria-hidden="true" tabindex="-1"></a>pima<span class="sc">$</span>bmi[pima<span class="sc">$</span>bmi <span class="sc">==</span> <span class="dv">0</span>] <span class="ot">&lt;-</span> <span class="cn">NA</span></span></code></pre></div>
 <p>The <code>test</code> variable is a categorical variable, not numerical.</p>
 <ul>
 <li>R thinks the <code>test</code> variable is <code>numeric</code>.</li>
@@ -544,80 +561,80 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <li>We need to convert the <code>test</code> variable to a <code>factor</code>.</li>
 </ul>
 <p>Let’s convert <code>test</code> to a factor.</p>
-<div class="sourceCode" id="cb27"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb27-1"><a href="data-exploration-a-k-a-exploratory-data-analysis.html#cb27-1"></a> pima<span class="op">$</span>test &lt;-<span class="st"> </span><span class="kw">factor</span>(pima<span class="op">$</span>test)</span>
-<span id="cb27-2"><a href="data-exploration-a-k-a-exploratory-data-analysis.html#cb27-2"></a> <span class="kw">summary</span>(pima<span class="op">$</span>test)</span>
-<span id="cb27-3"><a href="data-exploration-a-k-a-exploratory-data-analysis.html#cb27-3"></a><span class="co">#&gt;   0   1 </span></span>
-<span id="cb27-4"><a href="data-exploration-a-k-a-exploratory-data-analysis.html#cb27-4"></a><span class="co">#&gt; 500 268</span></span></code></pre></div>
+<div class="sourceCode" id="cb27"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb27-1"><a href="data-exploration-a-k-a-exploratory-data-analysis.html#cb27-1" aria-hidden="true" tabindex="-1"></a> pima<span class="sc">$</span>test <span class="ot">&lt;-</span> <span class="fu">factor</span>(pima<span class="sc">$</span>test)</span>
+<span id="cb27-2"><a href="data-exploration-a-k-a-exploratory-data-analysis.html#cb27-2" aria-hidden="true" tabindex="-1"></a> <span class="fu">summary</span>(pima<span class="sc">$</span>test)</span>
+<span id="cb27-3"><a href="data-exploration-a-k-a-exploratory-data-analysis.html#cb27-3" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;   0   1 </span></span>
+<span id="cb27-4"><a href="data-exploration-a-k-a-exploratory-data-analysis.html#cb27-4" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; 500 268</span></span></code></pre></div>
 <p>500 of the cases were negative and 268 were positive. We can provide more descriptive labels using the <code>levels</code> function.</p>
-<div class="sourceCode" id="cb28"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb28-1"><a href="data-exploration-a-k-a-exploratory-data-analysis.html#cb28-1"></a><span class="kw">levels</span>(pima<span class="op">$</span>test) &lt;-<span class="st"> </span><span class="kw">c</span>(<span class="st">&quot;negative&quot;</span>,<span class="st">&quot;positive&quot;</span>)</span></code></pre></div>
+<div class="sourceCode" id="cb28"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb28-1"><a href="data-exploration-a-k-a-exploratory-data-analysis.html#cb28-1" aria-hidden="true" tabindex="-1"></a><span class="fu">levels</span>(pima<span class="sc">$</span>test) <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="st">&quot;negative&quot;</span>,<span class="st">&quot;positive&quot;</span>)</span></code></pre></div>
 </div>
 </div>
-<div id="visualizing-data-with-base-graphics" class="section level2">
-<h2><span class="header-section-number">3.4</span> Visualizing data with <strong>base</strong> graphics</h2>
-<div id="histograms" class="section level3">
-<h3><span class="header-section-number">3.4.1</span> Histograms</h3>
+<div id="visualizing-data-with-base-graphics" class="section level2" number="2.4">
+<h2><span class="header-section-number">2.4</span> Visualizing data with <strong>base</strong> graphics</h2>
+<div id="histograms" class="section level3" number="2.4.1">
+<h3><span class="header-section-number">2.4.1</span> Histograms</h3>
 <p>The <code>hist</code> command can be used create a histogram of a numerical vector.</p>
 <ul>
 <li>The labels of the plot can be customized using the <code>xlab</code> and <code>ylab</code> arguments.</li>
 <li>The main title of the plot can be customized using the <code>main</code> argument.</li>
 </ul>
 <p>Here is a slightly customized histogram of diastolic blood pressure.</p>
-<div class="sourceCode" id="cb29"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb29-1"><a href="data-exploration-a-k-a-exploratory-data-analysis.html#cb29-1"></a><span class="kw">hist</span>(pima<span class="op">$</span>dias, <span class="dt">xlab =</span> <span class="st">&quot;diastolic blood pressure&quot;</span> , <span class="dt">main=</span><span class="st">&quot;&quot;</span>)</span></code></pre></div>
+<div class="sourceCode" id="cb29"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb29-1"><a href="data-exploration-a-k-a-exploratory-data-analysis.html#cb29-1" aria-hidden="true" tabindex="-1"></a><span class="fu">hist</span>(pima<span class="sc">$</span>dias, <span class="at">xlab =</span> <span class="st">&quot;diastolic blood pressure&quot;</span> , <span class="at">main=</span><span class="st">&quot;&quot;</span>)</span></code></pre></div>
 <p><img src="bookdown_test_files/figure-html/unnamed-chunk-32-1.png" width="672" />
 The histogram is approximately bell-shaped and centered around 70.</p>
 <p>We can change the number of breaks in the histogram by specifying the <code>breaks</code> argument of the <code>hist</code> function.</p>
 <p>Consider how the plot changes below.</p>
-<div class="sourceCode" id="cb30"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb30-1"><a href="data-exploration-a-k-a-exploratory-data-analysis.html#cb30-1"></a><span class="kw">hist</span>(pima<span class="op">$</span>dias, <span class="dt">xlab =</span> <span class="st">&quot;diastolic blood pressure&quot;</span>, <span class="dt">main =</span> <span class="st">&quot;&quot;</span>, <span class="dt">breaks =</span> <span class="dv">20</span>)</span></code></pre></div>
+<div class="sourceCode" id="cb30"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb30-1"><a href="data-exploration-a-k-a-exploratory-data-analysis.html#cb30-1" aria-hidden="true" tabindex="-1"></a><span class="fu">hist</span>(pima<span class="sc">$</span>dias, <span class="at">xlab =</span> <span class="st">&quot;diastolic blood pressure&quot;</span>, <span class="at">main =</span> <span class="st">&quot;&quot;</span>, <span class="at">breaks =</span> <span class="dv">20</span>)</span></code></pre></div>
 <p><img src="bookdown_test_files/figure-html/unnamed-chunk-33-1.png" width="672" /></p>
 </div>
-<div id="density-plots" class="section level3">
-<h3><span class="header-section-number">3.4.2</span> Density plots</h3>
+<div id="density-plots" class="section level3" number="2.4.2">
+<h3><span class="header-section-number">2.4.2</span> Density plots</h3>
 <p>Many people prefer the density plot over the histogram because the histogram is more sensitive to its options.</p>
 <p>A density plot is essentially a smoothed version of a histogram.
 * It isn’t as blocky.
 * It sometimes has weird things happen at the boundaries.</p>
 <p>The <code>plot</code> and <code>density</code> function can be combined to construct a density plot.</p>
-<div class="sourceCode" id="cb31"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb31-1"><a href="data-exploration-a-k-a-exploratory-data-analysis.html#cb31-1"></a><span class="kw">plot</span>(<span class="kw">density</span>(pima<span class="op">$</span>diastolic, <span class="dt">na.rm=</span><span class="ot">TRUE</span>), <span class="dt">main =</span> <span class="st">&quot;&quot;</span>)</span></code></pre></div>
+<div class="sourceCode" id="cb31"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb31-1"><a href="data-exploration-a-k-a-exploratory-data-analysis.html#cb31-1" aria-hidden="true" tabindex="-1"></a><span class="fu">plot</span>(<span class="fu">density</span>(pima<span class="sc">$</span>diastolic, <span class="at">na.rm=</span><span class="cn">TRUE</span>), <span class="at">main =</span> <span class="st">&quot;&quot;</span>)</span></code></pre></div>
 <p><img src="bookdown_test_files/figure-html/unnamed-chunk-34-1.png" width="672" />
 In the example above, we have to specify <code>na.rm = TRUE</code> so that the density is only computed using the non-missing values.</p>
 </div>
-<div id="scatter-plots" class="section level3">
-<h3><span class="header-section-number">3.4.3</span> Scatter plots</h3>
+<div id="scatter-plots" class="section level3" number="2.4.3">
+<h3><span class="header-section-number">2.4.3</span> Scatter plots</h3>
 <p>A scatter plot of the sorted numerical values versus their index can be used to identify outliers and see whether the data has many repeated values.</p>
-<div class="sourceCode" id="cb32"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb32-1"><a href="data-exploration-a-k-a-exploratory-data-analysis.html#cb32-1"></a><span class="kw">plot</span>(<span class="kw">sort</span>(pima<span class="op">$</span>diastolic), <span class="dt">ylab =</span> <span class="st">&quot;sorted diastolic bp&quot;</span>)</span></code></pre></div>
+<div class="sourceCode" id="cb32"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb32-1"><a href="data-exploration-a-k-a-exploratory-data-analysis.html#cb32-1" aria-hidden="true" tabindex="-1"></a><span class="fu">plot</span>(<span class="fu">sort</span>(pima<span class="sc">$</span>diastolic), <span class="at">ylab =</span> <span class="st">&quot;sorted diastolic bp&quot;</span>)</span></code></pre></div>
 <p><img src="bookdown_test_files/figure-html/unnamed-chunk-35-1.png" width="672" />
 The flat spots in the plot above show that the <code>diastolic</code> variable has mean repeated values.</p>
 </div>
-<div id="bivariate-scatter-plots" class="section level3">
-<h3><span class="header-section-number">3.4.4</span> Bivariate scatter plots</h3>
+<div id="bivariate-scatter-plots" class="section level3" number="2.4.4">
+<h3><span class="header-section-number">2.4.4</span> Bivariate scatter plots</h3>
 <p>Bivariate scatter plots can be used to idenify the relationship between two numerical variables.</p>
 <p>A scatter plot of diabetes vs diastolic blood pressure.</p>
-<div class="sourceCode" id="cb33"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb33-1"><a href="data-exploration-a-k-a-exploratory-data-analysis.html#cb33-1"></a><span class="kw">plot</span>(diabetes <span class="op">~</span><span class="st"> </span>diastolic, <span class="dt">data =</span> pima)</span></code></pre></div>
+<div class="sourceCode" id="cb33"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb33-1"><a href="data-exploration-a-k-a-exploratory-data-analysis.html#cb33-1" aria-hidden="true" tabindex="-1"></a><span class="fu">plot</span>(diabetes <span class="sc">~</span> diastolic, <span class="at">data =</span> pima)</span></code></pre></div>
 <p><img src="bookdown_test_files/figure-html/unnamed-chunk-36-1.png" width="672" />
 There is no clear pattern in the points, so it’s difficult to claim a relationship between the two variables.</p>
 </div>
-<div id="bivariate-boxplots" class="section level3">
-<h3><span class="header-section-number">3.4.5</span> Bivariate boxplots</h3>
+<div id="bivariate-boxplots" class="section level3" number="2.4.5">
+<h3><span class="header-section-number">2.4.5</span> Bivariate boxplots</h3>
 <p>A parallel boxplot of <code>diabetes</code> score versus <code>test</code> result.</p>
-<div class="sourceCode" id="cb34"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb34-1"><a href="data-exploration-a-k-a-exploratory-data-analysis.html#cb34-1"></a><span class="kw">plot</span>(diabetes <span class="op">~</span><span class="st"> </span>test, <span class="dt">data =</span> pima)</span></code></pre></div>
+<div class="sourceCode" id="cb34"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb34-1"><a href="data-exploration-a-k-a-exploratory-data-analysis.html#cb34-1" aria-hidden="true" tabindex="-1"></a><span class="fu">plot</span>(diabetes <span class="sc">~</span> test, <span class="at">data =</span> pima)</span></code></pre></div>
 <p><img src="bookdown_test_files/figure-html/unnamed-chunk-37-1.png" width="672" />
 The median <code>diabetes</code> score seems to be a bit higher for positive tests in comparison to the negative tests.</p>
 </div>
-<div id="multiple-plots-in-one-figure" class="section level3">
-<h3><span class="header-section-number">3.4.6</span> Multiple plots in one figure</h3>
+<div id="multiple-plots-in-one-figure" class="section level3" number="2.4.6">
+<h3><span class="header-section-number">2.4.6</span> Multiple plots in one figure</h3>
 <p>The <code>par</code> function can be used to construct multiple plots in one figure.</p>
 <ul>
 <li>The <code>mfrow</code> argument can be used to specify the number of rows and columns of plots you need.</li>
 </ul>
 <p>A 1 by 2 set of plots is shown below.</p>
-<div class="sourceCode" id="cb35"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb35-1"><a href="data-exploration-a-k-a-exploratory-data-analysis.html#cb35-1"></a><span class="kw">par</span>(<span class="dt">mfrow =</span> <span class="kw">c</span>(<span class="dv">1</span>, <span class="dv">2</span>))</span>
-<span id="cb35-2"><a href="data-exploration-a-k-a-exploratory-data-analysis.html#cb35-2"></a><span class="kw">plot</span>(diabetes <span class="op">~</span><span class="st"> </span>diastolic, <span class="dt">data =</span> pima)</span>
-<span id="cb35-3"><a href="data-exploration-a-k-a-exploratory-data-analysis.html#cb35-3"></a><span class="kw">plot</span>(diabetes <span class="op">~</span><span class="st"> </span>test, <span class="dt">data =</span> pima)</span></code></pre></div>
+<div class="sourceCode" id="cb35"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb35-1"><a href="data-exploration-a-k-a-exploratory-data-analysis.html#cb35-1" aria-hidden="true" tabindex="-1"></a><span class="fu">par</span>(<span class="at">mfrow =</span> <span class="fu">c</span>(<span class="dv">1</span>, <span class="dv">2</span>))</span>
+<span id="cb35-2"><a href="data-exploration-a-k-a-exploratory-data-analysis.html#cb35-2" aria-hidden="true" tabindex="-1"></a><span class="fu">plot</span>(diabetes <span class="sc">~</span> diastolic, <span class="at">data =</span> pima)</span>
+<span id="cb35-3"><a href="data-exploration-a-k-a-exploratory-data-analysis.html#cb35-3" aria-hidden="true" tabindex="-1"></a><span class="fu">plot</span>(diabetes <span class="sc">~</span> test, <span class="at">data =</span> pima)</span></code></pre></div>
 <p><img src="bookdown_test_files/figure-html/unnamed-chunk-38-1.png" width="672" /></p>
 </div>
 </div>
-<div id="visualizing-data-with-ggplot2" class="section level2">
-<h2><span class="header-section-number">3.5</span> Visualizing data with <strong>ggplot2</strong></h2>
+<div id="visualizing-data-with-ggplot2" class="section level2" number="2.5">
+<h2><span class="header-section-number">2.5</span> Visualizing data with <strong>ggplot2</strong></h2>
 <p>The plots we have just created are using the base graphics system in R.
 * These are very fast, simple, and professional.</p>
 <p>A fancier alternative is to construct plots using the <strong>ggplot2</strong> package.</p>
@@ -627,51 +644,51 @@ The median <code>diabetes</code> score seems to be a bit higher for positive tes
 <li>A mapping arguments that specifies the plot aesthetics (essentially, how the data that will be used in the plot).</li>
 <li>A geometry object that specifies how the aesthetics are used in a plot.</li>
 </ul>
-<div id="a-ggplot2-histogram" class="section level3">
-<h3><span class="header-section-number">3.5.1</span> A <strong>ggplot2</strong> histogram</h3>
-<div class="sourceCode" id="cb36"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb36-1"><a href="data-exploration-a-k-a-exploratory-data-analysis.html#cb36-1"></a><span class="kw">library</span>(ggplot2)</span>
-<span id="cb36-2"><a href="data-exploration-a-k-a-exploratory-data-analysis.html#cb36-2"></a><span class="co">#&gt; Warning: package &#39;ggplot2&#39; was built under R version 4.0.3</span></span>
-<span id="cb36-3"><a href="data-exploration-a-k-a-exploratory-data-analysis.html#cb36-3"></a>ggpima &lt;-<span class="st">  </span><span class="kw">ggplot</span>(pima)</span>
-<span id="cb36-4"><a href="data-exploration-a-k-a-exploratory-data-analysis.html#cb36-4"></a>ggpima <span class="op">+</span><span class="st"> </span><span class="kw">geom_histogram</span>(<span class="kw">aes</span>(<span class="dt">x=</span>diastolic))</span>
-<span id="cb36-5"><a href="data-exploration-a-k-a-exploratory-data-analysis.html#cb36-5"></a><span class="co">#&gt; `stat_bin()` using `bins = 30`. Pick better value with `binwidth`.</span></span>
-<span id="cb36-6"><a href="data-exploration-a-k-a-exploratory-data-analysis.html#cb36-6"></a><span class="co">#&gt; Warning: Removed 35 rows containing non-finite values (stat_bin).</span></span></code></pre></div>
+<div id="a-ggplot2-histogram" class="section level3" number="2.5.1">
+<h3><span class="header-section-number">2.5.1</span> A <strong>ggplot2</strong> histogram</h3>
+<div class="sourceCode" id="cb36"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb36-1"><a href="data-exploration-a-k-a-exploratory-data-analysis.html#cb36-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(ggplot2)</span>
+<span id="cb36-2"><a href="data-exploration-a-k-a-exploratory-data-analysis.html#cb36-2" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; Warning: package &#39;ggplot2&#39; was built under R version 4.0.3</span></span>
+<span id="cb36-3"><a href="data-exploration-a-k-a-exploratory-data-analysis.html#cb36-3" aria-hidden="true" tabindex="-1"></a>ggpima <span class="ot">&lt;-</span>  <span class="fu">ggplot</span>(pima)</span>
+<span id="cb36-4"><a href="data-exploration-a-k-a-exploratory-data-analysis.html#cb36-4" aria-hidden="true" tabindex="-1"></a>ggpima <span class="sc">+</span> <span class="fu">geom_histogram</span>(<span class="fu">aes</span>(<span class="at">x=</span>diastolic))</span>
+<span id="cb36-5"><a href="data-exploration-a-k-a-exploratory-data-analysis.html#cb36-5" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; `stat_bin()` using `bins = 30`. Pick better value with `binwidth`.</span></span>
+<span id="cb36-6"><a href="data-exploration-a-k-a-exploratory-data-analysis.html#cb36-6" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; Warning: Removed 35 rows containing non-finite values (stat_bin).</span></span></code></pre></div>
 <p><img src="bookdown_test_files/figure-html/unnamed-chunk-39-1.png" width="672" /></p>
 </div>
-<div id="a-ggplot2-density-plot" class="section level3">
-<h3><span class="header-section-number">3.5.2</span> A <strong>ggplot2</strong> density plot</h3>
-<div class="sourceCode" id="cb37"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb37-1"><a href="data-exploration-a-k-a-exploratory-data-analysis.html#cb37-1"></a>ggpima <span class="op">+</span><span class="st"> </span><span class="kw">geom_density</span>(<span class="kw">aes</span>(<span class="dt">x =</span> diastolic))</span>
-<span id="cb37-2"><a href="data-exploration-a-k-a-exploratory-data-analysis.html#cb37-2"></a><span class="co">#&gt; Warning: Removed 35 rows containing non-finite values (stat_density).</span></span></code></pre></div>
+<div id="a-ggplot2-density-plot" class="section level3" number="2.5.2">
+<h3><span class="header-section-number">2.5.2</span> A <strong>ggplot2</strong> density plot</h3>
+<div class="sourceCode" id="cb37"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb37-1"><a href="data-exploration-a-k-a-exploratory-data-analysis.html#cb37-1" aria-hidden="true" tabindex="-1"></a>ggpima <span class="sc">+</span> <span class="fu">geom_density</span>(<span class="fu">aes</span>(<span class="at">x =</span> diastolic))</span>
+<span id="cb37-2"><a href="data-exploration-a-k-a-exploratory-data-analysis.html#cb37-2" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; Warning: Removed 35 rows containing non-finite values (stat_density).</span></span></code></pre></div>
 <p><img src="bookdown_test_files/figure-html/unnamed-chunk-40-1.png" width="672" /></p>
 </div>
-<div id="a-ggplot2-scatter-plot" class="section level3">
-<h3><span class="header-section-number">3.5.3</span> A <strong>ggplot2</strong> scatter plot</h3>
-<div class="sourceCode" id="cb38"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb38-1"><a href="data-exploration-a-k-a-exploratory-data-analysis.html#cb38-1"></a>ggpima <span class="op">+</span><span class="st"> </span><span class="kw">geom_point</span>(<span class="kw">aes</span>(<span class="dt">x =</span> diastolic, <span class="dt">y =</span> diabetes))</span>
-<span id="cb38-2"><a href="data-exploration-a-k-a-exploratory-data-analysis.html#cb38-2"></a><span class="co">#&gt; Warning: Removed 35 rows containing missing values (geom_point).</span></span></code></pre></div>
+<div id="a-ggplot2-scatter-plot" class="section level3" number="2.5.3">
+<h3><span class="header-section-number">2.5.3</span> A <strong>ggplot2</strong> scatter plot</h3>
+<div class="sourceCode" id="cb38"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb38-1"><a href="data-exploration-a-k-a-exploratory-data-analysis.html#cb38-1" aria-hidden="true" tabindex="-1"></a>ggpima <span class="sc">+</span> <span class="fu">geom_point</span>(<span class="fu">aes</span>(<span class="at">x =</span> diastolic, <span class="at">y =</span> diabetes))</span>
+<span id="cb38-2"><a href="data-exploration-a-k-a-exploratory-data-analysis.html#cb38-2" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; Warning: Removed 35 rows containing missing values (geom_point).</span></span></code></pre></div>
 <p><img src="bookdown_test_files/figure-html/unnamed-chunk-41-1.png" width="672" /></p>
 </div>
-<div id="customizing-ggplot2-plots" class="section level3">
-<h3><span class="header-section-number">3.5.4</span> Customizing <strong>ggplot2</strong> plots</h3>
+<div id="customizing-ggplot2-plots" class="section level3" number="2.5.4">
+<h3><span class="header-section-number">2.5.4</span> Customizing <strong>ggplot2</strong> plots</h3>
 <p>We can customize our ggplots in numerous ways. Some examples:
 * Change the point shapes based on a categorical variable..
 * Change the location and orientation of the legend.</p>
-<div class="sourceCode" id="cb39"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb39-1"><a href="data-exploration-a-k-a-exploratory-data-analysis.html#cb39-1"></a>ggpima <span class="op">+</span><span class="st"> </span></span>
-<span id="cb39-2"><a href="data-exploration-a-k-a-exploratory-data-analysis.html#cb39-2"></a><span class="st">  </span><span class="kw">geom_point</span>(<span class="kw">aes</span>(<span class="dt">x =</span> diastolic, <span class="dt">y =</span> diabetes, <span class="dt">shape =</span> test)) <span class="op">+</span><span class="st"> </span></span>
-<span id="cb39-3"><a href="data-exploration-a-k-a-exploratory-data-analysis.html#cb39-3"></a><span class="st">  </span><span class="kw">theme</span>(<span class="dt">legend.position =</span> <span class="st">&quot;top&quot;</span>, <span class="dt">legend.direction =</span> <span class="st">&quot;horizontal&quot;</span>)</span>
-<span id="cb39-4"><a href="data-exploration-a-k-a-exploratory-data-analysis.html#cb39-4"></a><span class="co">#&gt; Warning: Removed 35 rows containing missing values (geom_point).</span></span></code></pre></div>
+<div class="sourceCode" id="cb39"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb39-1"><a href="data-exploration-a-k-a-exploratory-data-analysis.html#cb39-1" aria-hidden="true" tabindex="-1"></a>ggpima <span class="sc">+</span> </span>
+<span id="cb39-2"><a href="data-exploration-a-k-a-exploratory-data-analysis.html#cb39-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_point</span>(<span class="fu">aes</span>(<span class="at">x =</span> diastolic, <span class="at">y =</span> diabetes, <span class="at">shape =</span> test)) <span class="sc">+</span> </span>
+<span id="cb39-3"><a href="data-exploration-a-k-a-exploratory-data-analysis.html#cb39-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme</span>(<span class="at">legend.position =</span> <span class="st">&quot;top&quot;</span>, <span class="at">legend.direction =</span> <span class="st">&quot;horizontal&quot;</span>)</span>
+<span id="cb39-4"><a href="data-exploration-a-k-a-exploratory-data-analysis.html#cb39-4" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; Warning: Removed 35 rows containing missing values (geom_point).</span></span></code></pre></div>
 <p><img src="bookdown_test_files/figure-html/unnamed-chunk-42-1.png" width="672" /></p>
 </div>
-<div id="facetting-in-ggplot2" class="section level3">
-<h3><span class="header-section-number">3.5.5</span> Facetting in <code>ggplot2</code></h3>
+<div id="facetting-in-ggplot2" class="section level3" number="2.5.5">
+<h3><span class="header-section-number">2.5.5</span> Facetting in <code>ggplot2</code></h3>
 <p>Facetting creates separate plots (facets) of a data frame based on one or more facetting variables.</p>
 <p>Below, we facet the data by the <code>test</code> result.</p>
-<div class="sourceCode" id="cb40"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb40-1"><a href="data-exploration-a-k-a-exploratory-data-analysis.html#cb40-1"></a>ggpima <span class="op">+</span></span>
-<span id="cb40-2"><a href="data-exploration-a-k-a-exploratory-data-analysis.html#cb40-2"></a><span class="st">  </span><span class="kw">geom_point</span>(<span class="kw">aes</span>(<span class="dt">x =</span> diastolic, <span class="dt">y =</span> diabetes)) <span class="op">+</span></span>
-<span id="cb40-3"><a href="data-exploration-a-k-a-exploratory-data-analysis.html#cb40-3"></a><span class="st">  </span><span class="kw">facet_grid</span>(<span class="op">~</span><span class="st"> </span>test)</span>
-<span id="cb40-4"><a href="data-exploration-a-k-a-exploratory-data-analysis.html#cb40-4"></a><span class="co">#&gt; Warning: Removed 35 rows containing missing values (geom_point).</span></span></code></pre></div>
+<div class="sourceCode" id="cb40"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb40-1"><a href="data-exploration-a-k-a-exploratory-data-analysis.html#cb40-1" aria-hidden="true" tabindex="-1"></a>ggpima <span class="sc">+</span></span>
+<span id="cb40-2"><a href="data-exploration-a-k-a-exploratory-data-analysis.html#cb40-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_point</span>(<span class="fu">aes</span>(<span class="at">x =</span> diastolic, <span class="at">y =</span> diabetes)) <span class="sc">+</span></span>
+<span id="cb40-3"><a href="data-exploration-a-k-a-exploratory-data-analysis.html#cb40-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">facet_grid</span>(<span class="sc">~</span> test)</span>
+<span id="cb40-4"><a href="data-exploration-a-k-a-exploratory-data-analysis.html#cb40-4" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; Warning: Removed 35 rows containing missing values (geom_point).</span></span></code></pre></div>
 <p><img src="bookdown_test_files/figure-html/unnamed-chunk-43-1.png" width="672" /></p>
 </div>
-<div id="summary-of-ggplot2" class="section level3">
-<h3><span class="header-section-number">3.5.6</span> Summary of <strong>ggplot2</strong></h3>
+<div id="summary-of-ggplot2" class="section level3" number="2.5.6">
+<h3><span class="header-section-number">2.5.6</span> Summary of <strong>ggplot2</strong></h3>
 <ul>
 <li>Create a <code>ggplot</code> object using the <code>ggplot</code> function.
 <ul>
@@ -691,8 +708,8 @@ The median <code>diabetes</code> score seems to be a bit higher for positive tes
 </ul>
 </div>
 </div>
-<div id="summary-of-data-exploration" class="section level2">
-<h2><span class="header-section-number">3.6</span> Summary of data exploration</h2>
+<div id="summary-of-data-exploration" class="section level2" number="2.6">
+<h2><span class="header-section-number">2.6</span> Summary of data exploration</h2>
 <p>Data exploration helps us to understand the data, identify problems or unusual features of our data, decide on a modeling approach for the data, etc.</p>
 <p>You should use both numerical and graphical summaries of data <strong>prior</strong> to modeling the data.</p>
 
@@ -704,7 +721,7 @@ The median <code>diabetes</code> score seems to be a bit higher for positive tes
         </div>
       </div>
 <a href="r-foundations.html" class="navigation navigation-prev " aria-label="Previous page"><i class="fa fa-angle-left"></i></a>
-<a href="linear-models-and-regression.html" class="navigation navigation-next " aria-label="Next page"><i class="fa fa-angle-right"></i></a>
+<a href="review-of-probability-random-variables-and-random-vectors.html" class="navigation navigation-next " aria-label="Next page"><i class="fa fa-angle-right"></i></a>
     </div>
   </div>
 <script src="libs/gitbook-2.6.7/js/app.min.js"></script>
