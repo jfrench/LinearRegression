@@ -2,13 +2,15 @@
 title: "Joshua French"
 date: "`r format(Sys.time(), '%Y-%m-%d')`"
 output:
+  html_document:
+    df_print: paged
   pdf_document: default
   html_notebook: default
 editor_options:
   chunk_output_type: console
 ---
 
-# Data exploration (a.k.a., exploratory data analysis)
+# Data exploration
 
 Based on Chapter 1 of LMWR2, Chapter 1 of ALR4
 
@@ -36,6 +38,7 @@ Based on Chapter 1 of LMWR2, Chapter 1 of ALR4
 ### Data collection
 
 Data collection:
+
 * How the data were collected has a crucial impact on what conclusions can be made.
   * Are the data observational or experimental?
   * Are the data a sample of convenience or were they obtained via a designed sample survey?
@@ -130,9 +133,9 @@ Cleaning data involves finding and correcting data quality issues.
 
 Some odd things about the `pima` data
 
-* The minimum blood pressue is zero.
+* The minimum `diastolic` blood pressure is zero.
   * That's generally an indication of a health problem.
-* The test variable appears to be numerical but should be a categorical variable.
+* The `test` variable appears to be `numeric` but should be a `factor` (categorical) variable.
 * Many other variables have unusual zeros.
   * Look for anything unusual or unexpected, perhaps indicating a data-entry error.
 
@@ -173,8 +176,11 @@ Let's convert `test` to a factor.
 
 500 of the cases were negative and 268 were positive.  We can provide more descriptive labels using the `levels` function.
 
+We change the `0` and `1` levels to `negative` and `positive` to make the data more descriptive. A `summary` of the updates `test` variable shows why this is useful. 
+
 ```{r, echo=T}
-levels(pima$test) <- c("negative","positive")
+levels(pima$test) <- c("negative", "positive")
+summary(pima$test)
 ```
 
 ## Visualizing data with **base** graphics
@@ -190,6 +196,7 @@ Here is a slightly customized histogram of diastolic blood pressure.
 ```{r}
 hist(pima$dias, xlab = "diastolic blood pressure" , main="")
 ```
+
 The histogram is approximately bell-shaped and centered around 70.
 
 We can change the number of breaks in the histogram by specifying the `breaks` argument of the `hist` function.
@@ -205,6 +212,7 @@ hist(pima$dias, xlab = "diastolic blood pressure", main = "", breaks = 20)
 Many people prefer the density plot over the histogram because the histogram is more sensitive to its options.  
 
 A density plot is essentially a smoothed version of a histogram.
+
   * It isn't as blocky.
   * It sometimes has weird things happen at the boundaries.
 
@@ -213,25 +221,32 @@ The `plot` and `density` function can be combined to construct a density plot.
 ```{r}
 plot(density(pima$diastolic, na.rm=TRUE), main = "")
 ```
+
 In the example above, we have to specify `na.rm = TRUE` so that the density is only computed using the non-missing values.
 
-### Scatter plots
+### Index plots
+
+An index plot is a scatter plot of a numerical variable versus the index of each value (i.e., the position it occurs in the vector).
+
+* This is most useful for sorted vectors.
 
 A scatter plot of the sorted numerical values versus their index can be used to identify outliers and see whether the data has many repeated values.
 
 ```{r}
 plot(sort(pima$diastolic), ylab = "sorted diastolic bp")
 ```
+
 The flat spots in the plot above show that the `diastolic` variable has mean repeated values.
 
 ### Bivariate scatter plots
 
-Bivariate scatter plots can be used to idenify the relationship between two numerical variables.
+Bivariate scatter plots can be used to identify the relationship between two numerical variables.
 
 A scatter plot of diabetes vs diastolic blood pressure.
 ```{r}
 plot(diabetes ~ diastolic, data = pima)
 ```
+
 There is no clear pattern in the points, so it's difficult to claim a relationship between the two variables.
 
 ### Bivariate boxplots
@@ -240,6 +255,7 @@ A parallel boxplot of `diabetes` score versus `test` result.
 ```{r}
 plot(diabetes ~ test, data = pima)
 ```
+
 The median `diabetes` score seems to be a bit higher for positive tests in comparison to the negative tests.
 
 ### Multiple plots in one figure
@@ -253,21 +269,29 @@ A 1 by 2 set of plots is shown below.
 par(mfrow = c(1, 2))
 plot(diabetes ~ diastolic, data = pima)
 plot(diabetes ~ test, data = pima)
+par(mfrow = c(1, 1)) # reset to a single plot
 ```
 
 ## Visualizing data with **ggplot2**
 
-The plots we have just created are using the base graphics system in R.
+The plots we have just created are using the **base** graphics system in R.
+
 * These are very fast, simple, and professional.
 
 A fancier alternative is to construct plots using the **ggplot2** package.
 
-In its simplest form, **ggplot2** requires you to provide:
+In its simplest form, to construct a (useful) plot in **ggplot2**, you need to provide:
 
-* A `ggplot` object that includes the data frame holding the data.
-* A mapping arguments that specifies the plot aesthetics (essentially, how the data that will be used in the plot).
-* A geometry object that specifies how the aesthetics are used in a plot.
-
+* A `ggplot` object.
+  * This is usually the object that holds your data frame.
+  * The data frame is passed to `ggplot` via the `data` argument.
+* A geometry object  
+  * Roughly speaking, this is the *kind* of plot you want.
+  * e.g., `geom_hist` for a histogram, `geom_point` for a scatter plot, `geom_density` for a density plot.
+* An aesthetic mapping
+  * Aesthetic mappings describe how variables in the data are mapped to visual properties of a geometry.
+  * This is where you specify which variable with be the `x` variable, the `y` variable, which variable will control plots in the color, etc.
+  
 ### A **ggplot2** histogram
 ```{r}
 library(ggplot2)
@@ -285,21 +309,34 @@ ggpima + geom_density(aes(x = diastolic))
 ggpima + geom_point(aes(x = diastolic, y = diabetes))
 ```
 
-### Customizing **ggplot2** plots 
+### Scaling **ggplot2** plots
 
-We can customize our ggplots in numerous ways. Some examples:
-* Change the point shapes based on a categorical variable..
-* Change the location and orientation of the legend.
+In general, *scaling* is the process by which **ggplot2** maps variables to unique values. When this is done for discrete variables, **ggplot2** will often scale the variable to distinct colors, symbols, or sizes, depending on the aesthetic mapped.
+
+In the example below, we map the `test` variable to the `shape` aesthetic, which is then scaled to different shapes for the different `test` levels.
 
 ```{r}
 ggpima + 
-  geom_point(aes(x = diastolic, y = diabetes, shape = test)) + 
-  theme(legend.position = "top", legend.direction = "horizontal")
+  geom_point(aes(x = diastolic, y = diabetes, shape = test))
+```
+
+Alternatively, we can map the `test` variable to the `color` aesthetic, which creates a plot with different colors for each observation based on the `test` level.
+
+```{r}
+ggpima + 
+  geom_point(aes(x = diastolic, y = diabetes, color = test))
+```
+
+We can even combine these two aesthetic mappings in a single plot to get different colors and symbols for each level of `test`.
+
+```{r}
+ggpima + 
+  geom_point(aes(x = diastolic, y = diabetes, shape = test, color = test))
 ```
 
 ### Facetting in `ggplot2` 
 
-Facetting creates separate plots (facets) of a data frame based on one or more facetting variables.
+Facetting creates separate panels (facets) of a data frame based on one or more facetting variables.
 
 Below, we facet the data by the `test` result.
 
@@ -311,18 +348,30 @@ ggpima +
 
 ### Summary of **ggplot2**
 
-* Create a `ggplot` object using the `ggplot` function.
+To create a **ggplot2** plot:
+
+* Create a`ggplot` object using the `ggplot` function.
   * Specify the data frame the data is contained in (e.g., the data frame is `pima`). 
-  * Specify the geometry for the plot (the kind of plot you want to produce)
-  * Specify the aesthetics using `aes`.
-    * The aesthetic specifies what you see, such as position in the $x$ or $y$ direction or aspects such as shape or color.
-    * The aesthetic can be specifed in the geometry, or if you have consistent aesthetics across multiple geometries, in the `ggplot` statement.
-* The advantage of **ggplot2** is more apparent in producing complex plots involving more than two variables.
-* A `theme` specifies options for the appearance of the plot.
-  * We specified where the `legend` should appear in one plot and to use more than one panel (**facets**) in another. 
+* Specify the geometry for the plot (the kind of plot you want to produce)
+* Specify the aesthetics using `aes`.
+  * The aesthetic specifies what you see, such as position in the $x$ or $y$ direction or aspects such as shape or color.
+  * The aesthetic can be specifed in the geometry, or if you have consistent aesthetics across multiple geometries, in the `ggplot` statement.
+
+The advantage of **ggplot2** is more apparent in producing complex plots involving more than two variables.
+
+   * **ggplot2** makes it easy to plot the data for each group with different colors, symbols, line types, etc.
+   * **ggplot2** will automatically provide a legend mapping the attributes to the different groups.
+    * You can easily facet the data into multiple panels. 
 
 ## Summary of data exploration
 
-Data exploration helps us to understand the data, identify problems or unusual features of our data, decide on a modeling approach for the data, etc.
+You should use both numerical and graphical summaries of data **prior** to modeling data.
 
-You should use both numerical and graphical summaries of data **prior** to modeling the data.
+Data exploration helps us to:
+
+* Gain understanding about our data
+* Identify problems or unusual features of our data
+* Identify patterns in our data
+* Decide on a modeling approach for the data
+* etc.
+
