@@ -25,8 +25,19 @@ install.packages(tidy)
 moreplots = c("ggplot2", "ggthemes", "lattice", "HH")
 install.packages(moreplots)
 # packages related to model diagnostics
-diag = c("leaps", "lmtest", "gvlma", "caret", "perturb")
+diag = c("leaps", "lmtest", "gvlma", "caret")
 install.packages(diag)
+# packages related to workflow
+workflow = c("remotes")
+install.packages(workflow)
+```
+
+Lastly, we need to install the **perturb** package, which is currently not available
+through the `install.packages` function. To install this from the package developer's
+GitHub repository, we run the command below in the Console.
+
+```{r, eval = FALSE}
+remotes::install_github(repo = "JohnHendrickx/Perturb")
 ```
 
 *Acknowledgments*

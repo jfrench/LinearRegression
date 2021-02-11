@@ -18,17 +18,13 @@ Regression models are used to model the relationship between:
 * one or more **response** variables and
 * one or more **predictor** variables.
 
-The distinction between these two variables is their purpose in the regression model.
+The distinction between these two variables is their purpose in the model.
 
 * Predictor variables are used to predict the value of the response variable.
 
 Response variables are also known as **outcome**, **output**, or **dependent** variables. 
 
-* Response variables are modeled as random variables.
-
-Predictor variables are also known as **explanatory**, **regressor**, **input**, **dependent**, or *feature* variables.
-
-* Predictor variables are treated as known, fixed (non-random) variables.
+Predictor variables are also known as **explanatory**, **regressor**, **input**, **dependent**, or **feature** variables.
 
 Note:  Because the variables in our model are often interrelated, describing these variables as independent or dependent variables are vague and are best avoided.
 
@@ -37,19 +33,9 @@ A distinction is sometimes made between **regression models** and **classificati
 * Regression models attempt to predict a numerical response.
 * Classification models attempt to predict the category level a response will have.
 
-A *linear model* is a regression model in which the regression coefficients (to be discussed later) enter the model linearly.
+A **linear model** is a regression model in which the regression coefficients (to be discussed later) enter the model linearly.
 
 * A linear model is just a specific type of regression model.
-
-## Types of regression
-
-* *Simple* regression model: a regression model with one constant predictor and one non-constant predictor.
-* *Multiple* regression model: a regression model with more than one non-constant predictor.
-* *Multivariate* regression model: a regression model with more than one response variable.
-* *Linear* regression model: a regression model in which the regression coefficients enter the model linearly.
-* *Analysis of variance (ANOVA)* model: a linear regression model with one or more categorical predictors.
-* *Analysis of covariance (ANCOVA)*: a linear regression model with a quantitative predictor and a categorical predictor.
-* *Generalized linear model (GLM)*: a type of "generalized" regression model when the responses do not come from a normal distribution.
 
 ## Goals of regression
 
@@ -60,79 +46,138 @@ The basic goals of a regression model are to:
 2. *Identify relationships* (associations) between predictor variables and the response.
     * What is the general relationship between the selling price of a home and the number of bedrooms the home has?
 
-With our model, we also hope to be able to:
+With our regression model, we also hope to be able to:
 
 1. *Generalize* our results from the sample to the a larger population of interest.
     * E.g., we want to extend our results from a small set of college students to all college students.
 2. *Infer causality* between our predictors and the response.
-
     * E.g., if we give a person a vaccine, then this causes the person's risk of catching the disease to decrease.
 
-A note about models: 
-
-There is no such thing as a "true model" for real data.
-
-The general goal of a regression analysis is to find a model that adequately describes the relationship between the response and relevant predictor variables (either in terms of prediction, association, generalization, causality, etc.)
+**A "true model" doesn't exist for real data**, so that isn't the goal of a regression analysis. A regression analysis should attempt to find a model that adequately describes the relationship between the response and relevant predictor variables (either in terms of prediction, association, generalization, causality, etc.)
 
 ## Definition of a linear model
 
-Let $Y$ denote a response variable, $X_1, X_2, \ldots, X_{p-1}$ denote $p-1$ predictor variables, and $\epsilon$ denote a random variable we call **error**. 
+### Basic construction and relationships
+We begin by defining notation for the objects we will need and clarifying some of their important properties.
+
+* $Y$ denotes the response variable.
+  * The response variable is treated as a random variable.
+  * We will observe realizations of this random variable for each observation in our data set.
+* $X$ denotes a single predictor variable. $X_1$, $X_2$, \ldots, $X_{p-1}$ will denote the predictor variables when there is more than one predictor variable.
+  * The predictor variables are treated as non-random varables.
+  * We will observe values of the predictors variables for each observation in our data set.
+* $\beta_0$, $\beta_1$, \ldots, $\beta_{p-1}$ denote **regression coefficients**.
+  * Regression coefficients are statistical parameters that we will estimate from our data.
+  * Like all statistical parameters, regression coefficients are treated as fixed (non-random) but unknown values.
+  * Regression coefficients are not observable.
+* $\epsilon$ denotes **error**. 
+  * The error is not observable.
+  * The error is treated as a random variable.
+  * The error is assumed to have mean 0, i.e., $E(\epsilon) = 0$.
+  * Since $E(\epsilon) = 0$ and $X$ is non-random, the expectation of $\epsilon$ conditional on $X$ is also 0, i.e., $E(\epsilon | X) = 0$.
+  * In this context, error doesn't mean "mistake" or "malfunction". $\epsilon$ is simply the deviation of the response from its mean.
 
 Then a **linear model** for $Y$ is defined by the equation
 \begin{equation}
-Y = \beta_0 + \beta_1 X_1 + \beta_2 X_2 + \cdots + \beta_{p-1} X_{p-1} + \epsilon,
+Y = \beta_0 + \beta_1 X_1 + \beta_2 X_2 + \cdots + \beta_{p-1} X_{p-1} + \epsilon.
 (\#eq:lmdef)
 \end{equation}
-where $\beta_0, \beta_1, \ldots, \beta_{p-1}$ are known as **regression coefficients**.
 
-The model in Equation \@ref(eq:lmdef) is a **statistical model** because there is uncertainty in the response. 
+We now emphasize the relationship between the response, the mean response, and the error. The mean of the response variable will depend on the values of the predictor variables. Thus, we can only discuss the expectation of the response variable conditional on the values of the predictor variables. This is denoted as $E(Y | X_1, \ldots, X_{p-1})$.
 
-Suppose we have sampled $n$ observations from a population. The response values are denoted $Y_1, Y_2, \ldots, Y_n$. The value of predictor $j$ for observation $i$ is denoted by $x_{i,j}$. 
+For simplicity, assume our linear model only has a single predictor (this is an example of simple linear regression). Based on what we've presented, we have that
 
-Let $Y_1, Y_2, \ldots, Y_n$ denote the observed values of the response variable. . We have also measured $p-1$ predictor variables $X_1, X_2, \ldots, X_{p-1}$ denote $p-1$ predictor variables. The error for the $i$th observation is denoted $\epsilon_i$.
+\begin{align}
+E(Y|X) &= E(\beta_0 + \beta_1  X + \epsilon | X) \\
+ &= E(\beta_0 | X) + E(\beta_1 X | X) + E(\epsilon | X) \\
+ &= \beta_0 + \beta_1 X + 0\\
+ &= \beta_0 + \beta_1 X.
+\end{align}
 
-The linear model for the responses is defined by the system of equations
+The second line follows from the fact that the expectation of a sum of random variables is the sum of the expectation of the random variables. The third line follows from the fact that the expected value of a constant (non-random) value is the constant (the regression coefficients and $X$ are non-random) and by our assumption that the errors have mean 0 (unconditionally or conditionally on the predictor variable.)
+
+Thus, we see that we see that for a simple linear regression model
+$$ Y = E(Y|X) + \epsilon.$$
+For a model with multiple predictors, this extends to
+$$Y = E(Y|X_1, X_2, \ldots, X_{p-1}) + \epsilon.$$
+Thus, our response may be written as the sum of the mean response conditional on the predictors, $E(Y|X_1, X_2, \ldots, X_{p-1})$, and the error. This is why previously we discussed the fact that the error is simply the deviation of the response from its mean.
+
+<!-- The model in Equation \@ref(eq:lmdef) is a **statistical model** because there is uncertainty in the response.  -->
+
+### As a system of equations
+A linear regression analysis will model the data using a linear model. Suppose we have sampled $n$ observations from a population. We now introduce some additional notation:
+
+* $Y_1, Y_2, \ldots, Y_n$ denote the response values for the $n$ observations.
+* $x_{i,j}$ denotes the observed value of predictor $j$ for observation $i$.
+  * We use lowercase $x$ to indicate that this is the observed value of the predictor.
+* $\epsilon_1, \epsilon_2, \ldots, \epsilon_n$ denote the errors for the $n$ observations.
+
+The linear model relating the responses, the predictors, and the errors is defined by the system of equations
 \begin{equation}
 Y_i = \beta_0 + \beta_1 x_{i,1} + \beta_2 x_{i,2} + \cdots + \beta_{p-1} x_{i,p-1} + \epsilon_i,\quad i=1,2,\ldots,n.
 (\#eq:lmSystem)
 \end{equation}
 
-The regression coefficients are said to enter the model linearly, which is why this type of model is called a linear model. To see this more clearly, we represent the model using matrices.
+Based on our previous work, we can also write Equation \@ref(eq:lmSystem) as 
+\begin{equation}
+Y_i = E(Y_i | X_1 = x_{i,1}, \ldots, X_{p-1} = x_{i,p-1}) + \epsilon_i,\quad i=1,2,\ldots,n.
+\end{equation}
 
-Let $\mathbf{y} = [Y_1, Y_2, \ldots, Y_n]^T$ be a column vector containing the $n$ responses, $$\mathbf{X} = \begin{bmatrix}
+### Using matrix notation
+The regression coefficients are said to enter the model linearly, which is why this type of model is called a linear model. To see this more clearly, we represent the model using matrices. We define the following notation:
+
+* $\mathbf{y} = [Y_1, Y_2, \ldots, Y_n]^T$ denotes the column vector containing the $n$ responses.
+* $\mathbf{X}$ denotes the matrix containing a column of 1s and the observed predictor values, specifically, $$\mathbf{X} = \begin{bmatrix}
 1 & x_{1,1} & x_{1,2} & \cdots & x_{1,p-1} \\
 1 & x_{2,1} & x_{2,2} & \cdots & x_{2,p-1} \\
 \vdots & \vdots & \vdots & \vdots & \vdots \\
 1 & x_{n,1} & x_{n,2} & \cdots & x_{n,p-1}
-\end{bmatrix}$$
-be a matrix containing the observed predictor values (and a column of 1s),
-and $\mathbf{\epsilon} = [\epsilon_1, \epsilon_2, \ldots, \epsilon_n]^T$ be a column vector contained the $n$ errors, and $\mathbf{\beta} = [\beta_0, \beta_1, \ldots, \beta_{p-1}]^T$ be a column vector containing the $p$ regression coefficients. Then the system of equations defining the linear model in \@ref(eq:lmSystem) can be written as 
-$$\mathbf{y} = \mathbf{X}\mathbf{\beta} + \mathbf{\epsilon}.$$
+\end{bmatrix}.$$
+* $\boldsymbol{\beta} = [\beta_0, \beta_1, \ldots, \beta_{p-1}]^T$ denotes the column vector containing the $p$ regression coefficients.
+* $\boldsymbol{\epsilon} = [\epsilon_1, \epsilon_2, \ldots, \epsilon_n]^T$ denotes the column vector contained the $n$ errors.
+Then the system of equations defining the linear model in \@ref(eq:lmSystem) can be written as 
+$$\mathbf{y} = \mathbf{X}\mathbf{\beta} + \boldsymbol{\epsilon}.$$
 Thus, a linear model can be represented as a system of linear equations using matrices. A model that cannot be represented as a system of linear equations using matrices is not a linear model. 
 
-## Summarizing the components of a linear models
+## Summarizing the components of a linear model
 
-Before we progress any further, it is very informative to consider some properties of the objects discussed in Equation  \@ref(eq:lmSystem), specifically, with respect to whether they are observable and whether they are model is random variables. 
+We have already introduced a lot of objects. To aid in making sense of their notation, their purpose in the model, whether they can be observed, and whether they are modeled as a random variable (vector) or fixed, non-random values, we summarize things below.
 
 We've already talked about observing the response variable and the predictor variables. So these objects are observable. However, we have no way to measure the regression coefficients or the error. These are not observable.
 
-On the other hand, we treat the response variable as a random variable. Perhaps surprisingly, we treated the predictor variables as a fixed, non-random variables. Our analyses and inference will always be conditional on the predictor variables, so we treat them as non-random. The regression coefficients are treated as fixed, non-random but unknown values. This is standard for parameters in a statistical model. The errors are also treated as random variables. In fact, since both the predictor variables and the regression coefficients are non-random, the only way for the response to be a random variable based on Equation  \@ref(eq:lmSystem) is for the errors to be random.
+On the other hand, we treat the response variable as a random variable. Perhaps surprisingly, we treated the predictor variables as a fixed, non-random variables. The regression coefficients are treated as fixed, non-random but unknown values. This is standard for parameters in a statistical model. The errors are also treated as random variables. In fact, since both the predictor variables and the regression coefficients are non-random, the only way for the response to be a random variable based on Equation  \@ref(eq:lmSystem) is for the errors to be random.
 
 We summarize this information in the table below for the objects previously discussed using the various notations introduced.
 
 Notation | Description | Observable | Random
 --- | --- | --- |--- 
 $Y$ | response variable | Yes | Yes
-$X$ | predictor variable | Yes | No
 $Y_i$ | response value for the $i$th observation | Yes | Yes
+$\mathbf{y}$ | the $n\times 1$ column vector of response values | Yes | Yes
+$X$ | predictor variable | Yes | No
 $X_j$ | the $j$th predictor variable | Yes | No
 $x_{i,j}$ | the value of the $j$th predictor variable for the $i$th observation | Yes | No
-$\beta_j$ | the regression coefficient associated with the $j$th predictor variable | No | No
-$\epsilon_i$ | the error associated with observation $i$ | No | Yes
-$\mathbf{y}$ | the $n\times 1$ column vector of response values | Yes | Yes
 $\mathbf{X}$ | the $n\times p$ matrix of predictor values | Yes | No
-$\mathbf{\beta}$ | the $p\times 1$ column vector of regression coefficients | No | No
-$\mathbf{\epsilon}$ | the $n\times 1$ column vector of errors | No | Yes
+$\beta_j$ | the regression coefficient associated with the $j$th predictor variable | No | No
+$\boldsymbol{\beta}$ | the $p\times 1$ column vector of regression coefficients | No | No
+$\epsilon$ | the error | No | Yes
+$\epsilon_i$ | the error associated with observation $i$ | No | Yes
+$\boldsymbol{\epsilon}$ | the $n\times 1$ column vector of errors | No | Yes
+
+## Types of regression models
+
+The are many "named" types of regression models. You may hear or see people use these terms when describing their model. Here is a brief overview of some common regression models.
+
+Name | Defining characteristics
+--- | ---
+Simple | an intercept term and one predictor variable
+Multiple | more than one predictor variable
+Multivariate | more than one response variable
+Linear | the regression coefficients enter the model linearly
+Analysis of variance (ANOVA) | predictors are all categorical
+Analysis of covariance (ANCOVA) | at least one quantitative predictor and at least one categorical predictor
+Generalized linear model (GLM) | a type of "generalized" regression model when the responses do not come from a normal distribution.
+
 
 <!-- ## Scatter plots and linear regression -->
 
