@@ -1,0 +1,215 @@
+---
+title: "Joshua French"
+date: "`r format(Sys.time(), '%Y-%m-%d')`"
+output:
+  html_document:
+    df_print: paged
+  html_notebook: default
+---
+
+# Defining a linear model
+
+Based on Chapter 2 of LMWR2, Chapter 2 and 3 of ALR4
+
+## Background and terminology
+
+Regression models are used to model the relationship between:
+
+* one or more **response** variables and
+* one or more **predictor** variables.
+
+The distinction between these two variables is their purpose in the regression model.
+
+* Predictor variables are used to predict the value of the response variable.
+
+Response variables are also known as **outcome**, **output**, or **dependent** variables. 
+
+* Response variables are modeled as random variables.
+
+Predictor variables are also known as **explanatory**, **regressor**, **input**, **dependent**, or *feature* variables.
+
+* Predictor variables are treated as known, fixed (non-random) variables.
+
+Note:  Because the variables in our model are often interrelated, describing these variables as independent or dependent variables are vague and are best avoided.
+
+A distinction is sometimes made between **regression models** and **classification models**. In that case:
+
+* Regression models attempt to predict a numerical response.
+* Classification models attempt to predict the category level a response will have.
+
+A *linear model* is a regression model in which the regression coefficients (to be discussed later) enter the model linearly.
+
+* A linear model is just a specific type of regression model.
+
+## Types of regression
+
+* *Simple* regression model: a regression model with one constant predictor and one non-constant predictor.
+* *Multiple* regression model: a regression model with more than one non-constant predictor.
+* *Multivariate* regression model: a regression model with more than one response variable.
+* *Linear* regression model: a regression model in which the regression coefficients enter the model linearly.
+* *Analysis of variance (ANOVA)* model: a linear regression model with one or more categorical predictors.
+* *Analysis of covariance (ANCOVA)*: a linear regression model with a quantitative predictor and a categorical predictor.
+* *Generalized linear model (GLM)*: a type of "generalized" regression model when the responses do not come from a normal distribution.
+
+## Goals of regression
+
+The basic goals of a regression model are to:
+
+1. *Predict* future or unknown response values based on specified values of the predictors.
+    * What will the selling price of a home be?
+2. *Identify relationships* (associations) between predictor variables and the response.
+    * What is the general relationship between the selling price of a home and the number of bedrooms the home has?
+
+With our model, we also hope to be able to:
+
+1. *Generalize* our results from the sample to the a larger population of interest.
+    * E.g., we want to extend our results from a small set of college students to all college students.
+2. *Infer causality* between our predictors and the response.
+
+    * E.g., if we give a person a vaccine, then this causes the person's risk of catching the disease to decrease.
+
+A note about models: 
+
+There is no such thing as a "true model" for real data.
+
+The general goal of a regression analysis is to find a model that adequately describes the relationship between the response and relevant predictor variables (either in terms of prediction, association, generalization, causality, etc.)
+
+## Definition of a linear model
+
+Let $Y$ denote a response variable, $X_1, X_2, \ldots, X_{p-1}$ denote $p-1$ predictor variables, and $\epsilon$ denote a random variable we call **error**. 
+
+Then a **linear model** for $Y$ is defined by the equation
+\begin{equation}
+Y = \beta_0 + \beta_1 X_1 + \beta_2 X_2 + \cdots + \beta_{p-1} X_{p-1} + \epsilon,
+(\#eq:lmdef)
+\end{equation}
+where $\beta_0, \beta_1, \ldots, \beta_{p-1}$ are known as **regression coefficients**.
+
+The model in Equation \@ref(eq:lmdef) is a **statistical model** because there is uncertainty in the response. 
+
+Suppose we have sampled $n$ observations from a population. The response values are denoted $Y_1, Y_2, \ldots, Y_n$. The value of predictor $j$ for observation $i$ is denoted by $x_{i,j}$. 
+
+Let $Y_1, Y_2, \ldots, Y_n$ denote the observed values of the response variable. . We have also measured $p-1$ predictor variables $X_1, X_2, \ldots, X_{p-1}$ denote $p-1$ predictor variables. The error for the $i$th observation is denoted $\epsilon_i$.
+
+The linear model for the responses is defined by the system of equations
+\begin{equation}
+Y_i = \beta_0 + \beta_1 x_{i,1} + \beta_2 x_{i,2} + \cdots + \beta_{p-1} x_{i,p-1} + \epsilon_i,\quad i=1,2,\ldots,n.
+(\#eq:lmSystem)
+\end{equation}
+
+The regression coefficients are said to enter the model linearly, which is why this type of model is called a linear model. To see this more clearly, we represent the model using matrices.
+
+Let $\mathbf{y} = [Y_1, Y_2, \ldots, Y_n]^T$ be a column vector containing the $n$ responses, $$\mathbf{X} = \begin{bmatrix}
+1 & x_{1,1} & x_{1,2} & \cdots & x_{1,p-1} \\
+1 & x_{2,1} & x_{2,2} & \cdots & x_{2,p-1} \\
+\vdots & \vdots & \vdots & \vdots & \vdots \\
+1 & x_{n,1} & x_{n,2} & \cdots & x_{n,p-1}
+\end{bmatrix}$$
+be a matrix containing the observed predictor values (and a column of 1s),
+and $\mathbf{\epsilon} = [\epsilon_1, \epsilon_2, \ldots, \epsilon_n]^T$ be a column vector contained the $n$ errors, and $\mathbf{\beta} = [\beta_0, \beta_1, \ldots, \beta_{p-1}]^T$ be a column vector containing the $p$ regression coefficients. Then the system of equations defining the linear model in \@ref(eq:lmSystem) can be written as 
+$$\mathbf{y} = \mathbf{X}\mathbf{\beta} + \mathbf{\epsilon}.$$
+Thus, a linear model can be represented as a system of linear equations using matrices. A model that cannot be represented as a system of linear equations using matrices is not a linear model. 
+
+## Summarizing the components of a linear models
+
+Before we progress any further, it is very informative to consider some properties of the objects discussed in Equation  \@ref(eq:lmSystem), specifically, with respect to whether they are observable and whether they are model is random variables. 
+
+We've already talked about observing the response variable and the predictor variables. So these objects are observable. However, we have no way to measure the regression coefficients or the error. These are not observable.
+
+On the other hand, we treat the response variable as a random variable. Perhaps surprisingly, we treated the predictor variables as a fixed, non-random variables. Our analyses and inference will always be conditional on the predictor variables, so we treat them as non-random. The regression coefficients are treated as fixed, non-random but unknown values. This is standard for parameters in a statistical model. The errors are also treated as random variables. In fact, since both the predictor variables and the regression coefficients are non-random, the only way for the response to be a random variable based on Equation  \@ref(eq:lmSystem) is for the errors to be random.
+
+We summarize this information in the table below for the objects previously discussed using the various notations introduced.
+
+Notation | Description | Observable | Random
+--- | --- | --- |--- 
+$Y$ | response variable | Yes | Yes
+$X$ | predictor variable | Yes | No
+$Y_i$ | response value for the $i$th observation | Yes | Yes
+$X_j$ | the $j$th predictor variable | Yes | No
+$x_{i,j}$ | the value of the $j$th predictor variable for the $i$th observation | Yes | No
+$\beta_j$ | the regression coefficient associated with the $j$th predictor variable | No | No
+$\epsilon_i$ | the error associated with observation $i$ | No | Yes
+$\mathbf{y}$ | the $n\times 1$ column vector of response values | Yes | Yes
+$\mathbf{X}$ | the $n\times p$ matrix of predictor values | Yes | No
+$\mathbf{\beta}$ | the $p\times 1$ column vector of regression coefficients | No | No
+$\mathbf{\epsilon}$ | the $n\times 1$ column vector of errors | No | Yes
+
+<!-- ## Scatter plots and linear regression -->
+
+  <!-- Scatter plots are a convenient way to study the potential relationship between a single response and a single predictor variable. -->
+
+  <!-- ### Height inheritability -->
+
+  <!-- Karl Pearson (1857-1936) organized the collection of $n=1375$ heights of mothers in the United Kingdom under the age of 65 and one of their adult daughters over the age of 18.  These data are available in the `Heights` data set in the **alr4** package. We are interested in the inheritance from the mother to the daughter, so the mother's height (`mheight`) is used as the predictor variable and the daughter's height (`dheight`) is used as the response variable. -->
+
+  <!-- Questions of interest: -->
+
+  <!-- * Do taller mothers tend to have taller daughters -->
+  <!-- * Do shorter mothers tend to have shorter daughters? -->
+
+  <!-- ```{r} -->
+  <!-- data(Heights, package = "alr4") -->
+  <!-- str(Heights) -->
+  <!-- plot(dheight ~ mheight, data = Heights, -->
+              <!--      xlab = "mother's height (in)", -->
+              <!--      ylab = "daughter's height (in)", -->
+              <!--      xlim = c(55, 75), ylim = c(55, 75)) -->
+  <!-- ``` -->
+  <!-- There seems to be a clear trend between mother's heights and daughter's heights. The taller the mother, the taller the daughter *tends* to be. -->
+
+  <!-- ### Predicting snowfall -->
+
+  <!-- The `ftcollinssnow` data set in the **alr4** package measures late (September 1st until December 31st) and early (January 1st to June 30th) season snowfall for Fort Collins, CO between Late 1900 and Early 1993. -->
+
+  <!-- Question of interest: Can late season snowfall predict snowfall in the early part of the next year? -->
+
+
+  <!-- ```{r} -->
+  <!-- data("ftcollinssnow", package = "alr4") # load data -->
+<!-- str(ftcollinssnow) # examine structure -->
+<!-- plot(Late ~ Early, data = ftcollinssnow) # plot data -->
+<!-- # add "line of best fit" -->
+  <!-- abline(lm(Late ~ Early, data = ftcollinssnow), lty = 2) -->
+  <!-- # sample mean line -->
+  <!-- abline(mean(ftcollinssnow$Late), 0) -->
+  <!-- ``` -->
+
+  <!-- A plot of the snowfall data for the two time periods suggest that this relationship is weak or they may be uncorrelated. -->
+  <!-- * The dashed line indicates the "linear of best fit" , while the solid line indicates the average of the Late snowfall. -->
+
+  <!-- ### Turkey growth -->
+  <!-- Pens of turkeys were fed the same diet, except that each pen was supplemented with a `Dose` of amino acid methionine as a percentage of the total diet of the birds. The amino acid methionine was provided using three different `Source`s (one standard and two experimental). The `Weight` gain (g) of the turkeys was measured. These data are available in the `turkey` data in the **alr4** package. -->
+
+  <!-- Questions of interest: -->
+
+  <!-- * Is there a relationship between weight gain of the turkeys and the dose amount? If so, is the relationship linear? -->
+  <!-- * Does the source of the methionine impact the weight gain of the turkeys? -->
+
+  <!-- Consider a plot of the average `Weight` gain (g) of the turkeys as a function of the `Dose` amount (% of diet), separating the groups by the `Source` of the methionine. -->
+
+  <!-- ```{r} -->
+  <!-- data(turkey, package = "alr4") -->
+  <!-- str(turkey) -->
+  <!-- summary(turkey) # the source factor (S) is not a factor -->
+<!-- turkey$S = factor(turkey$S) -->
+  <!-- levels(turkey$S) <- c("control", "new source a", "new source b") -->
+  <!-- names(turkey) <- c("Dose", "Gain", "Source", "Replications", "SD") # rename variables -->
+<!-- # create turkey data ggplot -->
+  <!-- library(ggplot2) # load ggplot2 package -->
+<!-- gg_turkey <- ggplot(turkey, -->
+                           <!--                     mapping = aes(x = Dose, y = Gain, -->
+                                                                    <!--                                   color = Source, shape = Source)) -->
+  <!-- gg_turkey + geom_point() + geom_line() -->
+  <!-- ``` -->
+
+  <!-- Weight gain increases with dose amount, but doesn't appear to be linear. -->
+
+<!-- The amino acid source may slightly affect the growth trajectory of the turkeys. -->
+
+<!-- An alternative version of the previous plot using the **lattice** package -->
+
+<!-- ```{r} -->
+<!-- library(lattice) # load lattice package -->
+<!-- xyplot(Gain ~ Dose, data = turkey, groups = Source, -->
+<!--        auto.key = TRUE, type = "b") -->
+<!-- ``` -->
