@@ -24,7 +24,7 @@
 <meta name="author" content="Chapter 4 Useful matrix facts | Joshua French" />
 
 
-<meta name="date" content="2021-02-10" />
+<meta name="date" content="2021-02-11" />
 
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <meta name="apple-mobile-web-app-capable" content="yes" />
@@ -32,7 +32,7 @@
   
   
 <link rel="prev" href="review-of-probability-random-variables-and-random-vectors.html"/>
-<link rel="next" href="linear-models-and-regression.html"/>
+<link rel="next" href="defining-a-linear-model.html"/>
 <script src="libs/header-attrs-2.5/header-attrs.js"></script>
 <script src="libs/jquery-2.2.3/jquery.min.js"></script>
 <link href="libs/gitbook-2.6.7/css/style.css" rel="stylesheet" />
@@ -55,6 +55,69 @@
 <script src="libs/anchor-sections-1.0/anchor-sections.js"></script>
 
 
+<style type="text/css">
+pre > code.sourceCode { white-space: pre; position: relative; }
+pre > code.sourceCode > span { display: inline-block; line-height: 1.25; }
+pre > code.sourceCode > span:empty { height: 1.2em; }
+code.sourceCode > span { color: inherit; text-decoration: inherit; }
+pre.sourceCode { margin: 0; }
+@media screen {
+div.sourceCode { overflow: auto; }
+}
+@media print {
+pre > code.sourceCode { white-space: pre-wrap; }
+pre > code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
+}
+pre.numberSource code
+  { counter-reset: source-line 0; }
+pre.numberSource code > span
+  { position: relative; left: -4em; counter-increment: source-line; }
+pre.numberSource code > span > a:first-child::before
+  { content: counter(source-line);
+    position: relative; left: -1em; text-align: right; vertical-align: baseline;
+    border: none; display: inline-block;
+    -webkit-touch-callout: none; -webkit-user-select: none;
+    -khtml-user-select: none; -moz-user-select: none;
+    -ms-user-select: none; user-select: none;
+    padding: 0 4px; width: 4em;
+    color: #aaaaaa;
+  }
+pre.numberSource { margin-left: 3em; border-left: 1px solid #aaaaaa;  padding-left: 4px; }
+div.sourceCode
+  {   }
+@media screen {
+pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
+}
+code span.al { color: #ff0000; font-weight: bold; } /* Alert */
+code span.an { color: #60a0b0; font-weight: bold; font-style: italic; } /* Annotation */
+code span.at { color: #7d9029; } /* Attribute */
+code span.bn { color: #40a070; } /* BaseN */
+code span.bu { } /* BuiltIn */
+code span.cf { color: #007020; font-weight: bold; } /* ControlFlow */
+code span.ch { color: #4070a0; } /* Char */
+code span.cn { color: #880000; } /* Constant */
+code span.co { color: #60a0b0; font-style: italic; } /* Comment */
+code span.cv { color: #60a0b0; font-weight: bold; font-style: italic; } /* CommentVar */
+code span.do { color: #ba2121; font-style: italic; } /* Documentation */
+code span.dt { color: #902000; } /* DataType */
+code span.dv { color: #40a070; } /* DecVal */
+code span.er { color: #ff0000; font-weight: bold; } /* Error */
+code span.ex { } /* Extension */
+code span.fl { color: #40a070; } /* Float */
+code span.fu { color: #06287e; } /* Function */
+code span.im { } /* Import */
+code span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Information */
+code span.kw { color: #007020; font-weight: bold; } /* Keyword */
+code span.op { color: #666666; } /* Operator */
+code span.ot { color: #007020; } /* Other */
+code span.pp { color: #bc7a00; } /* Preprocessor */
+code span.sc { color: #4070a0; } /* SpecialChar */
+code span.ss { color: #bb6688; } /* SpecialString */
+code span.st { color: #4070a0; } /* String */
+code span.va { color: #19177c; } /* Variable */
+code span.vs { color: #4070a0; } /* VerbatimString */
+code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warning */
+</style>
 
 <link rel="stylesheet" href="style.css" type="text/css" />
 </head>
@@ -121,19 +184,18 @@
 <ul>
 <li class="chapter" data-level="1.11.1" data-path="r-foundations.html"><a href="r-foundations.html#creation-1"><i class="fa fa-check"></i><b>1.11.1</b> Creation</a></li>
 <li class="chapter" data-level="1.11.2" data-path="r-foundations.html"><a href="r-foundations.html#extracting-parts-of-a-data-frame"><i class="fa fa-check"></i><b>1.11.2</b> Extracting parts of a data frame</a></li>
-<li class="chapter" data-level="1.11.3" data-path="r-foundations.html"><a href="r-foundations.html#example-9"><i class="fa fa-check"></i><b>1.11.3</b> Example</a></li>
-<li class="chapter" data-level="1.11.4" data-path="r-foundations.html"><a href="r-foundations.html#importing-data"><i class="fa fa-check"></i><b>1.11.4</b> Importing Data</a></li>
+<li class="chapter" data-level="1.11.3" data-path="r-foundations.html"><a href="r-foundations.html#importing-data"><i class="fa fa-check"></i><b>1.11.3</b> Importing Data</a></li>
 </ul></li>
 <li class="chapter" data-level="1.12" data-path="r-foundations.html"><a href="r-foundations.html#logical-statements"><i class="fa fa-check"></i><b>1.12</b> Logical statements</a>
 <ul>
 <li class="chapter" data-level="1.12.1" data-path="r-foundations.html"><a href="r-foundations.html#basic-comparisons"><i class="fa fa-check"></i><b>1.12.1</b> Basic comparisons</a></li>
-<li class="chapter" data-level="1.12.2" data-path="r-foundations.html"><a href="r-foundations.html#example-10"><i class="fa fa-check"></i><b>1.12.2</b> Example</a></li>
+<li class="chapter" data-level="1.12.2" data-path="r-foundations.html"><a href="r-foundations.html#example-9"><i class="fa fa-check"></i><b>1.12.2</b> Example</a></li>
 <li class="chapter" data-level="1.12.3" data-path="r-foundations.html"><a href="r-foundations.html#and-and-or-statements"><i class="fa fa-check"></i><b>1.12.3</b> And and Or statements</a></li>
-<li class="chapter" data-level="1.12.4" data-path="r-foundations.html"><a href="r-foundations.html#example-11"><i class="fa fa-check"></i><b>1.12.4</b> Example</a></li>
+<li class="chapter" data-level="1.12.4" data-path="r-foundations.html"><a href="r-foundations.html#example-10"><i class="fa fa-check"></i><b>1.12.4</b> Example</a></li>
 </ul></li>
 <li class="chapter" data-level="1.13" data-path="r-foundations.html"><a href="r-foundations.html#subsetting-with-logical-statements"><i class="fa fa-check"></i><b>1.13</b> Subsetting with logical statements</a>
 <ul>
-<li class="chapter" data-level="1.13.1" data-path="r-foundations.html"><a href="r-foundations.html#example-12"><i class="fa fa-check"></i><b>1.13.1</b> Example</a></li>
+<li class="chapter" data-level="1.13.1" data-path="r-foundations.html"><a href="r-foundations.html#example-11"><i class="fa fa-check"></i><b>1.13.1</b> Example</a></li>
 </ul></li>
 <li class="chapter" data-level="1.14" data-path="r-foundations.html"><a href="r-foundations.html#ecosystem-debate"><i class="fa fa-check"></i><b>1.14</b> Ecosystem debate</a></li>
 </ul></li>
@@ -242,131 +304,28 @@
 <li class="chapter" data-level="4.5" data-path="useful-matrix-facts.html"><a href="useful-matrix-facts.html#matrix-inverse"><i class="fa fa-check"></i><b>4.5</b> Matrix inverse</a></li>
 <li class="chapter" data-level="4.6" data-path="useful-matrix-facts.html"><a href="useful-matrix-facts.html#matrix-derivatives"><i class="fa fa-check"></i><b>4.6</b> Matrix derivatives</a></li>
 </ul></li>
-<li class="chapter" data-level="5" data-path="linear-models-and-regression.html"><a href="linear-models-and-regression.html"><i class="fa fa-check"></i><b>5</b> Linear models and regression</a>
+<li class="chapter" data-level="5" data-path="defining-a-linear-model.html"><a href="defining-a-linear-model.html"><i class="fa fa-check"></i><b>5</b> Defining a linear model</a>
 <ul>
-<li class="chapter" data-level="5.1" data-path="linear-models-and-regression.html"><a href="linear-models-and-regression.html#regression-models"><i class="fa fa-check"></i><b>5.1</b> Regression models</a></li>
-<li class="chapter" data-level="5.2" data-path="linear-models-and-regression.html"><a href="linear-models-and-regression.html#common-types-of-regression-models"><i class="fa fa-check"></i><b>5.2</b> Common types of regression models</a></li>
-<li class="chapter" data-level="5.3" data-path="linear-models-and-regression.html"><a href="linear-models-and-regression.html#goals-of-regression"><i class="fa fa-check"></i><b>5.3</b> Goals of regression</a></li>
-<li class="chapter" data-level="5.4" data-path="linear-models-and-regression.html"><a href="linear-models-and-regression.html#simple-linear-regression"><i class="fa fa-check"></i><b>5.4</b> Simple Linear Regression</a>
+<li class="chapter" data-level="5.1" data-path="defining-a-linear-model.html"><a href="defining-a-linear-model.html#background-and-terminology"><i class="fa fa-check"></i><b>5.1</b> Background and terminology</a></li>
+<li class="chapter" data-level="5.2" data-path="defining-a-linear-model.html"><a href="defining-a-linear-model.html#goals-of-regression"><i class="fa fa-check"></i><b>5.2</b> Goals of regression</a></li>
+<li class="chapter" data-level="5.3" data-path="defining-a-linear-model.html"><a href="defining-a-linear-model.html#definition-of-a-linear-model"><i class="fa fa-check"></i><b>5.3</b> Definition of a linear model</a>
 <ul>
-<li class="chapter" data-level="5.4.1" data-path="linear-models-and-regression.html"><a href="linear-models-and-regression.html#model-description"><i class="fa fa-check"></i><b>5.4.1</b> Model description</a></li>
-<li class="chapter" data-level="5.4.2" data-path="linear-models-and-regression.html"><a href="linear-models-and-regression.html#interpreting-the-regression-coefficients"><i class="fa fa-check"></i><b>5.4.2</b> Interpreting the regression coefficients</a></li>
+<li class="chapter" data-level="5.3.1" data-path="defining-a-linear-model.html"><a href="defining-a-linear-model.html#basic-construction-and-relationships"><i class="fa fa-check"></i><b>5.3.1</b> Basic construction and relationships</a></li>
+<li class="chapter" data-level="5.3.2" data-path="defining-a-linear-model.html"><a href="defining-a-linear-model.html#as-a-system-of-equations"><i class="fa fa-check"></i><b>5.3.2</b> As a system of equations</a></li>
+<li class="chapter" data-level="5.3.3" data-path="defining-a-linear-model.html"><a href="defining-a-linear-model.html#using-matrix-notation"><i class="fa fa-check"></i><b>5.3.3</b> Using matrix notation</a></li>
 </ul></li>
-<li class="chapter" data-level="5.5" data-path="linear-models-and-regression.html"><a href="linear-models-and-regression.html#conditions-on-error"><i class="fa fa-check"></i><b>5.5</b> Conditions on Error</a></li>
-<li class="chapter" data-level="5.6" data-path="linear-models-and-regression.html"><a href="linear-models-and-regression.html#what-about-the-response"><i class="fa fa-check"></i><b>5.6</b> What about the response?</a></li>
-<li class="chapter" data-level="5.7" data-path="r-foundations.html"><a href="r-foundations.html#example"><i class="fa fa-check"></i><b>5.7</b> Example</a></li>
+<li class="chapter" data-level="5.4" data-path="defining-a-linear-model.html"><a href="defining-a-linear-model.html#summarizing-the-components-of-a-linear-model"><i class="fa fa-check"></i><b>5.4</b> Summarizing the components of a linear model</a></li>
+<li class="chapter" data-level="5.5" data-path="defining-a-linear-model.html"><a href="defining-a-linear-model.html#types-of-regression-models"><i class="fa fa-check"></i><b>5.5</b> Types of regression models</a></li>
 </ul></li>
 <li class="chapter" data-level="6" data-path="fitting-a-linear-model.html"><a href="fitting-a-linear-model.html"><i class="fa fa-check"></i><b>6</b> Fitting a linear model</a>
 <ul>
-<li class="chapter" data-level="6.1" data-path="linear-models-and-regression.html"><a href="linear-models-and-regression.html#simple-linear-regression"><i class="fa fa-check"></i><b>6.1</b> Simple Linear Regression</a></li>
-<li class="chapter" data-level="6.2" data-path="fitting-a-linear-model.html"><a href="fitting-a-linear-model.html#simple-linear-regression-1"><i class="fa fa-check"></i><b>6.2</b> Simple Linear Regression</a></li>
-<li class="chapter" data-level="6.3" data-path="fitting-a-linear-model.html"><a href="fitting-a-linear-model.html#understanding-the-model"><i class="fa fa-check"></i><b>6.3</b> Understanding the model</a></li>
-<li class="chapter" data-level="6.4" data-path="fitting-a-linear-model.html"><a href="fitting-a-linear-model.html#understanding-the-model-1"><i class="fa fa-check"></i><b>6.4</b> Understanding the model</a></li>
-<li class="chapter" data-level="6.5" data-path="fitting-a-linear-model.html"><a href="fitting-a-linear-model.html#understand-coefficients"><i class="fa fa-check"></i><b>6.5</b> Understand Coefficients</a></li>
-<li class="chapter" data-level="6.6" data-path="fitting-a-linear-model.html"><a href="fitting-a-linear-model.html#view-from-single-observation"><i class="fa fa-check"></i><b>6.6</b> View from single observation</a></li>
-<li class="chapter" data-level="6.7" data-path="linear-models-and-regression.html"><a href="linear-models-and-regression.html#conditions-on-error"><i class="fa fa-check"></i><b>6.7</b> Conditions on Error</a></li>
-<li class="chapter" data-level="6.8" data-path="linear-models-and-regression.html"><a href="linear-models-and-regression.html#what-about-the-response"><i class="fa fa-check"></i><b>6.8</b> What about the response?</a></li>
-<li class="chapter" data-level="6.9" data-path="r-foundations.html"><a href="r-foundations.html#example"><i class="fa fa-check"></i><b>6.9</b> Example</a></li>
+<li class="chapter" data-level="6.1" data-path="fitting-a-linear-model.html"><a href="fitting-a-linear-model.html#simple-linear-regression"><i class="fa fa-check"></i><b>6.1</b> Simple Linear Regression</a>
+<ul>
+<li class="chapter" data-level="6.1.1" data-path="fitting-a-linear-model.html"><a href="fitting-a-linear-model.html#model-description"><i class="fa fa-check"></i><b>6.1.1</b> Model description</a></li>
+<li class="chapter" data-level="6.1.2" data-path="fitting-a-linear-model.html"><a href="fitting-a-linear-model.html#interpreting-the-regression-coefficients"><i class="fa fa-check"></i><b>6.1.2</b> Interpreting the regression coefficients</a></li>
+</ul></li>
 </ul></li>
 <li class="chapter" data-level="" data-path="references.html"><a href="references.html"><i class="fa fa-check"></i>References</a></li>
-<li class="chapter" data-level="7" data-path="linear-models-in-general.html"><a href="linear-models-in-general.html"><i class="fa fa-check"></i><b>7</b> Linear Models in General</a>
-<ul>
-<li class="chapter" data-level="7.1" data-path="linear-models-in-general.html"><a href="linear-models-in-general.html#ordinary-least-square-ols-estimation"><i class="fa fa-check"></i><b>7.1</b> Ordinary Least Square (OLS) Estimation</a></li>
-<li class="chapter" data-level="7.2" data-path="linear-models-in-general.html"><a href="linear-models-in-general.html#residuals"><i class="fa fa-check"></i><b>7.2</b> Residuals</a></li>
-<li class="chapter" data-level="7.3" data-path="linear-models-in-general.html"><a href="linear-models-in-general.html#ols-estimators"><i class="fa fa-check"></i><b>7.3</b> OLS Estimators</a></li>
-<li class="chapter" data-level="7.4" data-path="linear-models-in-general.html"><a href="linear-models-in-general.html#in-picture"><i class="fa fa-check"></i><b>7.4</b> In Picture</a></li>
-<li class="chapter" data-level="7.5" data-path="linear-models-in-general.html"><a href="linear-models-in-general.html#forbess-data"><i class="fa fa-check"></i><b>7.5</b> Forbes’s Data</a></li>
-<li class="chapter" data-level="7.6" data-path="linear-models-in-general.html"><a href="linear-models-in-general.html#forbess-data-1"><i class="fa fa-check"></i><b>7.6</b> Forbes’s Data</a></li>
-<li class="chapter" data-level="7.7" data-path="linear-models-in-general.html"><a href="linear-models-in-general.html#unbiasedness-of-ols-estimators"><i class="fa fa-check"></i><b>7.7</b> Unbiasedness of OLS estimators</a></li>
-<li class="chapter" data-level="7.8" data-path="linear-models-in-general.html"><a href="linear-models-in-general.html#curves-vs.-lines"><i class="fa fa-check"></i><b>7.8</b> Curves Vs. Lines (!)</a></li>
-<li class="chapter" data-level="7.9" data-path="linear-models-in-general.html"><a href="linear-models-in-general.html#curve-to-line"><i class="fa fa-check"></i><b>7.9</b> Curve to Line</a></li>
-<li class="chapter" data-level="7.10" data-path="linear-models-in-general.html"><a href="linear-models-in-general.html#curve-to-line-1"><i class="fa fa-check"></i><b>7.10</b> Curve to Line</a></li>
-<li class="chapter" data-level="7.11" data-path="linear-models-in-general.html"><a href="linear-models-in-general.html#defining-a-linear-model"><i class="fa fa-check"></i><b>7.11</b> Defining a Linear Model</a></li>
-<li class="chapter" data-level="7.12" data-path="linear-models-in-general.html"><a href="linear-models-in-general.html#defining-a-linear-model-1"><i class="fa fa-check"></i><b>7.12</b> Defining a Linear Model</a></li>
-<li class="chapter" data-level="7.13" data-path="linear-models-in-general.html"><a href="linear-models-in-general.html#linearizable"><i class="fa fa-check"></i><b>7.13</b> Linearizable</a></li>
-<li class="chapter" data-level="7.14" data-path="linear-models-in-general.html"><a href="linear-models-in-general.html#flaxibility-of-linear-model"><i class="fa fa-check"></i><b>7.14</b> Flaxibility of Linear Model</a></li>
-<li class="chapter" data-level="7.15" data-path="linear-models-in-general.html"><a href="linear-models-in-general.html#flaxibility-of-linear-model-1"><i class="fa fa-check"></i><b>7.15</b> Flaxibility of Linear Model</a></li>
-<li class="chapter" data-level="7.16" data-path="linear-models-in-general.html"><a href="linear-models-in-general.html#examples-of-linear-models"><i class="fa fa-check"></i><b>7.16</b> Examples of Linear Models:</a></li>
-<li class="chapter" data-level="7.17" data-path="linear-models-in-general.html"><a href="linear-models-in-general.html#examples-of-linear-models-1"><i class="fa fa-check"></i><b>7.17</b> Examples of Linear Models</a></li>
-<li class="chapter" data-level="7.18" data-path="linear-models-in-general.html"><a href="linear-models-in-general.html#matrix-representation-of-a-linear-regression-model"><i class="fa fa-check"></i><b>7.18</b> Matrix Representation of a Linear Regression Model</a></li>
-<li class="chapter" data-level="7.19" data-path="linear-models-in-general.html"><a href="linear-models-in-general.html#matrix-representation-of-a-linear-regression-model-1"><i class="fa fa-check"></i><b>7.19</b> Matrix Representation of a Linear Regression Model</a></li>
-<li class="chapter" data-level="7.20" data-path="linear-models-in-general.html"><a href="linear-models-in-general.html#matrix-representation-of-a-linear-regression-model-2"><i class="fa fa-check"></i><b>7.20</b> Matrix Representation of a Linear Regression Model</a></li>
-<li class="chapter" data-level="7.21" data-path="linear-models-in-general.html"><a href="linear-models-in-general.html#least-squares-estimation-of-beta"><i class="fa fa-check"></i><b>7.21</b> Least Squares Estimation of <span class="math inline">\(\beta\)</span></a></li>
-<li class="chapter" data-level="7.22" data-path="linear-models-in-general.html"><a href="linear-models-in-general.html#least-squares-estimation-of-beta-1"><i class="fa fa-check"></i><b>7.22</b> Least Squares Estimation of <span class="math inline">\(\beta\)</span></a></li>
-<li class="chapter" data-level="7.23" data-path="linear-models-in-general.html"><a href="linear-models-in-general.html#derivation"><i class="fa fa-check"></i><b>7.23</b> Derivation</a></li>
-<li class="chapter" data-level="7.24" data-path="linear-models-in-general.html"><a href="linear-models-in-general.html#fitted-values-and-hat-matrix"><i class="fa fa-check"></i><b>7.24</b> Fitted Values and Hat Matrix</a></li>
-<li class="chapter" data-level="7.25" data-path="linear-models-in-general.html"><a href="linear-models-in-general.html#fitted-values"><i class="fa fa-check"></i><b>7.25</b> Fitted Values</a></li>
-<li class="chapter" data-level="7.26" data-path="linear-models-in-general.html"><a href="linear-models-in-general.html#residuals-1"><i class="fa fa-check"></i><b>7.26</b> Residuals</a></li>
-<li class="chapter" data-level="7.27" data-path="linear-models-in-general.html"><a href="linear-models-in-general.html#property-of-h"><i class="fa fa-check"></i><b>7.27</b> Property of <span class="math inline">\(H\)</span></a></li>
-<li class="chapter" data-level="7.28" data-path="linear-models-in-general.html"><a href="linear-models-in-general.html#property-of-h-1"><i class="fa fa-check"></i><b>7.28</b> Property of <span class="math inline">\(H\)</span></a></li>
-<li class="chapter" data-level="7.29" data-path="linear-models-in-general.html"><a href="linear-models-in-general.html#property-of-h-2"><i class="fa fa-check"></i><b>7.29</b> Property of <span class="math inline">\(H\)</span></a></li>
-<li class="chapter" data-level="7.30" data-path="linear-models-in-general.html"><a href="linear-models-in-general.html#property-of-h-3"><i class="fa fa-check"></i><b>7.30</b> Property of <span class="math inline">\(H\)</span></a></li>
-<li class="chapter" data-level="7.31" data-path="linear-models-in-general.html"><a href="linear-models-in-general.html#properties-of-i-h"><i class="fa fa-check"></i><b>7.31</b> Properties of <span class="math inline">\(I-H\)</span></a></li>
-<li class="chapter" data-level="7.32" data-path="linear-models-in-general.html"><a href="linear-models-in-general.html#residuals-and-fitted-values-are-orthogonal"><i class="fa fa-check"></i><b>7.32</b> Residuals and Fitted Values are Orthogonal</a></li>
-<li class="chapter" data-level="7.33" data-path="linear-models-in-general.html"><a href="linear-models-in-general.html#covariance-of-residuals-and-fitted-values"><i class="fa fa-check"></i><b>7.33</b> Covariance of Residuals and Fitted Values</a></li>
-<li class="chapter" data-level="7.34" data-path="linear-models-in-general.html"><a href="linear-models-in-general.html#covariance-of-residuals-and-fitted-values-1"><i class="fa fa-check"></i><b>7.34</b> Covariance of Residuals and Fitted Values</a></li>
-<li class="chapter" data-level="7.35" data-path="linear-models-in-general.html"><a href="linear-models-in-general.html#rss"><i class="fa fa-check"></i><b>7.35</b> RSS</a></li>
-<li class="chapter" data-level="7.36" data-path="linear-models-in-general.html"><a href="linear-models-in-general.html#properties-of-the-ols"><i class="fa fa-check"></i><b>7.36</b> Properties of the OLS</a></li>
-<li class="chapter" data-level="7.37" data-path="linear-models-in-general.html"><a href="linear-models-in-general.html#properties-of-the-ols-1"><i class="fa fa-check"></i><b>7.37</b> Properties of the OLS</a></li>
-<li class="chapter" data-level="7.38" data-path="linear-models-in-general.html"><a href="linear-models-in-general.html#properties-of-ols"><i class="fa fa-check"></i><b>7.38</b> Properties of OLS</a></li>
-<li class="chapter" data-level="7.39" data-path="linear-models-in-general.html"><a href="linear-models-in-general.html#properties-of-ols-1"><i class="fa fa-check"></i><b>7.39</b> Properties of OLS</a></li>
-<li class="chapter" data-level="7.40" data-path="linear-models-in-general.html"><a href="linear-models-in-general.html#properties-of-ols-2"><i class="fa fa-check"></i><b>7.40</b> Properties of OLS</a></li>
-<li class="chapter" data-level="7.41" data-path="linear-models-in-general.html"><a href="linear-models-in-general.html#galapagos-example"><i class="fa fa-check"></i><b>7.41</b> Galapagos Example</a></li>
-<li class="chapter" data-level="7.42" data-path="linear-models-in-general.html"><a href="linear-models-in-general.html#galapagos-data"><i class="fa fa-check"></i><b>7.42</b> Galapagos Data</a></li>
-<li class="chapter" data-level="7.43" data-path="linear-models-in-general.html"><a href="linear-models-in-general.html#ols-estimate"><i class="fa fa-check"></i><b>7.43</b> OLS Estimate</a></li>
-<li class="chapter" data-level="7.44" data-path="linear-models-in-general.html"><a href="linear-models-in-general.html#using-built-in-function"><i class="fa fa-check"></i><b>7.44</b> Using Built-in function</a></li>
-<li class="chapter" data-level="7.45" data-path="linear-models-in-general.html"><a href="linear-models-in-general.html#r-output-coefficients"><i class="fa fa-check"></i><b>7.45</b> R-output (coefficients)</a></li>
-<li class="chapter" data-level="7.46" data-path="linear-models-in-general.html"><a href="linear-models-in-general.html#r-output-others"><i class="fa fa-check"></i><b>7.46</b> R-output (others)</a></li>
-<li class="chapter" data-level="7.47" data-path="linear-models-in-general.html"><a href="linear-models-in-general.html#r-output-others-1"><i class="fa fa-check"></i><b>7.47</b> R-output (others)</a></li>
-<li class="chapter" data-level="7.48" data-path="linear-models-in-general.html"><a href="linear-models-in-general.html#r-output-others-2"><i class="fa fa-check"></i><b>7.48</b> R-output (others)</a></li>
-<li class="chapter" data-level="7.49" data-path="linear-models-in-general.html"><a href="linear-models-in-general.html#quiz"><i class="fa fa-check"></i><b>7.49</b> Quiz</a></li>
-<li class="chapter" data-level="7.50" data-path="linear-models-in-general.html"><a href="linear-models-in-general.html#quiz-1"><i class="fa fa-check"></i><b>7.50</b> Quiz</a></li>
-<li class="chapter" data-level="7.51" data-path="linear-models-in-general.html"><a href="linear-models-in-general.html#quiz-2"><i class="fa fa-check"></i><b>7.51</b> Quiz</a></li>
-<li class="chapter" data-level="7.52" data-path="linear-models-in-general.html"><a href="linear-models-in-general.html#quiz-3"><i class="fa fa-check"></i><b>7.52</b> Quiz</a></li>
-<li class="chapter" data-level="7.53" data-path="linear-models-in-general.html"><a href="linear-models-in-general.html#extract-sigma"><i class="fa fa-check"></i><b>7.53</b> Extract <span class="math inline">\(\sigma\)</span></a></li>
-<li class="chapter" data-level="7.54" data-path="linear-models-in-general.html"><a href="linear-models-in-general.html#access-individual-columns-of-coefficients-table"><i class="fa fa-check"></i><b>7.54</b> Access individual columns of coefficients table</a></li>
-<li class="chapter" data-level="7.55" data-path="linear-models-in-general.html"><a href="linear-models-in-general.html#gauss-markov-theorem"><i class="fa fa-check"></i><b>7.55</b> Gauss-Markov Theorem</a></li>
-<li class="chapter" data-level="7.56" data-path="linear-models-in-general.html"><a href="linear-models-in-general.html#gauss-markov-theorem-1"><i class="fa fa-check"></i><b>7.56</b> Gauss-Markov Theorem</a></li>
-<li class="chapter" data-level="7.57" data-path="linear-models-in-general.html"><a href="linear-models-in-general.html#different-estimator"><i class="fa fa-check"></i><b>7.57</b> Different Estimator?</a></li>
-<li class="chapter" data-level="7.58" data-path="linear-models-in-general.html"><a href="linear-models-in-general.html#goodness-of-fit"><i class="fa fa-check"></i><b>7.58</b> Goodness of Fit</a></li>
-<li class="chapter" data-level="7.59" data-path="linear-models-in-general.html"><a href="linear-models-in-general.html#goodness-of-fit-1"><i class="fa fa-check"></i><b>7.59</b> Goodness of Fit</a></li>
-<li class="chapter" data-level="7.60" data-path="linear-models-in-general.html"><a href="linear-models-in-general.html#goodness-of-fit-2"><i class="fa fa-check"></i><b>7.60</b> Goodness of Fit</a></li>
-<li class="chapter" data-level="7.61" data-path="linear-models-in-general.html"><a href="linear-models-in-general.html#goodness-of-fit-3"><i class="fa fa-check"></i><b>7.61</b> Goodness of Fit</a></li>
-<li class="chapter" data-level="7.62" data-path="linear-models-in-general.html"><a href="linear-models-in-general.html#goodness-of-fit-4"><i class="fa fa-check"></i><b>7.62</b> Goodness of Fit</a></li>
-<li class="chapter" data-level="7.63" data-path="linear-models-in-general.html"><a href="linear-models-in-general.html#sum-of-squares"><i class="fa fa-check"></i><b>7.63</b> Sum of Squares</a></li>
-<li class="chapter" data-level="7.64" data-path="linear-models-in-general.html"><a href="linear-models-in-general.html#sum-of-squares-1"><i class="fa fa-check"></i><b>7.64</b> Sum of Squares</a></li>
-<li class="chapter" data-level="7.65" data-path="linear-models-in-general.html"><a href="linear-models-in-general.html#goodness-of-fit-5"><i class="fa fa-check"></i><b>7.65</b> Goodness of Fit</a></li>
-<li class="chapter" data-level="7.66" data-path="linear-models-in-general.html"><a href="linear-models-in-general.html#goodness-of-fit-6"><i class="fa fa-check"></i><b>7.66</b> Goodness of Fit</a></li>
-<li class="chapter" data-level="7.67" data-path="linear-models-in-general.html"><a href="linear-models-in-general.html#goodness-of-fit-7"><i class="fa fa-check"></i><b>7.67</b> Goodness of Fit</a></li>
-<li class="chapter" data-level="7.68" data-path="linear-models-in-general.html"><a href="linear-models-in-general.html#goodness-of-fit-8"><i class="fa fa-check"></i><b>7.68</b> Goodness of Fit</a></li>
-<li class="chapter" data-level="7.69" data-path="linear-models-in-general.html"><a href="linear-models-in-general.html#guess-r2"><i class="fa fa-check"></i><b>7.69</b> Guess <span class="math inline">\(R^2\)</span></a></li>
-<li class="chapter" data-level="7.70" data-path="linear-models-in-general.html"><a href="linear-models-in-general.html#guess-r2-1"><i class="fa fa-check"></i><b>7.70</b> Guess <span class="math inline">\(R^2\)</span></a></li>
-<li class="chapter" data-level="7.71" data-path="linear-models-in-general.html"><a href="linear-models-in-general.html#extract-r2"><i class="fa fa-check"></i><b>7.71</b> Extract <span class="math inline">\(R^2\)</span></a></li>
-<li class="chapter" data-level="7.72" data-path="linear-models-in-general.html"><a href="linear-models-in-general.html#extract-r2-1"><i class="fa fa-check"></i><b>7.72</b> Extract <span class="math inline">\(R^2\)</span></a></li>
-<li class="chapter" data-level="7.73" data-path="linear-models-in-general.html"><a href="linear-models-in-general.html#a-note-on-r2"><i class="fa fa-check"></i><b>7.73</b> A Note on <span class="math inline">\(R^2\)</span></a></li>
-<li class="chapter" data-level="7.74" data-path="linear-models-in-general.html"><a href="linear-models-in-general.html#reliability-of-r2"><i class="fa fa-check"></i><b>7.74</b> Reliability of <span class="math inline">\(R^2\)</span></a></li>
-<li class="chapter" data-level="7.75" data-path="linear-models-in-general.html"><a href="linear-models-in-general.html#reliability-of-r2-1"><i class="fa fa-check"></i><b>7.75</b> Reliability of <span class="math inline">\(R^2\)</span></a></li>
-<li class="chapter" data-level="7.76" data-path="linear-models-in-general.html"><a href="linear-models-in-general.html#when-r2-useful"><i class="fa fa-check"></i><b>7.76</b> When <span class="math inline">\(R^2\)</span> Useful?</a></li>
-<li class="chapter" data-level="7.77" data-path="linear-models-in-general.html"><a href="linear-models-in-general.html#when-r2-useful-1"><i class="fa fa-check"></i><b>7.77</b> When <span class="math inline">\(R^2\)</span> Useful?</a></li>
-<li class="chapter" data-level="7.78" data-path="linear-models-in-general.html"><a href="linear-models-in-general.html#degrees-of-freedom"><i class="fa fa-check"></i><b>7.78</b> Degrees of Freedom</a></li>
-<li class="chapter" data-level="7.79" data-path="linear-models-in-general.html"><a href="linear-models-in-general.html#identifiability"><i class="fa fa-check"></i><b>7.79</b> Identifiability</a></li>
-<li class="chapter" data-level="7.80" data-path="linear-models-in-general.html"><a href="linear-models-in-general.html#identifiability-1"><i class="fa fa-check"></i><b>7.80</b> Identifiability</a></li>
-<li class="chapter" data-level="7.81" data-path="linear-models-in-general.html"><a href="linear-models-in-general.html#identifiability-2"><i class="fa fa-check"></i><b>7.81</b> Identifiability</a></li>
-<li class="chapter" data-level="7.82" data-path="linear-models-in-general.html"><a href="linear-models-in-general.html#identifiability-3"><i class="fa fa-check"></i><b>7.82</b> Identifiability</a></li>
-<li class="chapter" data-level="7.83" data-path="r-foundations.html"><a href="r-foundations.html#example"><i class="fa fa-check"></i><b>7.83</b> Example</a></li>
-<li class="chapter" data-level="7.84" data-path="r-foundations.html"><a href="r-foundations.html#example-1"><i class="fa fa-check"></i><b>7.84</b> Example</a></li>
-<li class="chapter" data-level="7.85" data-path="r-foundations.html"><a href="r-foundations.html#example-2"><i class="fa fa-check"></i><b>7.85</b> Example</a></li>
-<li class="chapter" data-level="7.86" data-path="r-foundations.html"><a href="r-foundations.html#example-3"><i class="fa fa-check"></i><b>7.86</b> Example</a></li>
-<li class="chapter" data-level="7.87" data-path="linear-models-in-general.html"><a href="linear-models-in-general.html#orthogonality"><i class="fa fa-check"></i><b>7.87</b> Orthogonality</a></li>
-<li class="chapter" data-level="7.88" data-path="linear-models-in-general.html"><a href="linear-models-in-general.html#orthogonality-1"><i class="fa fa-check"></i><b>7.88</b> Orthogonality</a></li>
-<li class="chapter" data-level="7.89" data-path="linear-models-in-general.html"><a href="linear-models-in-general.html#odor-example"><i class="fa fa-check"></i><b>7.89</b> Odor Example</a></li>
-<li class="chapter" data-level="7.90" data-path="linear-models-in-general.html"><a href="linear-models-in-general.html#odor-example-1"><i class="fa fa-check"></i><b>7.90</b> Odor Example</a></li>
-<li class="chapter" data-level="7.91" data-path="linear-models-in-general.html"><a href="linear-models-in-general.html#odor-example-2"><i class="fa fa-check"></i><b>7.91</b> Odor Example</a></li>
-<li class="chapter" data-level="7.92" data-path="linear-models-in-general.html"><a href="linear-models-in-general.html#odor-example-3"><i class="fa fa-check"></i><b>7.92</b> Odor Example</a></li>
-<li class="chapter" data-level="7.93" data-path="linear-models-in-general.html"><a href="linear-models-in-general.html#odor-example-4"><i class="fa fa-check"></i><b>7.93</b> Odor Example</a></li>
-<li class="chapter" data-level="7.94" data-path="linear-models-in-general.html"><a href="linear-models-in-general.html#diabetes-example"><i class="fa fa-check"></i><b>7.94</b> Diabetes Example</a></li>
-<li class="chapter" data-level="7.95" data-path="linear-models-in-general.html"><a href="linear-models-in-general.html#diabetes-example-1"><i class="fa fa-check"></i><b>7.95</b> Diabetes Example</a></li>
-</ul></li>
 <li class="divider"></li>
 <li><a href="https://github.com/rstudio/bookdown" target="blank">Published with bookdown</a></li>
 
@@ -391,25 +350,36 @@
 <h1><span class="header-section-number">Chapter 4</span> Useful matrix facts</h1>
 <div id="notation" class="section level2" number="4.1">
 <h2><span class="header-section-number">4.1</span> Notation</h2>
-<p>A matrix <span class="math inline">\(A\)</span> with <span class="math inline">\(m\)</span> rows and <span class="math inline">\(n\)</span> columns (an <span class="math inline">\(m\times n\)</span> matrix) will be denoted as
-<span class="math display">\[A = \begin{bmatrix}
-A_{1,1} &amp; A_{2,1} &amp; \cdots &amp; A_{1,n} \\
-A_{2,1} &amp; A_{2,1} &amp; \cdots &amp; A_{2,n} \\
+<p>A matrix <span class="math inline">\(\mathbf{A}\)</span> with <span class="math inline">\(m\)</span> rows and <span class="math inline">\(n\)</span> columns (an <span class="math inline">\(m\times n\)</span> matrix) will be denoted as
+<span class="math display">\[\mathbf{A} = \begin{bmatrix}
+\mathbf{A}_{1,1} &amp; \mathbf{A}_{2,1} &amp; \cdots &amp; \mathbf{A}_{1,n} \\
+\mathbf{A}_{2,1} &amp; \mathbf{A}_{2,1} &amp; \cdots &amp; \mathbf{A}_{2,n} \\
 \vdots &amp; \vdots &amp; \ddots &amp; \vdots \\
-A_{m,1} &amp; A_{m,2} &amp; \cdots &amp; A_{m,n} \\
-\end{bmatrix}.
+\mathbf{A}_{m,1} &amp; \mathbf{A}_{m,2} &amp; \cdots &amp; \mathbf{A}_{m,n} \\
+\end{bmatrix},
 \]</span></p>
-<p>where, <span class="math inline">\(A_{i,j}\)</span> denotes the element in row <span class="math inline">\(i\)</span> and column <span class="math inline">\(j\)</span> of matrix <span class="math inline">\(A\)</span>.</p>
+<p>where <span class="math inline">\(\mathbf{A}_{i,j}\)</span> denotes the element in row <span class="math inline">\(i\)</span> and column <span class="math inline">\(j\)</span> of matrix <span class="math inline">\(\mathbf{A}\)</span>.</p>
+<p>A <strong>column vector</strong> is a matrix with a single column. A <strong>row vector</strong> is a matrix with a single row.</p>
+<ul>
+<li>Vectors are commonly denoted with bold lowercase letters such as <span class="math inline">\(\mathbf{a}\)</span> or <span class="math inline">\(\mathbf{b}\)</span>, but this may be simplified to lowercase letters such as <span class="math inline">\(a\)</span> or <span class="math inline">\(b\)</span>.</li>
+</ul>
+<p>A <span class="math inline">\(p\times 1\)</span> column vector <span class="math inline">\(\mathbf{a}\)</span> may constructed as
+<span class="math display">\[\mathbf{a} = [a_1, a_2, \ldots, a_p]^T = 
+\begin{bmatrix}
+a_1 &amp; a_2 &amp; \cdots &amp; a_p
+\end{bmatrix}^T = \begin{bmatrix}
+a_1 \\ a_2 \\ \vdots \\ a_p
+\end{bmatrix}.\]</span></p>
 </div>
 <div id="basic-mathematical-properties" class="section level2" number="4.2">
 <h2><span class="header-section-number">4.2</span> Basic mathematical properties</h2>
 <div id="addition-and-subtraction" class="section level3" number="4.2.1">
 <h3><span class="header-section-number">4.2.1</span> Addition and subtraction</h3>
-<p>Consider matrices <span class="math inline">\(A\)</span> and <span class="math inline">\(B\)</span> with identical sizes <span class="math inline">\(m\times n\)</span>.</p>
-<p>We add <span class="math inline">\(A\)</span> and <span class="math inline">\(B\)</span> by adding the element in position <span class="math inline">\(i,j\)</span> of <span class="math inline">\(B\)</span> with the element in position <span class="math inline">\(i,j\)</span> of <span class="math inline">\(A\)</span>, i.e.,</p>
-<p><span class="math display">\[(A + B)_{i,j} = A_{i,j} + B_{i,j}.\]</span></p>
-<p>Similarly, if we subtract <span class="math inline">\(B\)</span> from matrix <span class="math inline">\(A\)</span>, then we subtract the element in position <span class="math inline">\(i,j\)</span> of <span class="math inline">\(B\)</span> from the element in position <span class="math inline">\(i,j\)</span> of <span class="math inline">\(A\)</span>, i.e.,</p>
-<p><span class="math display">\[(A - B)_{i,j} = A_{i,j} - B_{i,j}.\]</span></p>
+<p>Consider matrices <span class="math inline">\(\mathbf{A}\)</span> and <span class="math inline">\(\mathbf{B}\)</span> with identical sizes <span class="math inline">\(m\times n\)</span>.</p>
+<p>We add <span class="math inline">\(\mathbf{A}\)</span> and <span class="math inline">\(\mathbf{B}\)</span> by adding the element in position <span class="math inline">\(i,j\)</span> of <span class="math inline">\(\mathbf{B}\)</span> with the element in position <span class="math inline">\(i,j\)</span> of <span class="math inline">\(A\)</span>, i.e.,</p>
+<p><span class="math display">\[(\mathbf{A} + \mathbf{B})_{i,j} = \mathbf{A}_{i,j} + \mathbf{B}_{i,j}.\]</span></p>
+<p>Similarly, if we subtract <span class="math inline">\(\mathbf{B}\)</span> from matrix <span class="math inline">\(\mathbf{A}\)</span>, then we subtract the element in position <span class="math inline">\(i,j\)</span> of <span class="math inline">\(\mathbf{B}\)</span> from the element in position <span class="math inline">\(i,j\)</span> of <span class="math inline">\(\mathbf{A}\)</span>, i.e.,</p>
+<p><span class="math display">\[(\mathbf{A} - \mathbf{B})_{i,j} = \mathbf{A}_{i,j} - \mathbf{B}_{i,j}.\]</span></p>
 <p>Example:</p>
 <p><span class="math display">\[\begin{bmatrix}
 1 &amp; 2 &amp; 3 \\
@@ -438,9 +408,8 @@ A_{m,1} &amp; A_{m,2} &amp; \cdots &amp; A_{m,n} \\
 </div>
 <div id="scalar-multiplication" class="section level3" number="4.2.2">
 <h3><span class="header-section-number">4.2.2</span> Scalar multiplication</h3>
-<p>Consider an <span class="math inline">\(m\times n\)</span> matrix <span class="math inline">\(A\)</span>.</p>
-<p>A matrix multiplied by a scalar value <span class="math inline">\(c\in\mathbb{R}\)</span> is the matrix obtained by multiplying each element of the matrix by <span class="math inline">\(c\)</span>, i.e.,
-<span class="math display">\[(cA)_{i,j} = cA_{i,j}.\]</span>
+<p>A matrix multiplied by a scalar value <span class="math inline">\(c\in\mathbb{R}\)</span> is the matrix obtained by multiplying each element of the matrix by <span class="math inline">\(c\)</span>. If <span class="math inline">\(\mathbf{A}\)</span> is a matrix and <span class="math inline">\(c\in \mathbb{R}\)</span>, then
+<span class="math display">\[(c\mathbf{A})_{i,j} = c\mathbf{A}_{i,j}.\]</span>
 Example: <span class="math display">\[3\begin{bmatrix}
 1 &amp; 2 &amp; 3 \\
 4 &amp; 5 &amp; 6 \\
@@ -456,8 +425,8 @@ Example: <span class="math display">\[3\begin{bmatrix}
 </div>
 <div id="matrix-multiplication" class="section level3" number="4.2.3">
 <h3><span class="header-section-number">4.2.3</span> Matrix multiplication</h3>
-<p>Consider two matrices <span class="math inline">\(A\)</span> and <span class="math inline">\(C\)</span>. The matrix product <span class="math inline">\(AC\)</span> is only defined if the number of columns in <span class="math inline">\(A\)</span> matches the number of columns in <span class="math inline">\(C\)</span>.</p>
-<p>Assume <span class="math inline">\(A\)</span> is an <span class="math inline">\(m\times n\)</span> matrix and <span class="math inline">\(C\)</span> is an <span class="math inline">\(n\times p\)</span> matrix. <span class="math inline">\(AC\)</span> will be an <span class="math inline">\(m\timesp\)</span> matrix and <span class="math display">\[(AC)_{i,j} = \sum_{k=1}^{n} A_{i,k}C_{k,j}.\]</span></p>
+<p>Consider two matrices <span class="math inline">\(\mathbf{A}\)</span> and <span class="math inline">\(\mathbf{B}\)</span>. The matrix product <span class="math inline">\(\mathbf{AB}\)</span> is only defined if the number of columns in <span class="math inline">\(\mathbf{A}\)</span> matches the number of rows in <span class="math inline">\(\mathbf{B}\)</span>.</p>
+<p>Assume <span class="math inline">\(\mathbf{A}\)</span> is an <span class="math inline">\(m\times n\)</span> matrix and <span class="math inline">\(\mathbf{B}\)</span> is an <span class="math inline">\(n\times p\)</span> matrix. <span class="math inline">\(\mathbf{AB}\)</span> will be an <span class="math inline">\(m\times p\)</span> matrix and <span class="math display">\[(\mathbf{AB})_{i,j} = \sum_{k=1}^{n} \mathbf{A}_{i,k}\mathbf{B}_{k,j}.\]</span></p>
 <p>Example: <span class="math display">\[\begin{bmatrix}
 1 &amp; 2 &amp; 3 \\
 4 &amp; 5 &amp; 6
@@ -478,20 +447,20 @@ Example: <span class="math display">\[3\begin{bmatrix}
 </div>
 <div id="associative-property" class="section level3" number="4.2.4">
 <h3><span class="header-section-number">4.2.4</span> Associative property</h3>
-<p>Addition and multiplication satisfy the associative property for matrices. Assuming that the matrices <span class="math inline">\(A\)</span>, <span class="math inline">\(B\)</span>, and <span class="math inline">\(C\)</span> have the sizes required to do the operations below, then</p>
-<p><span class="math display">\[(A + B) + C = A + (B + C)\]</span>
+<p>Addition and multiplication satisfy the associative property for matrices. Assuming that the matrices <span class="math inline">\(\mathbf{A}\)</span>, <span class="math inline">\(\mathbf{B}\)</span>, and <span class="math inline">\(\mathbf{C}\)</span> have the sizes required to do the operations below, then</p>
+<p><span class="math display">\[(\mathbf{A} + \mathbf{B}) + \mathbf{C} = \mathbf{A} + (\mathbf{B} + \mathbf{C})\]</span>
 and
-<span class="math display">\[(AB)C=A(BC).\]</span></p>
+<span class="math display">\[(\mathbf{AB})\mathbf{C}=\mathbf{A}(\mathbf{BC}).\]</span></p>
 </div>
 <div id="distributive-property" class="section level3" number="4.2.5">
 <h3><span class="header-section-number">4.2.5</span> Distributive property</h3>
-<p>Matrix operations satisfy the distributive property. Assuming that the matrices <span class="math inline">\(A\)</span>, <span class="math inline">\(B\)</span>, and <span class="math inline">\(C\)</span> have the sizes required to do the operations below, then</p>
-<p><span class="math display">\[A(B+C)=AB + AC\quad\mathrm{and}\quad (A+B)C = AB + BC.\]</span></p>
+<p>Matrix operations satisfy the distributive property. Assuming that the matrices <span class="math inline">\(\mathbf{A}\)</span>, <span class="math inline">\(\mathbf{B}\)</span>, and <span class="math inline">\(\mathbf{C}\)</span> have the sizes required to do the operations below, then</p>
+<p><span class="math display">\[\mathbf{A}(\mathbf{B}+\mathbf{C})=\mathbf{AB} + \mathbf{AC}\quad\mathrm{and}\quad (\mathbf{A}+\mathbf{B})\mathbf{C} = \mathbf{AC} + \mathbf{BC}.\]</span></p>
 </div>
 <div id="no-commutative-property" class="section level3" number="4.2.6">
 <h3><span class="header-section-number">4.2.6</span> No commutative property</h3>
 <p>In general, matrix multiplication does not satisfy the commutative property, i.e.,
-<span class="math display">\[AB \neq BA,\]</span> even when the matrix sizes allow the operations to be performed.</p>
+<span class="math display">\[AB \neq BA,\]</span> even when the matrix sizes allow the operation to be performed.</p>
 <p>Example:</p>
 <p><span class="math display">\[\begin{bmatrix}
 1 &amp; 2
@@ -523,7 +492,7 @@ and
 <h2><span class="header-section-number">4.3</span> Transpose and related properties</h2>
 <div id="definition" class="section level3" number="4.3.1">
 <h3><span class="header-section-number">4.3.1</span> Definition</h3>
-<p>The transpose of a matrix, denoted <span class="math inline">\(T\)</span> as a superscript, exchanges the rows and columns of the matrix. More formally, the <span class="math inline">\(i,j\)</span> element of <span class="math inline">\(A^T\)</span> is the <span class="math inline">\(j,i\)</span> element of <span class="math inline">\(A\)</span>, i.e., <span class="math inline">\((A^T)_{i,j} = A_{j,i}\)</span>.</p>
+<p>The <strong>transpose</strong> of a matrix, denoted <span class="math inline">\(T\)</span> as a superscript, exchanges the rows and columns of the matrix. More formally, the <span class="math inline">\(i,j\)</span> element of <span class="math inline">\(\mathbf{A}^T\)</span> is the <span class="math inline">\(j,i\)</span> element of <span class="math inline">\(\mathbf{A}\)</span>, i.e., <span class="math inline">\((\mathbf{A}^T)_{i,j} = \mathbf{A}_{j,i}\)</span>.</p>
 <p>Example:</p>
 <p><span class="math display">\[\begin{bmatrix}
 2 &amp; 9 &amp; 3 \\
@@ -537,13 +506,13 @@ and
 </div>
 <div id="transpose-and-mathematical-operations" class="section level3" number="4.3.2">
 <h3><span class="header-section-number">4.3.2</span> Transpose and mathematical operations</h3>
-<p>Assume that <span class="math inline">\(A\)</span>, <span class="math inline">\(B\)</span>, and <span class="math inline">\(C\)</span> are matrices such that each of the matrix operations can be below. Additionally, assume that <span class="math inline">\(c\in \mathbb{R}\)</span> is a scalar constant.</p>
+<p>Assume that the matrices <span class="math inline">\(\mathbf{A}\)</span>, <span class="math inline">\(\mathbf{B}\)</span>, and <span class="math inline">\(\mathbf{C}\)</span> have the sizes required to perform the operations below. Additionally, assume that <span class="math inline">\(c\in \mathbb{R}\)</span> is a scalar constant.</p>
 <p>The following properties are true:</p>
 <ul>
 <li><span class="math inline">\(c^T = c\)</span></li>
-<li><span class="math inline">\((A + B)^T = A^T + B^T\)</span></li>
-<li><span class="math inline">\((AB)^T = B^T A^T\)</span> which can be extended to <span class="math inline">\((ABC)^T=C^T B^T A^T\)</span>, etc.</li>
-<li><span class="math inline">\((A^T)^T=A\)</span></li>
+<li><span class="math inline">\((\mathbf{A} + \mathbf{B})^T = \mathbf{A}^T + \mathbf{B}^T\)</span></li>
+<li><span class="math inline">\((\mathbf{AB})^T = \mathbf{B}^T \mathbf{A}^T\)</span>, which can be extended to <span class="math inline">\((\mathbf{ABC})^T=\mathbf{C}^T \mathbf{B}^T \mathbf{A}^T\)</span>, etc.</li>
+<li><span class="math inline">\((\mathbf{A}^T)^T=\mathbf{A}\)</span></li>
 </ul>
 </div>
 </div>
@@ -551,46 +520,54 @@ and
 <h2><span class="header-section-number">4.4</span> Special matrices</h2>
 <div id="square-matrices" class="section level3" number="4.4.1">
 <h3><span class="header-section-number">4.4.1</span> Square matrices</h3>
-<p>A matrix is square if the number of rows equals the number of columns. The diagonal elements of an <span class="math inline">\(n\times n\)</span> square matrix <span class="math inline">\(A\)</span> are the elements A_{i,i} for <span class="math inline">\(i = 1, 2, \ldots, n\)</span>. Any non-diagonal elements of <span class="math inline">\(A\)</span> are called off-diagonal elements.</p>
+<p>A matrix is <strong>square</strong> if the number of rows equals the number of columns. The <strong>diagonal elements</strong> of an <span class="math inline">\(n\times n\)</span> square matrix <span class="math inline">\(\mathbf{A}\)</span> are the elements <span class="math inline">\(\mathbf{A}_{i,i}\)</span> for <span class="math inline">\(i = 1, 2, \ldots, n\)</span>. Any non-diagonal elements of <span class="math inline">\(\mathbf{A}\)</span> are called off-diagonal elements.</p>
 </div>
 <div id="identity-matrix" class="section level3" number="4.4.2">
 <h3><span class="header-section-number">4.4.2</span> Identity matrix</h3>
-<p>The <span class="math inline">\(n\times n\)</span> identity matrix <span class="math inline">\(I_{n\timesn}\)</span> is 1 for its diagonal elements and 0 for its off-diagonal elements.</p>
+<p>The <span class="math inline">\(n\times n\)</span> identity matrix <span class="math inline">\(\mathbf{I}_{n\times n}\)</span> is 1 for its diagonal elements and 0 for its off-diagonal elements. Context often makes it clear what the dimensions of an identity matrix are, so <span class="math inline">\(\mathbf{I}_{n\times n}\)</span> is often simplified to <span class="math inline">\(\mathbf{I}\)</span> or <span class="math inline">\(I\)</span>.</p>
 <p>Example:</p>
-$I_{3} =
-<span class="math display">\[\begin{bmatrix}
+<p><span class="math display">\[\mathbf{I}_{3\times 3} = \begin{bmatrix}
 1 &amp; 0 &amp; 0 \\
 0 &amp; 1 &amp; 0 \\
 0 &amp; 0 &amp; 1
-\end{bmatrix}\]</span>
+\end{bmatrix}\]</span></p>
 </div>
 <div id="symmetric" class="section level3" number="4.4.3">
 <h3><span class="header-section-number">4.4.3</span> Symmetric</h3>
-<p>A matrix <span class="math inline">\(A\)</span> is symmetric if <span class="math inline">\(A = A^T\)</span>. Only square matrices can be symmetric (but not all square matrices are symmetric.)</p>
+<p>A matrix <span class="math inline">\(\mathbf{A}\)</span> is <strong>symmetric</strong> if <span class="math inline">\(\mathbf{A} = \mathbf{A}^T\)</span>, i.e., <span class="math inline">\(\mathbf{A}_{i,j} = \mathbf{A}_{j,i}\)</span> for all potential <span class="math inline">\(i,j\)</span>.</p>
+<ul>
+<li>A symmetric matrix must be square.</li>
+</ul>
 </div>
 <div id="idempotent" class="section level3" number="4.4.4">
 <h3><span class="header-section-number">4.4.4</span> Idempotent</h3>
-<p>A matrix is idempotent if <span class="math inline">\(AA = A\)</span>. Only square matrices can be idempotent (but not all square matrices are idempotent).</p>
+<p>A matrix is <strong>idempotent</strong> if <span class="math inline">\(\mathbf{AA} = \mathbf{A}\)</span></p>
+<ul>
+<li>An idempotent matrix must be square.</li>
+</ul>
 </div>
 </div>
 <div id="matrix-inverse" class="section level2" number="4.5">
 <h2><span class="header-section-number">4.5</span> Matrix inverse</h2>
-<p>An <span class="math inline">\(n\times n\)</span> square matrix <span class="math inline">\(A\)</span> is invertible if there exists a matrix <span class="math inline">\(B\)</span> such that <span class="math inline">\(AB=BA=I_{n\times n}\)</span>. The inverse of <span class="math inline">\(A\)</span> is denoted <span class="math inline">\(A^{-1}\)</span>.</p>
-<p>Inverse matrices do not exist for non-square matrices.</p>
-<p>Some other properties of the matrix inverse:</p>
+<p>An <span class="math inline">\(n\times n\)</span> matrix <span class="math inline">\(\mathbf{A}\)</span> is invertible if there exists a matrix <span class="math inline">\(\mathbf{B}\)</span> such that <span class="math inline">\(\mathbf{AB}=\mathbf{BA}=\mathbf{I}_{n\times n}\)</span>. The inverse of <span class="math inline">\(\mathbf{A}\)</span> is denoted <span class="math inline">\(\mathbf{A}^{-1}\)</span>.</p>
 <ul>
-<li>If <span class="math inline">\(n\times n\)</span> matrices <span class="math inline">\(A\)</span> and <span class="math inline">\(B\)</span> are invertible then <span class="math inline">\((AB)^{-1} = B^{-1} A ^{-1}\)</span>.</li>
-<li>If <span class="math inline">\(A\)</span> is invertible then <span class="math inline">\((A^-1)^T = (A^T)^{-1}\)</span>.</li>
+<li>Inverse matrices only exist for square matrices.</li>
+</ul>
+<p>Some other properties related to the inverse operator:</p>
+<ul>
+<li>If <span class="math inline">\(n\times n\)</span> matrices <span class="math inline">\(\mathbf{A}\)</span> and <span class="math inline">\(\mathbf{B}\)</span> are invertible then <span class="math inline">\((\mathbf{AB})^{-1} = \mathbf{B}^{-1} \mathbf{A} ^{-1}\)</span>.</li>
+<li>If <span class="math inline">\(\mathbf{A}\)</span> is invertible then <span class="math inline">\((\mathbf{A}^{-1})^T = (\mathbf{A}^T)^{-1}\)</span>.</li>
 </ul>
 </div>
 <div id="matrix-derivatives" class="section level2" number="4.6">
 <h2><span class="header-section-number">4.6</span> Matrix derivatives</h2>
-<p>Let <span class="math inline">\(f(b)\)</span> be a function of a scalar value <span class="math inline">\(b\)</span> and <span class="math inline">\(df(b)/db\)</span> denotes the derivative of the function with respect to <span class="math inline">\(b\)</span>. Then the following is true:</p>
+<p>We start with some basic calculus results.</p>
+<p>Let <span class="math inline">\(f(b)\)</span> be a function of a scalar value <span class="math inline">\(b\)</span> and <span class="math inline">\(\frac{df(b)}{db}\)</span> denote the derivative of the function with respect to <span class="math inline">\(b\)</span>. Assume <span class="math inline">\(x\)</span> is a fixed value. Then the following is true:</p>
 <table>
 <thead>
 <tr class="header">
 <th><span class="math inline">\(f(b)\)</span></th>
-<th><span class="math inline">\(df(b)/db\)</span></th>
+<th><span class="math inline">\(\frac{df(b)}{db}\)</span></th>
 </tr>
 </thead>
 <tbody>
@@ -608,33 +585,34 @@ $I_{3} =
 </tr>
 </tbody>
 </table>
-<p>Let <span class="math inline">\(f(\mathbf{b})\)</span> be a function of a <span class="math inline">\(p\times 1\)</span> column vector <span class="math inline">\(\mathbb{b}=[b_1\;b_2\;\cdots\; b_p]^T\)</span>. The derivative of <span class="math inline">\(f(\mathbf{b})\)</span> with respect to <span class="math inline">\(\mathbf{b}\)</span> is denoted <span class="math inline">\(df(\mathbf{b})/d\mathbf{b}\)</span> and
-<span class="math display">\[\frac{df(\mathbf{b})}{d\mathbf{b}} = \begin{bmatrix}
-\frac{df(\mathbf{b})}{db_1}\\
-\frac{df(\mathbf{b})}{db_2}\\
+<p>Now lets look at the deriviate of a scalar function with respect to a vector.</p>
+<p>Let <span class="math inline">\(f(\mathbf{b})\)</span> be a function of a <span class="math inline">\(p\times 1\)</span> column vector <span class="math inline">\(\mathbb{b}=[b_1, b_2, \ldots, b_p]^T\)</span>. The derivative of <span class="math inline">\(f(\mathbf{b})\)</span> with respect to <span class="math inline">\(\mathbf{b}\)</span> is denoted <span class="math inline">\(\frac{\partial f(\mathbf{b})}{\partial \mathbf{b}}\)</span> and
+<span class="math display">\[\frac{\partial f(\mathbf{b})}{\partial \mathbf{b}} = \begin{bmatrix}
+\frac{\partial f(\mathbf{b})}{\partial b_1}\\
+\frac{\partial f(\mathbf{b})}{\partial b_2}\\
 \vdots \\
-\frac{df(\mathbf{b})}{db_p}
+\frac{\partial f(\mathbf{b})}{\partial b_p}
 \end{bmatrix}.\]</span></p>
-<p>The following is true:</p>
+<p>Assume <span class="math inline">\(\mathbf{X}\)</span> is a fixed matrix. The following is true:</p>
 <table>
 <thead>
 <tr class="header">
-<th><span class="math inline">\(f(b)\)</span></th>
-<th><span class="math inline">\(df(b)/db\)</span></th>
+<th><span class="math inline">\(f(\mathbf{b})\)</span></th>
+<th><span class="math inline">\(\frac{\partial f(\mathbf{b})}{\partial \mathbf{b}}\)</span></th>
 </tr>
 </thead>
 <tbody>
 <tr class="odd">
-<td><span class="math inline">\(\mathbf{b}^T A\)</span></td>
-<td><span class="math inline">\(A\)</span></td>
+<td><span class="math inline">\(\mathbf{b}^T \mathbf{X}\)</span></td>
+<td><span class="math inline">\(\mathbf{X}\)</span></td>
 </tr>
 <tr class="even">
-<td>$^T </td>
+<td><span class="math inline">\(\mathbf{b}^T \mathbf{b}\)</span></td>
 <td><span class="math inline">\(2\mathbf{b}\)</span></td>
 </tr>
 <tr class="odd">
-<td><span class="math inline">\(\mathbf{b}^T A \mathbf{b}\)</span></td>
-<td><span class="math inline">\(2A\mathbf{b}\)</span></td>
+<td><span class="math inline">\(\mathbf{b}^T \mathbf{X} \mathbf{b}\)</span></td>
+<td><span class="math inline">\(2\mathbf{X}\mathbf{b}\)</span></td>
 </tr>
 </tbody>
 </table>
@@ -698,7 +676,7 @@ $I_{3} =
         </div>
       </div>
 <a href="review-of-probability-random-variables-and-random-vectors.html" class="navigation navigation-prev " aria-label="Previous page"><i class="fa fa-angle-left"></i></a>
-<a href="linear-models-and-regression.html" class="navigation navigation-next " aria-label="Next page"><i class="fa fa-angle-right"></i></a>
+<a href="defining-a-linear-model.html" class="navigation navigation-next " aria-label="Next page"><i class="fa fa-angle-right"></i></a>
     </div>
   </div>
 <script src="libs/gitbook-2.6.7/js/app.min.js"></script>
@@ -740,7 +718,7 @@ gitbook.start({
 "link": null,
 "text": null
 },
-"download": ["bookdown_test.pdf", "bookdown_test.epub"],
+"download": ["Data-Analysis-with-Linear-Regression.pdf", "Data-Analysis-with-Linear-Regression.epub"],
 "toc": {
 "collapse": "subsection"
 }
