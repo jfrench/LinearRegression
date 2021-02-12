@@ -317,14 +317,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <li class="chapter" data-level="5.4" data-path="defining-a-linear-model.html"><a href="defining-a-linear-model.html#summarizing-the-components-of-a-linear-model"><i class="fa fa-check"></i><b>5.4</b> Summarizing the components of a linear model</a></li>
 <li class="chapter" data-level="5.5" data-path="defining-a-linear-model.html"><a href="defining-a-linear-model.html#types-of-regression-models"><i class="fa fa-check"></i><b>5.5</b> Types of regression models</a></li>
 </ul></li>
-<li class="chapter" data-level="6" data-path="fitting-a-linear-model.html"><a href="fitting-a-linear-model.html"><i class="fa fa-check"></i><b>6</b> Fitting a linear model</a>
-<ul>
-<li class="chapter" data-level="6.1" data-path="fitting-a-linear-model.html"><a href="fitting-a-linear-model.html#simple-linear-regression"><i class="fa fa-check"></i><b>6.1</b> Simple Linear Regression</a>
-<ul>
-<li class="chapter" data-level="6.1.1" data-path="fitting-a-linear-model.html"><a href="fitting-a-linear-model.html#model-description"><i class="fa fa-check"></i><b>6.1.1</b> Model description</a></li>
-<li class="chapter" data-level="6.1.2" data-path="fitting-a-linear-model.html"><a href="fitting-a-linear-model.html#interpreting-the-regression-coefficients"><i class="fa fa-check"></i><b>6.1.2</b> Interpreting the regression coefficients</a></li>
-</ul></li>
-</ul></li>
+<li class="chapter" data-level="6" data-path="fitting-a-linear-model.html"><a href="fitting-a-linear-model.html"><i class="fa fa-check"></i><b>6</b> Fitting a linear model</a></li>
 <li class="chapter" data-level="" data-path="references.html"><a href="references.html"><i class="fa fa-check"></i>References</a></li>
 <li class="divider"></li>
 <li><a href="https://github.com/rstudio/bookdown" target="blank">Published with bookdown</a></li>
@@ -536,51 +529,10 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <li>Look for anything unusual or unexpected, perhaps indicating a data-entry error.</li>
 </ul></li>
 </ul>
-<p>Let’s look at the sorted <code>diastolic</code> values.</p>
-<div class="sourceCode" id="cb26"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb26-1"><a href="data-exploration.html#cb26-1" aria-hidden="true" tabindex="-1"></a><span class="fu">sort</span>(pima<span class="sc">$</span>diastolic)</span>
-<span id="cb26-2"><a href="data-exploration.html#cb26-2" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;   [1]   0   0   0   0   0   0   0   0   0   0   0   0   0   0   0   0   0   0</span></span>
-<span id="cb26-3"><a href="data-exploration.html#cb26-3" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;  [19]   0   0   0   0   0   0   0   0   0   0   0   0   0   0   0   0   0  24</span></span>
-<span id="cb26-4"><a href="data-exploration.html#cb26-4" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;  [37]  30  30  38  40  44  44  44  44  46  46  48  48  48  48  48  50  50  50</span></span>
-<span id="cb26-5"><a href="data-exploration.html#cb26-5" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;  [55]  50  50  50  50  50  50  50  50  50  50  52  52  52  52  52  52  52  52</span></span>
-<span id="cb26-6"><a href="data-exploration.html#cb26-6" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;  [73]  52  52  52  54  54  54  54  54  54  54  54  54  54  54  55  55  56  56</span></span>
-<span id="cb26-7"><a href="data-exploration.html#cb26-7" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;  [91]  56  56  56  56  56  56  56  56  56  56  58  58  58  58  58  58  58  58</span></span>
-<span id="cb26-8"><a href="data-exploration.html#cb26-8" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; [109]  58  58  58  58  58  58  58  58  58  58  58  58  58  60  60  60  60  60</span></span>
-<span id="cb26-9"><a href="data-exploration.html#cb26-9" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; [127]  60  60  60  60  60  60  60  60  60  60  60  60  60  60  60  60  60  60</span></span>
-<span id="cb26-10"><a href="data-exploration.html#cb26-10" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; [145]  60  60  60  60  60  60  60  60  60  60  60  60  60  60  61  62  62  62</span></span>
-<span id="cb26-11"><a href="data-exploration.html#cb26-11" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; [163]  62  62  62  62  62  62  62  62  62  62  62  62  62  62  62  62  62  62</span></span>
-<span id="cb26-12"><a href="data-exploration.html#cb26-12" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; [181]  62  62  62  62  62  62  62  62  62  62  62  62  62  64  64  64  64  64</span></span>
-<span id="cb26-13"><a href="data-exploration.html#cb26-13" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; [199]  64  64  64  64  64  64  64  64  64  64  64  64  64  64  64  64  64  64</span></span>
-<span id="cb26-14"><a href="data-exploration.html#cb26-14" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; [217]  64  64  64  64  64  64  64  64  64  64  64  64  64  64  64  64  64  64</span></span>
-<span id="cb26-15"><a href="data-exploration.html#cb26-15" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; [235]  64  64  65  65  65  65  65  65  65  66  66  66  66  66  66  66  66  66</span></span>
-<span id="cb26-16"><a href="data-exploration.html#cb26-16" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; [253]  66  66  66  66  66  66  66  66  66  66  66  66  66  66  66  66  66  66</span></span>
-<span id="cb26-17"><a href="data-exploration.html#cb26-17" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; [271]  66  66  66  68  68  68  68  68  68  68  68  68  68  68  68  68  68  68</span></span>
-<span id="cb26-18"><a href="data-exploration.html#cb26-18" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; [289]  68  68  68  68  68  68  68  68  68  68  68  68  68  68  68  68  68  68</span></span>
-<span id="cb26-19"><a href="data-exploration.html#cb26-19" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; [307]  68  68  68  68  68  68  68  68  68  68  68  68  70  70  70  70  70  70</span></span>
-<span id="cb26-20"><a href="data-exploration.html#cb26-20" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; [325]  70  70  70  70  70  70  70  70  70  70  70  70  70  70  70  70  70  70</span></span>
-<span id="cb26-21"><a href="data-exploration.html#cb26-21" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; [343]  70  70  70  70  70  70  70  70  70  70  70  70  70  70  70  70  70  70</span></span>
-<span id="cb26-22"><a href="data-exploration.html#cb26-22" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; [361]  70  70  70  70  70  70  70  70  70  70  70  70  70  70  70  72  72  72</span></span>
-<span id="cb26-23"><a href="data-exploration.html#cb26-23" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; [379]  72  72  72  72  72  72  72  72  72  72  72  72  72  72  72  72  72  72</span></span>
-<span id="cb26-24"><a href="data-exploration.html#cb26-24" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; [397]  72  72  72  72  72  72  72  72  72  72  72  72  72  72  72  72  72  72</span></span>
-<span id="cb26-25"><a href="data-exploration.html#cb26-25" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; [415]  72  72  72  72  72  74  74  74  74  74  74  74  74  74  74  74  74  74</span></span>
-<span id="cb26-26"><a href="data-exploration.html#cb26-26" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; [433]  74  74  74  74  74  74  74  74  74  74  74  74  74  74  74  74  74  74</span></span>
-<span id="cb26-27"><a href="data-exploration.html#cb26-27" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; [451]  74  74  74  74  74  74  74  74  74  74  74  74  74  74  74  74  74  74</span></span>
-<span id="cb26-28"><a href="data-exploration.html#cb26-28" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; [469]  74  74  74  75  75  75  75  75  75  75  75  76  76  76  76  76  76  76</span></span>
-<span id="cb26-29"><a href="data-exploration.html#cb26-29" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; [487]  76  76  76  76  76  76  76  76  76  76  76  76  76  76  76  76  76  76</span></span>
-<span id="cb26-30"><a href="data-exploration.html#cb26-30" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; [505]  76  76  76  76  76  76  76  76  76  76  76  76  76  76  78  78  78  78</span></span>
-<span id="cb26-31"><a href="data-exploration.html#cb26-31" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; [523]  78  78  78  78  78  78  78  78  78  78  78  78  78  78  78  78  78  78</span></span>
-<span id="cb26-32"><a href="data-exploration.html#cb26-32" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; [541]  78  78  78  78  78  78  78  78  78  78  78  78  78  78  78  78  78  78</span></span>
-<span id="cb26-33"><a href="data-exploration.html#cb26-33" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; [559]  78  78  78  78  78  80  80  80  80  80  80  80  80  80  80  80  80  80</span></span>
-<span id="cb26-34"><a href="data-exploration.html#cb26-34" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; [577]  80  80  80  80  80  80  80  80  80  80  80  80  80  80  80  80  80  80</span></span>
-<span id="cb26-35"><a href="data-exploration.html#cb26-35" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; [595]  80  80  80  80  80  80  80  80  80  82  82  82  82  82  82  82  82  82</span></span>
-<span id="cb26-36"><a href="data-exploration.html#cb26-36" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; [613]  82  82  82  82  82  82  82  82  82  82  82  82  82  82  82  82  82  82</span></span>
-<span id="cb26-37"><a href="data-exploration.html#cb26-37" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; [631]  82  82  82  84  84  84  84  84  84  84  84  84  84  84  84  84  84  84</span></span>
-<span id="cb26-38"><a href="data-exploration.html#cb26-38" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; [649]  84  84  84  84  84  84  84  84  85  85  85  85  85  85  86  86  86  86</span></span>
-<span id="cb26-39"><a href="data-exploration.html#cb26-39" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; [667]  86  86  86  86  86  86  86  86  86  86  86  86  86  86  86  86  86  88</span></span>
-<span id="cb26-40"><a href="data-exploration.html#cb26-40" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; [685]  88  88  88  88  88  88  88  88  88  88  88  88  88  88  88  88  88  88</span></span>
-<span id="cb26-41"><a href="data-exploration.html#cb26-41" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; [703]  88  88  88  88  88  88  90  90  90  90  90  90  90  90  90  90  90  90</span></span>
-<span id="cb26-42"><a href="data-exploration.html#cb26-42" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; [721]  90  90  90  90  90  90  90  90  90  90  92  92  92  92  92  92  92  92</span></span>
-<span id="cb26-43"><a href="data-exploration.html#cb26-43" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; [739]  94  94  94  94  94  94  95  96  96  96  96  98  98  98 100 100 100 102</span></span>
-<span id="cb26-44"><a href="data-exploration.html#cb26-44" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; [757] 104 104 106 106 106 108 108 110 110 110 114 122</span></span></code></pre></div>
+<p>Let’s look at the first 40 sorted <code>diastolic</code> values.</p>
+<div class="sourceCode" id="cb26"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb26-1"><a href="data-exploration.html#cb26-1" aria-hidden="true" tabindex="-1"></a><span class="fu">sort</span>(pima<span class="sc">$</span>diastolic)[<span class="dv">1</span><span class="sc">:</span><span class="dv">40</span>]</span>
+<span id="cb26-2"><a href="data-exploration.html#cb26-2" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;  [1]  0  0  0  0  0  0  0  0  0  0  0  0  0  0  0  0  0  0  0  0  0  0  0  0  0</span></span>
+<span id="cb26-3"><a href="data-exploration.html#cb26-3" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; [26]  0  0  0  0  0  0  0  0  0  0 24 30 30 38 40</span></span></code></pre></div>
 <p>The first 35 values of <code>diastolic</code> are zero. That’s a problem.</p>
 <ul>
 <li>It seems that 0 was used in place of a missing value.</li>
@@ -617,18 +569,18 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <h2><span class="header-section-number">2.4</span> Visualizing data with <strong>base</strong> graphics</h2>
 <div id="histograms" class="section level3" number="2.4.1">
 <h3><span class="header-section-number">2.4.1</span> Histograms</h3>
-<p>The <code>hist</code> command can be used create a histogram of a numerical vector.</p>
+<p>The <code>hist</code> function can be used create a histogram of a numerical vector.</p>
 <ul>
 <li>The labels of the plot can be customized using the <code>xlab</code> and <code>ylab</code> arguments.</li>
 <li>The main title of the plot can be customized using the <code>main</code> argument.</li>
 </ul>
 <p>Here is a slightly customized histogram of diastolic blood pressure.</p>
-<div class="sourceCode" id="cb30"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb30-1"><a href="data-exploration.html#cb30-1" aria-hidden="true" tabindex="-1"></a><span class="fu">hist</span>(pima<span class="sc">$</span>dias, <span class="at">xlab =</span> <span class="st">&quot;diastolic blood pressure&quot;</span> , <span class="at">main=</span><span class="st">&quot;&quot;</span>)</span></code></pre></div>
+<div class="sourceCode" id="cb30"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb30-1"><a href="data-exploration.html#cb30-1" aria-hidden="true" tabindex="-1"></a><span class="fu">hist</span>(pima<span class="sc">$</span>diastolic, <span class="at">xlab =</span> <span class="st">&quot;diastolic blood pressure&quot;</span>, <span class="at">main =</span> <span class="st">&quot;&quot;</span>)</span></code></pre></div>
 <p><img src="Data-Analysis-with-Linear-Regression_files/figure-html/unnamed-chunk-33-1.png" width="672" /></p>
 <p>The histogram is approximately bell-shaped and centered around 70.</p>
 <p>We can change the number of breaks in the histogram by specifying the <code>breaks</code> argument of the <code>hist</code> function.</p>
 <p>Consider how the plot changes below.</p>
-<div class="sourceCode" id="cb31"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb31-1"><a href="data-exploration.html#cb31-1" aria-hidden="true" tabindex="-1"></a><span class="fu">hist</span>(pima<span class="sc">$</span>dias, <span class="at">xlab =</span> <span class="st">&quot;diastolic blood pressure&quot;</span>, <span class="at">main =</span> <span class="st">&quot;&quot;</span>, <span class="at">breaks =</span> <span class="dv">20</span>)</span></code></pre></div>
+<div class="sourceCode" id="cb31"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb31-1"><a href="data-exploration.html#cb31-1" aria-hidden="true" tabindex="-1"></a><span class="fu">hist</span>(pima<span class="sc">$</span>diastolic, <span class="at">xlab =</span> <span class="st">&quot;diastolic blood pressure&quot;</span>, <span class="at">main =</span> <span class="st">&quot;&quot;</span>, <span class="at">breaks =</span> <span class="dv">20</span>)</span></code></pre></div>
 <p><img src="Data-Analysis-with-Linear-Regression_files/figure-html/unnamed-chunk-34-1.png" width="672" /></p>
 </div>
 <div id="density-plots" class="section level3" number="2.4.2">
@@ -640,7 +592,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <li>It sometimes has weird things happen at the boundaries.</li>
 </ul>
 <p>The <code>plot</code> and <code>density</code> function can be combined to construct a density plot.</p>
-<div class="sourceCode" id="cb32"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb32-1"><a href="data-exploration.html#cb32-1" aria-hidden="true" tabindex="-1"></a><span class="fu">plot</span>(<span class="fu">density</span>(pima<span class="sc">$</span>diastolic, <span class="at">na.rm=</span><span class="cn">TRUE</span>), <span class="at">main =</span> <span class="st">&quot;&quot;</span>)</span></code></pre></div>
+<div class="sourceCode" id="cb32"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb32-1"><a href="data-exploration.html#cb32-1" aria-hidden="true" tabindex="-1"></a><span class="fu">plot</span>(<span class="fu">density</span>(pima<span class="sc">$</span>diastolic, <span class="at">na.rm =</span> <span class="cn">TRUE</span>), <span class="at">main =</span> <span class="st">&quot;&quot;</span>)</span></code></pre></div>
 <p><img src="Data-Analysis-with-Linear-Regression_files/figure-html/unnamed-chunk-35-1.png" width="672" /></p>
 <p>In the example above, we have to specify <code>na.rm = TRUE</code> so that the density is only computed using the non-missing values.</p>
 </div>
@@ -735,17 +687,17 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <h3><span class="header-section-number">2.5.4</span> Scaling <strong>ggplot2</strong> plots</h3>
 <p>In general, <em>scaling</em> is the process by which <strong>ggplot2</strong> maps variables to unique values. When this is done for discrete variables, <strong>ggplot2</strong> will often scale the variable to distinct colors, symbols, or sizes, depending on the aesthetic mapped.</p>
 <p>In the example below, we map the <code>test</code> variable to the <code>shape</code> aesthetic, which is then scaled to different shapes for the different <code>test</code> levels.</p>
-<div class="sourceCode" id="cb41"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb41-1"><a href="data-exploration.html#cb41-1" aria-hidden="true" tabindex="-1"></a>ggpima <span class="sc">+</span> </span>
+<div class="sourceCode" id="cb41"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb41-1"><a href="data-exploration.html#cb41-1" aria-hidden="true" tabindex="-1"></a>ggpima <span class="sc">+</span></span>
 <span id="cb41-2"><a href="data-exploration.html#cb41-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_point</span>(<span class="fu">aes</span>(<span class="at">x =</span> diastolic, <span class="at">y =</span> diabetes, <span class="at">shape =</span> test))</span>
 <span id="cb41-3"><a href="data-exploration.html#cb41-3" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; Warning: Removed 35 rows containing missing values (geom_point).</span></span></code></pre></div>
 <p><img src="Data-Analysis-with-Linear-Regression_files/figure-html/unnamed-chunk-43-1.png" width="672" /></p>
 <p>Alternatively, we can map the <code>test</code> variable to the <code>color</code> aesthetic, which creates a plot with different colors for each observation based on the <code>test</code> level.</p>
-<div class="sourceCode" id="cb42"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb42-1"><a href="data-exploration.html#cb42-1" aria-hidden="true" tabindex="-1"></a>ggpima <span class="sc">+</span> </span>
+<div class="sourceCode" id="cb42"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb42-1"><a href="data-exploration.html#cb42-1" aria-hidden="true" tabindex="-1"></a>ggpima <span class="sc">+</span></span>
 <span id="cb42-2"><a href="data-exploration.html#cb42-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_point</span>(<span class="fu">aes</span>(<span class="at">x =</span> diastolic, <span class="at">y =</span> diabetes, <span class="at">color =</span> test))</span>
 <span id="cb42-3"><a href="data-exploration.html#cb42-3" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; Warning: Removed 35 rows containing missing values (geom_point).</span></span></code></pre></div>
 <p><img src="Data-Analysis-with-Linear-Regression_files/figure-html/unnamed-chunk-44-1.png" width="672" /></p>
 <p>We can even combine these two aesthetic mappings in a single plot to get different colors and symbols for each level of <code>test</code>.</p>
-<div class="sourceCode" id="cb43"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb43-1"><a href="data-exploration.html#cb43-1" aria-hidden="true" tabindex="-1"></a>ggpima <span class="sc">+</span> </span>
+<div class="sourceCode" id="cb43"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb43-1"><a href="data-exploration.html#cb43-1" aria-hidden="true" tabindex="-1"></a>ggpima <span class="sc">+</span></span>
 <span id="cb43-2"><a href="data-exploration.html#cb43-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_point</span>(<span class="fu">aes</span>(<span class="at">x =</span> diastolic, <span class="at">y =</span> diabetes, <span class="at">shape =</span> test, <span class="at">color =</span> test))</span>
 <span id="cb43-3"><a href="data-exploration.html#cb43-3" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; Warning: Removed 35 rows containing missing values (geom_point).</span></span></code></pre></div>
 <p><img src="Data-Analysis-with-Linear-Regression_files/figure-html/unnamed-chunk-45-1.png" width="672" /></p>
@@ -772,7 +724,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <li>Specify the aesthetics using <code>aes</code>.
 <ul>
 <li>The aesthetic specifies what you see, such as position in the <span class="math inline">\(x\)</span> or <span class="math inline">\(y\)</span> direction or aspects such as shape or color.</li>
-<li>The aesthetic can be specifed in the geometry, or if you have consistent aesthetics across multiple geometries, in the <code>ggplot</code> statement.</li>
+<li>The aesthetic can be specified in the geometry, or if you have consistent aesthetics across multiple geometries, in the <code>ggplot</code> statement.</li>
 </ul></li>
 </ul>
 <p>The advantage of <strong>ggplot2</strong> is more apparent in producing complex plots involving more than two variables.</p>
