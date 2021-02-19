@@ -46,8 +46,7 @@ str(gala) # basic structure of gala data
 # Fit linear model using R.
 # Must use data = gala since data vectors are in gala data.frame
 lmod <- lm(Species ~ Area + Elevation + Nearest + Scruz + Adjacent, data = gala)
-library(faraway) #need for sumary function
-sumary(lmod) # the author's modified version of summary, which
+faraway::sumary(lmod) # the author's modified version of summary, which
              # produces too much information
 # extract least-squares coefficients from lmod
 coef(lmod)
@@ -71,6 +70,7 @@ names(lmodsum)
 sqrt(deviance(lmod)/df.residual(lmod))
 lmodsum$sigma
 sqrt(sum(residuals(lmod)^2)/df.residual(lmod))
+sigma(lmod)
 
 # estimated ses of estimated coefficients
 lmodsum$coef[,2]
