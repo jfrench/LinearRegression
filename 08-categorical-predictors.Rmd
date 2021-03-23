@@ -14,7 +14,6 @@ Let $X$ denote a numeric regressor, with $x_i$ denoting the value of $X$ for obs
 
 Let $F$ denote a categorical variable with levels $L_1, L_2, \ldots, L_K$. The $F$ stands for "factor", while the $L$ stands for "level". The notation $F_i$ denotes the value of $F$ for observation $i$. A regression model can only be fit for numeric regressors. In order to use a categorical predictor in a regression model, we must convert it to a set of one or more indicator variables. 
 
-
 An indicator function takes the value 1 of a certain property is true and 0 otherwise. An indicator variable is the variable that results from applying an indicator function to each observation in a data set. Many notations exist for indicator functions. We will adopt the notation 
 
 \begin{equation*}
@@ -38,16 +37,16 @@ $$ Y_i = \beta_{int} + \beta_{L_2} d_{i,2} + \cdots + \beta_{L_K} d_{i,K} + \eps
 When an observation has level $L_1$, then the expected response is $\beta_{int}$. More specifically, $$E(Y|F=L_1) = \beta_{int} + \beta_{L_2} 0 + \cdots + \beta_{L_K} 0 = \beta_{int}.$$
 
 When an observation has level $L_2$, the expected response is $\beta_{int} + \beta_{L_2}$. More formally, 
-$$E(Y|F=L_2) = \beta_{int} + \beta_{L_2} 1 + \cdots + \beta_{L_K} 0 = \beta_{int} + \beta_{L_2}.$$ Thus, the mean response for observations having level $L_2$ is $\beta_{int} + \beta_{L_2}$. Alternatively, we can say that $\beta_{L_2}$ represents the expected change in the response when comparing observations having level $L_1$ and $L_2$. In general, $E(Y|F=L_j) = \beta_{int} + \beta_{L_j}$ for $j=2,\ldots,K$.
+$$E(Y|F=L_2) = \beta_{int} + \beta_{L_2} 1 + \beta_{L_3} 0 + \cdots + \beta_{L_K} 0 = \beta_{int} + \beta_{L_2}.$$ Thus, the mean response for observations having level $L_2$ is $\beta_{int} + \beta_{L_2}$. Alternatively, we can say that $\beta_{L_2}$ represents the expected change in the response when comparing observations having level $L_1$ and $L_2$. In general, $$E(Y|F=L_j) = \beta_{int} + \beta_{L_j},\quad j=2,\ldots,K.$$
 
 In the context of a one-way ANOVA:
 
 * $\beta_{int}$ represents the expected response for observations having the reference level.
-* $\beta_{L_j}, j=2,\ldots,K$ represents the expected change in the response when comparing observations having the reference level and level $L_j$. 
+* $\beta_{L_j}$, for $j=2,\ldots,K$, represents the expected change in the response when comparing observations having the reference level and level $L_j$. 
 
 ### Main effects models
 
-A main effect model is also called a parallel lines model since the regression equations for each factor level produce lines parallel to one another.
+A main effects model is also called a parallel lines model since the regression equations for each factor level produce lines parallel to one another.
 
 A parallel lines model is formulated as
 $$ Y_i = \beta_{int} + \beta_{X} x_i + \beta_{L_2} d_{i,2} + \cdots + \beta_{L_K} d_{i,K} + \epsilon_i,\quad i=1,2,\ldots n.$$
@@ -55,14 +54,16 @@ $$ Y_i = \beta_{int} + \beta_{X} x_i + \beta_{L_2} d_{i,2} + \cdots + \beta_{L_K
 When an observation has level $L_1$, then the expected response is $\beta_{int} + \beta_1 X$. More specifically, $$E(Y|X = x, F=L_1) = \beta_{int} + \beta_X x + \beta_{L_2} 0 + \cdots + \beta_{L_K} 0 = \beta_{int} + \beta_X x.$$ Thus, $E(Y|X = 0, F=L_1) = \beta_{int}.$
 
 When an observation has level $L_2$, the expected response is $\beta_{int} + \beta_{X} X + \beta_{L_2}$. More formally, 
-$$E(Y|X = x, F=L_2) = \beta_{int} + \beta_X x + \beta_{L_2} 1 + \cdots + \beta_{L_K} 0 = \beta_{int} + \beta_X x + \beta_{L_2}.$$ Thus, the mean response for observations having level $L_2$ is $\beta_{int} + \beta_{L_2} + \beta_{X} x$. In general, $E(Y|X = x, F=L_j) = \beta_{int} + \beta_X x + \beta_{L_j}$ for $j = 2,\ldots,K$. Thus,
+$$E(Y|X = x, F=L_2) = \beta_{int} + \beta_X x + \beta_{L_2} 1 + \beta_{L_3} 0 + \cdots + \beta_{L_K} 0 = \beta_{int} + \beta_X x + \beta_{L_2}.$$ Thus, the mean response for observations having level $L_2$ is $\beta_{int} + \beta_{L_2} + \beta_{X} x$. In general, 
+$$E(Y|X = x, F=L_j) = \beta_{int} + \beta_X x + \beta_{L_j},\quad j = 2,\ldots,K.$$ Thus,
 
 $$E(Y|X=x, F=L_j) - E(Y|X=x, F=L_1) = (\beta_{int} + \beta_X x + \beta_{L_j}) - (\beta_{int} + \beta_X x) = \beta_{L_j}.$$
 
 In the context of parallel lines models:
 
-* $\beta_{int}$ represents the expected response for observations having the reference level when the numeric regression $X = 0$.
-* $\beta_{L_j}, j=2,\ldots,K$ represents the expected change in the response when comparing observations having level $L_1$ and $L_j$ with $X$ fixed at the same value. 
+* $\beta_{int}$ represents the expected response for observations having the reference level when the numeric regressor $X = 0$.
+* $\beta_X$ is the expected change in the response when $X$ increases by 1 unit for a fixed level of $F$.
+* $\beta_{L_j}$, for $j=2,\ldots,K$ represents the expected change in the response when comparing observations having level $L_1$ and $L_j$ with $X$ fixed at the same value. 
 
 ### Interaction models 
 
@@ -70,7 +71,7 @@ An interaction model is also called a separate lines model since the regression 
 
 A separate lines model is formulated as
 $$ Y_i = \beta_{int} + \beta_{X} x_i + \beta_{L_2} d_{i,2} + \cdots + \beta_{L_K} d_{i,K} + + \beta_{X L_2} x_i d_{i,2} + \cdots +  \beta_{X L_j} x_i d_{i,K} + \epsilon_i,\quad i=1,2,\ldots n.$$
-When an observation has level $L_1$, then the expected response is $\beta_{int} + \beta_1 X$. More specifically, $$E(Y|X = x, F=L_1) = \beta_{int} + \beta_X x + \beta_{L_2} 0 + \cdots + \beta_{L_K} 0  + \beta_{X L_2} x_i 0 + \cdots +  \beta_{X L_j} x_i 0 = \beta_{int} + \beta_X x.$$ Thus, $E(Y|X = 0, F=L_1) = \beta_{int}.$
+When an observation has level $L_1$, then the expected response is $\beta_{int} + \beta_1 X$. More specifically, $$E(Y|X = x, F=L_1) = \beta_{int} + \beta_X x + \beta_{L_2} 0 + \cdots + \beta_{L_K} 0  + \beta_{X L_2} x_i 0 + \cdots +  \beta_{X L_K} x_i 0 = \beta_{int} + \beta_X x.$$ Thus, $E(Y|X = 0, F=L_1) = \beta_{int}.$
 
 When an observation has level $L_j$, for $j=2,\ldots,K$, the expected response is $\beta_{int} + \beta_{X} X + \beta_{L_j} + \beta_{X L_J} X.$ More formally, 
 $$E(Y|X = x, F=L_j) = \beta_{int} + \beta_X x + \beta_{L_j} + \beta_{X L_j} x.$$
@@ -81,10 +82,10 @@ Additionally, we note that $$E(Y|X=0, F=L_j) - E(Y|X=0, F=L_1) = (\beta_{int} + 
 
 In the context of separate lines models:
 
-* $\beta_{int}$ represents the expected response for observations having the reference level when the numeric regression $X = 0$.
-* $\beta_{L_j}, j=2,\ldots,K$ represents the expected change in the response when comparing observations having level $L_1$ and $L_j$ with $X=0$.
-* $\beta_X$ represents the expected change in the response when $X$ increases by 1 unit for a fixed factor level.
-* $\beta_X L_j$ represents the difference in the expected rate of change when $X$ increases by 1 unit for observations have the baseline level in comparison to level $L_j$.
+* $\beta_{int}$ represents the expected response for observations having the reference level when the numeric regressor $X = 0$.
+* $\beta_{L_j}$, for $j=2,\ldots,K$, represents the expected change in the response when comparing observations having level $L_1$ and $L_j$ with $X=0$.
+* $\beta_X$ represents the expected change in the response when $X$ increases by 1 unit for observations having the reference level.
+* $\beta_X L_j$, for $j=2,\ldots,K$, represents the difference in the expected rate of change when $X$ increases by 1 unit for observations have the baseline level in comparison to level $L_j$.
 
 ### Extensions
 
