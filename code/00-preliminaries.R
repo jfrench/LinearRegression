@@ -2,7 +2,7 @@
 books = c("faraway", "alr4", "car", "rms")
 install.packages(books)
 # packages related to tidy/tidying data
-tidy = c("broom", "tidyr", "dplyr")
+tidy = c("broom", "tidyr", "dplyr", "tidyverse")
 install.packages(tidy)
 # packages related to plotting
 moreplots = c("ggplot2", "ggthemes", "lattice", "HH")

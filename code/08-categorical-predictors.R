@@ -15,10 +15,13 @@ Boxplot(lifeExpF ~ group, data = UN11) # easily identify outliers of boxplot
 # with functions means: using this data frame, perform the following actions ...
 # we determine whether the value of group equal to ith level of group, add 0 to convert TRUE/FALSE to 1/0
 levels(UN11$group)
-U1 = with(UN11, (group == levels(group)[1]) + 0) 
-U2 = with(UN11, (group == levels(group)[2]) + 0)
-U3 = with(UN11, (group == levels(group)[3]) + 0)
+U1 <- with(UN11, (group == levels(group)[1]) + 0)
+U2 <- with(UN11, (group == levels(group)[2]) + 0)
+U3 <- with(UN11, (group == levels(group)[3]) + 0)
 head(data.frame(group = UN11$group, U1, U2, U3), 10)
+
+(UN11$group == "oecd") + 0
+levels(UN11$group)
 
 # add dummy variables to data frame
 UN11$U1 = U1
@@ -46,10 +49,10 @@ library(dplyr)
 UN11 %>% group_by(group) %>% summarize(sample_mean = mean(lifeExpF))
 
 # fit one-way model
-lmod = lm(lifeExpF ~ group, data = UN11)
+lmod <- lm(lifeExpF ~ group, data = UN11)
 
 # effects plot of one-way model
-plot(allEffects(lmod, default.levels=50), ylim=c(60,85),
+plot(allEffects(lmod, default.levels=50), ylim=c(60, 85),
      grid=TRUE, multiline=TRUE)
 
 # plot fitted lines for each group for one-way model
@@ -59,6 +62,7 @@ mean_lifeExpF = tapply(UN11$lifeExpF, UN11$group, mean) # compute mean lifeExpF 
 mean_df = data.frame(group = names(mean_lifeExpF), mean = mean_lifeExpF)
 library(ggplot2)
 ggplot(UN11, aes(x = log(ppgdp), y = lifeExpF, col = group)) + geom_point() + geom_hline(aes(yintercept = mean, col = group), mean_df) + theme_bw() + theme(legend.position="top")
+ggplot(UN11, aes(x = log(ppgdp), y = lifeExpF)) + geom_point() + facet_wrap(~ group)
 
 # using base graphics
 grp_col = as.numeric(UN11$group)
@@ -96,7 +100,7 @@ plot(thsd)
 
 # manually produce different between other and africa
 # estimated difference +/- tukey multipler * sehat(estimated difference)
-qmult = qtukey(.95, 3, df.residual(lmod))/sqrt(2)
+qmult <- qtukey(.95, 3, df.residual(lmod))/sqrt(2)
 coef(lmod)[2] + c(-1, 1) * qmult * sqrt(diag(vcov(lmod))[2])
 coef(lmod)[3] + c(-1, 1) * qmult * sqrt(diag(vcov(lmod))[3])
 -diff_23 + c(-1, 1) * qmult * se_diff_23
@@ -142,15 +146,15 @@ abline(59.21366 - 22.98484, 2.24254 + 1.09498, col = 3)
 legend("topleft", legend = c("oecd", "other", "africa"), col = 1:3, pch = 1:3, lty = 1)
 
 # effect plot for log(ppgdp) by group
-ppgdpEffect = Effect(c("ppgdp", "group"), 
+ppgdpEffect = Effect(c("ppgdp", "group"),
                      mod = lmodi,
                      xlevels = list(ppgdp = seq(1, 106000, len = 1000)))
-# effect plot of ppgdp on original scale, 
+# effect plot of ppgdp on original scale,
 # all line on same graph (multiline = TRUE)
-plot(ppgdpEffect, 
+plot(ppgdpEffect,
      multiline = TRUE)
 
-# effect plot of ppgdp on log scale, 
+# effect plot of ppgdp on log scale,
 # all line on same graph (multiline = TRUE)
 # transform.x is used to plot the x-axis
 # on the exp scale
@@ -198,7 +202,7 @@ abline(49.53, 3.2, col = 4)
 abline(48, 3.2, col = 5)
 abline(37.36, 3.2, col = 6)
 # create the legend
-legend("topleft", legend = c("oecd", "other", "africa"), 
+legend("topleft", legend = c("oecd", "other", "africa"),
        col = 4:6, pch = 1:3, lty = 1)
 
 # effect plot for log(ppgdp) by group
