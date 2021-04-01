@@ -19,11 +19,11 @@ vif(lmod)
 
 # condition numbers
 library(perturb)
-colldiag(lmod)
+colldiag(lmod, scale = TRUE, add.intercept = FALSE)
 
 # condition index 9 has high variance
 # decomposition proportions (vdp) for gleason
 lmod2 = update(lmod, . ~ . - gleason)
-colldiag(lmod2)
+colldiag(lmod2, scale = FALSE)
 
-# perhaps remove age
+

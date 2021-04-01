@@ -8,41 +8,73 @@ output:
 
 # Categorical predictors
 
-Categorical  predictors can greatly improve the explanatory power or predictive capability of a fitted model when different patterns exist for different levels of a categorical variable.
+Categorical  predictors can greatly improve the explanatory power or predictive capability of a fitted model when different patterns exist for different levels of the categorical variables. In what follows, we consider several common linear regression models that involve a categorical variable. To simplify our discussion, we only consider the setting where there is a single categorical variable to add to our model. Similarly, we only consider the setting where there is a single numeric variable.
+
+We begin by defining some notation.
 
 Let $X$ denote a numeric regressor, with $x_i$ denoting the value of $X$ for observation $i$.
 
-Let $F$ denote a categorical variable with levels $L_1, L_2, \ldots, L_K$. The $F$ stands for "factor", while the $L$ stands for "level". The notation $F_i$ denotes the value of $F$ for observation $i$. A regression model can only be fit for numeric regressors. In order to use a categorical predictor in a regression model, we must convert it to a set of one or more indicator variables. 
+Let $F$ denote a categorical variable with levels $L_1, L_2, \ldots, L_K$. The $F$ stands for "factor", while the $L$ stands for "level". The notation $f_i$ denotes the value of $F$ for observation $i$. 
 
-An indicator function takes the value 1 of a certain property is true and 0 otherwise. An indicator variable is the variable that results from applying an indicator function to each observation in a data set. Many notations exist for indicator functions. We will adopt the notation 
+## Indicator/dummy variables
+
+We may recall that if $\mathbf{X}$ denotes our matrix of regressors and $\mathbf{y}$ our vector of responses, then (assuming the columns of $\mathbf{X}$ are linearly independent) the OLS solution for $\boldsymbol{\beta}$ is $$\hat{\boldsymbol{\beta}} = (\mathbf{X}^T \mathbf{X})^{-1} \mathbf{X}^T \mathbf{y}.$$ In order to compute the estimated coefficients, both $\mathbf{X}$ and $\mathbf{y}$ must contain numeric values. How can we use a categorical predictor in our regression model when the levels are not numeric values? In order to use a categorical predictor in a regression model, we must transform it into a set of one or more **indicator** or **dummy variables**, which we explain in more detail below.
+
+An **indicator function** is a function that takes the value 1 of a certain property is true and 0 otherwise. An indicator variable is the variable that results from applying an indicator function to each observation in a data set. Many notations exist for indicator functions. We will adopt the notation 
 
 \begin{equation*}
 I_S(x) = \begin{cases}
 1 & \textrm{if}\;x \in S\\
-0 & \textrm{if}\; \notin S
+0 & \textrm{if}\;x \notin S
 \end{cases},
 \end{equation*}
 
-which is shorthand for a function that returns 1 if $x$ is in the set $S$ and 0 otherwise. We define $D_j$ to be the indicator (dummy) variable for factor level $L_j$ of $F$. The value of $D_j$ for observation $i$ is denoted $d_{i,j} = I_{\{L_j\}}(F_i)$, i.e., $d_{i,j}$ is 1 if observation $i$ has factor level $L_j$ and 0 otherwise.
+which is shorthand for a function that returns 1 if $x$ is in the set $S$ and 0 otherwise. 
 
-## Interpretation
+We let $D_j$ denote the indicator (dummy) variable for factor level $L_j$ of $F$. The value of $D_j$ for observation $i$ is denoted $d_{i,j}$, with $$d_{i,j} = I_{\{L_j\}}(f_i),$$ i.e., $d_{i,j}$ is 1 if observation $i$ has factor level $L_j$ and 0 otherwise.
 
-In the examples below, we use notation $\beta_X$ to denote the regression coefficient for regressor $X$ instead of notation like $\beta_3$ to more closely connect each coefficient with the regressor to which it is related.
+## Common of linear models with categorical predictors
+
+It is common to use notation like $E(Y|X_1, X_2) = \beta_0 + \beta_1 X_1 +\beta_2 X_2$ when discussing linear regression models. That notation is generally simple and convenient, but can be unclear. Asking a researcher what the estimate of $\beta_2$ is in a model is ambiguous because it will depend on the order the researcher added the variables to the model. To more closely connect each coefficient with the regressor to which it is related, we will use the notation $\beta_X$ to denote the coefficient for regressor $X$ and $\beta_{D_j}$ to denote the coefficient for regressor $D_j$. Similarly, $\beta_{int}$ denotes the intercept included in our model.
 
 ### One-way ANOVA
 
-A one-way ANOVA assumes a constant mean for each level of a categorical variable. In this context, the linear model is formulated as
-$$ Y_i = \beta_{int} + \beta_{L_2} d_{i,2} + \cdots + \beta_{L_K} d_{i,K} + \epsilon_i,\quad i=1,2,\ldots n.$$
+#### Definition
 
-When an observation has level $L_1$, then the expected response is $\beta_{int}$. More specifically, $$E(Y|F=L_1) = \beta_{int} + \beta_{L_2} 0 + \cdots + \beta_{L_K} 0 = \beta_{int}.$$
+A one-way analysis of variance (ANOVA) assumes a constant mean for each level of a categorical variable. A general one-way ANOVA relating a response variable $Y$ to a factor variable $F$ with $K$ levels may be formulated as $$E(Y|F) = \beta_{int} + \beta_{D_2} D_2 + \ldots + \beta_{D_K} D_K.$$ Alternatively, in terms of the individual responses, we may formulate the one-way ANOVA  model as 
+$$Y_i = \beta_{int} + \beta_{D_2} d_{i,2} + \cdots + \beta_{D_K} d_{i,K} + \epsilon_i,\quad i=1,2,\ldots n.$$ 
 
-When an observation has level $L_2$, the expected response is $\beta_{int} + \beta_{L_2}$. More formally, 
-$$E(Y|F=L_2) = \beta_{int} + \beta_{L_2} 1 + \beta_{L_3} 0 + \cdots + \beta_{L_K} 0 = \beta_{int} + \beta_{L_2}.$$ Thus, the mean response for observations having level $L_2$ is $\beta_{int} + \beta_{L_2}$. Alternatively, we can say that $\beta_{L_2}$ represents the expected change in the response when comparing observations having level $L_1$ and $L_2$. In general, $$E(Y|F=L_j) = \beta_{int} + \beta_{L_j},\quad j=2,\ldots,K.$$
+This may bring up some questions that need answering.
 
-In the context of a one-way ANOVA:
+*Why does the one-way ANOVA model only contains dummy variables for the last $K-1$ levels of $F$?* This is not a mistake. If we included dummy variables for all levels of $F$, then the matrix of regressors would have linearly dependent columns because the sum of the dummy variables for all $K$ levels would equal the column of 1s for the intercept.
+
+*Why do we omit the dummy variable for the first level of $F$?* This is simply convention. We could omit the dummy variable for any single level of $F$. However, it is conventional to designate one level the reference level and to omit that variable. As we will see when discussing interpretation of the coefficient, the reference level becomes the level of $F$ that all other levels are compared to.
+
+*Could we omit the intercept instead of one of the dummy variables?* Yes, you could. There is no mathematical or philosophical issues with this. However, this can create problems when you construct models including both categorical and numeric regressors. The standard approach is recommended because it typically makes our model easier to interpret and extend.
+
+#### Interpretation
+
+We interpret the coefficients of our one-way ANOVA with respect to the change in the mean response.
+
+Suppose an observation of level $L_1$. We can determine that the mean response is 
+
+\begin{align*}
+E(Y|F=L_1) &= \beta_{int} + \beta_{D_2} 0 + \cdots + \beta_{D_K} 0 \\
+&= \beta_{int}.
+\end{align*}
+
+Similarly, when an observation has level $L_2$, then 
+\begin{align*}
+E(Y|F=L_2) &= \beta_{int} + \beta_{D_2} 1 + \beta_{D_3} 0 + \cdots + \beta_{D_K} 0 \\
+&= \beta_{int} + \beta_{D_2}.
+\end{align*}
+This helps us to see the general relationship that
+$$E(Y|F=L_j) = \beta_{int} + \beta_{D_j},\quad j=2,\ldots,K.$$
+ In the context of a one-way ANOVA:
 
 * $\beta_{int}$ represents the expected response for observations having the reference level.
 * $\beta_{L_j}$, for $j=2,\ldots,K$, represents the expected change in the response when comparing observations having the reference level and level $L_j$. 
+  * You can verify this by computing $E(Y|F=L_j) - E(Y|F=L_1)$ (for $j = 2, \ldots, K$).
 
 ### Main effects models
 
