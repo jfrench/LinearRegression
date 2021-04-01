@@ -24,7 +24,7 @@ rs$which # best subset models (in terms of RSS)
 
 # calculate AIC of each model
 n = nobs(lmod)
-aic <- n*log(rs$rss/n) + 2*(2:5)
+aic <-  n*log(rs$rss/n) + 2*(2:5)
 aic2 <- rs$bic + (2 - log(n)) * 2:5
 # plot AIC vs p
 plot(2:5, aic, xlab = "p", ylab = "AIC")
@@ -55,20 +55,21 @@ f1 = gamble ~ sex + income
 f2 = gamble ~ sex + verbal + income
 
 cv_5fold = trainControl(method = "cv", number = 5) # 5-fold crossvalidation train/test data
-modela = train(f1, data = teengamb, trControl = cv_5fold, 
+modela = train(f1, data = teengamb, trControl = cv_5fold,
                method = "lm")
-modelb = train(f2, data = teengamb, trControl = cv_5fold, 
+modelb = train(f2, data = teengamb, trControl = cv_5fold,
                method = "lm")
 
 # compare mse (rmse) for the two models using 5-fold cv
 print(modela) # p = 3
 print(modelb) # p = 4
 
-# p = 3 model better in terms of RMSE and MAE
+# we prefer the model with smaller RMSE and MAE
+# this can switch depending on the random 5-fold data set selected
 
 # trying an interaction model
 f3 = gamble ~ sex*income
-modelc = train(f3, data = teengamb, trControl = cv_5fold, 
+modelc = train(f3, data = teengamb, trControl = cv_5fold,
                method = "lm")
 print(modelc) # even better
 library(car)
@@ -77,12 +78,12 @@ residualPlots(lm(f3, data = teengamb))
 # try a transformed model
 # trying another model
 f4 = sqrt(gamble) ~ sex*income
-modeld = train(f4, data = teengamb, trControl = cv_5fold, 
+modeld = train(f4, data = teengamb, trControl = cv_5fold,
                method = "lm")
-print(modeld) # even better
+print(modeld)
 residualPlots(lm(f4, data = teengamb))
 
-# not comparable to previous model since the respose is
+# not comparable to previous model since the response is
 # transformed.  Should really go through variable selection
 # process again.
 
