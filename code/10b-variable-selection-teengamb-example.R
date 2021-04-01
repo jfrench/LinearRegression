@@ -24,7 +24,8 @@ rs$which # best subset models (in terms of RSS)
 
 # calculate AIC of each model
 n = nobs(lmod)
-aic <-  n*log(rs$rss/n) + 2*(2:5)
+aic <-  n * log(rs$rss/n) + n * log(2 * pi) + n + 2 * (2:5)
+# easier, but differs by a constant (will have same results)
 aic2 <- rs$bic + (2 - log(n)) * 2:5
 # plot AIC vs p
 plot(2:5, aic, xlab = "p", ylab = "AIC")
