@@ -35,13 +35,35 @@ avPlots(lmod, col.lines = NULL, id = FALSE)
 # fit slightly different model
 lmod = lm(prestige ~ education + income + women, data = Prestige)
 
-# av plot for education
-deltahat = residuals(lm(prestige ~ income + women, data = Prestige))
-gammahat = residuals(lm(education ~ income + women, data = Prestige))
-
+# av plot for education alone
 avPlot(lmod, "education")
-plot(deltahat ~ gammahat)
 
+# recreating the av plot for education manually
+# regressing the response on all other regressors
+deltahat = residuals(lm(prestige ~ income + women, data = Prestige))
+# regressoing education on all other regressors
+gammahat = residuals(lm(education ~ income + women, data = Prestige))
+# plotting deltahat vs gammahat
+plot(deltahat ~ gammahat)
+# adding a loess smoother to the added variable plot
+# fit a loess smooth
+loess_fit <- loess(deltahat ~ gammahat)
+# create a sequence of x-values to make predictions
+x_values <- seq(min(gammahat), max(gammahat), len = 100)
+# predict the response for the sequence of x-values
+y_values <- predict(loess_fit, newdata = data.frame(gammahat = x_values))
+# connect the points together
+lines(x_values, y_values, col = "blue")
+
+# do something similar for the income variable
+avPlot(lmod, "income")
+deltahat = residuals(lm(prestige ~ education + women, data = Prestige))
+gammahat = residuals(lm(income ~ education + women, data = Prestige))
+plot(deltahat ~ gammahat)
+loess_fit <- loess(deltahat ~ gammahat)
+x_values <- seq(min(gammahat), max(gammahat), len = 100)
+y_values <- predict(loess_fit, newdata = data.frame(gammahat = x_values))
+lines(x_values, y_values, col = "blue")
 
 # examine component plus residual plots
 crPlots(lmod)
@@ -53,12 +75,8 @@ lmod3 = lm(prestige ~ education + log(income) + women, data = Prestige)
 crPlots(lmod3)
 
 lmod4 = lm(prestige ~ education + log(income) +
-             women + I(women^2), data = Prestige)
-crPlots(lmod4, order = 2)
-
-lmod5 = lm(prestige ~ education + log(income) +
              poly(women, 2), data = Prestige)
-crPlots(lmod5)
+crPlots(lmod4)
 
 # examine ceres plots
 ceresPlots(lmod)
