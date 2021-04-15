@@ -25,6 +25,3 @@ lmod2 = lm(sr ~ pop15 + pop75 + dpi + sqrt(ddpi), data = savings)
 crPlots(lmod2)
 
 residualPlots(lmod2)
-
-lmod3 = lm(sr ~ pop15 + pop75 + dpi + ddpi, data = savings)
-crPlots(lmod3)

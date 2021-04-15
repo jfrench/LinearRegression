@@ -10,12 +10,13 @@ data(savings, package = "faraway") # load data
 lmod <- lm(sr ~ ., data = savings) #fit full model
 
 ### Identifying unusual observations
+# extract leverage values
 h <- hatvalues(lmod)
 
 # half-normal plot of leverages
 # get country name for each observation
 # useful for labeling leverage points
-countries <- row.names(savings) 
+countries <- row.names(savings)
 halfnorm(h, nlab = 2, labs = countries, ylab = "leverage")
 
 # index plot of leverage values
@@ -26,10 +27,10 @@ infIndexPlot(lmod, vars = "hat")
 stud <- rstudent(lmod)
 # largest magnitude studentized residual
 max(abs(stud))
-# since we are doing a two-sided test, we need the 
-# 1 - alpha/2n quantile not 1-alpha/n.  
+# since we are doing a two-sided test, we need the
+# 1 - alpha/2n quantile not 1-alpha/n.
 # df = 50 - 5 - 1
-qt(1 - .05/(50*2), df = 44) 
+qt(1 - .05/(50*2), df = 44)
 
 # perform outler check using Bonferroni correction
 outlierTest(lmod)
@@ -40,7 +41,7 @@ infIndexPlot(lmod, vars = c("Studentized", "Bonf"))
 # star example
 data(star, package = "faraway")
 par(mfrow = c(1, 1))
-plot(light ~ temp, data = star, xlab = "log(Temperature)", 
+plot(light ~ temp, data = star, xlab = "log(Temperature)",
      ylab = "log(Light Intensity)")
 lm1 <- lm(light ~ temp, data = star)
 lm2 <- lm(light ~ temp, data = star, subset = (temp > 3.6))
