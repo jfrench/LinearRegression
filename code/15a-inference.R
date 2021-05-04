@@ -9,11 +9,11 @@ data(gala, package = "faraway")
 ### 3.2
 ### Test whether any of the (non-constant) predictors should be in the model
 # Fit full model
-lmod = lm(Species ~ Area + Elevation + Nearest + 
+lmod = lm(Species ~ Area + Elevation + Nearest +
             Scruz + Adjacent, data = gala)
 # Fit null model
 nullmod = lm(Species ~ 1, data = gala)
-# F test for all (non-constant) predicts
+# F test for all (non-constant) predictors
 anova(nullmod, lmod)
 
 # manually verify results
@@ -25,13 +25,14 @@ anova(nullmod, lmod)
 1 - pf(f, df1 = df0 - df, df2 = df)
 
 # Test statistic and p-value available from summary function
-library(faraway) # for sumary function
-sumary(lmod)
+summary(lmod)
 
 ### Test whether regression coefficient for Area is significant
 
 # fit reduced model (full without Area)
-lmods <- lm(Species ~ Elevation + Nearest + Scruz + Adjacent, data = gala) 
+lmods <- lm(Species ~ Elevation + Nearest + Scruz + Adjacent, data = gala)
+# alternatively,
+# lmods <- update(lmod, . ~ . - Area)
 anova(lmods, lmod)
 
 # notice p-values are the same and t1^2 = F
@@ -55,7 +56,7 @@ anova(lmods, lmod) # compare models using general f-test
 ### assuming other predictors in model
 
 # Fit linear subspace model
-lmods <- lm(Species ~ I(Adjacent + Area) + Elevation + Nearest + Scruz, gala) 
+lmods <- lm(Species ~ I(Adjacent + Area) + Elevation + Nearest + Scruz, gala)
 # The I() means evaulate this function before creating the model.
 #  This allows us to create transformed predictors in the model statement.
 anova(lmods, lmod) # compare models using general f-test
@@ -63,7 +64,7 @@ anova(lmods, lmod) # compare models using general f-test
 ### Test whether beta_Area = 0.5 assuming other predictors are in the model
 
 # Fit reduced model
-lmods <- lm(Species ~ Area + offset(0.5*Elevation) + Nearest + Scruz + Adjacent, gala) 
+lmods <- lm(Species ~ Area + offset(0.5*Elevation) + Nearest + Scruz + Adjacent, gala)
 # the offset term indicates that this term is a constant and not to be estimated.
 anova(lmods, lmod) # compare models using general f-test
 
@@ -102,7 +103,7 @@ mean(fstats >= fobs)
 plot(density(fstats), xlim = c(0, 10))
 abline(v = fobs)
 
-### Test test whether the Scruz predictor should be in the model when Nearest is. 
+### Test test whether the Scruz predictor should be in the model when Nearest is.
 # Test statistic available from summary function
 tobs <- lms$coef[3,3]
 
