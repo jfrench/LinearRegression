@@ -1,25 +1,36 @@
-## --------------------------------------------------------------------------------
+## ---- include=FALSE-------------------------------------------------
+# change Console output behavior
+knitr::opts_chunk$set(comment = "#>", collapse = TRUE)
+
+
+## -------------------------------------------------------------------
 # determine basic data type
 typeof(1)
 typeof(1L)
 typeof("hello world!")
 
 
-## --------------------------------------------------------------------------------
+## -------------------------------------------------------------------
 # is the object numeric?
 is.numeric("hello world!")
 is.numeric(1)
 is.numeric(1L)
 
 
-## --------------------------------------------------------------------------------
+## ---- echo=FALSE----------------------------------------------------
+knitr::kable(data.frame(dimensionality = c("1d", "2d", "nd"),
+                        homogeneous = c("vector", "matrix", "array"),
+                        heterogeneous = c("list", "data frame", "")))
+
+
+## -------------------------------------------------------------------
 # compute the mean of 1, 2, ..., 10 and assign the name m
-m <- mean(1:10)
+m <- mean(1:10) 
 m # print m
 print(m) # print m a different way
 
 
-## ---- eval=FALSE-----------------------------------------------------------------
+## ---- eval=FALSE----------------------------------------------------
 ## # vector creation
 ## c(1, 2, 5.3, 6, -2, 4)
 ## c("one", "two", "three")
@@ -35,7 +46,7 @@ print(m) # print m a different way
 ## rep(1:3, each = 3)
 
 
-## --------------------------------------------------------------------------------
+## -------------------------------------------------------------------
 v1 <- 1:5 # create a vector
 v1 # print the vector
 print(v1)
@@ -44,7 +55,7 @@ new <- c(v1, v2) # combine and assign the combined vectors
 new # print the combined vector
 
 
-## --------------------------------------------------------------------------------
+## -------------------------------------------------------------------
 # create some factor variables
 f1 <- factor(rep(1:6, times = 3))
 f1
@@ -52,27 +63,27 @@ f2 <- factor(c("a", 7, "blue", "blue", FALSE))
 f2
 
 
-## --------------------------------------------------------------------------------
+## -------------------------------------------------------------------
 # define a sequence 2, 4, ..., 16
 a <- seq(2, 16, by = 2)
 a
 
 
-## --------------------------------------------------------------------------------
+## -------------------------------------------------------------------
 # extract subset of vector
 a[c(2, 4, 6)]
 
 
-## --------------------------------------------------------------------------------
+## -------------------------------------------------------------------
 # extract subset of vector using minus
 a[-c(2, 4, 6)]
 
 
-## --------------------------------------------------------------------------------
+## -------------------------------------------------------------------
 a[-(3:6)]
 
 
-## ---- eval=FALSE-----------------------------------------------------------------
+## ---- eval=FALSE----------------------------------------------------
 ## # common functions
 ## x <- rexp(100) # sample 100 iid values from an Exponential(1) distribution
 ## length(x) # length of x
@@ -86,7 +97,7 @@ a[-(3:6)]
 ## str(x) # structure of x
 
 
-## ---- eval=FALSE-----------------------------------------------------------------
+## ---- eval=FALSE----------------------------------------------------
 ## # statistical calculations
 ## pnorm(1.96, mean = 0, sd = 1)
 ## qunif(0.6, min = 0, max = 1)
@@ -95,7 +106,7 @@ a[-(3:6)]
 ## rchisq(100, df = 5)
 
 
-## ---- paged.print=FALSE----------------------------------------------------------
+## ---- paged.print=FALSE---------------------------------------------
 # create basic data frame
 d <- c(1, 2, 3, 4)
 e <- c("red", "white", "blue", NA)
@@ -104,19 +115,19 @@ df <- data.frame(d,e,f)
 df
 
 
-## ---- paged.print=FALSE----------------------------------------------------------
+## ---- paged.print=FALSE---------------------------------------------
 # name columns of data frame
 names(df) <- c("ID", "Color", "Passed")
 df
 
 
-## ---- paged.print=FALSE----------------------------------------------------------
+## ---- paged.print=FALSE---------------------------------------------
 # create data frame with better column names
 df2 <- data.frame(ID = d, Color = e, Passed = f)
 df2
 
 
-## ---- eval=FALSE, paged.print=FALSE----------------------------------------------
+## ---- eval=FALSE, paged.print=FALSE---------------------------------
 ## # Extract parts of a data frame
 ## df3 <- data.frame(numbers = 1:5,
 ##                   characters = letters[1:5],
@@ -129,7 +140,7 @@ df2
 ## df3[, c("numbers", "logicals")] # access the numbers and logical columns of df3
 
 
-## --------------------------------------------------------------------------------
+## -------------------------------------------------------------------
 # import data as data frame
 dtf <- read.table(file = "https://raw.githubusercontent.com/jfrench/DataWrangleViz/master/data/covid_dec4.csv",
                   header = TRUE,
@@ -137,7 +148,7 @@ dtf <- read.table(file = "https://raw.githubusercontent.com/jfrench/DataWrangleV
 str(dtf)
 
 
-## ---- eval=FALSE-----------------------------------------------------------------
+## ---- eval=FALSE----------------------------------------------------
 ## # logical statements
 ## # a <- seq(2, 16, by = 2) # creating the vector a
 ## a
@@ -147,7 +158,7 @@ str(dtf)
 ## a != 10
 
 
-## --------------------------------------------------------------------------------
+## -------------------------------------------------------------------
 # relationship between logicals & (and), | (or)
 TRUE & TRUE
 FALSE & TRUE
@@ -157,13 +168,13 @@ FALSE | TRUE
 FALSE | FALSE
 
 
-## ---- eval=FALSE-----------------------------------------------------------------
+## ---- eval=FALSE----------------------------------------------------
 ## # complex logical statements
 ## (a > 6) & (a <= 10)
 ## (a <= 4) | (a >= 12)
 
 
-## ---- eval = FALSE---------------------------------------------------------------
+## ---- eval = FALSE--------------------------------------------------
 ## # accessing parts of a vector using logicals
 ## a
 ## a < 6

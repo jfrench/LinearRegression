@@ -22,7 +22,7 @@ x <- model.matrix(lmod)
 # data frame x0 values for which predictions are desired
 newdf <- data.frame(t(x0))
 head(newdf)
-# calculate point estimate, predictional interval, and confidence interval for median predictor values
+# calculate point estimate, prediction interval, and confidence interval for median predictor values
 predict(lmod, new = newdf)
 predict(lmod, new = newdf, interval = "prediction", level = 0.95)
 predict(lmod, new = newdf, interval = "confidence", level = 0.95)
@@ -40,11 +40,9 @@ predict(lmod, new=data.frame(t(x1)), interval="confidence")
 lms <- lm(brozek ~ weight, data = fat)
 weight = seq(118, 375, len = 100)
 # construct confidence interval for mean response
-ci <- predict(lms, new = data.frame(weight),
-                       interval = "confidence")
+ci <- predict(lms, new = data.frame(weight), interval = "confidence")
 # construct prediction interval for new response
-pi <- predict(lms, new = data.frame(weight),
-              interval = "prediction")
+pi <- predict(lms, new = data.frame(weight), interval = "prediction")
 
 # plot fitted model
 plot(weight, ci[,1], ylab = "% fat", ylim = range(pi), type = "l")

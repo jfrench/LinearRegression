@@ -13,9 +13,9 @@ knitr::opts_chunk$set(comment = "#>", collapse = TRUE)
 
 # R Foundations
 
-Meaningful data analysis requires the use of computer software. In this course, we will utilize R.
+Meaningful data analysis requires the use of computer software. 
 
-In what follows, I will attempt to lay a foundation of key components of R that you will need for data analysis. I make no attempt to be exhaustive, and many other important components of R (like plotting) will be discussed later, as needed.
+R statistical software is one of the most popular tools for data analysis both in academia and the broader workforce. In what follows, I will attempt to lay a foundation of basic knowledge and skills with R that you will need for data analysis. I make no attempt to be exhaustive, and many other important aspects of using R (like plotting) will be discussed later, as needed.
 
 ## What is R?
 
@@ -33,7 +33,7 @@ In what follows, I will attempt to lay a foundation of key components of R that 
 
 R may be downloaded from the R Project's [website](https://www.r-project.org/). This [link](https://cloud.r-project.org/) *should* bring you to the relevant page for downloading the software.
 
-R Studio Desktop is a free "front end" for R provided by [R Studio](https://rstudio.com/). R Studio Desktop makes doing data science with R much easier by adding an Integrated Development Environment (IDE) and providing many other features. Currently, you may download R Studio at this [link](https://rstudio.com/products/rstudio/download/). You may need to navigate the R Studio website directly if this link no longer functions.
+R Studio Desktop is a free "front end" for R provided by [R Studio](https://rstudio.com/). R Studio Desktop makes doing data analysis with R much easier by adding an Integrated Development Environment (IDE) and providing many other features. Currently, you may download R Studio at this [link](https://rstudio.com/products/rstudio/download/). You may need to navigate the R Studio website directly if this link no longer functions.
 
 Install R and R Studio Desktop before continuing. Then open R Studio Desktop as you continue to learn about R.
 
@@ -47,7 +47,7 @@ R Studio Desktop has four panes:
 4. The Files/Plot/Packages/Help: the pane where you navigate between directories, where plots can be viewed, where you can see the packages available to be loaded, and where you can get help.
 
 <!-- ![RStudio panes](pictures/rstudio_panes.png) -->
-To see all R Studio, press the keys `Shift + Ctrl + Alt + 0`
+To see all R Studio panes, press the keys `Shift + Ctrl + Alt + 0`
 
 ## Running code, scripts, and comments
 Code is executed in R by typing it in the Console and hitting enter.
@@ -104,6 +104,7 @@ If you want to search the documentation for a certain *topic*, then execute `??t
 ### Example {.example}
 
 Do the following:
+
 1. Execute `?lm` in the Console to get help on the `lm` function, which is one of the main functions used for fitting linear models.
 2. Execute `??logarithms` in the Console to search the R documentation for information about logarithms.
 3. Do a web search for something along the lines of "How do I change the size of the axis labels in an R plot?".
@@ -113,7 +114,7 @@ Do the following:
 ### Basic data types
 R has 6 basic ("atomic") [vector types](https://cran.r-project.org/doc/manuals/r-release/R-lang.html#Basic-types):
 
-1. character - collections of characters. E.g., `"a"`, "hello world!"
+1. character - collections of characters. E.g., `"a"`, `"hello world!"`
 2. double - decimal numbers. e.g., `1.2`, `1.0`
 3. integer - whole numbers. In R, you must add `L` to the end of a number to specify it as an integer. E.g., `1L` is an integer but `1` is a double.
 4. logical - boolean values, `TRUE` and `FALSE`
@@ -147,8 +148,9 @@ is.numeric("hello world!")
 is.numeric(1)
 is.numeric(1L)
 ```
+
 #### NULL
-`NULL` is a special object to indicate the object is absent. An object having a length of zero is not the same thing as an object being absent.
+`NULL` is a special object to indicate an object is absent. An object having a length of zero is not the same thing as an object being absent.
 
 #### NA
 A "missing value" occurs when the value of something isn't known. R uses the special object `NA` to represent missing value.
@@ -197,7 +199,8 @@ Data structures can be stored using the assignment operator `<-` or `=`.
 Some comments:
   
 * In general, both `<-` and `=` can be used for assignment.
-* Pressing the "Alt" and "-" keys simultaneously on a PC or Linux machine (Option and - on a Mac) will insert `<-` into the R console and script files (but not in R Markdown for some reason).
+* Pressing the "Alt" and "-" keys simultaneously on a PC or Linux machine (Option and - on a Mac) will insert `<-` into the R console and script files.
+  * If you are creating an R Markdown file, then this command will only insert `<-` if you are in an R computing environment.
 * `<-` and `=` are NOT synonyms, but can be used identically most of the time. It's safest to use `<-` for assignment.
 
 Once an object has been assigned a name, it can be printed by executing the name of the object or using the `print` function.
@@ -247,7 +250,7 @@ Some examples:
 * `rep(1:3, each = 3)`: Repeat each element of the sequence 1, 2, 3 three times.
 
 ### Example {.example}
-Execute the following commands above in the Console to see what you get.
+Execute the following commands in the Console to see what you get.
 
 ```{r, eval=FALSE}
 # vector creation
@@ -265,7 +268,7 @@ rep(c("trt1", "trt2", "trt3"), times = 1:3)
 rep(1:3, each = 3)
 ```
 
-Vectors can be combined into a new object using the `c`.
+Vectors can be combined into a new object using the `c` function.
 
 ### Example {.example}
 Execute the following commands in the Console
@@ -370,6 +373,8 @@ Suppose that a random variable $X$ has the `dist` distribution:
 * `r[dist](n, ...)`: returns an i.i.d. random sample of size `n` having the same distribution as $X$.
 * The `...` indicates that additional arguments describing the parameters of the distribution may be required.
 
+Execute `?Distributions` to get information about the distributions available in R by default.
+
 ### Example {.example}
 
 Execute the following commands in R to see the output. What is each command doing?
@@ -441,6 +446,7 @@ Part of a data frame can also be extracted by thinking of at as a general matrix
 If you need to select multiple columns of a data frame by name, you can pass a character vector with column names in the column position of `[]`.
 
 * `df[, c("Color", "Passed")]` would extract the `Color` and `Passed` columns of df.
+
 ### Example {.example}
 
 Execute the following commands in the Console:
@@ -515,7 +521,7 @@ More complicated logical statements can be made using `&` and `|`.
 * `&` means "and"
   * Only `TRUE & TRUE` returns `TRUE`. Otherwise the `&` operator returns `FALSE`.
 * `|` means "or"
-  * Only a single value in an "|" statements needs to be true for `TRUE` to be returned.
+  * Only a single value in an `|` statement needs to be true for `TRUE` to be returned.
 
 Note that:
 

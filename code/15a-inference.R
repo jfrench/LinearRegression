@@ -103,7 +103,7 @@ mean(fstats >= fobs)
 plot(density(fstats), xlim = c(0, 10))
 abline(v = fobs)
 
-### Test test whether the Scruz predictor should be in the model when Nearest is.
+### Test whether the Scruz predictor should be in the model when Nearest is.
 # Test statistic available from summary function
 tobs <- lms$coef[3,3]
 
