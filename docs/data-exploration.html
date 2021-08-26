@@ -24,7 +24,7 @@
 <meta name="author" content="Chapter 2 Data exploration | Joshua French" />
 
 
-<meta name="date" content="2021-08-24" />
+<meta name="date" content="2021-08-26" />
 
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <meta name="apple-mobile-web-app-capable" content="yes" />
@@ -382,7 +382,7 @@ div.csl-indent {
 <div id="data-analysis-process" class="section level2" number="2.1">
 <h2><span class="header-section-number">2.1</span> Data analysis process</h2>
 <ol style="list-style-type: decimal">
-<li>Define a question of interest.</li>
+<li>Define a statistical question of interest.</li>
 <li>Collect relevant data.</li>
 <li>Analyze the data.</li>
 <li>Interpret your analysis.</li>
@@ -404,7 +404,7 @@ div.csl-indent {
 <li>Put the problem into statistical terms.
 <ul>
 <li>This is often the most challenging step and where irreparable errors are sometimes made.</li>
-<li>That a statistical method can read in and process the data is not enough. The results of an inapt analysis may be meaningless.</li>
+<li>That a statistical method can read in and process the data is not enough. The results of an inept analysis may be meaningless.</li>
 </ul></li>
 </ul>
 </div>
@@ -454,13 +454,15 @@ div.csl-indent {
 <p>Plots can provide a useful visual summary of the data.</p>
 <ul>
 <li>For one numerical variable: boxplots, histograms, density plots, etc.</li>
-<li>For two numerical variables: scatterplots.</li>
-<li>For three or more variables, construct interactive and dynamic graphics.</li>
-<li>For one categorial variable: bar charts</li>
+<li>For one categorial variable: bar charts.</li>
+<li>For two numerical variables: scatter plots.</li>
+<li>For one numerical and one categorical variables: parallel boxplots or density plots that distinguish between category level.</li>
+<li>For two categorical variables: panels of bar charts.</li>
+<li>For three or more variables: one or two variable plots with distinguishing colors or line types, interactive and dynamic graphics.</li>
 </ul>
 <p>Good graphics are essential in data analysis.</p>
 <ul>
-<li>They help us avoid mistakes.</li>
+<li>They help us to understand our data structure so that we can avoid mistakes.</li>
 <li>They help us decide on a model.</li>
 <li>They help communicate the results of our analysis.</li>
 <li>Graphics can be more convincing than text at times.</li>
@@ -526,7 +528,7 @@ div.csl-indent {
 <h3><span class="header-section-number">2.3.1</span> Numerically summarizing the data</h3>
 <p>The <code>summary</code> command is a useful way to numerically summarize a data frame.</p>
 <p>The <code>summary</code> function will compute the minimum, 0.25 quantile, mean, median, 0.75 quantile, and maximum of a <code>numeric</code> variable.</p>
-<p>The <code>summary</code> function will count the number of values of each level of a <code>factor</code> variable.</p>
+<p>The <code>summary</code> function will count the number of values having each level for a <code>factor</code> variable.</p>
 <p>Let’s summarize the <code>pima</code> data frame.</p>
 <div class="sourceCode" id="cb25"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb25-1"><a href="data-exploration.html#cb25-1" aria-hidden="true" tabindex="-1"></a><span class="fu">summary</span>(pima)</span>
 <span id="cb25-2"><a href="data-exploration.html#cb25-2" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;     pregnant         glucose        diastolic         triceps     </span></span>
@@ -554,7 +556,7 @@ div.csl-indent {
 <div id="cleaning-the-data" class="section level3" number="2.3.2">
 <h3><span class="header-section-number">2.3.2</span> Cleaning the data</h3>
 <p>Cleaning data involves finding and correcting data quality issues.</p>
-<p>Some odd things about the <code>pima</code> data</p>
+<p>The <code>pima</code> data set has some odd characterics:</p>
 <ul>
 <li>The minimum <code>diastolic</code> blood pressure is zero.
 <ul>
@@ -635,26 +637,26 @@ div.csl-indent {
 </div>
 <div id="index-plots" class="section level3" number="2.4.3">
 <h3><span class="header-section-number">2.4.3</span> Index plots</h3>
-<p>An index plot is a scatter plot of a numerical variable versus the index of each value (i.e., the position it occurs in the vector).</p>
+<p>An index plot is a scatter plot of a <code>numeric</code> variable versus the index of each value (i.e., the position of the value in the vector).</p>
 <ul>
 <li>This is most useful for sorted vectors.</li>
 </ul>
-<p>A scatter plot of the sorted numerical values versus their index can be used to identify outliers and see whether the data has many repeated values.</p>
+<p>A scatter plot of sorted <code>numeric</code> values versus their index can be used to identify outliers and see whether the data has many repeated values.</p>
 <div class="sourceCode" id="cb33"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb33-1"><a href="data-exploration.html#cb33-1" aria-hidden="true" tabindex="-1"></a><span class="fu">plot</span>(<span class="fu">sort</span>(pima<span class="sc">$</span>diastolic), <span class="at">ylab =</span> <span class="st">&quot;sorted diastolic bp&quot;</span>)</span></code></pre></div>
 <p><img src="Data-Analysis-with-Linear-Regression_files/figure-html/unnamed-chunk-36-1.png" width="672" /></p>
-<p>The flat spots in the plot above show that the <code>diastolic</code> variable has mean repeated values.</p>
+<p>The flat spots in the plot above show that the <code>diastolic</code> variable has many repeated values.</p>
 </div>
 <div id="bivariate-scatter-plots" class="section level3" number="2.4.4">
 <h3><span class="header-section-number">2.4.4</span> Bivariate scatter plots</h3>
-<p>Bivariate scatter plots can be used to identify the relationship between two numerical variables.</p>
-<p>A scatter plot of diabetes vs diastolic blood pressure.</p>
+<p>Bivariate scatter plots can be used to identify the relationship between two <code>numeric</code> variables.</p>
+<p>A scatter plot of diabetes vs diastolic blood pressure is shown below.</p>
 <div class="sourceCode" id="cb34"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb34-1"><a href="data-exploration.html#cb34-1" aria-hidden="true" tabindex="-1"></a><span class="fu">plot</span>(diabetes <span class="sc">~</span> diastolic, <span class="at">data =</span> pima)</span></code></pre></div>
 <p><img src="Data-Analysis-with-Linear-Regression_files/figure-html/unnamed-chunk-37-1.png" width="672" /></p>
 <p>There is no clear pattern in the points, so it’s difficult to claim a relationship between the two variables.</p>
 </div>
 <div id="bivariate-boxplots" class="section level3" number="2.4.5">
 <h3><span class="header-section-number">2.4.5</span> Bivariate boxplots</h3>
-<p>A parallel boxplot of <code>diabetes</code> score versus <code>test</code> result.</p>
+<p>A parallel boxplot of <code>diabetes</code> score versus <code>test</code> result is shown below.</p>
 <div class="sourceCode" id="cb35"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb35-1"><a href="data-exploration.html#cb35-1" aria-hidden="true" tabindex="-1"></a><span class="fu">plot</span>(diabetes <span class="sc">~</span> test, <span class="at">data =</span> pima)</span></code></pre></div>
 <p><img src="Data-Analysis-with-Linear-Regression_files/figure-html/unnamed-chunk-38-1.png" width="672" /></p>
 <p>The median <code>diabetes</code> score seems to be a bit higher for positive tests in comparison to the negative tests.</p>
@@ -675,9 +677,9 @@ div.csl-indent {
 </div>
 <div id="visualizing-data-with-ggplot2" class="section level2" number="2.5">
 <h2><span class="header-section-number">2.5</span> Visualizing data with <strong>ggplot2</strong></h2>
-<p>The plots we have just created are using the <strong>base</strong> graphics system in R.</p>
+<p>The previous plots were created using R’s <strong>base</strong> graphics system.</p>
 <ul>
-<li>These are very fast, simple, and professional.</li>
+<li><strong>base</strong> graphics are fast and simple to produce while looking professional.</li>
 </ul>
 <p>A fancier alternative is to construct plots using the <strong>ggplot2</strong> package.</p>
 <p>In its simplest form, to construct a (useful) plot in <strong>ggplot2</strong>, you need to provide:</p>
@@ -695,7 +697,7 @@ div.csl-indent {
 <li>An aesthetic mapping
 <ul>
 <li>Aesthetic mappings describe how variables in the data are mapped to visual properties of a geometry.</li>
-<li>This is where you specify which variable with be the <code>x</code> variable, the <code>y</code> variable, which variable will control plots in the color, etc.</li>
+<li>This is where you specify which variable with be the <code>x</code> variable, the <code>y</code> variable, which variable will control color in the plots, etc.</li>
 </ul></li>
 </ul>
 <div id="a-ggplot2-histogram" class="section level3" number="2.5.1">
@@ -766,8 +768,8 @@ div.csl-indent {
 <p>The advantage of <strong>ggplot2</strong> is more apparent in producing complex plots involving more than two variables.</p>
 <ul>
 <li><strong>ggplot2</strong> makes it easy to plot the data for each group with different colors, symbols, line types, etc.</li>
-<li><strong>ggplot2</strong> will automatically provide a legend mapping the attributes to the different groups.
-* You can easily facet the data into multiple panels.</li>
+<li><strong>ggplot2</strong> will automatically provide a legend mapping the attributes to the different groups.</li>
+<li><strong>ggplot2</strong> makes it easy to create separate panels with plots for the observations having a certain characteristic.</li>
 </ul>
 </div>
 </div>

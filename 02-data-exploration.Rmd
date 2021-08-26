@@ -13,7 +13,7 @@ Based on Chapter 1 of LMWR2, Chapter 1 of ALR4
 
 ## Data analysis process
 
-1. Define a question of interest.
+1. Define a statistical question of interest.
 2. Collect relevant data.
 3. Analyze the data.
 4. Interpret your analysis.
@@ -30,7 +30,7 @@ Based on Chapter 1 of LMWR2, Chapter 1 of ALR4
   * Make sure you know what the client wants.
 * Put the problem into statistical terms.
   * This is often the most challenging step and where irreparable errors are sometimes made.
-  * That a statistical method can read in and process the data is not enough. The results of an inapt analysis may be meaningless.
+  * That a statistical method can read in and process the data is not enough. The results of an inept analysis may be meaningless.
 
 ### Data collection
 
@@ -69,13 +69,15 @@ Statistics can be used to numerically summarize aspects of the data:
 Plots can provide a useful visual summary of the data.
 
 * For one numerical variable: boxplots, histograms, density plots, etc.
-* For two numerical variables: scatterplots.
-* For three or more variables, construct interactive and dynamic graphics.
-* For one categorial variable: bar charts
+* For one categorial variable: bar charts.
+* For two numerical variables: scatter plots.
+* For one numerical and one categorical variables: parallel boxplots or density plots that distinguish between category level.
+* For two categorical variables: panels of bar charts.
+* For three or more variables: one or two variable plots with distinguishing colors or line types, interactive and dynamic graphics. 
 
 Good graphics are essential in data analysis.
 
-* They help us avoid mistakes.
+* They help us to understand our data structure so that we can avoid mistakes.
 * They help us decide on a model.
 * They help communicate the results of our analysis.
 * Graphics can be more convincing than text at times.
@@ -117,7 +119,7 @@ The `summary` command is a useful way to numerically summarize a data frame.
 
 The `summary` function will compute the minimum, 0.25 quantile, mean, median, 0.75 quantile, and maximum of a `numeric` variable.
 
-The `summary` function will count the number of values of each level of a `factor` variable.
+The `summary` function will count the number of values having each level for a `factor` variable.
 
 Let's summarize the `pima` data frame.
 
@@ -129,7 +131,7 @@ summary(pima)
 
 Cleaning data involves finding and correcting data quality issues.
 
-Some odd things about the `pima` data
+The `pima` data set has some odd characterics:
 
 * The minimum `diastolic` blood pressure is zero.
   * That's generally an indication of a health problem.
@@ -224,23 +226,23 @@ In the example above, we have to specify `na.rm = TRUE` so that the density is o
 
 ### Index plots
 
-An index plot is a scatter plot of a numerical variable versus the index of each value (i.e., the position it occurs in the vector).
+An index plot is a scatter plot of a `numeric` variable versus the index of each value (i.e., the position of the value in the  vector).
 
 * This is most useful for sorted vectors.
 
-A scatter plot of the sorted numerical values versus their index can be used to identify outliers and see whether the data has many repeated values.
+A scatter plot of sorted `numeric` values versus their index can be used to identify outliers and see whether the data has many repeated values.
 
 ```{r}
 plot(sort(pima$diastolic), ylab = "sorted diastolic bp")
 ```
 
-The flat spots in the plot above show that the `diastolic` variable has mean repeated values.
+The flat spots in the plot above show that the `diastolic` variable has many repeated values.
 
 ### Bivariate scatter plots
 
-Bivariate scatter plots can be used to identify the relationship between two numerical variables.
+Bivariate scatter plots can be used to identify the relationship between two `numeric` variables.
 
-A scatter plot of diabetes vs diastolic blood pressure.
+A scatter plot of diabetes vs diastolic blood pressure is shown below.
 ```{r}
 plot(diabetes ~ diastolic, data = pima)
 ```
@@ -249,7 +251,7 @@ There is no clear pattern in the points, so it's difficult to claim a relationsh
 
 ### Bivariate boxplots
 
-A parallel boxplot of `diabetes` score versus `test` result.
+A parallel boxplot of `diabetes` score versus `test` result is shown below.
 ```{r}
 plot(diabetes ~ test, data = pima)
 ```
@@ -272,9 +274,9 @@ par(mfrow = c(1, 1)) # reset to a single plot
 
 ## Visualizing data with **ggplot2**
 
-The plots we have just created are using the **base** graphics system in R.
+The previous plots were created using R's **base** graphics system.
 
-* These are very fast, simple, and professional.
+* **base** graphics are fast and simple to produce while looking professional.
 
 A fancier alternative is to construct plots using the **ggplot2** package.
 
@@ -288,7 +290,7 @@ In its simplest form, to construct a (useful) plot in **ggplot2**, you need to p
   * e.g., `geom_hist` for a histogram, `geom_point` for a scatter plot, `geom_density` for a density plot.
 * An aesthetic mapping
   * Aesthetic mappings describe how variables in the data are mapped to visual properties of a geometry.
-  * This is where you specify which variable with be the `x` variable, the `y` variable, which variable will control plots in the color, etc.
+  * This is where you specify which variable with be the `x` variable, the `y` variable, which variable will control color in the plots, etc.
 
 ### A **ggplot2** histogram
 ```{r}
@@ -357,9 +359,9 @@ To create a **ggplot2** plot:
 
 The advantage of **ggplot2** is more apparent in producing complex plots involving more than two variables.
 
-   * **ggplot2** makes it easy to plot the data for each group with different colors, symbols, line types, etc.
-   * **ggplot2** will automatically provide a legend mapping the attributes to the different groups.
-    * You can easily facet the data into multiple panels.
+  * **ggplot2** makes it easy to plot the data for each group with different colors, symbols, line types, etc.
+  * **ggplot2** will automatically provide a legend mapping the attributes to the different groups.
+  * **ggplot2** makes it easy to create separate panels with plots for the observations having a certain characteristic.
 
 ## Summary of data exploration
 
