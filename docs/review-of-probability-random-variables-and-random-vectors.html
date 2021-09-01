@@ -24,7 +24,7 @@
 <meta name="author" content="Chapter 3 Review of probability, random variables, and random vectors | Joshua French" />
 
 
-<meta name="date" content="2021-08-31" />
+<meta name="date" content="2021-09-01" />
 
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <meta name="apple-mobile-web-app-capable" content="yes" />
@@ -294,6 +294,8 @@ div.csl-indent {
 <li class="chapter" data-level="3.7" data-path="review-of-probability-random-variables-and-random-vectors.html"><a href="review-of-probability-random-variables-and-random-vectors.html#example-1-1"><i class="fa fa-check"></i><b>3.7</b> Example 1</a>
 <ul>
 <li class="chapter" data-level="3.7.1" data-path="review-of-probability-random-variables-and-random-vectors.html"><a href="review-of-probability-random-variables-and-random-vectors.html#bernoulli-distribution"><i class="fa fa-check"></i><b>3.7.1</b> Bernoulli distribution</a></li>
+<li class="chapter" data-level="3.7.2" data-path="review-of-probability-random-variables-and-random-vectors.html"><a href="review-of-probability-random-variables-and-random-vectors.html#binomial-distribution"><i class="fa fa-check"></i><b>3.7.2</b> Binomial distribution</a></li>
+<li class="chapter" data-level="3.7.3" data-path="review-of-probability-random-variables-and-random-vectors.html"><a href="review-of-probability-random-variables-and-random-vectors.html#poisson-distribution"><i class="fa fa-check"></i><b>3.7.3</b> Poisson Distribution</a></li>
 </ul></li>
 <li class="chapter" data-level="3.8" data-path="review-of-probability-random-variables-and-random-vectors.html"><a href="review-of-probability-random-variables-and-random-vectors.html#example-2-1"><i class="fa fa-check"></i><b>3.8</b> Example 2</a>
 <ul>
@@ -610,21 +612,29 @@ Note that <span class="math inline">\(\mathbf{\Sigma}\)</span> must be symmetric
 <h2><span class="header-section-number">3.7</span> Example 1</h2>
 <div id="bernoulli-distribution" class="section level3" number="3.7.1">
 <h3><span class="header-section-number">3.7.1</span> Bernoulli distribution</h3>
-<p>A random variable $Y() with <span class="math inline">\(\Omega = {0, 1}\)</span> and <span class="math inline">\(P(Y=1)=\theta\)</span>.</p>
+<p>A random variable <span class="math inline">\(Y\sim \mathrm{Bernoulli}(\theta)\)</span> when <span class="math inline">\(\Omega = \{0, 1\}\)</span> and <span class="math inline">\(P(Y=1)=\theta\)</span>.</p>
 <p>The pmf of a Bernoulli random variable is
 <span class="math display">\[f(y|\theta)=\theta^y (1-\theta)^{(1-y)}.\]</span></p>
 <p>Determine <span class="math inline">\(E(Y)\)</span></p>
 <p>Determine <span class="math inline">\(var(Y)\)</span></p>
-<!-- Binomial distribution -->
-<!-- A random variable Y∼Bin(n,θ) is the sum of n≥1 (fixed) independent Bernoulli random variables. The associated support is S={0,1,2,…,n} and the pmf is p(y│θ)=(■(n@y)) θ^y (1-θ)^(n-y). -->
-<!-- E(Y)=  -->
-<!-- var(Y)= -->
-<!-- Assume Y∼Bin(20,0.4). Determine F(8) and P(8≤Y≤10).  -->
-<!-- Poisson Distribution -->
-<!-- Y∼Poisson(θ) when S={0,1,2,…} and p(y|θ)=1/y! θ^y e^(-θ). -->
-<!-- E(Y)=  -->
-<!-- var(Y)= -->
-<!-- Assume Y∼Poisson(4). Determine F(12) and P(15≤Y≤20). -->
+</div>
+<div id="binomial-distribution" class="section level3" number="3.7.2">
+<h3><span class="header-section-number">3.7.2</span> Binomial distribution</h3>
+<p>A random variable <span class="math inline">\(Y\sim \mathrm{Bin}(n,\theta)\)</span> is the sum of <span class="math inline">\(n\geq 1\)</span> (fixed) independent Bernoulli random variables. The associated sample space is <span class="math inline">\(\Omega=\{0,1,2,…,n\}\)</span> and the pmf is <span class="math display">\[f(y│\theta) = {n \choose y} \theta^y (1-\theta)^{(n-y)}.\]</span></p>
+<p>Determine <span class="math inline">\(E(Y)\)</span></p>
+<p>Determine <span class="math inline">\(var(Y)\)</span></p>
+<p>Assume <span class="math inline">\(Y\sim \mathrm{Bin}(20,0.4)\)</span>.</p>
+<p>Determine <span class="math inline">\(F(8)\)</span>.</p>
+<p>Determine <span class="math inline">\(P(8\leq Y \leq 10)\)</span>.</p>
+</div>
+<div id="poisson-distribution" class="section level3" number="3.7.3">
+<h3><span class="header-section-number">3.7.3</span> Poisson Distribution</h3>
+<p><span class="math inline">\(Y \sim \mathrm{Poisson}(\theta)\)</span> when <span class="math inline">\(\Omega=\{0,1,2,…\}\)</span> and <span class="math display">\[f(y|\theta)=\frac{1}{y!} \theta^y e^{-\theta}.\]</span></p>
+<p>Determine <span class="math inline">\(E(Y)\)</span></p>
+<p>Determine <span class="math inline">\(var(Y)\)</span></p>
+<p>Assume <span class="math inline">\(Y\sim \mathrm{Poisson}(4)\)</span>.</p>
+<p>Determine <span class="math inline">\(F(12)\)</span></p>
+<p>Determine <span class="math inline">\(P(15\leq Y \leq 20)\)</span>.</p>
 </div>
 </div>
 <div id="example-2-1" class="section level2" number="3.8">
