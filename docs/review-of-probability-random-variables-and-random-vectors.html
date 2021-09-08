@@ -24,7 +24,7 @@
 <meta name="author" content="Chapter 3 Review of probability, random variables, and random vectors | Joshua French" />
 
 
-<meta name="date" content="2021-09-01" />
+<meta name="date" content="2021-09-08" />
 
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <meta name="apple-mobile-web-app-capable" content="yes" />
@@ -612,29 +612,39 @@ Note that <span class="math inline">\(\mathbf{\Sigma}\)</span> must be symmetric
 <h2><span class="header-section-number">3.7</span> Example 1</h2>
 <div id="bernoulli-distribution" class="section level3" number="3.7.1">
 <h3><span class="header-section-number">3.7.1</span> Bernoulli distribution</h3>
-<p>A random variable <span class="math inline">\(Y\sim \mathrm{Bernoulli}(\theta)\)</span> when <span class="math inline">\(\Omega = \{0, 1\}\)</span> and <span class="math inline">\(P(Y=1)=\theta\)</span>.</p>
-<p>The pmf of a Bernoulli random variable is
-<span class="math display">\[f(y|\theta)=\theta^y (1-\theta)^{(1-y)}.\]</span></p>
-<p>Determine <span class="math inline">\(E(Y)\)</span></p>
-<p>Determine <span class="math inline">\(var(Y)\)</span></p>
+<p>A random variable <span class="math inline">\(Y\sim \mathrm{Bernoulli}(\theta)\)</span> when <span class="math inline">\(\mathcal{S} = \{0, 1\}\)</span> and the pmf of a Bernoulli random variable is
+<span class="math display">\[f(y\mid\theta)=\theta^y (1-\theta)^{(1-y)}.\]</span></p>
+<ul>
+<li>Determine <span class="math inline">\(E(Y)\)</span><span class="math display">\[\\[4in]\]</span></li>
+<li>Determine <span class="math inline">\(var(Y)\)</span><span class="math display">\[\\[4in]\]</span></li>
+</ul>
 </div>
 <div id="binomial-distribution" class="section level3" number="3.7.2">
 <h3><span class="header-section-number">3.7.2</span> Binomial distribution</h3>
-<p>A random variable <span class="math inline">\(Y\sim \mathrm{Bin}(n,\theta)\)</span> is the sum of <span class="math inline">\(n\geq 1\)</span> (fixed) independent Bernoulli random variables. The associated sample space is <span class="math inline">\(\Omega=\{0,1,2,…,n\}\)</span> and the pmf is <span class="math display">\[f(y│\theta) = {n \choose y} \theta^y (1-\theta)^{(n-y)}.\]</span></p>
-<p>Determine <span class="math inline">\(E(Y)\)</span></p>
-<p>Determine <span class="math inline">\(var(Y)\)</span></p>
+<p>A random variable <span class="math inline">\(Y\sim \mathrm{Bin}(n,\theta)\)</span> when <span class="math inline">\(\mathcal{S}=\{0,1,2,\ldots,n\}\)</span> and the pmf is <span class="math display">\[f(y\mid\theta) = {n \choose y} \theta^y (1-\theta)^{(n-y)}.\]</span></p>
+<p>Alternatively, let <span class="math inline">\(Y_1,Y_2,\ldots,Y_n\stackrel{i.i.d.}{\sim} \mathrm{Bernoulli}(\theta)\)</span>. Then <span class="math inline">\(Y=\sum_{i=1}^n Y_i \sim \mathrm{Bin}(n,\theta)\)</span>.</p>
+<ul>
+<li>Determine <span class="math inline">\(E(Y)\)</span> <span class="math display">\[\\[4in]\]</span></li>
+<li>Determine <span class="math inline">\(var(Y)\)</span> <span class="math display">\[\\[4in]\]</span></li>
+</ul>
 <p>Assume <span class="math inline">\(Y\sim \mathrm{Bin}(20,0.4)\)</span>.</p>
-<p>Determine <span class="math inline">\(F(8)\)</span>.</p>
-<p>Determine <span class="math inline">\(P(8\leq Y \leq 10)\)</span>.</p>
+<ul>
+<li>Determine <span class="math inline">\(F(8)\)</span>. <span class="math display">\[\\[4in]\]</span></li>
+<li>Determine <span class="math inline">\(P(8\leq Y \leq 10)\)</span>. <span class="math display">\[\\[4in]\]</span></li>
+</ul>
 </div>
 <div id="poisson-distribution" class="section level3" number="3.7.3">
 <h3><span class="header-section-number">3.7.3</span> Poisson Distribution</h3>
-<p><span class="math inline">\(Y \sim \mathrm{Poisson}(\theta)\)</span> when <span class="math inline">\(\Omega=\{0,1,2,…\}\)</span> and <span class="math display">\[f(y|\theta)=\frac{1}{y!} \theta^y e^{-\theta}.\]</span></p>
-<p>Determine <span class="math inline">\(E(Y)\)</span></p>
-<p>Determine <span class="math inline">\(var(Y)\)</span></p>
+<p><span class="math inline">\(Y \sim \mathrm{Poisson}(\theta)\)</span> when <span class="math inline">\(\Omega=\{0,1,2,\ldots\}\)</span> and <span class="math display">\[f(y\mid\theta)=\frac{1}{y!} \theta^y e^{-\theta}.\]</span></p>
+<ul>
+<li>Determine <span class="math inline">\(E(Y)\)</span> <span class="math display">\[\\[4in]\]</span></li>
+<li>Determine <span class="math inline">\(var(Y)\)</span> <span class="math display">\[\\[4in]\]</span></li>
+</ul>
 <p>Assume <span class="math inline">\(Y\sim \mathrm{Poisson}(4)\)</span>.</p>
-<p>Determine <span class="math inline">\(F(12)\)</span></p>
-<p>Determine <span class="math inline">\(P(15\leq Y \leq 20)\)</span>.</p>
+<ul>
+<li>Determine <span class="math inline">\(F(12)\)</span> <span class="math display">\[\\[4in]\]</span></li>
+<li>Determine <span class="math inline">\(P(15\leq Y \leq 20)\)</span>. <span class="math display">\[\\[4in]\]</span></li>
+</ul>
 </div>
 </div>
 <div id="example-2-1" class="section level2" number="3.8">
@@ -643,31 +653,38 @@ Note that <span class="math inline">\(\mathbf{\Sigma}\)</span> must be symmetric
 <span class="math display">\[f(y_1,y_2 )=3y_1;\ 0 \leq y_2\leq y_1\leq 1.\]</span></p>
 <div id="problem-1" class="section level3" number="3.8.1">
 <h3><span class="header-section-number">3.8.1</span> Problem 1</h3>
-<p>Determine <span class="math inline">\(P(0\leq Y_1\leq 0.5;\ 0.25\leq Y_2)\)</span></p>
+<p>Determine <span class="math inline">\(P(0\leq Y_1\leq 0.5;\ 0.25\leq Y_2)\)</span>
+<span class="math display">\[\\[4in]\]</span></p>
 </div>
 <div id="problem-2" class="section level3" number="3.8.2">
 <h3><span class="header-section-number">3.8.2</span> Problem 2</h3>
-<p>Determine <span class="math inline">\(f_{Y_1 }\)</span> and <span class="math inline">\(f_{Y_2 }\)</span></p>
+<p>Determine <span class="math inline">\(f_{Y_1 }\)</span> and <span class="math inline">\(f_{Y_2 }\)</span>
+<span class="math display">\[\\[4in]\]</span></p>
 </div>
 <div id="problem-3" class="section level3" number="3.8.3">
 <h3><span class="header-section-number">3.8.3</span> Problem 3</h3>
-<p>Determine <span class="math inline">\(E(Y_1)\)</span> and <span class="math inline">\(E(Y_2)\)</span></p>
+<p>Determine <span class="math inline">\(E(Y_1)\)</span> and <span class="math inline">\(E(Y_2)\)</span>
+<span class="math display">\[\\[4in]\]</span></p>
 </div>
 <div id="problem-4" class="section level3" number="3.8.4">
 <h3><span class="header-section-number">3.8.4</span> Problem 4</h3>
-<p>Determine <span class="math inline">\(var(Y_1)\)</span> and <span class="math inline">\(var(Y_2)\)</span></p>
+<p>Determine <span class="math inline">\(var(Y_1)\)</span> and <span class="math inline">\(var(Y_2)\)</span>
+<span class="math display">\[\\[4in]\]</span></p>
 </div>
 <div id="problem-5" class="section level3" number="3.8.5">
 <h3><span class="header-section-number">3.8.5</span> Problem 5</h3>
-<p>Determine <span class="math inline">\(E(Y_1 Y_2)\)</span></p>
+<p>Determine <span class="math inline">\(E(Y_1 Y_2)\)</span>
+<span class="math display">\[\\[4in]\]</span></p>
 </div>
 <div id="problem-6" class="section level3" number="3.8.6">
 <h3><span class="header-section-number">3.8.6</span> Problem 6</h3>
-<p>Determine <span class="math inline">\(cov(Y_1,Y_2)\)</span></p>
+<p>Determine <span class="math inline">\(cov(Y_1,Y_2)\)</span>
+<span class="math display">\[\\[4in]\]</span></p>
 </div>
 <div id="problem-7" class="section level3" number="3.8.7">
 <h3><span class="header-section-number">3.8.7</span> Problem 7</h3>
-<p>Determine the mean and variance of <span class="math inline">\(\mathbf{a}^T \mathbf{y}\)</span>, where <span class="math inline">\(\mathbf{a}=(1,-1)^T\)</span> and <span class="math inline">\(\mathbf{y}=(Y_1,Y_2 )^T\)</span>. This is the expectation and variance of the difference between the amount of gas available and the amount of gas sold.</p>
+<p>Determine the mean and variance of <span class="math inline">\(\mathbf{a}^T \mathbf{y}\)</span>, where <span class="math inline">\(\mathbf{a}=(1,-1)^T\)</span> and <span class="math inline">\(\mathbf{y}=(Y_1,Y_2 )^T\)</span>. This is the expectation and variance of the difference between the amount of gas available and the amount of gas sold.
+<span class="math display">\[\\[4in]\]</span></p>
 
 </div>
 </div>
