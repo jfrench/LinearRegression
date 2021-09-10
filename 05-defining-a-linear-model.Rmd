@@ -1,6 +1,9 @@
 ---
 title: "Joshua French"
 date: "`r format(Sys.time(), '%Y-%m-%d')`"
+bibliography: [book.bib, packages.bib]
+biblio-style: apalike
+link-citations: yes
 ---
 
 # Defining a linear model
@@ -14,7 +17,7 @@ Regression models are used to model the relationship between:
 * one or more **response** variables and
 * one or more **predictor** variables.
 
-The distinction between these two variables is their purpose in the model.
+The distinction between these two types variables is their purpose in the model.
 
 * Predictor variables are used to predict the value of the response variable.
 
@@ -22,16 +25,12 @@ Response variables are also known as **outcome**, **output**, or **dependent** v
 
 Predictor variables are also known as **explanatory**, **regressor**, **input**, **dependent**, or **feature** variables.
 
-Note:  Because the variables in our model are often interrelated, describing these variables as independent or dependent variables are vague and are best avoided.
+Note:  Because the variables in our model are often interrelated, describing these variables as independent or dependent variables is vague and is best avoided.
 
 A distinction is sometimes made between **regression models** and **classification models**. In that case:
 
 * Regression models attempt to predict a numerical response.
 * Classification models attempt to predict the category level a response will have.
-
-A **linear model** is a regression model in which the regression coefficients (to be discussed later) enter the model linearly.
-
-* A linear model is just a specific type of regression model.
 
 ## Goals of regression
 
@@ -49,9 +48,67 @@ With our regression model, we also hope to be able to:
 2. *Infer causality* between our predictors and the response.
     * E.g., if we give a person a vaccine, then this causes the person's risk of catching the disease to decrease.
 
-**A "true model" doesn't exist for real data**, so that isn't the goal of a regression analysis. A regression analysis should attempt to find a model that adequately describes the relationship between the response and relevant predictor variables (either in terms of prediction, association, generalization, causality, etc.)
+**A "true model" doesn't exist for real data**. Thus, finding the true model should not be the goal of a regression analysis. A regression analysis should attempt to find a model that adequately describes the relationship between the response and relevant predictor variables (either in terms of prediction, association, generalization, causality, etc.)
+
+## Regression for Pearson's height data
+
+@wachsmuth_et_al2003 compiled child and parent height data from English familes tabulated by @pearson1897 and @pearson_lee1903. The data are available in the `PearsonLee` data set in the **HistData** package [@R-HistData]. The `PearsonLee` data frame includes the variables:
+
+* `child`: child height (inches).
+* `parent`: parent height (inches).
+* `gp`: a factor with levels `fd` (father/daughter), `fs` (father/son), `md` (mother/daughter), `ms` (mother/son) indicating the parent/child relationship.
+* `par`: a factor with levels `Father`, `Mother` indicating the parent measured.
+* `chl`: a factor with levels `Daughter`, `Son` indicating the child's relationship to the parent.
+
+It is natural to wonder whether the height of a parent could explain the height of their child. We can consider a regression analysis that regresses child's height (the response variable) on parent's height (the predictor variable). The additional variables `gp`, `par`, and `chl` could also be used as predictor variables in our analysis. We perform an informal (linear) regression analysis visually  using **ggplot2** [@R-ggplot2]. 
+
+Consider a plot of child's height versus parent's height.
+
+```{r}
+data(PearsonLee, package = "HistData") # load data
+library(ggplot2) # load ggplot2 package
+# create ggplot object for repeated use
+# we'll be using common aesthetics across multiple geometries
+# so we put them in the ggplot function
+# also improve the x, y labels
+ggheight <- ggplot(data = PearsonLee, 
+                    mapping = aes(x = parent, y = child)) + 
+             xlab("parent height (in)") + ylab("child height (in)")
+ggheight + geom_point() # scatter plot of child vs parent height
+```
+
+We see a positive linear association between parent height and child height: as the height of the parent increases, the height of the child also tends to increase.
+
+A simple linear regression model describes the relationship between a response and a predictor variable using the "best fitting" straight line (we'll formalize what best means later). We add the estimated simple linear regression model to our previous plot below using the `geom_smooth` function. The line fits reasonably well.
+
+```{r}
+ggheight + geom_point() +
+  geom_smooth(method = lm, formula = y ~ x, se = FALSE) # add estimated line
+```
+
+We may also wonder whether the type of parent (father/mother) or child (daughter/son) affects the relationship. We facet our scatter plots based on the `par` and `chl` variables below. While the overall patterns are similar, we notice that Father heights tend to be larger than Mother heights and Son heights tend to be larger than Daughter heights. 
+
+```{r}
+ggheight + geom_point() +
+  facet_grid(par ~ chl) # facet the data by parent/child type
+```
+
+Having seen the previous graphic, we may wonder whether we can better model the relationship between parent and child height by accounting for which parent and child were measured. An interaction model assumes that the intercept and slope of each combination of parent/child is the different. We fit and plot an interaction model below.
+
+```{r}
+ggheight + geom_point() + facet_grid(par ~ chl) +  
+       geom_smooth(method = lm, formula = y ~ x, se = FALSE) # add interaction  model to data
+```
+
+Other questions we could explore are whether the slopes across the different parent/child combinations are the same, whether the variability of the data is constant as parent height changes, predicting heights outside the range of the observed data, the precision of our estimated model, etc.
+
+Regression analysis will generally be much more complex that was is presented above, but this example hopefully gives you an idea of the kinds of questions regression analysis can help you answer. 
 
 ## Definition of a linear model
+
+A **linear model** is a regression model in which the regression coefficients (to be discussed later) enter the model linearly.
+
+* A linear model is just a specific type of regression model.
 
 ### Basic construction and relationships
 We begin by defining notation for the objects we will need and clarifying some of their important properties.
@@ -174,6 +231,38 @@ Analysis of variance (ANOVA) | predictors are all categorical
 Analysis of covariance (ANCOVA) | at least one quantitative predictor and at least one categorical predictor
 Generalized linear model (GLM) | a type of "generalized" regression model when the responses do not come from a normal distribution.
 
+## Standard linear model assumptions
+
+The formulation of a linear model typically makes additional assumptions beyond the 
+ones previously mentioned, specifically, about the errors, $\epsilon_1,\epsilon_2,\ldots,\epsilon_n$.
+
+We have already mentioned that fact that we are assuming $E(\epsilon_i)=0$ for $i=1,2,\ldots,n$.
+
+We also typically assume that the errors have constant variances, i.e., $$var(\epsilon_i) = \sigma^2, \quad i=1,2,\ldots,n,$$
+and that the errors are uncorrelated, i.e., $$cov(\epsilon_i, \epsilon_j) = 0, \quad i,j=1,2,\ldots,n,\quad i\neq j.$$
+
+Additionally, we assume that the errors are identically distributed. Formally, that may be written as 
+\begin{equation}
+\epsilon_i \sim F, i=1,2,\ldots,n,
+(\#eq:errordist)
+\end{equation}
+where $F$ is some arbitrary distribution. The $\sim$ means "distributed as". In other words, Equation \@ref(eq:errordist) means, "$\epsilon_i$ is distributed as $F$ for $i$ equal to $1,2,\ldots,n$". However, it is more common to assume the errors have a normal (Gaussian) distribution. Two uncorrelated normal random variables are also independent (this is true for normal random variables, but is not generally true for other distributions). Thus, we may concisely state the typical error assumptions as 
+$$\epsilon_1,\epsilon_2,\ldots,\epsilon_n \stackrel{i.i.d.}{\sim} N(0, \sigma^2),$$
+which combines the following assumptions:
+
+1. $E(\epsilon_i)=0$ for $i=1,2,\ldots,n$.
+1. $var(\epsilon_i)=0$ for $i=1,2,\ldots,n$.
+1. $cov(\epsilon_i,\epsilon_j)=0$ for $i\neq j$ with $i,j=1,2,\ldots,n$.
+1. $\epsilon_i$ has a normal distribution for $i=1,2,\ldots,n$.
+
+## Exercises
+
+1. If given a set of data with several variables, how would you decide what the response variable and the predictor variables would be?
+1. Which objects in the linear model formula in Equation \@ref(eq:lmdef) are considered random? Which are considered fixed?
+1. Which objects in the linear model formula in Equation \@ref(eq:lmdef) are observable? Which are not observable?
+1. What are the typical goals of a regression analysis?
+1. List the typical assumptions made for the errors in a linear model?
+1. Without using a formula, what is the basic difference between a linear model and a non-linear model?
 
 <!-- ## Scatter plots and linear regression -->
 

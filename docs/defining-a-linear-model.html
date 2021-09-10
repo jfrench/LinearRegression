@@ -24,7 +24,7 @@
 <meta name="author" content="Chapter 5 Defining a linear model | Joshua French" />
 
 
-<meta name="date" content="2021-09-08" />
+<meta name="date" content="2021-09-10" />
 
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <meta name="apple-mobile-web-app-capable" content="yes" />
@@ -339,16 +339,22 @@ div.csl-indent {
 <ul>
 <li class="chapter" data-level="5.1" data-path="defining-a-linear-model.html"><a href="defining-a-linear-model.html#background-and-terminology"><i class="fa fa-check"></i><b>5.1</b> Background and terminology</a></li>
 <li class="chapter" data-level="5.2" data-path="defining-a-linear-model.html"><a href="defining-a-linear-model.html#goals-of-regression"><i class="fa fa-check"></i><b>5.2</b> Goals of regression</a></li>
-<li class="chapter" data-level="5.3" data-path="defining-a-linear-model.html"><a href="defining-a-linear-model.html#definition-of-a-linear-model"><i class="fa fa-check"></i><b>5.3</b> Definition of a linear model</a>
+<li class="chapter" data-level="5.3" data-path="defining-a-linear-model.html"><a href="defining-a-linear-model.html#regression-for-pearsons-height-data"><i class="fa fa-check"></i><b>5.3</b> Regression for Pearson’s height data</a></li>
+<li class="chapter" data-level="5.4" data-path="defining-a-linear-model.html"><a href="defining-a-linear-model.html#definition-of-a-linear-model"><i class="fa fa-check"></i><b>5.4</b> Definition of a linear model</a>
 <ul>
-<li class="chapter" data-level="5.3.1" data-path="defining-a-linear-model.html"><a href="defining-a-linear-model.html#basic-construction-and-relationships"><i class="fa fa-check"></i><b>5.3.1</b> Basic construction and relationships</a></li>
-<li class="chapter" data-level="5.3.2" data-path="defining-a-linear-model.html"><a href="defining-a-linear-model.html#as-a-system-of-equations"><i class="fa fa-check"></i><b>5.3.2</b> As a system of equations</a></li>
-<li class="chapter" data-level="5.3.3" data-path="defining-a-linear-model.html"><a href="defining-a-linear-model.html#using-matrix-notation"><i class="fa fa-check"></i><b>5.3.3</b> Using matrix notation</a></li>
+<li class="chapter" data-level="5.4.1" data-path="defining-a-linear-model.html"><a href="defining-a-linear-model.html#basic-construction-and-relationships"><i class="fa fa-check"></i><b>5.4.1</b> Basic construction and relationships</a></li>
+<li class="chapter" data-level="5.4.2" data-path="defining-a-linear-model.html"><a href="defining-a-linear-model.html#as-a-system-of-equations"><i class="fa fa-check"></i><b>5.4.2</b> As a system of equations</a></li>
+<li class="chapter" data-level="5.4.3" data-path="defining-a-linear-model.html"><a href="defining-a-linear-model.html#using-matrix-notation"><i class="fa fa-check"></i><b>5.4.3</b> Using matrix notation</a></li>
 </ul></li>
-<li class="chapter" data-level="5.4" data-path="defining-a-linear-model.html"><a href="defining-a-linear-model.html#summarizing-the-components-of-a-linear-model"><i class="fa fa-check"></i><b>5.4</b> Summarizing the components of a linear model</a></li>
-<li class="chapter" data-level="5.5" data-path="defining-a-linear-model.html"><a href="defining-a-linear-model.html#types-of-regression-models"><i class="fa fa-check"></i><b>5.5</b> Types of regression models</a></li>
+<li class="chapter" data-level="5.5" data-path="defining-a-linear-model.html"><a href="defining-a-linear-model.html#summarizing-the-components-of-a-linear-model"><i class="fa fa-check"></i><b>5.5</b> Summarizing the components of a linear model</a></li>
+<li class="chapter" data-level="5.6" data-path="defining-a-linear-model.html"><a href="defining-a-linear-model.html#types-of-regression-models"><i class="fa fa-check"></i><b>5.6</b> Types of regression models</a></li>
+<li class="chapter" data-level="5.7" data-path="defining-a-linear-model.html"><a href="defining-a-linear-model.html#standard-linear-model-assumptions"><i class="fa fa-check"></i><b>5.7</b> Standard linear model assumptions</a></li>
+<li class="chapter" data-level="5.8" data-path="defining-a-linear-model.html"><a href="defining-a-linear-model.html#exercises"><i class="fa fa-check"></i><b>5.8</b> Exercises</a></li>
 </ul></li>
-<li class="chapter" data-level="6" data-path="fitting-a-linear-model.html"><a href="fitting-a-linear-model.html"><i class="fa fa-check"></i><b>6</b> Fitting a linear model</a></li>
+<li class="chapter" data-level="6" data-path="fitting-a-linear-model.html"><a href="fitting-a-linear-model.html"><i class="fa fa-check"></i><b>6</b> Fitting a linear model</a>
+<ul>
+<li class="chapter" data-level="6.1" data-path="fitting-a-linear-model.html"><a href="fitting-a-linear-model.html#section"><i class="fa fa-check"></i><b>6.1</b> </a></li>
+</ul></li>
 <li class="chapter" data-level="7" data-path="interpreting-a-fitted-linear-model.html"><a href="interpreting-a-fitted-linear-model.html"><i class="fa fa-check"></i><b>7</b> Interpreting a fitted linear model</a></li>
 <li class="chapter" data-level="8" data-path="categorical-predictors.html"><a href="categorical-predictors.html"><i class="fa fa-check"></i><b>8</b> Categorical predictors</a>
 <ul>
@@ -393,21 +399,17 @@ div.csl-indent {
 <li>one or more <strong>response</strong> variables and</li>
 <li>one or more <strong>predictor</strong> variables.</li>
 </ul>
-<p>The distinction between these two variables is their purpose in the model.</p>
+<p>The distinction between these two types variables is their purpose in the model.</p>
 <ul>
 <li>Predictor variables are used to predict the value of the response variable.</li>
 </ul>
 <p>Response variables are also known as <strong>outcome</strong>, <strong>output</strong>, or <strong>dependent</strong> variables.</p>
 <p>Predictor variables are also known as <strong>explanatory</strong>, <strong>regressor</strong>, <strong>input</strong>, <strong>dependent</strong>, or <strong>feature</strong> variables.</p>
-<p>Note: Because the variables in our model are often interrelated, describing these variables as independent or dependent variables are vague and are best avoided.</p>
+<p>Note: Because the variables in our model are often interrelated, describing these variables as independent or dependent variables is vague and is best avoided.</p>
 <p>A distinction is sometimes made between <strong>regression models</strong> and <strong>classification models</strong>. In that case:</p>
 <ul>
 <li>Regression models attempt to predict a numerical response.</li>
 <li>Classification models attempt to predict the category level a response will have.</li>
-</ul>
-<p>A <strong>linear model</strong> is a regression model in which the regression coefficients (to be discussed later) enter the model linearly.</p>
-<ul>
-<li>A linear model is just a specific type of regression model.</li>
 </ul>
 </div>
 <div id="goals-of-regression" class="section level2" number="5.2">
@@ -434,12 +436,55 @@ div.csl-indent {
 <li>E.g., if we give a person a vaccine, then this causes the person’s risk of catching the disease to decrease.</li>
 </ul></li>
 </ol>
-<p><strong>A “true model” doesn’t exist for real data</strong>, so that isn’t the goal of a regression analysis. A regression analysis should attempt to find a model that adequately describes the relationship between the response and relevant predictor variables (either in terms of prediction, association, generalization, causality, etc.)</p>
+<p><strong>A “true model” doesn’t exist for real data</strong>. Thus, finding the true model should not be the goal of a regression analysis. A regression analysis should attempt to find a model that adequately describes the relationship between the response and relevant predictor variables (either in terms of prediction, association, generalization, causality, etc.)</p>
 </div>
-<div id="definition-of-a-linear-model" class="section level2" number="5.3">
-<h2><span class="header-section-number">5.3</span> Definition of a linear model</h2>
-<div id="basic-construction-and-relationships" class="section level3" number="5.3.1">
-<h3><span class="header-section-number">5.3.1</span> Basic construction and relationships</h3>
+<div id="regression-for-pearsons-height-data" class="section level2" number="5.3">
+<h2><span class="header-section-number">5.3</span> Regression for Pearson’s height data</h2>
+<p><span class="citation"><a href="#ref-wachsmuth_et_al2003" role="doc-biblioref">Wachsmuth, Wilkinson, and Dallal</a> (<a href="#ref-wachsmuth_et_al2003" role="doc-biblioref">2003</a>)</span> compiled child and parent height data from English familes tabulated by <span class="citation"><a href="#ref-pearson1897" role="doc-biblioref">Pearson and Lee</a> (<a href="#ref-pearson1897" role="doc-biblioref">1897</a>)</span> and <span class="citation"><a href="#ref-pearson_lee1903" role="doc-biblioref">Pearson and Lee</a> (<a href="#ref-pearson_lee1903" role="doc-biblioref">1903</a>)</span>. The data are available in the <code>PearsonLee</code> data set in the <strong>HistData</strong> package <span class="citation">(<a href="#ref-R-HistData" role="doc-biblioref">Friendly 2021</a>)</span>. The <code>PearsonLee</code> data frame includes the variables:</p>
+<ul>
+<li><code>child</code>: child height (inches).</li>
+<li><code>parent</code>: parent height (inches).</li>
+<li><code>gp</code>: a factor with levels <code>fd</code> (father/daughter), <code>fs</code> (father/son), <code>md</code> (mother/daughter), <code>ms</code> (mother/son) indicating the parent/child relationship.</li>
+<li><code>par</code>: a factor with levels <code>Father</code>, <code>Mother</code> indicating the parent measured.</li>
+<li><code>chl</code>: a factor with levels <code>Daughter</code>, <code>Son</code> indicating the child’s relationship to the parent.</li>
+</ul>
+<p>It is natural to wonder whether the height of a parent could explain the height of their child. We can consider a regression analysis that regresses child’s height (the response variable) on parent’s height (the predictor variable). The additional variables <code>gp</code>, <code>par</code>, and <code>chl</code> could also be used as predictor variables in our analysis. We perform an informal (linear) regression analysis visually using <strong>ggplot2</strong> <span class="citation">(<a href="#ref-R-ggplot2" role="doc-biblioref">Wickham et al. 2021</a>)</span>.</p>
+<p>Consider a plot of child’s height versus parent’s height.</p>
+<div class="sourceCode" id="cb45"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb45-1"><a href="defining-a-linear-model.html#cb45-1" aria-hidden="true" tabindex="-1"></a><span class="fu">data</span>(PearsonLee, <span class="at">package =</span> <span class="st">&quot;HistData&quot;</span>) <span class="co"># load data</span></span>
+<span id="cb45-2"><a href="defining-a-linear-model.html#cb45-2" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(ggplot2) <span class="co"># load ggplot2 package</span></span>
+<span id="cb45-3"><a href="defining-a-linear-model.html#cb45-3" aria-hidden="true" tabindex="-1"></a><span class="co"># create ggplot object for repeated use</span></span>
+<span id="cb45-4"><a href="defining-a-linear-model.html#cb45-4" aria-hidden="true" tabindex="-1"></a><span class="co"># we&#39;ll be using common aesthetics across multiple geometries</span></span>
+<span id="cb45-5"><a href="defining-a-linear-model.html#cb45-5" aria-hidden="true" tabindex="-1"></a><span class="co"># so we put them in the ggplot function</span></span>
+<span id="cb45-6"><a href="defining-a-linear-model.html#cb45-6" aria-hidden="true" tabindex="-1"></a><span class="co"># also improve the x, y labels</span></span>
+<span id="cb45-7"><a href="defining-a-linear-model.html#cb45-7" aria-hidden="true" tabindex="-1"></a>ggheight <span class="ot">&lt;-</span> <span class="fu">ggplot</span>(<span class="at">data =</span> PearsonLee, </span>
+<span id="cb45-8"><a href="defining-a-linear-model.html#cb45-8" aria-hidden="true" tabindex="-1"></a>                    <span class="at">mapping =</span> <span class="fu">aes</span>(<span class="at">x =</span> parent, <span class="at">y =</span> child)) <span class="sc">+</span> </span>
+<span id="cb45-9"><a href="defining-a-linear-model.html#cb45-9" aria-hidden="true" tabindex="-1"></a>             <span class="fu">xlab</span>(<span class="st">&quot;parent height (in)&quot;</span>) <span class="sc">+</span> <span class="fu">ylab</span>(<span class="st">&quot;child height (in)&quot;</span>)</span>
+<span id="cb45-10"><a href="defining-a-linear-model.html#cb45-10" aria-hidden="true" tabindex="-1"></a>ggheight <span class="sc">+</span> <span class="fu">geom_point</span>() <span class="co"># scatter plot of child vs parent height</span></span></code></pre></div>
+<p><img src="Data-Analysis-with-Linear-Regression_files/figure-html/unnamed-chunk-47-1.png" width="672" /></p>
+<p>We see a positive linear association between parent height and child height: as the height of the parent increases, the height of the child also tends to increase.</p>
+<p>A simple linear regression model describes the relationship between a response and a predictor variable using the “best fitting” straight line (we’ll formalize what best means later). We add the estimated simple linear regression model to our previous plot below using the <code>geom_smooth</code> function. The line fits reasonably well.</p>
+<div class="sourceCode" id="cb46"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb46-1"><a href="defining-a-linear-model.html#cb46-1" aria-hidden="true" tabindex="-1"></a>ggheight <span class="sc">+</span> <span class="fu">geom_point</span>() <span class="sc">+</span></span>
+<span id="cb46-2"><a href="defining-a-linear-model.html#cb46-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_smooth</span>(<span class="at">method =</span> lm, <span class="at">formula =</span> y <span class="sc">~</span> x, <span class="at">se =</span> <span class="cn">FALSE</span>) <span class="co"># add estimated line</span></span></code></pre></div>
+<p><img src="Data-Analysis-with-Linear-Regression_files/figure-html/unnamed-chunk-48-1.png" width="672" /></p>
+<p>We may also wonder whether the type of parent (father/mother) or child (daughter/son) affects the relationship. We facet our scatter plots based on the <code>par</code> and <code>chl</code> variables below. While the overall patterns are similar, we notice that Father heights tend to be larger than Mother heights and Son heights tend to be larger than Daughter heights.</p>
+<div class="sourceCode" id="cb47"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb47-1"><a href="defining-a-linear-model.html#cb47-1" aria-hidden="true" tabindex="-1"></a>ggheight <span class="sc">+</span> <span class="fu">geom_point</span>() <span class="sc">+</span></span>
+<span id="cb47-2"><a href="defining-a-linear-model.html#cb47-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">facet_grid</span>(par <span class="sc">~</span> chl) <span class="co"># facet the data by parent/child type</span></span></code></pre></div>
+<p><img src="Data-Analysis-with-Linear-Regression_files/figure-html/unnamed-chunk-49-1.png" width="672" /></p>
+<p>Having seen the previous graphic, we may wonder whether we can better model the relationship between parent and child height by accounting for which parent and child were measured. An interaction model assumes that the intercept and slope of each combination of parent/child is the different. We fit and plot an interaction model below.</p>
+<div class="sourceCode" id="cb48"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb48-1"><a href="defining-a-linear-model.html#cb48-1" aria-hidden="true" tabindex="-1"></a>ggheight <span class="sc">+</span> <span class="fu">geom_point</span>() <span class="sc">+</span> <span class="fu">facet_grid</span>(par <span class="sc">~</span> chl) <span class="sc">+</span>  </span>
+<span id="cb48-2"><a href="defining-a-linear-model.html#cb48-2" aria-hidden="true" tabindex="-1"></a>       <span class="fu">geom_smooth</span>(<span class="at">method =</span> lm, <span class="at">formula =</span> y <span class="sc">~</span> x, <span class="at">se =</span> <span class="cn">FALSE</span>) <span class="co"># add interaction  model to data</span></span></code></pre></div>
+<p><img src="Data-Analysis-with-Linear-Regression_files/figure-html/unnamed-chunk-50-1.png" width="672" /></p>
+<p>Other questions we could explore are whether the slopes across the different parent/child combinations are the same, whether the variability of the data is constant as parent height changes, predicting heights outside the range of the observed data, the precision of our estimated model, etc.</p>
+<p>Regression analysis will generally be much more complex that was is presented above, but this example hopefully gives you an idea of the kinds of questions regression analysis can help you answer.</p>
+</div>
+<div id="definition-of-a-linear-model" class="section level2" number="5.4">
+<h2><span class="header-section-number">5.4</span> Definition of a linear model</h2>
+<p>A <strong>linear model</strong> is a regression model in which the regression coefficients (to be discussed later) enter the model linearly.</p>
+<ul>
+<li>A linear model is just a specific type of regression model.</li>
+</ul>
+<div id="basic-construction-and-relationships" class="section level3" number="5.4.1">
+<h3><span class="header-section-number">5.4.1</span> Basic construction and relationships</h3>
 <p>We begin by defining notation for the objects we will need and clarifying some of their important properties.</p>
 <ul>
 <li><span class="math inline">\(Y\)</span> denotes the response variable.
@@ -488,8 +533,8 @@ For a model with multiple predictors, this extends to
 Thus, our response may be written as the sum of the mean response conditional on the predictors, <span class="math inline">\(E(Y|X_1, X_2, \ldots, X_{p-1})\)</span>, and the error. This is why previously we discussed the fact that the error is simply the deviation of the response from its mean.</p>
 <!-- The model in Equation \@ref(eq:lmdef) is a **statistical model** because there is uncertainty in the response.  -->
 </div>
-<div id="as-a-system-of-equations" class="section level3" number="5.3.2">
-<h3><span class="header-section-number">5.3.2</span> As a system of equations</h3>
+<div id="as-a-system-of-equations" class="section level3" number="5.4.2">
+<h3><span class="header-section-number">5.4.2</span> As a system of equations</h3>
 <p>A linear regression analysis will model the data using a linear model. Suppose we have sampled <span class="math inline">\(n\)</span> observations from a population. We now introduce some additional notation:</p>
 <ul>
 <li><span class="math inline">\(Y_1, Y_2, \ldots, Y_n\)</span> denote the response values for the <span class="math inline">\(n\)</span> observations.</li>
@@ -509,8 +554,8 @@ Y_i = \beta_0 + \beta_1 x_{i,1} + \beta_2 x_{i,2} + \cdots + \beta_{p-1} x_{i,p-
 Y_i = E(Y_i | X_1 = x_{i,1}, \ldots, X_{p-1} = x_{i,p-1}) + \epsilon_i,\quad i=1,2,\ldots,n.
 \end{equation}\]</span></p>
 </div>
-<div id="using-matrix-notation" class="section level3" number="5.3.3">
-<h3><span class="header-section-number">5.3.3</span> Using matrix notation</h3>
+<div id="using-matrix-notation" class="section level3" number="5.4.3">
+<h3><span class="header-section-number">5.4.3</span> Using matrix notation</h3>
 <p>The regression coefficients are said to enter the model linearly, which is why this type of model is called a linear model. To see this more clearly, we represent the model using matrices. We define the following notation:</p>
 <ul>
 <li><span class="math inline">\(\mathbf{y} = [Y_1, Y_2, \ldots, Y_n]^T\)</span> denotes the column vector containing the <span class="math inline">\(n\)</span> responses.</li>
@@ -528,8 +573,8 @@ Thus, a linear model can be represented as a system of linear equations using ma
 </ul>
 </div>
 </div>
-<div id="summarizing-the-components-of-a-linear-model" class="section level2" number="5.4">
-<h2><span class="header-section-number">5.4</span> Summarizing the components of a linear model</h2>
+<div id="summarizing-the-components-of-a-linear-model" class="section level2" number="5.5">
+<h2><span class="header-section-number">5.5</span> Summarizing the components of a linear model</h2>
 <p>We have already introduced a lot of objects. To aid in making sense of their notation, their purpose in the model, whether they can be observed, and whether they are modeled as a random variable (vector) or fixed, non-random values, we summarize things below.</p>
 <p>We’ve already talked about observing the response variable and the predictor variables. So these objects are observable. However, we have no way to measure the regression coefficients or the error. These are not observable.</p>
 <p>On the other hand, we treat the response variable as a random variable. Perhaps surprisingly, we treated the predictor variables as a fixed, non-random variables. The regression coefficients are treated as fixed, non-random but unknown values. This is standard for parameters in a statistical model. The errors are also treated as random variables. In fact, since both the predictor variables and the regression coefficients are non-random, the only way for the response to be a random variable based on Equation <a href="defining-a-linear-model.html#eq:lmSystem">(5.2)</a> is for the errors to be random.</p>
@@ -625,8 +670,8 @@ Thus, a linear model can be represented as a system of linear equations using ma
 </tbody>
 </table>
 </div>
-<div id="types-of-regression-models" class="section level2" number="5.5">
-<h2><span class="header-section-number">5.5</span> Types of regression models</h2>
+<div id="types-of-regression-models" class="section level2" number="5.6">
+<h2><span class="header-section-number">5.6</span> Types of regression models</h2>
 <p>The are many “named” types of regression models. You may hear or see people use these terms when describing their model. Here is a brief overview of some common regression models.</p>
 <table>
 <colgroup>
@@ -670,6 +715,39 @@ Thus, a linear model can be represented as a system of linear equations using ma
 </tr>
 </tbody>
 </table>
+</div>
+<div id="standard-linear-model-assumptions" class="section level2" number="5.7">
+<h2><span class="header-section-number">5.7</span> Standard linear model assumptions</h2>
+<p>The formulation of a linear model typically makes additional assumptions beyond the
+ones previously mentioned, specifically, about the errors, <span class="math inline">\(\epsilon_1,\epsilon_2,\ldots,\epsilon_n\)</span>.</p>
+<p>We have already mentioned that fact that we are assuming <span class="math inline">\(E(\epsilon_i)=0\)</span> for <span class="math inline">\(i=1,2,\ldots,n\)</span>.</p>
+<p>We also typically assume that the errors have constant variances, i.e., <span class="math display">\[var(\epsilon_i) = \sigma^2, \quad i=1,2,\ldots,n,\]</span>
+and that the errors are uncorrelated, i.e., <span class="math display">\[cov(\epsilon_i, \epsilon_j) = 0, \quad i,j=1,2,\ldots,n,\quad i\neq j.\]</span></p>
+<p>Additionally, we assume that the errors are identically distributed. Formally, that may be written as
+<span class="math display" id="eq:errordist">\[\begin{equation}
+\epsilon_i \sim F, i=1,2,\ldots,n,
+\tag{5.3}
+\end{equation}\]</span>
+where <span class="math inline">\(F\)</span> is some arbitrary distribution. The <span class="math inline">\(\sim\)</span> means “distributed as.” In other words, Equation <a href="defining-a-linear-model.html#eq:errordist">(5.3)</a> means, “<span class="math inline">\(\epsilon_i\)</span> is distributed as <span class="math inline">\(F\)</span> for <span class="math inline">\(i\)</span> equal to <span class="math inline">\(1,2,\ldots,n\)</span>.” However, it is more common to assume the errors have a normal (Gaussian) distribution. Two uncorrelated normal random variables are also independent (this is true for normal random variables, but is not generally true for other distributions). Thus, we may concisely state the typical error assumptions as
+<span class="math display">\[\epsilon_1,\epsilon_2,\ldots,\epsilon_n \stackrel{i.i.d.}{\sim} N(0, \sigma^2),\]</span>
+which combines the following assumptions:</p>
+<ol style="list-style-type: decimal">
+<li><span class="math inline">\(E(\epsilon_i)=0\)</span> for <span class="math inline">\(i=1,2,\ldots,n\)</span>.</li>
+<li><span class="math inline">\(var(\epsilon_i)=0\)</span> for <span class="math inline">\(i=1,2,\ldots,n\)</span>.</li>
+<li><span class="math inline">\(cov(\epsilon_i,\epsilon_j)=0\)</span> for <span class="math inline">\(i\neq j\)</span> with <span class="math inline">\(i,j=1,2,\ldots,n\)</span>.</li>
+<li><span class="math inline">\(\epsilon_i\)</span> has a normal distribution for <span class="math inline">\(i=1,2,\ldots,n\)</span>.</li>
+</ol>
+</div>
+<div id="exercises" class="section level2" number="5.8">
+<h2><span class="header-section-number">5.8</span> Exercises</h2>
+<ol style="list-style-type: decimal">
+<li>If given a set of data with several variables, how would you decide what the response variable and the predictor variables would be?</li>
+<li>Which objects in the linear model formula in Equation <a href="defining-a-linear-model.html#eq:lmdef">(5.1)</a> are considered random? Which are considered fixed?</li>
+<li>Which objects in the linear model formula in Equation <a href="defining-a-linear-model.html#eq:lmdef">(5.1)</a> are observable? Which are not observable?</li>
+<li>What are the typical goals of a regression analysis?</li>
+<li>List the typical assumptions made for the errors in a linear model?</li>
+<li>Without using a formula, what is the basic difference between a linear model and a non-linear model?</li>
+</ol>
 <!-- ## Scatter plots and linear regression -->
 <p><!-- Scatter plots are a convenient way to study the potential relationship between a single response and a single predictor variable. --></p>
 <p><!-- ### Height inheritability --></p>
@@ -729,6 +807,24 @@ Thus, a linear model can be represented as a system of linear equations using ma
 <!--        auto.key = TRUE, type = "b") -->
 <!-- ``` -->
 
+</div>
+</div>
+<h3>References</h3>
+<div id="refs" class="references csl-bib-body hanging-indent">
+<div id="ref-R-HistData" class="csl-entry">
+Friendly, Michael. 2021. <em>HistData: Data Sets from the History of Statistics and Data Visualization</em>. <a href="https://CRAN.R-project.org/package=HistData">https://CRAN.R-project.org/package=HistData</a>.
+</div>
+<div id="ref-pearson1897" class="csl-entry">
+Pearson, Karl, and Alice Lee. 1897. <span>“Mathematical Contributions to the Theory of Evolution. On Telegony in Man.”</span> <em>Proceedings of the Royal Society of London</em> 60 (359-367): 273–83.
+</div>
+<div id="ref-pearson_lee1903" class="csl-entry">
+———. 1903. <span>“On the Laws of Inheritance in Man: <span>I</span>. <span>I</span>nheritance of Physical Characters.”</span> <em>Biometrika</em> 2 (4): 357–462.
+</div>
+<div id="ref-wachsmuth_et_al2003" class="csl-entry">
+Wachsmuth, Amanda, Leland Wilkinson, and Gerard E Dallal. 2003. <span>“Galton’s Bend.”</span> <em>The American Statistician</em> 57 (3): 190–92. <a href="https://doi.org/10.1198/0003130031874">https://doi.org/10.1198/0003130031874</a>.
+</div>
+<div id="ref-R-ggplot2" class="csl-entry">
+Wickham, Hadley, Winston Chang, Lionel Henry, Thomas Lin Pedersen, Kohske Takahashi, Claus Wilke, Kara Woo, Hiroaki Yutani, and Dewey Dunnington. 2021. <em>Ggplot2: Create Elegant Data Visualisations Using the Grammar of Graphics</em>. <a href="https://CRAN.R-project.org/package=ggplot2">https://CRAN.R-project.org/package=ggplot2</a>.
 </div>
 </div>
             </section>
