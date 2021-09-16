@@ -4,11 +4,11 @@
 
   <meta charset="utf-8" />
   <meta http-equiv="X-UA-Compatible" content="IE=edge" />
-  <title>References | Joshua French</title>
+  <title>Chapter 5 Linear model definition and properties | Joshua French</title>
   <meta name="description" content="A collection of R notebooks demonstrating how to perform data analysis with linear regression." />
   <meta name="generator" content="bookdown 0.24 and GitBook 2.6.7" />
 
-  <meta property="og:title" content="References | Joshua French" />
+  <meta property="og:title" content="Chapter 5 Linear model definition and properties | Joshua French" />
   <meta property="og:type" content="book" />
   
   
@@ -16,12 +16,12 @@
   
 
   <meta name="twitter:card" content="summary" />
-  <meta name="twitter:title" content="References | Joshua French" />
+  <meta name="twitter:title" content="Chapter 5 Linear model definition and properties | Joshua French" />
   
   <meta name="twitter:description" content="A collection of R notebooks demonstrating how to perform data analysis with linear regression." />
   
 
-<meta name="author" content="References | Joshua French" />
+<meta name="author" content="Chapter 5 Linear model definition and properties | Joshua French" />
 
 
 <meta name="date" content="2021-09-16" />
@@ -31,8 +31,8 @@
   <meta name="apple-mobile-web-app-status-bar-style" content="black" />
   
   
-<link rel="prev" href="assessing-and-addressing-collinearity.html"/>
-
+<link rel="prev" href="useful-matrix-facts.html"/>
+<link rel="next" href="fitting-a-linear-model.html"/>
 <script src="libs/header-attrs-2.10/header-attrs.js"></script>
 <script src="libs/jquery-3.6.0/jquery-3.6.0.min.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/fuse.js@6.4.6/dist/fuse.min.js"></script>
@@ -403,34 +403,511 @@ div.csl-indent {
           <div class="page-inner">
 
             <section class="normal" id="section-">
-<div id="references" class="section level1 unnumbered">
-<h1>References</h1>
+<div id="linear-model-definition-and-properties" class="section level1" number="5">
+<h1><span class="header-section-number">Chapter 5</span> Linear model definition and properties</h1>
+<p>Based on Chapter 2 of LMWR2, Chapter 2 and 3 of ALR4</p>
+<div id="background-and-terminology" class="section level2" number="5.1">
+<h2><span class="header-section-number">5.1</span> Background and terminology</h2>
+<p>Regression models are used to model the relationship between:</p>
+<ul>
+<li>one or more <strong>response</strong> variables and</li>
+<li>one or more <strong>predictor</strong> variables.</li>
+</ul>
+<p>The distinction between these two types variables is their purpose in the model.</p>
+<ul>
+<li>Predictor variables are used to predict the value of the response variable.</li>
+</ul>
+<p>Response variables are also known as <strong>outcome</strong>, <strong>output</strong>, or <strong>dependent</strong> variables.</p>
+<p>Predictor variables are also known as <strong>explanatory</strong>, <strong>regressor</strong>, <strong>input</strong>, <strong>dependent</strong>, or <strong>feature</strong> variables.</p>
+<p>Note: Because the variables in our model are often interrelated, describing these variables as independent or dependent variables is vague and is best avoided.</p>
+<p>A distinction is sometimes made between <strong>regression models</strong> and <strong>classification models</strong>. In that case:</p>
+<ul>
+<li>Regression models attempt to predict a numerical response.</li>
+<li>Classification models attempt to predict the category level a response will have.</li>
+</ul>
+</div>
+<div id="goals-of-regression" class="section level2" number="5.2">
+<h2><span class="header-section-number">5.2</span> Goals of regression</h2>
+<p>The basic goals of a regression model are to:</p>
+<ol style="list-style-type: decimal">
+<li><em>Predict</em> future or unknown response values based on specified values of the predictors.
+<ul>
+<li>What will the selling price of a home be?</li>
+</ul></li>
+<li><em>Identify relationships</em> (associations) between predictor variables and the response.
+<ul>
+<li>What is the general relationship between the selling price of a home and the number of bedrooms the home has?</li>
+</ul></li>
+</ol>
+<p>With our regression model, we also hope to be able to:</p>
+<ol style="list-style-type: decimal">
+<li><em>Generalize</em> our results from the sample to the a larger population of interest.
+<ul>
+<li>E.g., we want to extend our results from a small set of college students to all college students.</li>
+</ul></li>
+<li><em>Infer causality</em> between our predictors and the response.
+<ul>
+<li>E.g., if we give a person a vaccine, then this causes the person’s risk of catching the disease to decrease.</li>
+</ul></li>
+</ol>
+<p><strong>A “true model” doesn’t exist for real data</strong>. Thus, finding the true model should not be the goal of a regression analysis. A regression analysis should attempt to find a model that adequately describes the relationship between the response and relevant predictor variables (either in terms of prediction, association, generalization, causality, etc.)</p>
+</div>
+<div id="regression-for-pearsons-height-data" class="section level2" number="5.3">
+<h2><span class="header-section-number">5.3</span> Regression for Pearson’s height data</h2>
+<p><span class="citation"><a href="#ref-wachsmuth_et_al2003" role="doc-biblioref">Wachsmuth, Wilkinson, and Dallal</a> (<a href="#ref-wachsmuth_et_al2003" role="doc-biblioref">2003</a>)</span> compiled child and parent height data from English familes tabulated by <span class="citation"><a href="#ref-pearson1897" role="doc-biblioref">Pearson and Lee</a> (<a href="#ref-pearson1897" role="doc-biblioref">1897</a>)</span> and <span class="citation"><a href="#ref-pearson_lee1903" role="doc-biblioref">Pearson and Lee</a> (<a href="#ref-pearson_lee1903" role="doc-biblioref">1903</a>)</span>. The data are available in the <code>PearsonLee</code> data set in the <strong>HistData</strong> package <span class="citation">(<a href="#ref-R-HistData" role="doc-biblioref">Friendly 2021</a>)</span>. The <code>PearsonLee</code> data frame includes the variables:</p>
+<ul>
+<li><code>child</code>: child height (inches).</li>
+<li><code>parent</code>: parent height (inches).</li>
+<li><code>gp</code>: a factor with levels <code>fd</code> (father/daughter), <code>fs</code> (father/son), <code>md</code> (mother/daughter), <code>ms</code> (mother/son) indicating the parent/child relationship.</li>
+<li><code>par</code>: a factor with levels <code>Father</code>, <code>Mother</code> indicating the parent measured.</li>
+<li><code>chl</code>: a factor with levels <code>Daughter</code>, <code>Son</code> indicating the child’s relationship to the parent.</li>
+</ul>
+<p>It is natural to wonder whether the height of a parent could explain the height of their child. We can consider a regression analysis that regresses child’s height (the response variable) on parent’s height (the predictor variable). The additional variables <code>gp</code>, <code>par</code>, and <code>chl</code> could also be used as predictor variables in our analysis. We perform an informal (linear) regression analysis visually using <strong>ggplot2</strong> <span class="citation">(<a href="#ref-R-ggplot2" role="doc-biblioref">Wickham et al. 2021</a>)</span>.</p>
+<p>Consider a plot of child’s height versus parent’s height.</p>
+<div class="sourceCode" id="cb45"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb45-1"><a href="linear-model-definition-and-properties.html#cb45-1" aria-hidden="true" tabindex="-1"></a><span class="fu">data</span>(PearsonLee, <span class="at">package =</span> <span class="st">&quot;HistData&quot;</span>) <span class="co"># load data</span></span>
+<span id="cb45-2"><a href="linear-model-definition-and-properties.html#cb45-2" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(ggplot2) <span class="co"># load ggplot2 package</span></span>
+<span id="cb45-3"><a href="linear-model-definition-and-properties.html#cb45-3" aria-hidden="true" tabindex="-1"></a><span class="co"># create ggplot object for repeated use</span></span>
+<span id="cb45-4"><a href="linear-model-definition-and-properties.html#cb45-4" aria-hidden="true" tabindex="-1"></a><span class="co"># we&#39;ll be using common aesthetics across multiple geometries</span></span>
+<span id="cb45-5"><a href="linear-model-definition-and-properties.html#cb45-5" aria-hidden="true" tabindex="-1"></a><span class="co"># so we put them in the ggplot function</span></span>
+<span id="cb45-6"><a href="linear-model-definition-and-properties.html#cb45-6" aria-hidden="true" tabindex="-1"></a><span class="co"># also improve the x, y labels</span></span>
+<span id="cb45-7"><a href="linear-model-definition-and-properties.html#cb45-7" aria-hidden="true" tabindex="-1"></a>ggheight <span class="ot">&lt;-</span> <span class="fu">ggplot</span>(<span class="at">data =</span> PearsonLee, </span>
+<span id="cb45-8"><a href="linear-model-definition-and-properties.html#cb45-8" aria-hidden="true" tabindex="-1"></a>                    <span class="at">mapping =</span> <span class="fu">aes</span>(<span class="at">x =</span> parent, <span class="at">y =</span> child)) <span class="sc">+</span> </span>
+<span id="cb45-9"><a href="linear-model-definition-and-properties.html#cb45-9" aria-hidden="true" tabindex="-1"></a>             <span class="fu">xlab</span>(<span class="st">&quot;parent height (in)&quot;</span>) <span class="sc">+</span> <span class="fu">ylab</span>(<span class="st">&quot;child height (in)&quot;</span>)</span>
+<span id="cb45-10"><a href="linear-model-definition-and-properties.html#cb45-10" aria-hidden="true" tabindex="-1"></a>ggheight <span class="sc">+</span> <span class="fu">geom_point</span>() <span class="co"># scatter plot of child vs parent height</span></span></code></pre></div>
+<p><img src="Data-Analysis-with-Linear-Regression_files/figure-html/unnamed-chunk-47-1.png" width="672" /></p>
+<p>We see a positive linear association between parent height and child height: as the height of the parent increases, the height of the child also tends to increase.</p>
+<p>A simple linear regression model describes the relationship between a response and a predictor variable using the “best fitting” straight line (we’ll formalize what best means later). We add the estimated simple linear regression model to our previous plot below using the <code>geom_smooth</code> function. The line fits reasonably well.</p>
+<div class="sourceCode" id="cb46"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb46-1"><a href="linear-model-definition-and-properties.html#cb46-1" aria-hidden="true" tabindex="-1"></a>ggheight <span class="sc">+</span> <span class="fu">geom_point</span>() <span class="sc">+</span></span>
+<span id="cb46-2"><a href="linear-model-definition-and-properties.html#cb46-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_smooth</span>(<span class="at">method =</span> lm, <span class="at">formula =</span> y <span class="sc">~</span> x, <span class="at">se =</span> <span class="cn">FALSE</span>) <span class="co"># add estimated line</span></span></code></pre></div>
+<p><img src="Data-Analysis-with-Linear-Regression_files/figure-html/unnamed-chunk-48-1.png" width="672" /></p>
+<p>We may also wonder whether the type of parent (father/mother) or child (daughter/son) affects the relationship. We facet our scatter plots based on the <code>par</code> and <code>chl</code> variables below. While the overall patterns are similar, we notice that Father heights tend to be larger than Mother heights and Son heights tend to be larger than Daughter heights.</p>
+<div class="sourceCode" id="cb47"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb47-1"><a href="linear-model-definition-and-properties.html#cb47-1" aria-hidden="true" tabindex="-1"></a>ggheight <span class="sc">+</span> <span class="fu">geom_point</span>() <span class="sc">+</span></span>
+<span id="cb47-2"><a href="linear-model-definition-and-properties.html#cb47-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">facet_grid</span>(par <span class="sc">~</span> chl) <span class="co"># facet the data by parent/child type</span></span></code></pre></div>
+<p><img src="Data-Analysis-with-Linear-Regression_files/figure-html/unnamed-chunk-49-1.png" width="672" /></p>
+<p>Having seen the previous graphic, we may wonder whether we can better model the relationship between parent and child height by accounting for which parent and child were measured. An interaction model assumes that the intercept and slope of each combination of parent/child is the different. We fit and plot an interaction model below.</p>
+<div class="sourceCode" id="cb48"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb48-1"><a href="linear-model-definition-and-properties.html#cb48-1" aria-hidden="true" tabindex="-1"></a>ggheight <span class="sc">+</span> <span class="fu">geom_point</span>() <span class="sc">+</span> <span class="fu">facet_grid</span>(par <span class="sc">~</span> chl) <span class="sc">+</span>  </span>
+<span id="cb48-2"><a href="linear-model-definition-and-properties.html#cb48-2" aria-hidden="true" tabindex="-1"></a>       <span class="fu">geom_smooth</span>(<span class="at">method =</span> lm, <span class="at">formula =</span> y <span class="sc">~</span> x, <span class="at">se =</span> <span class="cn">FALSE</span>) <span class="co"># add interaction  model to data</span></span></code></pre></div>
+<p><img src="Data-Analysis-with-Linear-Regression_files/figure-html/unnamed-chunk-50-1.png" width="672" /></p>
+<p>Other questions we could explore are whether the slopes across the different parent/child combinations are the same, whether the variability of the data is constant as parent height changes, predicting heights outside the range of the observed data, the precision of our estimated model, etc.</p>
+<p>Regression analysis will generally be much more complex that was is presented above, but this example hopefully gives you an idea of the kinds of questions regression analysis can help you answer.</p>
+</div>
+<div id="definition-of-a-linear-model" class="section level2" number="5.4">
+<h2><span class="header-section-number">5.4</span> Definition of a linear model</h2>
+<p>A <strong>linear model</strong> is a regression model in which the regression coefficients (to be discussed later) enter the model linearly.</p>
+<ul>
+<li>A linear model is just a specific type of regression model.</li>
+</ul>
+<div id="basic-construction-and-relationships" class="section level3" number="5.4.1">
+<h3><span class="header-section-number">5.4.1</span> Basic construction and relationships</h3>
+<p>We begin by defining notation for the objects we will need and clarifying some of their important properties.</p>
+<ul>
+<li><span class="math inline">\(Y\)</span> denotes the response variable.
+<ul>
+<li>The response variable is treated as a random variable.</li>
+<li>We will observe realizations of this random variable for each observation in our data set.</li>
+</ul></li>
+<li><span class="math inline">\(X\)</span> denotes a single predictor variable. <span class="math inline">\(X_1\)</span>, <span class="math inline">\(X_2\)</span>, , <span class="math inline">\(X_{p-1}\)</span> will denote the predictor variables when there is more than one predictor variable.
+<ul>
+<li>The predictor variables are treated as non-random varables.</li>
+<li>We will observe values of the predictors variables for each observation in our data set.</li>
+</ul></li>
+<li><span class="math inline">\(\beta_0\)</span>, <span class="math inline">\(\beta_1\)</span>, , <span class="math inline">\(\beta_{p-1}\)</span> denote <strong>regression coefficients</strong>.
+<ul>
+<li>Regression coefficients are statistical parameters that we will estimate from our data.</li>
+<li>Like all statistical parameters, regression coefficients are treated as fixed (non-random) but unknown values.</li>
+<li>Regression coefficients are not observable.</li>
+</ul></li>
+<li><span class="math inline">\(\epsilon\)</span> denotes <strong>error</strong>.
+<ul>
+<li>The error is not observable.</li>
+<li>The error is treated as a random variable.</li>
+<li>The error is assumed to have mean 0, i.e., <span class="math inline">\(E(\epsilon) = 0\)</span>.</li>
+<li>Since <span class="math inline">\(E(\epsilon) = 0\)</span> and <span class="math inline">\(X\)</span> is non-random, the expectation of <span class="math inline">\(\epsilon\)</span> conditional on <span class="math inline">\(X\)</span> is also 0, i.e., <span class="math inline">\(E(\epsilon | X) = 0\)</span>.</li>
+<li>In this context, error doesn’t mean “mistake” or “malfunction.” <span class="math inline">\(\epsilon\)</span> is simply the deviation of the response from its mean.</li>
+</ul></li>
+</ul>
+<p>Then a <strong>linear model</strong> for <span class="math inline">\(Y\)</span> is defined by the equation
+<span class="math display" id="eq:lmdef">\[\begin{equation}
+Y = \beta_0 + \beta_1 X_1 + \beta_2 X_2 + \cdots + \beta_{p-1} X_{p-1} + \epsilon.
+\tag{5.1}
+\end{equation}\]</span></p>
+<p>We now emphasize the relationship between the response, the mean response, and the error. The mean of the response variable will depend on the values of the predictor variables. Thus, we can only discuss the expectation of the response variable conditional on the values of the predictor variables. This is denoted as <span class="math inline">\(E(Y | X_1, \ldots, X_{p-1})\)</span>.</p>
+<p>For simplicity, assume our linear model only has a single predictor (this is an example of simple linear regression). Based on what we’ve presented, we have that</p>
+<p><span class="math display">\[\begin{align}
+E(Y|X) &amp;= E(\beta_0 + \beta_1  X + \epsilon | X) \\
+ &amp;= E(\beta_0 | X) + E(\beta_1 X | X) + E(\epsilon | X) \\
+ &amp;= \beta_0 + \beta_1 X + 0\\
+ &amp;= \beta_0 + \beta_1 X.
+\end{align}\]</span></p>
+<p>The second line follows from the fact that the expectation of a sum of random variables is the sum of the expectation of the random variables. The third line follows from the fact that the expected value of a constant (non-random) value is the constant (the regression coefficients and <span class="math inline">\(X\)</span> are non-random) and by our assumption that the errors have mean 0 (unconditionally or conditionally on the predictor variable.)</p>
+<p>Thus, we see that we see that for a simple linear regression model
+<span class="math display">\[ Y = E(Y|X) + \epsilon.\]</span>
+For a model with multiple predictors, this extends to
+<span class="math display">\[Y = E(Y|X_1, X_2, \ldots, X_{p-1}) + \epsilon.\]</span>
+Thus, our response may be written as the sum of the mean response conditional on the predictors, <span class="math inline">\(E(Y|X_1, X_2, \ldots, X_{p-1})\)</span>, and the error. This is why previously we discussed the fact that the error is simply the deviation of the response from its mean.</p>
+<p>Alternatively, one can say that a regression model is linear if the mean function can be written as a linear combination of the regression coefficients and known values, i.e.,
+<span class="math display">\[E(Y|X_1, X_2, \ldots, X_{p-1}) = \sum_{j=0}^{p-1} c_j \beta_j,\]</span>
+where <span class="math inline">\(c_0, c_1, \ldots, c_{p-1}\)</span> are known values. In fact, the <span class="math inline">\(c_i, i = 1,2,\ldots,n\)</span> can be any function of <span class="math inline">\(X_1,X_2,\ldots,X_n\)</span>! e.g., <span class="math inline">\(c_1 = X_1 * X_2 * X_3\)</span>, <span class="math inline">\(c_3 = X_2^2\)</span>, <span class="math inline">\(c_8 = ln(X_1)/X_2^2\)</span>.</p>
+<p>Some examples of linear models:</p>
+<ul>
+<li><span class="math inline">\(E(Y|X) = \beta_0 + +\beta_1 X + \beta_2 X^2\)</span>.</li>
+<li><span class="math inline">\(E(Y|X_1, X_2) = \beta_0 + \beta_1 X_1 + \beta_2 X_2\)</span>.</li>
+<li><span class="math inline">\(E(Y|X_1, X_2) = \beta_0 + \beta_1 X_1 + \beta_2 X_2 + \beta_3 X_1 * X_2\)</span>.</li>
+<li><span class="math inline">\(E(Y|X_1, X_2) = \beta_0 + \beta_1 \ln(X_1) + \beta_2 X_2^{-1}\)</span>.</li>
+<li><span class="math inline">\(E(\ln(Y)|X_1, X_2) = \beta_0 + \beta_1 X_1 + \beta_2 X_2\)</span>.</li>
+<li><span class="math inline">\(E(Y^{-1}|X_1, X_2) = \beta_0 + \beta_1 X_1 + \beta_2 X_2\)</span>.</li>
+</ul>
+<p>Some examples of non-linear models:</p>
+<ul>
+<li><span class="math inline">\(E(Y|X) = \beta_0 + e^{\beta_1} X\)</span>.</li>
+<li><span class="math inline">\(E(Y|X) = \beta_0 + \beta_1 X/(\beta_2 + X)\)</span>.</li>
+</ul>
+<!-- The model in Equation \@ref(eq:lmdef) is a **statistical model** because there is uncertainty in the response.  -->
+</div>
+<div id="as-a-system-of-equations" class="section level3" number="5.4.2">
+<h3><span class="header-section-number">5.4.2</span> As a system of equations</h3>
+<p>A linear regression analysis will model the data using a linear model. Suppose we have sampled <span class="math inline">\(n\)</span> observations from a population. We now introduce some additional notation:</p>
+<ul>
+<li><span class="math inline">\(Y_1, Y_2, \ldots, Y_n\)</span> denote the response values for the <span class="math inline">\(n\)</span> observations.</li>
+<li><span class="math inline">\(x_{i,j}\)</span> denotes the observed value of predictor <span class="math inline">\(j\)</span> for observation <span class="math inline">\(i\)</span>.
+<ul>
+<li>We use lowercase <span class="math inline">\(x\)</span> to indicate that this is the observed value of the predictor.</li>
+</ul></li>
+<li><span class="math inline">\(\epsilon_1, \epsilon_2, \ldots, \epsilon_n\)</span> denote the errors for the <span class="math inline">\(n\)</span> observations.</li>
+</ul>
+<p>The linear model relating the responses, the predictors, and the errors is defined by the system of equations
+<span class="math display" id="eq:lmSystem">\[\begin{equation}
+Y_i = \beta_0 + \beta_1 x_{i,1} + \beta_2 x_{i,2} + \cdots + \beta_{p-1} x_{i,p-1} + \epsilon_i,\quad i=1,2,\ldots,n.
+\tag{5.2}
+\end{equation}\]</span></p>
+<p>Based on our previous work, we can also write Equation <a href="linear-model-definition-and-properties.html#eq:lmSystem">(5.2)</a> as
+<span class="math display">\[\begin{equation}
+Y_i = E(Y_i | X_1 = x_{i,1}, \ldots, X_{p-1} = x_{i,p-1}) + \epsilon_i,\quad i=1,2,\ldots,n.
+\end{equation}\]</span></p>
+</div>
+<div id="using-matrix-notation" class="section level3" number="5.4.3">
+<h3><span class="header-section-number">5.4.3</span> Using matrix notation</h3>
+<p>The regression coefficients are said to enter the model linearly, which is why this type of model is called a linear model. To see this more clearly, we represent the model using matrices. We define the following notation:</p>
+<ul>
+<li><span class="math inline">\(\mathbf{y} = [Y_1, Y_2, \ldots, Y_n]^T\)</span> denotes the column vector containing the <span class="math inline">\(n\)</span> responses.</li>
+<li><span class="math inline">\(\mathbf{X}\)</span> denotes the matrix containing a column of 1s and the observed predictor values, specifically, <span class="math display">\[\mathbf{X} = \begin{bmatrix}
+1 &amp; x_{1,1} &amp; x_{1,2} &amp; \cdots &amp; x_{1,p-1} \\
+1 &amp; x_{2,1} &amp; x_{2,2} &amp; \cdots &amp; x_{2,p-1} \\
+\vdots &amp; \vdots &amp; \vdots &amp; \vdots &amp; \vdots \\
+1 &amp; x_{n,1} &amp; x_{n,2} &amp; \cdots &amp; x_{n,p-1}
+\end{bmatrix}.\]</span></li>
+<li><span class="math inline">\(\boldsymbol{\beta} = [\beta_0, \beta_1, \ldots, \beta_{p-1}]^T\)</span> denotes the column vector containing the <span class="math inline">\(p\)</span> regression coefficients.</li>
+<li><span class="math inline">\(\boldsymbol{\epsilon} = [\epsilon_1, \epsilon_2, \ldots, \epsilon_n]^T\)</span> denotes the column vector contained the <span class="math inline">\(n\)</span> errors.
+Then the system of equations defining the linear model in <a href="linear-model-definition-and-properties.html#eq:lmSystem">(5.2)</a> can be written as
+<span class="math display">\[\mathbf{y} = \mathbf{X}\mathbf{\beta} + \boldsymbol{\epsilon}.\]</span>
+Thus, a linear model can be represented as a system of linear equations using matrices. A model that cannot be represented as a system of linear equations using matrices is not a linear model.</li>
+</ul>
+</div>
+</div>
+<div id="summarizing-the-components-of-a-linear-model" class="section level2" number="5.5">
+<h2><span class="header-section-number">5.5</span> Summarizing the components of a linear model</h2>
+<p>We have already introduced a lot of objects. To aid in making sense of their notation, their purpose in the model, whether they can be observed, and whether they are modeled as a random variable (vector) or fixed, non-random values, we summarize things below.</p>
+<p>We’ve already talked about observing the response variable and the predictor variables. So these objects are observable. However, we have no way to measure the regression coefficients or the error. These are not observable.</p>
+<p>On the other hand, we treat the response variable as a random variable. Perhaps surprisingly, we treated the predictor variables as a fixed, non-random variables. The regression coefficients are treated as fixed, non-random but unknown values. This is standard for parameters in a statistical model. The errors are also treated as random variables. In fact, since both the predictor variables and the regression coefficients are non-random, the only way for the response to be a random variable based on Equation <a href="linear-model-definition-and-properties.html#eq:lmSystem">(5.2)</a> is for the errors to be random.</p>
+<p>We summarize this information in the table below for the objects previously discussed using the various notations introduced.</p>
+<table>
+<colgroup>
+<col width="25%" />
+<col width="25%" />
+<col width="25%" />
+<col width="25%" />
+</colgroup>
+<thead>
+<tr class="header">
+<th>Notation</th>
+<th>Description</th>
+<th>Observable</th>
+<th>Random</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td><span class="math inline">\(Y\)</span></td>
+<td>response variable</td>
+<td>Yes</td>
+<td>Yes</td>
+</tr>
+<tr class="even">
+<td><span class="math inline">\(Y_i\)</span></td>
+<td>response value for the <span class="math inline">\(i\)</span>th observation</td>
+<td>Yes</td>
+<td>Yes</td>
+</tr>
+<tr class="odd">
+<td><span class="math inline">\(\mathbf{y}\)</span></td>
+<td>the <span class="math inline">\(n\times 1\)</span> column vector of response values</td>
+<td>Yes</td>
+<td>Yes</td>
+</tr>
+<tr class="even">
+<td><span class="math inline">\(X\)</span></td>
+<td>predictor variable</td>
+<td>Yes</td>
+<td>No</td>
+</tr>
+<tr class="odd">
+<td><span class="math inline">\(X_j\)</span></td>
+<td>the <span class="math inline">\(j\)</span>th predictor variable</td>
+<td>Yes</td>
+<td>No</td>
+</tr>
+<tr class="even">
+<td><span class="math inline">\(x_{i,j}\)</span></td>
+<td>the value of the <span class="math inline">\(j\)</span>th predictor variable for the <span class="math inline">\(i\)</span>th observation</td>
+<td>Yes</td>
+<td>No</td>
+</tr>
+<tr class="odd">
+<td><span class="math inline">\(\mathbf{X}\)</span></td>
+<td>the <span class="math inline">\(n\times p\)</span> matrix of predictor values</td>
+<td>Yes</td>
+<td>No</td>
+</tr>
+<tr class="even">
+<td><span class="math inline">\(\beta_j\)</span></td>
+<td>the regression coefficient associated with the <span class="math inline">\(j\)</span>th predictor variable</td>
+<td>No</td>
+<td>No</td>
+</tr>
+<tr class="odd">
+<td><span class="math inline">\(\boldsymbol{\beta}\)</span></td>
+<td>the <span class="math inline">\(p\times 1\)</span> column vector of regression coefficients</td>
+<td>No</td>
+<td>No</td>
+</tr>
+<tr class="even">
+<td><span class="math inline">\(\epsilon\)</span></td>
+<td>the error</td>
+<td>No</td>
+<td>Yes</td>
+</tr>
+<tr class="odd">
+<td><span class="math inline">\(\epsilon_i\)</span></td>
+<td>the error associated with observation <span class="math inline">\(i\)</span></td>
+<td>No</td>
+<td>Yes</td>
+</tr>
+<tr class="even">
+<td><span class="math inline">\(\boldsymbol{\epsilon}\)</span></td>
+<td>the <span class="math inline">\(n\times 1\)</span> column vector of errors</td>
+<td>No</td>
+<td>Yes</td>
+</tr>
+</tbody>
+</table>
+</div>
+<div id="types-of-regression-models" class="section level2" number="5.6">
+<h2><span class="header-section-number">5.6</span> Types of regression models</h2>
+<p>The are many “named” types of regression models. You may hear or see people use these terms when describing their model. Here is a brief overview of some common regression models.</p>
+<table>
+<colgroup>
+<col width="50%" />
+<col width="50%" />
+</colgroup>
+<thead>
+<tr class="header">
+<th>Name</th>
+<th>Defining characteristics</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>Simple</td>
+<td>an intercept term and one predictor variable</td>
+</tr>
+<tr class="even">
+<td>Multiple</td>
+<td>more than one predictor variable</td>
+</tr>
+<tr class="odd">
+<td>Multivariate</td>
+<td>more than one response variable</td>
+</tr>
+<tr class="even">
+<td>Linear</td>
+<td>the regression coefficients enter the model linearly</td>
+</tr>
+<tr class="odd">
+<td>Analysis of variance (ANOVA)</td>
+<td>predictors are all categorical</td>
+</tr>
+<tr class="even">
+<td>Analysis of covariance (ANCOVA)</td>
+<td>at least one quantitative predictor and at least one categorical predictor</td>
+</tr>
+<tr class="odd">
+<td>Generalized linear model (GLM)</td>
+<td>a type of “generalized” regression model when the responses do not come from a normal distribution.</td>
+</tr>
+</tbody>
+</table>
+</div>
+<div id="standard-linear-model-assumptions-and-implications" class="section level2" number="5.7">
+<h2><span class="header-section-number">5.7</span> Standard linear model assumptions and implications</h2>
+<p>The formulation of a linear model typically makes additional assumptions beyond the
+ones previously mentioned, specifically, about the errors, <span class="math inline">\(\epsilon_1,\epsilon_2,\ldots,\epsilon_n\)</span>.</p>
+<p>We have already mentioned that fact that we are assuming <span class="math inline">\(E(\epsilon_i)=0\)</span> for <span class="math inline">\(i=1,2,\ldots,n\)</span>.</p>
+<p>We also typically assume that the errors have constant variances, i.e., <span class="math display">\[var(\epsilon_i) = \sigma^2, \quad i=1,2,\ldots,n,\]</span>
+and that the errors are uncorrelated, i.e., <span class="math display">\[cov(\epsilon_i, \epsilon_j) = 0, \quad i,j=1,2,\ldots,n,\quad i\neq j.\]</span></p>
+<p>Additionally, we assume that the errors are identically distributed. Formally, that may be written as
+<span class="math display" id="eq:errordist">\[\begin{equation}
+\epsilon_i \sim F, i=1,2,\ldots,n,
+\tag{5.3}
+\end{equation}\]</span>
+where <span class="math inline">\(F\)</span> is some arbitrary distribution. The <span class="math inline">\(\sim\)</span> means “distributed as.” In other words, Equation <a href="linear-model-definition-and-properties.html#eq:errordist">(5.3)</a> means, “<span class="math inline">\(\epsilon_i\)</span> is distributed as <span class="math inline">\(F\)</span> for <span class="math inline">\(i\)</span> equal to <span class="math inline">\(1,2,\ldots,n\)</span>.” However, it is more common to assume the errors have a normal (Gaussian) distribution. Two uncorrelated normal random variables are also independent (this is true for normal random variables, but is not generally true for other distributions). Thus, we may concisely state the typical error assumptions as
+<span class="math display">\[\epsilon_1,\epsilon_2,\ldots,\epsilon_n \stackrel{i.i.d.}{\sim} N(0, \sigma^2),\]</span>
+which combines the following assumptions:</p>
+<ol style="list-style-type: decimal">
+<li><span class="math inline">\(E(\epsilon_i)=0\)</span> for <span class="math inline">\(i=1,2,\ldots,n\)</span>.</li>
+<li><span class="math inline">\(var(\epsilon_i)=0\)</span> for <span class="math inline">\(i=1,2,\ldots,n\)</span>.</li>
+<li><span class="math inline">\(cov(\epsilon_i,\epsilon_j)=0\)</span> for <span class="math inline">\(i\neq j\)</span> with <span class="math inline">\(i,j=1,2,\ldots,n\)</span>.</li>
+<li><span class="math inline">\(\epsilon_i\)</span> has a normal distribution for <span class="math inline">\(i=1,2,\ldots,n\)</span>.</li>
+</ol>
+<p>Using the notation previously developed, the assumptions above may be stated in vector notation as
+<span class="math display" id="eq:error-assumptions">\[\begin{equation}
+\boldsymbol{\epsilon} \sim N(\mathbf{0}_{n\times 1}, \sigma^2 I_n), \tag{5.4}
+\end{equation}\]</span>
+where <span class="math inline">\(\mathbf{0}_{n\times 1}\)</span> is the <span class="math inline">\(n \times 1\)</span> vector of zeros and <span class="math inline">\(I_n\)</span> is the <span class="math inline">\(n\times n\)</span> identity matrix.</p>
+<p>Writing the error assumptions in the form of Equation <a href="linear-model-definition-and-properties.html#eq:error-assumptions">(5.4)</a> allows us to see other important properties of a linear model. Specifically, if we make the assumptions in Equation <a href="linear-model-definition-and-properties.html#eq:error-assumptions">(5.4)</a>, then</p>
+<p><span class="math display" id="eq:dist-properties-y">\[\begin{equation}
+\mathbf{y} \sim N(\mathbf{X}\boldsymbol{\beta}, \sigma^2 I_n).
+\tag{5.5}
+\end{equation}\]</span></p>
+<p>How do we know that Equation <a href="linear-model-definition-and-properties.html#eq:dist-properties-y">(5.5)</a> is true? Show that:</p>
+<ul>
+<li><span class="math inline">\(E(\mathbf{y}) = \mathbf{X}\boldsymbol{\beta}\)</span> and</li>
+<li><span class="math inline">\(\mathrm{var}(\mathbf{y}) = \sigma^2 I_n\)</span>.</li>
+<li>Note <span class="math inline">\(\mathbf{y}\)</span> is a linear function of the multivariate normal vector <span class="math inline">\(\boldsymbol{\epsilon}\)</span>, so <span class="math inline">\(\mathbf{y}\)</span> must also have a multivariate normal distribution.</li>
+</ul>
+</div>
+<div id="mathematical-interpretation-of-coefficients" class="section level2" number="5.8">
+<h2><span class="header-section-number">5.8</span> Mathematical interpretation of coefficients</h2>
+<p>The regression coefficients have simple mathematical interpretations in basic settings.</p>
+<div id="coefficient-interpretation-in-simple-linear-regression" class="section level3" number="5.8.1">
+<h3><span class="header-section-number">5.8.1</span> Coefficient interpretation in simple linear regression</h3>
+<p>Suppose we have a simple linear regression model, so that <span class="math inline">\(E(Y|X)=\beta_0 + \beta_1 X.\)</span> The interpretations of the coefficients are:</p>
+<ul>
+<li><span class="math inline">\(\beta_0\)</span> is the expected response when the predictor is 0, i.e., <span class="math inline">\(\beta_0=E(Y|X=0)\)</span>.</li>
+<li><span class="math inline">\(\beta_1\)</span> is the expected change in the response when the predictor increases 1 unit, i.e., <span class="math inline">\(\beta_1=E(Y|X=x_0+1)-E(Y|X=x_0)\)</span>.</li>
+</ul>
+</div>
+<div id="coefficient-interpretation-in-multiple-linear-regression" class="section level3" number="5.8.2">
+<h3><span class="header-section-number">5.8.2</span> Coefficient interpretation in multiple linear regression</h3>
+<p>Suppose we have a multiple linear regression model, so that <span class="math inline">\(E(Y|X_1,\ldots,X_{p-1})=\beta_0 + \beta_1 X_1 + \cdots + \beta_{p-1} X_{p-1}.\)</span> Let <span class="math inline">\(\mathbb{X} = \{X_1,\ldots,X_{p-1}\}\)</span> be the set of predictors and <span class="math inline">\(\mathbb{X}_{-j} = \mathbb{X}\setminus\{X_j\}\)</span>, i.e., the set of predictors without <span class="math inline">\(X_j\)</span>.</p>
+<p>The interpretations of the coefficients are:</p>
+<ul>
+<li><span class="math inline">\(\beta_0\)</span> is the expected response when all predictors are 0, i.e., <span class="math inline">\(\beta_0=E(Y|X_1=0,\ldots,X_{p-1}=0)\)</span>.</li>
+<li><span class="math inline">\(\beta_j\)</span> is the expected change in the response when predictor <span class="math inline">\(j\)</span> increases 1 unit and the other predictors stay the same, i.e., <span class="math inline">\(\beta_j=E(Y|\mathbb{X}_{-j} = \mathbf{x}^*, X_{j+1} = x_{0}+1)-E(Y|\mathbb{X}_{-j} = \mathbf{x}^*, X_{j+1} = x_{0})\)</span> where <span class="math inline">\(\mathbf{x}^*\in \mathbb{R}^{p-2}\)</span> is a fixed vector of length <span class="math inline">\(p-2\)</span> (the number of predictors excluding <span class="math inline">\(X_j\)</span>).</li>
+</ul>
+</div>
+</div>
+<div id="exercises" class="section level2" number="5.9">
+<h2><span class="header-section-number">5.9</span> Exercises</h2>
+<ol style="list-style-type: decimal">
+<li>If given a set of data with several variables, how would you decide what the response variable and the predictor variables would be?</li>
+<li>Which objects in the linear model formula in Equation <a href="linear-model-definition-and-properties.html#eq:lmdef">(5.1)</a> are considered random? Which are considered fixed?</li>
+<li>Which objects in the linear model formula in Equation <a href="linear-model-definition-and-properties.html#eq:lmdef">(5.1)</a> are observable? Which are not observable?</li>
+<li>What are the typical goals of a regression analysis?</li>
+<li>List the typical assumptions made for the errors in a linear model.</li>
+<li>Without using a formula, what is the basic difference between a linear model and a non-linear model?</li>
+<li>Assuming that <span class="math inline">\(\boldsymbol{\epsilon} ~ N(\mathbf{0}_{n\times 1}, \sigma^2 I_n)\)</span> and <span class="math inline">\(\mathbf{y} = \mathbf{X}\boldsymbol{\beta} + \boldsymbol{\epsilon}\)</span>, show that:
+<ol style="list-style-type: lower-alpha">
+<li><span class="math inline">\(E(\mathbf{y}) = \mathbf{X}\boldsymbol{\beta}\)</span>.</li>
+<li><span class="math inline">\(\mathrm{var}(\mathbf{y}) = \sigma^2 I_n\)</span>.</li>
+</ol></li>
+<li>In the context of simple linear regression under the standard assumptions, show that:
+<ol style="list-style-type: lower-alpha">
+<li><span class="math inline">\(\beta_0=E(Y|X=0)\)</span>.</li>
+<li><span class="math inline">\(\beta_1=E(Y|X=x_0+1)-E(Y|X=x_0)\)</span>.</li>
+</ol></li>
+<li>In the context of multiple linear regression under the standard assumptions, show that:
+<ol style="list-style-type: lower-alpha">
+<li><span class="math inline">\(\beta_0=E(Y|X_1=0,\ldots,X_{p-1}=0)\)</span>.</li>
+<li>For <span class="math inline">\(j=1,2,\ldots,p-1\)</span>, <span class="math inline">\(\beta_j=E(Y|\mathbb{X}_{-j} = \mathbf{x}^*, X_{j+1} = x_{0}+1)-E(Y|\mathbb{X}_{-j} = \mathbf{x}^*, X_{j+1} = x_{0})\)</span> where <span class="math inline">\(\mathbf{x}^*\)</span> is a fixed vector of the appropriate size.</li>
+</ol></li>
+</ol>
+<!-- ## Scatter plots and linear regression -->
+<p><!-- Scatter plots are a convenient way to study the potential relationship between a single response and a single predictor variable. --></p>
+<p><!-- ### Height inheritability --></p>
+<p><!-- Karl Pearson (1857-1936) organized the collection of $n=1375$ heights of mothers in the United Kingdom under the age of 65 and one of their adult daughters over the age of 18.  These data are available in the `Heights` data set in the **alr4** package. We are interested in the inheritance from the mother to the daughter, so the mother's height (`mheight`) is used as the predictor variable and the daughter's height (`dheight`) is used as the response variable. --></p>
+<p><!-- Questions of interest: --></p>
+<p><!-- * Do taller mothers tend to have taller daughters -->
+<!-- * Do shorter mothers tend to have shorter daughters? --></p>
+<p><!-- ```{r} -->
+<!-- data(Heights, package = "alr4") -->
+<!-- str(Heights) -->
+<!-- plot(dheight ~ mheight, data = Heights, -->
+<!--      xlab = "mother's height (in)", -->
+<!--      ylab = "daughter's height (in)", -->
+<!--      xlim = c(55, 75), ylim = c(55, 75)) -->
+<!-- ``` -->
+<!-- There seems to be a clear trend between mother's heights and daughter's heights. The taller the mother, the taller the daughter *tends* to be. --></p>
+<p><!-- ### Predicting snowfall --></p>
+<p><!-- The `ftcollinssnow` data set in the **alr4** package measures late (September 1st until December 31st) and early (January 1st to June 30th) season snowfall for Fort Collins, CO between Late 1900 and Early 1993. --></p>
+<p><!-- Question of interest: Can late season snowfall predict snowfall in the early part of the next year? --></p>
+<p><!-- ```{r} -->
+<!-- data("ftcollinssnow", package = "alr4") # load data -->
+<!-- str(ftcollinssnow) # examine structure -->
+<!-- plot(Late ~ Early, data = ftcollinssnow) # plot data -->
+<!-- # add "line of best fit" -->
+<!-- abline(lm(Late ~ Early, data = ftcollinssnow), lty = 2) -->
+<!-- # sample mean line -->
+<!-- abline(mean(ftcollinssnow$Late), 0) -->
+<!-- ``` --></p>
+<p><!-- A plot of the snowfall data for the two time periods suggest that this relationship is weak or they may be uncorrelated. -->
+<!-- * The dashed line indicates the "linear of best fit" , while the solid line indicates the average of the Late snowfall. --></p>
+<p><!-- ### Turkey growth -->
+<!-- Pens of turkeys were fed the same diet, except that each pen was supplemented with a `Dose` of amino acid methionine as a percentage of the total diet of the birds. The amino acid methionine was provided using three different `Source`s (one standard and two experimental). The `Weight` gain (g) of the turkeys was measured. These data are available in the `turkey` data in the **alr4** package. --></p>
+<p><!-- Questions of interest: --></p>
+<p><!-- * Is there a relationship between weight gain of the turkeys and the dose amount? If so, is the relationship linear? -->
+<!-- * Does the source of the methionine impact the weight gain of the turkeys? --></p>
+<p><!-- Consider a plot of the average `Weight` gain (g) of the turkeys as a function of the `Dose` amount (% of diet), separating the groups by the `Source` of the methionine. --></p>
+<p><!-- ```{r} -->
+<!-- data(turkey, package = "alr4") -->
+<!-- str(turkey) -->
+<!-- summary(turkey) # the source factor (S) is not a factor -->
+<!-- turkey$S = factor(turkey$S) -->
+<!-- levels(turkey$S) <- c("control", "new source a", "new source b") -->
+<!-- names(turkey) <- c("Dose", "Gain", "Source", "Replications", "SD") # rename variables -->
+<!-- # create turkey data ggplot -->
+<!-- library(ggplot2) # load ggplot2 package -->
+<!-- gg_turkey <- ggplot(turkey, -->
+<!--                     mapping = aes(x = Dose, y = Gain, -->
+<!--                                   color = Source, shape = Source)) -->
+<!-- gg_turkey + geom_point() + geom_line() -->
+<!-- ``` --></p>
+<p><!-- Weight gain increases with dose amount, but doesn't appear to be linear. --></p>
+<!-- The amino acid source may slightly affect the growth trajectory of the turkeys. -->
+<!-- An alternative version of the previous plot using the **lattice** package -->
+<!-- ```{r} -->
+<!-- library(lattice) # load lattice package -->
+<!-- xyplot(Gain ~ Dose, data = turkey, groups = Source, -->
+<!--        auto.key = TRUE, type = "b") -->
+<!-- ``` -->
 
+</div>
+</div>
+<h3>References</h3>
 <div id="refs" class="references csl-bib-body hanging-indent">
-<div class="csl-entry">
+<div id="ref-R-HistData" class="csl-entry">
 Friendly, Michael. 2021. <em>HistData: Data Sets from the History of Statistics and Data Visualization</em>. <a href="https://CRAN.R-project.org/package=HistData">https://CRAN.R-project.org/package=HistData</a>.
 </div>
-<div class="csl-entry">
-Gorman, Kristen B., Tony D. Williams, and William R. Fraser. 2014. <span>“Ecological Sexual Dimorphism and Environmental Variability Within a Community of Antarctic Penguins (Genus Pygoscelis).”</span> <em>PLOS ONE</em> 9 (3): 1–14. <a href="https://doi.org/10.1371/journal.pone.0090081">https://doi.org/10.1371/journal.pone.0090081</a>.
-</div>
-<div class="csl-entry">
-Horst, Allison, Alison Hill, and Kristen Gorman. 2020. <em>Palmerpenguins: Palmer Archipelago (Antarctica) Penguin Data</em>. <a href="https://CRAN.R-project.org/package=palmerpenguins">https://CRAN.R-project.org/package=palmerpenguins</a>.
-</div>
-<div class="csl-entry">
+<div id="ref-pearson1897" class="csl-entry">
 Pearson, Karl, and Alice Lee. 1897. <span>“Mathematical Contributions to the Theory of Evolution. On Telegony in Man.”</span> <em>Proceedings of the Royal Society of London</em> 60 (359-367): 273–83.
 </div>
-<div class="csl-entry">
+<div id="ref-pearson_lee1903" class="csl-entry">
 ———. 1903. <span>“On the Laws of Inheritance in Man: <span>I</span>. <span>I</span>nheritance of Physical Characters.”</span> <em>Biometrika</em> 2 (4): 357–462.
 </div>
-<div class="csl-entry">
+<div id="ref-wachsmuth_et_al2003" class="csl-entry">
 Wachsmuth, Amanda, Leland Wilkinson, and Gerard E Dallal. 2003. <span>“Galton’s Bend.”</span> <em>The American Statistician</em> 57 (3): 190–92. <a href="https://doi.org/10.1198/0003130031874">https://doi.org/10.1198/0003130031874</a>.
 </div>
-<div class="csl-entry">
+<div id="ref-R-ggplot2" class="csl-entry">
 Wickham, Hadley, Winston Chang, Lionel Henry, Thomas Lin Pedersen, Kohske Takahashi, Claus Wilke, Kara Woo, Hiroaki Yutani, and Dewey Dunnington. 2021. <em>Ggplot2: Create Elegant Data Visualisations Using the Grammar of Graphics</em>. <a href="https://CRAN.R-project.org/package=ggplot2">https://CRAN.R-project.org/package=ggplot2</a>.
-</div>
-<div class="csl-entry">
-Xie, Yihui. 2021. <em>Bookdown: Authoring Books and Technical Documents with r Markdown</em>. <a href="https://CRAN.R-project.org/package=bookdown">https://CRAN.R-project.org/package=bookdown</a>.
-</div>
 </div>
 </div>
             </section>
@@ -438,8 +915,8 @@ Xie, Yihui. 2021. <em>Bookdown: Authoring Books and Technical Documents with r M
           </div>
         </div>
       </div>
-<a href="assessing-and-addressing-collinearity.html" class="navigation navigation-prev navigation-unique" aria-label="Previous page"><i class="fa fa-angle-left"></i></a>
-
+<a href="useful-matrix-facts.html" class="navigation navigation-prev " aria-label="Previous page"><i class="fa fa-angle-left"></i></a>
+<a href="fitting-a-linear-model.html" class="navigation navigation-next " aria-label="Next page"><i class="fa fa-angle-right"></i></a>
     </div>
   </div>
 <script src="libs/gitbook-2.6.7/js/app.min.js"></script>

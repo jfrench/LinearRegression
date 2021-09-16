@@ -6,7 +6,7 @@ biblio-style: apalike
 link-citations: yes
 ---
 
-# Defining a linear model
+# Linear model definition and properties
 
 Based on Chapter 2 of LMWR2, Chapter 2 and 3 of ALR4
 
@@ -155,6 +155,24 @@ For a model with multiple predictors, this extends to
 $$Y = E(Y|X_1, X_2, \ldots, X_{p-1}) + \epsilon.$$
 Thus, our response may be written as the sum of the mean response conditional on the predictors, $E(Y|X_1, X_2, \ldots, X_{p-1})$, and the error. This is why previously we discussed the fact that the error is simply the deviation of the response from its mean.
 
+Alternatively, one can say that a regression model is linear if the mean function can be written as a linear combination of the regression coefficients and known values, i.e., 
+$$E(Y|X_1, X_2, \ldots, X_{p-1}) = \sum_{j=0}^{p-1} c_j \beta_j,$$
+where $c_0, c_1, \ldots, c_{p-1}$ are known values. In fact, the $c_i, i = 1,2,\ldots,n$ can be any function of $X_1,X_2,\ldots,X_n$! e.g., $c_1 = X_1 * X_2 * X_3$, $c_3 = X_2^2$, $c_8 = ln(X_1)/X_2^2$.
+
+Some examples of linear models:
+
+* $E(Y|X) = \beta_0 + +\beta_1 X + \beta_2 X^2$.
+* $E(Y|X_1, X_2) = \beta_0 + \beta_1 X_1 + \beta_2 X_2$.
+* $E(Y|X_1, X_2) = \beta_0 + \beta_1 X_1 + \beta_2 X_2 + \beta_3 X_1 * X_2$.
+* $E(Y|X_1, X_2) = \beta_0 + \beta_1 \ln(X_1) + \beta_2 X_2^{-1}$.
+* $E(\ln(Y)|X_1, X_2) = \beta_0 + \beta_1 X_1 + \beta_2 X_2$.
+* $E(Y^{-1}|X_1, X_2) = \beta_0 + \beta_1 X_1 + \beta_2 X_2$.
+
+Some examples of non-linear models:
+
+* $E(Y|X) = \beta_0 + e^{\beta_1} X$.
+* $E(Y|X) = \beta_0 + \beta_1 X/(\beta_2 + X)$.
+
 <!-- The model in Equation \@ref(eq:lmdef) is a **statistical model** because there is uncertainty in the response.  -->
 
 ### As a system of equations
@@ -231,7 +249,7 @@ Analysis of variance (ANOVA) | predictors are all categorical
 Analysis of covariance (ANCOVA) | at least one quantitative predictor and at least one categorical predictor
 Generalized linear model (GLM) | a type of "generalized" regression model when the responses do not come from a normal distribution.
 
-## Standard linear model assumptions
+## Standard linear model assumptions and implications
 
 The formulation of a linear model typically makes additional assumptions beyond the 
 ones previously mentioned, specifically, about the errors, $\epsilon_1,\epsilon_2,\ldots,\epsilon_n$.
@@ -255,14 +273,60 @@ which combines the following assumptions:
 1. $cov(\epsilon_i,\epsilon_j)=0$ for $i\neq j$ with $i,j=1,2,\ldots,n$.
 1. $\epsilon_i$ has a normal distribution for $i=1,2,\ldots,n$.
 
+Using the notation previously developed, the assumptions above may be stated in vector notation as
+\begin{equation}
+\boldsymbol{\epsilon} \sim N(\mathbf{0}_{n\times 1}, \sigma^2 I_n), (\#eq:error-assumptions)
+\end{equation}
+where $\mathbf{0}_{n\times 1}$ is the $n \times 1$ vector of zeros and $I_n$ is the $n\times n$ identity matrix.
+
+Writing the error assumptions in the form of Equation \@ref(eq:error-assumptions) allows us to see other important properties of a linear model. Specifically, if we make the assumptions in Equation \@ref(eq:error-assumptions), then
+
+\begin{equation}
+\mathbf{y} \sim N(\mathbf{X}\boldsymbol{\beta}, \sigma^2 I_n).
+(\#eq:dist-properties-y)
+\end{equation}
+
+How do we know that Equation \@ref(eq:dist-properties-y) is true? Show that:
+
+* $E(\mathbf{y}) = \mathbf{X}\boldsymbol{\beta}$ and
+* $\mathrm{var}(\mathbf{y}) = \sigma^2 I_n$.
+* Note $\mathbf{y}$ is a linear function of the multivariate normal vector $\boldsymbol{\epsilon}$, so $\mathbf{y}$ must also have a multivariate normal distribution.
+
+## Mathematical interpretation of coefficients
+
+The regression coefficients have simple mathematical interpretations in basic settings.
+
+### Coefficient interpretation in simple linear regression
+Suppose we have a simple linear regression model, so that $E(Y|X)=\beta_0 + \beta_1 X.$ The interpretations of the coefficients are:
+
+* $\beta_0$ is the expected response when the predictor is 0, i.e., $\beta_0=E(Y|X=0)$.
+* $\beta_1$ is the expected change in the response when the predictor increases 1 unit, i.e., $\beta_1=E(Y|X=x_0+1)-E(Y|X=x_0)$.
+
+### Coefficient interpretation in multiple linear regression
+Suppose we have a multiple linear regression model, so that $E(Y|X_1,\ldots,X_{p-1})=\beta_0 + \beta_1 X_1 + \cdots + \beta_{p-1} X_{p-1}.$ Let $\mathbb{X} = \{X_1,\ldots,X_{p-1}\}$ be the set of predictors and $\mathbb{X}_{-j} = \mathbb{X}\setminus\{X_j\}$, i.e., the set of predictors without $X_j$.  
+
+The interpretations of the coefficients are:
+
+* $\beta_0$ is the expected response when all predictors are 0, i.e., $\beta_0=E(Y|X_1=0,\ldots,X_{p-1}=0)$.
+* $\beta_j$ is the expected change in the response when predictor $j$ increases 1 unit and the other predictors stay the same, i.e., $\beta_j=E(Y|\mathbb{X}_{-j} = \mathbf{x}^*, X_{j+1} = x_{0}+1)-E(Y|\mathbb{X}_{-j} = \mathbf{x}^*, X_{j+1} = x_{0})$ where $\mathbf{x}^*\in \mathbb{R}^{p-2}$ is a fixed vector of length $p-2$ (the number of predictors excluding $X_j$).
+
 ## Exercises
 
 1. If given a set of data with several variables, how would you decide what the response variable and the predictor variables would be?
 1. Which objects in the linear model formula in Equation \@ref(eq:lmdef) are considered random? Which are considered fixed?
 1. Which objects in the linear model formula in Equation \@ref(eq:lmdef) are observable? Which are not observable?
 1. What are the typical goals of a regression analysis?
-1. List the typical assumptions made for the errors in a linear model?
+1. List the typical assumptions made for the errors in a linear model.
 1. Without using a formula, what is the basic difference between a linear model and a non-linear model?
+1. Assuming that $\boldsymbol{\epsilon} ~ N(\mathbf{0}_{n\times 1}, \sigma^2 I_n)$ and $\mathbf{y}  = \mathbf{X}\boldsymbol{\beta} + \boldsymbol{\epsilon}$, show that:
+    a. $E(\mathbf{y}) = \mathbf{X}\boldsymbol{\beta}$.
+    a. $\mathrm{var}(\mathbf{y}) = \sigma^2 I_n$.
+1. In the context of simple linear regression under the standard assumptions, show that: 
+    a. $\beta_0=E(Y|X=0)$.
+    a. $\beta_1=E(Y|X=x_0+1)-E(Y|X=x_0)$.
+1. In the context of multiple linear regression under the standard assumptions, show that:
+    a. $\beta_0=E(Y|X_1=0,\ldots,X_{p-1}=0)$.
+    b. For $j=1,2,\ldots,p-1$, $\beta_j=E(Y|\mathbb{X}_{-j} = \mathbf{x}^*, X_{j+1} = x_{0}+1)-E(Y|\mathbb{X}_{-j} = \mathbf{x}^*, X_{j+1} = x_{0})$ where $\mathbf{x}^*$ is a fixed vector of the appropriate size.
 
 <!-- ## Scatter plots and linear regression -->
 

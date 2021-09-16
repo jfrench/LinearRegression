@@ -8,7 +8,237 @@ output:
 
 # Fitting a linear model
 
-## 
+A linear model for a response variable $Y$ using $p-1$ predictor variables
+$X_1, \ldots, X_{p-1}$ may be described by the formula
+
+$$Y=\beta_0 + \beta_1 X_1 + \cdots + \beta_{p-1} X_{p-1} + \epsilon,$$
+where $\beta_0, \beta_1, \ldots, \beta_{p-1}$ are regression coefficients and $\epsilon$ is the error.
+
+In this chapter we focus on estimating the regression coefficients.
+
+Fitting a regression model is the same thing as estimating the parameters of a simple linear regression model. 
+
+There are many different methods of parameter estimation in statistics: method-of-moments, maximum likelihood, Bayesian, etc.
+
+The most common estimation method for linear models is known as **Ordinary Least Squares (OLS)** estimation. OLS estimation estimates the parameters with the values that minimize the residuals sum of squares (RSS). 
+
+## OLS estimation of the simple linear regression model
+
+In a simple linear regression context, we have $n$ observed responses
+$Y_1,Y_2,\ldots,Y_n$ and predictor values $x_1,x_2,\ldots,x_n$.
+
+Recall that in a simple linear regression model
+$$E(Y|X) = \beta_0 + \beta_1 X.$$ 
+We need to define some new notation and objects to define the RSS.
+
+Let $\beta_j$ denote the estimated value of $\beta_j$ and the estimated mean response as a function of the predictor $X$ is $$\hat{E}(Y|X) = \hat{\beta}_0 + \hat{\beta}_1 X.$$ 
+
+The **$i$th fitted value** is defined as 
+$$\hat{Y}_i = \hat{E}(Y_i|X = x_i) = \hat{\beta}_0 + \hat{\beta}_1 x_i.$$ 
+
+The **$i$th residual** is defined as 
+$$\hat{\epsilon}_i = Y_i - \hat{Y}_i.$$
+The RSS of a regression model is the sum of the squared residuals. 
+
+The RSS for a simple linear regression model, as a function of the estimated regression coefficients, is
+\begin{align}
+RSS(\hat{\beta}_0, \hat{\beta}_1) &= \sum_{i=1}^n \hat{\epsilon}_i^2 \\
+&= \sum_{i=1}^n (Y_i - \hat{Y}_i)^2 \\
+&= \sum_{i=1}^n (Y_i - \hat{E}(Y|X=x_i))^2 \\
+ &= \sum_{i=1}^n (Y_i - (\hat{\beta}_0 + \hat{\beta}_1 x_i))^2.
+\end{align}
+
+The **fitted model** is the estimated model that minimizes the RSS. In a simple linear regression context, the fitted model is known as the **line of best fit**.
+
+In Figure \@ref(fig:rss-viz), we attempt to visualize the response values, fitted values, residuals, and line of best fit in a simple linear regression context. Notice that:
+
+* The fitted values are the value returned by the line of best fit when it is evaluated at the observed predictor values. Alternatively, the fitted value for each observation is the y-value obtained when intersecting the line of best fit with a vertical line drawn from each observed predictor value.
+* The residual is the vertical distance between each response value and the fitted value.
+* The RSS seeks to minimize the sum of the squared vertical distances between the response and fitted values.
+
+```{r rss-viz, fig.cap = "Visualization of the response values, fitted values, residuals, and line of best fit.", echo=FALSE}
+set.seed(2)
+x <- c(3, 5, 7, 8, 9)
+y <- 2 + 2 * x + rnorm(5, sd = 4)
+plot(y ~ x, pch = 19)
+lmod <- lm(y ~ x)
+yhat <- fitted(lmod)
+abline(lmod, col = "grey")
+points(yhat ~ x, pch = 4, col = "blue")
+segments(x, y, x, yhat, col = "orange")
+legend("topleft",
+       legend = c("observed response", "fitted value", "residual", "line of best fit"),
+       pch = c(19, 4, NA, NA),
+       col = c("black", "blue", "orange", "grey"),
+       lwd = c(NA, NA, 1, 1))
+```
+
+### OLS estimators of the simple linear regression coefficents
+
+Define $\bar{x}=\sum_{i=1}^n x_i$ and $\bar{Y} = \sum_{i=1}^n Y_i$.
+
+The OLS estimators of the regression coefficients for a simple linear regression coefficients are
+
+\begin{align}
+\hat{\beta}_1 &= \frac{\sum_{i=1}^n x_i Y_i - \frac{1}{n} \biggl(\sum_{i=1}^n x_i\biggr)\biggl(\sum_{i=1}^n Y_i\biggr)}{\sum_{i=1}^n x_i^2 - \frac{1}{n} \biggl(\sum_{i=1}^n x_i\biggr)^2} \\
+&= \frac{\sum_{i=1}^n (x_i - \bar{x})(Y_i - \bar{Y})}{\sum_{i=1}^n (x_i - \bar{x})^2} \\
+&= \frac{\sum_{i=1}^n (x_i - \bar{x})Y_i}{\sum_{i=1}^n (x_i - \bar{x})x_i}
+\end{align}
+and
+\begin{equation}
+\hat{\beta}_0 = \bar{Y} - \hat{\beta}_1 \bar{x}.
+\end{equation}
+
+Thought it's already been said, we state once again that the OLS estimators of $\beta_0$ and $\beta_1$ shown above are the estimators that minimize the RSS.
+
+The other parameter we've discussed is the error variance, $\sigma^2$. The most common estimator of the error variance is 
+\begin{equation}
+\hat{\sigma}^2 = \frac{RSS}{n-p}, (\#eq:sigmasq-hat)
+\end{equation}
+where $p$ is the number of regression coefficients. In general, $n-p$ is the degrees of freedom of the RSS. In a simple linear regression context, the denominator of \@ref(eq:sigmasq-hat) is $n-2$.
+
+## Penguins simple linear regression example
+
+We will use the `penguins` data set in the **palmerpenguins** package [@R-palmerpenguins] to illustrate a very basic simple linear regression analysis.
+
+The `penguins` data set provides data related to various penguin species measured in the Palmer Archipelago (Antarctica), originally provided by @GormanEtAl2014. We start by loading the data into memory.
+
+```{r}
+data(penguins, package = "palmerpenguins")
+```
+
+The data set includes `r nrow(penguins)` observations of `r ncol(penguins)` variables. The variables are:
+
+* `species`: a `factor` indicating the penguin species
+* `island`: a `factor` indicating the island the penguin was observed
+* `bill_length_mm`: a `numeric` variable indicating the bill length in millimeters
+* `bill_depth_mm`: a `numeric` variable indicating the bill depth in millimeters
+* `flipper_length_mm`: an `integer` variable indicating the flipper length in millimeters
+* `body_mass_g`: an `integer` variable indicating the body mass in grams
+* `sex`: a `factor` indicating the penguin sex (`female`, `male`)
+* `year`: an integer denoting the study year the penguin was observed (`2007`, `2008`, or `2009`)
+
+We begin by creating a scatter plot of `bill_length_mm` versus `body_mass_g` (y-axis versus x-axis) in Figure \@ref(fig:penguin-plot). We see a clear positive association between body mass and bill length: as the body mass increases, the bill length tends to increase. The pattern is linear, i.e., roughly a straight line.
+```{r penguin-plot, fig.cap = "A scatter plot of penguin bill length (mm) versus body mass (g)"}
+plot(bill_length_mm ~ body_mass_g, data = penguins,
+     ylab = "bill length (mm)", xlab = "body mass (g)",
+     main = "Penguin size measurements")
+```
+
+We first perform a single linear regression analysis manually using the equations previously provided by regressing `bill_length_mm` on `body_mass_g`.
+
+Using the `summary` function on the `penguins` data frame, we see that both `bill_length_mm` and `body_mass_g` have `NA` values.
+
+```{r}
+summary(penguins)
+```
+We want to remove the rows of `penguins` where either `body_mass_g` or `bill_length_mm` have `NA` values. We do that below using the `na.omit` function (selecting only the relevant variables) and assign the cleaned object the name `penguins_clean`.
+
+```{r}
+# remove rows of penguins where bill_length_mm or body_mass_g have NA values 
+penguins_clean <- na.omit(penguins[,c("bill_length_mm", "body_mass_g")])
+```
+
+We extract the `bill_length_mm` variable from the `penguins` data frame and assign it the name `y` since it will be the response variable. We extract the `body_mass_g` variable from the `penguins` data frame and assign it the name `y` since it will be the predictor variable. We also determine the number of observations and assign that value the name `n`.
+
+```{r}
+# extract response and predictor from penguins_clean
+y <- penguins_clean$bill_length_mm
+x <- penguins_clean$body_mass_g
+# determine number of observations
+n <- length(y)
+```
+
+We now compute $\hat{\beta}$_1 and $\hat{beta}_0$. Note that placing `()` around the assignment operations will both perform the assign and print the results.
+
+```{r}
+# compute OLS estimates of beta1 and beta0
+(b1 <- (sum(x * y) - sum(x) * sum(y) / n)/(sum(x^2) - sum(x)^2/n))
+(b0 <- mean(y) - b1 * mean(x))        
+```
+The estimated value of $\beta_0$ is $\hat{\beta}_1-22.02$ and the estimate value of $\beta_1$ is $\hat{\beta}_1=-0.0011$.
+
+We can use the `abline` function to overlay the fitted model on the observed data. Note that in simple linear regression, $\hat{\beta}_1$ corresponds to the slope of the fitted line and $\hat{\beta}_0$ will be the intercept.
+
+```{r}
+plot(bill_length_mm ~ body_mass_g, data = penguins,
+     ylab = "bill length (mm)", xlab = "body mass (g)",
+     main = "Penguin size measurements")
+# a is the intercept and b is the slope
+abline(a = b0, b = b1)
+```
+
+The fit of the model to our data seems reasonable.
+
+We can also compute the residuals, $\hat{\epsilon}_1,\ldots,\hat{\epsilon}_n$, the fitted values $\hat{y}_1,\ldots,\hat{y}_n$, and the associated RSS, $RSS=\sum_{i=1}^n \hat{\epsilon}_i^2$.
+
+```{r}
+yhat <- b0 + b1 * x # compute fitted values
+ehat <- y - yhat # compute residuals
+(rss <- sum(ehat^2)) # sum of the squared residuals
+(sigmasqhat <- rss/(n-2)) # estimated error variance
+```
+## Fitting a linear model using R
+
+We now describe how to use R to fit a linear model to data.
+
+The `lm` function uses OLS to fit a linear model to data. The function has two major arguments:
+
+* `data`: the data frame in which the model variables are stored. This can be omitted if the variables are already stored in memory.
+* `formula`: a @(wilkinsonrogers1973) style formula describing the linear regression model. Assuming the `y` is the response, `x`, `x1`, `x2`, `x3` are available predictors:
+  * `y ~ x` describes a simple linear regression model based on $E(Y|X)=\beta_0+\beta_1 X$.
+  * `y ~ x1 + x2` describes a multiple linear regression model based on $E(Y|X_1, X_2)=\beta_0+\beta_1 X_1 + \beta_2 X_2$.
+  * `y ~ x1 + x2 + x1:x2` and `y ~ x1 * x2` describe a multiple linear regression model based on $E(Y|X_1, X_2)=\beta_0+\beta_1 X_1 + \beta_2 X_2 + \beta_3 X_3$.
+  * `y ~ -1 + x1 + x2` describes a multiple linear regression model without an intercept, in this case, $E(Y|X_1, X_2)=\beta_1 X_1 + \beta_2 X_2$.
+
+We fit a linear model regressing `body_mass_g` on `bill_length_mm` using the `penguins` data frame and store it in the object `lmod`. `lmod` is an object of class `lm`.
+
+```{r}
+lmod <- lm(bill_length_mm ~ body_mass_g, data = penguins) # fit model
+class(lmod) # class of lmod
+```
+
+There are a number of methods (generic function that do something specific when applied to a certain type of object). Commonly used ones include:
+
+* `residuals`: extracts $\hat{\boldsymbol{\epsilon}}$ from an `lm` object.
+* `fitted`: extracts $\hat{\mathbf{y}}$ from an `lm` object.
+* `coef` or `coefficients`: extracts $\hat{\boldsymbol{\beta}}$ from an `lm` object.
+* `deviance`: extracts the RSS from an `lm` object.
+* `sigma`: extracts $\hat{\sigma}$ from an `lm` object.
+* `df.residual`: extracts $n-p$, the degrees of freedom for the RSS, from an `lm` object.
+* `summary`: provides:
+    * A 5-number summary of the $\hat{\boldsymbol{\epsilon}}$
+    * A table that lists the predictors, the `Estimate` of the associated coefficients, the **estimated** standard error of the estimates (`Std.Error`), the computed test statistic associated with testing $H_0: \beta_j = 0$ versus $H_a: \beta_j \neq 0$ for $j=0,1,\ldots,p-1$ (`t value`), and the associated p-value of each test `Pr(>|t|)`.
+    
+```{r}
+(coeffs2 <- coefficients(lmod)) # extract, assign, and print coefficients
+ehat2 <- residuals(lmod) # extract and assign residuals
+yhat2 <- fitted(lmod) # extract and assign fitted values
+rss2 <- deviance(lmod) # extract and assign rss
+sigmasqhat2 <- rss2/df.residual(lmod) # estimated error variance
+# compare to manually computed values
+all.equal(c(b0, b1), coeffs2, check.attributes = FALSE)
+all.equal(ehat, ehat2, check.attributes = FALSE)
+all.equal(rss, rss2)
+all.equal(sigmasqhat, sigmasqhat2)
+# methods(class="lm")
+```
+
+### Derivation of OLS simple linear regression estimators
+
+Use calculus to derive the OLS estimator of the regression coefficients. Take the partial derivatives of $RSS(\hat{\beta}_0, \hat{\beta}_1)$ with respect to 
+$\hat{\beta}_0$ and $\hat{\beta}_1$, set the derivatives equal to zero, and solve for $\hat{\beta}_0$ and $\hat{\beta}_1$ to find the critical points of $RSS(\hat{\beta}_0, \hat{\beta}_1)$. Technically, you must show that the Hessian matrix of $RSS(\hat{\beta}_0, \hat{\beta}_1)$ is positive definite to verify that our solution minimizes the RSS, but we won't do that here.
+
+$$\\[4in]$$
+
+### Expected value of OLS simple linear regression estimators
+
+Determine the expected value of the OLS simple linear regression estimators.
+
+$$\\[4in]$$
+
+
+
 
 <!-- ## Simple Linear Regression -->
 

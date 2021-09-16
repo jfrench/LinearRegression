@@ -6,7 +6,7 @@
   <meta http-equiv="X-UA-Compatible" content="IE=edge" />
   <title>Chapter 3 Review of probability, random variables, and random vectors | Joshua French</title>
   <meta name="description" content="A collection of R notebooks demonstrating how to perform data analysis with linear regression." />
-  <meta name="generator" content="bookdown 0.23 and GitBook 2.6.7" />
+  <meta name="generator" content="bookdown 0.24 and GitBook 2.6.7" />
 
   <meta property="og:title" content="Chapter 3 Review of probability, random variables, and random vectors | Joshua French" />
   <meta property="og:type" content="book" />
@@ -24,7 +24,7 @@
 <meta name="author" content="Chapter 3 Review of probability, random variables, and random vectors | Joshua French" />
 
 
-<meta name="date" content="2021-09-10" />
+<meta name="date" content="2021-09-16" />
 
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <meta name="apple-mobile-web-app-capable" content="yes" />
@@ -35,6 +35,7 @@
 <link rel="next" href="useful-matrix-facts.html"/>
 <script src="libs/header-attrs-2.10/header-attrs.js"></script>
 <script src="libs/jquery-3.6.0/jquery-3.6.0.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/fuse.js@6.4.6/dist/fuse.min.js"></script>
 <link href="libs/gitbook-2.6.7/css/style.css" rel="stylesheet" />
 <link href="libs/gitbook-2.6.7/css/plugin-table.css" rel="stylesheet" />
 <link href="libs/gitbook-2.6.7/css/plugin-bookdown.css" rel="stylesheet" />
@@ -42,7 +43,6 @@
 <link href="libs/gitbook-2.6.7/css/plugin-search.css" rel="stylesheet" />
 <link href="libs/gitbook-2.6.7/css/plugin-fontsettings.css" rel="stylesheet" />
 <link href="libs/gitbook-2.6.7/css/plugin-clipboard.css" rel="stylesheet" />
-
 
 
 
@@ -335,25 +335,39 @@ div.csl-indent {
 <li class="chapter" data-level="4.5" data-path="useful-matrix-facts.html"><a href="useful-matrix-facts.html#matrix-inverse"><i class="fa fa-check"></i><b>4.5</b> Matrix inverse</a></li>
 <li class="chapter" data-level="4.6" data-path="useful-matrix-facts.html"><a href="useful-matrix-facts.html#matrix-derivatives"><i class="fa fa-check"></i><b>4.6</b> Matrix derivatives</a></li>
 </ul></li>
-<li class="chapter" data-level="5" data-path="defining-a-linear-model.html"><a href="defining-a-linear-model.html"><i class="fa fa-check"></i><b>5</b> Defining a linear model</a>
+<li class="chapter" data-level="5" data-path="linear-model-definition-and-properties.html"><a href="linear-model-definition-and-properties.html"><i class="fa fa-check"></i><b>5</b> Linear model definition and properties</a>
 <ul>
-<li class="chapter" data-level="5.1" data-path="defining-a-linear-model.html"><a href="defining-a-linear-model.html#background-and-terminology"><i class="fa fa-check"></i><b>5.1</b> Background and terminology</a></li>
-<li class="chapter" data-level="5.2" data-path="defining-a-linear-model.html"><a href="defining-a-linear-model.html#goals-of-regression"><i class="fa fa-check"></i><b>5.2</b> Goals of regression</a></li>
-<li class="chapter" data-level="5.3" data-path="defining-a-linear-model.html"><a href="defining-a-linear-model.html#regression-for-pearsons-height-data"><i class="fa fa-check"></i><b>5.3</b> Regression for Pearson’s height data</a></li>
-<li class="chapter" data-level="5.4" data-path="defining-a-linear-model.html"><a href="defining-a-linear-model.html#definition-of-a-linear-model"><i class="fa fa-check"></i><b>5.4</b> Definition of a linear model</a>
+<li class="chapter" data-level="5.1" data-path="linear-model-definition-and-properties.html"><a href="linear-model-definition-and-properties.html#background-and-terminology"><i class="fa fa-check"></i><b>5.1</b> Background and terminology</a></li>
+<li class="chapter" data-level="5.2" data-path="linear-model-definition-and-properties.html"><a href="linear-model-definition-and-properties.html#goals-of-regression"><i class="fa fa-check"></i><b>5.2</b> Goals of regression</a></li>
+<li class="chapter" data-level="5.3" data-path="linear-model-definition-and-properties.html"><a href="linear-model-definition-and-properties.html#regression-for-pearsons-height-data"><i class="fa fa-check"></i><b>5.3</b> Regression for Pearson’s height data</a></li>
+<li class="chapter" data-level="5.4" data-path="linear-model-definition-and-properties.html"><a href="linear-model-definition-and-properties.html#definition-of-a-linear-model"><i class="fa fa-check"></i><b>5.4</b> Definition of a linear model</a>
 <ul>
-<li class="chapter" data-level="5.4.1" data-path="defining-a-linear-model.html"><a href="defining-a-linear-model.html#basic-construction-and-relationships"><i class="fa fa-check"></i><b>5.4.1</b> Basic construction and relationships</a></li>
-<li class="chapter" data-level="5.4.2" data-path="defining-a-linear-model.html"><a href="defining-a-linear-model.html#as-a-system-of-equations"><i class="fa fa-check"></i><b>5.4.2</b> As a system of equations</a></li>
-<li class="chapter" data-level="5.4.3" data-path="defining-a-linear-model.html"><a href="defining-a-linear-model.html#using-matrix-notation"><i class="fa fa-check"></i><b>5.4.3</b> Using matrix notation</a></li>
+<li class="chapter" data-level="5.4.1" data-path="linear-model-definition-and-properties.html"><a href="linear-model-definition-and-properties.html#basic-construction-and-relationships"><i class="fa fa-check"></i><b>5.4.1</b> Basic construction and relationships</a></li>
+<li class="chapter" data-level="5.4.2" data-path="linear-model-definition-and-properties.html"><a href="linear-model-definition-and-properties.html#as-a-system-of-equations"><i class="fa fa-check"></i><b>5.4.2</b> As a system of equations</a></li>
+<li class="chapter" data-level="5.4.3" data-path="linear-model-definition-and-properties.html"><a href="linear-model-definition-and-properties.html#using-matrix-notation"><i class="fa fa-check"></i><b>5.4.3</b> Using matrix notation</a></li>
 </ul></li>
-<li class="chapter" data-level="5.5" data-path="defining-a-linear-model.html"><a href="defining-a-linear-model.html#summarizing-the-components-of-a-linear-model"><i class="fa fa-check"></i><b>5.5</b> Summarizing the components of a linear model</a></li>
-<li class="chapter" data-level="5.6" data-path="defining-a-linear-model.html"><a href="defining-a-linear-model.html#types-of-regression-models"><i class="fa fa-check"></i><b>5.6</b> Types of regression models</a></li>
-<li class="chapter" data-level="5.7" data-path="defining-a-linear-model.html"><a href="defining-a-linear-model.html#standard-linear-model-assumptions"><i class="fa fa-check"></i><b>5.7</b> Standard linear model assumptions</a></li>
-<li class="chapter" data-level="5.8" data-path="defining-a-linear-model.html"><a href="defining-a-linear-model.html#exercises"><i class="fa fa-check"></i><b>5.8</b> Exercises</a></li>
+<li class="chapter" data-level="5.5" data-path="linear-model-definition-and-properties.html"><a href="linear-model-definition-and-properties.html#summarizing-the-components-of-a-linear-model"><i class="fa fa-check"></i><b>5.5</b> Summarizing the components of a linear model</a></li>
+<li class="chapter" data-level="5.6" data-path="linear-model-definition-and-properties.html"><a href="linear-model-definition-and-properties.html#types-of-regression-models"><i class="fa fa-check"></i><b>5.6</b> Types of regression models</a></li>
+<li class="chapter" data-level="5.7" data-path="linear-model-definition-and-properties.html"><a href="linear-model-definition-and-properties.html#standard-linear-model-assumptions-and-implications"><i class="fa fa-check"></i><b>5.7</b> Standard linear model assumptions and implications</a></li>
+<li class="chapter" data-level="5.8" data-path="linear-model-definition-and-properties.html"><a href="linear-model-definition-and-properties.html#mathematical-interpretation-of-coefficients"><i class="fa fa-check"></i><b>5.8</b> Mathematical interpretation of coefficients</a>
+<ul>
+<li class="chapter" data-level="5.8.1" data-path="linear-model-definition-and-properties.html"><a href="linear-model-definition-and-properties.html#coefficient-interpretation-in-simple-linear-regression"><i class="fa fa-check"></i><b>5.8.1</b> Coefficient interpretation in simple linear regression</a></li>
+<li class="chapter" data-level="5.8.2" data-path="linear-model-definition-and-properties.html"><a href="linear-model-definition-and-properties.html#coefficient-interpretation-in-multiple-linear-regression"><i class="fa fa-check"></i><b>5.8.2</b> Coefficient interpretation in multiple linear regression</a></li>
+</ul></li>
+<li class="chapter" data-level="5.9" data-path="linear-model-definition-and-properties.html"><a href="linear-model-definition-and-properties.html#exercises"><i class="fa fa-check"></i><b>5.9</b> Exercises</a></li>
 </ul></li>
 <li class="chapter" data-level="6" data-path="fitting-a-linear-model.html"><a href="fitting-a-linear-model.html"><i class="fa fa-check"></i><b>6</b> Fitting a linear model</a>
 <ul>
-<li class="chapter" data-level="6.1" data-path="fitting-a-linear-model.html"><a href="fitting-a-linear-model.html#section"><i class="fa fa-check"></i><b>6.1</b> </a></li>
+<li class="chapter" data-level="6.1" data-path="fitting-a-linear-model.html"><a href="fitting-a-linear-model.html#ols-estimation-of-the-simple-linear-regression-model"><i class="fa fa-check"></i><b>6.1</b> OLS estimation of the simple linear regression model</a>
+<ul>
+<li class="chapter" data-level="6.1.1" data-path="fitting-a-linear-model.html"><a href="fitting-a-linear-model.html#ols-estimators-of-the-simple-linear-regression-coefficents"><i class="fa fa-check"></i><b>6.1.1</b> OLS estimators of the simple linear regression coefficents</a></li>
+</ul></li>
+<li class="chapter" data-level="6.2" data-path="fitting-a-linear-model.html"><a href="fitting-a-linear-model.html#penguins-simple-linear-regression-example"><i class="fa fa-check"></i><b>6.2</b> Penguins simple linear regression example</a></li>
+<li class="chapter" data-level="6.3" data-path="fitting-a-linear-model.html"><a href="fitting-a-linear-model.html#fitting-a-linear-model-using-r"><i class="fa fa-check"></i><b>6.3</b> Fitting a linear model using R</a>
+<ul>
+<li class="chapter" data-level="6.3.1" data-path="fitting-a-linear-model.html"><a href="fitting-a-linear-model.html#derivation-of-ols-simple-linear-regression-estimators"><i class="fa fa-check"></i><b>6.3.1</b> Derivation of OLS simple linear regression estimators</a></li>
+<li class="chapter" data-level="6.3.2" data-path="fitting-a-linear-model.html"><a href="fitting-a-linear-model.html#expected-value-of-ols-simple-linear-regression-estimators"><i class="fa fa-check"></i><b>6.3.2</b> Expected value of OLS simple linear regression estimators</a></li>
+</ul></li>
 </ul></li>
 <li class="chapter" data-level="7" data-path="interpreting-a-fitted-linear-model.html"><a href="interpreting-a-fitted-linear-model.html"><i class="fa fa-check"></i><b>7</b> Interpreting a fitted linear model</a></li>
 <li class="chapter" data-level="8" data-path="categorical-predictors.html"><a href="categorical-predictors.html"><i class="fa fa-check"></i><b>8</b> Categorical predictors</a>
@@ -603,10 +617,10 @@ cov(Y_n,Y_1)&amp;cov(Y_n,Y_2)&amp;\dots&amp;var(Y_n)\end{pmatrix}\end{aligned}.\
 <h2><span class="header-section-number">3.6</span> Multivariate normal (Gaussian) distribution</h2>
 <div id="definition-1" class="section level3" number="3.6.1">
 <h3><span class="header-section-number">3.6.1</span> Definition</h3>
-<p><span class="math inline">\(\mathbf{y}=(Y_1,\dots,Y_n )^T\)</span> has a multivariate normal distribution with mean <span class="math inline">\(\mathbf{\mu}\)</span> (an <span class="math inline">\(n\times 1\)</span> vector) and covariance <span class="math inline">\(\mathbf{\Sigma}\)</span> (an <span class="math inline">\(n\times n\)</span> matrix) if the joint pdf is</p>
-<p><span class="math display">\[f(\mathbf{y})=\frac{1}{(2\pi)^{n/2} |\mathbf{\Sigma}|^{1/2} }  \exp\left(-\frac{1}{2} (\mathbf{y}-\mathbf{\mu})^T \Sigma^{-1} (\mathbf{y}-\mathbf{\mu})\right).\]</span>
-Note that <span class="math inline">\(\mathbf{\Sigma}\)</span> must be symmetric and positive definite.</p>
-<p>We would denote this as <span class="math inline">\(\mathbf{y}\sim N(\mathbf{\mu},\mathbf{\Sigma)}\)</span>.</p>
+<p><span class="math inline">\(\mathbf{y}=(Y_1,\dots,Y_n )^T\)</span> has a multivariate normal distribution with mean <span class="math inline">\(E(\mathbf{y})=\boldsymbol{\mu}\)</span> (an <span class="math inline">\(n\times 1\)</span> vector) and covariance <span class="math inline">\(\mathrm{var}(\mathbf{y})=\boldsymbol{\Sigma}\)</span> (an <span class="math inline">\(n\times n\)</span> matrix) if the joint pdf is</p>
+<p><span class="math display">\[f(\mathbf{y})=\frac{1}{(2\pi)^{n/2} |\boldsymbol{\Sigma}|^{1/2} }  \exp\left(-\frac{1}{2} (\mathbf{y}-\boldsymbol{\mu})^T \Sigma^{-1} (\mathbf{y}-\boldsymbol{\mu})\right),\]</span></p>
+<p>where <span class="math inline">\(|\boldsymbol{\Sigma}|\)</span> is the determinant of <span class="math inline">\(\boldsymbol{\Sigma}\)</span>. Note that <span class="math inline">\(\boldsymbol{\Sigma}\)</span> must be symmetric and positive definite.</p>
+<p>We would denote this as <span class="math inline">\(\mathbf{y}\sim N(\boldsymbol{\mu},\boldsymbol{\Sigma})\)</span>.</p>
 </div>
 <div id="useful-facts" class="section level3" number="3.6.2">
 <h3><span class="header-section-number">3.6.2</span> Useful facts</h3>
@@ -621,13 +635,13 @@ Note that <span class="math inline">\(\mathbf{\Sigma}\)</span> must be symmetric
 <p>A random variable <span class="math inline">\(Y\sim \mathrm{Bernoulli}(\theta)\)</span> when <span class="math inline">\(\mathcal{S} = \{0, 1\}\)</span> and the pmf of a Bernoulli random variable is
 <span class="math display">\[f(y\mid\theta)=\theta^y (1-\theta)^{(1-y)}.\]</span></p>
 <ul>
-<li>Determine <span class="math inline">\(E(Y)\)</span><span class="math display">\[\\[4in]\]</span></li>
-<li>Determine <span class="math inline">\(var(Y)\)</span><span class="math display">\[\\[4in]\]</span></li>
+<li>Determine <span class="math inline">\(E(Y)\)</span> <span class="math display">\[\\[4in]\]</span></li>
+<li>Determine <span class="math inline">\(var(Y)\)</span> <span class="math display">\[\\[4in]\]</span></li>
 </ul>
 </div>
 <div id="binomial-distribution" class="section level3" number="3.7.2">
 <h3><span class="header-section-number">3.7.2</span> Binomial distribution</h3>
-<p>A random variable <span class="math inline">\(Y\sim \mathrm{Bin}(n,\theta)\)</span> when <span class="math inline">\(\mathcal{S}=\{0,1,2,\ldots,n\}\)</span> and the pmf is <span class="math display">\[f(y\mid\theta) = {n \choose y} \theta^y (1-\theta)^{(n-y)}.\]</span></p>
+<p>A random variable <span class="math inline">\(Y\sim \mathrm{Bin}(n,\theta)\)</span> when <span class="math inline">\(\mathcal{S}=\{0,1,2,\ldots,n\}\)</span> and the pmf is <span class="math display">\[f(y\mid\theta) = \binom{n}{y} \theta^y (1-\theta)^{(n-y)}.\]</span></p>
 <p>Alternatively, let <span class="math inline">\(Y_1,Y_2,\ldots,Y_n\stackrel{i.i.d.}{\sim} \mathrm{Bernoulli}(\theta)\)</span>. Then <span class="math inline">\(Y=\sum_{i=1}^n Y_i \sim \mathrm{Bin}(n,\theta)\)</span>.</p>
 <ul>
 <li>Determine <span class="math inline">\(E(Y)\)</span> <span class="math display">\[\\[4in]\]</span></li>
@@ -705,7 +719,6 @@ Note that <span class="math inline">\(\mathbf{\Sigma}\)</span> must be symmetric
     </div>
   </div>
 <script src="libs/gitbook-2.6.7/js/app.min.js"></script>
-<script src="libs/gitbook-2.6.7/js/lunr.js"></script>
 <script src="libs/gitbook-2.6.7/js/clipboard.min.js"></script>
 <script src="libs/gitbook-2.6.7/js/plugin-search.js"></script>
 <script src="libs/gitbook-2.6.7/js/plugin-sharing.js"></script>
@@ -746,7 +759,7 @@ gitbook.start({
 },
 "download": ["Data-Analysis-with-Linear-Regression.pdf", "Data-Analysis-with-Linear-Regression.epub"],
 "search": {
-"engine": "lunr",
+"engine": "fuse",
 "options": null
 },
 "toc": {

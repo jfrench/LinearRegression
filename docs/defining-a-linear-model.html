@@ -6,7 +6,7 @@
   <meta http-equiv="X-UA-Compatible" content="IE=edge" />
   <title>Chapter 5 Defining a linear model | Joshua French</title>
   <meta name="description" content="A collection of R notebooks demonstrating how to perform data analysis with linear regression." />
-  <meta name="generator" content="bookdown 0.23 and GitBook 2.6.7" />
+  <meta name="generator" content="bookdown 0.24 and GitBook 2.6.7" />
 
   <meta property="og:title" content="Chapter 5 Defining a linear model | Joshua French" />
   <meta property="og:type" content="book" />
@@ -24,7 +24,7 @@
 <meta name="author" content="Chapter 5 Defining a linear model | Joshua French" />
 
 
-<meta name="date" content="2021-09-10" />
+<meta name="date" content="2021-09-15" />
 
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <meta name="apple-mobile-web-app-capable" content="yes" />
@@ -35,6 +35,7 @@
 <link rel="next" href="fitting-a-linear-model.html"/>
 <script src="libs/header-attrs-2.10/header-attrs.js"></script>
 <script src="libs/jquery-3.6.0/jquery-3.6.0.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/fuse.js@6.4.6/dist/fuse.min.js"></script>
 <link href="libs/gitbook-2.6.7/css/style.css" rel="stylesheet" />
 <link href="libs/gitbook-2.6.7/css/plugin-table.css" rel="stylesheet" />
 <link href="libs/gitbook-2.6.7/css/plugin-bookdown.css" rel="stylesheet" />
@@ -42,7 +43,6 @@
 <link href="libs/gitbook-2.6.7/css/plugin-search.css" rel="stylesheet" />
 <link href="libs/gitbook-2.6.7/css/plugin-fontsettings.css" rel="stylesheet" />
 <link href="libs/gitbook-2.6.7/css/plugin-clipboard.css" rel="stylesheet" />
-
 
 
 
@@ -349,11 +349,25 @@ div.csl-indent {
 <li class="chapter" data-level="5.5" data-path="defining-a-linear-model.html"><a href="defining-a-linear-model.html#summarizing-the-components-of-a-linear-model"><i class="fa fa-check"></i><b>5.5</b> Summarizing the components of a linear model</a></li>
 <li class="chapter" data-level="5.6" data-path="defining-a-linear-model.html"><a href="defining-a-linear-model.html#types-of-regression-models"><i class="fa fa-check"></i><b>5.6</b> Types of regression models</a></li>
 <li class="chapter" data-level="5.7" data-path="defining-a-linear-model.html"><a href="defining-a-linear-model.html#standard-linear-model-assumptions"><i class="fa fa-check"></i><b>5.7</b> Standard linear model assumptions</a></li>
-<li class="chapter" data-level="5.8" data-path="defining-a-linear-model.html"><a href="defining-a-linear-model.html#exercises"><i class="fa fa-check"></i><b>5.8</b> Exercises</a></li>
+<li class="chapter" data-level="5.8" data-path="defining-a-linear-model.html"><a href="defining-a-linear-model.html#mathematical-interpretation-of-coefficients"><i class="fa fa-check"></i><b>5.8</b> Mathematical interpretation of coefficients</a>
+<ul>
+<li class="chapter" data-level="5.8.1" data-path="defining-a-linear-model.html"><a href="defining-a-linear-model.html#coefficient-interpretation-in-simple-linear-regression"><i class="fa fa-check"></i><b>5.8.1</b> Coefficient interpretation in simple linear regression</a></li>
+<li class="chapter" data-level="5.8.2" data-path="defining-a-linear-model.html"><a href="defining-a-linear-model.html#coefficient-interpretation-in-multiple-linear-regression"><i class="fa fa-check"></i><b>5.8.2</b> Coefficient interpretation in multiple linear regression</a></li>
+</ul></li>
+<li class="chapter" data-level="5.9" data-path="defining-a-linear-model.html"><a href="defining-a-linear-model.html#exercises"><i class="fa fa-check"></i><b>5.9</b> Exercises</a></li>
 </ul></li>
 <li class="chapter" data-level="6" data-path="fitting-a-linear-model.html"><a href="fitting-a-linear-model.html"><i class="fa fa-check"></i><b>6</b> Fitting a linear model</a>
 <ul>
-<li class="chapter" data-level="6.1" data-path="fitting-a-linear-model.html"><a href="fitting-a-linear-model.html#section"><i class="fa fa-check"></i><b>6.1</b> </a></li>
+<li class="chapter" data-level="6.1" data-path="fitting-a-linear-model.html"><a href="fitting-a-linear-model.html#ols-estimation-of-the-simple-linear-regression-model"><i class="fa fa-check"></i><b>6.1</b> OLS estimation of the simple linear regression model</a>
+<ul>
+<li class="chapter" data-level="6.1.1" data-path="fitting-a-linear-model.html"><a href="fitting-a-linear-model.html#ols-estimators-of-the-simple-linear-regression-coefficents"><i class="fa fa-check"></i><b>6.1.1</b> OLS estimators of the simple linear regression coefficents</a></li>
+</ul></li>
+<li class="chapter" data-level="6.2" data-path="fitting-a-linear-model.html"><a href="fitting-a-linear-model.html#penguins-simple-linear-regression-example"><i class="fa fa-check"></i><b>6.2</b> Penguins simple linear regression example</a></li>
+<li class="chapter" data-level="6.3" data-path="fitting-a-linear-model.html"><a href="fitting-a-linear-model.html#fitting-a-linear-model-using-r"><i class="fa fa-check"></i><b>6.3</b> Fitting a linear model using R</a>
+<ul>
+<li class="chapter" data-level="6.3.1" data-path="fitting-a-linear-model.html"><a href="fitting-a-linear-model.html#derivation-of-ols-simple-linear-regression-estimators"><i class="fa fa-check"></i><b>6.3.1</b> Derivation of OLS simple linear regression estimators</a></li>
+<li class="chapter" data-level="6.3.2" data-path="fitting-a-linear-model.html"><a href="fitting-a-linear-model.html#expected-value-of-ols-simple-linear-regression-estimators"><i class="fa fa-check"></i><b>6.3.2</b> Expected value of OLS simple linear regression estimators</a></li>
+</ul></li>
 </ul></li>
 <li class="chapter" data-level="7" data-path="interpreting-a-fitted-linear-model.html"><a href="interpreting-a-fitted-linear-model.html"><i class="fa fa-check"></i><b>7</b> Interpreting a fitted linear model</a></li>
 <li class="chapter" data-level="8" data-path="categorical-predictors.html"><a href="categorical-predictors.html"><i class="fa fa-check"></i><b>8</b> Categorical predictors</a>
@@ -531,6 +545,21 @@ E(Y|X) &amp;= E(\beta_0 + \beta_1  X + \epsilon | X) \\
 For a model with multiple predictors, this extends to
 <span class="math display">\[Y = E(Y|X_1, X_2, \ldots, X_{p-1}) + \epsilon.\]</span>
 Thus, our response may be written as the sum of the mean response conditional on the predictors, <span class="math inline">\(E(Y|X_1, X_2, \ldots, X_{p-1})\)</span>, and the error. This is why previously we discussed the fact that the error is simply the deviation of the response from its mean.</p>
+<p>Alternatively, one can say that a regression model is linear if the mean function can be written as a linear combination of the regression coefficients and known values, i.e.,
+<span class="math display">\[E(Y|X_1, X_2, \ldots, X_{p-1}) = \sum_{j=0}^{p-1} c_j \beta_j,\]</span>
+where <span class="math inline">\(c_0, c_1, \ldots, c_{p-1}\)</span> are known values. In fact, the <span class="math inline">\(c_i, i = 1,2,\ldots,n\)</span> can be any function of <span class="math inline">\(X_1,X_2,\ldots,X_n\)</span>! e.g., <span class="math inline">\(c_1 = X_1 * X_2 * X_3\)</span>, <span class="math inline">\(c_3 = X_2^2\)</span>, <span class="math inline">\(c_8 = ln(X_1)/X_2^2\)</span>.</p>
+<p>Some examples of linear models:</p>
+<ul>
+<li><span class="math inline">\(E(Y|X) = \beta_0 + \beta_1 X^2\)</span>.</li>
+<li><span class="math inline">\(E(Y|X_1, X_2) = \beta_0 + \beta_1 X_1 + \beta_2 X_2\)</span>.</li>
+<li><span class="math inline">\(E(Y|X_1, X_2) = \beta_0 + \beta_1 X_1 + \beta_2 X_2 + \beta_3 X_1 * X_2\)</span>.</li>
+<li><span class="math inline">\(E(Y|X_1, X_2) = \beta_0 + \beta_1 ln(X_1) + \beta_2 X_2^{-1}\)</span>.</li>
+</ul>
+<p>Some examples of non-linear models:</p>
+<ul>
+<li><span class="math inline">\(E(Y|X) = \beta_0 + e^{\beta_1} X\)</span>.</li>
+<li><span class="math inline">\(E(Y|X) = \beta_0 + \beta_1 X/(\beta_2 + X)\)</span>.</li>
+</ul>
 <!-- The model in Equation \@ref(eq:lmdef) is a **statistical model** because there is uncertainty in the response.  -->
 </div>
 <div id="as-a-system-of-equations" class="section level3" number="5.4.2">
@@ -738,8 +767,29 @@ which combines the following assumptions:</p>
 <li><span class="math inline">\(\epsilon_i\)</span> has a normal distribution for <span class="math inline">\(i=1,2,\ldots,n\)</span>.</li>
 </ol>
 </div>
-<div id="exercises" class="section level2" number="5.8">
-<h2><span class="header-section-number">5.8</span> Exercises</h2>
+<div id="mathematical-interpretation-of-coefficients" class="section level2" number="5.8">
+<h2><span class="header-section-number">5.8</span> Mathematical interpretation of coefficients</h2>
+<p>The regression coefficients have simple mathematical interpretations in basic settings.</p>
+<div id="coefficient-interpretation-in-simple-linear-regression" class="section level3" number="5.8.1">
+<h3><span class="header-section-number">5.8.1</span> Coefficient interpretation in simple linear regression</h3>
+<p>Suppose we have a simple linear regression model, so that <span class="math inline">\(E(Y|X)=\beta_0 + \beta_1 X.\)</span> The interpretations of the coefficients are:</p>
+<ul>
+<li><span class="math inline">\(\beta_0\)</span> is the expected response when the predictor is 0, i.e., <span class="math inline">\(\beta_0=E(Y|X=0)\)</span>.</li>
+<li><span class="math inline">\(\beta_1\)</span> is the expected change in the response when the predictor increases 1 unit, i.e., <span class="math inline">\(\beta_1=E(Y|X=x_0+1)-E(Y|X=x_0)\)</span>.</li>
+</ul>
+</div>
+<div id="coefficient-interpretation-in-multiple-linear-regression" class="section level3" number="5.8.2">
+<h3><span class="header-section-number">5.8.2</span> Coefficient interpretation in multiple linear regression</h3>
+<p>Suppose we have a multiple linear regression model, so that <span class="math inline">\(E(Y|X_1,\ldots,X_{p-1})=\beta_0 + \beta_1 X_1 + \cdots + \beta_{p-1} X_{p-1}.\)</span> Let <span class="math inline">\(\mathcal{X} = \{X_1,\ldots,X_{p-1}\}\)</span> be the set of predictors and <span class="math inline">\(\mathcal{X}_{-j} = \mathcal{X}\setminus\{X_j\}\)</span>, i.e., the set of predictors without <span class="math inline">\(X_j\)</span>.</p>
+<p>The interpretations of the coefficients are:</p>
+<ul>
+<li><span class="math inline">\(\beta_0\)</span> is the expected response when all predictors are 0, i.e., <span class="math inline">\(\beta_0=E(Y|X_1=0,\ldots,X_{p-1}=0)\)</span>.</li>
+<li><span class="math inline">\(\beta_j\)</span> is the expected change in the response when predictor <span class="math inline">\(j\)</span> increases 1 unit and the other predictors stay the same, i.e., <span class="math inline">\(\beta_j=E(Y|\mathcal{X}_{-j} = \mathbf{x}^*, X_{j+1} = x_{0}+1)-E(Y|\mathcal{X}_{-j} = \mathbf{x}^*, X_{j+1} = x_{0})\)</span> where <span class="math inline">\(\mathbf{x}^*\in \mathbb{R}^{p-2}\)</span> is a fixed vector of length <span class="math inline">\(p-2\)</span> (the number of predictors excluding <span class="math inline">\(X_j\)</span>).</li>
+</ul>
+</div>
+</div>
+<div id="exercises" class="section level2" number="5.9">
+<h2><span class="header-section-number">5.9</span> Exercises</h2>
 <ol style="list-style-type: decimal">
 <li>If given a set of data with several variables, how would you decide what the response variable and the predictor variables would be?</li>
 <li>Which objects in the linear model formula in Equation <a href="defining-a-linear-model.html#eq:lmdef">(5.1)</a> are considered random? Which are considered fixed?</li>
@@ -747,6 +797,10 @@ which combines the following assumptions:</p>
 <li>What are the typical goals of a regression analysis?</li>
 <li>List the typical assumptions made for the errors in a linear model?</li>
 <li>Without using a formula, what is the basic difference between a linear model and a non-linear model?</li>
+<li>In the context of simple linear regression under the standard assumptions, show that <span class="math inline">\(\beta_0=E(Y|X=0)\)</span>.</li>
+<li>In the context of simple linear regression under the standard assumptions, show that <span class="math inline">\(\beta_1=E(Y|X=x_0+1)-E(Y|X=x_0)\)</span>.</li>
+<li>In the context of multiple linear regression under the standard assumptions, show that <span class="math inline">\(\beta_0=E(Y|X_1=0,\ldots,X_{p-1}=0)\)</span>.</li>
+<li>In the context of multiple linear regression under the standard assumptions, show that <span class="math inline">\(\beta_j=E(Y|\mathcal{X}_{-j} = \mathbf{x}^*, X_{j+1} = x_{0}+1)-E(Y|\mathcal{X}_{-j} = \mathbf{x}^*, X_{j+1} = x_{0})\)</span> where <span class="math inline">\(\mathbf{x}^*\)</span> is a fixed vector of the appropriate size.</li>
 </ol>
 <!-- ## Scatter plots and linear regression -->
 <p><!-- Scatter plots are a convenient way to study the potential relationship between a single response and a single predictor variable. --></p>
@@ -837,7 +891,6 @@ Wickham, Hadley, Winston Chang, Lionel Henry, Thomas Lin Pedersen, Kohske Takaha
     </div>
   </div>
 <script src="libs/gitbook-2.6.7/js/app.min.js"></script>
-<script src="libs/gitbook-2.6.7/js/lunr.js"></script>
 <script src="libs/gitbook-2.6.7/js/clipboard.min.js"></script>
 <script src="libs/gitbook-2.6.7/js/plugin-search.js"></script>
 <script src="libs/gitbook-2.6.7/js/plugin-sharing.js"></script>
@@ -878,7 +931,7 @@ gitbook.start({
 },
 "download": ["Data-Analysis-with-Linear-Regression.pdf", "Data-Analysis-with-Linear-Regression.epub"],
 "search": {
-"engine": "lunr",
+"engine": "fuse",
 "options": null
 },
 "toc": {

@@ -233,12 +233,14 @@ Then:
 ## Multivariate normal (Gaussian) distribution
 
 ### Definition
-$\mathbf{y}=(Y_1,\dots,Y_n )^T$ has a multivariate normal distribution with mean $\mathbf{\mu}$ (an $n\times 1$ vector) and covariance $\mathbf{\Sigma}$ (an $n\times n$ matrix) if the joint pdf is
+$\mathbf{y}=(Y_1,\dots,Y_n )^T$ has a multivariate normal distribution with mean $E(\mathbf{y})=\boldsymbol{\mu}$ (an $n\times 1$ vector) and covariance $\mathrm{var}(\mathbf{y})=\boldsymbol{\Sigma}$ (an $n\times n$ matrix) if the joint pdf is
 
-$$f(\mathbf{y})=\frac{1}{(2\pi)^{n/2} |\mathbf{\Sigma}|^{1/2} }  \exp\left(-\frac{1}{2} (\mathbf{y}-\mathbf{\mu})^T \Sigma^{-1} (\mathbf{y}-\mathbf{\mu})\right).$$
-Note that $\mathbf{\Sigma}$ must be symmetric and positive definite.
+$$f(\mathbf{y})=\frac{1}{(2\pi)^{n/2} |\boldsymbol{\Sigma}|^{1/2} }  \exp\left(-\frac{1}{2} (\mathbf{y}-\boldsymbol{\mu})^T \Sigma^{-1} (\mathbf{y}-\boldsymbol{\mu})\right),$$
 
-We would denote this as $\mathbf{y}\sim N(\mathbf{\mu},\mathbf{\Sigma)}$.
+where $|\boldsymbol{\Sigma}|$ is the determinant of $\boldsymbol{\Sigma}$. Note that $\boldsymbol{\Sigma}$ must be symmetric and positive definite.
+
+
+We would denote this as $\mathbf{y}\sim N(\boldsymbol{\mu},\boldsymbol{\Sigma})$.
 
 ### Useful facts
 
@@ -253,12 +255,12 @@ We would denote this as $\mathbf{y}\sim N(\mathbf{\mu},\mathbf{\Sigma)}$.
 A random variable $Y\sim \mathrm{Bernoulli}(\theta)$ when $\mathcal{S} = \{0, 1\}$ and the pmf of a Bernoulli random variable is
 $$f(y\mid\theta)=\theta^y (1-\theta)^{(1-y)}.$$
 
-* Determine $E(Y)$\vspace{2in}$$\\[4in]$$
-* Determine $var(Y)$\vspace{2in}$$\\[4in]$$
+* Determine $E(Y)$ $$\\[4in]$$
+* Determine $var(Y)$ $$\\[4in]$$
 
 ### Binomial distribution
 
-A random variable $Y\sim \mathrm{Bin}(n,\theta)$ when $\mathcal{S}=\{0,1,2,\ldots,n\}$ and the pmf is $$f(y\mid\theta) = {n \choose y} \theta^y (1-\theta)^{(n-y)}.$$
+A random variable $Y\sim \mathrm{Bin}(n,\theta)$ when $\mathcal{S}=\{0,1,2,\ldots,n\}$ and the pmf is $$f(y\mid\theta) = \binom{n}{y} \theta^y (1-\theta)^{(n-y)}.$$
 
 Alternatively, let $Y_1,Y_2,\ldots,Y_n\stackrel{i.i.d.}{\sim} \mathrm{Bernoulli}(\theta)$. Then $Y=\sum_{i=1}^n Y_i \sim \mathrm{Bin}(n,\theta)$.
 
