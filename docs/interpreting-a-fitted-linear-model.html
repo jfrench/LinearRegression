@@ -24,16 +24,16 @@
 <meta name="author" content="Chapter 7 Interpreting a fitted linear model | Joshua French" />
 
 
-<meta name="date" content="2021-09-23" />
+<meta name="date" content="2021-10-18" />
 
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <meta name="apple-mobile-web-app-capable" content="yes" />
   <meta name="apple-mobile-web-app-status-bar-style" content="black" />
   
   
-<link rel="prev" href="fitting-a-linear-model.html"/>
+<link rel="prev" href="parameter-estimation-for-linear-models.html"/>
 <link rel="next" href="categorical-predictors.html"/>
-<script src="libs/header-attrs-2.10/header-attrs.js"></script>
+<script src="libs/header-attrs-2.11/header-attrs.js"></script>
 <script src="libs/jquery-3.6.0/jquery-3.6.0.min.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/fuse.js@6.4.6/dist/fuse.min.js"></script>
 <link href="libs/gitbook-2.6.7/css/style.css" rel="stylesheet" />
@@ -120,28 +120,6 @@ code span.vs { color: #4070a0; } /* VerbatimString */
 code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warning */
 </style>
 
-<style type="text/css">
-/* Used with Pandoc 2.11+ new --citeproc when CSL is used */
-div.csl-bib-body { }
-div.csl-entry {
-  clear: both;
-}
-.hanging div.csl-entry {
-  margin-left:2em;
-  text-indent:-2em;
-}
-div.csl-left-margin {
-  min-width:2em;
-  float:left;
-}
-div.csl-right-inline {
-  margin-left:2em;
-  padding-left:1em;
-}
-div.csl-indent {
-  margin-left: 2em;
-}
-</style>
 
 <link rel="stylesheet" href="style.css" type="text/css" />
 </head>
@@ -356,21 +334,23 @@ div.csl-indent {
 </ul></li>
 <li class="chapter" data-level="5.9" data-path="linear-model-definition-and-properties.html"><a href="linear-model-definition-and-properties.html#exercises"><i class="fa fa-check"></i><b>5.9</b> Exercises</a></li>
 </ul></li>
-<li class="chapter" data-level="6" data-path="fitting-a-linear-model.html"><a href="fitting-a-linear-model.html"><i class="fa fa-check"></i><b>6</b> Fitting a linear model</a>
+<li class="chapter" data-level="6" data-path="parameter-estimation-for-linear-models.html"><a href="parameter-estimation-for-linear-models.html"><i class="fa fa-check"></i><b>6</b> Parameter estimation for linear models</a>
 <ul>
-<li class="chapter" data-level="6.1" data-path="fitting-a-linear-model.html"><a href="fitting-a-linear-model.html#ols-estimation-of-the-simple-linear-regression-model"><i class="fa fa-check"></i><b>6.1</b> OLS estimation of the simple linear regression model</a>
+<li class="chapter" data-level="6.1" data-path="parameter-estimation-for-linear-models.html"><a href="parameter-estimation-for-linear-models.html#ols-estimation-of-the-simple-linear-regression-model"><i class="fa fa-check"></i><b>6.1</b> OLS estimation of the simple linear regression model</a>
 <ul>
-<li class="chapter" data-level="6.1.1" data-path="fitting-a-linear-model.html"><a href="fitting-a-linear-model.html#visualizing-the-rss-as-a-function-of-the-estimated-coefficients"><i class="fa fa-check"></i><b>6.1.1</b> Visualizing the RSS as a function of the estimated coefficients</a></li>
-<li class="chapter" data-level="6.1.2" data-path="fitting-a-linear-model.html"><a href="fitting-a-linear-model.html#ols-estimators-of-the-simple-linear-regression-coefficents"><i class="fa fa-check"></i><b>6.1.2</b> OLS estimators of the simple linear regression coefficents</a></li>
+<li class="chapter" data-level="6.1.1" data-path="parameter-estimation-for-linear-models.html"><a href="parameter-estimation-for-linear-models.html#visualizing-the-rss-as-a-function-of-the-estimated-coefficients"><i class="fa fa-check"></i><b>6.1.1</b> Visualizing the RSS as a function of the estimated coefficients</a></li>
+<li class="chapter" data-level="6.1.2" data-path="parameter-estimation-for-linear-models.html"><a href="parameter-estimation-for-linear-models.html#ols-estimators-of-the-simple-linear-regression-parameters"><i class="fa fa-check"></i><b>6.1.2</b> OLS estimators of the simple linear regression parameters</a></li>
 </ul></li>
-<li class="chapter" data-level="6.2" data-path="fitting-a-linear-model.html"><a href="fitting-a-linear-model.html#penguins-simple-linear-regression-example"><i class="fa fa-check"></i><b>6.2</b> Penguins simple linear regression example</a></li>
-<li class="chapter" data-level="6.3" data-path="fitting-a-linear-model.html"><a href="fitting-a-linear-model.html#fitting-a-linear-model-using-r"><i class="fa fa-check"></i><b>6.3</b> Fitting a linear model using R</a>
+<li class="chapter" data-level="6.2" data-path="parameter-estimation-for-linear-models.html"><a href="parameter-estimation-for-linear-models.html#penguins-simple-linear-regression-example"><i class="fa fa-check"></i><b>6.2</b> Penguins simple linear regression example</a></li>
+<li class="chapter" data-level="6.3" data-path="parameter-estimation-for-linear-models.html"><a href="parameter-estimation-for-linear-models.html#fitting-a-linear-model-using-r"><i class="fa fa-check"></i><b>6.3</b> Fitting a linear model using R</a>
 <ul>
-<li class="chapter" data-level="6.3.1" data-path="fitting-a-linear-model.html"><a href="fitting-a-linear-model.html#derivation-of-ols-simple-linear-regression-estimators"><i class="fa fa-check"></i><b>6.3.1</b> Derivation of OLS simple linear regression estimators</a></li>
-<li class="chapter" data-level="6.3.2" data-path="fitting-a-linear-model.html"><a href="fitting-a-linear-model.html#expected-value-of-ols-simple-linear-regression-estimators"><i class="fa fa-check"></i><b>6.3.2</b> Expected value of OLS simple linear regression estimators</a></li>
+<li class="chapter" data-level="6.3.1" data-path="parameter-estimation-for-linear-models.html"><a href="parameter-estimation-for-linear-models.html#derivation-of-ols-simple-linear-regression-estimators"><i class="fa fa-check"></i><b>6.3.1</b> Derivation of OLS simple linear regression estimators</a></li>
 </ul></li>
 </ul></li>
-<li class="chapter" data-level="7" data-path="interpreting-a-fitted-linear-model.html"><a href="interpreting-a-fitted-linear-model.html"><i class="fa fa-check"></i><b>7</b> Interpreting a fitted linear model</a></li>
+<li class="chapter" data-level="7" data-path="interpreting-a-fitted-linear-model.html"><a href="interpreting-a-fitted-linear-model.html"><i class="fa fa-check"></i><b>7</b> Interpreting a fitted linear model</a>
+<ul>
+<li class="chapter" data-level="7.1" data-path="interpreting-a-fitted-linear-model.html"><a href="interpreting-a-fitted-linear-model.html#orthogonality"><i class="fa fa-check"></i><b>7.1</b> Orthogonality</a></li>
+</ul></li>
 <li class="chapter" data-level="8" data-path="categorical-predictors.html"><a href="categorical-predictors.html"><i class="fa fa-check"></i><b>8</b> Categorical predictors</a>
 <ul>
 <li class="chapter" data-level="8.1" data-path="categorical-predictors.html"><a href="categorical-predictors.html#indicatordummy-variables"><i class="fa fa-check"></i><b>8.1</b> Indicator/dummy variables</a></li>
@@ -384,6 +364,10 @@ div.csl-indent {
 </ul></li>
 <li class="chapter" data-level="9" data-path="assessing-and-addressing-collinearity.html"><a href="assessing-and-addressing-collinearity.html"><i class="fa fa-check"></i><b>9</b> Assessing and addressing collinearity</a></li>
 <li class="chapter" data-level="" data-path="references.html"><a href="references.html"><i class="fa fa-check"></i>References</a></li>
+<li class="chapter" data-level="10" data-path="linear-model-estimation.html"><a href="linear-model-estimation.html"><i class="fa fa-check"></i><b>10</b> Linear model estimation</a>
+<ul>
+<li class="chapter" data-level="10.1" data-path="linear-model-estimation.html"><a href="linear-model-estimation.html#a-simple-motivating-example"><i class="fa fa-check"></i><b>10.1</b> A simple motivating example</a></li>
+</ul></li>
 <li class="divider"></li>
 <li><a href="https://github.com/rstudio/bookdown" target="blank">Published with bookdown</a></li>
 
@@ -406,143 +390,109 @@ div.csl-indent {
             <section class="normal" id="section-">
 <div id="interpreting-a-fitted-linear-model" class="section level1" number="7">
 <h1><span class="header-section-number">Chapter 7</span> Interpreting a fitted linear model</h1>
-<!-- ## Simple Linear Regression -->
-<!-- ### Model description -->
-<!-- The simple linear regression model is described by the mean function  -->
-<!-- $$E(Y│X=x)=\beta_0+\beta_1 x,$$ -->
-<!-- and variance function -->
-<!-- $$var(Y│X=x)=\sigma^2,$$ -->
-<!-- where: -->
-<!-- * $Y$ is the response variable -->
-<!-- * $X$ is a regressor variable -->
-<!-- * $\beta_0$ and $\beta_1$ are known as *regression parameters* or *regression coefficients*. -->
-<!-- Note:  -->
-<!-- * The values that $Y$ takes are modeled as random variables. -->
-<!-- * The values that $X$ takes are modeled as known, non-random values. -->
-<!-- ### Interpreting the regression coefficients -->
-<!-- * The *intercept*, $\beta_0$, is the mean response when $X=0$. -->
-<!--   * i.e., $\beta_0=E(Y|X=0)$. -->
-<!-- * The *slope*, $\beta_1$, is the mean change in the response when $X$ increases by 1 unit. -->
-<!--   * i.e., $\beta_1 = E(Y|X=x+1)-E(Y|X=x)$. -->
-<!-- ```{r} -->
-<!-- plot(c(-1, 3), c(-1, 3), type = "n", xlab = expression(italic(X)), ylab = expression(italic(Y)), asp = 1) -->
-<!-- abline(a = 1, b = 1) -->
-<!-- lines(c(0, 0.25), c(0, 0)) -->
-<!-- lines(c(0, 0.25), c(1, 1)) -->
-<!-- lines(c(0.25, 0.25), c(0, 1)) -->
-<!-- lines(c(0.25, 0.5), c(0.5, 0.5)) -->
-<!-- text(0.5, 0.5, expression(italic(beta)[0]), pos = 4) -->
-<!-- lines(c(1, 2), c(2, 2)) -->
-<!-- lines(c(2, 2), c(2, 3)) -->
-<!-- lines(c(2, 2.25), c(2.5, 2.5)) -->
-<!-- text(2.25, 2.5, expression(italic(beta)[1]), pos = 4) -->
-<!-- ``` -->
-<!-- #  -->
-<!-- # ## Simple Linear Regression -->
-<!-- #  -->
-<!-- # The simple linear regression model consists of the mean function  -->
-<!-- # $$E(Y│X=x)=\beta_0+\beta_1 x,$$ -->
-<!-- # and variance function -->
-<!-- #  -->
-<!-- # $$var(Y│X=x)=\sigma^2,$$ -->
-<!-- # where: -->
-<!-- #  -->
-<!-- # - $Y$ is the response -->
-<!-- # - $X$ is a regressor variable -->
-<!-- # - $\beta_0$ and $\beta_1$ are known as **regression parameters** or **coefficients**. -->
-<!-- #  -->
-<!-- # # Simple Linear Regression -->
-<!-- #  -->
-<!-- # Chapter 2 of LMWR2, Chapter 2 and 3 of ALR4 -->
-<!-- #  -->
-<!-- #  -->
-<!-- # ## Simple Linear Regression -->
-<!-- #  -->
-<!-- # The simple linear regression model consists of the mean function  -->
-<!-- # $$E(Y│X=x)=\beta_0+\beta_1 x,$$ -->
-<!-- #  -->
-<!-- # and variance function -->
-<!-- #  -->
-<!-- # $$var(Y│X=x)=\sigma^2,$$ -->
-<!-- # where: -->
-<!-- #  -->
-<!-- # - $Y$ is the response -->
-<!-- # - $X$ is a regressor variable -->
-<!-- # - $\beta_0$ and $\beta_1$ are known as **regression parameters** or **coefficients**. -->
-<!-- #  -->
-<!-- # ## Understanding the model -->
-<!-- # ```{r} -->
-<!-- # set.seed(1) -->
-<!-- # x = runif(10, 60, 100) -->
-<!-- # y = x + rnorm(10) -->
-<!-- # plot(x,y, pch=20, xlab = 'Midyear Evaluation', ylab = 'Year-End Evaluation', main = 'Y = -0.74 +1.01 X') -->
-<!-- # abline(lm(y~x), lwd = 2, col = 'red') -->
-<!-- # ``` -->
-<!-- #  -->
-<!-- #  -->
-<!-- # ## Understanding the model  -->
-<!-- # ```{r out.width='1000px'} -->
-<!-- # library(knitr) -->
-<!-- # include_graphics('images/simple_lin_reg.png') -->
-<!-- # ``` -->
-<!-- #  -->
-<!-- # ## Understand Coefficients -->
-<!-- #  -->
-<!-- # ```{r} -->
-<!-- # include_graphics('images/coefficients.png', dpi=80) -->
-<!-- # ``` -->
-<!-- #  -->
-<!-- # ## View from single observation -->
-<!-- # Assume that we have n observations or cases for which the response and predictor variables are measured. -->
-<!-- #  -->
-<!-- # -    The responses are denoted $y_1,y_2,\dots ,y_n$. -->
-<!-- # -    The regressor values for regressor X are denoted $x_1,x_2,\dots,x_n$. -->
-<!-- #  -->
-<!-- # Each response will deviate from its associated mean, so our statistical model must include an additional source of variation. -->
-<!-- #  -->
-<!-- # The statistical model for each response is -->
-<!-- # $$y_i=\beta_0+\beta_1 x_i+\epsilon_i,\quad   i=1,2,\dots,n,$$ -->
-<!-- #  -->
-<!-- # where $\epsilon_i$ denotes the deviation of $y_i$ from its mean. -->
-<!-- #  -->
-<!-- # -    The $\epsilon_i$ are known as errors. -->
-<!-- #  -->
-<!-- # ## Conditions on Error -->
-<!-- #  -->
-<!-- # Conditional on knowing the regressor values, the errors have:  -->
-<!-- #  -->
-<!-- # -    Mean 0 -->
-<!-- # -    Variance $\sigma^2$ (constant) -->
-<!-- # -    And are uncorrelated. -->
-<!-- #  -->
-<!-- # Mathematically, this is the same as:  -->
-<!-- #  -->
-<!-- # -    $E(\epsilon_i│X=x_i )=0$  -->
-<!-- # -    $var(\epsilon_i│X=x_i )=\sigma^2$ -->
-<!-- # -    $cov(\epsilon_i,\epsilon_j )=0$  when $i\neq j$. -->
-<!-- #  -->
-<!-- # ## What about the response? -->
-<!-- #  -->
-<!-- # - Mean: -->
-<!-- #  -->
-<!-- #   $$E[Y_i|X_i] = E[\beta_0+\beta_1X_i + \epsilon_i]= \beta_0 + \beta_1X_i$$ -->
-<!-- #   $$Var(Y_i|X_i) = Var(\beta_0+\beta_1X_i + \epsilon_i) = Var(\epsilon_i) = \sigma^2$$ -->
-<!-- #   $$cov(Y_i, Y_j) = 0,\quad i \neq j$$ -->
-<!-- #   The responses $Y_i$ come from probability distributions whose means are $\beta_0+\beta_1X_i$ and whose variances are $\sigma^2$, the same for all levels of $X$. Further, any two responses $Y_i$ and $Y_j$ are uncorrelated.  -->
-<!-- #    -->
-<!-- # ## Example -->
-<!-- #  -->
-<!-- # ```{r} -->
-<!-- # include_graphics('images/simple_lin_reg_values.png',dpi = 100) -->
-<!-- # ``` -->
+<div id="orthogonality" class="section level2" number="7.1">
+<h2><span class="header-section-number">7.1</span> Orthogonality</h2>
+<p>Let <span class="math display">\[\mathbf{x}_j=(x_{1,j},\ldots,x_{n,j})^T\]</span> denote the <span class="math inline">\(n\times 1\)</span> column vector of observed values for regressor <span class="math inline">\(X_j\)</span>. Regressors, <span class="math inline">\(\mathbf{x}_j\)</span> and <span class="math inline">\(\mathbf{x}_k\)</span> are <strong>orthogonal</strong> if <span class="math inline">\(\mathbf{x}_j^T \mathbf{x}_k=0\)</span>.</p>
+<p>Let <span class="math inline">\(\boldsymbol{1}_{n\times1}\)</span> denote an <span class="math inline">\(n\times 1\)</span> column vector of 1s. The definition of orthogonal vectors above implies that <span class="math inline">\(\mathbf{x}_j\)</span> is orthogonal to <span class="math inline">\(\boldsymbol{1}_{n\times1}\)</span> if <span class="math display">\[
+\mathbf{x}_j^T \boldsymbol{1}_{n\times1} = \sum_{i=1}^n x_{i,j} = 0,\]</span>
+i.e., if the values in <span class="math inline">\(\mathbf{x}_j\)</span> sum to zero.</p>
+<p>Let <span class="math inline">\(\bar{x}_j = \frac{1}{n}\sum_{i=1}^n x_{i,j}\)</span> denote the sample mean of <span class="math inline">\(\mathbf{x}_j\)</span> and <span class="math inline">\(\bar{\mathbf{x}}_j = \bar{x}_j \boldsymbol{1}_{n\times 1}\)</span> denote the column vector that repeats <span class="math inline">\(\bar{x}_j\)</span> <span class="math inline">\(n\)</span> times.</p>
+<p><strong>Centering</strong> <span class="math inline">\(\mathbf{x}_j\)</span> involves subtracting the sample mean of <span class="math inline">\(\mathbf{x}_j\)</span> from <span class="math inline">\(\mathbf{x}_j\)</span>, i.e., <span class="math inline">\(\mathbf{x}_j - \bar{\mathbf{x}}_j\)</span>.</p>
+<p>Regressors <span class="math inline">\(\mathbf{x}_j\)</span> and <span class="math inline">\(\mathbf{x}_k\)</span> are <strong>uncorrelated</strong> if they are orthogonal after being centered, i.e., if
+<span class="math display">\[(\mathbf{x}_j - \bar{\mathbf{x}}_j)^T (\mathbf{x}_k - \bar{\mathbf{x}}_k).\]</span>
+Note that the sample covariance between vectors <span class="math inline">\(\mathbf{x}_j\)</span> and <span class="math inline">\(\mathbf{x}_k\)</span> is
+<span class="math display">\[\begin{align*}
+\widehat{\mathrm{cov}}(\mathbf{x}_j, \mathbf{x}_k) &amp;= \frac{1}{n}\sum_{i=1}^n (x_i,j - \bar{x}_j)(x_i,k - \bar{x}_k) \\
+ &amp;= \frac{1}{n-1}(\mathbf{x}_j - \bar{\mathbf{x}}_j)^T (\mathbf{x}_k - \bar{\mathbf{x}}_k).
+\end{align*}\]</span>
+Thus, two centered regressors are orthogonal if their covariance is zero.</p>
+<p>It is a desirable to have orthogonal regressors in your fitted model because they simplify estimating the relationship between the regressors and the response. Specifically:</p>
+<p><strong>If a regressor is orthogonal to all other regressors (and the column of 1s) in a model, adding or removing the orthogonal regressor from your model will not impact the estimated regression coefficients of the other regressors.</strong></p>
+<p>Since most linear regression models include an intercept, we should assess whether our regressors are orthogonal to other regressors and the column of 1s.</p>
+<p>We consider a simple example to demonstrate how orthogonality of regressors impacts the estimated regression coefficients.</p>
+<p>In the code below, we define vectors <code>y</code>, <code>x1</code>, and <code>x2</code>.</p>
+<div class="sourceCode" id="cb1"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb1-1"><a href="interpreting-a-fitted-linear-model.html#cb1-1" aria-hidden="true" tabindex="-1"></a>y <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="dv">1</span>, <span class="dv">4</span>, <span class="dv">6</span>, <span class="dv">8</span>, <span class="dv">9</span>)        <span class="co"># create an arbitrary response vector</span></span>
+<span id="cb1-2"><a href="interpreting-a-fitted-linear-model.html#cb1-2" aria-hidden="true" tabindex="-1"></a>x1 <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="dv">7</span>, <span class="dv">5</span>, <span class="dv">5</span>, <span class="dv">7</span>, <span class="dv">7</span>)       <span class="co"># create regressor 1</span></span>
+<span id="cb1-3"><a href="interpreting-a-fitted-linear-model.html#cb1-3" aria-hidden="true" tabindex="-1"></a>x2 <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="sc">-</span><span class="dv">1</span>, <span class="dv">2</span>, <span class="sc">-</span><span class="dv">3</span>, <span class="dv">1</span>, <span class="dv">5</span><span class="sc">/</span><span class="dv">7</span>)  <span class="co"># create regressor 2 to be orthogonal to x1</span></span></code></pre></div>
+<p>Regressors <code>x1</code> and <code>x2</code> are orthogonal since their crossproduct <span class="math inline">\(\mathbf{x}_1^T \mathbf{x}_2\)</span> (in R, <code>crossprod(x1, x2)</code>) equals zero.</p>
+<div class="sourceCode" id="cb2"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb2-1"><a href="interpreting-a-fitted-linear-model.html#cb2-1" aria-hidden="true" tabindex="-1"></a><span class="fu">crossprod</span>(x1, x2) <span class="co"># crossproduct is zero so x1 and x2 are orthogonal</span></span></code></pre></div>
+<pre><code>##      [,1]
+## [1,]    0</code></pre>
+<p>In the code below, we regress <code>y</code> on <code>x1</code> without an intercept (<code>lmod1</code>). The estimated coefficient for <code>x1</code> is <span class="math inline">\(\hat{\beta}_1=0.893\)</span>. Next, we then regress <code>y</code> on <code>x1</code> and <code>x2</code> without an intercept (<code>lmod2</code>). The estimated coefficients for <code>x1</code> and <code>x2</code> are <span class="math inline">\(\hat{\beta}_1=0.893\)</span> and <span class="math inline">\(\hat{\beta}_2=0.221\)</span>, respectively. Because <code>x1</code> and <code>x2</code> are orthogonal (and because there are no other regressors to consider in the model), the estimated coefficient for <code>x1</code> stays the same in both models.</p>
+<div class="sourceCode" id="cb4"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb4-1"><a href="interpreting-a-fitted-linear-model.html#cb4-1" aria-hidden="true" tabindex="-1"></a>lmod1 <span class="ot">&lt;-</span> <span class="fu">lm</span>(y <span class="sc">~</span> x1 <span class="sc">-</span> <span class="dv">1</span>)</span>
+<span id="cb4-2"><a href="interpreting-a-fitted-linear-model.html#cb4-2" aria-hidden="true" tabindex="-1"></a><span class="fu">coef</span>(lmod1)</span></code></pre></div>
+<pre><code>##       x1 
+## 0.893401</code></pre>
+<div class="sourceCode" id="cb6"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb6-1"><a href="interpreting-a-fitted-linear-model.html#cb6-1" aria-hidden="true" tabindex="-1"></a>lmod2 <span class="ot">&lt;-</span> <span class="fu">lm</span>(y <span class="sc">~</span> x1 <span class="sc">+</span> x2 <span class="sc">-</span> <span class="dv">1</span>)</span>
+<span id="cb6-2"><a href="interpreting-a-fitted-linear-model.html#cb6-2" aria-hidden="true" tabindex="-1"></a><span class="fu">coef</span>(lmod2)</span></code></pre></div>
+<pre><code>##        x1        x2 
+## 0.8934010 0.2210526</code></pre>
+<p>The previous models (<code>lmod1</code> and <code>lmod2</code>) neglect an important characteristic of a typical linear model: we usually include an intercept coefficient (a columns of 1s as a regressor) in our model. If the regressors are not orthogonal to the column of 1s in our <span class="math inline">\(\mathbf{X}\)</span> matrix, then the coefficients for the other regressors in the model will change when the regressors are added or removed from the model because they are not orthogonal to the column of 1s.</p>
+<p>However, neither <code>x1</code> nor <code>x2</code> is orthogonal with the column of ones. We define the vector <code>ones</code> below, which is a column of 1s, and compute the crossproduct between <code>ones</code> and the two regressors. Since the crossproducts are not zero, <code>x1</code> and <code>x2</code> are not orthogonal to the column of ones.</p>
+<div class="sourceCode" id="cb8"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb8-1"><a href="interpreting-a-fitted-linear-model.html#cb8-1" aria-hidden="true" tabindex="-1"></a>ones <span class="ot">&lt;-</span> <span class="fu">rep</span>(<span class="dv">1</span>, <span class="dv">5</span>)</span>
+<span id="cb8-2"><a href="interpreting-a-fitted-linear-model.html#cb8-2" aria-hidden="true" tabindex="-1"></a><span class="fu">crossprod</span>(ones, x1) <span class="co"># not zero</span></span></code></pre></div>
+<pre><code>##      [,1]
+## [1,]   31</code></pre>
+<div class="sourceCode" id="cb10"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb10-1"><a href="interpreting-a-fitted-linear-model.html#cb10-1" aria-hidden="true" tabindex="-1"></a><span class="fu">crossprod</span>(ones, x2) <span class="co"># not zero</span></span></code></pre></div>
+<pre><code>##            [,1]
+## [1,] -0.2857143</code></pre>
+<p>If we add the column of ones to <code>lmod2</code> (i.e., if we include the intercept in the model), then the coefficients for both <code>x1</code> and <code>x2</code> change because these regressors are not orthogonal to the column of 1s, as verified by the R output below. Comparing <code>lmod2</code> and <code>lmod3</code>, <span class="math inline">\(\hat{\beta}_1\)</span> changes from <span class="math inline">\(0.893\)</span> to <span class="math inline">\(0.397\)</span> and <span class="math inline">\(\hat{\beta}_2\)</span> changes from <span class="math inline">\(0.221\)</span> to <span class="math inline">\(0.279\)</span>.</p>
+<div class="sourceCode" id="cb12"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb12-1"><a href="interpreting-a-fitted-linear-model.html#cb12-1" aria-hidden="true" tabindex="-1"></a>lmod3 <span class="ot">&lt;-</span> <span class="fu">lm</span>(y <span class="sc">~</span> x1 <span class="sc">+</span> x2)</span>
+<span id="cb12-2"><a href="interpreting-a-fitted-linear-model.html#cb12-2" aria-hidden="true" tabindex="-1"></a><span class="fu">coef</span>(lmod3)</span></code></pre></div>
+<pre><code>## (Intercept)          x1          x2 
+##   3.1547101   0.3969746   0.2791657</code></pre>
+<p>For orthogonality of our regressors to be most impactful, the model’s regressors should be orthogonal to each other and the column of 1s. In that context, adding or removing any of the regressors doesn’t impact the estimated coefficients of the other regressors. In the code below, we define centered regressors <code>x3</code> and <code>x4</code> to be uncorrelated, i.e., <code>x3</code> and <code>x4</code> have sample mean zero and are orthogonal to each other.</p>
+<div class="sourceCode" id="cb14"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb14-1"><a href="interpreting-a-fitted-linear-model.html#cb14-1" aria-hidden="true" tabindex="-1"></a>x3 <span class="ot">&lt;-</span>  <span class="fu">c</span>(<span class="dv">0</span>, <span class="sc">-</span><span class="dv">1</span>, <span class="dv">1</span>, <span class="dv">0</span>, <span class="dv">0</span>) <span class="co"># sample mean is zero</span></span>
+<span id="cb14-2"><a href="interpreting-a-fitted-linear-model.html#cb14-2" aria-hidden="true" tabindex="-1"></a>x4 <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="dv">0</span>, <span class="dv">0</span>, <span class="dv">0</span>, <span class="dv">1</span>, <span class="sc">-</span><span class="dv">1</span>)  <span class="co"># sample mean is zero</span></span>
+<span id="cb14-3"><a href="interpreting-a-fitted-linear-model.html#cb14-3" aria-hidden="true" tabindex="-1"></a><span class="fu">cov</span>(x3, x4)              <span class="co"># 0, so x3 and x4 are uncorrelated</span></span></code></pre></div>
+<pre><code>## [1] 0</code></pre>
+<p>If we fit a linear regression model with any combination of <code>ones</code>, <code>x3</code>, or <code>x4</code> as regressors, the associated regression coefficients will not change. To demonstrate this, we consider all possible combinations of the three variables in the models below. We do not run the code to save space, but we summarize the results below.</p>
+<div class="sourceCode" id="cb16"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb16-1"><a href="interpreting-a-fitted-linear-model.html#cb16-1" aria-hidden="true" tabindex="-1"></a><span class="fu">coef</span>(<span class="fu">lm</span>(y <span class="sc">~</span> <span class="dv">1</span>))           <span class="co"># only column of 1s</span></span>
+<span id="cb16-2"><a href="interpreting-a-fitted-linear-model.html#cb16-2" aria-hidden="true" tabindex="-1"></a><span class="fu">coef</span>(<span class="fu">lm</span>(y <span class="sc">~</span> x3 <span class="sc">-</span> <span class="dv">1</span>))      <span class="co"># only x3</span></span>
+<span id="cb16-3"><a href="interpreting-a-fitted-linear-model.html#cb16-3" aria-hidden="true" tabindex="-1"></a><span class="fu">coef</span>(<span class="fu">lm</span>(y <span class="sc">~</span> x4 <span class="sc">-</span> <span class="dv">1</span>))      <span class="co"># only x4</span></span>
+<span id="cb16-4"><a href="interpreting-a-fitted-linear-model.html#cb16-4" aria-hidden="true" tabindex="-1"></a><span class="fu">coef</span>(<span class="fu">lm</span>(y <span class="sc">~</span> x3))          <span class="co"># 1s and x3</span></span>
+<span id="cb16-5"><a href="interpreting-a-fitted-linear-model.html#cb16-5" aria-hidden="true" tabindex="-1"></a><span class="fu">coef</span>(<span class="fu">lm</span>(y <span class="sc">~</span> x4))          <span class="co"># 1s and x4</span></span>
+<span id="cb16-6"><a href="interpreting-a-fitted-linear-model.html#cb16-6" aria-hidden="true" tabindex="-1"></a><span class="fu">coef</span>(<span class="fu">lm</span>(y <span class="sc">~</span> x3 <span class="sc">+</span> x4 <span class="sc">-</span> <span class="dv">1</span>)) <span class="co"># x3 and x4</span></span>
+<span id="cb16-7"><a href="interpreting-a-fitted-linear-model.html#cb16-7" aria-hidden="true" tabindex="-1"></a><span class="fu">coef</span>(<span class="fu">lm</span>(y <span class="sc">~</span> x3 <span class="sc">+</span> x4))     <span class="co"># 1s, x3, and x4</span></span></code></pre></div>
+<p>We simply note that in each of the previous models, because all of the regressors (and the column of 1s) are orthogonal to each other, adding or removing any regressor doesn’t impact the estimated coefficients for the other regressors in the model. Thus, the estimated coefficients were <span class="math inline">\(\hat{\beta}_{int}=5.6\)</span>, <span class="math inline">\(\hat{\beta}_{3}=1.0\)</span>, <span class="math inline">\(\hat{\beta}_{4}=-0.5\)</span> when the relevant regressor was included in the model.</p>
+<p>The easiest way to determine which vectors are orthogonal to each other and the intercept is to compute the crossproduct of the <span class="math inline">\(\mathbf{X}\)</span> matrix for the largest set of regressors you are considering. Consider the matrix of crossproducts for the columns of 1s, <code>x1</code>, <code>x2</code>, <code>x3</code>, and <code>x4</code>.</p>
+<div class="sourceCode" id="cb17"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb17-1"><a href="interpreting-a-fitted-linear-model.html#cb17-1" aria-hidden="true" tabindex="-1"></a><span class="fu">crossprod</span>(<span class="fu">model.matrix</span>(<span class="sc">~</span> x1 <span class="sc">+</span> x2 <span class="sc">+</span> x3 <span class="sc">+</span> x4))</span></code></pre></div>
+<pre><code>##             (Intercept)  x1         x2 x3        x4
+## (Intercept)   5.0000000  31 -0.2857143  0 0.0000000
+## x1           31.0000000 197  0.0000000  0 0.0000000
+## x2           -0.2857143   0 15.5102041 -5 0.2857143
+## x3            0.0000000   0 -5.0000000  2 0.0000000
+## x4            0.0000000   0  0.2857143  0 2.0000000</code></pre>
+<p>Consider the sequence of models below.</p>
+<div class="sourceCode" id="cb19"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb19-1"><a href="interpreting-a-fitted-linear-model.html#cb19-1" aria-hidden="true" tabindex="-1"></a><span class="fu">coef</span>(<span class="fu">lm</span>(y <span class="sc">~</span> <span class="dv">1</span>))</span></code></pre></div>
+<pre><code>## (Intercept) 
+##         5.6</code></pre>
+<p>The model with only an intercept has an estimated coefficient of <span class="math inline">\(\hat{\beta}_{int}=5.6\)</span>. If we add the <code>x1</code> to the model with an intercept, then both coefficients change because they are not orthogonal to each other.</p>
+<div class="sourceCode" id="cb21"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb21-1"><a href="interpreting-a-fitted-linear-model.html#cb21-1" aria-hidden="true" tabindex="-1"></a>lmod4 <span class="ot">&lt;-</span> <span class="fu">lm</span>(y <span class="sc">~</span> x1) <span class="co"># model with 1s and x1</span></span>
+<span id="cb21-2"><a href="interpreting-a-fitted-linear-model.html#cb21-2" aria-hidden="true" tabindex="-1"></a><span class="fu">coef</span>(lmod4)</span></code></pre></div>
+<pre><code>## (Intercept)          x1 
+##         2.5         0.5</code></pre>
+<p>If we add <code>x2</code> to <code>lmod4</code>, we might think that only <span class="math inline">\(\hat{\beta}_{int}\)</span> will change because <code>x1</code> and <code>x2</code> are orthogonal to each other. However, because <code>x2</code> is not orthogonal to all of the other regressors in the model (<code>x1</code> and the column of 1s), both <span class="math inline">\(\hat{\beta}_{int}\)</span> and <span class="math inline">\(\hat{\beta}_1\)</span> will change. The easiest way to realize this is to look at <code>lmod2</code> above with only <code>x1</code> and <code>x2</code>. When we add the column of 1s to <code>lmod2</code>, both <span class="math inline">\(\hat{\beta}_1\)</span> and <span class="math inline">\(\hat{\beta}_2\)</span> will change because neither regressor is orthogonal to the column of 1s needed to include the intercept term.</p>
+<div class="sourceCode" id="cb23"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb23-1"><a href="interpreting-a-fitted-linear-model.html#cb23-1" aria-hidden="true" tabindex="-1"></a><span class="fu">coef</span>(<span class="fu">lm</span>(y <span class="sc">~</span> x1 <span class="sc">+</span> x2))</span></code></pre></div>
+<pre><code>## (Intercept)          x1          x2 
+##   3.1547101   0.3969746   0.2791657</code></pre>
+<p>However, note that <code>x3</code> is orthogonal to the column of 1s and <code>x1</code>. Thus, if we add <code>x3</code> to <code>lmod4</code>, which includes both a column of 1s and <code>x1</code>, <code>x3</code> will not change the estimated coefficients for the intercept or <code>x1</code>.</p>
+<div class="sourceCode" id="cb25"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb25-1"><a href="interpreting-a-fitted-linear-model.html#cb25-1" aria-hidden="true" tabindex="-1"></a><span class="fu">coef</span>(<span class="fu">lm</span>(y <span class="sc">~</span> x1 <span class="sc">+</span> x3))</span></code></pre></div>
+<pre><code>## (Intercept)          x1          x3 
+##         2.5         0.5         1.0</code></pre>
+<p>Additionally, since <code>x4</code> is orthogonal to the column of 1s, <code>x1</code>, and <code>x3</code>, adding <code>x4</code> to the previous model will not change the estimated coefficients for any of the other variables already in the model.</p>
+<div class="sourceCode" id="cb27"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb27-1"><a href="interpreting-a-fitted-linear-model.html#cb27-1" aria-hidden="true" tabindex="-1"></a><span class="fu">coef</span>(<span class="fu">lm</span>(y <span class="sc">~</span> x1 <span class="sc">+</span> x3 <span class="sc">+</span> x4))</span></code></pre></div>
+<pre><code>## (Intercept)          x1          x3          x4 
+##         2.5         0.5         1.0        -0.5</code></pre>
 
+</div>
 </div>
             </section>
 
           </div>
         </div>
       </div>
-<a href="fitting-a-linear-model.html" class="navigation navigation-prev " aria-label="Previous page"><i class="fa fa-angle-left"></i></a>
+<a href="parameter-estimation-for-linear-models.html" class="navigation navigation-prev " aria-label="Previous page"><i class="fa fa-angle-left"></i></a>
 <a href="categorical-predictors.html" class="navigation navigation-next " aria-label="Next page"><i class="fa fa-angle-right"></i></a>
     </div>
   </div>

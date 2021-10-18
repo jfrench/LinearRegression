@@ -1,0 +1,118 @@
+---
+title: "Joshua French"
+date: "`r format(Sys.time(), '%Y-%m-%d')`"
+bibliography: [book.bib, packages.bib]
+biblio-style: apalike
+link-citations: yes
+---
+
+# Linear model estimation
+
+##  A simple motivating example
+
+Suppose you observe data related to the heights of 5 mothers and their adult daughters. The observed heights (measured in inches) are provided in Table \@ref(tab:mdheights). 
+```{r mdheights, echo = FALSE, message=FALSE}
+data(PearsonLee, package = "HistData") # load data
+# filter mother/daughter height's and select 5 observations
+library(dplyr)
+library(tibble)
+set.seed(2)
+mdh <- PearsonLee |> filter(gp == "md") |> select("parent", "child") |> slice_sample(n = 5) %>% rename(mother = parent, daughter = child)
+mdh <- mdh %>% add_column(observation = 1:5, .before="mother")
+knitr::kable(mdh, caption = "Heights of mothers and their adult daughters (in).",
+             col.names = c("observation", "mother's height (in)", "daughter's height (in)"))
+```
+
+The 5 pairs of observed data are denoted
+$$(x_1, Y_1), (x_2, Y_2), \ldots, (x_5, Y_5),$$
+with $(x_i, Y_i)$ denoting the data for observation $i$. $x_i$ denotes the mother's height for observation $i$ and $Y_i$ denotes the daughter's height for observation $i$. In this data set, e.g., $x_3 = 69.5$ and $Y_5= 57.5$.
+
+Figure \@ref(fig:mdheights-plot) displays a scatter plot of height data provided in Table \@ref(tab:mdheights). The relationship between the points is approximately a straight line. Thus, we will model the typical (mean) relationship between the height of mothers and their adult daughters as a straight line. 
+
+```{r mdheights-plot, fig.cap = "Daughter's versus mother's height.", echo=FALSE}
+x <- mdh$mother # mothers' heights
+y <- mdh$daughter # daughters' heights
+plot(y ~ x, pch = 19, xlab = "mother's height (in)", ylab = "daughter's heights (in)")
+```
+
+The $x_1,x_2,\ldots,x_5$ are observed values of a random variable $X$, while $Y_1, Y_2, \ldots, Y_5$ are observed values of a random variable $Y$. Thus, $X$ denotes the height a mother and $Y$ denotes the height of (one of) their adult daughter(s). We want to model variable $Y$ using variable $X$. The variable we are trying to model is known as the **response variable**. The variables we use to model the response are known as **predictor variables**.
+
+A regression model describes the typical relationship between the response variable $Y$ as a function of the predictor variable $X$. More formally, the **regression model** for $Y$ as a function of $X$, denoted $m(X)$ is the expected value of $Y$ conditional on the predictor $X$, i.e., 
+$$m(X)=E(Y\mid X).$$
+A **simple linear regression model** assumes the regression model between $Y$ and $X$ is a straight line using the equation
+$$m(X)=E(Y\mid X)=\beta_0 + \beta_1 X.$$
+$\beta_0$ and $\beta_1$ are the intercept and slope of our regression functions. In general, $\beta_0$ and $\beta_1$ are known as **regression coefficients** and are model parameters that we estimate from our data.
+
+The estimated regression model is denoted by
+$$\hat{m}(X)=\hat{\beta}_0 + \hat{\beta}_1 X,$$
+where $\hat{\beta}_0$ and $\hat{\beta}_1$ are values of $\beta_0$ and $\beta_1$ that we estimate from the data. The $\hat{}$ denotes an estimate. We will refer to $\hat{m}(X)$ as the **fitted model**.
+
+How do we determine the "best fitting" model? Consider the three plots in Figure \@ref(fig:three-fitted-lines) where 3 potential "best fitting" models are drawn on the scatter plot of the height data. Which one is best?
+
+```{r three-fitted-lines, fig.cap = "Comparison of three potential fitted models to some observed data. The fitted models are shown in grey.", echo=FALSE}
+lmod <- lm(y ~ x)
+coef_ls <- coef(lmod) # OLs estimates
+lad <- function(b) {
+  yhat <- b[1] + b[2] * x
+  return(mean(abs(y-yhat)))
+}
+coef_lad <- optim(coef_ls, fn = lad)$par # least absolute deviation
+par(mfrow = c(1, 1))
+plot(y ~ x, pch = 19, xlab = "parent's height (in)", ylab = "child's heights (in)")
+abline(a = coef_ls[1], b= coef_ls[2], col = "grey")
+# title("(a) fitted line 1")
+# plot(y ~ x, pch = 19, xlab = "parent's height (in)", ylab = "child's heights (in)")
+abline(b = 1.173613, a = -3.920259, col = "grey") # orthogonal distance regression
+# title("(b) fitted line 2")
+# plot(y ~ x, pch = 19, xlab = "parent's height (in)", ylab = "child's heights (in)")
+abline(a = coef_lad[1], b = coef_lad[2], col = "grey")
+# title("(c) fitted line 3")
+par(mfrow = c(1, 1))
+```
+
+To determine the "best fitting" model, we must establish a criterion by which to evaluate the fit of the model to the data. We will introduce one below.
+
+The **fitted value** of an observation is obtained by substituting its predictor value into the estimated regression function. More specifically, the fitted value for observation $i$, denoted $\hat{Y}_i$, is found using the formula
+\begin{equation}
+\hat{Y}_i = \hat{m}(x_i) = \hat{\beta}_0 + \hat{\beta}_1 x_i.(\#eq:slr-yhat)
+\end{equation}
+The fitted values of a fitted lines are shown in Figure \@ref(fig:slr-yhat). Informally, you can see that the fitted values may be obtained by drawing a vertical line at each observation and seeing where the vertical line intersects the fitted model.
+
+```{r slr-yhat, fig.cap="The fitted values are placed on the fitted model.", echo=FALSE}
+plot(y ~ x, pch = 19, xlab = "parent's height (in)", ylab = "child's heights (in)")
+abline(a = coef_ls[1], b= coef_ls[2], col = "grey")
+yhat <- fitted(lmod)
+points(x, yhat, pch = 4)
+legend("topleft", legend = c("observed data", "fitted values", "fitted line"),
+       pch = c(19, 4, NA),
+       col = c("black", "black", "grey"),
+       lwd = c(NA, NA, 1))
+```
+
+The **residual** of an observation is the difference between its response and its fitted value. More specifically, the residual for observation $i$, denoted $\hat{\epsilon}_i$, is found using the formula
+\begin{equation}
+\hat{\epsilon}_i=Y_i-\hat{Y}_i=Y_i-(\hat{\beta}_0 + \hat{\beta}_1 x_i).
+(\#eq:residual)
+\end{equation}
+```{r slr-residual, fig.cap="Residuals are drawn as black segments in relation to the observed data, fitted values, and fitted model.", echo=FALSE}
+plot(y ~ x, pch = 19, xlab = "parent's height (in)", ylab = "child's heights (in)",
+     col = "grey")
+abline(a = coef_ls[1], b= coef_ls[2], col = "grey")
+points(x, yhat, pch = 4, col = "grey")
+for (i in seq_len(x)) {
+  segments(x[i], y[i], x[i], yhat[i])
+}
+legend("topleft", legend = c("observed data", "fitted values", "fitted line", "residuals"),
+       pch = c(19, 4, NA, NA),
+       col = c("grey", "grey", "grey", "black"),
+       lwd = c(NA, NA, 1, 1))
+```
+
+A common criterion for measuring model fit is the **residual sum of squares (RSS)**, which is the sum of the squared residuals. The formula for the RSS is 
+\begin{align*}
+RSS &=\sum_{i=1}^n \hat{\epsilon}_i^2\\
+&=\sum_{i=1}^n (Y_i - \hat{Y}_i)^2\\
+&=\sum_{i=1}^n (Y_i-(\hat{\beta}_0 + \hat{\beta}_1 x_i))^2,\\
+\end{align*}
+where the second line is obtained by replacing $\hat{\epsilon}_$ with its definition in Equation \@ref(eq:residual), and the third line is obtained by replacing $\hat{Y}_$ with its definition in Equation \@ref(eq:slr-yhat).
+

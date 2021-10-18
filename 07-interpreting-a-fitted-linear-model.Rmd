@@ -8,142 +8,155 @@ output:
 
 # Interpreting a fitted linear model
 
-<!-- ## Simple Linear Regression -->
+## Orthogonality
 
-<!-- ### Model description -->
-<!-- The simple linear regression model is described by the mean function  -->
-<!-- $$E(Y│X=x)=\beta_0+\beta_1 x,$$ -->
+Let $$\mathbf{x}_j=(x_{1,j},\ldots,x_{n,j})^T$$ denote the $n\times 1$ column vector of observed values for regressor $X_j$. Regressors, $\mathbf{x}_j$ and $\mathbf{x}_k$ are **orthogonal** if $\mathbf{x}_j^T \mathbf{x}_k=0$. 
 
-<!-- and variance function -->
+Let $\boldsymbol{1}_{n\times1}$ denote an $n\times 1$ column vector of 1s. The definition of orthogonal vectors above implies that $\mathbf{x}_j$ is orthogonal to $\boldsymbol{1}_{n\times1}$ if $$
+\mathbf{x}_j^T \boldsymbol{1}_{n\times1} = \sum_{i=1}^n x_{i,j} = 0,$$
+i.e., if the values in $\mathbf{x}_j$ sum to zero.
 
-<!-- $$var(Y│X=x)=\sigma^2,$$ -->
-<!-- where: -->
+Let $\bar{x}_j = \frac{1}{n}\sum_{i=1}^n x_{i,j}$ denote the sample mean of $\mathbf{x}_j$ and $\bar{\mathbf{x}}_j = \bar{x}_j \boldsymbol{1}_{n\times 1}$ denote the column vector that repeats $\bar{x}_j$ $n$ times. 
 
-<!-- * $Y$ is the response variable -->
-<!-- * $X$ is a regressor variable -->
-<!-- * $\beta_0$ and $\beta_1$ are known as *regression parameters* or *regression coefficients*. -->
+**Centering** $\mathbf{x}_j$ involves subtracting the sample mean of $\mathbf{x}_j$ from $\mathbf{x}_j$, i.e., $\mathbf{x}_j - \bar{\mathbf{x}}_j$. 
 
-<!-- Note:  -->
+Regressors $\mathbf{x}_j$ and $\mathbf{x}_k$ are **uncorrelated** if they are orthogonal after being centered, i.e., if
+$$(\mathbf{x}_j - \bar{\mathbf{x}}_j)^T (\mathbf{x}_k - \bar{\mathbf{x}}_k).$$
+Note that the sample covariance between vectors $\mathbf{x}_j$ and $\mathbf{x}_k$ is 
+\begin{align*}
+\widehat{\mathrm{cov}}(\mathbf{x}_j, \mathbf{x}_k) &= \frac{1}{n}\sum_{i=1}^n (x_i,j - \bar{x}_j)(x_i,k - \bar{x}_k) \\
+ &= \frac{1}{n-1}(\mathbf{x}_j - \bar{\mathbf{x}}_j)^T (\mathbf{x}_k - \bar{\mathbf{x}}_k).
+\end{align*}
+Thus, two centered regressors are orthogonal if their covariance is zero.
 
-<!-- * The values that $Y$ takes are modeled as random variables. -->
-<!-- * The values that $X$ takes are modeled as known, non-random values. -->
+It is a desirable to have orthogonal regressors in your fitted model because they simplify estimating the relationship between the regressors and the response.  Specifically:
 
-<!-- ### Interpreting the regression coefficients -->
+**If a regressor is orthogonal to all other regressors (and the column of 1s) in a model, adding or removing the orthogonal regressor from your model will not impact the estimated regression coefficients of the other regressors.**
 
-<!-- * The *intercept*, $\beta_0$, is the mean response when $X=0$. -->
-<!--   * i.e., $\beta_0=E(Y|X=0)$. -->
-<!-- * The *slope*, $\beta_1$, is the mean change in the response when $X$ increases by 1 unit. -->
-<!--   * i.e., $\beta_1 = E(Y|X=x+1)-E(Y|X=x)$. -->
+Since most linear regression models include an intercept, we should assess whether our regressors are orthogonal to other regressors and the column of 1s.
 
-<!-- ```{r} -->
-<!-- plot(c(-1, 3), c(-1, 3), type = "n", xlab = expression(italic(X)), ylab = expression(italic(Y)), asp = 1) -->
-<!-- abline(a = 1, b = 1) -->
-<!-- lines(c(0, 0.25), c(0, 0)) -->
-<!-- lines(c(0, 0.25), c(1, 1)) -->
-<!-- lines(c(0.25, 0.25), c(0, 1)) -->
-<!-- lines(c(0.25, 0.5), c(0.5, 0.5)) -->
-<!-- text(0.5, 0.5, expression(italic(beta)[0]), pos = 4) -->
-<!-- lines(c(1, 2), c(2, 2)) -->
-<!-- lines(c(2, 2), c(2, 3)) -->
-<!-- lines(c(2, 2.25), c(2.5, 2.5)) -->
-<!-- text(2.25, 2.5, expression(italic(beta)[1]), pos = 4) -->
+We consider a simple example to demonstrate how orthogonality of regressors impacts the estimated regression coefficients.
 
-<!-- ``` -->
-<!-- #  -->
-<!-- # ## Simple Linear Regression -->
-<!-- #  -->
-<!-- # The simple linear regression model consists of the mean function  -->
-<!-- # $$E(Y│X=x)=\beta_0+\beta_1 x,$$ -->
-<!-- # and variance function -->
-<!-- #  -->
-<!-- # $$var(Y│X=x)=\sigma^2,$$ -->
-<!-- # where: -->
-<!-- #  -->
-<!-- # - $Y$ is the response -->
-<!-- # - $X$ is a regressor variable -->
-<!-- # - $\beta_0$ and $\beta_1$ are known as **regression parameters** or **coefficients**. -->
-<!-- #  -->
-<!-- # # Simple Linear Regression -->
-<!-- #  -->
-<!-- # Chapter 2 of LMWR2, Chapter 2 and 3 of ALR4 -->
-<!-- #  -->
-<!-- #  -->
-<!-- # ## Simple Linear Regression -->
-<!-- #  -->
-<!-- # The simple linear regression model consists of the mean function  -->
-<!-- # $$E(Y│X=x)=\beta_0+\beta_1 x,$$ -->
-<!-- #  -->
-<!-- # and variance function -->
-<!-- #  -->
-<!-- # $$var(Y│X=x)=\sigma^2,$$ -->
-<!-- # where: -->
-<!-- #  -->
-<!-- # - $Y$ is the response -->
-<!-- # - $X$ is a regressor variable -->
-<!-- # - $\beta_0$ and $\beta_1$ are known as **regression parameters** or **coefficients**. -->
-<!-- #  -->
-<!-- # ## Understanding the model -->
-<!-- # ```{r} -->
-<!-- # set.seed(1) -->
-<!-- # x = runif(10, 60, 100) -->
-<!-- # y = x + rnorm(10) -->
-<!-- # plot(x,y, pch=20, xlab = 'Midyear Evaluation', ylab = 'Year-End Evaluation', main = 'Y = -0.74 +1.01 X') -->
-<!-- # abline(lm(y~x), lwd = 2, col = 'red') -->
-<!-- # ``` -->
-<!-- #  -->
-<!-- #  -->
-<!-- # ## Understanding the model  -->
-<!-- # ```{r out.width='1000px'} -->
-<!-- # library(knitr) -->
-<!-- # include_graphics('images/simple_lin_reg.png') -->
-<!-- # ``` -->
-<!-- #  -->
-<!-- # ## Understand Coefficients -->
-<!-- #  -->
-<!-- # ```{r} -->
-<!-- # include_graphics('images/coefficients.png', dpi=80) -->
-<!-- # ``` -->
-<!-- #  -->
-<!-- # ## View from single observation -->
-<!-- # Assume that we have n observations or cases for which the response and predictor variables are measured. -->
-<!-- #  -->
-<!-- # -	The responses are denoted $y_1,y_2,\dots ,y_n$. -->
-<!-- # -	The regressor values for regressor X are denoted $x_1,x_2,\dots,x_n$. -->
-<!-- #  -->
-<!-- # Each response will deviate from its associated mean, so our statistical model must include an additional source of variation. -->
-<!-- #  -->
-<!-- # The statistical model for each response is -->
-<!-- # $$y_i=\beta_0+\beta_1 x_i+\epsilon_i,\quad   i=1,2,\dots,n,$$ -->
-<!-- #  -->
-<!-- # where $\epsilon_i$ denotes the deviation of $y_i$ from its mean. -->
-<!-- #  -->
-<!-- # -	The $\epsilon_i$ are known as errors. -->
-<!-- #  -->
-<!-- # ## Conditions on Error -->
-<!-- #  -->
-<!-- # Conditional on knowing the regressor values, the errors have:  -->
-<!-- #  -->
-<!-- # -	Mean 0 -->
-<!-- # -	Variance $\sigma^2$ (constant) -->
-<!-- # -	And are uncorrelated. -->
-<!-- #  -->
-<!-- # Mathematically, this is the same as:  -->
-<!-- #  -->
-<!-- # -	$E(\epsilon_i│X=x_i )=0$  -->
-<!-- # -	$var(\epsilon_i│X=x_i )=\sigma^2$ -->
-<!-- # -	$cov(\epsilon_i,\epsilon_j )=0$  when $i\neq j$. -->
-<!-- #  -->
-<!-- # ## What about the response? -->
-<!-- #  -->
-<!-- # - Mean: -->
-<!-- #  -->
-<!-- #   $$E[Y_i|X_i] = E[\beta_0+\beta_1X_i + \epsilon_i]= \beta_0 + \beta_1X_i$$ -->
-<!-- #   $$Var(Y_i|X_i) = Var(\beta_0+\beta_1X_i + \epsilon_i) = Var(\epsilon_i) = \sigma^2$$ -->
-<!-- #   $$cov(Y_i, Y_j) = 0,\quad i \neq j$$ -->
-<!-- #   The responses $Y_i$ come from probability distributions whose means are $\beta_0+\beta_1X_i$ and whose variances are $\sigma^2$, the same for all levels of $X$. Further, any two responses $Y_i$ and $Y_j$ are uncorrelated.  -->
-<!-- #    -->
-<!-- # ## Example -->
-<!-- #  -->
-<!-- # ```{r} -->
-<!-- # include_graphics('images/simple_lin_reg_values.png',dpi = 100) -->
-<!-- # ``` -->
+```{r, include=FALSE,eval=FALSE}
+{y <- c(1, 4, 6, 8, 9) # this doesn't really matter
+ones <- rep(0, 5) # column of 1s
+x1 <- c(7, 5, 5, 7, 7) # create predictor 1
+x2 <- c(-1, 2, -3, 1, 5/7) # choose predictor 2 to be orthogonal to x1
+crossprod(x1, x2) # crossproduct is zero
+x3 <- c(0, -1, 1, 0, 0) # orthogonal to ones, x1
+x4 <- c(0, 0, 0, 1, -1) # orthogonal to ones, x1, x3
+x5 <- c(1, 0, 0, -1, 0) # orthogonal to ones, x1, not x4
+
+crossprod(cbind(1, x1, x4, x5))
+
+lm(y ~ x1)
+lm(y ~ x4 + x5 - 1)
+lm(y ~ x1 + x4 + x5)
+```
+
+In the code below, we define vectors `y`, `x1`, and `x2`. 
+```{r}
+y <- c(1, 4, 6, 8, 9)        # create an arbitrary response vector
+x1 <- c(7, 5, 5, 7, 7)       # create regressor 1
+x2 <- c(-1, 2, -3, 1, 5/7)  # create regressor 2 to be orthogonal to x1
+```
+
+Regressors `x1` and `x2` are orthogonal since their crossproduct $\mathbf{x}_1^T \mathbf{x}_2$ (in R, `crossprod(x1, x2)`) equals zero. 
+```{r}
+crossprod(x1, x2) # crossproduct is zero so x1 and x2 are orthogonal
+```
+In the code below, we regress `y` on `x1` without an intercept (`lmod1`). The estimated coefficient for `x1` is $\hat{\beta}_1=0.893$. Next, we then regress `y` on `x1` and `x2` without an intercept (`lmod2`). The estimated coefficients for `x1` and `x2` are $\hat{\beta}_1=0.893$ and $\hat{\beta}_2=0.221$, respectively. Because `x1` and `x2` are orthogonal (and because there are no other regressors to consider in the model), the estimated coefficient for `x1` stays the same in both models.
+```{r}
+lmod1 <- lm(y ~ x1 - 1)
+coef(lmod1)
+lmod2 <- lm(y ~ x1 + x2 - 1)
+coef(lmod2)
+```
+
+The previous models (`lmod1` and `lmod2`) neglect an important characteristic of a typical linear model: we usually include an intercept coefficient (a columns of 1s as a regressor) in our model. If the regressors are not orthogonal to the column of 1s in our $\mathbf{X}$ matrix, then the coefficients for the other regressors in the model will change when the regressors are added or removed from the model because they are not orthogonal to the column of 1s.
+
+However, neither `x1` nor `x2` is orthogonal with the column of ones. We define the vector `ones` below, which is a column of 1s, and compute the crossproduct between `ones` and the two regressors. Since the crossproducts are not zero, `x1` and `x2` are not orthogonal to the column of ones.
+```{r}
+ones <- rep(1, 5)
+crossprod(ones, x1) # not zero
+crossprod(ones, x2) # not zero
+```
+
+If we add the column of ones to `lmod2` (i.e., if we include the intercept in the model), then the coefficients for both `x1` and `x2` change because these regressors are not orthogonal to the column of 1s, as verified by the R output below. Comparing `lmod2` and `lmod3`, $\hat{\beta}_1$ changes from $0.893$ to $0.397$ and $\hat{\beta}_2$ changes from $0.221$ to $0.279$.
+
+```{r}
+lmod3 <- lm(y ~ x1 + x2)
+coef(lmod3)
+```
+For orthogonality of our regressors to be most impactful, the model's regressors should be orthogonal to each other and the column of 1s. In that context, adding or removing any of the regressors doesn't impact the estimated coefficients of the other regressors. In the code below, we define centered regressors `x3` and `x4` to be uncorrelated, i.e., `x3` and `x4` have sample mean zero and are orthogonal to each other.
+
+```{r}
+x3 <-  c(0, -1, 1, 0, 0) # sample mean is zero
+x4 <- c(0, 0, 0, 1, -1)  # sample mean is zero
+cov(x3, x4)              # 0, so x3 and x4 are uncorrelated
+```
+
+If we fit a linear regression model with any combination of `ones`, `x3`, or `x4` as regressors, the associated regression coefficients will not change. To demonstrate this, we consider all possible combinations of the three variables in the models below. We do not run the code to save space, but we summarize the results below.
+
+```{r, eval = FALSE}
+coef(lm(y ~ 1))           # only column of 1s
+coef(lm(y ~ x3 - 1))      # only x3
+coef(lm(y ~ x4 - 1))      # only x4
+coef(lm(y ~ x3))          # 1s and x3
+coef(lm(y ~ x4))          # 1s and x4
+coef(lm(y ~ x3 + x4 - 1)) # x3 and x4
+coef(lm(y ~ x3 + x4))     # 1s, x3, and x4
+```
+We simply note that in each of the previous models, because all of the regressors (and the column of 1s) are orthogonal to each other, adding or removing any regressor doesn't impact the estimated coefficients for the other regressors in the model. Thus, the estimated coefficients were $\hat{\beta}_{int}=5.6$, $\hat{\beta}_{3}=1.0$, $\hat{\beta}_{4}=-0.5$ when the relevant regressor was included in the model.
+
+The easiest way to determine which vectors are orthogonal to each other and the intercept is to compute the crossproduct of the $\mathbf{X}$ matrix for the largest set of regressors you are considering. Consider the matrix of crossproducts for the columns of 1s, `x1`, `x2`, `x3`, and `x4`.
+
+```{r}
+crossprod(model.matrix(~ x1 + x2 + x3 + x4))
+```
+Consider the sequence of models below.
+```{r}
+coef(lm(y ~ 1))
+```
+The model with only an intercept has an estimated coefficient of $\hat{\beta}_{int}=5.6$. If we add the `x1` to the model with an intercept, then both coefficients change because they are not orthogonal to each other.
+```{r}
+lmod4 <- lm(y ~ x1) # model with 1s and x1
+coef(lmod4)
+```
+If we add `x2` to `lmod4`, we might think that only $\hat{\beta}_{int}$ will change because `x1` and `x2` are orthogonal to each other. However, because `x2` is not orthogonal to all of the other regressors in the model (`x1` and the column of 1s), both $\hat{\beta}_{int}$ and $\hat{\beta}_1$ will change. The easiest way to realize this is to look at `lmod2` above with only `x1` and `x2`. When we add the column of 1s to `lmod2`, both $\hat{\beta}_1$ and $\hat{\beta}_2$ will change because neither regressor is orthogonal to the column of 1s needed to include the intercept term.
+
+```{r}
+coef(lm(y ~ x1 + x2))
+```
+
+However, note that `x3` is orthogonal to the column of 1s and `x1`. Thus, if we add `x3` to `lmod4`, which includes both a column of 1s and `x1`, `x3` will not change the estimated coefficients for the intercept or `x1`.
+
+```{r}
+coef(lm(y ~ x1 + x3))
+```
+
+Additionally, since `x4` is orthogonal to the column of 1s, `x1`, and `x3`, adding `x4` to the previous model will not change the estimated coefficients for any of the other variables already in the model.
+
+```{r}
+coef(lm(y ~ x1 + x3 + x4))
+```
+
+Lastly, if we can partition our $\mathbf{X}$ matrix usch that $\mathbf{X}^T \mathbf{X}$ is a block diagonal matrix, then the none of the blocks of variables will affect the estimated coefficients of the other variables.
+
+Define a new regressor `x5` below. `x5` is orthogonal to the column of 1s and `x1`, but not `x4`. 
+
+```{r}
+x5 <- c(1, 0, 0, -1, 0) # orthogonal to ones, x1, not x4
+crossprod(cbind(1, x1, x4, x5))
+```
+
+This means that if we fit the model with only the column of 1s and the intercept, the model only with `x4` and `x5`, and then fit the model with the column of 1s, `x1`, `x4`, and `x5`, then the coefficients $\hat{\beta}_{int}$ and $\hat{\beta}_{1}$ are not impacted when `x4` and `x5` are added to the model. Similarly, $\hat{\beta}_{4}$ and $\hat{\beta}_{5}$ are not impacted when the column of 1s and `x1` are added to the model with `x4` and `x5`. See the output below.
+
+```{r}
+lm(y ~ x1)           # model with 1s and x1
+lm(y ~ x4 + x5 - 1)  # model with x4 and x5 only
+lm(y ~ x1 + x4 + x5) # model with 1s, x1, x4, x5
+```
+
+
+

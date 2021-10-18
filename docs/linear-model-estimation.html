@@ -4,11 +4,11 @@
 
   <meta charset="utf-8" />
   <meta http-equiv="X-UA-Compatible" content="IE=edge" />
-  <title>Page not found | Joshua French</title>
+  <title>Chapter 10 Linear model estimation | Joshua French</title>
   <meta name="description" content="A collection of R notebooks demonstrating how to perform data analysis with linear regression." />
   <meta name="generator" content="bookdown 0.24 and GitBook 2.6.7" />
 
-  <meta property="og:title" content="Page not found | Joshua French" />
+  <meta property="og:title" content="Chapter 10 Linear model estimation | Joshua French" />
   <meta property="og:type" content="book" />
   
   
@@ -16,24 +16,24 @@
   
 
   <meta name="twitter:card" content="summary" />
-  <meta name="twitter:title" content="Page not found | Joshua French" />
+  <meta name="twitter:title" content="Chapter 10 Linear model estimation | Joshua French" />
   
   <meta name="twitter:description" content="A collection of R notebooks demonstrating how to perform data analysis with linear regression." />
   
 
-<meta name="author" content="Page not found | Joshua French" />
+<meta name="author" content="Chapter 10 Linear model estimation | Joshua French" />
 
 
-<meta name="date" content="2021-10-18" />
+<meta name="date" content="2021-09-24" />
 
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <meta name="apple-mobile-web-app-capable" content="yes" />
   <meta name="apple-mobile-web-app-status-bar-style" content="black" />
   
   
+<link rel="prev" href="references.html"/>
 
-
-<script src="libs/header-attrs-2.11/header-attrs.js"></script>
+<script src="libs/header-attrs-2.10/header-attrs.js"></script>
 <script src="libs/jquery-3.6.0/jquery-3.6.0.min.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/fuse.js@6.4.6/dist/fuse.min.js"></script>
 <link href="libs/gitbook-2.6.7/css/style.css" rel="stylesheet" />
@@ -55,70 +55,6 @@
 <script src="libs/anchor-sections-1.0.1/anchor-sections.js"></script>
 
 
-<style type="text/css">
-pre > code.sourceCode { white-space: pre; position: relative; }
-pre > code.sourceCode > span { display: inline-block; line-height: 1.25; }
-pre > code.sourceCode > span:empty { height: 1.2em; }
-.sourceCode { overflow: visible; }
-code.sourceCode > span { color: inherit; text-decoration: inherit; }
-pre.sourceCode { margin: 0; }
-@media screen {
-div.sourceCode { overflow: auto; }
-}
-@media print {
-pre > code.sourceCode { white-space: pre-wrap; }
-pre > code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
-}
-pre.numberSource code
-  { counter-reset: source-line 0; }
-pre.numberSource code > span
-  { position: relative; left: -4em; counter-increment: source-line; }
-pre.numberSource code > span > a:first-child::before
-  { content: counter(source-line);
-    position: relative; left: -1em; text-align: right; vertical-align: baseline;
-    border: none; display: inline-block;
-    -webkit-touch-callout: none; -webkit-user-select: none;
-    -khtml-user-select: none; -moz-user-select: none;
-    -ms-user-select: none; user-select: none;
-    padding: 0 4px; width: 4em;
-    color: #aaaaaa;
-  }
-pre.numberSource { margin-left: 3em; border-left: 1px solid #aaaaaa;  padding-left: 4px; }
-div.sourceCode
-  {   }
-@media screen {
-pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
-}
-code span.al { color: #ff0000; font-weight: bold; } /* Alert */
-code span.an { color: #60a0b0; font-weight: bold; font-style: italic; } /* Annotation */
-code span.at { color: #7d9029; } /* Attribute */
-code span.bn { color: #40a070; } /* BaseN */
-code span.bu { } /* BuiltIn */
-code span.cf { color: #007020; font-weight: bold; } /* ControlFlow */
-code span.ch { color: #4070a0; } /* Char */
-code span.cn { color: #880000; } /* Constant */
-code span.co { color: #60a0b0; font-style: italic; } /* Comment */
-code span.cv { color: #60a0b0; font-weight: bold; font-style: italic; } /* CommentVar */
-code span.do { color: #ba2121; font-style: italic; } /* Documentation */
-code span.dt { color: #902000; } /* DataType */
-code span.dv { color: #40a070; } /* DecVal */
-code span.er { color: #ff0000; font-weight: bold; } /* Error */
-code span.ex { } /* Extension */
-code span.fl { color: #40a070; } /* Float */
-code span.fu { color: #06287e; } /* Function */
-code span.im { } /* Import */
-code span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Information */
-code span.kw { color: #007020; font-weight: bold; } /* Keyword */
-code span.op { color: #666666; } /* Operator */
-code span.ot { color: #007020; } /* Other */
-code span.pp { color: #bc7a00; } /* Preprocessor */
-code span.sc { color: #4070a0; } /* SpecialChar */
-code span.ss { color: #bb6688; } /* SpecialString */
-code span.st { color: #4070a0; } /* String */
-code span.va { color: #19177c; } /* Variable */
-code span.vs { color: #4070a0; } /* VerbatimString */
-code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warning */
-</style>
 
 
 <link rel="stylesheet" href="style.css" type="text/css" />
@@ -345,12 +281,10 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <li class="chapter" data-level="6.3" data-path="parameter-estimation-for-linear-models.html"><a href="parameter-estimation-for-linear-models.html#fitting-a-linear-model-using-r"><i class="fa fa-check"></i><b>6.3</b> Fitting a linear model using R</a>
 <ul>
 <li class="chapter" data-level="6.3.1" data-path="parameter-estimation-for-linear-models.html"><a href="parameter-estimation-for-linear-models.html#derivation-of-ols-simple-linear-regression-estimators"><i class="fa fa-check"></i><b>6.3.1</b> Derivation of OLS simple linear regression estimators</a></li>
+<li class="chapter" data-level="6.3.2" data-path="parameter-estimation-for-linear-models.html"><a href="parameter-estimation-for-linear-models.html#expected-value-of-ols-simple-linear-regression-estimators"><i class="fa fa-check"></i><b>6.3.2</b> Expected value of OLS simple linear regression estimators</a></li>
 </ul></li>
 </ul></li>
-<li class="chapter" data-level="7" data-path="interpreting-a-fitted-linear-model.html"><a href="interpreting-a-fitted-linear-model.html"><i class="fa fa-check"></i><b>7</b> Interpreting a fitted linear model</a>
-<ul>
-<li class="chapter" data-level="7.1" data-path="interpreting-a-fitted-linear-model.html"><a href="interpreting-a-fitted-linear-model.html#orthogonality"><i class="fa fa-check"></i><b>7.1</b> Orthogonality</a></li>
-</ul></li>
+<li class="chapter" data-level="7" data-path="interpreting-a-fitted-linear-model.html"><a href="interpreting-a-fitted-linear-model.html"><i class="fa fa-check"></i><b>7</b> Interpreting a fitted linear model</a></li>
 <li class="chapter" data-level="8" data-path="categorical-predictors.html"><a href="categorical-predictors.html"><i class="fa fa-check"></i><b>8</b> Categorical predictors</a>
 <ul>
 <li class="chapter" data-level="8.1" data-path="categorical-predictors.html"><a href="categorical-predictors.html#indicatordummy-variables"><i class="fa fa-check"></i><b>8.1</b> Indicator/dummy variables</a></li>
@@ -388,18 +322,428 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
           <div class="page-inner">
 
             <section class="normal" id="section-">
-<div id="page-not-found" class="section level1">
-<h1>Page not found</h1>
-<p>The page you requested cannot be found (perhaps it was moved or renamed).</p>
-<p>You may want to try searching to find the page's new location, or use
-the table of contents to find the page you are looking for.</p>
+<div id="linear-model-estimation" class="section level1" number="10">
+<h1><span class="header-section-number">Chapter 10</span> Linear model estimation</h1>
+<div id="a-simple-motivating-example" class="section level2" number="10.1">
+<h2><span class="header-section-number">10.1</span> A simple motivating example</h2>
+<p>Suppose you observe data related to the heights of 5 mothers and their adult daughters. The observed heights (measured in inches) are provided in Table <a href="linear-model-estimation.html#tab:mdheights">10.1</a>.</p>
+<table>
+<caption><span id="tab:mdheights">Table 10.1: </span>Heights of mothers and their adult daughters (in).</caption>
+<thead>
+<tr class="header">
+<th align="right">observation</th>
+<th align="right">mother’s height (in)</th>
+<th align="right">daughter’s height (in)</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td align="right">1</td>
+<td align="right">67.5</td>
+<td align="right">62.5</td>
+</tr>
+<tr class="even">
+<td align="right">2</td>
+<td align="right">60.5</td>
+<td align="right">56.5</td>
+</tr>
+<tr class="odd">
+<td align="right">3</td>
+<td align="right">69.5</td>
+<td align="right">68.5</td>
+</tr>
+<tr class="even">
+<td align="right">4</td>
+<td align="right">68.5</td>
+<td align="right">66.5</td>
+</tr>
+<tr class="odd">
+<td align="right">5</td>
+<td align="right">62.5</td>
+<td align="right">57.5</td>
+</tr>
+</tbody>
+</table>
+<p>The 5 pairs of observed data are denoted
+<span class="math display">\[(x_1, Y_1), (x_2, Y_2), \ldots, (x_5, Y_5),\]</span>
+with <span class="math inline">\((x_i, Y_i)\)</span> denoting the data for observation <span class="math inline">\(i\)</span>. <span class="math inline">\(x_i\)</span> denotes the mother’s height for observation <span class="math inline">\(i\)</span> and <span class="math inline">\(Y_i\)</span> denotes the daughter’s height for observation <span class="math inline">\(i\)</span>. In this data set, e.g., <span class="math inline">\(x_3 = 69.5\)</span> and <span class="math inline">\(Y_5= 57.5\)</span>.</p>
+<p>Figure <a href="linear-model-estimation.html#fig:mdheights-plot">10.1</a> displays a scatter plot of height data provided in Table <a href="linear-model-estimation.html#tab:mdheights">10.1</a>. The relationship between the points is approximately a straight line. Thus, we will model the typical (mean) relationship between the height of mothers and their adult daughters as a straight line.</p>
+<div class="figure"><span style="display:block;" id="fig:mdheights-plot"></span>
+<img src="Data-Analysis-with-Linear-Regression_files/figure-html/mdheights-plot-1.png" alt="Daughter's versus mother's height." width="672" />
+<p class="caption">
+Figure 10.1: Daughter’s versus mother’s height.
+</p>
+</div>
+<p>Let <span class="math inline">\(Y\)</span> denote the height of an adult daughter and <span class="math inline">\(X\)</span> denote the height of the daughter’s mother. We want to model variable <span class="math inline">\(Y\)</span> using variable <span class="math inline">\(X\)</span>. The variable we are trying to model is known as the <strong>response variable</strong>. The variables we use to model the response are known as <strong>predictor variables</strong>.</p>
+<p>We construct a simple linear regression model of <span class="math inline">\(Y\)</span> as a function <span class="math inline">\(X\)</span>, denoted <span class="math inline">\(m(X)\)</span>, using the formula
+<span class="math display">\[m(X)=\beta_0 + \beta_1 X.\]</span>
+We refer to <span class="math inline">\(m(X)\)</span> as the <strong>regression function</strong>. <span class="math inline">\(\beta_0\)</span> and <span class="math inline">\(\beta_1\)</span> are the intercept and slope of our regression functions. In general, <span class="math inline">\(\beta_0\)</span> and <span class="math inline">\(\beta_1\)</span> are known as <strong>regression coefficients</strong> and are model parameters that we estimate from our data.</p>
+<p>The estimated regression function is denoted by
+<span class="math display">\[\hat{m}(X)=\hat{\beta}_0 + \hat{\beta}_1 X,\]</span>
+where <span class="math inline">\(\hat{\beta}_0\)</span> and <span class="math inline">\(\hat{\beta}_1\)</span> are values of <span class="math inline">\(\beta_0\)</span> and <span class="math inline">\(\beta_1\)</span> that we estimate from the data. The <span class="math inline">\(\hat{}\)</span> denotes an estimate. We will refer to <span class="math inline">\(\hat{m}(X)\)</span> as the <strong>fitted model</strong>.</p>
+<p>How do we determine the “best fitting” model? Consider the three plots in Figure <a href="linear-model-estimation.html#fig:three-fitted-lines">10.2</a> where 3 potential “best fitting” models are drawn on the scatter plot of the height data. Which one is best?</p>
+<div class="figure"><span style="display:block;" id="fig:three-fitted-lines"></span>
+<img src="Data-Analysis-with-Linear-Regression_files/figure-html/three-fitted-lines-1.png" alt="Comparison of three potential fitted models to some observed data. The fitted models are shown in grey." width="672" />
+<p class="caption">
+Figure 10.2: Comparison of three potential fitted models to some observed data. The fitted models are shown in grey.
+</p>
+</div>
+<p>To determine the “best fitting” model, we must establish a criterion by which to evaluate the fit of the model to the data. We will introduce one below.</p>
+<p>The <strong>fitted value</strong> of an observation is obtained by substituting its predictor value into the estimated regression function. More specifically, the fitted value for observation <span class="math inline">\(i\)</span>, denoted <span class="math inline">\(\hat{Y}_i\)</span>, is found using the formula
+<span class="math display" id="eq:slr-yhat">\[\begin{equation}
+\hat{Y}_i = \hat{m}(x_i) = \hat{\beta}_0 + \hat{\beta}_1 x_i.\tag{10.1}
+\end{equation}\]</span>
+The fitted values of a fitted lines are shown in Figure <a href="linear-model-estimation.html#fig:slr-yhat">10.3</a>. Informally, you can see that the fitted values may be obtained by drawing a vertical line at each observation and seeing where the vertical line intersects the fitted model.</p>
+<div class="figure"><span style="display:block;" id="fig:slr-yhat"></span>
+<img src="Data-Analysis-with-Linear-Regression_files/figure-html/slr-yhat-1.png" alt="The fitted values are placed on the fitted model." width="672" />
+<p class="caption">
+Figure 10.3: The fitted values are placed on the fitted model.
+</p>
+</div>
+<p>The <strong>residual</strong> of an observation is the difference between its response and its fitted value. More specifically, the residual for observation <span class="math inline">\(i\)</span>, denoted <span class="math inline">\(\hat{\epsilon}_i\)</span>, is found using the formula
+<span class="math display" id="eq:residual">\[\begin{equation}
+\hat{\epsilon}_i=Y_i-\hat{Y}_i=Y_i-(\hat{\beta}_0 + \hat{\beta}_1 x_i).
+\tag{10.2}
+\end{equation}\]</span></p>
+<pre><code>## Warning in seq_len(x): first element used of &#39;length.out&#39; argument</code></pre>
+<div class="figure"><span style="display:block;" id="fig:slr-residual"></span>
+<img src="Data-Analysis-with-Linear-Regression_files/figure-html/slr-residual-1.png" alt="Residuals are drawn as black segments in relation to the observed data, fitted values, and fitted model." width="672" />
+<p class="caption">
+Figure 10.4: Residuals are drawn as black segments in relation to the observed data, fitted values, and fitted model.
+</p>
+</div>
+<p>A common criterion for measuring model fit is the <strong>residual sum of squares (RSS)</strong>, which is the sum of the squared residuals. The formula for the RSS is
+<span class="math display">\[\begin{align*}
+RSS &amp;=\sum_{i=1}^n \hat{\epsilon}_i^2\\
+&amp;=\sum_{i=1}^n (Y_i - \hat{Y}_i)^2\\
+&amp;=\sum_{i=1}^n (Y_i-(\hat{\beta}_0 + \hat{\beta}_1 x_i))^2,\\
+\end{align*}\]</span>
+where the second lines is obtained by replacing <span class="math inline">\(\hat{\epsilon}_\)</span> with its definition in Equation <a href="linear-model-estimation.html#eq:residual">(10.2)</a>, and the third lines is obtained by replacing <span class="math inline">\(\hat{Y}_\)</span> with its definition in Equation <a href="linear-model-estimation.html#eq:slr-yhat">(10.1)</a>.</p>
+<!-- Based on Chapter 2 of LMWR2, Chapter 2 and 3 of ALR4 -->
+<!-- ## Background and terminology -->
+<!-- Regression models are used to model the relationship between: -->
+<!-- * one or more **response** variables and -->
+<!-- * one or more **predictor** variables. -->
+<!-- The distinction between these two types variables is their purpose in the model. -->
+<!-- * Predictor variables are used to predict the value of the response variable. -->
+<!-- Response variables are also known as **outcome**, **output**, or **dependent** variables.  -->
+<!-- Predictor variables are also known as **explanatory**, **regressor**, **input**, **dependent**, or **feature** variables. -->
+<!-- Note:  Because the variables in our model are often interrelated, describing these variables as independent or dependent variables is vague and is best avoided. -->
+<!-- A distinction is sometimes made between **regression models** and **classification models**. In that case: -->
+<!-- * Regression models attempt to predict a numerical response. -->
+<!-- * Classification models attempt to predict the category level a response will have. -->
+<!-- ## Goals of regression -->
+<!-- The basic goals of a regression model are to: -->
+<!-- 1. *Predict* future or unknown response values based on specified values of the predictors. -->
+<!--     * What will the selling price of a home be? -->
+<!-- 2. *Identify relationships* (associations) between predictor variables and the response. -->
+<!--     * What is the general relationship between the selling price of a home and the number of bedrooms the home has? -->
+<!-- With our regression model, we also hope to be able to: -->
+<!-- 1. *Generalize* our results from the sample to the a larger population of interest. -->
+<!--     * E.g., we want to extend our results from a small set of college students to all college students. -->
+<!-- 2. *Infer causality* between our predictors and the response. -->
+<!--     * E.g., if we give a person a vaccine, then this causes the person's risk of catching the disease to decrease. -->
+<!-- **A "true model" doesn't exist for real data**. Thus, finding the true model should not be the goal of a regression analysis. A regression analysis should attempt to find a model that adequately describes the relationship between the response and relevant predictor variables (either in terms of prediction, association, generalization, causality, etc.) -->
+<!-- ## Regression for Pearson's height data -->
+<!-- @wachsmuth_et_al2003 compiled child and parent height data from English familes tabulated by @pearson1897 and @pearson_lee1903. The data are available in the `PearsonLee` data set in the **HistData** package [@R-HistData]. The `PearsonLee` data frame includes the variables: -->
+<!-- * `child`: child height (inches). -->
+<!-- * `parent`: parent height (inches). -->
+<!-- * `gp`: a factor with levels `fd` (father/daughter), `fs` (father/son), `md` (mother/daughter), `ms` (mother/son) indicating the parent/child relationship. -->
+<!-- * `par`: a factor with levels `Father`, `Mother` indicating the parent measured. -->
+<!-- * `chl`: a factor with levels `Daughter`, `Son` indicating the child's relationship to the parent. -->
+<!-- It is natural to wonder whether the height of a parent could explain the height of their child. We can consider a regression analysis that regresses child's height (the response variable) on parent's height (the predictor variable). The additional variables `gp`, `par`, and `chl` could also be used as predictor variables in our analysis. We perform an informal (linear) regression analysis visually  using **ggplot2** [@R-ggplot2].  -->
+<!-- Consider a plot of child's height versus parent's height. -->
+<!-- ```{r} -->
+<!-- data(PearsonLee, package = "HistData") # load data -->
+<!-- library(ggplot2) # load ggplot2 package -->
+<!-- # create ggplot object for repeated use -->
+<!-- # we'll be using common aesthetics across multiple geometries -->
+<!-- # so we put them in the ggplot function -->
+<!-- # also improve the x, y labels -->
+<!-- ggheight <- ggplot(data = PearsonLee,  -->
+<!--                     mapping = aes(x = parent, y = child)) +  -->
+<!--              xlab("parent height (in)") + ylab("child height (in)") -->
+<!-- ggheight + geom_point() # scatter plot of child vs parent height -->
+<!-- ``` -->
+<!-- We see a positive linear association between parent height and child height: as the height of the parent increases, the height of the child also tends to increase. -->
+<!-- A simple linear regression model describes the relationship between a response and a predictor variable using the "best fitting" straight line (we'll formalize what best means later). We add the estimated simple linear regression model to our previous plot below using the `geom_smooth` function. The line fits reasonably well. -->
+<!-- ```{r} -->
+<!-- ggheight + geom_point() + -->
+<!--   geom_smooth(method = lm, formula = y ~ x, se = FALSE) # add estimated line -->
+<!-- ``` -->
+<!-- We may also wonder whether the type of parent (father/mother) or child (daughter/son) affects the relationship. We facet our scatter plots based on the `par` and `chl` variables below. While the overall patterns are similar, we notice that Father heights tend to be larger than Mother heights and Son heights tend to be larger than Daughter heights.  -->
+<!-- ```{r} -->
+<!-- ggheight + geom_point() + -->
+<!--   facet_grid(par ~ chl) # facet the data by parent/child type -->
+<!-- ``` -->
+<!-- Having seen the previous graphic, we may wonder whether we can better model the relationship between parent and child height by accounting for which parent and child were measured. An interaction model assumes that the intercept and slope of each combination of parent/child is the different. We fit and plot an interaction model below. -->
+<!-- ```{r} -->
+<!-- ggheight + geom_point() + facet_grid(par ~ chl) +   -->
+<!--        geom_smooth(method = lm, formula = y ~ x, se = FALSE) # add interaction  model to data -->
+<!-- ``` -->
+<!-- Other questions we could explore are whether the slopes across the different parent/child combinations are the same, whether the variability of the data is constant as parent height changes, predicting heights outside the range of the observed data, the precision of our estimated model, etc. -->
+<!-- Regression analysis will generally be much more complex that was is presented above, but this example hopefully gives you an idea of the kinds of questions regression analysis can help you answer.  -->
+<!-- ## Definition of a linear model -->
+<!-- A **linear model** is a regression model in which the regression coefficients (to be discussed later) enter the model linearly. -->
+<!-- * A linear model is just a specific type of regression model. -->
+<!-- ### Basic construction and relationships -->
+<!-- We begin by defining notation for the objects we will need and clarifying some of their important properties. -->
+<!-- * $Y$ denotes the response variable. -->
+<!--   * The response variable is treated as a random variable. -->
+<!--   * We will observe realizations of this random variable for each observation in our data set. -->
+<!-- * $X$ denotes a single predictor variable. $X_1$, $X_2$, \ldots, $X_{p-1}$ will denote the predictor variables when there is more than one predictor variable. -->
+<!--   * The predictor variables are treated as non-random varables. -->
+<!--   * We will observe values of the predictors variables for each observation in our data set. -->
+<!-- * $\beta_0$, $\beta_1$, \ldots, $\beta_{p-1}$ denote **regression coefficients**. -->
+<!--   * Regression coefficients are statistical parameters that we will estimate from our data. -->
+<!--   * Like all statistical parameters, regression coefficients are treated as fixed (non-random) but unknown values. -->
+<!--   * Regression coefficients are not observable. -->
+<!-- * $\epsilon$ denotes **error**.  -->
+<!--   * The error is not observable. -->
+<!--   * The error is treated as a random variable. -->
+<!--   * The error is assumed to have mean 0, i.e., $E(\epsilon) = 0$. -->
+<!--   * Since $E(\epsilon) = 0$ and $X$ is non-random, the expectation of $\epsilon$ conditional on $X$ is also 0, i.e., $E(\epsilon | X) = 0$. -->
+<!--   * In this context, error doesn't mean "mistake" or "malfunction". $\epsilon$ is simply the deviation of the response from its mean. -->
+<!-- Then a **linear model** for $Y$ is defined by the equation -->
+<!-- \begin{equation} -->
+<!-- Y = \beta_0 + \beta_1 X_1 + \beta_2 X_2 + \cdots + \beta_{p-1} X_{p-1} + \epsilon. -->
+<!-- (\#eq:lmdef) -->
+<!-- \end{equation} -->
+<!-- We now emphasize the relationship between the response, the mean response, and the error. The mean of the response variable will depend on the values of the predictor variables. Thus, we can only discuss the expectation of the response variable conditional on the values of the predictor variables. This is denoted as $E(Y | X_1, \ldots, X_{p-1})$. -->
+<!-- For simplicity, assume our linear model only has a single predictor (this is an example of simple linear regression). Based on what we've presented, we have that -->
+<!-- \begin{align} -->
+<!-- E(Y|X) &= E(\beta_0 + \beta_1  X + \epsilon | X) \\ -->
+<!--  &= E(\beta_0 | X) + E(\beta_1 X | X) + E(\epsilon | X) \\ -->
+<!--  &= \beta_0 + \beta_1 X + 0\\ -->
+<!--  &= \beta_0 + \beta_1 X. -->
+<!-- \end{align} -->
+<!-- The second line follows from the fact that the expectation of a sum of random variables is the sum of the expectation of the random variables. The third line follows from the fact that the expected value of a constant (non-random) value is the constant (the regression coefficients and $X$ are non-random) and by our assumption that the errors have mean 0 (unconditionally or conditionally on the predictor variable.) -->
+<!-- Thus, we see that we see that for a simple linear regression model -->
+<!-- $$ Y = E(Y|X) + \epsilon.$$ -->
+<!-- For a model with multiple predictors, this extends to -->
+<!-- $$Y = E(Y|X_1, X_2, \ldots, X_{p-1}) + \epsilon.$$ -->
+<!-- Thus, our response may be written as the sum of the mean response conditional on the predictors, $E(Y|X_1, X_2, \ldots, X_{p-1})$, and the error. This is why previously we discussed the fact that the error is simply the deviation of the response from its mean. -->
+<!-- Alternatively, one can say that a regression model is linear if the mean function can be written as a linear combination of the regression coefficients and known values, i.e.,  -->
+<!-- $$E(Y|X_1, X_2, \ldots, X_{p-1}) = \sum_{j=0}^{p-1} c_j \beta_j,$$ -->
+<!-- where $c_0, c_1, \ldots, c_{p-1}$ are known values. In fact, the $c_i, i = 1,2,\ldots,n$ can be any function of $X_1,X_2,\ldots,X_n$! e.g., $c_1 = X_1 * X_2 * X_3$, $c_3 = X_2^2$, $c_8 = ln(X_1)/X_2^2$. -->
+<!-- Some examples of linear models: -->
+<!-- * $E(Y|X) = \beta_0 + +\beta_1 X + \beta_2 X^2$. -->
+<!-- * $E(Y|X_1, X_2) = \beta_0 + \beta_1 X_1 + \beta_2 X_2$. -->
+<!-- * $E(Y|X_1, X_2) = \beta_0 + \beta_1 X_1 + \beta_2 X_2 + \beta_3 X_1 * X_2$. -->
+<!-- * $E(Y|X_1, X_2) = \beta_0 + \beta_1 \ln(X_1) + \beta_2 X_2^{-1}$. -->
+<!-- * $E(\ln(Y)|X_1, X_2) = \beta_0 + \beta_1 X_1 + \beta_2 X_2$. -->
+<!-- * $E(Y^{-1}|X_1, X_2) = \beta_0 + \beta_1 X_1 + \beta_2 X_2$. -->
+<!-- Some examples of non-linear models: -->
+<!-- * $E(Y|X) = \beta_0 + e^{\beta_1 X}$. -->
+<!-- * $E(Y|X) = \beta_0 + \beta_1 X/(\beta_2 + X)$. -->
+<!-- <!-- The model in Equation \@ref(eq:lmdef) is a **statistical model** because there is uncertainty in the response.  -->
+<p>–&gt;</p>
+<!-- ### As a system of equations -->
+<!-- A linear regression analysis will model the data using a linear model. Suppose we have sampled $n$ observations from a population. We now introduce some additional notation: -->
+<!-- * $Y_1, Y_2, \ldots, Y_n$ denote the response values for the $n$ observations. -->
+<!-- * $x_{i,j}$ denotes the observed value of predictor $j$ for observation $i$. -->
+<!--   * We use lowercase $x$ to indicate that this is the observed value of the predictor. -->
+<!-- * $\epsilon_1, \epsilon_2, \ldots, \epsilon_n$ denote the errors for the $n$ observations. -->
+<!-- The linear model relating the responses, the predictors, and the errors is defined by the system of equations -->
+<!-- \begin{equation} -->
+<!-- Y_i = \beta_0 + \beta_1 x_{i,1} + \beta_2 x_{i,2} + \cdots + \beta_{p-1} x_{i,p-1} + \epsilon_i,\quad i=1,2,\ldots,n. -->
+<!-- (\#eq:lmSystem) -->
+<!-- \end{equation} -->
+<!-- Based on our previous work, we can also write Equation \@ref(eq:lmSystem) as  -->
+<!-- \begin{equation} -->
+<!-- Y_i = E(Y_i | X_1 = x_{i,1}, \ldots, X_{p-1} = x_{i,p-1}) + \epsilon_i,\quad i=1,2,\ldots,n. -->
+<!-- \end{equation} -->
+<!-- ### Using matrix notation -->
+<!-- The regression coefficients are said to enter the model linearly, which is why this type of model is called a linear model. To see this more clearly, we represent the model using matrices. We define the following notation: -->
+<!-- * $\mathbf{y} = [Y_1, Y_2, \ldots, Y_n]^T$ denotes the column vector containing the $n$ responses. -->
+<!-- * $\mathbf{X}$ denotes the matrix containing a column of 1s and the observed predictor values, specifically, $$\mathbf{X} = \begin{bmatrix} -->
+<!-- 1 & x_{1,1} & x_{1,2} & \cdots & x_{1,p-1} \\ -->
+<!-- 1 & x_{2,1} & x_{2,2} & \cdots & x_{2,p-1} \\ -->
+<!-- \vdots & \vdots & \vdots & \vdots & \vdots \\ -->
+<!-- 1 & x_{n,1} & x_{n,2} & \cdots & x_{n,p-1} -->
+<!-- \end{bmatrix}.$$ -->
+<!-- * $\boldsymbol{\beta} = [\beta_0, \beta_1, \ldots, \beta_{p-1}]^T$ denotes the column vector containing the $p$ regression coefficients. -->
+<!-- * $\boldsymbol{\epsilon} = [\epsilon_1, \epsilon_2, \ldots, \epsilon_n]^T$ denotes the column vector contained the $n$ errors. -->
+<!-- Then the system of equations defining the linear model in \@ref(eq:lmSystem) can be written as  -->
+<!-- $$\mathbf{y} = \mathbf{X}\mathbf{\beta} + \boldsymbol{\epsilon}.$$ -->
+<!-- Thus, a linear model can be represented as a system of linear equations using matrices. A model that cannot be represented as a system of linear equations using matrices is not a linear model.  -->
+<!-- ## Summarizing the components of a linear model -->
+<!-- We have already introduced a lot of objects. To aid in making sense of their notation, their purpose in the model, whether they can be observed, and whether they are modeled as a random variable (vector) or fixed, non-random values, we summarize things below. -->
+<!-- We've already talked about observing the response variable and the predictor variables. So these objects are observable. However, we have no way to measure the regression coefficients or the error. These are not observable. -->
+<!-- On the other hand, we treat the response variable as a random variable. Perhaps surprisingly, we treated the predictor variables as a fixed, non-random variables. The regression coefficients are treated as fixed, non-random but unknown values. This is standard for parameters in a statistical model. The errors are also treated as random variables. In fact, since both the predictor variables and the regression coefficients are non-random, the only way for the response to be a random variable based on Equation  \@ref(eq:lmSystem) is for the errors to be random. -->
+<!-- We summarize this information in the table below for the objects previously discussed using the various notations introduced. -->
+<!-- Notation | Description | Observable | Random -->
+<!-- --- | --- | --- |---  -->
+<!-- $Y$ | response variable | Yes | Yes -->
+<!-- $Y_i$ | response value for the $i$th observation | Yes | Yes -->
+<!-- $\mathbf{y}$ | the $n\times 1$ column vector of response values | Yes | Yes -->
+<!-- $X$ | predictor variable | Yes | No -->
+<!-- $X_j$ | the $j$th predictor variable | Yes | No -->
+<!-- $x_{i,j}$ | the value of the $j$th predictor variable for the $i$th observation | Yes | No -->
+<!-- $\mathbf{X}$ | the $n\times p$ matrix of predictor values | Yes | No -->
+<!-- $\beta_j$ | the regression coefficient associated with the $j$th predictor variable | No | No -->
+<!-- $\boldsymbol{\beta}$ | the $p\times 1$ column vector of regression coefficients | No | No -->
+<!-- $\epsilon$ | the error | No | Yes -->
+<!-- $\epsilon_i$ | the error associated with observation $i$ | No | Yes -->
+<!-- $\boldsymbol{\epsilon}$ | the $n\times 1$ column vector of errors | No | Yes -->
+<!-- ## Types of regression models -->
+<!-- The are many "named" types of regression models. You may hear or see people use these terms when describing their model. Here is a brief overview of some common regression models. -->
+<!-- Name | Defining characteristics -->
+<!-- --- | --- -->
+<!-- Simple | an intercept term and one predictor variable -->
+<!-- Multiple | more than one predictor variable -->
+<!-- Multivariate | more than one response variable -->
+<!-- Linear | the regression coefficients enter the model linearly -->
+<!-- Analysis of variance (ANOVA) | predictors are all categorical -->
+<!-- Analysis of covariance (ANCOVA) | at least one quantitative predictor and at least one categorical predictor -->
+<!-- Generalized linear model (GLM) | a type of "generalized" regression model when the responses do not come from a normal distribution. -->
+<!-- ## Standard linear model assumptions and implications -->
+<!-- The formulation of a linear model typically makes additional assumptions beyond the  -->
+<!-- ones previously mentioned, specifically, about the errors, $\epsilon_1,\epsilon_2,\ldots,\epsilon_n$. -->
+<!-- We have already mentioned that fact that we are assuming $E(\epsilon_i)=0$ for $i=1,2,\ldots,n$. -->
+<!-- We also typically assume that the errors have constant variances, i.e., $$var(\epsilon_i) = \sigma^2, \quad i=1,2,\ldots,n,$$ -->
+<!-- and that the errors are uncorrelated, i.e., $$cov(\epsilon_i, \epsilon_j) = 0, \quad i,j=1,2,\ldots,n,\quad i\neq j.$$ -->
+<!-- Additionally, we assume that the errors are identically distributed. Formally, that may be written as  -->
+<!-- \begin{equation} -->
+<!-- \epsilon_i \sim F, i=1,2,\ldots,n, -->
+<!-- (\#eq:errordist) -->
+<!-- \end{equation} -->
+<!-- where $F$ is some arbitrary distribution. The $\sim$ means "distributed as". In other words, Equation \@ref(eq:errordist) means, "$\epsilon_i$ is distributed as $F$ for $i$ equal to $1,2,\ldots,n$". However, it is more common to assume the errors have a normal (Gaussian) distribution. Two uncorrelated normal random variables are also independent (this is true for normal random variables, but is not generally true for other distributions). Thus, we may concisely state the typical error assumptions as  -->
+<!-- $$\epsilon_1,\epsilon_2,\ldots,\epsilon_n \stackrel{i.i.d.}{\sim} N(0, \sigma^2),$$ -->
+<!-- which combines the following assumptions: -->
+<!-- 1. $E(\epsilon_i)=0$ for $i=1,2,\ldots,n$. -->
+<!-- 1. $var(\epsilon_i)=\sigma^2$ for $i=1,2,\ldots,n$. -->
+<!-- 1. $cov(\epsilon_i,\epsilon_j)=0$ for $i\neq j$ with $i,j=1,2,\ldots,n$. -->
+<!-- 1. $\epsilon_i$ has a normal distribution for $i=1,2,\ldots,n$. -->
+<!-- Using the notation previously developed, the assumptions above may be stated in vector notation as -->
+<!-- \begin{equation} -->
+<!-- \boldsymbol{\epsilon} \sim N(\mathbf{0}_{n\times 1}, \sigma^2 I_n), (\#eq:error-assumptions) -->
+<!-- \end{equation} -->
+<!-- where $\mathbf{0}_{n\times 1}$ is the $n \times 1$ vector of zeros and $I_n$ is the $n\times n$ identity matrix. -->
+<!-- Writing the error assumptions in the form of Equation \@ref(eq:error-assumptions) allows us to see other important properties of a linear model. Specifically, if we make the assumptions in Equation \@ref(eq:error-assumptions), then -->
+<!-- \begin{equation} -->
+<!-- \mathbf{y} \sim N(\mathbf{X}\boldsymbol{\beta}, \sigma^2 I_n). -->
+<!-- (\#eq:dist-properties-y) -->
+<!-- \end{equation} -->
+<!-- How do we know that Equation \@ref(eq:dist-properties-y) is true? Show that: -->
+<!-- * $E(\mathbf{y}) = \mathbf{X}\boldsymbol{\beta}$ and -->
+<!-- * $\mathrm{var}(\mathbf{y}) = \sigma^2 I_n$. -->
+<!-- * Note $\mathbf{y}$ is a linear function of the multivariate normal vector $\boldsymbol{\epsilon}$, so $\mathbf{y}$ must also have a multivariate normal distribution. -->
+<!-- ## Mathematical interpretation of coefficients -->
+<!-- The regression coefficients have simple mathematical interpretations in basic settings. -->
+<!-- ### Coefficient interpretation in simple linear regression -->
+<!-- Suppose we have a simple linear regression model, so that $E(Y|X)=\beta_0 + \beta_1 X.$ The interpretations of the coefficients are: -->
+<!-- * $\beta_0$ is the expected response when the predictor is 0, i.e., $\beta_0=E(Y|X=0)$. -->
+<!-- * $\beta_1$ is the expected change in the response when the predictor increases 1 unit, i.e., $\beta_1=E(Y|X=x_0+1)-E(Y|X=x_0)$. -->
+<!-- ### Coefficient interpretation in multiple linear regression -->
+<!-- Suppose we have a multiple linear regression model, so that $E(Y|X_1,\ldots,X_{p-1})=\beta_0 + \beta_1 X_1 + \cdots + \beta_{p-1} X_{p-1}.$ Let $\mathbb{X} = \{X_1,\ldots,X_{p-1}\}$ be the set of predictors and $\mathbb{X}_{-j} = \mathbb{X}\setminus\{X_j\}$, i.e., the set of predictors without $X_j$.   -->
+<!-- The interpretations of the coefficients are: -->
+<!-- * $\beta_0$ is the expected response when all predictors are 0, i.e., $\beta_0=E(Y|X_1=0,\ldots,X_{p-1}=0)$. -->
+<!-- * $\beta_j$ is the expected change in the response when predictor $j$ increases 1 unit and the other predictors stay the same, i.e., $\beta_j=E(Y|\mathbb{X}_{-j} = \mathbf{x}^*, X_{j+1} = x_{0}+1)-E(Y|\mathbb{X}_{-j} = \mathbf{x}^*, X_{j+1} = x_{0})$ where $\mathbf{x}^*\in \mathbb{R}^{p-2}$ is a fixed vector of length $p-2$ (the number of predictors excluding $X_j$). -->
+<!-- ## Exercises -->
+<!-- 1. If given a set of data with several variables, how would you decide what the response variable and the predictor variables would be? -->
+<!-- 1. Which objects in the linear model formula in Equation \@ref(eq:lmdef) are considered random? Which are considered fixed? -->
+<!-- 1. Which objects in the linear model formula in Equation \@ref(eq:lmdef) are observable? Which are not observable? -->
+<!-- 1. What are the typical goals of a regression analysis? -->
+<!-- 1. List the typical assumptions made for the errors in a linear model. -->
+<!-- 1. Without using a formula, what is the basic difference between a linear model and a non-linear model? -->
+<!-- 1. Assuming that $\boldsymbol{\epsilon} ~ N(\mathbf{0}_{n\times 1}, \sigma^2 I_n)$ and $\mathbf{y}  = \mathbf{X}\boldsymbol{\beta} + \boldsymbol{\epsilon}$, show that: -->
+<!--     a. $E(\mathbf{y}) = \mathbf{X}\boldsymbol{\beta}$. -->
+<!--     a. $\mathrm{var}(\mathbf{y}) = \sigma^2 I_n$. -->
+<!-- 1. In the context of simple linear regression under the standard assumptions, show that:  -->
+<!--     a. $\beta_0=E(Y|X=0)$. -->
+<!--     a. $\beta_1=E(Y|X=x_0+1)-E(Y|X=x_0)$. -->
+<!-- 1. In the context of multiple linear regression under the standard assumptions, show that: -->
+<!--     a. $\beta_0=E(Y|X_1=0,\ldots,X_{p-1}=0)$. -->
+<!--     b. For $j=1,2,\ldots,p-1$, $\beta_j=E(Y|\mathbb{X}_{-j} = \mathbf{x}^*, X_{j+1} = x_{0}+1)-E(Y|\mathbb{X}_{-j} = \mathbf{x}^*, X_{j+1} = x_{0})$ where $\mathbf{x}^*$ is a fixed vector of the appropriate size. -->
+<!-- <!-- ## Scatter plots and linear regression -->
+<p>–&gt;</p>
+<!--   <!-- Scatter plots are a convenient way to study the potential relationship between a single response and a single predictor variable. -->
+<p>–&gt;</p>
+<!--   <!-- ### Height inheritability -->
+<p>–&gt;</p>
+<!--   <!-- Karl Pearson (1857-1936) organized the collection of $n=1375$ heights of mothers in the United Kingdom under the age of 65 and one of their adult daughters over the age of 18.  These data are available in the `Heights` data set in the **alr4** package. We are interested in the inheritance from the mother to the daughter, so the mother's height (`mheight`) is used as the predictor variable and the daughter's height (`dheight`) is used as the response variable. -->
+<p>–&gt;</p>
+<!--   <!-- Questions of interest: -->
+<p>–&gt;</p>
+<!--   <!-- * Do taller mothers tend to have taller daughters -->
+<p>–&gt;
+<!--   <!-- * Do shorter mothers tend to have shorter daughters? --> –&gt;</p>
+<!--   <!-- ```{r} -->
+<p>–&gt;
+<!--   <!-- data(Heights, package = "alr4") --> –&gt;
+<!--   <!-- str(Heights) --> –&gt;
+<!--   <!-- plot(dheight ~ mheight, data = Heights, --> –&gt;
+<!--               <!--      xlab = "mother's height (in)", --> –&gt;
+<!--               <!--      ylab = "daughter's height (in)", --> –&gt;
+<!--               <!--      xlim = c(55, 75), ylim = c(55, 75)) --> –&gt;
+<!--   <!-- ``` --> –&gt;
+<!--   <!-- There seems to be a clear trend between mother's heights and daughter's heights. The taller the mother, the taller the daughter *tends* to be. --> –&gt;</p>
+<!--   <!-- ### Predicting snowfall -->
+<p>–&gt;</p>
+<!--   <!-- The `ftcollinssnow` data set in the **alr4** package measures late (September 1st until December 31st) and early (January 1st to June 30th) season snowfall for Fort Collins, CO between Late 1900 and Early 1993. -->
+<p>–&gt;</p>
+<!--   <!-- Question of interest: Can late season snowfall predict snowfall in the early part of the next year? -->
+<p>–&gt;</p>
+<!--   <!-- ```{r} -->
+<p>–&gt;
+<!--   <!-- data("ftcollinssnow", package = "alr4") # load data --> –&gt;
+<!-- <!-- str(ftcollinssnow) # examine structure --> –&gt;
+<!-- <!-- plot(Late ~ Early, data = ftcollinssnow) # plot data --> –&gt;
+<!-- <!-- # add "line of best fit" --> –&gt;
+<!--   <!-- abline(lm(Late ~ Early, data = ftcollinssnow), lty = 2) --> –&gt;
+<!--   <!-- # sample mean line --> –&gt;
+<!--   <!-- abline(mean(ftcollinssnow$Late), 0) --> –&gt;
+<!--   <!-- ``` --> –&gt;</p>
+<!--   <!-- A plot of the snowfall data for the two time periods suggest that this relationship is weak or they may be uncorrelated. -->
+<p>–&gt;
+<!--   <!-- * The dashed line indicates the "linear of best fit" , while the solid line indicates the average of the Late snowfall. --> –&gt;</p>
+<!--   <!-- ### Turkey growth -->
+<p>–&gt;
+<!--   <!-- Pens of turkeys were fed the same diet, except that each pen was supplemented with a `Dose` of amino acid methionine as a percentage of the total diet of the birds. The amino acid methionine was provided using three different `Source`s (one standard and two experimental). The `Weight` gain (g) of the turkeys was measured. These data are available in the `turkey` data in the **alr4** package. --> –&gt;</p>
+<!--   <!-- Questions of interest: -->
+<p>–&gt;</p>
+<!--   <!-- * Is there a relationship between weight gain of the turkeys and the dose amount? If so, is the relationship linear? -->
+<p>–&gt;
+<!--   <!-- * Does the source of the methionine impact the weight gain of the turkeys? --> –&gt;</p>
+<!--   <!-- Consider a plot of the average `Weight` gain (g) of the turkeys as a function of the `Dose` amount (% of diet), separating the groups by the `Source` of the methionine. -->
+<p>–&gt;</p>
+<!--   <!-- ```{r} -->
+<p>–&gt;
+<!--   <!-- data(turkey, package = "alr4") --> –&gt;
+<!--   <!-- str(turkey) --> –&gt;
+<!--   <!-- summary(turkey) # the source factor (S) is not a factor --> –&gt;
+<!-- <!-- turkey$S = factor(turkey$S) --> –&gt;
+<!--   <!-- levels(turkey$S) <- c("control", "new source a", "new source b") --> –&gt;
+<!--   <!-- names(turkey) <- c("Dose", "Gain", "Source", "Replications", "SD") # rename variables --> –&gt;
+<!-- <!-- # create turkey data ggplot --> –&gt;
+<!--   <!-- library(ggplot2) # load ggplot2 package --> –&gt;
+<!-- <!-- gg_turkey <- ggplot(turkey, --> –&gt;
+<!--                            <!--                     mapping = aes(x = Dose, y = Gain, --> –&gt;
+<!--                                                                     <!--                                   color = Source, shape = Source)) --> –&gt;
+<!--   <!-- gg_turkey + geom_point() + geom_line() --> –&gt;
+<!--   <!-- ``` --> –&gt;</p>
+<!--   <!-- Weight gain increases with dose amount, but doesn't appear to be linear. -->
+<p>–&gt;</p>
+<!-- <!-- The amino acid source may slightly affect the growth trajectory of the turkeys. -->
+<p>–&gt;</p>
+<!-- <!-- An alternative version of the previous plot using the **lattice** package -->
+<p>–&gt;</p>
+<!-- <!-- ```{r} -->
+<p>–&gt;
+<!-- <!-- library(lattice) # load lattice package --> –&gt;
+<!-- <!-- xyplot(Gain ~ Dose, data = turkey, groups = Source, --> –&gt;
+<!-- <!--        auto.key = TRUE, type = "b") --> –&gt;
+<!-- <!-- ``` --> –&gt;</p>
+
+</div>
 </div>
             </section>
 
           </div>
         </div>
       </div>
-
+<a href="references.html" class="navigation navigation-prev navigation-unique" aria-label="Previous page"><i class="fa fa-angle-left"></i></a>
 
     </div>
   </div>

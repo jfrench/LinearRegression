@@ -75,15 +75,15 @@ $$E(Y) = \sum_{y\in \mathcal{S}} y f_Y(y),$$
 assuming the sum is well-defined.
 
 The **variance** of $Y$ is defined as 
-$$var(Y)=E(Y-E(Y))^2== \sum_{y\in \mathcal{S}} (y - E(Y))^2 f_Y(y).$$
-The **standard deviation** of Y is $$SD(Y)=\sqrt{var(Y)  }.$$
+$$\mathrm{var}(Y)=E(Y-E(Y))^2== \sum_{y\in \mathcal{S}} (y - E(Y))^2 f_Y(y).$$
+The **standard deviation** of Y is $$SD(Y)=\sqrt{\mathrm{var}(Y)  }.$$
 
 #### Example (Bernoulli)
 A random variable $Y\sim \mathsf{Bernoulli}(\pi)$ if $\mathcal{S} = {0, 1}$ and $P(Y = 1) = \pi$, where $\pi\in (0,1)$.
 
 The pmf of a Bernoulli random variable is $$f_Y(y) = \pi^y (1-\pi)^{(1-y)}.$$
 
-Determine $E(Y)$ and $var(Y)$.
+Determine $E(Y)$ and $\mathrm{var}(Y)$.
 
 ### Continuous random variables
 
@@ -102,8 +102,7 @@ $$E(Y)= \int_{-\infty}^{\infty} y f_Y(y)  dy = \int_{y\in\mathcal{S}} y f_Y(y).$
 assuming the integral is well-defined.
 
 The **variance** of a continuous random variable $Y$ is defined by 
-$$var(Y)=E(Y-E(Y))^2=\int_{-\infty}^{\infty} (y - E(Y))^2 f_Y(y)  dy = \int_{y\in\mathcal{S}} (y - E(Y))^2 f_Y(y) dy.$$
-The **standard deviation** of Y is $$SD(Y)=\sqrt{var(Y)  }.$$
+$$\mathrm{var}(Y)=E(Y-E(Y))^2=\int_{-\infty}^{\infty} (y - E(Y))^2 f_Y(y)  dy = \int_{y\in\mathcal{S}} (y - E(Y))^2 f_Y(y) dy.$$
 
 ### Useful facts for transformation of random variables
 
@@ -111,8 +110,8 @@ Let $Y$ be a random variable and $c\in\mathbb{R}$ be a constant. Then:
 
 * $E(cY) = c E(Y)$
 * $E(c + Y) = c + E(Y)$
-* $var(cY) = c^2 var(Y)$
-* $var(c + Y) = var(Y)$
+* $\mathrm{var}(cY) = c^2 \mathrm{var}(Y)$
+* $\mathrm{var}(c + Y) = \mathrm{var}(Y)$
 
 ## Multivariate distributions
 
@@ -169,7 +168,7 @@ $$ f(x|y) = f(x, y)/f_{Y}(y).$$
 ### Covariance 
 
 The covariance between random variables $X$ and $Y$ is 
-$$cov(X,Y)=E[(X-E(X))(Y-E(Y))]=E(XY)-E(X)E(Y).$$
+$$\mathrm{cov}(X,Y)=E[(X-E(X))(Y-E(Y))]=E(XY)-E(X)E(Y).$$
 
 ### Useful facts for transformations of multiple random variables
 
@@ -178,10 +177,14 @@ Let $a$ and $b$ be scalar constants.  Then:
 -	$E(aY)=aE(Y)$
 -	$E(a+Y)=a+E(Y)$
 -	$E(aY+bZ)=aE(Y)+bE(Z)$
--	$var(aY)=a^2 var(Y)$
--	$var(a+Y)=var(Y)$
--	$cov(aY,bZ)=ab cov(Y,Z).$
--	$var(Y+Z)=var(Y)+var(Z)+2cov(Y,Z).$
+-	$\mathrm{var}(aY)=a^2 \mathrm{var}(Y)$
+-	$\mathrm{var}(a+Y)=\mathrm{var}(Y)$
+-	$\mathrm{var}(Y+Z)=\mathrm{var}(Y)+\mathrm{var}(Z)+2\mathrm{cov}(Y,Z)$
+- $\mathrm{cov}(a,Y)=0$
+- $\mathrm{cov}(Y,Y)=\mathrm{var}(Y)$
+-	$\mathrm{cov}(aY,bZ)=ab\mathrm{cov}(Y,Z)$
+-	$\mathrm{cov}(a + Y,b + Z)=\mathrm{cov}(Y,Z)$
+
 
 ## Random vectors
 
@@ -197,14 +200,14 @@ $$E(\mathbf{y})=\begin{pmatrix}E(Y_1)\\E(Y_2)\\\vdots\\E(Y_n)\end{pmatrix}.$$
 
 The variance (covariance) of a random vector is
 $$\begin{aligned}
-var(\mathbf{y}) &= E(\mathbf{y}\mathbf{y}^T )-E(\mathbf{y})E(\mathbf{y})^T\\
-&= \begin{pmatrix}var(Y_1) & cov(Y_1,Y_2) &\dots &cov(Y_1,Y_n)\\cov(Y_2,Y_1 )&var(Y_2)&\dots&cov(Y_2,Y_n)\\\vdots&\vdots&\vdots&\vdots\\
-cov(Y_n,Y_1)&cov(Y_n,Y_2)&\dots&var(Y_n)\end{pmatrix}\end{aligned}.$$
+\mathrm{var}(\mathbf{y}) &= E(\mathbf{y}\mathbf{y}^T )-E(\mathbf{y})E(\mathbf{y})^T\\
+&= \begin{pmatrix}\mathrm{var}(Y_1) & \mathrm{cov}(Y_1,Y_2) &\dots &\mathrm{cov}(Y_1,Y_n)\\\mathrm{cov}(Y_2,Y_1 )&\mathrm{var}(Y_2)&\dots&\mathrm{cov}(Y_2,Y_n)\\\vdots&\vdots&\vdots&\vdots\\
+\mathrm{cov}(Y_n,Y_1)&\mathrm{cov}(Y_n,Y_2)&\dots&\mathrm{var}(Y_n)\end{pmatrix}\end{aligned}.$$
 
 Let $\mathbf{x} = (X_1, X_2, \ldots, X_n)^T$ and $\mathbf{y} = (Y_1, Y_2, \ldots, Y_n)^T$ be $n\times 1$ random vectors.
 
 The covariance between two random vectors is 
-$$cov(\mathbf{x}, \mathbf{y}) = E(\mathbf{x}, \mathbf{y}^T) - E(\mathbf{x}) E(\mathbf{y})^T.$$
+$$\mathrm{cov}(\mathbf{x}, \mathbf{y}) = E(\mathbf{x}, \mathbf{y}^T) - E(\mathbf{x}) E(\mathbf{y})^T.$$
 
 ## Properties of transformations of random vectors
 
@@ -221,14 +224,14 @@ Then:
 
 *	$E(A\mathbf{y})=AE(\mathbf{y}), E(\mathbf{y}A^T )=E(\mathbf{y}) A^T.$
 *	$E(\mathbf{x}+\mathbf{y})=E(\mathbf{x})+E(\mathbf{y})$
-*	$var(A\mathbf{y})=A\ var(\mathbf{y}) A^T$
-*	$cov(\mathbf{x}+\mathbf{y},\mathbf{z})=cov(\mathbf{x},\mathbf{z})+cov(\mathbf{y},\mathbf{z})$
-*	$cov(\mathbf{x},\mathbf{y}+\mathbf{z})=cov(\mathbf{x},\mathbf{y})+cov(\mathbf{x},\mathbf{z})$
-*	$cov(A\mathbf{x},\mathbf{y})=A\ cov(\mathbf{x},\mathbf{y})$
-* $cov(\mathbf{x},A\mathbf{y})=cov(\mathbf{x},\mathbf{y}) A^T$
-* $var(a)= 0_{n\times n}$
-* $cov(\mathbf{a},\mathbf{y})=0_{n\times n}$
-* $var(\mathbf{a}+\mathbf{y})=var(\mathbf{y})$
+*	$\mathrm{var}(A\mathbf{y})=A\mathrm{var}(\mathbf{y}) A^T$
+*	$\mathrm{cov}(\mathbf{x}+\mathbf{y},\mathbf{z})=\mathrm{cov}(\mathbf{x},\mathbf{z})+\mathrm{cov}(\mathbf{y},\mathbf{z})$
+*	$\mathrm{cov}(\mathbf{x},\mathbf{y}+\mathbf{z})=\mathrm{cov}(\mathbf{x},\mathbf{y})+\mathrm{cov}(\mathbf{x},\mathbf{z})$
+*	$\mathrm{cov}(A\mathbf{x},\mathbf{y})=A\ cov(\mathbf{x},\mathbf{y})$
+* $\mathrm{cov}(\mathbf{x},A\mathbf{y})=\mathrm{cov}(\mathbf{x},\mathbf{y}) A^T$
+* $\mathrm{var}(a)= 0_{n\times n}$
+* $\mathrm{cov}(\mathbf{a},\mathbf{y})=0_{n\times n}$
+* $\mathrm{var}(\mathbf{a}+\mathbf{y})=var(\mathbf{y})$
 
 ## Multivariate normal (Gaussian) distribution
 
@@ -256,7 +259,7 @@ A random variable $Y\sim \mathrm{Bernoulli}(\theta)$ when $\mathcal{S} = \{0, 1\
 $$f(y\mid\theta)=\theta^y (1-\theta)^{(1-y)}.$$
 
 * Determine $E(Y)$ $$\\[4in]$$
-* Determine $var(Y)$ $$\\[4in]$$
+* Determine $\mathrm{var}(Y)$ $$\\[4in]$$
 
 ### Binomial distribution
 
@@ -265,7 +268,7 @@ A random variable $Y\sim \mathrm{Bin}(n,\theta)$ when $\mathcal{S}=\{0,1,2,\ldot
 Alternatively, let $Y_1,Y_2,\ldots,Y_n\stackrel{i.i.d.}{\sim} \mathrm{Bernoulli}(\theta)$. Then $Y=\sum_{i=1}^n Y_i \sim \mathrm{Bin}(n,\theta)$.
 
 * Determine $E(Y)$ $$\\[4in]$$
-* Determine $var(Y)$ $$\\[4in]$$
+* Determine $\mathrm{var}(Y)$ $$\\[4in]$$
 
 Assume $Y\sim \mathrm{Bin}(20,0.4)$. 
 
@@ -277,7 +280,7 @@ Assume $Y\sim \mathrm{Bin}(20,0.4)$.
 $Y \sim \mathrm{Poisson}(\theta)$ when $\Omega=\{0,1,2,\ldots\}$ and $$f(y\mid\theta)=\frac{1}{y!} \theta^y e^{-\theta}.$$
 
 * Determine $E(Y)$ $$\\[4in]$$
-* Determine $var(Y)$ $$\\[4in]$$
+* Determine $\mathrm{var}(Y)$ $$\\[4in]$$
 
 Assume $Y\sim \mathrm{Poisson}(4)$. 
 
@@ -302,7 +305,7 @@ Determine $E(Y_1)$ and $E(Y_2)$
 $$\\[4in]$$
 
 ### Problem 4
-Determine $var(Y_1)$ and $var(Y_2)$
+Determine $\mathrm{var}(Y_1)$ and $\mathrm{var}(Y_2)$
 $$\\[4in]$$
 
 ### Problem 5
@@ -310,7 +313,7 @@ Determine $E(Y_1 Y_2)$
 $$\\[4in]$$
 
 ### Problem 6
-Determine $cov(Y_1,Y_2)$
+Determine $\mathrm{cov}(Y_1,Y_2)$
 $$\\[4in]$$
 
 ### Problem 7

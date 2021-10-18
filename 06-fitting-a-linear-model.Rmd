@@ -6,26 +6,26 @@ output:
     df_print: paged
 ---
 
-# Fitting a linear model
+# Parameter estimation for linear models
 
-A linear model for a response variable $Y$ using $p-1$ predictor variables
-$X_1, \ldots, X_{p-1}$ may be described by the formula
+<!-- A linear model for a response variable $Y$ using $p-1$ predictor variables -->
+<!-- $X_1, \ldots, X_{p-1}$ may be described by the formula -->
 
-$$Y=\beta_0 + \beta_1 X_1 + \cdots + \beta_{p-1} X_{p-1} + \epsilon,$$
-where $\beta_0, \beta_1, \ldots, \beta_{p-1}$ are regression coefficients and $\epsilon$ is the error.
+<!-- $$Y=\beta_0 + \beta_1 X_1 + \cdots + \beta_{p-1} X_{p-1} + \epsilon,$$ -->
+<!-- where $\beta_0, \beta_1, \ldots, \beta_{p-1}$ are regression coefficients and $\epsilon$ is the error. -->
 
-In this chapter we focus on estimating the regression coefficients.
+In this chapter we focus on estimating the parameters of a linear regression model. We also discuss important properties of the parameter estimators.
 
-Fitting a regression model is the same thing as estimating the parameters of a simple linear regression model. 
+To make the discussion easier to follow, we start by describing the *simple* linear regression model, which is a linear model with only a single predictor.
 
-There are many different methods of parameter estimation in statistics: method-of-moments, maximum likelihood, Bayesian, etc.
+<!-- Fitting a regression model is the same thing as estimating the parameters of a simple linear regression model.  -->
 
-The most common estimation method for linear models is known as **Ordinary Least Squares (OLS)** estimation. OLS estimation estimates the parameters with the values that minimize the residuals sum of squares (RSS). 
+There are many different methods of parameter estimation in statistics: method-of-moments, maximum likelihood, Bayesian, etc. The most common parameter estimation method for linear models is **Ordinary Least Squares (OLS)** estimation. OLS estimation estimates the regression coefficients with the values that minimize the residuals sum of squares (RSS), which we will define shortly. 
 
 ## OLS estimation of the simple linear regression model
 
 In a simple linear regression context, we have $n$ observed responses
-$Y_1,Y_2,\ldots,Y_n$ and predictor values $x_1,x_2,\ldots,x_n$.
+$Y_1,Y_2,\ldots,Y_n$ and $n$ predictor values $x_1,x_2,\ldots,x_n$.
 
 Recall that for a simple linear regression model 
 $$Y = \beta_0 + \beta_1 X + \epsilon = E(Y|X) + \epsilon$$
@@ -44,12 +44,12 @@ $$\hat{\epsilon}_i = Y_i - \hat{Y}_i.$$ The $i$th residual is the difference bet
 **The RSS of a regression model is the sum of its squared residuals**. 
 
 The RSS for a simple linear regression model, as a function of the estimated regression coefficients, is
-\begin{align}
+\begin{align*}
 RSS(\hat{\beta}_0, \hat{\beta}_1) &= \sum_{i=1}^n \hat{\epsilon}_i^2 \\
 &= \sum_{i=1}^n (Y_i - \hat{Y}_i)^2 \\
 &= \sum_{i=1}^n (Y_i - \hat{E}(Y|X=x_i))^2 \\
  &= \sum_{i=1}^n (Y_i - (\hat{\beta}_0 + \hat{\beta}_1 x_i))^2.
-\end{align}
+\end{align*}
 
 The **fitted model** is the estimated model that minimizes the RSS. In a simple linear regression context, the fitted model is known as the **line of best fit**.
 
@@ -154,17 +154,17 @@ points(x = optimal_b[1], y = optimal_b[2], pch = 4)
 
 What is our takeaway from this example? It's probably not ideal to numerically search for the values of $\hat{\beta}_0$ and $\hat{\beta}_1$ that minimize $RSS(\hat{\beta}_0$, $\hat{\beta}_1)$. Instead, we should seek an exact solution using mathematics.
 
-### OLS estimators of the simple linear regression coefficents
+### OLS estimators of the simple linear regression parameters
 
 Define $\bar{x}=\frac{1}{n}\sum_{i=1}^n x_i$ and $\bar{Y} = \frac{1}{n}\sum_{i=1}^n Y_i$.
 
 The OLS estimators of the regression coefficients for a simple linear regression coefficients are
 
-\begin{align}
+\begin{align*}
 \hat{\beta}_1 &= \frac{\sum_{i=1}^n x_i Y_i - \frac{1}{n} \biggl(\sum_{i=1}^n x_i\biggr)\biggl(\sum_{i=1}^n Y_i\biggr)}{\sum_{i=1}^n x_i^2 - \frac{1}{n} \biggl(\sum_{i=1}^n x_i\biggr)^2} \\
 &= \frac{\sum_{i=1}^n (x_i - \bar{x})(Y_i - \bar{Y})}{\sum_{i=1}^n (x_i - \bar{x})^2} \\
 &= \frac{\sum_{i=1}^n (x_i - \bar{x})Y_i}{\sum_{i=1}^n (x_i - \bar{x})x_i}
-\end{align}
+\end{align*}
 and
 \begin{equation}
 \hat{\beta}_0 = \bar{Y} - \hat{\beta}_1 \bar{x}.
@@ -238,7 +238,7 @@ We now compute $\hat{\beta}_1$ and $\hat{\beta}_0$. Note that placing `()` aroun
 (b0 <- mean(y) - b1 * mean(x))        
 ```
 
-The estimated value of $\beta_0$ is $\hat{\beta_0}_0=26.90$ and the estimated value of $\beta_1$ is $\hat{\beta_1}_1=0.004$. The basic mathematical interpretation of our results is that:
+The estimated value of $\beta_0$ is $\hat{\beta}_0=26.90$ and the estimated value of $\beta_1$ is $\hat{\beta}_1=0.004$. The basic mathematical interpretation of our results is that:
 
 * ($\hat{\beta}_1$): If a penguin has a body mass 1 gram larger than another penguin, we expect the larger penguins bill length to be 0.004 millimeters longer.
 * ($\hat{\beta}_0$):A penguin with a body mass of 0 grams is expected to have a bill length of 26.9 millimeters.
@@ -320,149 +320,3 @@ Use calculus to derive the OLS estimator of the regression coefficients. Take th
 $\hat{\beta}_0$ and $\hat{\beta}_1$, set the derivatives equal to zero, and solve for $\hat{\beta}_0$ and $\hat{\beta}_1$ to find the critical points of $RSS(\hat{\beta}_0, \hat{\beta}_1)$. Technically, you must show that the Hessian matrix of $RSS(\hat{\beta}_0, \hat{\beta}_1)$ is positive definite to verify that our solution minimizes the RSS, but we won't do that here.
 
 $$\\[4in]$$
-
-### Expected value of OLS simple linear regression estimators
-
-Determine the expected value of the OLS simple linear regression estimators.
-
-$$\\[4in]$$
-
-<!-- ## Simple Linear Regression -->
-
-<!-- ### Model description -->
-<!-- The simple linear regression model is described by the mean function  -->
-<!-- $$E(Y│X=x)=\beta_0+\beta_1 x,$$ -->
-
-<!-- and variance function -->
-
-<!-- $$var(Y│X=x)=\sigma^2,$$ -->
-<!-- where: -->
-
-<!-- * $Y$ is the response variable -->
-<!-- * $X$ is a regressor variable -->
-<!-- * $\beta_0$ and $\beta_1$ are known as *regression parameters* or *regression coefficients*. -->
-
-<!-- Note:  -->
-
-<!-- * The values that $Y$ takes are modeled as random variables. -->
-<!-- * The values that $X$ takes are modeled as known, non-random values. -->
-
-<!-- ### Interpreting the regression coefficients -->
-
-<!-- * The *intercept*, $\beta_0$, is the mean response when $X=0$. -->
-<!--   * i.e., $\beta_0=E(Y|X=0)$. -->
-<!-- * The *slope*, $\beta_1$, is the mean change in the response when $X$ increases by 1 unit. -->
-<!--   * i.e., $\beta_1 = E(Y|X=x+1)-E(Y|X=x)$. -->
-
-<!-- ```{r} -->
-<!-- plot(c(-1, 3), c(-1, 3), type = "n", xlab = expression(italic(X)), ylab = expression(italic(Y)), asp = 1) -->
-<!-- abline(a = 1, b = 1) -->
-<!-- lines(c(0, 0.25), c(0, 0)) -->
-<!-- lines(c(0, 0.25), c(1, 1)) -->
-<!-- lines(c(0.25, 0.25), c(0, 1)) -->
-<!-- lines(c(0.25, 0.5), c(0.5, 0.5)) -->
-<!-- text(0.5, 0.5, expression(italic(beta)[0]), pos = 4) -->
-<!-- lines(c(1, 2), c(2, 2)) -->
-<!-- lines(c(2, 2), c(2, 3)) -->
-<!-- lines(c(2, 2.25), c(2.5, 2.5)) -->
-<!-- text(2.25, 2.5, expression(italic(beta)[1]), pos = 4) -->
-
-<!-- ``` -->
-<!-- #  -->
-<!-- # ## Simple Linear Regression -->
-<!-- #  -->
-<!-- # The simple linear regression model consists of the mean function  -->
-<!-- # $$E(Y│X=x)=\beta_0+\beta_1 x,$$ -->
-<!-- # and variance function -->
-<!-- #  -->
-<!-- # $$var(Y│X=x)=\sigma^2,$$ -->
-<!-- # where: -->
-<!-- #  -->
-<!-- # - $Y$ is the response -->
-<!-- # - $X$ is a regressor variable -->
-<!-- # - $\beta_0$ and $\beta_1$ are known as **regression parameters** or **coefficients**. -->
-<!-- #  -->
-<!-- # # Simple Linear Regression -->
-<!-- #  -->
-<!-- # Chapter 2 of LMWR2, Chapter 2 and 3 of ALR4 -->
-<!-- #  -->
-<!-- #  -->
-<!-- # ## Simple Linear Regression -->
-<!-- #  -->
-<!-- # The simple linear regression model consists of the mean function  -->
-<!-- # $$E(Y│X=x)=\beta_0+\beta_1 x,$$ -->
-<!-- #  -->
-<!-- # and variance function -->
-<!-- #  -->
-<!-- # $$var(Y│X=x)=\sigma^2,$$ -->
-<!-- # where: -->
-<!-- #  -->
-<!-- # - $Y$ is the response -->
-<!-- # - $X$ is a regressor variable -->
-<!-- # - $\beta_0$ and $\beta_1$ are known as **regression parameters** or **coefficients**. -->
-<!-- #  -->
-<!-- # ## Understanding the model -->
-<!-- # ```{r} -->
-<!-- # set.seed(1) -->
-<!-- # x = runif(10, 60, 100) -->
-<!-- # y = x + rnorm(10) -->
-<!-- # plot(x,y, pch=20, xlab = 'Midyear Evaluation', ylab = 'Year-End Evaluation', main = 'Y = -0.74 +1.01 X') -->
-<!-- # abline(lm(y~x), lwd = 2, col = 'red') -->
-<!-- # ``` -->
-<!-- #  -->
-<!-- #  -->
-<!-- # ## Understanding the model  -->
-<!-- # ```{r out.width='1000px'} -->
-<!-- # library(knitr) -->
-<!-- # include_graphics('images/simple_lin_reg.png') -->
-<!-- # ``` -->
-<!-- #  -->
-<!-- # ## Understand Coefficients -->
-<!-- #  -->
-<!-- # ```{r} -->
-<!-- # include_graphics('images/coefficients.png', dpi=80) -->
-<!-- # ``` -->
-<!-- #  -->
-<!-- # ## View from single observation -->
-<!-- # Assume that we have n observations or cases for which the response and predictor variables are measured. -->
-<!-- #  -->
-<!-- # -	The responses are denoted $y_1,y_2,\dots ,y_n$. -->
-<!-- # -	The regressor values for regressor X are denoted $x_1,x_2,\dots,x_n$. -->
-<!-- #  -->
-<!-- # Each response will deviate from its associated mean, so our statistical model must include an additional source of variation. -->
-<!-- #  -->
-<!-- # The statistical model for each response is -->
-<!-- # $$y_i=\beta_0+\beta_1 x_i+\epsilon_i,\quad   i=1,2,\dots,n,$$ -->
-<!-- #  -->
-<!-- # where $\epsilon_i$ denotes the deviation of $y_i$ from its mean. -->
-<!-- #  -->
-<!-- # -	The $\epsilon_i$ are known as errors. -->
-<!-- #  -->
-<!-- # ## Conditions on Error -->
-<!-- #  -->
-<!-- # Conditional on knowing the regressor values, the errors have:  -->
-<!-- #  -->
-<!-- # -	Mean 0 -->
-<!-- # -	Variance $\sigma^2$ (constant) -->
-<!-- # -	And are uncorrelated. -->
-<!-- #  -->
-<!-- # Mathematically, this is the same as:  -->
-<!-- #  -->
-<!-- # -	$E(\epsilon_i│X=x_i )=0$  -->
-<!-- # -	$var(\epsilon_i│X=x_i )=\sigma^2$ -->
-<!-- # -	$cov(\epsilon_i,\epsilon_j )=0$  when $i\neq j$. -->
-<!-- #  -->
-<!-- # ## What about the response? -->
-<!-- #  -->
-<!-- # - Mean: -->
-<!-- #  -->
-<!-- #   $$E[Y_i|X_i] = E[\beta_0+\beta_1X_i + \epsilon_i]= \beta_0 + \beta_1X_i$$ -->
-<!-- #   $$Var(Y_i|X_i) = Var(\beta_0+\beta_1X_i + \epsilon_i) = Var(\epsilon_i) = \sigma^2$$ -->
-<!-- #   $$cov(Y_i, Y_j) = 0,\quad i \neq j$$ -->
-<!-- #   The responses $Y_i$ come from probability distributions whose means are $\beta_0+\beta_1X_i$ and whose variances are $\sigma^2$, the same for all levels of $X$. Further, any two responses $Y_i$ and $Y_j$ are uncorrelated.  -->
-<!-- #    -->
-<!-- # ## Example -->
-<!-- #  -->
-<!-- # ```{r} -->
-<!-- # include_graphics('images/simple_lin_reg_values.png',dpi = 100) -->
-<!-- # ``` -->
