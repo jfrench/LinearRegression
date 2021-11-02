@@ -83,6 +83,7 @@ lms <- summary(lmod)
 fobs <- lms$fstatistic[1]
 1 - pf(lms$fstatistic[1], lms$fstatistic[2], lms$fstatistic[3])
 
+
 # Randomly sample responses (4000 times), recompute model and fstatistic
 nreps <- 4000
 set.seed(123) # reproducible results
@@ -96,7 +97,7 @@ for (i in 1:nreps) {
 }
 
 # compute p-value (the proportion of simulated test statistics at least as extreme
-# as our observed test statistics).
+# as our observed test statistic).
 mean(fstats >= fobs)
 
 # compare statistics for permuted data to observed statistic
