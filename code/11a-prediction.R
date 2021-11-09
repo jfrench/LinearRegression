@@ -11,13 +11,14 @@ data(fat, package = "faraway")
 lmod <- lm(brozek ~ age + weight + height + neck + chest +
              abdom + hip + thigh + knee + ankle + biceps +
              forearm + wrist, data = fat)
+summary(lmod)
 
 # extract x matrix
 x <- model.matrix(lmod)
 # determine median values of predictor variables
 (x0 <- apply(x, 2, median))
 # manually predict mean/future response
-(y0 <- sum(x0*coef(lmod)))
+(y0hat <- sum(x0*coef(lmod)))
 
 # data frame x0 values for which predictions are desired
 newdf <- data.frame(t(x0))

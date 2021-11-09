@@ -1,0 +1,47 @@
+---
+title: "Joshua French"
+date: "`r format(Sys.time(), '%Y-%m-%d')`"
+output:
+  html_document:
+    df_print: paged
+---
+# Assumptions Stated and Prioritized
+
+## Standard assumptiosn concisely stated
+
+There are several standard assumptions made when performing linear regression.
+
+The ones necessary to derive the theoretical properties of the estimators, confidence intervals, prediction intervals, etc., are:
+
+1. The structure of the model is correct:
+\begin{equation*}
+E(\mathbf{y}|\mathbf{X})=\mathbf{X}\boldsymbol{\beta}.
+\end{equation*}
+This is equivalent to saying the model is correctly specified. This means there are no missing or extra regressors in our regression equation.
+2. The errors, conditional on the regressor values, are i.i.d. Normal with mean 0 and constant variance $\sigma^2$. This may be succinctly stated at \begin{equation*}
+\mathbf{y}\mid \mathbf{X} \sim N(\boldsymbol{0}_{n\times 1}, \sigma^2 \mathbf{I}_n).
+\end{equation*}
+Note that this is actually 4 assumptions:
+
+    a. $E(\epsilon \mid \mathbb{X})=0$, i.e., the mean of the errors is zero regardless of the values of the regressors. Note that this is effectively the same as the structure assumption in 1.
+    b. $\mathrm{var}(\epsilon \mid \mathbb{X})=0$, i.e., the variance of the errors is constant ($\sigma^2$) regardless of the values of the regressors.
+    c. Any two errors are uncorrelated, regardless of the values of their regressors, as long as they are not the same error, i.e., $\mathrm{cov}(\epsilon_i,\epsilon_j\mid \mathbb{X})=0$ for all $i\neq j$.
+    d. Each of the errors, regardless of the regressor values, are normally distributed.
+
+There are additional assumption needed for the practical fitting of the linear regression model. These assumptions are often not explicitly stated. They are:
+
+3. The columns of $\mathbf{X}$ are linearly independent, i.e., none of the regressors are linear combinations of each other. This assumption is checking by assessing whether collinearity is present. This assumption is critical for ensuring that our model is identifiable (estimatable).
+4. No observations are substantially more influential than other observations in determining the fit of the model to the observed data. Influential observations can make it difficult to determine whether Assumptions 1 and 2 are satisfied.
+
+## Standard assumptions prioritized
+
+We assume that any issues with collinearity and identifiability (Assumption 3) have already been addressed. 
+
+The assumptions previously stated are not equally important. The order of importance is 
+  
+1. **The structure of the model is correct (Assumption 1)**. If the structure of your model is incorrect, then no conclusions drawn from our model are trustworthy. It's possible that our conclusions aren't correct, but we have no confidence of that if the structure of our model is wrong. 
+2. **No points are overly influential in determining the model fit (Assumption 4)**. An overly influential observation can make it seem like the model is correctly specified when it is not. It can also impact assessing the other assumptions below.
+3. **The errors have constant variance (Assumption 2)**. If this assumption isn't satisfied, then standard confidence intervals for the regression coefficients and mean function and prediction intervals for new observations are not trustworthy.
+4. **The errors are uncorrelated (Assumption 2)**. If this assumption isn't satisfied, then standard confidence intervals for the regression coefficients and mean function and prediction intervals for new observations are not trustworthy.
+5. **The errors are normally distributed (Assumption 2)**. This is the least important assumption. If the previous assumptions are satisfied, then our OLS estimator of $\boldsymbol{\beta}$ is still the best linear unbiased estimator regardless of the normality of the errors. If the sample size is large enough, the central limit theorem tells us that our confidence intervals for the regression coefficients and the mean function are still approximately valid. However, if our sample size is small or we are interested in constructing a prediction interval, then non-normal errors can lead to untrustworth confidence and prediction intervals.
+

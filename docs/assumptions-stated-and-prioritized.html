@@ -4,11 +4,11 @@
 
   <meta charset="utf-8" />
   <meta http-equiv="X-UA-Compatible" content="IE=edge" />
-  <title>Page not found | Joshua French</title>
+  <title>Chapter 12 Assumptions Stated and Prioritized | Joshua French</title>
   <meta name="description" content="A collection of R notebooks demonstrating how to perform data analysis with linear regression." />
   <meta name="generator" content="bookdown 0.24 and GitBook 2.6.7" />
 
-  <meta property="og:title" content="Page not found | Joshua French" />
+  <meta property="og:title" content="Chapter 12 Assumptions Stated and Prioritized | Joshua French" />
   <meta property="og:type" content="book" />
   
   
@@ -16,12 +16,12 @@
   
 
   <meta name="twitter:card" content="summary" />
-  <meta name="twitter:title" content="Page not found | Joshua French" />
+  <meta name="twitter:title" content="Chapter 12 Assumptions Stated and Prioritized | Joshua French" />
   
   <meta name="twitter:description" content="A collection of R notebooks demonstrating how to perform data analysis with linear regression." />
   
 
-<meta name="author" content="Page not found | Joshua French" />
+<meta name="author" content="Chapter 12 Assumptions Stated and Prioritized | Joshua French" />
 
 
 <meta name="date" content="2021-11-08" />
@@ -31,7 +31,7 @@
   <meta name="apple-mobile-web-app-status-bar-style" content="black" />
   
   
-
+<link rel="prev" href="linear-model-inference.html"/>
 
 <script src="libs/header-attrs-2.11/header-attrs.js"></script>
 <script src="libs/jquery-3.6.0/jquery-3.6.0.min.js"></script>
@@ -348,18 +348,55 @@
           <div class="page-inner">
 
             <section class="normal" id="section-">
-<div id="page-not-found" class="section level1">
-<h1>Page not found</h1>
-<p>The page you requested cannot be found (perhaps it was moved or renamed).</p>
-<p>You may want to try searching to find the page's new location, or use
-the table of contents to find the page you are looking for.</p>
+<div id="assumptions-stated-and-prioritized" class="section level1" number="12">
+<h1><span class="header-section-number">Chapter 12</span> Assumptions Stated and Prioritized</h1>
+<div id="standard-assumptiosn-concisely-stated" class="section level2" number="12.1">
+<h2><span class="header-section-number">12.1</span> Standard assumptiosn concisely stated</h2>
+<p>There are several standard assumptions made when performing linear regression.</p>
+<p>The ones necessary to derive the theoretical properties of the estimators, confidence intervals, prediction intervals, etc., are:</p>
+<ol style="list-style-type: decimal">
+<li><p>The structure of the model is correct:
+<span class="math display">\[\begin{equation*}
+E(\mathbf{y}|\mathbf{X})=\mathbf{X}\boldsymbol{\beta}.
+\end{equation*}\]</span>
+This is equivalent to saying the model is correctly specified. This means there are no missing or extra regressors in our regression equation.</p></li>
+<li><p>The errors, conditional on the regressor values, are i.i.d. Normal with mean 0 and constant variance <span class="math inline">\(\sigma^2\)</span>. This may be succinctly stated at <span class="math display">\[\begin{equation*}
+\mathbf{y}\mid \mathbf{X} \sim N(\boldsymbol{0}_{n\times 1}, \sigma^2 \mathbf{I}_n).
+\end{equation*}\]</span>
+Note that this is actually 4 assumptions:</p>
+<ol style="list-style-type: lower-alpha">
+<li><span class="math inline">\(E(\epsilon \mid \mathbb{X})=0\)</span>, i.e., the mean of the errors is zero regardless of the values of the regressors. Note that this is effectively the same as the structure assumption in 1.</li>
+<li><span class="math inline">\(\mathrm{var}(\epsilon \mid \mathbb{X})=0\)</span>, i.e., the variance of the errors is constant (<span class="math inline">\(\sigma^2\)</span>) regardless of the values of the regressors.</li>
+<li>Any two errors are uncorrelated, regardless of the values of their regressors, as long as they are not the same error, i.e., <span class="math inline">\(\mathrm{cov}(\epsilon_i,\epsilon_j\mid \mathbb{X})=0\)</span> for all <span class="math inline">\(i\neq j\)</span>.</li>
+<li>Each of the errors, regardless of the regressor values, are normally distributed.</li>
+</ol></li>
+</ol>
+<p>There are additional assumption needed for the practical fitting of the linear regression model. These assumptions are often not explicitly stated. They are:</p>
+<ol start="3" style="list-style-type: decimal">
+<li>The columns of <span class="math inline">\(\mathbf{X}\)</span> are linearly independent, i.e., none of the regressors are linear combinations of each other. This assumption is checking by assessing whether collinearity is present. This assumption is critical for ensuring that our model is identifiable (estimatable).</li>
+<li>No observations are substantially more influential than other observations in determining the fit of the model to the observed data. Influential observations can make it difficult to determine whether Assumptions 1 and 2 are satisfied.</li>
+</ol>
+</div>
+<div id="standard-assumptions-prioritized" class="section level2" number="12.2">
+<h2><span class="header-section-number">12.2</span> Standard assumptions prioritized</h2>
+<p>We assume that any issues with collinearity and identifiability (Assumption 3) have already been addressed.</p>
+<p>The assumptions previously stated are not equally important. The order of importance is</p>
+<ol style="list-style-type: decimal">
+<li><strong>The structure of the model is correct (Assumption 1)</strong>. If the structure of your model is incorrect, then no conclusions drawn from our model are trustworthy. It’s possible that our conclusions aren’t correct, but we have no confidence of that if the structure of our model is wrong.</li>
+<li><strong>No points are overly influential in determining the model fit (Assumption 4)</strong>. An overly influential observation can make it seem like the model is correctly specified when it is not. It can also impact assessing the other assumptions below.</li>
+<li><strong>The errors have constant variance (Assumption 2)</strong>. If this assumption isn’t satisfied, then standard confidence intervals for the regression coefficients and mean function and prediction intervals for new observations are not trustworthy.</li>
+<li><strong>The errors are uncorrelated (Assumption 2)</strong>. If this assumption isn’t satisfied, then standard confidence intervals for the regression coefficients and mean function and prediction intervals for new observations are not trustworthy.</li>
+<li><strong>The errors are normally distributed (Assumption 2)</strong>. This is the least important assumption. If the previous assumptions are satisfied, then our OLS estimator of <span class="math inline">\(\boldsymbol{\beta}\)</span> is still the best linear unbiased estimator regardless of the normality of the errors. If the sample size is large enough, the central limit theorem tells us that our confidence intervals for the regression coefficients and the mean function are still approximately valid. However, if our sample size is small or we are interested in constructing a prediction interval, then non-normal errors can lead to untrustworth confidence and prediction intervals.</li>
+</ol>
+
+</div>
 </div>
             </section>
 
           </div>
         </div>
       </div>
-
+<a href="linear-model-inference.html" class="navigation navigation-prev navigation-unique" aria-label="Previous page"><i class="fa fa-angle-left"></i></a>
 
     </div>
   </div>
