@@ -52,27 +52,6 @@ summary(lm(Species ~ Area, gala))
 lmods <- lm(Species ~ Elevation + Nearest + Scruz, data = gala) # fit reduced model
 anova(lmods, lmod) # compare models using general f-test
 
-### Test whether regression coefficients for Area and Adjacent are equal to,
-### assuming other predictors in model
-
-# Fit linear subspace model
-lmods <- lm(Species ~ I(Adjacent + Area) + Elevation + Nearest + Scruz, gala)
-# The I() means evaulate this function before creating the model.
-#  This allows us to create transformed predictors in the model statement.
-anova(lmods, lmod) # compare models using general f-test
-
-### Test whether beta_Area = 0.5 assuming other predictors are in the model
-
-# Fit reduced model
-lmods <- lm(Species ~ Area + offset(0.5*Elevation) + Nearest + Scruz + Adjacent, gala)
-# the offset term indicates that this term is a constant and not to be estimated.
-anova(lmods, lmod) # compare models using general f-test
-
-# Same test using t test
-(tstat <- (coef(lmod)[3] - 0.5)/sqrt(vcov(lmod)[3,3])) # test statistic
-2 * (1 - pt(abs(tstat), df = df.residual(lmod))) # p-value
-tstat^2
-
 ### 3.3 Permutation tests
 ### Test whether Nearest and Scruz predictors needed
 lmod <- lm(Species ~ Nearest + Scruz, data = gala)
@@ -216,3 +195,26 @@ ggplot(coefdf, aes(x = estimates)) + # create ggplot object with estimates as x-
   facet_wrap(~ parameter, scales = "free") + # create a diferent density for each parameter
   geom_vline(data = cidf, aes(xintercept=cis)) + # plot vertical lines for each bootstrap ci
   theme_bw() # simpler theme
+
+### Some additional tests
+### Test whether regression coefficients for Area and Adjacent are equal,
+### assuming other predictors in model
+
+# Fit linear subspace model
+lmods <- lm(Species ~ I(Adjacent + Area) + Elevation + Nearest + Scruz, gala)
+# The I() means evaulate this function before creating the model.
+#  This allows us to create transformed predictors in the model statement.
+anova(lmods, lmod) # compare models using general f-test
+
+### Test whether beta_Area = 0.5 assuming other predictors are in the model
+
+# Fit reduced model
+lmods <- lm(Species ~ Area + offset(0.5*Elevation) + Nearest + Scruz + Adjacent, gala)
+# the offset term indicates that this term is a constant and not to be estimated.
+anova(lmods, lmod) # compare models using general f-test
+
+# Same test using t test
+(tstat <- (coef(lmod)[3] - 0.5)/sqrt(vcov(lmod)[3,3])) # test statistic
+2 * (1 - pt(abs(tstat), df = df.residual(lmod))) # p-value
+tstat^2
+
