@@ -17,13 +17,23 @@ round(cor(x), 2)
 # variance inflation factor
 vif(lmod)
 
-# condition numbers
+# condition indices
 library(perturb)
-colldiag(lmod, scale = TRUE, add.intercept = FALSE)
 
 # condition index 9 has high variance
 # decomposition proportions (vdp) for gleason
-lmod2 = update(lmod, . ~ . - gleason)
-colldiag(lmod2, scale = FALSE)
+colldiag(lmod, scale = TRUE, add.intercept = TRUE)
 
+
+# remove gleason from model
+lmod2 = update(lmod, . ~ . - gleason)
+
+# condition index 9 has high variance
+# decomposition proportions (vdp) for age
+colldiag(lmod2, scale = TRUE, add.intercept = TRUE)
+
+
+# remove age from model
+lmod3 = update(lmod2, . ~ . - age)
+colldiag(lmod3, scale = TRUE)
 
