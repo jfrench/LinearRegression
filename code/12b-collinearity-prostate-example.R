@@ -24,7 +24,6 @@ library(perturb)
 # decomposition proportions (vdp) for gleason
 colldiag(lmod, scale = TRUE, add.intercept = TRUE)
 
-
 # remove gleason from model
 lmod2 = update(lmod, . ~ . - gleason)
 
@@ -35,5 +34,5 @@ colldiag(lmod2, scale = TRUE, add.intercept = TRUE)
 
 # remove age from model
 lmod3 = update(lmod2, . ~ . - age)
-colldiag(lmod3, scale = TRUE)
+colldiag(lmod3)
 
