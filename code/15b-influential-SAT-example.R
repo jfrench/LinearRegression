@@ -26,13 +26,16 @@ lmod2 = lm(total ~ expend + salary + ratio + takers,
            data = sat,
            subset = (names != "Utah"))
 compareCoefs(lmod, lmod2)
-confint(lmod)
 
+# compare confidence intervals with and without Utah
+# look at takes
+confint(lmod)
+confint(lmod2)
+
+# construct influence plot for model
 influencePlot(lmod)
 
 # f test for a regression relationship
 nullmod = lm(total ~ 1, data = sat)
 anova(nullmod, lmod)
 
-# confidence interval for beta_takes
-confint(lmod)
