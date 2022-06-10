@@ -1,5 +1,5 @@
 ---
-title: "Variable Selection Part 1"
+title: "Variable Selection"
 date: "`r format(Sys.time(), '%Y-%m-%d')`"
 output:
   html_document:
@@ -64,7 +64,7 @@ faraway::sumary(lmod)
 
 
 ```{r}
-back1 <- update(lmod, . ~ . - ??)
+back1 <- update(lmod, . ~ . - Area)
 faraway::sumary(back1)
 ```
 
@@ -72,7 +72,7 @@ faraway::sumary(back1)
 - This does not imply the other variables are not related to the response.
 
 ```{r}
-lmod1 <- lm(Life.Exp ~ ??, data = statedata)
+lmod1 <- lm(Life.Exp ~ Illiteracy, data = statedata)
 faraway::sumary(lmod1)
 ```
 

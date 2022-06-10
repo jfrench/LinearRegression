@@ -266,7 +266,7 @@ The **fitted model** is the estimated model that minimizes the RSS, i.e., the fi
 In a simple linear regression context, the fitted model is known as the
 **line of best fit**.
 
-In Figure \@ref(fig:rss-viz), we visualize the response values, fitted
+In Figure \@ref(fig:rss-viz2), we visualize the response values, fitted
 values, residuals, and fitted model in a simple linear regression
 context. Note that:
 
@@ -277,7 +277,7 @@ context. Note that:
 -   The RSS is the sum of the squared vertical distances between the
     response and fitted values.
 
-```{r rss-viz, fig.cap = "Visualization of the response values, fitted values, residuals, and fitted model.", echo=FALSE}
+```{r rss-viz2, fig.cap = "Visualization of the response values, fitted values, residuals, and fitted model.", echo=FALSE}
 set.seed(2)
 x <- c(3, 5, 7, 8, 9)
 y <- 2 + 2 * x + rnorm(5, sd = 4)
@@ -363,12 +363,12 @@ The data set includes `r nrow(penguins)` observations of
     (`2007`, `2008`, or `2009`)
 
 We begin by creating a scatter plot of `bill_length_mm` versus
-`body_mass_g` (y-axis versus x-axis) in Figure \@ref(fig:penguin-plot).
+`body_mass_g` (y-axis versus x-axis) in Figure \@ref(fig:penguin-plot-2).
 We see a clear positive association between body mass and bill length:
 as the body mass increases, the bill length tends to increase. The
 pattern is linear, i.e., roughly a straight line.
 
-```{r penguin-plot, fig.cap = "A scatter plot of penguin bill length (mm) versus body mass (g)"}
+```{r penguin-plot-2, fig.cap = "A scatter plot of penguin bill length (mm) versus body mass (g)"}
 plot(bill_length_mm ~ body_mass_g, data = penguins,
      ylab = "bill length (mm)", xlab = "body mass (g)",
      main = "Penguin size measurements")
@@ -583,7 +583,7 @@ summary(mlmod)
 
 ## Categorical predictors
 
-## Penguins multiple linear regression example with categorical predictor {#s:penguins-mlr}
+## Penguins multiple linear regression example with categorical predictor {#s:penguins-mlr2}
 
 ```{r}
 library(ggplot2)

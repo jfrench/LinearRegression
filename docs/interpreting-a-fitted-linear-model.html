@@ -4,27 +4,26 @@
 
   <meta charset="utf-8" />
   <meta http-equiv="X-UA-Compatible" content="IE=edge" />
-  <title>Chapter 7 Interpreting a fitted linear model | Joshua French</title>
-  <meta name="description" content="A collection of R notebooks demonstrating how to perform data analysis with linear regression." />
-  <meta name="generator" content="bookdown 0.24 and GitBook 2.6.7" />
+  <title>Chapter 8 Interpreting a fitted linear model | Joshua French</title>
+  <meta name="description" content="A collection of R notebooks that progressively introduction how to fit and use linear models." />
+  <meta name="generator" content="bookdown 0.25 and GitBook 2.6.7" />
 
-  <meta property="og:title" content="Chapter 7 Interpreting a fitted linear model | Joshua French" />
+  <meta property="og:title" content="Chapter 8 Interpreting a fitted linear model | Joshua French" />
   <meta property="og:type" content="book" />
   
-  
-  <meta property="og:description" content="A collection of R notebooks demonstrating how to perform data analysis with linear regression." />
+  <meta property="og:description" content="A collection of R notebooks that progressively introduction how to fit and use linear models." />
   
 
   <meta name="twitter:card" content="summary" />
-  <meta name="twitter:title" content="Chapter 7 Interpreting a fitted linear model | Joshua French" />
+  <meta name="twitter:title" content="Chapter 8 Interpreting a fitted linear model | Joshua French" />
   
-  <meta name="twitter:description" content="A collection of R notebooks demonstrating how to perform data analysis with linear regression." />
+  <meta name="twitter:description" content="A collection of R notebooks that progressively introduction how to fit and use linear models." />
   
 
-<meta name="author" content="Chapter 7 Interpreting a fitted linear model | Joshua French" />
+<meta name="author" content="Chapter 8 Interpreting a fitted linear model | Joshua French" />
 
 
-<meta name="date" content="2021-10-18" />
+<meta name="date" content="2022-06-10" />
 
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <meta name="apple-mobile-web-app-capable" content="yes" />
@@ -32,8 +31,7 @@
   
   
 <link rel="prev" href="parameter-estimation-for-linear-models.html"/>
-<link rel="next" href="categorical-predictors.html"/>
-<script src="libs/header-attrs-2.11/header-attrs.js"></script>
+<link rel="next" href="categorical-predictors-1.html"/>
 <script src="libs/jquery-3.6.0/jquery-3.6.0.min.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/fuse.js@6.4.6/dist/fuse.min.js"></script>
 <link href="libs/gitbook-2.6.7/css/style.css" rel="stylesheet" />
@@ -51,8 +49,9 @@
 
 
 
-<link href="libs/anchor-sections-1.0.1/anchor-sections.css" rel="stylesheet" />
-<script src="libs/anchor-sections-1.0.1/anchor-sections.js"></script>
+<link href="libs/anchor-sections-1.1.0/anchor-sections.css" rel="stylesheet" />
+<link href="libs/anchor-sections-1.1.0/anchor-sections-hash.css" rel="stylesheet" />
+<script src="libs/anchor-sections-1.1.0/anchor-sections.js"></script>
 
 
 <style type="text/css">
@@ -137,236 +136,324 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <li><a href="./">Data Analysis with Linear Regression</a></li>
 
 <li class="divider"></li>
-<li class="chapter" data-level="" data-path="index.html"><a href="index.html"><i class="fa fa-check"></i>Preliminaries</a></li>
-<li class="chapter" data-level="1" data-path="r-foundations.html"><a href="r-foundations.html"><i class="fa fa-check"></i><b>1</b> R Foundations</a>
+<li><a href="index.html#preliminaries">Preliminaries<span></span></a></li>
+<li class="chapter" data-level="1" data-path="r-foundations.html"><a href="r-foundations.html"><i class="fa fa-check"></i><b>1</b> R Foundations<span></span></a>
 <ul>
-<li class="chapter" data-level="1.1" data-path="r-foundations.html"><a href="r-foundations.html#what-is-r"><i class="fa fa-check"></i><b>1.1</b> What is R?</a></li>
-<li class="chapter" data-level="1.2" data-path="r-foundations.html"><a href="r-foundations.html#where-to-get-r-and-r-studio-desktop"><i class="fa fa-check"></i><b>1.2</b> Where to get R (and R Studio Desktop)</a></li>
-<li class="chapter" data-level="1.3" data-path="r-foundations.html"><a href="r-foundations.html#r-studio-layout"><i class="fa fa-check"></i><b>1.3</b> R Studio Layout</a></li>
-<li class="chapter" data-level="1.4" data-path="r-foundations.html"><a href="r-foundations.html#running-code-scripts-and-comments"><i class="fa fa-check"></i><b>1.4</b> Running code, scripts, and comments</a>
+<li class="chapter" data-level="1.1" data-path="r-foundations.html"><a href="r-foundations.html#what-is-r"><i class="fa fa-check"></i><b>1.1</b> What is R?<span></span></a></li>
+<li class="chapter" data-level="1.2" data-path="r-foundations.html"><a href="r-foundations.html#where-to-get-r-and-r-studio-desktop"><i class="fa fa-check"></i><b>1.2</b> Where to get R (and R Studio Desktop)<span></span></a></li>
+<li class="chapter" data-level="1.3" data-path="r-foundations.html"><a href="r-foundations.html#r-studio-layout"><i class="fa fa-check"></i><b>1.3</b> R Studio Layout<span></span></a></li>
+<li class="chapter" data-level="1.4" data-path="r-foundations.html"><a href="r-foundations.html#running-code-scripts-and-comments"><i class="fa fa-check"></i><b>1.4</b> Running code, scripts, and comments<span></span></a>
 <ul>
-<li class="chapter" data-level="1.4.1" data-path="r-foundations.html"><a href="r-foundations.html#example"><i class="fa fa-check"></i><b>1.4.1</b> Example</a></li>
+<li class="chapter" data-level="1.4.1" data-path="r-foundations.html"><a href="r-foundations.html#example"><i class="fa fa-check"></i><b>1.4.1</b> Example<span></span></a></li>
 </ul></li>
-<li class="chapter" data-level="1.5" data-path="r-foundations.html"><a href="r-foundations.html#packages"><i class="fa fa-check"></i><b>1.5</b> Packages</a>
+<li class="chapter" data-level="1.5" data-path="r-foundations.html"><a href="r-foundations.html#packages"><i class="fa fa-check"></i><b>1.5</b> Packages<span></span></a>
 <ul>
-<li class="chapter" data-level="1.5.1" data-path="r-foundations.html"><a href="r-foundations.html#example-1"><i class="fa fa-check"></i><b>1.5.1</b> Example</a></li>
+<li class="chapter" data-level="1.5.1" data-path="r-foundations.html"><a href="r-foundations.html#example-1"><i class="fa fa-check"></i><b>1.5.1</b> Example<span></span></a></li>
 </ul></li>
-<li class="chapter" data-level="1.6" data-path="r-foundations.html"><a href="r-foundations.html#getting-help"><i class="fa fa-check"></i><b>1.6</b> Getting help</a>
+<li class="chapter" data-level="1.6" data-path="r-foundations.html"><a href="r-foundations.html#getting-help"><i class="fa fa-check"></i><b>1.6</b> Getting help<span></span></a>
 <ul>
-<li class="chapter" data-level="1.6.1" data-path="r-foundations.html"><a href="r-foundations.html#example-2"><i class="fa fa-check"></i><b>1.6.1</b> Example</a></li>
+<li class="chapter" data-level="1.6.1" data-path="r-foundations.html"><a href="r-foundations.html#example-2"><i class="fa fa-check"></i><b>1.6.1</b> Example<span></span></a></li>
 </ul></li>
-<li class="chapter" data-level="1.7" data-path="r-foundations.html"><a href="r-foundations.html#data-types-and-structures"><i class="fa fa-check"></i><b>1.7</b> Data types and structures</a>
+<li class="chapter" data-level="1.7" data-path="r-foundations.html"><a href="r-foundations.html#data-types-and-structures"><i class="fa fa-check"></i><b>1.7</b> Data types and structures<span></span></a>
 <ul>
-<li class="chapter" data-level="1.7.1" data-path="r-foundations.html"><a href="r-foundations.html#basic-data-types"><i class="fa fa-check"></i><b>1.7.1</b> Basic data types</a></li>
-<li class="chapter" data-level="1.7.2" data-path="r-foundations.html"><a href="r-foundations.html#other-important-object-types"><i class="fa fa-check"></i><b>1.7.2</b> Other important object types</a></li>
-<li class="chapter" data-level="1.7.3" data-path="r-foundations.html"><a href="r-foundations.html#data-structures"><i class="fa fa-check"></i><b>1.7.3</b> Data structures</a></li>
+<li class="chapter" data-level="1.7.1" data-path="r-foundations.html"><a href="r-foundations.html#basic-data-types"><i class="fa fa-check"></i><b>1.7.1</b> Basic data types<span></span></a></li>
+<li class="chapter" data-level="1.7.2" data-path="r-foundations.html"><a href="r-foundations.html#other-important-object-types"><i class="fa fa-check"></i><b>1.7.2</b> Other important object types<span></span></a></li>
+<li class="chapter" data-level="1.7.3" data-path="r-foundations.html"><a href="r-foundations.html#data-structures"><i class="fa fa-check"></i><b>1.7.3</b> Data structures<span></span></a></li>
 </ul></li>
-<li class="chapter" data-level="1.8" data-path="r-foundations.html"><a href="r-foundations.html#assignment"><i class="fa fa-check"></i><b>1.8</b> Assignment</a>
+<li class="chapter" data-level="1.8" data-path="r-foundations.html"><a href="r-foundations.html#assignment"><i class="fa fa-check"></i><b>1.8</b> Assignment<span></span></a>
 <ul>
-<li class="chapter" data-level="1.8.1" data-path="r-foundations.html"><a href="r-foundations.html#example-3"><i class="fa fa-check"></i><b>1.8.1</b> Example</a></li>
+<li class="chapter" data-level="1.8.1" data-path="r-foundations.html"><a href="r-foundations.html#example-3"><i class="fa fa-check"></i><b>1.8.1</b> Example<span></span></a></li>
 </ul></li>
-<li class="chapter" data-level="1.9" data-path="r-foundations.html"><a href="r-foundations.html#vectors"><i class="fa fa-check"></i><b>1.9</b> Vectors</a>
+<li class="chapter" data-level="1.9" data-path="r-foundations.html"><a href="r-foundations.html#vectors"><i class="fa fa-check"></i><b>1.9</b> Vectors<span></span></a>
 <ul>
-<li class="chapter" data-level="1.9.1" data-path="r-foundations.html"><a href="r-foundations.html#creation"><i class="fa fa-check"></i><b>1.9.1</b> Creation</a></li>
-<li class="chapter" data-level="1.9.2" data-path="r-foundations.html"><a href="r-foundations.html#creating-patterned-vectors"><i class="fa fa-check"></i><b>1.9.2</b> Creating patterned vectors</a></li>
-<li class="chapter" data-level="1.9.3" data-path="r-foundations.html"><a href="r-foundations.html#example-4"><i class="fa fa-check"></i><b>1.9.3</b> Example</a></li>
-<li class="chapter" data-level="1.9.4" data-path="r-foundations.html"><a href="r-foundations.html#example-5"><i class="fa fa-check"></i><b>1.9.4</b> Example</a></li>
-<li class="chapter" data-level="1.9.5" data-path="r-foundations.html"><a href="r-foundations.html#categorical-vectors"><i class="fa fa-check"></i><b>1.9.5</b> Categorical vectors</a></li>
-<li class="chapter" data-level="1.9.6" data-path="r-foundations.html"><a href="r-foundations.html#example-6"><i class="fa fa-check"></i><b>1.9.6</b> Example</a></li>
-<li class="chapter" data-level="1.9.7" data-path="r-foundations.html"><a href="r-foundations.html#extracting-parts-of-a-vector"><i class="fa fa-check"></i><b>1.9.7</b> Extracting parts of a vector</a></li>
+<li class="chapter" data-level="1.9.1" data-path="r-foundations.html"><a href="r-foundations.html#creation"><i class="fa fa-check"></i><b>1.9.1</b> Creation<span></span></a></li>
+<li class="chapter" data-level="1.9.2" data-path="r-foundations.html"><a href="r-foundations.html#creating-patterned-vectors"><i class="fa fa-check"></i><b>1.9.2</b> Creating patterned vectors<span></span></a></li>
+<li class="chapter" data-level="1.9.3" data-path="r-foundations.html"><a href="r-foundations.html#example-4"><i class="fa fa-check"></i><b>1.9.3</b> Example<span></span></a></li>
+<li class="chapter" data-level="1.9.4" data-path="r-foundations.html"><a href="r-foundations.html#example-5"><i class="fa fa-check"></i><b>1.9.4</b> Example<span></span></a></li>
+<li class="chapter" data-level="1.9.5" data-path="r-foundations.html"><a href="r-foundations.html#categorical-vectors"><i class="fa fa-check"></i><b>1.9.5</b> Categorical vectors<span></span></a></li>
+<li class="chapter" data-level="1.9.6" data-path="r-foundations.html"><a href="r-foundations.html#example-6"><i class="fa fa-check"></i><b>1.9.6</b> Example<span></span></a></li>
+<li class="chapter" data-level="1.9.7" data-path="r-foundations.html"><a href="r-foundations.html#extracting-parts-of-a-vector"><i class="fa fa-check"></i><b>1.9.7</b> Extracting parts of a vector<span></span></a></li>
 </ul></li>
-<li class="chapter" data-level="1.10" data-path="r-foundations.html"><a href="r-foundations.html#helpful-functions"><i class="fa fa-check"></i><b>1.10</b> Helpful functions</a>
+<li class="chapter" data-level="1.10" data-path="r-foundations.html"><a href="r-foundations.html#helpful-functions"><i class="fa fa-check"></i><b>1.10</b> Helpful functions<span></span></a>
 <ul>
-<li class="chapter" data-level="1.10.1" data-path="r-foundations.html"><a href="r-foundations.html#general-functions"><i class="fa fa-check"></i><b>1.10.1</b> General functions</a></li>
-<li class="chapter" data-level="1.10.2" data-path="r-foundations.html"><a href="r-foundations.html#example-7"><i class="fa fa-check"></i><b>1.10.2</b> Example</a></li>
-<li class="chapter" data-level="1.10.3" data-path="r-foundations.html"><a href="r-foundations.html#functions-related-to-statistical-distributions"><i class="fa fa-check"></i><b>1.10.3</b> Functions related to statistical distributions</a></li>
-<li class="chapter" data-level="1.10.4" data-path="r-foundations.html"><a href="r-foundations.html#example-8"><i class="fa fa-check"></i><b>1.10.4</b> Example</a></li>
+<li class="chapter" data-level="1.10.1" data-path="r-foundations.html"><a href="r-foundations.html#general-functions"><i class="fa fa-check"></i><b>1.10.1</b> General functions<span></span></a></li>
+<li class="chapter" data-level="1.10.2" data-path="r-foundations.html"><a href="r-foundations.html#example-7"><i class="fa fa-check"></i><b>1.10.2</b> Example<span></span></a></li>
+<li class="chapter" data-level="1.10.3" data-path="r-foundations.html"><a href="r-foundations.html#functions-related-to-statistical-distributions"><i class="fa fa-check"></i><b>1.10.3</b> Functions related to statistical distributions<span></span></a></li>
+<li class="chapter" data-level="1.10.4" data-path="r-foundations.html"><a href="r-foundations.html#example-8"><i class="fa fa-check"></i><b>1.10.4</b> Example<span></span></a></li>
 </ul></li>
-<li class="chapter" data-level="1.11" data-path="r-foundations.html"><a href="r-foundations.html#data-frames"><i class="fa fa-check"></i><b>1.11</b> Data Frames</a>
+<li class="chapter" data-level="1.11" data-path="r-foundations.html"><a href="r-foundations.html#data-frames"><i class="fa fa-check"></i><b>1.11</b> Data Frames<span></span></a>
 <ul>
-<li class="chapter" data-level="1.11.1" data-path="r-foundations.html"><a href="r-foundations.html#creation-1"><i class="fa fa-check"></i><b>1.11.1</b> Creation</a></li>
-<li class="chapter" data-level="1.11.2" data-path="r-foundations.html"><a href="r-foundations.html#extracting-parts-of-a-data-frame"><i class="fa fa-check"></i><b>1.11.2</b> Extracting parts of a data frame</a></li>
-<li class="chapter" data-level="1.11.3" data-path="r-foundations.html"><a href="r-foundations.html#example-9"><i class="fa fa-check"></i><b>1.11.3</b> Example</a></li>
-<li class="chapter" data-level="1.11.4" data-path="r-foundations.html"><a href="r-foundations.html#importing-data"><i class="fa fa-check"></i><b>1.11.4</b> Importing Data</a></li>
+<li class="chapter" data-level="1.11.1" data-path="r-foundations.html"><a href="r-foundations.html#creation-1"><i class="fa fa-check"></i><b>1.11.1</b> Creation<span></span></a></li>
+<li class="chapter" data-level="1.11.2" data-path="r-foundations.html"><a href="r-foundations.html#extracting-parts-of-a-data-frame"><i class="fa fa-check"></i><b>1.11.2</b> Extracting parts of a data frame<span></span></a></li>
+<li class="chapter" data-level="1.11.3" data-path="r-foundations.html"><a href="r-foundations.html#example-9"><i class="fa fa-check"></i><b>1.11.3</b> Example<span></span></a></li>
+<li class="chapter" data-level="1.11.4" data-path="r-foundations.html"><a href="r-foundations.html#importing-data"><i class="fa fa-check"></i><b>1.11.4</b> Importing Data<span></span></a></li>
 </ul></li>
-<li class="chapter" data-level="1.12" data-path="r-foundations.html"><a href="r-foundations.html#logical-statements"><i class="fa fa-check"></i><b>1.12</b> Logical statements</a>
+<li class="chapter" data-level="1.12" data-path="r-foundations.html"><a href="r-foundations.html#logical-statements"><i class="fa fa-check"></i><b>1.12</b> Logical statements<span></span></a>
 <ul>
-<li class="chapter" data-level="1.12.1" data-path="r-foundations.html"><a href="r-foundations.html#basic-comparisons"><i class="fa fa-check"></i><b>1.12.1</b> Basic comparisons</a></li>
-<li class="chapter" data-level="1.12.2" data-path="r-foundations.html"><a href="r-foundations.html#example-10"><i class="fa fa-check"></i><b>1.12.2</b> Example</a></li>
-<li class="chapter" data-level="1.12.3" data-path="r-foundations.html"><a href="r-foundations.html#and-and-or-statements"><i class="fa fa-check"></i><b>1.12.3</b> And and Or statements</a></li>
-<li class="chapter" data-level="1.12.4" data-path="r-foundations.html"><a href="r-foundations.html#example-11"><i class="fa fa-check"></i><b>1.12.4</b> Example</a></li>
+<li class="chapter" data-level="1.12.1" data-path="r-foundations.html"><a href="r-foundations.html#basic-comparisons"><i class="fa fa-check"></i><b>1.12.1</b> Basic comparisons<span></span></a></li>
+<li class="chapter" data-level="1.12.2" data-path="r-foundations.html"><a href="r-foundations.html#example-10"><i class="fa fa-check"></i><b>1.12.2</b> Example<span></span></a></li>
+<li class="chapter" data-level="1.12.3" data-path="r-foundations.html"><a href="r-foundations.html#and-and-or-statements"><i class="fa fa-check"></i><b>1.12.3</b> And and Or statements<span></span></a></li>
+<li class="chapter" data-level="1.12.4" data-path="r-foundations.html"><a href="r-foundations.html#example-11"><i class="fa fa-check"></i><b>1.12.4</b> Example<span></span></a></li>
 </ul></li>
-<li class="chapter" data-level="1.13" data-path="r-foundations.html"><a href="r-foundations.html#subsetting-with-logical-statements"><i class="fa fa-check"></i><b>1.13</b> Subsetting with logical statements</a>
+<li class="chapter" data-level="1.13" data-path="r-foundations.html"><a href="r-foundations.html#subsetting-with-logical-statements"><i class="fa fa-check"></i><b>1.13</b> Subsetting with logical statements<span></span></a>
 <ul>
-<li class="chapter" data-level="1.13.1" data-path="r-foundations.html"><a href="r-foundations.html#example-12"><i class="fa fa-check"></i><b>1.13.1</b> Example</a></li>
+<li class="chapter" data-level="1.13.1" data-path="r-foundations.html"><a href="r-foundations.html#example-12"><i class="fa fa-check"></i><b>1.13.1</b> Example<span></span></a></li>
 </ul></li>
-<li class="chapter" data-level="1.14" data-path="r-foundations.html"><a href="r-foundations.html#ecosystem-debate"><i class="fa fa-check"></i><b>1.14</b> Ecosystem debate</a></li>
+<li class="chapter" data-level="1.14" data-path="r-foundations.html"><a href="r-foundations.html#ecosystem-debate"><i class="fa fa-check"></i><b>1.14</b> Ecosystem debate<span></span></a></li>
 </ul></li>
-<li class="chapter" data-level="2" data-path="data-exploration.html"><a href="data-exploration.html"><i class="fa fa-check"></i><b>2</b> Data exploration</a>
+<li class="chapter" data-level="2" data-path="data-exploration.html"><a href="data-exploration.html"><i class="fa fa-check"></i><b>2</b> Data exploration<span></span></a>
 <ul>
-<li class="chapter" data-level="2.1" data-path="data-exploration.html"><a href="data-exploration.html#data-analysis-process"><i class="fa fa-check"></i><b>2.1</b> Data analysis process</a>
+<li class="chapter" data-level="2.1" data-path="data-exploration.html"><a href="data-exploration.html#data-analysis-process"><i class="fa fa-check"></i><b>2.1</b> Data analysis process<span></span></a>
 <ul>
-<li class="chapter" data-level="2.1.1" data-path="data-exploration.html"><a href="data-exploration.html#problem-formulation"><i class="fa fa-check"></i><b>2.1.1</b> Problem Formulation</a></li>
-<li class="chapter" data-level="2.1.2" data-path="data-exploration.html"><a href="data-exploration.html#data-collection"><i class="fa fa-check"></i><b>2.1.2</b> Data collection</a></li>
+<li class="chapter" data-level="2.1.1" data-path="data-exploration.html"><a href="data-exploration.html#problem-formulation"><i class="fa fa-check"></i><b>2.1.1</b> Problem Formulation<span></span></a></li>
+<li class="chapter" data-level="2.1.2" data-path="data-exploration.html"><a href="data-exploration.html#data-collection"><i class="fa fa-check"></i><b>2.1.2</b> Data collection<span></span></a></li>
 </ul></li>
-<li class="chapter" data-level="2.2" data-path="data-exploration.html"><a href="data-exploration.html#data-exploration-1"><i class="fa fa-check"></i><b>2.2</b> Data exploration</a>
+<li class="chapter" data-level="2.2" data-path="data-exploration.html"><a href="data-exploration.html#data-exploration-1"><i class="fa fa-check"></i><b>2.2</b> Data exploration<span></span></a>
 <ul>
-<li class="chapter" data-level="2.2.1" data-path="data-exploration.html"><a href="data-exploration.html#numerical-summaries-of-data"><i class="fa fa-check"></i><b>2.2.1</b> Numerical summaries of data</a></li>
-<li class="chapter" data-level="2.2.2" data-path="data-exploration.html"><a href="data-exploration.html#visual-summaries-of-data"><i class="fa fa-check"></i><b>2.2.2</b> Visual summaries of data</a></li>
-<li class="chapter" data-level="2.2.3" data-path="data-exploration.html"><a href="data-exploration.html#what-to-look-for"><i class="fa fa-check"></i><b>2.2.3</b> What to look for</a></li>
+<li class="chapter" data-level="2.2.1" data-path="data-exploration.html"><a href="data-exploration.html#numerical-summaries-of-data"><i class="fa fa-check"></i><b>2.2.1</b> Numerical summaries of data<span></span></a></li>
+<li class="chapter" data-level="2.2.2" data-path="data-exploration.html"><a href="data-exploration.html#visual-summaries-of-data"><i class="fa fa-check"></i><b>2.2.2</b> Visual summaries of data<span></span></a></li>
+<li class="chapter" data-level="2.2.3" data-path="data-exploration.html"><a href="data-exploration.html#what-to-look-for"><i class="fa fa-check"></i><b>2.2.3</b> What to look for<span></span></a></li>
 </ul></li>
-<li class="chapter" data-level="2.3" data-path="data-exploration.html"><a href="data-exploration.html#kidney-example"><i class="fa fa-check"></i><b>2.3</b> Kidney Example</a>
+<li class="chapter" data-level="2.3" data-path="data-exploration.html"><a href="data-exploration.html#kidney-example"><i class="fa fa-check"></i><b>2.3</b> Kidney Example<span></span></a>
 <ul>
-<li class="chapter" data-level="2.3.1" data-path="data-exploration.html"><a href="data-exploration.html#numerically-summarizing-the-data"><i class="fa fa-check"></i><b>2.3.1</b> Numerically summarizing the data</a></li>
-<li class="chapter" data-level="2.3.2" data-path="data-exploration.html"><a href="data-exploration.html#cleaning-the-data"><i class="fa fa-check"></i><b>2.3.2</b> Cleaning the data</a></li>
+<li class="chapter" data-level="2.3.1" data-path="data-exploration.html"><a href="data-exploration.html#numerically-summarizing-the-data"><i class="fa fa-check"></i><b>2.3.1</b> Numerically summarizing the data<span></span></a></li>
+<li class="chapter" data-level="2.3.2" data-path="data-exploration.html"><a href="data-exploration.html#cleaning-the-data"><i class="fa fa-check"></i><b>2.3.2</b> Cleaning the data<span></span></a></li>
 </ul></li>
-<li class="chapter" data-level="2.4" data-path="data-exploration.html"><a href="data-exploration.html#visualizing-data-with-base-graphics"><i class="fa fa-check"></i><b>2.4</b> Visualizing data with <strong>base</strong> graphics</a>
+<li class="chapter" data-level="2.4" data-path="data-exploration.html"><a href="data-exploration.html#visualizing-data-with-base-graphics"><i class="fa fa-check"></i><b>2.4</b> Visualizing data with <strong>base</strong> graphics<span></span></a>
 <ul>
-<li class="chapter" data-level="2.4.1" data-path="data-exploration.html"><a href="data-exploration.html#histograms"><i class="fa fa-check"></i><b>2.4.1</b> Histograms</a></li>
-<li class="chapter" data-level="2.4.2" data-path="data-exploration.html"><a href="data-exploration.html#density-plots"><i class="fa fa-check"></i><b>2.4.2</b> Density plots</a></li>
-<li class="chapter" data-level="2.4.3" data-path="data-exploration.html"><a href="data-exploration.html#index-plots"><i class="fa fa-check"></i><b>2.4.3</b> Index plots</a></li>
-<li class="chapter" data-level="2.4.4" data-path="data-exploration.html"><a href="data-exploration.html#bivariate-scatter-plots"><i class="fa fa-check"></i><b>2.4.4</b> Bivariate scatter plots</a></li>
-<li class="chapter" data-level="2.4.5" data-path="data-exploration.html"><a href="data-exploration.html#bivariate-boxplots"><i class="fa fa-check"></i><b>2.4.5</b> Bivariate boxplots</a></li>
-<li class="chapter" data-level="2.4.6" data-path="data-exploration.html"><a href="data-exploration.html#multiple-plots-in-one-figure"><i class="fa fa-check"></i><b>2.4.6</b> Multiple plots in one figure</a></li>
+<li class="chapter" data-level="2.4.1" data-path="data-exploration.html"><a href="data-exploration.html#histograms"><i class="fa fa-check"></i><b>2.4.1</b> Histograms<span></span></a></li>
+<li class="chapter" data-level="2.4.2" data-path="data-exploration.html"><a href="data-exploration.html#density-plots"><i class="fa fa-check"></i><b>2.4.2</b> Density plots<span></span></a></li>
+<li class="chapter" data-level="2.4.3" data-path="data-exploration.html"><a href="data-exploration.html#index-plots"><i class="fa fa-check"></i><b>2.4.3</b> Index plots<span></span></a></li>
+<li class="chapter" data-level="2.4.4" data-path="data-exploration.html"><a href="data-exploration.html#bivariate-scatter-plots"><i class="fa fa-check"></i><b>2.4.4</b> Bivariate scatter plots<span></span></a></li>
+<li class="chapter" data-level="2.4.5" data-path="data-exploration.html"><a href="data-exploration.html#bivariate-boxplots"><i class="fa fa-check"></i><b>2.4.5</b> Bivariate boxplots<span></span></a></li>
+<li class="chapter" data-level="2.4.6" data-path="data-exploration.html"><a href="data-exploration.html#multiple-plots-in-one-figure"><i class="fa fa-check"></i><b>2.4.6</b> Multiple plots in one figure<span></span></a></li>
 </ul></li>
-<li class="chapter" data-level="2.5" data-path="data-exploration.html"><a href="data-exploration.html#visualizing-data-with-ggplot2"><i class="fa fa-check"></i><b>2.5</b> Visualizing data with <strong>ggplot2</strong></a>
+<li class="chapter" data-level="2.5" data-path="data-exploration.html"><a href="data-exploration.html#visualizing-data-with-ggplot2"><i class="fa fa-check"></i><b>2.5</b> Visualizing data with <strong>ggplot2</strong><span></span></a>
 <ul>
-<li class="chapter" data-level="2.5.1" data-path="data-exploration.html"><a href="data-exploration.html#a-ggplot2-histogram"><i class="fa fa-check"></i><b>2.5.1</b> A <strong>ggplot2</strong> histogram</a></li>
-<li class="chapter" data-level="2.5.2" data-path="data-exploration.html"><a href="data-exploration.html#a-ggplot2-density-plot"><i class="fa fa-check"></i><b>2.5.2</b> A <strong>ggplot2</strong> density plot</a></li>
-<li class="chapter" data-level="2.5.3" data-path="data-exploration.html"><a href="data-exploration.html#a-ggplot2-scatter-plot"><i class="fa fa-check"></i><b>2.5.3</b> A <strong>ggplot2</strong> scatter plot</a></li>
-<li class="chapter" data-level="2.5.4" data-path="data-exploration.html"><a href="data-exploration.html#scaling-ggplot2-plots"><i class="fa fa-check"></i><b>2.5.4</b> Scaling <strong>ggplot2</strong> plots</a></li>
-<li class="chapter" data-level="2.5.5" data-path="data-exploration.html"><a href="data-exploration.html#facetting-in-ggplot2"><i class="fa fa-check"></i><b>2.5.5</b> Facetting in <code>ggplot2</code></a></li>
-<li class="chapter" data-level="2.5.6" data-path="data-exploration.html"><a href="data-exploration.html#summary-of-ggplot2"><i class="fa fa-check"></i><b>2.5.6</b> Summary of <strong>ggplot2</strong></a></li>
+<li class="chapter" data-level="2.5.1" data-path="data-exploration.html"><a href="data-exploration.html#a-ggplot2-histogram"><i class="fa fa-check"></i><b>2.5.1</b> A <strong>ggplot2</strong> histogram<span></span></a></li>
+<li class="chapter" data-level="2.5.2" data-path="data-exploration.html"><a href="data-exploration.html#a-ggplot2-density-plot"><i class="fa fa-check"></i><b>2.5.2</b> A <strong>ggplot2</strong> density plot<span></span></a></li>
+<li class="chapter" data-level="2.5.3" data-path="data-exploration.html"><a href="data-exploration.html#a-ggplot2-scatter-plot"><i class="fa fa-check"></i><b>2.5.3</b> A <strong>ggplot2</strong> scatter plot<span></span></a></li>
+<li class="chapter" data-level="2.5.4" data-path="data-exploration.html"><a href="data-exploration.html#scaling-ggplot2-plots"><i class="fa fa-check"></i><b>2.5.4</b> Scaling <strong>ggplot2</strong> plots<span></span></a></li>
+<li class="chapter" data-level="2.5.5" data-path="data-exploration.html"><a href="data-exploration.html#facetting-in-ggplot2"><i class="fa fa-check"></i><b>2.5.5</b> Facetting in <code>ggplot2</code><span></span></a></li>
+<li class="chapter" data-level="2.5.6" data-path="data-exploration.html"><a href="data-exploration.html#summary-of-ggplot2"><i class="fa fa-check"></i><b>2.5.6</b> Summary of <strong>ggplot2</strong><span></span></a></li>
 </ul></li>
-<li class="chapter" data-level="2.6" data-path="data-exploration.html"><a href="data-exploration.html#summary-of-data-exploration"><i class="fa fa-check"></i><b>2.6</b> Summary of data exploration</a></li>
+<li class="chapter" data-level="2.6" data-path="data-exploration.html"><a href="data-exploration.html#summary-of-data-exploration"><i class="fa fa-check"></i><b>2.6</b> Summary of data exploration<span></span></a></li>
 </ul></li>
-<li class="chapter" data-level="3" data-path="review-of-probability-random-variables-and-random-vectors.html"><a href="review-of-probability-random-variables-and-random-vectors.html"><i class="fa fa-check"></i><b>3</b> Review of probability, random variables, and random vectors</a>
+<li class="chapter" data-level="3" data-path="review-of-probability-random-variables-and-random-vectors.html"><a href="review-of-probability-random-variables-and-random-vectors.html"><i class="fa fa-check"></i><b>3</b> Review of probability, random variables, and random vectors<span></span></a>
 <ul>
-<li class="chapter" data-level="3.1" data-path="review-of-probability-random-variables-and-random-vectors.html"><a href="review-of-probability-random-variables-and-random-vectors.html#probability-basics"><i class="fa fa-check"></i><b>3.1</b> Probability Basics</a></li>
-<li class="chapter" data-level="3.2" data-path="review-of-probability-random-variables-and-random-vectors.html"><a href="review-of-probability-random-variables-and-random-vectors.html#random-variables"><i class="fa fa-check"></i><b>3.2</b> Random Variables</a>
+<li class="chapter" data-level="3.1" data-path="review-of-probability-random-variables-and-random-vectors.html"><a href="review-of-probability-random-variables-and-random-vectors.html#probability-basics"><i class="fa fa-check"></i><b>3.1</b> Probability Basics<span></span></a></li>
+<li class="chapter" data-level="3.2" data-path="review-of-probability-random-variables-and-random-vectors.html"><a href="review-of-probability-random-variables-and-random-vectors.html#random-variables"><i class="fa fa-check"></i><b>3.2</b> Random Variables<span></span></a>
 <ul>
-<li class="chapter" data-level="3.2.1" data-path="review-of-probability-random-variables-and-random-vectors.html"><a href="review-of-probability-random-variables-and-random-vectors.html#discrete-random-variables"><i class="fa fa-check"></i><b>3.2.1</b> Discrete random variables</a></li>
-<li class="chapter" data-level="3.2.2" data-path="review-of-probability-random-variables-and-random-vectors.html"><a href="review-of-probability-random-variables-and-random-vectors.html#continuous-random-variables"><i class="fa fa-check"></i><b>3.2.2</b> Continuous random variables</a></li>
-<li class="chapter" data-level="3.2.3" data-path="review-of-probability-random-variables-and-random-vectors.html"><a href="review-of-probability-random-variables-and-random-vectors.html#useful-facts-for-transformation-of-random-variables"><i class="fa fa-check"></i><b>3.2.3</b> Useful facts for transformation of random variables</a></li>
+<li class="chapter" data-level="3.2.1" data-path="review-of-probability-random-variables-and-random-vectors.html"><a href="review-of-probability-random-variables-and-random-vectors.html#discrete-random-variables"><i class="fa fa-check"></i><b>3.2.1</b> Discrete random variables<span></span></a></li>
+<li class="chapter" data-level="3.2.2" data-path="review-of-probability-random-variables-and-random-vectors.html"><a href="review-of-probability-random-variables-and-random-vectors.html#continuous-random-variables"><i class="fa fa-check"></i><b>3.2.2</b> Continuous random variables<span></span></a></li>
+<li class="chapter" data-level="3.2.3" data-path="review-of-probability-random-variables-and-random-vectors.html"><a href="review-of-probability-random-variables-and-random-vectors.html#useful-facts-for-transformation-of-random-variables"><i class="fa fa-check"></i><b>3.2.3</b> Useful facts for transformation of random variables<span></span></a></li>
 </ul></li>
-<li class="chapter" data-level="3.3" data-path="review-of-probability-random-variables-and-random-vectors.html"><a href="review-of-probability-random-variables-and-random-vectors.html#multivariate-distributions"><i class="fa fa-check"></i><b>3.3</b> Multivariate distributions</a>
+<li class="chapter" data-level="3.3" data-path="review-of-probability-random-variables-and-random-vectors.html"><a href="review-of-probability-random-variables-and-random-vectors.html#multivariate-distributions"><i class="fa fa-check"></i><b>3.3</b> Multivariate distributions<span></span></a>
 <ul>
-<li class="chapter" data-level="3.3.1" data-path="review-of-probability-random-variables-and-random-vectors.html"><a href="review-of-probability-random-variables-and-random-vectors.html#basic-properties"><i class="fa fa-check"></i><b>3.3.1</b> Basic properties</a></li>
-<li class="chapter" data-level="3.3.2" data-path="review-of-probability-random-variables-and-random-vectors.html"><a href="review-of-probability-random-variables-and-random-vectors.html#marginal-distributions"><i class="fa fa-check"></i><b>3.3.2</b> Marginal distributions</a></li>
-<li class="chapter" data-level="3.3.3" data-path="review-of-probability-random-variables-and-random-vectors.html"><a href="review-of-probability-random-variables-and-random-vectors.html#independence-of-random-variables"><i class="fa fa-check"></i><b>3.3.3</b> Independence of random variables</a></li>
-<li class="chapter" data-level="3.3.4" data-path="review-of-probability-random-variables-and-random-vectors.html"><a href="review-of-probability-random-variables-and-random-vectors.html#conditional-distributions"><i class="fa fa-check"></i><b>3.3.4</b> Conditional distributions</a></li>
-<li class="chapter" data-level="3.3.5" data-path="review-of-probability-random-variables-and-random-vectors.html"><a href="review-of-probability-random-variables-and-random-vectors.html#covariance"><i class="fa fa-check"></i><b>3.3.5</b> Covariance</a></li>
-<li class="chapter" data-level="3.3.6" data-path="review-of-probability-random-variables-and-random-vectors.html"><a href="review-of-probability-random-variables-and-random-vectors.html#useful-facts-for-transformations-of-multiple-random-variables"><i class="fa fa-check"></i><b>3.3.6</b> Useful facts for transformations of multiple random variables</a></li>
+<li class="chapter" data-level="3.3.1" data-path="review-of-probability-random-variables-and-random-vectors.html"><a href="review-of-probability-random-variables-and-random-vectors.html#basic-properties"><i class="fa fa-check"></i><b>3.3.1</b> Basic properties<span></span></a></li>
+<li class="chapter" data-level="3.3.2" data-path="review-of-probability-random-variables-and-random-vectors.html"><a href="review-of-probability-random-variables-and-random-vectors.html#marginal-distributions"><i class="fa fa-check"></i><b>3.3.2</b> Marginal distributions<span></span></a></li>
+<li class="chapter" data-level="3.3.3" data-path="review-of-probability-random-variables-and-random-vectors.html"><a href="review-of-probability-random-variables-and-random-vectors.html#independence-of-random-variables"><i class="fa fa-check"></i><b>3.3.3</b> Independence of random variables<span></span></a></li>
+<li class="chapter" data-level="3.3.4" data-path="review-of-probability-random-variables-and-random-vectors.html"><a href="review-of-probability-random-variables-and-random-vectors.html#conditional-distributions"><i class="fa fa-check"></i><b>3.3.4</b> Conditional distributions<span></span></a></li>
+<li class="chapter" data-level="3.3.5" data-path="review-of-probability-random-variables-and-random-vectors.html"><a href="review-of-probability-random-variables-and-random-vectors.html#covariance"><i class="fa fa-check"></i><b>3.3.5</b> Covariance<span></span></a></li>
+<li class="chapter" data-level="3.3.6" data-path="review-of-probability-random-variables-and-random-vectors.html"><a href="review-of-probability-random-variables-and-random-vectors.html#useful-facts-for-transformations-of-multiple-random-variables"><i class="fa fa-check"></i><b>3.3.6</b> Useful facts for transformations of multiple random variables<span></span></a></li>
 </ul></li>
-<li class="chapter" data-level="3.4" data-path="review-of-probability-random-variables-and-random-vectors.html"><a href="review-of-probability-random-variables-and-random-vectors.html#random-vectors"><i class="fa fa-check"></i><b>3.4</b> Random vectors</a>
+<li class="chapter" data-level="3.4" data-path="review-of-probability-random-variables-and-random-vectors.html"><a href="review-of-probability-random-variables-and-random-vectors.html#random-vectors"><i class="fa fa-check"></i><b>3.4</b> Random vectors<span></span></a>
 <ul>
-<li class="chapter" data-level="3.4.1" data-path="review-of-probability-random-variables-and-random-vectors.html"><a href="review-of-probability-random-variables-and-random-vectors.html#definition"><i class="fa fa-check"></i><b>3.4.1</b> Definition</a></li>
-<li class="chapter" data-level="3.4.2" data-path="review-of-probability-random-variables-and-random-vectors.html"><a href="review-of-probability-random-variables-and-random-vectors.html#mean-variance-and-covariance"><i class="fa fa-check"></i><b>3.4.2</b> Mean, variance, and covariance</a></li>
+<li class="chapter" data-level="3.4.1" data-path="review-of-probability-random-variables-and-random-vectors.html"><a href="review-of-probability-random-variables-and-random-vectors.html#definition"><i class="fa fa-check"></i><b>3.4.1</b> Definition<span></span></a></li>
+<li class="chapter" data-level="3.4.2" data-path="review-of-probability-random-variables-and-random-vectors.html"><a href="review-of-probability-random-variables-and-random-vectors.html#mean-variance-and-covariance"><i class="fa fa-check"></i><b>3.4.2</b> Mean, variance, and covariance<span></span></a></li>
 </ul></li>
-<li class="chapter" data-level="3.5" data-path="review-of-probability-random-variables-and-random-vectors.html"><a href="review-of-probability-random-variables-and-random-vectors.html#properties-of-transformations-of-random-vectors"><i class="fa fa-check"></i><b>3.5</b> Properties of transformations of random vectors</a></li>
-<li class="chapter" data-level="3.6" data-path="review-of-probability-random-variables-and-random-vectors.html"><a href="review-of-probability-random-variables-and-random-vectors.html#multivariate-normal-gaussian-distribution"><i class="fa fa-check"></i><b>3.6</b> Multivariate normal (Gaussian) distribution</a>
+<li class="chapter" data-level="3.5" data-path="review-of-probability-random-variables-and-random-vectors.html"><a href="review-of-probability-random-variables-and-random-vectors.html#properties-of-transformations-of-random-vectors"><i class="fa fa-check"></i><b>3.5</b> Properties of transformations of random vectors<span></span></a></li>
+<li class="chapter" data-level="3.6" data-path="review-of-probability-random-variables-and-random-vectors.html"><a href="review-of-probability-random-variables-and-random-vectors.html#multivariate-normal-gaussian-distribution"><i class="fa fa-check"></i><b>3.6</b> Multivariate normal (Gaussian) distribution<span></span></a>
 <ul>
-<li class="chapter" data-level="3.6.1" data-path="review-of-probability-random-variables-and-random-vectors.html"><a href="review-of-probability-random-variables-and-random-vectors.html#definition-1"><i class="fa fa-check"></i><b>3.6.1</b> Definition</a></li>
-<li class="chapter" data-level="3.6.2" data-path="review-of-probability-random-variables-and-random-vectors.html"><a href="review-of-probability-random-variables-and-random-vectors.html#useful-facts"><i class="fa fa-check"></i><b>3.6.2</b> Useful facts</a></li>
+<li class="chapter" data-level="3.6.1" data-path="review-of-probability-random-variables-and-random-vectors.html"><a href="review-of-probability-random-variables-and-random-vectors.html#definition-1"><i class="fa fa-check"></i><b>3.6.1</b> Definition<span></span></a></li>
+<li class="chapter" data-level="3.6.2" data-path="review-of-probability-random-variables-and-random-vectors.html"><a href="review-of-probability-random-variables-and-random-vectors.html#useful-facts"><i class="fa fa-check"></i><b>3.6.2</b> Useful facts<span></span></a></li>
 </ul></li>
-<li class="chapter" data-level="3.7" data-path="review-of-probability-random-variables-and-random-vectors.html"><a href="review-of-probability-random-variables-and-random-vectors.html#example-1-1"><i class="fa fa-check"></i><b>3.7</b> Example 1</a>
+<li class="chapter" data-level="3.7" data-path="review-of-probability-random-variables-and-random-vectors.html"><a href="review-of-probability-random-variables-and-random-vectors.html#example-1-1"><i class="fa fa-check"></i><b>3.7</b> Example 1<span></span></a>
 <ul>
-<li class="chapter" data-level="3.7.1" data-path="review-of-probability-random-variables-and-random-vectors.html"><a href="review-of-probability-random-variables-and-random-vectors.html#bernoulli-distribution"><i class="fa fa-check"></i><b>3.7.1</b> Bernoulli distribution</a></li>
-<li class="chapter" data-level="3.7.2" data-path="review-of-probability-random-variables-and-random-vectors.html"><a href="review-of-probability-random-variables-and-random-vectors.html#binomial-distribution"><i class="fa fa-check"></i><b>3.7.2</b> Binomial distribution</a></li>
-<li class="chapter" data-level="3.7.3" data-path="review-of-probability-random-variables-and-random-vectors.html"><a href="review-of-probability-random-variables-and-random-vectors.html#poisson-distribution"><i class="fa fa-check"></i><b>3.7.3</b> Poisson Distribution</a></li>
+<li class="chapter" data-level="3.7.1" data-path="review-of-probability-random-variables-and-random-vectors.html"><a href="review-of-probability-random-variables-and-random-vectors.html#bernoulli-distribution"><i class="fa fa-check"></i><b>3.7.1</b> Bernoulli distribution<span></span></a></li>
+<li class="chapter" data-level="3.7.2" data-path="review-of-probability-random-variables-and-random-vectors.html"><a href="review-of-probability-random-variables-and-random-vectors.html#binomial-distribution"><i class="fa fa-check"></i><b>3.7.2</b> Binomial distribution<span></span></a></li>
+<li class="chapter" data-level="3.7.3" data-path="review-of-probability-random-variables-and-random-vectors.html"><a href="review-of-probability-random-variables-and-random-vectors.html#poisson-distribution"><i class="fa fa-check"></i><b>3.7.3</b> Poisson Distribution<span></span></a></li>
 </ul></li>
-<li class="chapter" data-level="3.8" data-path="review-of-probability-random-variables-and-random-vectors.html"><a href="review-of-probability-random-variables-and-random-vectors.html#example-2-1"><i class="fa fa-check"></i><b>3.8</b> Example 2</a>
+<li class="chapter" data-level="3.8" data-path="review-of-probability-random-variables-and-random-vectors.html"><a href="review-of-probability-random-variables-and-random-vectors.html#example-2-1"><i class="fa fa-check"></i><b>3.8</b> Example 2<span></span></a>
 <ul>
-<li class="chapter" data-level="3.8.1" data-path="review-of-probability-random-variables-and-random-vectors.html"><a href="review-of-probability-random-variables-and-random-vectors.html#problem-1"><i class="fa fa-check"></i><b>3.8.1</b> Problem 1</a></li>
-<li class="chapter" data-level="3.8.2" data-path="review-of-probability-random-variables-and-random-vectors.html"><a href="review-of-probability-random-variables-and-random-vectors.html#problem-2"><i class="fa fa-check"></i><b>3.8.2</b> Problem 2</a></li>
-<li class="chapter" data-level="3.8.3" data-path="review-of-probability-random-variables-and-random-vectors.html"><a href="review-of-probability-random-variables-and-random-vectors.html#problem-3"><i class="fa fa-check"></i><b>3.8.3</b> Problem 3</a></li>
-<li class="chapter" data-level="3.8.4" data-path="review-of-probability-random-variables-and-random-vectors.html"><a href="review-of-probability-random-variables-and-random-vectors.html#problem-4"><i class="fa fa-check"></i><b>3.8.4</b> Problem 4</a></li>
-<li class="chapter" data-level="3.8.5" data-path="review-of-probability-random-variables-and-random-vectors.html"><a href="review-of-probability-random-variables-and-random-vectors.html#problem-5"><i class="fa fa-check"></i><b>3.8.5</b> Problem 5</a></li>
-<li class="chapter" data-level="3.8.6" data-path="review-of-probability-random-variables-and-random-vectors.html"><a href="review-of-probability-random-variables-and-random-vectors.html#problem-6"><i class="fa fa-check"></i><b>3.8.6</b> Problem 6</a></li>
-<li class="chapter" data-level="3.8.7" data-path="review-of-probability-random-variables-and-random-vectors.html"><a href="review-of-probability-random-variables-and-random-vectors.html#problem-7"><i class="fa fa-check"></i><b>3.8.7</b> Problem 7</a></li>
-</ul></li>
-</ul></li>
-<li class="chapter" data-level="4" data-path="useful-matrix-facts.html"><a href="useful-matrix-facts.html"><i class="fa fa-check"></i><b>4</b> Useful matrix facts</a>
-<ul>
-<li class="chapter" data-level="4.1" data-path="useful-matrix-facts.html"><a href="useful-matrix-facts.html#notation"><i class="fa fa-check"></i><b>4.1</b> Notation</a></li>
-<li class="chapter" data-level="4.2" data-path="useful-matrix-facts.html"><a href="useful-matrix-facts.html#basic-mathematical-properties"><i class="fa fa-check"></i><b>4.2</b> Basic mathematical properties</a>
-<ul>
-<li class="chapter" data-level="4.2.1" data-path="useful-matrix-facts.html"><a href="useful-matrix-facts.html#addition-and-subtraction"><i class="fa fa-check"></i><b>4.2.1</b> Addition and subtraction</a></li>
-<li class="chapter" data-level="4.2.2" data-path="useful-matrix-facts.html"><a href="useful-matrix-facts.html#scalar-multiplication"><i class="fa fa-check"></i><b>4.2.2</b> Scalar multiplication</a></li>
-<li class="chapter" data-level="4.2.3" data-path="useful-matrix-facts.html"><a href="useful-matrix-facts.html#matrix-multiplication"><i class="fa fa-check"></i><b>4.2.3</b> Matrix multiplication</a></li>
-<li class="chapter" data-level="4.2.4" data-path="useful-matrix-facts.html"><a href="useful-matrix-facts.html#associative-property"><i class="fa fa-check"></i><b>4.2.4</b> Associative property</a></li>
-<li class="chapter" data-level="4.2.5" data-path="useful-matrix-facts.html"><a href="useful-matrix-facts.html#distributive-property"><i class="fa fa-check"></i><b>4.2.5</b> Distributive property</a></li>
-<li class="chapter" data-level="4.2.6" data-path="useful-matrix-facts.html"><a href="useful-matrix-facts.html#no-commutative-property"><i class="fa fa-check"></i><b>4.2.6</b> No commutative property</a></li>
-</ul></li>
-<li class="chapter" data-level="4.3" data-path="useful-matrix-facts.html"><a href="useful-matrix-facts.html#transpose-and-related-properties"><i class="fa fa-check"></i><b>4.3</b> Transpose and related properties</a>
-<ul>
-<li class="chapter" data-level="4.3.1" data-path="useful-matrix-facts.html"><a href="useful-matrix-facts.html#definition-2"><i class="fa fa-check"></i><b>4.3.1</b> Definition</a></li>
-<li class="chapter" data-level="4.3.2" data-path="useful-matrix-facts.html"><a href="useful-matrix-facts.html#transpose-and-mathematical-operations"><i class="fa fa-check"></i><b>4.3.2</b> Transpose and mathematical operations</a></li>
-</ul></li>
-<li class="chapter" data-level="4.4" data-path="useful-matrix-facts.html"><a href="useful-matrix-facts.html#special-matrices"><i class="fa fa-check"></i><b>4.4</b> Special matrices</a>
-<ul>
-<li class="chapter" data-level="4.4.1" data-path="useful-matrix-facts.html"><a href="useful-matrix-facts.html#square-matrices"><i class="fa fa-check"></i><b>4.4.1</b> Square matrices</a></li>
-<li class="chapter" data-level="4.4.2" data-path="useful-matrix-facts.html"><a href="useful-matrix-facts.html#identity-matrix"><i class="fa fa-check"></i><b>4.4.2</b> Identity matrix</a></li>
-<li class="chapter" data-level="4.4.3" data-path="useful-matrix-facts.html"><a href="useful-matrix-facts.html#symmetric"><i class="fa fa-check"></i><b>4.4.3</b> Symmetric</a></li>
-<li class="chapter" data-level="4.4.4" data-path="useful-matrix-facts.html"><a href="useful-matrix-facts.html#idempotent"><i class="fa fa-check"></i><b>4.4.4</b> Idempotent</a></li>
-</ul></li>
-<li class="chapter" data-level="4.5" data-path="useful-matrix-facts.html"><a href="useful-matrix-facts.html#matrix-inverse"><i class="fa fa-check"></i><b>4.5</b> Matrix inverse</a></li>
-<li class="chapter" data-level="4.6" data-path="useful-matrix-facts.html"><a href="useful-matrix-facts.html#matrix-derivatives"><i class="fa fa-check"></i><b>4.6</b> Matrix derivatives</a></li>
-</ul></li>
-<li class="chapter" data-level="5" data-path="linear-model-definition-and-properties.html"><a href="linear-model-definition-and-properties.html"><i class="fa fa-check"></i><b>5</b> Linear model definition and properties</a>
-<ul>
-<li class="chapter" data-level="5.1" data-path="linear-model-definition-and-properties.html"><a href="linear-model-definition-and-properties.html#background-and-terminology"><i class="fa fa-check"></i><b>5.1</b> Background and terminology</a></li>
-<li class="chapter" data-level="5.2" data-path="linear-model-definition-and-properties.html"><a href="linear-model-definition-and-properties.html#goals-of-regression"><i class="fa fa-check"></i><b>5.2</b> Goals of regression</a></li>
-<li class="chapter" data-level="5.3" data-path="linear-model-definition-and-properties.html"><a href="linear-model-definition-and-properties.html#regression-for-pearsons-height-data"><i class="fa fa-check"></i><b>5.3</b> Regression for Pearson’s height data</a></li>
-<li class="chapter" data-level="5.4" data-path="linear-model-definition-and-properties.html"><a href="linear-model-definition-and-properties.html#definition-of-a-linear-model"><i class="fa fa-check"></i><b>5.4</b> Definition of a linear model</a>
-<ul>
-<li class="chapter" data-level="5.4.1" data-path="linear-model-definition-and-properties.html"><a href="linear-model-definition-and-properties.html#basic-construction-and-relationships"><i class="fa fa-check"></i><b>5.4.1</b> Basic construction and relationships</a></li>
-<li class="chapter" data-level="5.4.2" data-path="linear-model-definition-and-properties.html"><a href="linear-model-definition-and-properties.html#as-a-system-of-equations"><i class="fa fa-check"></i><b>5.4.2</b> As a system of equations</a></li>
-<li class="chapter" data-level="5.4.3" data-path="linear-model-definition-and-properties.html"><a href="linear-model-definition-and-properties.html#using-matrix-notation"><i class="fa fa-check"></i><b>5.4.3</b> Using matrix notation</a></li>
-</ul></li>
-<li class="chapter" data-level="5.5" data-path="linear-model-definition-and-properties.html"><a href="linear-model-definition-and-properties.html#summarizing-the-components-of-a-linear-model"><i class="fa fa-check"></i><b>5.5</b> Summarizing the components of a linear model</a></li>
-<li class="chapter" data-level="5.6" data-path="linear-model-definition-and-properties.html"><a href="linear-model-definition-and-properties.html#types-of-regression-models"><i class="fa fa-check"></i><b>5.6</b> Types of regression models</a></li>
-<li class="chapter" data-level="5.7" data-path="linear-model-definition-and-properties.html"><a href="linear-model-definition-and-properties.html#standard-linear-model-assumptions-and-implications"><i class="fa fa-check"></i><b>5.7</b> Standard linear model assumptions and implications</a></li>
-<li class="chapter" data-level="5.8" data-path="linear-model-definition-and-properties.html"><a href="linear-model-definition-and-properties.html#mathematical-interpretation-of-coefficients"><i class="fa fa-check"></i><b>5.8</b> Mathematical interpretation of coefficients</a>
-<ul>
-<li class="chapter" data-level="5.8.1" data-path="linear-model-definition-and-properties.html"><a href="linear-model-definition-and-properties.html#coefficient-interpretation-in-simple-linear-regression"><i class="fa fa-check"></i><b>5.8.1</b> Coefficient interpretation in simple linear regression</a></li>
-<li class="chapter" data-level="5.8.2" data-path="linear-model-definition-and-properties.html"><a href="linear-model-definition-and-properties.html#coefficient-interpretation-in-multiple-linear-regression"><i class="fa fa-check"></i><b>5.8.2</b> Coefficient interpretation in multiple linear regression</a></li>
-</ul></li>
-<li class="chapter" data-level="5.9" data-path="linear-model-definition-and-properties.html"><a href="linear-model-definition-and-properties.html#exercises"><i class="fa fa-check"></i><b>5.9</b> Exercises</a></li>
-</ul></li>
-<li class="chapter" data-level="6" data-path="parameter-estimation-for-linear-models.html"><a href="parameter-estimation-for-linear-models.html"><i class="fa fa-check"></i><b>6</b> Parameter estimation for linear models</a>
-<ul>
-<li class="chapter" data-level="6.1" data-path="parameter-estimation-for-linear-models.html"><a href="parameter-estimation-for-linear-models.html#ols-estimation-of-the-simple-linear-regression-model"><i class="fa fa-check"></i><b>6.1</b> OLS estimation of the simple linear regression model</a>
-<ul>
-<li class="chapter" data-level="6.1.1" data-path="parameter-estimation-for-linear-models.html"><a href="parameter-estimation-for-linear-models.html#visualizing-the-rss-as-a-function-of-the-estimated-coefficients"><i class="fa fa-check"></i><b>6.1.1</b> Visualizing the RSS as a function of the estimated coefficients</a></li>
-<li class="chapter" data-level="6.1.2" data-path="parameter-estimation-for-linear-models.html"><a href="parameter-estimation-for-linear-models.html#ols-estimators-of-the-simple-linear-regression-parameters"><i class="fa fa-check"></i><b>6.1.2</b> OLS estimators of the simple linear regression parameters</a></li>
-</ul></li>
-<li class="chapter" data-level="6.2" data-path="parameter-estimation-for-linear-models.html"><a href="parameter-estimation-for-linear-models.html#penguins-simple-linear-regression-example"><i class="fa fa-check"></i><b>6.2</b> Penguins simple linear regression example</a></li>
-<li class="chapter" data-level="6.3" data-path="parameter-estimation-for-linear-models.html"><a href="parameter-estimation-for-linear-models.html#fitting-a-linear-model-using-r"><i class="fa fa-check"></i><b>6.3</b> Fitting a linear model using R</a>
-<ul>
-<li class="chapter" data-level="6.3.1" data-path="parameter-estimation-for-linear-models.html"><a href="parameter-estimation-for-linear-models.html#derivation-of-ols-simple-linear-regression-estimators"><i class="fa fa-check"></i><b>6.3.1</b> Derivation of OLS simple linear regression estimators</a></li>
+<li class="chapter" data-level="3.8.1" data-path="review-of-probability-random-variables-and-random-vectors.html"><a href="review-of-probability-random-variables-and-random-vectors.html#problem-1"><i class="fa fa-check"></i><b>3.8.1</b> Problem 1<span></span></a></li>
+<li class="chapter" data-level="3.8.2" data-path="review-of-probability-random-variables-and-random-vectors.html"><a href="review-of-probability-random-variables-and-random-vectors.html#problem-2"><i class="fa fa-check"></i><b>3.8.2</b> Problem 2<span></span></a></li>
+<li class="chapter" data-level="3.8.3" data-path="review-of-probability-random-variables-and-random-vectors.html"><a href="review-of-probability-random-variables-and-random-vectors.html#problem-3"><i class="fa fa-check"></i><b>3.8.3</b> Problem 3<span></span></a></li>
+<li class="chapter" data-level="3.8.4" data-path="review-of-probability-random-variables-and-random-vectors.html"><a href="review-of-probability-random-variables-and-random-vectors.html#problem-4"><i class="fa fa-check"></i><b>3.8.4</b> Problem 4<span></span></a></li>
+<li class="chapter" data-level="3.8.5" data-path="review-of-probability-random-variables-and-random-vectors.html"><a href="review-of-probability-random-variables-and-random-vectors.html#problem-5"><i class="fa fa-check"></i><b>3.8.5</b> Problem 5<span></span></a></li>
+<li class="chapter" data-level="3.8.6" data-path="review-of-probability-random-variables-and-random-vectors.html"><a href="review-of-probability-random-variables-and-random-vectors.html#problem-6"><i class="fa fa-check"></i><b>3.8.6</b> Problem 6<span></span></a></li>
+<li class="chapter" data-level="3.8.7" data-path="review-of-probability-random-variables-and-random-vectors.html"><a href="review-of-probability-random-variables-and-random-vectors.html#problem-7"><i class="fa fa-check"></i><b>3.8.7</b> Problem 7<span></span></a></li>
 </ul></li>
 </ul></li>
-<li class="chapter" data-level="7" data-path="interpreting-a-fitted-linear-model.html"><a href="interpreting-a-fitted-linear-model.html"><i class="fa fa-check"></i><b>7</b> Interpreting a fitted linear model</a>
+<li class="chapter" data-level="4" data-path="useful-matrix-facts.html"><a href="useful-matrix-facts.html"><i class="fa fa-check"></i><b>4</b> Useful matrix facts<span></span></a>
 <ul>
-<li class="chapter" data-level="7.1" data-path="interpreting-a-fitted-linear-model.html"><a href="interpreting-a-fitted-linear-model.html#orthogonality"><i class="fa fa-check"></i><b>7.1</b> Orthogonality</a></li>
+<li class="chapter" data-level="4.1" data-path="useful-matrix-facts.html"><a href="useful-matrix-facts.html#notation"><i class="fa fa-check"></i><b>4.1</b> Notation<span></span></a></li>
+<li class="chapter" data-level="4.2" data-path="useful-matrix-facts.html"><a href="useful-matrix-facts.html#basic-mathematical-properties"><i class="fa fa-check"></i><b>4.2</b> Basic mathematical properties<span></span></a>
+<ul>
+<li class="chapter" data-level="4.2.1" data-path="useful-matrix-facts.html"><a href="useful-matrix-facts.html#addition-and-subtraction"><i class="fa fa-check"></i><b>4.2.1</b> Addition and subtraction<span></span></a></li>
+<li class="chapter" data-level="4.2.2" data-path="useful-matrix-facts.html"><a href="useful-matrix-facts.html#scalar-multiplication"><i class="fa fa-check"></i><b>4.2.2</b> Scalar multiplication<span></span></a></li>
+<li class="chapter" data-level="4.2.3" data-path="useful-matrix-facts.html"><a href="useful-matrix-facts.html#matrix-multiplication"><i class="fa fa-check"></i><b>4.2.3</b> Matrix multiplication<span></span></a></li>
+<li class="chapter" data-level="4.2.4" data-path="useful-matrix-facts.html"><a href="useful-matrix-facts.html#associative-property"><i class="fa fa-check"></i><b>4.2.4</b> Associative property<span></span></a></li>
+<li class="chapter" data-level="4.2.5" data-path="useful-matrix-facts.html"><a href="useful-matrix-facts.html#distributive-property"><i class="fa fa-check"></i><b>4.2.5</b> Distributive property<span></span></a></li>
+<li class="chapter" data-level="4.2.6" data-path="useful-matrix-facts.html"><a href="useful-matrix-facts.html#no-commutative-property"><i class="fa fa-check"></i><b>4.2.6</b> No commutative property<span></span></a></li>
 </ul></li>
-<li class="chapter" data-level="8" data-path="categorical-predictors.html"><a href="categorical-predictors.html"><i class="fa fa-check"></i><b>8</b> Categorical predictors</a>
+<li class="chapter" data-level="4.3" data-path="useful-matrix-facts.html"><a href="useful-matrix-facts.html#transpose-and-related-properties"><i class="fa fa-check"></i><b>4.3</b> Transpose and related properties<span></span></a>
 <ul>
-<li class="chapter" data-level="8.1" data-path="categorical-predictors.html"><a href="categorical-predictors.html#indicatordummy-variables"><i class="fa fa-check"></i><b>8.1</b> Indicator/dummy variables</a></li>
-<li class="chapter" data-level="8.2" data-path="categorical-predictors.html"><a href="categorical-predictors.html#common-of-linear-models-with-categorical-predictors"><i class="fa fa-check"></i><b>8.2</b> Common of linear models with categorical predictors</a>
+<li class="chapter" data-level="4.3.1" data-path="useful-matrix-facts.html"><a href="useful-matrix-facts.html#definition-2"><i class="fa fa-check"></i><b>4.3.1</b> Definition<span></span></a></li>
+<li class="chapter" data-level="4.3.2" data-path="useful-matrix-facts.html"><a href="useful-matrix-facts.html#transpose-and-mathematical-operations"><i class="fa fa-check"></i><b>4.3.2</b> Transpose and mathematical operations<span></span></a></li>
+</ul></li>
+<li class="chapter" data-level="4.4" data-path="useful-matrix-facts.html"><a href="useful-matrix-facts.html#special-matrices"><i class="fa fa-check"></i><b>4.4</b> Special matrices<span></span></a>
 <ul>
-<li class="chapter" data-level="8.2.1" data-path="categorical-predictors.html"><a href="categorical-predictors.html#one-way-anova"><i class="fa fa-check"></i><b>8.2.1</b> One-way ANOVA</a></li>
-<li class="chapter" data-level="8.2.2" data-path="categorical-predictors.html"><a href="categorical-predictors.html#main-effects-models"><i class="fa fa-check"></i><b>8.2.2</b> Main effects models</a></li>
-<li class="chapter" data-level="8.2.3" data-path="categorical-predictors.html"><a href="categorical-predictors.html#interaction-models"><i class="fa fa-check"></i><b>8.2.3</b> Interaction models</a></li>
-<li class="chapter" data-level="8.2.4" data-path="categorical-predictors.html"><a href="categorical-predictors.html#extensions"><i class="fa fa-check"></i><b>8.2.4</b> Extensions</a></li>
+<li class="chapter" data-level="4.4.1" data-path="useful-matrix-facts.html"><a href="useful-matrix-facts.html#square-matrices"><i class="fa fa-check"></i><b>4.4.1</b> Square matrices<span></span></a></li>
+<li class="chapter" data-level="4.4.2" data-path="useful-matrix-facts.html"><a href="useful-matrix-facts.html#identity-matrix"><i class="fa fa-check"></i><b>4.4.2</b> Identity matrix<span></span></a></li>
+<li class="chapter" data-level="4.4.3" data-path="useful-matrix-facts.html"><a href="useful-matrix-facts.html#symmetric"><i class="fa fa-check"></i><b>4.4.3</b> Symmetric<span></span></a></li>
+<li class="chapter" data-level="4.4.4" data-path="useful-matrix-facts.html"><a href="useful-matrix-facts.html#idempotent"><i class="fa fa-check"></i><b>4.4.4</b> Idempotent<span></span></a></li>
+</ul></li>
+<li class="chapter" data-level="4.5" data-path="useful-matrix-facts.html"><a href="useful-matrix-facts.html#matrix-inverse"><i class="fa fa-check"></i><b>4.5</b> Matrix inverse<span></span></a></li>
+<li class="chapter" data-level="4.6" data-path="useful-matrix-facts.html"><a href="useful-matrix-facts.html#matrix-derivatives"><i class="fa fa-check"></i><b>4.6</b> Matrix derivatives<span></span></a></li>
+</ul></li>
+<li class="chapter" data-level="5" data-path="defining-and-fitting-a-linear-model.html"><a href="defining-and-fitting-a-linear-model.html"><i class="fa fa-check"></i><b>5</b> Defining and fitting a linear model<span></span></a>
+<ul>
+<li class="chapter" data-level="5.1" data-path="defining-and-fitting-a-linear-model.html"><a href="defining-and-fitting-a-linear-model.html#background-and-terminology"><i class="fa fa-check"></i><b>5.1</b> Background and terminology<span></span></a></li>
+<li class="chapter" data-level="5.2" data-path="defining-and-fitting-a-linear-model.html"><a href="defining-and-fitting-a-linear-model.html#goals-of-regression"><i class="fa fa-check"></i><b>5.2</b> Goals of regression<span></span></a></li>
+<li class="chapter" data-level="5.3" data-path="defining-and-fitting-a-linear-model.html"><a href="defining-and-fitting-a-linear-model.html#definition-of-a-linear-model"><i class="fa fa-check"></i><b>5.3</b> Definition of a linear model<span></span></a>
+<ul>
+<li class="chapter" data-level="5.3.1" data-path="defining-and-fitting-a-linear-model.html"><a href="defining-and-fitting-a-linear-model.html#basic-construction-and-relationships"><i class="fa fa-check"></i><b>5.3.1</b> Basic construction and relationships<span></span></a></li>
+<li class="chapter" data-level="5.3.2" data-path="defining-and-fitting-a-linear-model.html"><a href="defining-and-fitting-a-linear-model.html#as-a-system-of-equations"><i class="fa fa-check"></i><b>5.3.2</b> As a system of equations<span></span></a></li>
+<li class="chapter" data-level="5.3.3" data-path="defining-and-fitting-a-linear-model.html"><a href="defining-and-fitting-a-linear-model.html#using-matrix-notation"><i class="fa fa-check"></i><b>5.3.3</b> Using matrix notation<span></span></a></li>
+</ul></li>
+<li class="chapter" data-level="5.4" data-path="defining-and-fitting-a-linear-model.html"><a href="defining-and-fitting-a-linear-model.html#summarizing-the-components-of-a-linear-model"><i class="fa fa-check"></i><b>5.4</b> Summarizing the components of a linear model<span></span></a></li>
+<li class="chapter" data-level="5.5" data-path="defining-and-fitting-a-linear-model.html"><a href="defining-and-fitting-a-linear-model.html#types-of-regression-models"><i class="fa fa-check"></i><b>5.5</b> Types of regression models<span></span></a></li>
+<li class="chapter" data-level="5.6" data-path="defining-and-fitting-a-linear-model.html"><a href="defining-and-fitting-a-linear-model.html#standard-linear-model-assumptions-and-implications"><i class="fa fa-check"></i><b>5.6</b> Standard linear model assumptions and implications<span></span></a></li>
+<li class="chapter" data-level="5.7" data-path="defining-and-fitting-a-linear-model.html"><a href="defining-and-fitting-a-linear-model.html#mathematical-interpretation-of-coefficients"><i class="fa fa-check"></i><b>5.7</b> Mathematical interpretation of coefficients<span></span></a>
+<ul>
+<li class="chapter" data-level="5.7.1" data-path="defining-and-fitting-a-linear-model.html"><a href="defining-and-fitting-a-linear-model.html#coefficient-interpretation-in-simple-linear-regression"><i class="fa fa-check"></i><b>5.7.1</b> Coefficient interpretation in simple linear regression<span></span></a></li>
+<li class="chapter" data-level="5.7.2" data-path="defining-and-fitting-a-linear-model.html"><a href="defining-and-fitting-a-linear-model.html#coefficient-interpretation-in-multiple-linear-regression"><i class="fa fa-check"></i><b>5.7.2</b> Coefficient interpretation in multiple linear regression<span></span></a></li>
+</ul></li>
+<li class="chapter" data-level="5.8" data-path="defining-and-fitting-a-linear-model.html"><a href="defining-and-fitting-a-linear-model.html#exercises"><i class="fa fa-check"></i><b>5.8</b> Exercises<span></span></a></li>
+</ul></li>
+<li class="chapter" data-level="6" data-path="linear-model-estimation.html"><a href="linear-model-estimation.html"><i class="fa fa-check"></i><b>6</b> Linear model estimation<span></span></a>
+<ul>
+<li class="chapter" data-level="6.1" data-path="linear-model-estimation.html"><a href="linear-model-estimation.html#a-simple-motivating-example"><i class="fa fa-check"></i><b>6.1</b> A simple motivating example<span></span></a></li>
+<li class="chapter" data-level="6.2" data-path="linear-model-estimation.html"><a href="linear-model-estimation.html#defining-a-linear-model"><i class="fa fa-check"></i><b>6.2</b> Defining a linear model<span></span></a>
+<ul>
+<li class="chapter" data-level="6.2.1" data-path="linear-model-estimation.html"><a href="linear-model-estimation.html#ss-necessary-components"><i class="fa fa-check"></i><b>6.2.1</b> Necessary components and notation<span></span></a></li>
+<li class="chapter" data-level="6.2.2" data-path="linear-model-estimation.html"><a href="linear-model-estimation.html#standard-definition-of-linear-model"><i class="fa fa-check"></i><b>6.2.2</b> Standard definition of linear model<span></span></a></li>
+</ul></li>
+<li class="chapter" data-level="6.3" data-path="linear-model-estimation.html"><a href="linear-model-estimation.html#estimation-of-the-simple-linear-regression-model"><i class="fa fa-check"></i><b>6.3</b> Estimation of the simple linear regression model<span></span></a>
+<ul>
+<li class="chapter" data-level="6.3.1" data-path="linear-model-estimation.html"><a href="linear-model-estimation.html#ss:fv-resid-rss"><i class="fa fa-check"></i><b>6.3.1</b> Fitted values, residuals, and RSS<span></span></a></li>
+<li class="chapter" data-level="6.3.2" data-path="linear-model-estimation.html"><a href="linear-model-estimation.html#ols-estimators-of-the-simple-linear-regression-parameters"><i class="fa fa-check"></i><b>6.3.2</b> OLS estimators of the simple linear regression parameters<span></span></a></li>
+</ul></li>
+<li class="chapter" data-level="6.4" data-path="linear-model-estimation.html"><a href="linear-model-estimation.html#s:penguins-slr"><i class="fa fa-check"></i><b>6.4</b> Penguins simple linear regression example<span></span></a></li>
+<li class="chapter" data-level="6.5" data-path="linear-model-estimation.html"><a href="linear-model-estimation.html#estimation-of-the-multiple-linear-regression-coefficients"><i class="fa fa-check"></i><b>6.5</b> Estimation of the multiple linear regression coefficients)<span></span></a>
+<ul>
+<li class="chapter" data-level="6.5.1" data-path="linear-model-estimation.html"><a href="linear-model-estimation.html#using-matrix-notation-to-represent-a-linear-model"><i class="fa fa-check"></i><b>6.5.1</b> Using matrix notation to represent a linear model<span></span></a></li>
+<li class="chapter" data-level="6.5.2" data-path="linear-model-estimation.html"><a href="linear-model-estimation.html#ss:fv-resid-rss-mlr"><i class="fa fa-check"></i><b>6.5.2</b> Residuals, fitted values, and RSS for multiple linear regression<span></span></a></li>
+<li class="chapter" data-level="6.5.3" data-path="linear-model-estimation.html"><a href="linear-model-estimation.html#ols-estimator-of-the-linear-model-parameters"><i class="fa fa-check"></i><b>6.5.3</b> OLS estimator of the linear model parameters<span></span></a></li>
+</ul></li>
+<li class="chapter" data-level="6.6" data-path="linear-model-estimation.html"><a href="linear-model-estimation.html#s:penguins-mlr"><i class="fa fa-check"></i><b>6.6</b> Penguins multiple linear regression example<span></span></a></li>
+<li class="chapter" data-level="6.7" data-path="linear-model-estimation.html"><a href="linear-model-estimation.html#categorical-predictors"><i class="fa fa-check"></i><b>6.7</b> Categorical predictors<span></span></a></li>
+<li class="chapter" data-level="6.8" data-path="linear-model-estimation.html"><a href="linear-model-estimation.html#s:penguins-mlr"><i class="fa fa-check"></i><b>6.8</b> Penguins multiple linear regression example with categorical predictor<span></span></a></li>
+<li class="chapter" data-level="6.9" data-path="linear-model-estimation.html"><a href="linear-model-estimation.html#evaluating-model-fit"><i class="fa fa-check"></i><b>6.9</b> Evaluating model fit<span></span></a></li>
+<li class="chapter" data-level="6.10" data-path="linear-model-estimation.html"><a href="linear-model-estimation.html#summary-of-notation"><i class="fa fa-check"></i><b>6.10</b> Summary of notation<span></span></a></li>
+<li class="chapter" data-level="6.11" data-path="linear-model-estimation.html"><a href="linear-model-estimation.html#summary-of-functions-used-in-this-chapter"><i class="fa fa-check"></i><b>6.11</b> Summary of functions used in this chapter<span></span></a></li>
+<li class="chapter" data-level="6.12" data-path="linear-model-estimation.html"><a href="linear-model-estimation.html#summarizing-the-components-of-a-linear-model-1"><i class="fa fa-check"></i><b>6.12</b> Summarizing the components of a linear model<span></span></a></li>
+<li class="chapter" data-level="6.13" data-path="linear-model-estimation.html"><a href="linear-model-estimation.html#going-deeper"><i class="fa fa-check"></i><b>6.13</b> Going Deeper<span></span></a>
+<ul>
+<li class="chapter" data-level="6.13.1" data-path="linear-model-estimation.html"><a href="linear-model-estimation.html#manually-estimating-the-simple-linear-regression-coefficients"><i class="fa fa-check"></i><b>6.13.1</b> Manually estimating the simple linear regression coefficients<span></span></a></li>
+<li class="chapter" data-level="6.13.2" data-path="linear-model-estimation.html"><a href="linear-model-estimation.html#manually-estimating-the-multiple-linear-regression-coefficients"><i class="fa fa-check"></i><b>6.13.2</b> Manually estimating the multiple linear regression coefficients<span></span></a></li>
+<li class="chapter" data-level="6.13.3" data-path="linear-model-estimation.html"><a href="linear-model-estimation.html#parameter-estimation-and-matrix-decompositions"><i class="fa fa-check"></i><b>6.13.3</b> Parameter estimation and matrix decompositions<span></span></a></li>
+<li class="chapter" data-level="6.13.4" data-path="linear-model-estimation.html"><a href="linear-model-estimation.html#updating-a-model"><i class="fa fa-check"></i><b>6.13.4</b> Updating a model<span></span></a></li>
+<li class="chapter" data-level="6.13.5" data-path="linear-model-estimation.html"><a href="linear-model-estimation.html#more-discussion-of-formula-for-model-building"><i class="fa fa-check"></i><b>6.13.5</b> More discussion of <code>formula</code> for model-building<span></span></a></li>
 </ul></li>
 </ul></li>
-<li class="chapter" data-level="9" data-path="assessing-and-addressing-collinearity.html"><a href="assessing-and-addressing-collinearity.html"><i class="fa fa-check"></i><b>9</b> Assessing and addressing collinearity</a></li>
-<li class="chapter" data-level="" data-path="references.html"><a href="references.html"><i class="fa fa-check"></i>References</a></li>
-<li class="chapter" data-level="10" data-path="linear-model-estimation.html"><a href="linear-model-estimation.html"><i class="fa fa-check"></i><b>10</b> Linear model estimation</a>
+<li class="chapter" data-level="7" data-path="parameter-estimation-for-linear-models.html"><a href="parameter-estimation-for-linear-models.html"><i class="fa fa-check"></i><b>7</b> Parameter estimation for linear models<span></span></a>
 <ul>
-<li class="chapter" data-level="10.1" data-path="linear-model-estimation.html"><a href="linear-model-estimation.html#a-simple-motivating-example"><i class="fa fa-check"></i><b>10.1</b> A simple motivating example</a></li>
+<li class="chapter" data-level="7.1" data-path="parameter-estimation-for-linear-models.html"><a href="parameter-estimation-for-linear-models.html#ols-estimation-of-the-simple-linear-regression-model"><i class="fa fa-check"></i><b>7.1</b> OLS estimation of the simple linear regression model<span></span></a>
+<ul>
+<li class="chapter" data-level="7.1.1" data-path="parameter-estimation-for-linear-models.html"><a href="parameter-estimation-for-linear-models.html#visualizing-the-rss-as-a-function-of-the-estimated-coefficients"><i class="fa fa-check"></i><b>7.1.1</b> Visualizing the RSS as a function of the estimated coefficients<span></span></a></li>
+<li class="chapter" data-level="7.1.2" data-path="parameter-estimation-for-linear-models.html"><a href="parameter-estimation-for-linear-models.html#ols-estimators-of-the-simple-linear-regression-parameters-1"><i class="fa fa-check"></i><b>7.1.2</b> OLS estimators of the simple linear regression parameters<span></span></a></li>
+</ul></li>
+<li class="chapter" data-level="7.2" data-path="parameter-estimation-for-linear-models.html"><a href="parameter-estimation-for-linear-models.html#penguins-simple-linear-regression-example"><i class="fa fa-check"></i><b>7.2</b> Penguins simple linear regression example<span></span></a></li>
+<li class="chapter" data-level="7.3" data-path="parameter-estimation-for-linear-models.html"><a href="parameter-estimation-for-linear-models.html#fitting-a-linear-model-using-r"><i class="fa fa-check"></i><b>7.3</b> Fitting a linear model using R<span></span></a>
+<ul>
+<li class="chapter" data-level="7.3.1" data-path="parameter-estimation-for-linear-models.html"><a href="parameter-estimation-for-linear-models.html#derivation-of-ols-simple-linear-regression-estimators"><i class="fa fa-check"></i><b>7.3.1</b> Derivation of OLS simple linear regression estimators<span></span></a></li>
+</ul></li>
+</ul></li>
+<li class="chapter" data-level="8" data-path="interpreting-a-fitted-linear-model.html"><a href="interpreting-a-fitted-linear-model.html"><i class="fa fa-check"></i><b>8</b> Interpreting a fitted linear model<span></span></a>
+<ul>
+<li class="chapter" data-level="8.1" data-path="interpreting-a-fitted-linear-model.html"><a href="interpreting-a-fitted-linear-model.html#orthogonality"><i class="fa fa-check"></i><b>8.1</b> Orthogonality<span></span></a></li>
+<li class="chapter" data-level="8.2" data-path="interpreting-a-fitted-linear-model.html"><a href="interpreting-a-fitted-linear-model.html#example-fuel-consumption-data"><i class="fa fa-check"></i><b>8.2</b> Example: Fuel Consumption Data<span></span></a></li>
+<li class="chapter" data-level="8.3" data-path="interpreting-a-fitted-linear-model.html"><a href="interpreting-a-fitted-linear-model.html#setting-up-a-linear-model"><i class="fa fa-check"></i><b>8.3</b> Setting Up a Linear Model<span></span></a>
+<ul>
+<li class="chapter" data-level="8.3.1" data-path="interpreting-a-fitted-linear-model.html"><a href="interpreting-a-fitted-linear-model.html#adjusting-units"><i class="fa fa-check"></i><b>8.3.1</b> Adjusting Units<span></span></a></li>
+<li class="chapter" data-level="8.3.2" data-path="interpreting-a-fitted-linear-model.html"><a href="interpreting-a-fitted-linear-model.html#fitting-a-model"><i class="fa fa-check"></i><b>8.3.2</b> Fitting a Model<span></span></a></li>
+</ul></li>
+<li class="chapter" data-level="8.4" data-path="interpreting-a-fitted-linear-model.html"><a href="interpreting-a-fitted-linear-model.html#interpreting-the-coefficients"><i class="fa fa-check"></i><b>8.4</b> Interpreting the Coefficients<span></span></a></li>
+<li class="chapter" data-level="8.5" data-path="interpreting-a-fitted-linear-model.html"><a href="interpreting-a-fitted-linear-model.html#example-berkeley-guidance-study"><i class="fa fa-check"></i><b>8.5</b> Example: Berkeley Guidance Study<span></span></a></li>
+<li class="chapter" data-level="8.6" data-path="interpreting-a-fitted-linear-model.html"><a href="interpreting-a-fitted-linear-model.html#dictionary-of-data"><i class="fa fa-check"></i><b>8.6</b> Dictionary of Data<span></span></a></li>
+<li class="chapter" data-level="8.7" data-path="interpreting-a-fitted-linear-model.html"><a href="interpreting-a-fitted-linear-model.html#analysing-relations-between-regressors"><i class="fa fa-check"></i><b>8.7</b> Analysing Relations Between Regressors<span></span></a></li>
+<li class="chapter" data-level="8.8" data-path="interpreting-a-fitted-linear-model.html"><a href="interpreting-a-fitted-linear-model.html#adjusting-the-regressors"><i class="fa fa-check"></i><b>8.8</b> Adjusting the Regressors<span></span></a></li>
+<li class="chapter" data-level="8.9" data-path="interpreting-a-fitted-linear-model.html"><a href="interpreting-a-fitted-linear-model.html#comparing-different-models"><i class="fa fa-check"></i><b>8.9</b> Comparing Different Models<span></span></a>
+<ul>
+<li class="chapter" data-level="8.9.1" data-path="interpreting-a-fitted-linear-model.html"><a href="interpreting-a-fitted-linear-model.html#bmi-relation-to-wt2-wt9-and-wt18"><i class="fa fa-check"></i><b>8.9.1</b> BMI relation to WT2, WT9 and WT18<span></span></a></li>
+<li class="chapter" data-level="8.9.2" data-path="interpreting-a-fitted-linear-model.html"><a href="interpreting-a-fitted-linear-model.html#bmi-relation-to-wt2-dw9-and-dw18"><i class="fa fa-check"></i><b>8.9.2</b> BMI relation to WT2, DW9 and DW18<span></span></a></li>
+<li class="chapter" data-level="8.9.3" data-path="interpreting-a-fitted-linear-model.html"><a href="interpreting-a-fitted-linear-model.html#bmi-relation-to-wt2-wt9-wt18-dw9-and-dw18"><i class="fa fa-check"></i><b>8.9.3</b> BMI relation to WT2, WT9, WT18, DW9 and DW18<span></span></a></li>
+</ul></li>
+<li class="chapter" data-level="8.10" data-path="interpreting-a-fitted-linear-model.html"><a href="interpreting-a-fitted-linear-model.html#effect-plots"><i class="fa fa-check"></i><b>8.10</b> Effect Plots<span></span></a></li>
+<li class="chapter" data-level="8.11" data-path="interpreting-a-fitted-linear-model.html"><a href="interpreting-a-fitted-linear-model.html#regressors-on-logarithmic-scale"><i class="fa fa-check"></i><b>8.11</b> Regressors on Logarithmic Scale<span></span></a></li>
+<li class="chapter" data-level="8.12" data-path="interpreting-a-fitted-linear-model.html"><a href="interpreting-a-fitted-linear-model.html#below-we-create-an-effects-plot-on-a-natural-log-scale."><i class="fa fa-check"></i><b>8.12</b> Below we create an effects plot on a natural log scale.<span></span></a></li>
+<li class="chapter" data-level="8.13" data-path="interpreting-a-fitted-linear-model.html"><a href="interpreting-a-fitted-linear-model.html#below-we-create-an-effects-plot-on-a-log10-scale."><i class="fa fa-check"></i><b>8.13</b> Below we create an effects plot on a log10 scale.<span></span></a></li>
+<li class="chapter" data-level="8.14" data-path="interpreting-a-fitted-linear-model.html"><a href="interpreting-a-fitted-linear-model.html#below-we-create-an-effects-plot-on-a-regular-scale."><i class="fa fa-check"></i><b>8.14</b> Below we create an effects plot on a regular scale.<span></span></a></li>
+<li class="chapter" data-level="8.15" data-path="interpreting-a-fitted-linear-model.html"><a href="interpreting-a-fitted-linear-model.html#interpreting-coefficients-with-log-scale-on-regressor"><i class="fa fa-check"></i><b>8.15</b> Interpreting Coefficients with Log Scale on Regressor<span></span></a>
+<ul>
+<li class="chapter" data-level="8.15.1" data-path="interpreting-a-fitted-linear-model.html"><a href="interpreting-a-fitted-linear-model.html#natural-log-scale"><i class="fa fa-check"></i><b>8.15.1</b> Natural Log Scale<span></span></a></li>
+<li class="chapter" data-level="8.15.2" data-path="interpreting-a-fitted-linear-model.html"><a href="interpreting-a-fitted-linear-model.html#common-log-base-10-scale"><i class="fa fa-check"></i><b>8.15.2</b> Common Log (base 10) Scale<span></span></a></li>
+</ul></li>
+<li class="chapter" data-level="8.16" data-path="interpreting-a-fitted-linear-model.html"><a href="interpreting-a-fitted-linear-model.html#log-level-interpretation"><i class="fa fa-check"></i><b>8.16</b> Log-Level Interpretation<span></span></a></li>
+<li class="chapter" data-level="8.17" data-path="interpreting-a-fitted-linear-model.html"><a href="interpreting-a-fitted-linear-model.html#log-log-interpretation"><i class="fa fa-check"></i><b>8.17</b> Log-log Interpretation<span></span></a></li>
+<li class="chapter" data-level="8.18" data-path="interpreting-a-fitted-linear-model.html"><a href="interpreting-a-fitted-linear-model.html#summary-of-interpretations-simple-linear-regression"><i class="fa fa-check"></i><b>8.18</b> Summary of Interpretations (Simple Linear Regression)<span></span></a></li>
+<li class="chapter" data-level="8.19" data-path="interpreting-a-fitted-linear-model.html"><a href="interpreting-a-fitted-linear-model.html#more-practice"><i class="fa fa-check"></i><b>8.19</b> More Practice<span></span></a></li>
+</ul></li>
+<li class="chapter" data-level="9" data-path="categorical-predictors-1.html"><a href="categorical-predictors-1.html"><i class="fa fa-check"></i><b>9</b> Categorical predictors<span></span></a>
+<ul>
+<li class="chapter" data-level="9.1" data-path="categorical-predictors-1.html"><a href="categorical-predictors-1.html#indicatordummy-variables"><i class="fa fa-check"></i><b>9.1</b> Indicator/dummy variables<span></span></a></li>
+<li class="chapter" data-level="9.2" data-path="categorical-predictors-1.html"><a href="categorical-predictors-1.html#common-of-linear-models-with-categorical-predictors"><i class="fa fa-check"></i><b>9.2</b> Common of linear models with categorical predictors<span></span></a>
+<ul>
+<li class="chapter" data-level="9.2.1" data-path="categorical-predictors-1.html"><a href="categorical-predictors-1.html#one-way-anova"><i class="fa fa-check"></i><b>9.2.1</b> One-way ANOVA<span></span></a></li>
+<li class="chapter" data-level="9.2.2" data-path="categorical-predictors-1.html"><a href="categorical-predictors-1.html#main-effects-models"><i class="fa fa-check"></i><b>9.2.2</b> Main effects models<span></span></a></li>
+<li class="chapter" data-level="9.2.3" data-path="categorical-predictors-1.html"><a href="categorical-predictors-1.html#interaction-models"><i class="fa fa-check"></i><b>9.2.3</b> Interaction models<span></span></a></li>
+<li class="chapter" data-level="9.2.4" data-path="categorical-predictors-1.html"><a href="categorical-predictors-1.html#extensions"><i class="fa fa-check"></i><b>9.2.4</b> Extensions<span></span></a></li>
+</ul></li>
+</ul></li>
+<li class="chapter" data-level="10" data-path="assessing-and-addressing-collinearity.html"><a href="assessing-and-addressing-collinearity.html"><i class="fa fa-check"></i><b>10</b> Assessing and addressing collinearity<span></span></a></li>
+<li><a href="references.html#references">References<span></span></a></li>
+<li class="chapter" data-level="11" data-path="defining-and-fitting-a-linear-model-1.html"><a href="defining-and-fitting-a-linear-model-1.html"><i class="fa fa-check"></i><b>11</b> Defining and fitting a linear model<span></span></a>
+<ul>
+<li class="chapter" data-level="11.1" data-path="defining-and-fitting-a-linear-model-1.html"><a href="defining-and-fitting-a-linear-model-1.html#background-and-terminology-1"><i class="fa fa-check"></i><b>11.1</b> Background and terminology<span></span></a></li>
+<li class="chapter" data-level="11.2" data-path="defining-and-fitting-a-linear-model-1.html"><a href="defining-and-fitting-a-linear-model-1.html#goals-of-regression-1"><i class="fa fa-check"></i><b>11.2</b> Goals of regression<span></span></a></li>
+<li class="chapter" data-level="11.3" data-path="defining-and-fitting-a-linear-model-1.html"><a href="defining-and-fitting-a-linear-model-1.html#definition-of-a-linear-model-1"><i class="fa fa-check"></i><b>11.3</b> Definition of a linear model<span></span></a>
+<ul>
+<li class="chapter" data-level="11.3.1" data-path="defining-and-fitting-a-linear-model-1.html"><a href="defining-and-fitting-a-linear-model-1.html#basic-construction-and-relationships-1"><i class="fa fa-check"></i><b>11.3.1</b> Basic construction and relationships<span></span></a></li>
+<li class="chapter" data-level="11.3.2" data-path="defining-and-fitting-a-linear-model-1.html"><a href="defining-and-fitting-a-linear-model-1.html#as-a-system-of-equations-1"><i class="fa fa-check"></i><b>11.3.2</b> As a system of equations<span></span></a></li>
+<li class="chapter" data-level="11.3.3" data-path="defining-and-fitting-a-linear-model-1.html"><a href="defining-and-fitting-a-linear-model-1.html#using-matrix-notation-1"><i class="fa fa-check"></i><b>11.3.3</b> Using matrix notation<span></span></a></li>
+</ul></li>
+<li class="chapter" data-level="11.4" data-path="defining-and-fitting-a-linear-model-1.html"><a href="defining-and-fitting-a-linear-model-1.html#summarizing-the-components-of-a-linear-model-2"><i class="fa fa-check"></i><b>11.4</b> Summarizing the components of a linear model<span></span></a></li>
+<li class="chapter" data-level="11.5" data-path="defining-and-fitting-a-linear-model-1.html"><a href="defining-and-fitting-a-linear-model-1.html#types-of-regression-models-1"><i class="fa fa-check"></i><b>11.5</b> Types of regression models<span></span></a></li>
+<li class="chapter" data-level="11.6" data-path="defining-and-fitting-a-linear-model-1.html"><a href="defining-and-fitting-a-linear-model-1.html#standard-linear-model-assumptions-and-implications-1"><i class="fa fa-check"></i><b>11.6</b> Standard linear model assumptions and implications<span></span></a></li>
+<li class="chapter" data-level="11.7" data-path="defining-and-fitting-a-linear-model-1.html"><a href="defining-and-fitting-a-linear-model-1.html#mathematical-interpretation-of-coefficients-1"><i class="fa fa-check"></i><b>11.7</b> Mathematical interpretation of coefficients<span></span></a>
+<ul>
+<li class="chapter" data-level="11.7.1" data-path="defining-and-fitting-a-linear-model-1.html"><a href="defining-and-fitting-a-linear-model-1.html#coefficient-interpretation-in-simple-linear-regression-1"><i class="fa fa-check"></i><b>11.7.1</b> Coefficient interpretation in simple linear regression<span></span></a></li>
+<li class="chapter" data-level="11.7.2" data-path="defining-and-fitting-a-linear-model-1.html"><a href="defining-and-fitting-a-linear-model-1.html#coefficient-interpretation-in-multiple-linear-regression-1"><i class="fa fa-check"></i><b>11.7.2</b> Coefficient interpretation in multiple linear regression<span></span></a></li>
+</ul></li>
+<li class="chapter" data-level="11.8" data-path="defining-and-fitting-a-linear-model-1.html"><a href="defining-and-fitting-a-linear-model-1.html#exercises-1"><i class="fa fa-check"></i><b>11.8</b> Exercises<span></span></a></li>
+</ul></li>
+<li class="chapter" data-level="12" data-path="linear-model-inference.html"><a href="linear-model-inference.html"><i class="fa fa-check"></i><b>12</b> Linear model inference<span></span></a></li>
+<li class="chapter" data-level="13" data-path="assumptions-stated-and-prioritized.html"><a href="assumptions-stated-and-prioritized.html"><i class="fa fa-check"></i><b>13</b> Assumptions Stated and Prioritized<span></span></a>
+<ul>
+<li class="chapter" data-level="13.1" data-path="assumptions-stated-and-prioritized.html"><a href="assumptions-stated-and-prioritized.html#standard-assumptions-concisely-stated"><i class="fa fa-check"></i><b>13.1</b> Standard assumptions concisely stated<span></span></a></li>
+<li class="chapter" data-level="13.2" data-path="assumptions-stated-and-prioritized.html"><a href="assumptions-stated-and-prioritized.html#standard-assumptions-prioritized"><i class="fa fa-check"></i><b>13.2</b> Standard assumptions prioritized<span></span></a></li>
 </ul></li>
 <li class="divider"></li>
 <li><a href="https://github.com/rstudio/bookdown" target="blank">Published with bookdown</a></li>
@@ -388,10 +475,10 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
           <div class="page-inner">
 
             <section class="normal" id="section-">
-<div id="interpreting-a-fitted-linear-model" class="section level1" number="7">
-<h1><span class="header-section-number">Chapter 7</span> Interpreting a fitted linear model</h1>
-<div id="orthogonality" class="section level2" number="7.1">
-<h2><span class="header-section-number">7.1</span> Orthogonality</h2>
+<div id="interpreting-a-fitted-linear-model" class="section level1 hasAnchor" number="8">
+<h1><span class="header-section-number">Chapter 8</span> Interpreting a fitted linear model<a href="interpreting-a-fitted-linear-model.html#interpreting-a-fitted-linear-model" class="anchor-section" aria-label="Anchor link to header"></a></h1>
+<div id="orthogonality" class="section level2 hasAnchor" number="8.1">
+<h2><span class="header-section-number">8.1</span> Orthogonality<a href="interpreting-a-fitted-linear-model.html#orthogonality" class="anchor-section" aria-label="Anchor link to header"></a></h2>
 <p>Let <span class="math display">\[\mathbf{x}_j=(x_{1,j},\ldots,x_{n,j})^T\]</span> denote the <span class="math inline">\(n\times 1\)</span> column vector of observed values for regressor <span class="math inline">\(X_j\)</span>. Regressors, <span class="math inline">\(\mathbf{x}_j\)</span> and <span class="math inline">\(\mathbf{x}_k\)</span> are <strong>orthogonal</strong> if <span class="math inline">\(\mathbf{x}_j^T \mathbf{x}_k=0\)</span>.</p>
 <p>Let <span class="math inline">\(\boldsymbol{1}_{n\times1}\)</span> denote an <span class="math inline">\(n\times 1\)</span> column vector of 1s. The definition of orthogonal vectors above implies that <span class="math inline">\(\mathbf{x}_j\)</span> is orthogonal to <span class="math inline">\(\boldsymbol{1}_{n\times1}\)</span> if <span class="math display">\[
 \mathbf{x}_j^T \boldsymbol{1}_{n\times1} = \sum_{i=1}^n x_{i,j} = 0,\]</span>
@@ -484,6 +571,497 @@ Thus, two centered regressors are orthogonal if their covariance is zero.</p>
 <div class="sourceCode" id="cb27"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb27-1"><a href="interpreting-a-fitted-linear-model.html#cb27-1" aria-hidden="true" tabindex="-1"></a><span class="fu">coef</span>(<span class="fu">lm</span>(y <span class="sc">~</span> x1 <span class="sc">+</span> x3 <span class="sc">+</span> x4))</span></code></pre></div>
 <pre><code>## (Intercept)          x1          x3          x4 
 ##         2.5         0.5         1.0        -0.5</code></pre>
+<p>Lastly, if we can partition our <span class="math inline">\(\mathbf{X}\)</span> matrix usch that <span class="math inline">\(\mathbf{X}^T \mathbf{X}\)</span> is a block diagonal matrix, then the none of the blocks of variables will affect the estimated coefficients of the other variables.</p>
+<p>Define a new regressor <code>x5</code> below. <code>x5</code> is orthogonal to the column of 1s and <code>x1</code>, but not <code>x4</code>.</p>
+<div class="sourceCode" id="cb29"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb29-1"><a href="interpreting-a-fitted-linear-model.html#cb29-1" aria-hidden="true" tabindex="-1"></a>x5 <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="dv">1</span>, <span class="dv">0</span>, <span class="dv">0</span>, <span class="sc">-</span><span class="dv">1</span>, <span class="dv">0</span>) <span class="co"># orthogonal to ones, x1, not x4</span></span>
+<span id="cb29-2"><a href="interpreting-a-fitted-linear-model.html#cb29-2" aria-hidden="true" tabindex="-1"></a><span class="fu">crossprod</span>(<span class="fu">cbind</span>(<span class="dv">1</span>, x1, x4, x5))</span></code></pre></div>
+<pre><code>##        x1 x4 x5
+##     5  31  0  0
+## x1 31 197  0  0
+## x4  0   0  2 -1
+## x5  0   0 -1  2</code></pre>
+<p>This means that if we fit the model with only the column of 1s and the intercept, the model only with <code>x4</code> and <code>x5</code>, and then fit the model with the column of 1s, <code>x1</code>, <code>x4</code>, and <code>x5</code>, then the coefficients <span class="math inline">\(\hat{\beta}_{int}\)</span> and <span class="math inline">\(\hat{\beta}_{1}\)</span> are not impacted when <code>x4</code> and <code>x5</code> are added to the model. Similarly, <span class="math inline">\(\hat{\beta}_{4}\)</span> and <span class="math inline">\(\hat{\beta}_{5}\)</span> are not impacted when the column of 1s and <code>x1</code> are added to the model with <code>x4</code> and <code>x5</code>. See the output below.</p>
+<div class="sourceCode" id="cb31"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb31-1"><a href="interpreting-a-fitted-linear-model.html#cb31-1" aria-hidden="true" tabindex="-1"></a><span class="fu">lm</span>(y <span class="sc">~</span> x1)           <span class="co"># model with 1s and x1</span></span></code></pre></div>
+<pre><code>## 
+## Call:
+## lm(formula = y ~ x1)
+## 
+## Coefficients:
+## (Intercept)           x1  
+##         2.5          0.5</code></pre>
+<div class="sourceCode" id="cb33"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb33-1"><a href="interpreting-a-fitted-linear-model.html#cb33-1" aria-hidden="true" tabindex="-1"></a><span class="fu">lm</span>(y <span class="sc">~</span> x4 <span class="sc">+</span> x5 <span class="sc">-</span> <span class="dv">1</span>)  <span class="co"># model with x4 and x5 only</span></span></code></pre></div>
+<pre><code>## 
+## Call:
+## lm(formula = y ~ x4 + x5 - 1)
+## 
+## Coefficients:
+## x4  x5  
+## -3  -5</code></pre>
+<div class="sourceCode" id="cb35"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb35-1"><a href="interpreting-a-fitted-linear-model.html#cb35-1" aria-hidden="true" tabindex="-1"></a><span class="fu">lm</span>(y <span class="sc">~</span> x1 <span class="sc">+</span> x4 <span class="sc">+</span> x5) <span class="co"># model with 1s, x1, x4, x5</span></span></code></pre></div>
+<pre><code>## 
+## Call:
+## lm(formula = y ~ x1 + x4 + x5)
+## 
+## Coefficients:
+## (Intercept)           x1           x4           x5  
+##         2.5          0.5         -3.0         -5.0</code></pre>
+</div>
+<div id="example-fuel-consumption-data" class="section level2 hasAnchor" number="8.2">
+<h2><span class="header-section-number">8.2</span> Example: Fuel Consumption Data<a href="interpreting-a-fitted-linear-model.html#example-fuel-consumption-data" class="anchor-section" aria-label="Anchor link to header"></a></h2>
+<div class="sourceCode" id="cb37"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb37-1"><a href="interpreting-a-fitted-linear-model.html#cb37-1" aria-hidden="true" tabindex="-1"></a><span class="fu">data</span>(fuel2001, <span class="at">package =</span> <span class="st">&quot;alr4&quot;</span>)</span></code></pre></div>
+<p>The variables (for the year 2001 unless otherwise noted) are:</p>
+<ul>
+<li><code>Drivers</code>: Number of Licensed drivers in the state</li>
+<li><code>FuelC</code>: Gasoline sold for road use (1000s of gal.)</li>
+<li><code>Miles</code>: Miles of Federal-aid highway miles in the state</li>
+<li><code>Pop</code>: 2001 population age 16 and over</li>
+<li><code>Tax</code>: Gasoline state tax rate (cents/gallon)</li>
+</ul>
+</div>
+<div id="setting-up-a-linear-model" class="section level2 hasAnchor" number="8.3">
+<h2><span class="header-section-number">8.3</span> Setting Up a Linear Model<a href="interpreting-a-fitted-linear-model.html#setting-up-a-linear-model" class="anchor-section" aria-label="Anchor link to header"></a></h2>
+<p>What is the relationship between fuel consumption and various regressors for the 50 United States and the District of Columbia?</p>
+<div id="adjusting-units" class="section level3 hasAnchor" number="8.3.1">
+<h3><span class="header-section-number">8.3.1</span> Adjusting Units<a href="interpreting-a-fitted-linear-model.html#adjusting-units" class="anchor-section" aria-label="Anchor link to header"></a></h3>
+<ul>
+<li>Some of the variables are adjusted for population. Others are are not.</li>
+<li>Some dollar values are given in thousands of dollars. Others are given in dollars.</li>
+<li>Some units of fuel are given in gallons. Others are given in 1000’s of gallons.</li>
+<li>Our model should have regressor variables with compatible units with the response variable.</li>
+</ul>
+<ol style="list-style-type: decimal">
+<li><strong>Create a new variable called <code>Fuel</code> that converts units of <code>FuelC</code> from 1000’s of gallons to gallons per person</strong>.</li>
+<li><strong>Create a new variable called <code>Income1k</code>that converts the units of <code>Income</code> from dollars per capita to 1000’s of dollars per capita.</strong></li>
+<li><strong>Convert the units of <code>Drivers</code> from number of drivers to number of drivers per capita</strong>.</li>
+</ol>
+<ul>
+<li><code>Fuel</code>: Average amount of gasoline sold for road use per person (Gallons/person)</li>
+<li><code>Income1K</code>: Average personal income (in thousands) for the year 2000 per person ($1K/person)</li>
+<li><code>Dlic</code>: Number of licensed drivers per 1000 persons (licensed drivers/1K persons)</li>
+</ul>
+<div class="sourceCode" id="cb38"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb38-1"><a href="interpreting-a-fitted-linear-model.html#cb38-1" aria-hidden="true" tabindex="-1"></a><span class="co"># create new regressors/transformed responses to fuel2001 data frame</span></span>
+<span id="cb38-2"><a href="interpreting-a-fitted-linear-model.html#cb38-2" aria-hidden="true" tabindex="-1"></a>fuel2001<span class="sc">$</span>Fuel <span class="ot">&lt;-</span> <span class="dv">1000</span><span class="sc">*</span>fuel2001<span class="sc">$</span>FuelC<span class="sc">/</span>fuel2001<span class="sc">$</span>Pop</span>
+<span id="cb38-3"><a href="interpreting-a-fitted-linear-model.html#cb38-3" aria-hidden="true" tabindex="-1"></a>fuel2001<span class="sc">$</span>Dlic <span class="ot">&lt;-</span> <span class="dv">1000</span><span class="sc">*</span>fuel2001<span class="sc">$</span>Drivers<span class="sc">/</span>fuel2001<span class="sc">$</span>Pop</span>
+<span id="cb38-4"><a href="interpreting-a-fitted-linear-model.html#cb38-4" aria-hidden="true" tabindex="-1"></a>fuel2001<span class="sc">$</span>Income1K <span class="ot">&lt;-</span> fuel2001<span class="sc">$</span>Income<span class="sc">/</span><span class="dv">1000</span></span></code></pre></div>
+<div class="sourceCode" id="cb39"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb39-1"><a href="interpreting-a-fitted-linear-model.html#cb39-1" aria-hidden="true" tabindex="-1"></a><span class="fu">summary</span>(fuel2001)</span></code></pre></div>
+<pre><code>##     Drivers             FuelC              Income          Miles       
+##  Min.   :  328094   Min.   :  148769   Min.   :20993   Min.   :  1534  
+##  1st Qu.: 1087128   1st Qu.:  737361   1st Qu.:25323   1st Qu.: 36586  
+##  Median : 2718209   Median : 2048664   Median :27871   Median : 78914  
+##  Mean   : 3750504   Mean   : 2542786   Mean   :28404   Mean   : 77419  
+##  3rd Qu.: 4424256   3rd Qu.: 3039932   3rd Qu.:31209   3rd Qu.:112828  
+##  Max.   :21623793   Max.   :14691753   Max.   :40640   Max.   :300767  
+##       MPC             Pop                Tax             Fuel      
+##  Min.   : 6556   Min.   :  381882   Min.   : 7.50   Min.   :317.5  
+##  1st Qu.: 9391   1st Qu.: 1162624   1st Qu.:18.00   1st Qu.:575.0  
+##  Median :10458   Median : 3115130   Median :20.00   Median :626.0  
+##  Mean   :10448   Mean   : 4257046   Mean   :20.15   Mean   :613.1  
+##  3rd Qu.:11311   3rd Qu.: 4845200   3rd Qu.:23.25   3rd Qu.:666.6  
+##  Max.   :17495   Max.   :25599275   Max.   :29.00   Max.   :842.8  
+##       Dlic           Income1K    
+##  Min.   : 700.2   Min.   :20.99  
+##  1st Qu.: 864.1   1st Qu.:25.32  
+##  Median : 909.1   Median :27.87  
+##  Mean   : 903.7   Mean   :28.40  
+##  3rd Qu.: 943.0   3rd Qu.:31.21  
+##  Max.   :1075.3   Max.   :40.64</code></pre>
+</div>
+<div id="fitting-a-model" class="section level3 hasAnchor" number="8.3.2">
+<h3><span class="header-section-number">8.3.2</span> Fitting a Model<a href="interpreting-a-fitted-linear-model.html#fitting-a-model" class="anchor-section" aria-label="Anchor link to header"></a></h3>
+<p>We will set up a regression model to determine how <code>Fuel</code> (gallons per person) is related to <code>Tax</code> (cents per gallon),
+<code>Dlic</code> (drivers per capita), <code>Income1k</code> (thousands of dollars of income per capita), and <code>Miles</code> (federal highway miles).</p>
+<p><span class="math display">\[E( \mbox{Fuel} \ | \ \mbox{Tax, Dlic, Income1K, Miles})=\beta_0+\beta_1 (\mbox{Tax}) +\beta_2 (\mbox{Dlic}) + \beta_3 (\mbox{Income1K}) + \beta_4 \log{(\mbox{Miles})}\]</span></p>
+<div class="sourceCode" id="cb41"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb41-1"><a href="interpreting-a-fitted-linear-model.html#cb41-1" aria-hidden="true" tabindex="-1"></a><span class="co"># fit model</span></span>
+<span id="cb41-2"><a href="interpreting-a-fitted-linear-model.html#cb41-2" aria-hidden="true" tabindex="-1"></a>lmod <span class="ot">&lt;-</span> <span class="fu">lm</span>(Fuel <span class="sc">~</span> Tax <span class="sc">+</span> Dlic <span class="sc">+</span> Income1K <span class="sc">+</span> <span class="fu">log</span>(Miles), <span class="at">data =</span> fuel2001)</span>
+<span id="cb41-3"><a href="interpreting-a-fitted-linear-model.html#cb41-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb41-4"><a href="interpreting-a-fitted-linear-model.html#cb41-4" aria-hidden="true" tabindex="-1"></a><span class="co"># summarize model</span></span>
+<span id="cb41-5"><a href="interpreting-a-fitted-linear-model.html#cb41-5" aria-hidden="true" tabindex="-1"></a>faraway<span class="sc">::</span><span class="fu">sumary</span>(lmod)</span></code></pre></div>
+<pre><code>##              Estimate Std. Error t value  Pr(&gt;|t|)
+## (Intercept) 154.19284  194.90616  0.7911 0.4329381
+## Tax          -4.22798    2.03012 -2.0826 0.0428733
+## Dlic          0.47187    0.12851  3.6718 0.0006256
+## Income1K     -6.13533    2.19363 -2.7969 0.0075078
+## log(Miles)   26.75518    9.33737  2.8654 0.0062592
+## 
+## n = 51, p = 5, Residual SE = 64.89122, R-Squared = 0.51</code></pre>
+<p>We see the fitted model is:</p>
+<p><span class="math display">\[\widehat{\mbox{E}}(\mbox{Fuel} \ | \ \mbox{Tax, Dlic, Income1k, Miles}) = 154.19 - 4.24 (\mbox{Tax}) + 0.47 (\mbox{Dlic}) - 6.14(\mbox{Income1K}) + 26.76 \log{(\mbox{26.76})}\]</span></p>
+<p>This equation represents the estimated conditional mean of Fuel given fixed values of the regressors Tax, Dlic, Income1K, and Miles.</p>
+</div>
+</div>
+<div id="interpreting-the-coefficients" class="section level2 hasAnchor" number="8.4">
+<h2><span class="header-section-number">8.4</span> Interpreting the Coefficients<a href="interpreting-a-fitted-linear-model.html#interpreting-the-coefficients" class="anchor-section" aria-label="Anchor link to header"></a></h2>
+<p>Estimated coefficients are usually interpreted as a <strong>rate of change.</strong></p>
+<ul>
+<li>If we increase a regressor by 1 unit (and hold all others constant), what is the predicted change in the response variable?</li>
+</ul>
+<ol start="4" style="list-style-type: decimal">
+<li><strong>Interpret the practical meaning of <span class="math inline">\(\beta_1 = -4.24\)</span>. Pay attention to units when giving your interpretation.</strong></li>
+</ol>
+<ul>
+<li>The sign of a parameter estimate indicates the direction of the relationship between the regressor and the response (when all other regressors are constant).</li>
+<li>The sign of the effect of a regressor is often more important than its magnitude.</li>
+<li>If regressors are highly correlated with other regressors, both the magnitude and sign of an estimated coefficient may change depending on the values of the other regressors are in the model.</li>
+</ul>
+</div>
+<div id="example-berkeley-guidance-study" class="section level2 hasAnchor" number="8.5">
+<h2><span class="header-section-number">8.5</span> Example: Berkeley Guidance Study<a href="interpreting-a-fitted-linear-model.html#example-berkeley-guidance-study" class="anchor-section" aria-label="Anchor link to header"></a></h2>
+<p>Data from the Berkeley guidance study of children born in 1928-29 in Berkeley, CA. BGSgirls contains data from just the girls in the study.</p>
+<div class="sourceCode" id="cb43"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb43-1"><a href="interpreting-a-fitted-linear-model.html#cb43-1" aria-hidden="true" tabindex="-1"></a><span class="fu">data</span>(BGSgirls, <span class="at">package =</span> <span class="st">&quot;alr4&quot;</span>)</span>
+<span id="cb43-2"><a href="interpreting-a-fitted-linear-model.html#cb43-2" aria-hidden="true" tabindex="-1"></a><span class="fu">head</span>(BGSgirls)</span></code></pre></div>
+<pre><code>##     WT2  HT2  WT9   HT9  LG9 ST9 WT18  HT18 LG18 ST18 BMI18 Soma
+## 67 13.6 87.7 32.5 133.4 28.4  74 56.9 158.9 34.6  143  22.5  5.0
+## 68 11.3 90.0 27.8 134.8 26.9  65 49.9 166.0 33.8  117  18.1  4.0
+## 69 17.0 89.6 44.4 141.5 31.9 104 55.3 162.2 35.1  143  21.0  5.5
+## 70 13.2 90.3 40.5 137.1 31.8  79 65.9 167.8 39.3  148  23.4  5.5
+## 71 13.3 89.4 29.9 136.1 27.7  83 62.3 170.9 36.3  152  21.3  4.5
+## 72 11.3 85.5 22.8 130.6 23.4  60 47.4 164.9 31.8  126  17.4  3.0</code></pre>
+</div>
+<div id="dictionary-of-data" class="section level2 hasAnchor" number="8.6">
+<h2><span class="header-section-number">8.6</span> Dictionary of Data<a href="interpreting-a-fitted-linear-model.html#dictionary-of-data" class="anchor-section" aria-label="Anchor link to header"></a></h2>
+<ul>
+<li><code>BMI18</code>: the body mass index at age 18</li>
+<li><code>WT2</code>, <code>WT9</code>, and <code>WT18</code>: the weights at ages 2, 9, and 18 (in kg) for the <span class="math inline">\(n=70\)</span> girls in the study.</li>
+</ul>
+</div>
+<div id="analysing-relations-between-regressors" class="section level2 hasAnchor" number="8.7">
+<h2><span class="header-section-number">8.7</span> Analysing Relations Between Regressors<a href="interpreting-a-fitted-linear-model.html#analysing-relations-between-regressors" class="anchor-section" aria-label="Anchor link to header"></a></h2>
+<div class="sourceCode" id="cb45"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb45-1"><a href="interpreting-a-fitted-linear-model.html#cb45-1" aria-hidden="true" tabindex="-1"></a><span class="co"># basic scatterplot matrix</span></span>
+<span id="cb45-2"><a href="interpreting-a-fitted-linear-model.html#cb45-2" aria-hidden="true" tabindex="-1"></a><span class="fu">pairs</span>(<span class="sc">~</span> BMI18 <span class="sc">+</span> WT2 <span class="sc">+</span> WT9 <span class="sc">+</span> WT18, <span class="at">data =</span> BGSgirls)</span></code></pre></div>
+<p><img src="Data-Analysis-with-Linear-Regression_files/figure-html/unnamed-chunk-22-1.png" width="672" /></p>
+<ol start="5" style="list-style-type: decimal">
+<li><p><strong>Based on the scatter plot matrix above, does there seem to be any relations among the regressors? Explain why these relations make practical sense.</strong></p></li>
+<li><p><strong>How can we adjust our model to account for the relations between the regressors?</strong></p></li>
+</ol>
+</div>
+<div id="adjusting-the-regressors" class="section level2 hasAnchor" number="8.8">
+<h2><span class="header-section-number">8.8</span> Adjusting the Regressors<a href="interpreting-a-fitted-linear-model.html#adjusting-the-regressors" class="anchor-section" aria-label="Anchor link to header"></a></h2>
+<ol start="7" style="list-style-type: decimal">
+<li><p><strong>Create a new regressor called <code>DW9</code> that is the weight gain from age 2 to 9.</strong></p></li>
+<li><p><strong>Create a new regressor called <code>DW18</code> that is the weight gain from age 9 to 18.</strong></p></li>
+</ol>
+<div class="sourceCode" id="cb46"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb46-1"><a href="interpreting-a-fitted-linear-model.html#cb46-1" aria-hidden="true" tabindex="-1"></a>BGSgirls<span class="sc">$</span>DW9 <span class="ot">&lt;-</span> BGSgirls<span class="sc">$</span>WT9<span class="sc">-</span>BGSgirls<span class="sc">$</span>WT2</span>
+<span id="cb46-2"><a href="interpreting-a-fitted-linear-model.html#cb46-2" aria-hidden="true" tabindex="-1"></a>BGSgirls<span class="sc">$</span>DW18 <span class="ot">&lt;-</span> BGSgirls<span class="sc">$</span>WT18<span class="sc">-</span>BGSgirls<span class="sc">$</span>WT9</span>
+<span id="cb46-3"><a href="interpreting-a-fitted-linear-model.html#cb46-3" aria-hidden="true" tabindex="-1"></a>BGSgirls<span class="sc">$</span>DW218 <span class="ot">&lt;-</span> BGSgirls<span class="sc">$</span>WT18<span class="sc">-</span>BGSgirls<span class="sc">$</span>WT2</span></code></pre></div>
+<div class="sourceCode" id="cb47"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb47-1"><a href="interpreting-a-fitted-linear-model.html#cb47-1" aria-hidden="true" tabindex="-1"></a><span class="co"># basic scatterplot matrix</span></span>
+<span id="cb47-2"><a href="interpreting-a-fitted-linear-model.html#cb47-2" aria-hidden="true" tabindex="-1"></a><span class="fu">pairs</span>(<span class="sc">~</span> BMI18 <span class="sc">+</span> DW9 <span class="sc">+</span> DW18, <span class="at">data =</span> BGSgirls)</span></code></pre></div>
+<p><img src="Data-Analysis-with-Linear-Regression_files/figure-html/unnamed-chunk-24-1.png" width="672" /></p>
+<ol start="9" style="list-style-type: decimal">
+<li><strong>Based on the scatter plot matrix above, how can you tell that the new regressors seem to be more independent from each other?</strong></li>
+</ol>
+</div>
+<div id="comparing-different-models" class="section level2 hasAnchor" number="8.9">
+<h2><span class="header-section-number">8.9</span> Comparing Different Models<a href="interpreting-a-fitted-linear-model.html#comparing-different-models" class="anchor-section" aria-label="Anchor link to header"></a></h2>
+<div id="bmi-relation-to-wt2-wt9-and-wt18" class="section level3 hasAnchor" number="8.9.1">
+<h3><span class="header-section-number">8.9.1</span> BMI relation to WT2, WT9 and WT18<a href="interpreting-a-fitted-linear-model.html#bmi-relation-to-wt2-wt9-and-wt18" class="anchor-section" aria-label="Anchor link to header"></a></h3>
+<div class="sourceCode" id="cb48"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb48-1"><a href="interpreting-a-fitted-linear-model.html#cb48-1" aria-hidden="true" tabindex="-1"></a>m1 <span class="ot">&lt;-</span> <span class="fu">lm</span>(BMI18 <span class="sc">~</span> WT2 <span class="sc">+</span> WT9 <span class="sc">+</span> WT18, BGSgirls)</span>
+<span id="cb48-2"><a href="interpreting-a-fitted-linear-model.html#cb48-2" aria-hidden="true" tabindex="-1"></a>faraway<span class="sc">::</span><span class="fu">sumary</span>(m1)</span></code></pre></div>
+<pre><code>##              Estimate Std. Error t value  Pr(&gt;|t|)
+## (Intercept)  8.309780   1.655175  5.0205 4.156e-06
+## WT2         -0.386633   0.151451 -2.5528    0.0130
+## WT9          0.031410   0.049370  0.6362    0.5268
+## WT18         0.287447   0.026026 11.0444 &lt; 2.2e-16
+## 
+## n = 70, p = 4, Residual SE = 1.33291, R-Squared = 0.78</code></pre>
+</div>
+<div id="bmi-relation-to-wt2-dw9-and-dw18" class="section level3 hasAnchor" number="8.9.2">
+<h3><span class="header-section-number">8.9.2</span> BMI relation to WT2, DW9 and DW18<a href="interpreting-a-fitted-linear-model.html#bmi-relation-to-wt2-dw9-and-dw18" class="anchor-section" aria-label="Anchor link to header"></a></h3>
+<div class="sourceCode" id="cb50"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb50-1"><a href="interpreting-a-fitted-linear-model.html#cb50-1" aria-hidden="true" tabindex="-1"></a>m2 <span class="ot">&lt;-</span> <span class="fu">lm</span>(BMI18 <span class="sc">~</span> WT2 <span class="sc">+</span> DW9 <span class="sc">+</span> DW18, BGSgirls)</span>
+<span id="cb50-2"><a href="interpreting-a-fitted-linear-model.html#cb50-2" aria-hidden="true" tabindex="-1"></a>faraway<span class="sc">::</span><span class="fu">sumary</span>(m2)</span></code></pre></div>
+<pre><code>##              Estimate Std. Error t value  Pr(&gt;|t|)
+## (Intercept)  8.309780   1.655175  5.0205 4.156e-06
+## WT2         -0.067776   0.127509 -0.5315    0.5968
+## DW9          0.318857   0.038553  8.2706 8.683e-12
+## DW18         0.287447   0.026026 11.0444 &lt; 2.2e-16
+## 
+## n = 70, p = 4, Residual SE = 1.33291, R-Squared = 0.78</code></pre>
+</div>
+<div id="bmi-relation-to-wt2-wt9-wt18-dw9-and-dw18" class="section level3 hasAnchor" number="8.9.3">
+<h3><span class="header-section-number">8.9.3</span> BMI relation to WT2, WT9, WT18, DW9 and DW18<a href="interpreting-a-fitted-linear-model.html#bmi-relation-to-wt2-wt9-wt18-dw9-and-dw18" class="anchor-section" aria-label="Anchor link to header"></a></h3>
+<div class="sourceCode" id="cb52"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb52-1"><a href="interpreting-a-fitted-linear-model.html#cb52-1" aria-hidden="true" tabindex="-1"></a>m3 <span class="ot">&lt;-</span> <span class="fu">lm</span>(BMI18 <span class="sc">~</span> WT2 <span class="sc">+</span> WT9 <span class="sc">+</span> WT18 <span class="sc">+</span> DW9 <span class="sc">+</span> DW18, BGSgirls)</span>
+<span id="cb52-2"><a href="interpreting-a-fitted-linear-model.html#cb52-2" aria-hidden="true" tabindex="-1"></a>faraway<span class="sc">::</span><span class="fu">sumary</span>(m3)</span></code></pre></div>
+<pre><code>## 
+## Coefficients: (2 not defined because of singularities)
+##              Estimate Std. Error t value  Pr(&gt;|t|)
+## (Intercept)  8.309780   1.655175  5.0205 4.156e-06
+## WT2         -0.386633   0.151451 -2.5528    0.0130
+## WT9          0.031410   0.049370  0.6362    0.5268
+## WT18         0.287447   0.026026 11.0444 &lt; 2.2e-16
+## 
+## n = 70, p = 4, Residual SE = 1.33291, R-Squared = 0.78</code></pre>
+<div class="sourceCode" id="cb54"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb54-1"><a href="interpreting-a-fitted-linear-model.html#cb54-1" aria-hidden="true" tabindex="-1"></a><span class="fu">coef</span>(m1)</span></code></pre></div>
+<pre><code>## (Intercept)         WT2         WT9        WT18 
+##  8.30977995 -0.38663273  0.03140967  0.28744733</code></pre>
+<div class="sourceCode" id="cb56"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb56-1"><a href="interpreting-a-fitted-linear-model.html#cb56-1" aria-hidden="true" tabindex="-1"></a><span class="fu">coef</span>(m2)</span></code></pre></div>
+<pre><code>## (Intercept)         WT2         DW9        DW18 
+##  8.30977995 -0.06777573  0.31885700  0.28744733</code></pre>
+<div class="sourceCode" id="cb58"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb58-1"><a href="interpreting-a-fitted-linear-model.html#cb58-1" aria-hidden="true" tabindex="-1"></a><span class="fu">coef</span>(m3)</span></code></pre></div>
+<pre><code>## (Intercept)         WT2         WT9        WT18         DW9        DW18 
+##  8.30977995 -0.38663273  0.03140967  0.28744733          NA          NA</code></pre>
+<table>
+<thead>
+<tr class="header">
+<th>Regressor</th>
+<th>Model 1</th>
+<th>Model 2</th>
+<th>Model 3</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>Intercept</td>
+<td>8.298</td>
+<td>8.298</td>
+<td>8.298</td>
+</tr>
+<tr class="even">
+<td>CI</td>
+<td>(5.00,11.62)</td>
+<td>(5.00,11.62)</td>
+<td>(5.00,11.62)</td>
+</tr>
+<tr class="odd">
+<td>WT2</td>
+<td>-0.383</td>
+<td>-0.065</td>
+<td>-0.383</td>
+</tr>
+<tr class="even">
+<td>CI</td>
+<td>(-0.69,-0.08)</td>
+<td>(-0.32,0.19)</td>
+<td>(-0.69,-0.08)</td>
+</tr>
+<tr class="odd">
+<td>WT9</td>
+<td>0.032</td>
+<td>–</td>
+<td>0.032</td>
+</tr>
+<tr class="even">
+<td>CI</td>
+<td>(-0.06,0.13)</td>
+<td>–</td>
+<td>(-0.06,0.13)</td>
+</tr>
+<tr class="odd">
+<td>WT18</td>
+<td>0.287</td>
+<td>–</td>
+<td>–</td>
+</tr>
+<tr class="even">
+<td>CI</td>
+<td>(0.23,0.34)</td>
+<td>–</td>
+<td>–</td>
+</tr>
+<tr class="odd">
+<td>DW9</td>
+<td>–</td>
+<td>0.318</td>
+<td>NA</td>
+</tr>
+<tr class="even">
+<td>CI</td>
+<td>–</td>
+<td>(0.24,0.40)</td>
+<td>NA</td>
+</tr>
+<tr class="odd">
+<td>DW18</td>
+<td>–</td>
+<td>0.287</td>
+<td>NA</td>
+</tr>
+<tr class="even">
+<td>CI</td>
+<td>–</td>
+<td>(0.23,0.34)</td>
+<td>NA</td>
+</tr>
+</tbody>
+</table>
+<ol start="10" style="list-style-type: decimal">
+<li><strong>Comment on how the WT2 coefficient is the same/different in the different models.</strong></li>
+</ol>
+<p>When regressors are correlated, interpretation of the effect of a regressor depends not only on the other regressors in the model, but also upon the linear transformation of the variables used.</p>
+<ol start="11" style="list-style-type: decimal">
+<li><strong>Why are their NAs in Model 3?</strong></li>
+</ol>
+</div>
+</div>
+<div id="effect-plots" class="section level2 hasAnchor" number="8.10">
+<h2><span class="header-section-number">8.10</span> Effect Plots<a href="interpreting-a-fitted-linear-model.html#effect-plots" class="anchor-section" aria-label="Anchor link to header"></a></h2>
+<p>An <strong>effect plot</strong> displays effect of a regressor on the mean response while holding the other regressors at their mean values.</p>
+<p><span class="math display">\[ \hat{y} = \beta_0 + \beta_1 (\bar{X}_1) + \beta_2 (\bar{X}_2) + \ldots + \beta_{i-1} (\bar{X}_{i-1}) + \beta_i (X_i) + \beta_{i+1} (\bar{X}_{i+1}) + \ldots + + \beta_{p-1} (\bar{X}_{p-1})\]</span></p>
+<div class="sourceCode" id="cb60"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb60-1"><a href="interpreting-a-fitted-linear-model.html#cb60-1" aria-hidden="true" tabindex="-1"></a><span class="fu">summary</span>(lmod)<span class="sc">$</span>coefficients</span></code></pre></div>
+<pre><code>##                Estimate  Std. Error    t value     Pr(&gt;|t|)
+## (Intercept) 154.1928446 194.9061606  0.7911132 0.4329381433
+## Tax          -4.2279832   2.0301211 -2.0826261 0.0428733310
+## Dlic          0.4718712   0.1285134  3.6717660 0.0006255639
+## Income1K     -6.1353310   2.1936336 -2.7968805 0.0075077902
+## log(Miles)   26.7551756   9.3373740  2.8653854 0.0062591801</code></pre>
+<ol start="12" style="list-style-type: decimal">
+<li><strong>Complete the code below to extract each of the coefficients in the Fuel Consumption model <code>lmod</code> from the coefficient array above.</strong></li>
+</ol>
+<div class="sourceCode" id="cb62"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb62-1"><a href="interpreting-a-fitted-linear-model.html#cb62-1" aria-hidden="true" tabindex="-1"></a>b0 <span class="ot">&lt;-</span> <span class="fu">summary</span>(lmod)<span class="sc">$</span>coefficients[<span class="dv">1</span>] <span class="co">#beta_0</span></span>
+<span id="cb62-2"><a href="interpreting-a-fitted-linear-model.html#cb62-2" aria-hidden="true" tabindex="-1"></a>b1 <span class="ot">&lt;-</span> <span class="fu">summary</span>(lmod)<span class="sc">$</span>coefficients[<span class="dv">2</span>] <span class="co">#beta_1</span></span>
+<span id="cb62-3"><a href="interpreting-a-fitted-linear-model.html#cb62-3" aria-hidden="true" tabindex="-1"></a>b2 <span class="ot">&lt;-</span> <span class="fu">summary</span>(lmod)<span class="sc">$</span>coefficients[<span class="dv">3</span>] <span class="co">#beta_2</span></span>
+<span id="cb62-4"><a href="interpreting-a-fitted-linear-model.html#cb62-4" aria-hidden="true" tabindex="-1"></a>b3 <span class="ot">&lt;-</span> <span class="fu">summary</span>(lmod)<span class="sc">$</span>coefficients[<span class="dv">4</span>] <span class="co">#beta_3</span></span>
+<span id="cb62-5"><a href="interpreting-a-fitted-linear-model.html#cb62-5" aria-hidden="true" tabindex="-1"></a>b4 <span class="ot">&lt;-</span> <span class="fu">summary</span>(lmod)<span class="sc">$</span>coefficients[<span class="dv">5</span>] <span class="co">#beta_4</span></span></code></pre></div>
+<ol start="12" style="list-style-type: decimal">
+<li>Complete the R code below to compute the sample means for each of the regressors.</li>
+</ol>
+<div class="sourceCode" id="cb63"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb63-1"><a href="interpreting-a-fitted-linear-model.html#cb63-1" aria-hidden="true" tabindex="-1"></a>xbar.Tax <span class="ot">&lt;-</span> <span class="fu">mean</span>(fuel2001<span class="sc">$</span>Tax)</span>
+<span id="cb63-2"><a href="interpreting-a-fitted-linear-model.html#cb63-2" aria-hidden="true" tabindex="-1"></a>xbar.Dlic <span class="ot">&lt;-</span> <span class="fu">mean</span>(fuel2001<span class="sc">$</span>Dlic)</span>
+<span id="cb63-3"><a href="interpreting-a-fitted-linear-model.html#cb63-3" aria-hidden="true" tabindex="-1"></a>xbar.Income1K <span class="ot">&lt;-</span> <span class="fu">mean</span>(fuel2001<span class="sc">$</span>Income1K)</span>
+<span id="cb63-4"><a href="interpreting-a-fitted-linear-model.html#cb63-4" aria-hidden="true" tabindex="-1"></a>xbar.Miles <span class="ot">&lt;-</span> <span class="fu">mean</span>(fuel2001<span class="sc">$</span>Miles)</span></code></pre></div>
+<ol start="13" style="list-style-type: decimal">
+<li><strong>What is the effect of <code>Tax</code> on expected Fuel consumption when the other regressors are fixed at the sample mean values? Write a formula to express this relation.</strong></li>
+</ol>
+<p>Thus we have the model
+<span class="math display">\[\mbox{E}(\mbox{Fuel} \ | \ \mbox{Tax, Dlic=??, Income1K=??, log(Miles) = ??}) = ?? - ??(\mbox{Tax})\]</span></p>
+<div class="sourceCode" id="cb64"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb64-1"><a href="interpreting-a-fitted-linear-model.html#cb64-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(effects) <span class="co"># for Effect function</span></span></code></pre></div>
+<pre><code>## Loading required package: carData</code></pre>
+<pre><code>## lattice theme set by effectsTheme()
+## See ?effectsTheme for details.</code></pre>
+<div class="sourceCode" id="cb67"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb67-1"><a href="interpreting-a-fitted-linear-model.html#cb67-1" aria-hidden="true" tabindex="-1"></a><span class="co"># effect plot for Tax regressor</span></span>
+<span id="cb67-2"><a href="interpreting-a-fitted-linear-model.html#cb67-2" aria-hidden="true" tabindex="-1"></a><span class="fu">plot</span>(<span class="fu">Effect</span>(<span class="st">&quot;Tax&quot;</span>, lmod))</span></code></pre></div>
+<p><img src="Data-Analysis-with-Linear-Regression_files/figure-html/unnamed-chunk-32-1.png" width="672" /></p>
+<ol start="14" style="list-style-type: decimal">
+<li><strong>If instead of fixing the values of the regressors at their mean, we choose other values such as the minimum value of each of regressors. What effect (if any) would this have on the graph above?</strong></li>
+</ol>
+</div>
+<div id="regressors-on-logarithmic-scale" class="section level2 hasAnchor" number="8.11">
+<h2><span class="header-section-number">8.11</span> Regressors on Logarithmic Scale<a href="interpreting-a-fitted-linear-model.html#regressors-on-logarithmic-scale" class="anchor-section" aria-label="Anchor link to header"></a></h2>
+<p>Logarithms are commonly used both for the response and for regressors.</p>
+<div class="sourceCode" id="cb68"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb68-1"><a href="interpreting-a-fitted-linear-model.html#cb68-1" aria-hidden="true" tabindex="-1"></a><span class="fu">summary</span>(fuel2001)</span></code></pre></div>
+<pre><code>##     Drivers             FuelC              Income          Miles       
+##  Min.   :  328094   Min.   :  148769   Min.   :20993   Min.   :  1534  
+##  1st Qu.: 1087128   1st Qu.:  737361   1st Qu.:25323   1st Qu.: 36586  
+##  Median : 2718209   Median : 2048664   Median :27871   Median : 78914  
+##  Mean   : 3750504   Mean   : 2542786   Mean   :28404   Mean   : 77419  
+##  3rd Qu.: 4424256   3rd Qu.: 3039932   3rd Qu.:31209   3rd Qu.:112828  
+##  Max.   :21623793   Max.   :14691753   Max.   :40640   Max.   :300767  
+##       MPC             Pop                Tax             Fuel      
+##  Min.   : 6556   Min.   :  381882   Min.   : 7.50   Min.   :317.5  
+##  1st Qu.: 9391   1st Qu.: 1162624   1st Qu.:18.00   1st Qu.:575.0  
+##  Median :10458   Median : 3115130   Median :20.00   Median :626.0  
+##  Mean   :10448   Mean   : 4257046   Mean   :20.15   Mean   :613.1  
+##  3rd Qu.:11311   3rd Qu.: 4845200   3rd Qu.:23.25   3rd Qu.:666.6  
+##  Max.   :17495   Max.   :25599275   Max.   :29.00   Max.   :842.8  
+##       Dlic           Income1K    
+##  Min.   : 700.2   Min.   :20.99  
+##  1st Qu.: 864.1   1st Qu.:25.32  
+##  Median : 909.1   Median :27.87  
+##  Mean   : 903.7   Mean   :28.40  
+##  3rd Qu.: 943.0   3rd Qu.:31.21  
+##  Max.   :1075.3   Max.   :40.64</code></pre>
+<ol start="15" style="list-style-type: decimal">
+<li><strong>Based on the summary output above, why do you think we used a log scale on <code>Miles</code>?</strong></li>
+</ol>
+<p>In the code block below, we create new variables that are the natural log and log base 10 of Miles and recreate the linear model using each of these new variables.</p>
+<div class="sourceCode" id="cb70"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb70-1"><a href="interpreting-a-fitted-linear-model.html#cb70-1" aria-hidden="true" tabindex="-1"></a>fuel2001<span class="sc">$</span>LnMiles <span class="ot">&lt;-</span> <span class="fu">log</span>(fuel2001<span class="sc">$</span>Miles)</span>
+<span id="cb70-2"><a href="interpreting-a-fitted-linear-model.html#cb70-2" aria-hidden="true" tabindex="-1"></a>fuel2001<span class="sc">$</span>LogMiles <span class="ot">&lt;-</span> <span class="fu">log10</span>(fuel2001<span class="sc">$</span>Miles)</span>
+<span id="cb70-3"><a href="interpreting-a-fitted-linear-model.html#cb70-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb70-4"><a href="interpreting-a-fitted-linear-model.html#cb70-4" aria-hidden="true" tabindex="-1"></a>lmod.ln <span class="ot">&lt;-</span> <span class="fu">lm</span>(Fuel <span class="sc">~</span> Tax <span class="sc">+</span> Dlic <span class="sc">+</span> Income1K <span class="sc">+</span> LnMiles, <span class="at">data =</span> fuel2001)</span>
+<span id="cb70-5"><a href="interpreting-a-fitted-linear-model.html#cb70-5" aria-hidden="true" tabindex="-1"></a>lmod.log <span class="ot">&lt;-</span> <span class="fu">lm</span>(Fuel <span class="sc">~</span> Tax <span class="sc">+</span> Dlic <span class="sc">+</span> Income1K <span class="sc">+</span> LogMiles, <span class="at">data =</span> fuel2001)</span>
+<span id="cb70-6"><a href="interpreting-a-fitted-linear-model.html#cb70-6" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb70-7"><a href="interpreting-a-fitted-linear-model.html#cb70-7" aria-hidden="true" tabindex="-1"></a>faraway<span class="sc">::</span><span class="fu">sumary</span>(lmod.ln) <span class="co">#Check that model is the same</span></span></code></pre></div>
+<pre><code>##              Estimate Std. Error t value  Pr(&gt;|t|)
+## (Intercept) 154.19284  194.90616  0.7911 0.4329381
+## Tax          -4.22798    2.03012 -2.0826 0.0428733
+## Dlic          0.47187    0.12851  3.6718 0.0006256
+## Income1K     -6.13533    2.19363 -2.7969 0.0075078
+## LnMiles      26.75518    9.33737  2.8654 0.0062592
+## 
+## n = 51, p = 5, Residual SE = 64.89122, R-Squared = 0.51</code></pre>
+<div class="sourceCode" id="cb72"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb72-1"><a href="interpreting-a-fitted-linear-model.html#cb72-1" aria-hidden="true" tabindex="-1"></a>faraway<span class="sc">::</span><span class="fu">sumary</span>(lmod.log) <span class="co">#Check that model is the same</span></span></code></pre></div>
+<pre><code>##              Estimate Std. Error t value  Pr(&gt;|t|)
+## (Intercept) 154.19284  194.90616  0.7911 0.4329381
+## Tax          -4.22798    2.03012 -2.0826 0.0428733
+## Dlic          0.47187    0.12851  3.6718 0.0006256
+## Income1K     -6.13533    2.19363 -2.7969 0.0075078
+## LogMiles     61.60607   21.50010  2.8654 0.0062592
+## 
+## n = 51, p = 5, Residual SE = 64.89122, R-Squared = 0.51</code></pre>
+</div>
+<div id="below-we-create-an-effects-plot-on-a-natural-log-scale." class="section level2 hasAnchor" number="8.12">
+<h2><span class="header-section-number">8.12</span> Below we create an effects plot on a natural log scale.<a href="interpreting-a-fitted-linear-model.html#below-we-create-an-effects-plot-on-a-natural-log-scale." class="anchor-section" aria-label="Anchor link to header"></a></h2>
+<div class="sourceCode" id="cb74"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb74-1"><a href="interpreting-a-fitted-linear-model.html#cb74-1" aria-hidden="true" tabindex="-1"></a><span class="fu">plot</span>(<span class="fu">Effect</span>(<span class="st">&quot;LnMiles&quot;</span>, lmod.ln), </span>
+<span id="cb74-2"><a href="interpreting-a-fitted-linear-model.html#cb74-2" aria-hidden="true" tabindex="-1"></a>     <span class="at">main =</span> <span class="st">&quot;ln(Miles) effect plot&quot;</span>)</span></code></pre></div>
+<p><img src="Data-Analysis-with-Linear-Regression_files/figure-html/unnamed-chunk-35-1.png" width="672" /></p>
+</div>
+<div id="below-we-create-an-effects-plot-on-a-log10-scale." class="section level2 hasAnchor" number="8.13">
+<h2><span class="header-section-number">8.13</span> Below we create an effects plot on a log10 scale.<a href="interpreting-a-fitted-linear-model.html#below-we-create-an-effects-plot-on-a-log10-scale." class="anchor-section" aria-label="Anchor link to header"></a></h2>
+<div class="sourceCode" id="cb75"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb75-1"><a href="interpreting-a-fitted-linear-model.html#cb75-1" aria-hidden="true" tabindex="-1"></a><span class="fu">plot</span>(<span class="fu">Effect</span>(<span class="st">&quot;LogMiles&quot;</span>, lmod.log), </span>
+<span id="cb75-2"><a href="interpreting-a-fitted-linear-model.html#cb75-2" aria-hidden="true" tabindex="-1"></a>     <span class="at">main =</span> <span class="st">&quot;log(Miles) effect plot&quot;</span>)</span></code></pre></div>
+<p><img src="Data-Analysis-with-Linear-Regression_files/figure-html/unnamed-chunk-36-1.png" width="672" /></p>
+</div>
+<div id="below-we-create-an-effects-plot-on-a-regular-scale." class="section level2 hasAnchor" number="8.14">
+<h2><span class="header-section-number">8.14</span> Below we create an effects plot on a regular scale.<a href="interpreting-a-fitted-linear-model.html#below-we-create-an-effects-plot-on-a-regular-scale." class="anchor-section" aria-label="Anchor link to header"></a></h2>
+<div class="sourceCode" id="cb76"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb76-1"><a href="interpreting-a-fitted-linear-model.html#cb76-1" aria-hidden="true" tabindex="-1"></a><span class="fu">plot</span>(<span class="fu">Effect</span>(<span class="st">&quot;Miles&quot;</span>, lmod, </span>
+<span id="cb76-2"><a href="interpreting-a-fitted-linear-model.html#cb76-2" aria-hidden="true" tabindex="-1"></a>            <span class="at">xlevels =</span> <span class="fu">list</span>(<span class="at">Miles =</span> <span class="fu">seq</span>(<span class="dv">1</span>, <span class="fl">3e5</span>, <span class="at">len =</span> <span class="dv">301</span>))))</span></code></pre></div>
+<p><img src="Data-Analysis-with-Linear-Regression_files/figure-html/unnamed-chunk-37-1.png" width="672" /></p>
+<p>The effect of increasing Miles is greater in states with fewer miles of roadway, with relatively little change in states with the most roadway.</p>
+<p>This is the usual effect of logarithms: the fitted effect changes most rapidly when the regressor is small and less rapidly when the predictor is large.</p>
+</div>
+<div id="interpreting-coefficients-with-log-scale-on-regressor" class="section level2 hasAnchor" number="8.15">
+<h2><span class="header-section-number">8.15</span> Interpreting Coefficients with Log Scale on Regressor<a href="interpreting-a-fitted-linear-model.html#interpreting-coefficients-with-log-scale-on-regressor" class="anchor-section" aria-label="Anchor link to header"></a></h2>
+<div id="natural-log-scale" class="section level3 hasAnchor" number="8.15.1">
+<h3><span class="header-section-number">8.15.1</span> Natural Log Scale<a href="interpreting-a-fitted-linear-model.html#natural-log-scale" class="anchor-section" aria-label="Anchor link to header"></a></h3>
+<p>Regressor <span class="math inline">\(X_j\)</span> increasing by 1% while the other regressors remain constant is associated with a <span class="math inline">\(\beta_j/100\)</span> increase in the response variable, on average.</p>
+<ol start="16" style="list-style-type: decimal">
+<li><strong>Interpret the meaning of the coefficient associated to the natural log of Miles which you can find below.</strong></li>
+</ol>
+<div class="sourceCode" id="cb77"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb77-1"><a href="interpreting-a-fitted-linear-model.html#cb77-1" aria-hidden="true" tabindex="-1"></a><span class="fu">summary</span>(lmod.ln)<span class="sc">$</span>coefficients[<span class="dv">5</span>, <span class="dv">1</span>] <span class="co">#ln coeff</span></span></code></pre></div>
+<pre><code>## [1] 26.75518</code></pre>
+</div>
+<div id="common-log-base-10-scale" class="section level3 hasAnchor" number="8.15.2">
+<h3><span class="header-section-number">8.15.2</span> Common Log (base 10) Scale<a href="interpreting-a-fitted-linear-model.html#common-log-base-10-scale" class="anchor-section" aria-label="Anchor link to header"></a></h3>
+<p>Regressor <span class="math inline">\(X_j\)</span> increasing by a factor of 10 (an increase of 900%) while the other regressors remain constant is associated with a <span class="math inline">\(\beta_j\)</span> increase in the response variable, on average.</p>
+<ol start="17" style="list-style-type: decimal">
+<li><strong>Interpret the meaning of the coefficient associated to the log base 10 of Miles which you can find below.</strong></li>
+</ol>
+<div class="sourceCode" id="cb79"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb79-1"><a href="interpreting-a-fitted-linear-model.html#cb79-1" aria-hidden="true" tabindex="-1"></a><span class="fu">summary</span>(lmod.log)<span class="sc">$</span>coefficients[<span class="dv">5</span>, <span class="dv">1</span>] <span class="co">#log coeff</span></span></code></pre></div>
+<pre><code>## [1] 61.60607</code></pre>
+</div>
+</div>
+<div id="log-level-interpretation" class="section level2 hasAnchor" number="8.16">
+<h2><span class="header-section-number">8.16</span> Log-Level Interpretation<a href="interpreting-a-fitted-linear-model.html#log-level-interpretation" class="anchor-section" aria-label="Anchor link to header"></a></h2>
+<p>It is common for responses to be transformed to a logarithmic scale for theoretical or practical considerations.</p>
+<p><span class="math display">\[\mbox{E}( \log{Y} \ | \ X)= \beta_0 + \beta_1 X.\]</span></p>
+<p>This is sometimes called a <strong>log-level model</strong>.</p>
+<ul>
+<li>A unit increase in <span class="math inline">\(X\)</span> is associated with a change in the mean <span class="math inline">\(Y\)</span> by the multiplicative effect <span class="math inline">\(\exp^{\beta_1}\)</span>.</li>
+<li><strong>Thus <span class="math inline">\(beta_1\)</span> is the continuous exponential growth/decay rate.</strong></li>
+</ul>
+<p>It is often acceptable to approximate the expected value of a log by the log of the expected value:</p>
+<p><span class="math display">\[\log{( \mbox{E}(Y \ | \ X=x) )} \approx\mbox{E}(\log{Y} \ | \ X=x)\]</span></p>
+<p>Thus, we have</p>
+<p><span class="math display">\[\mbox{E}(Y \ | \ X=x) \approx e^{\rm{E}(\log{Y} \ | \ X=x)} = e^{\beta_0 + \beta_1 X}=e^{\beta_0}e^{\beta_1X}.\]</span></p>
+</div>
+<div id="log-log-interpretation" class="section level2 hasAnchor" number="8.17">
+<h2><span class="header-section-number">8.17</span> Log-log Interpretation<a href="interpreting-a-fitted-linear-model.html#log-log-interpretation" class="anchor-section" aria-label="Anchor link to header"></a></h2>
+<p>Consider the log-log simple linear regression model</p>
+<p><span class="math display">\[\mbox{E}( \log{Y} \ | \ X) = \beta_0 + \beta_1 \log{X}.\]</span></p>
+<p>When we scale <span class="math inline">\(X\)</span> by a factor of <span class="math inline">\(c\)</span>, the response is predicted to grow by a factor of <span class="math inline">\(c^{\beta_1}\)</span>, on average.</p>
+</div>
+<div id="summary-of-interpretations-simple-linear-regression" class="section level2 hasAnchor" number="8.18">
+<h2><span class="header-section-number">8.18</span> Summary of Interpretations (Simple Linear Regression)<a href="interpreting-a-fitted-linear-model.html#summary-of-interpretations-simple-linear-regression" class="anchor-section" aria-label="Anchor link to header"></a></h2>
+<p><strong>Level-level</strong>: <span class="math inline">\(\mathbf{\mbox{E}(Y \ | \ X=x)} = \boldsymbol\beta_0 + \boldsymbol\beta_1 X\)</span>: The predicted change in the response is <span class="math inline">\(\beta_1\)</span> when we increase <span class="math inline">\(X\)</span> by 1 unit, on average.</p>
+<p><strong>Level-log</strong>: <span class="math inline">\(\mathbf{\mbox{E}(Y \ | \ X=x)} = \boldsymbol\beta_0 + \boldsymbol\beta_1 \log{X}\)</span>: When we increase <span class="math inline">\(X\)</span> by 1%, the response is predicted to increase by <span class="math inline">\(\beta_j/100\)</span>, on average.</p>
+<p><strong>Log-level</strong>: <span class="math inline">\(\mathbf{\mbox{E}(\log{Y} \ | \ X=x) = \boldsymbol\beta_0 + \boldsymbol\beta_1 X}\)</span>: A unit increase in <span class="math inline">\(X\)</span> is predicted to change the response by a factor of <span class="math inline">\(e^{\beta_1}\)</span>, on average. The continuous growth rate is <span class="math inline">\(\beta_1\)</span>.</p>
+<p><strong>Log-log</strong>: <span class="math inline">\(\mathbf{\mbox{E}(\log{Y} \ | \ X=x) = \boldsymbol\beta_0 + \boldsymbol\beta_1 \log{X}}\)</span>: When we scale <span class="math inline">\(X\)</span> by a factor of <span class="math inline">\(c\)</span>, the response is predicted to grow by a factor of <span class="math inline">\(c^{\beta_1}\)</span>, on average.</p>
+</div>
+<div id="more-practice" class="section level2 hasAnchor" number="8.19">
+<h2><span class="header-section-number">8.19</span> More Practice<a href="interpreting-a-fitted-linear-model.html#more-practice" class="anchor-section" aria-label="Anchor link to header"></a></h2>
+<ol style="list-style-type: decimal">
+<li><p>For a log-level model, interpret the relationship between <span class="math inline">\(X\)</span> and the mean of <span class="math inline">\(Y\)</span> when <span class="math inline">\(X\)</span> increases by 1 unit and <span class="math inline">\(\beta_j=0.3\)</span> and the other predictors do not change.</p></li>
+<li><p>For a log-log model, what is the expected change in <span class="math inline">\(Y\)</span> if we multiply <span class="math inline">\(X\)</span> by a factor of <span class="math inline">\(c\)</span>.</p></li>
+<li><p>For a log-log model, interpret the relationship between <span class="math inline">\(X\)</span> and the expected value of <span class="math inline">\(Y\)</span> when <span class="math inline">\(X\)</span> increases by <span class="math inline">\(10\%\)</span> and <span class="math inline">\(\beta_1=0.3\)</span>.</p></li>
+</ol>
 
 </div>
 </div>
@@ -493,7 +1071,7 @@ Thus, two centered regressors are orthogonal if their covariance is zero.</p>
         </div>
       </div>
 <a href="parameter-estimation-for-linear-models.html" class="navigation navigation-prev " aria-label="Previous page"><i class="fa fa-angle-left"></i></a>
-<a href="categorical-predictors.html" class="navigation navigation-next " aria-label="Next page"><i class="fa fa-angle-right"></i></a>
+<a href="categorical-predictors-1.html" class="navigation navigation-next " aria-label="Next page"><i class="fa fa-angle-right"></i></a>
     </div>
   </div>
 <script src="libs/gitbook-2.6.7/js/app.min.js"></script>

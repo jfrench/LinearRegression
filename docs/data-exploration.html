@@ -5,26 +5,25 @@
   <meta charset="utf-8" />
   <meta http-equiv="X-UA-Compatible" content="IE=edge" />
   <title>Chapter 2 Data exploration | Joshua French</title>
-  <meta name="description" content="A collection of R notebooks demonstrating how to perform data analysis with linear regression." />
-  <meta name="generator" content="bookdown 0.24 and GitBook 2.6.7" />
+  <meta name="description" content="A collection of R notebooks that progressively introduction how to fit and use linear models." />
+  <meta name="generator" content="bookdown 0.25 and GitBook 2.6.7" />
 
   <meta property="og:title" content="Chapter 2 Data exploration | Joshua French" />
   <meta property="og:type" content="book" />
   
-  
-  <meta property="og:description" content="A collection of R notebooks demonstrating how to perform data analysis with linear regression." />
+  <meta property="og:description" content="A collection of R notebooks that progressively introduction how to fit and use linear models." />
   
 
   <meta name="twitter:card" content="summary" />
   <meta name="twitter:title" content="Chapter 2 Data exploration | Joshua French" />
   
-  <meta name="twitter:description" content="A collection of R notebooks demonstrating how to perform data analysis with linear regression." />
+  <meta name="twitter:description" content="A collection of R notebooks that progressively introduction how to fit and use linear models." />
   
 
 <meta name="author" content="Chapter 2 Data exploration | Joshua French" />
 
 
-<meta name="date" content="2021-09-23" />
+<meta name="date" content="2022-06-10" />
 
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <meta name="apple-mobile-web-app-capable" content="yes" />
@@ -33,7 +32,6 @@
   
 <link rel="prev" href="r-foundations.html"/>
 <link rel="next" href="review-of-probability-random-variables-and-random-vectors.html"/>
-<script src="libs/header-attrs-2.10/header-attrs.js"></script>
 <script src="libs/jquery-3.6.0/jquery-3.6.0.min.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/fuse.js@6.4.6/dist/fuse.min.js"></script>
 <link href="libs/gitbook-2.6.7/css/style.css" rel="stylesheet" />
@@ -51,8 +49,9 @@
 
 
 
-<link href="libs/anchor-sections-1.0.1/anchor-sections.css" rel="stylesheet" />
-<script src="libs/anchor-sections-1.0.1/anchor-sections.js"></script>
+<link href="libs/anchor-sections-1.1.0/anchor-sections.css" rel="stylesheet" />
+<link href="libs/anchor-sections-1.1.0/anchor-sections-hash.css" rel="stylesheet" />
+<script src="libs/anchor-sections-1.1.0/anchor-sections.js"></script>
 
 
 <style type="text/css">
@@ -159,231 +158,239 @@ div.csl-indent {
 <li><a href="./">Data Analysis with Linear Regression</a></li>
 
 <li class="divider"></li>
-<li class="chapter" data-level="" data-path="index.html"><a href="index.html"><i class="fa fa-check"></i>Preliminaries</a></li>
-<li class="chapter" data-level="1" data-path="r-foundations.html"><a href="r-foundations.html"><i class="fa fa-check"></i><b>1</b> R Foundations</a>
+<li><a href="index.html#preliminaries">Preliminaries<span></span></a></li>
+<li class="chapter" data-level="1" data-path="r-foundations.html"><a href="r-foundations.html"><i class="fa fa-check"></i><b>1</b> R Foundations<span></span></a>
 <ul>
-<li class="chapter" data-level="1.1" data-path="r-foundations.html"><a href="r-foundations.html#what-is-r"><i class="fa fa-check"></i><b>1.1</b> What is R?</a></li>
-<li class="chapter" data-level="1.2" data-path="r-foundations.html"><a href="r-foundations.html#where-to-get-r-and-r-studio-desktop"><i class="fa fa-check"></i><b>1.2</b> Where to get R (and R Studio Desktop)</a></li>
-<li class="chapter" data-level="1.3" data-path="r-foundations.html"><a href="r-foundations.html#r-studio-layout"><i class="fa fa-check"></i><b>1.3</b> R Studio Layout</a></li>
-<li class="chapter" data-level="1.4" data-path="r-foundations.html"><a href="r-foundations.html#running-code-scripts-and-comments"><i class="fa fa-check"></i><b>1.4</b> Running code, scripts, and comments</a>
+<li class="chapter" data-level="1.1" data-path="r-foundations.html"><a href="r-foundations.html#what-is-r"><i class="fa fa-check"></i><b>1.1</b> What is R?<span></span></a></li>
+<li class="chapter" data-level="1.2" data-path="r-foundations.html"><a href="r-foundations.html#where-to-get-r-and-r-studio-desktop"><i class="fa fa-check"></i><b>1.2</b> Where to get R (and R Studio Desktop)<span></span></a></li>
+<li class="chapter" data-level="1.3" data-path="r-foundations.html"><a href="r-foundations.html#r-studio-layout"><i class="fa fa-check"></i><b>1.3</b> R Studio Layout<span></span></a></li>
+<li class="chapter" data-level="1.4" data-path="r-foundations.html"><a href="r-foundations.html#running-code-scripts-and-comments"><i class="fa fa-check"></i><b>1.4</b> Running code, scripts, and comments<span></span></a>
 <ul>
-<li class="chapter" data-level="1.4.1" data-path="r-foundations.html"><a href="r-foundations.html#example"><i class="fa fa-check"></i><b>1.4.1</b> Example</a></li>
+<li class="chapter" data-level="1.4.1" data-path="r-foundations.html"><a href="r-foundations.html#example"><i class="fa fa-check"></i><b>1.4.1</b> Example<span></span></a></li>
 </ul></li>
-<li class="chapter" data-level="1.5" data-path="r-foundations.html"><a href="r-foundations.html#packages"><i class="fa fa-check"></i><b>1.5</b> Packages</a>
+<li class="chapter" data-level="1.5" data-path="r-foundations.html"><a href="r-foundations.html#packages"><i class="fa fa-check"></i><b>1.5</b> Packages<span></span></a>
 <ul>
-<li class="chapter" data-level="1.5.1" data-path="r-foundations.html"><a href="r-foundations.html#example-1"><i class="fa fa-check"></i><b>1.5.1</b> Example</a></li>
+<li class="chapter" data-level="1.5.1" data-path="r-foundations.html"><a href="r-foundations.html#example-1"><i class="fa fa-check"></i><b>1.5.1</b> Example<span></span></a></li>
 </ul></li>
-<li class="chapter" data-level="1.6" data-path="r-foundations.html"><a href="r-foundations.html#getting-help"><i class="fa fa-check"></i><b>1.6</b> Getting help</a>
+<li class="chapter" data-level="1.6" data-path="r-foundations.html"><a href="r-foundations.html#getting-help"><i class="fa fa-check"></i><b>1.6</b> Getting help<span></span></a>
 <ul>
-<li class="chapter" data-level="1.6.1" data-path="r-foundations.html"><a href="r-foundations.html#example-2"><i class="fa fa-check"></i><b>1.6.1</b> Example</a></li>
+<li class="chapter" data-level="1.6.1" data-path="r-foundations.html"><a href="r-foundations.html#example-2"><i class="fa fa-check"></i><b>1.6.1</b> Example<span></span></a></li>
 </ul></li>
-<li class="chapter" data-level="1.7" data-path="r-foundations.html"><a href="r-foundations.html#data-types-and-structures"><i class="fa fa-check"></i><b>1.7</b> Data types and structures</a>
+<li class="chapter" data-level="1.7" data-path="r-foundations.html"><a href="r-foundations.html#data-types-and-structures"><i class="fa fa-check"></i><b>1.7</b> Data types and structures<span></span></a>
 <ul>
-<li class="chapter" data-level="1.7.1" data-path="r-foundations.html"><a href="r-foundations.html#basic-data-types"><i class="fa fa-check"></i><b>1.7.1</b> Basic data types</a></li>
-<li class="chapter" data-level="1.7.2" data-path="r-foundations.html"><a href="r-foundations.html#other-important-object-types"><i class="fa fa-check"></i><b>1.7.2</b> Other important object types</a></li>
-<li class="chapter" data-level="1.7.3" data-path="r-foundations.html"><a href="r-foundations.html#data-structures"><i class="fa fa-check"></i><b>1.7.3</b> Data structures</a></li>
+<li class="chapter" data-level="1.7.1" data-path="r-foundations.html"><a href="r-foundations.html#basic-data-types"><i class="fa fa-check"></i><b>1.7.1</b> Basic data types<span></span></a></li>
+<li class="chapter" data-level="1.7.2" data-path="r-foundations.html"><a href="r-foundations.html#other-important-object-types"><i class="fa fa-check"></i><b>1.7.2</b> Other important object types<span></span></a></li>
+<li class="chapter" data-level="1.7.3" data-path="r-foundations.html"><a href="r-foundations.html#data-structures"><i class="fa fa-check"></i><b>1.7.3</b> Data structures<span></span></a></li>
 </ul></li>
-<li class="chapter" data-level="1.8" data-path="r-foundations.html"><a href="r-foundations.html#assignment"><i class="fa fa-check"></i><b>1.8</b> Assignment</a>
+<li class="chapter" data-level="1.8" data-path="r-foundations.html"><a href="r-foundations.html#assignment"><i class="fa fa-check"></i><b>1.8</b> Assignment<span></span></a>
 <ul>
-<li class="chapter" data-level="1.8.1" data-path="r-foundations.html"><a href="r-foundations.html#example-3"><i class="fa fa-check"></i><b>1.8.1</b> Example</a></li>
+<li class="chapter" data-level="1.8.1" data-path="r-foundations.html"><a href="r-foundations.html#example-3"><i class="fa fa-check"></i><b>1.8.1</b> Example<span></span></a></li>
 </ul></li>
-<li class="chapter" data-level="1.9" data-path="r-foundations.html"><a href="r-foundations.html#vectors"><i class="fa fa-check"></i><b>1.9</b> Vectors</a>
+<li class="chapter" data-level="1.9" data-path="r-foundations.html"><a href="r-foundations.html#vectors"><i class="fa fa-check"></i><b>1.9</b> Vectors<span></span></a>
 <ul>
-<li class="chapter" data-level="1.9.1" data-path="r-foundations.html"><a href="r-foundations.html#creation"><i class="fa fa-check"></i><b>1.9.1</b> Creation</a></li>
-<li class="chapter" data-level="1.9.2" data-path="r-foundations.html"><a href="r-foundations.html#creating-patterned-vectors"><i class="fa fa-check"></i><b>1.9.2</b> Creating patterned vectors</a></li>
-<li class="chapter" data-level="1.9.3" data-path="r-foundations.html"><a href="r-foundations.html#example-4"><i class="fa fa-check"></i><b>1.9.3</b> Example</a></li>
-<li class="chapter" data-level="1.9.4" data-path="r-foundations.html"><a href="r-foundations.html#example-5"><i class="fa fa-check"></i><b>1.9.4</b> Example</a></li>
-<li class="chapter" data-level="1.9.5" data-path="r-foundations.html"><a href="r-foundations.html#categorical-vectors"><i class="fa fa-check"></i><b>1.9.5</b> Categorical vectors</a></li>
-<li class="chapter" data-level="1.9.6" data-path="r-foundations.html"><a href="r-foundations.html#example-6"><i class="fa fa-check"></i><b>1.9.6</b> Example</a></li>
-<li class="chapter" data-level="1.9.7" data-path="r-foundations.html"><a href="r-foundations.html#extracting-parts-of-a-vector"><i class="fa fa-check"></i><b>1.9.7</b> Extracting parts of a vector</a></li>
+<li class="chapter" data-level="1.9.1" data-path="r-foundations.html"><a href="r-foundations.html#creation"><i class="fa fa-check"></i><b>1.9.1</b> Creation<span></span></a></li>
+<li class="chapter" data-level="1.9.2" data-path="r-foundations.html"><a href="r-foundations.html#creating-patterned-vectors"><i class="fa fa-check"></i><b>1.9.2</b> Creating patterned vectors<span></span></a></li>
+<li class="chapter" data-level="1.9.3" data-path="r-foundations.html"><a href="r-foundations.html#example-4"><i class="fa fa-check"></i><b>1.9.3</b> Example<span></span></a></li>
+<li class="chapter" data-level="1.9.4" data-path="r-foundations.html"><a href="r-foundations.html#example-5"><i class="fa fa-check"></i><b>1.9.4</b> Example<span></span></a></li>
+<li class="chapter" data-level="1.9.5" data-path="r-foundations.html"><a href="r-foundations.html#categorical-vectors"><i class="fa fa-check"></i><b>1.9.5</b> Categorical vectors<span></span></a></li>
+<li class="chapter" data-level="1.9.6" data-path="r-foundations.html"><a href="r-foundations.html#example-6"><i class="fa fa-check"></i><b>1.9.6</b> Example<span></span></a></li>
+<li class="chapter" data-level="1.9.7" data-path="r-foundations.html"><a href="r-foundations.html#extracting-parts-of-a-vector"><i class="fa fa-check"></i><b>1.9.7</b> Extracting parts of a vector<span></span></a></li>
 </ul></li>
-<li class="chapter" data-level="1.10" data-path="r-foundations.html"><a href="r-foundations.html#helpful-functions"><i class="fa fa-check"></i><b>1.10</b> Helpful functions</a>
+<li class="chapter" data-level="1.10" data-path="r-foundations.html"><a href="r-foundations.html#helpful-functions"><i class="fa fa-check"></i><b>1.10</b> Helpful functions<span></span></a>
 <ul>
-<li class="chapter" data-level="1.10.1" data-path="r-foundations.html"><a href="r-foundations.html#general-functions"><i class="fa fa-check"></i><b>1.10.1</b> General functions</a></li>
-<li class="chapter" data-level="1.10.2" data-path="r-foundations.html"><a href="r-foundations.html#example-7"><i class="fa fa-check"></i><b>1.10.2</b> Example</a></li>
-<li class="chapter" data-level="1.10.3" data-path="r-foundations.html"><a href="r-foundations.html#functions-related-to-statistical-distributions"><i class="fa fa-check"></i><b>1.10.3</b> Functions related to statistical distributions</a></li>
-<li class="chapter" data-level="1.10.4" data-path="r-foundations.html"><a href="r-foundations.html#example-8"><i class="fa fa-check"></i><b>1.10.4</b> Example</a></li>
+<li class="chapter" data-level="1.10.1" data-path="r-foundations.html"><a href="r-foundations.html#general-functions"><i class="fa fa-check"></i><b>1.10.1</b> General functions<span></span></a></li>
+<li class="chapter" data-level="1.10.2" data-path="r-foundations.html"><a href="r-foundations.html#example-7"><i class="fa fa-check"></i><b>1.10.2</b> Example<span></span></a></li>
+<li class="chapter" data-level="1.10.3" data-path="r-foundations.html"><a href="r-foundations.html#functions-related-to-statistical-distributions"><i class="fa fa-check"></i><b>1.10.3</b> Functions related to statistical distributions<span></span></a></li>
+<li class="chapter" data-level="1.10.4" data-path="r-foundations.html"><a href="r-foundations.html#example-8"><i class="fa fa-check"></i><b>1.10.4</b> Example<span></span></a></li>
 </ul></li>
-<li class="chapter" data-level="1.11" data-path="r-foundations.html"><a href="r-foundations.html#data-frames"><i class="fa fa-check"></i><b>1.11</b> Data Frames</a>
+<li class="chapter" data-level="1.11" data-path="r-foundations.html"><a href="r-foundations.html#data-frames"><i class="fa fa-check"></i><b>1.11</b> Data Frames<span></span></a>
 <ul>
-<li class="chapter" data-level="1.11.1" data-path="r-foundations.html"><a href="r-foundations.html#creation-1"><i class="fa fa-check"></i><b>1.11.1</b> Creation</a></li>
-<li class="chapter" data-level="1.11.2" data-path="r-foundations.html"><a href="r-foundations.html#extracting-parts-of-a-data-frame"><i class="fa fa-check"></i><b>1.11.2</b> Extracting parts of a data frame</a></li>
-<li class="chapter" data-level="1.11.3" data-path="r-foundations.html"><a href="r-foundations.html#example-9"><i class="fa fa-check"></i><b>1.11.3</b> Example</a></li>
-<li class="chapter" data-level="1.11.4" data-path="r-foundations.html"><a href="r-foundations.html#importing-data"><i class="fa fa-check"></i><b>1.11.4</b> Importing Data</a></li>
+<li class="chapter" data-level="1.11.1" data-path="r-foundations.html"><a href="r-foundations.html#creation-1"><i class="fa fa-check"></i><b>1.11.1</b> Creation<span></span></a></li>
+<li class="chapter" data-level="1.11.2" data-path="r-foundations.html"><a href="r-foundations.html#extracting-parts-of-a-data-frame"><i class="fa fa-check"></i><b>1.11.2</b> Extracting parts of a data frame<span></span></a></li>
+<li class="chapter" data-level="1.11.3" data-path="r-foundations.html"><a href="r-foundations.html#example-9"><i class="fa fa-check"></i><b>1.11.3</b> Example<span></span></a></li>
+<li class="chapter" data-level="1.11.4" data-path="r-foundations.html"><a href="r-foundations.html#importing-data"><i class="fa fa-check"></i><b>1.11.4</b> Importing Data<span></span></a></li>
 </ul></li>
-<li class="chapter" data-level="1.12" data-path="r-foundations.html"><a href="r-foundations.html#logical-statements"><i class="fa fa-check"></i><b>1.12</b> Logical statements</a>
+<li class="chapter" data-level="1.12" data-path="r-foundations.html"><a href="r-foundations.html#logical-statements"><i class="fa fa-check"></i><b>1.12</b> Logical statements<span></span></a>
 <ul>
-<li class="chapter" data-level="1.12.1" data-path="r-foundations.html"><a href="r-foundations.html#basic-comparisons"><i class="fa fa-check"></i><b>1.12.1</b> Basic comparisons</a></li>
-<li class="chapter" data-level="1.12.2" data-path="r-foundations.html"><a href="r-foundations.html#example-10"><i class="fa fa-check"></i><b>1.12.2</b> Example</a></li>
-<li class="chapter" data-level="1.12.3" data-path="r-foundations.html"><a href="r-foundations.html#and-and-or-statements"><i class="fa fa-check"></i><b>1.12.3</b> And and Or statements</a></li>
-<li class="chapter" data-level="1.12.4" data-path="r-foundations.html"><a href="r-foundations.html#example-11"><i class="fa fa-check"></i><b>1.12.4</b> Example</a></li>
+<li class="chapter" data-level="1.12.1" data-path="r-foundations.html"><a href="r-foundations.html#basic-comparisons"><i class="fa fa-check"></i><b>1.12.1</b> Basic comparisons<span></span></a></li>
+<li class="chapter" data-level="1.12.2" data-path="r-foundations.html"><a href="r-foundations.html#example-10"><i class="fa fa-check"></i><b>1.12.2</b> Example<span></span></a></li>
+<li class="chapter" data-level="1.12.3" data-path="r-foundations.html"><a href="r-foundations.html#and-and-or-statements"><i class="fa fa-check"></i><b>1.12.3</b> And and Or statements<span></span></a></li>
+<li class="chapter" data-level="1.12.4" data-path="r-foundations.html"><a href="r-foundations.html#example-11"><i class="fa fa-check"></i><b>1.12.4</b> Example<span></span></a></li>
 </ul></li>
-<li class="chapter" data-level="1.13" data-path="r-foundations.html"><a href="r-foundations.html#subsetting-with-logical-statements"><i class="fa fa-check"></i><b>1.13</b> Subsetting with logical statements</a>
+<li class="chapter" data-level="1.13" data-path="r-foundations.html"><a href="r-foundations.html#subsetting-with-logical-statements"><i class="fa fa-check"></i><b>1.13</b> Subsetting with logical statements<span></span></a>
 <ul>
-<li class="chapter" data-level="1.13.1" data-path="r-foundations.html"><a href="r-foundations.html#example-12"><i class="fa fa-check"></i><b>1.13.1</b> Example</a></li>
+<li class="chapter" data-level="1.13.1" data-path="r-foundations.html"><a href="r-foundations.html#example-12"><i class="fa fa-check"></i><b>1.13.1</b> Example<span></span></a></li>
 </ul></li>
-<li class="chapter" data-level="1.14" data-path="r-foundations.html"><a href="r-foundations.html#ecosystem-debate"><i class="fa fa-check"></i><b>1.14</b> Ecosystem debate</a></li>
+<li class="chapter" data-level="1.14" data-path="r-foundations.html"><a href="r-foundations.html#ecosystem-debate"><i class="fa fa-check"></i><b>1.14</b> Ecosystem debate<span></span></a></li>
 </ul></li>
-<li class="chapter" data-level="2" data-path="data-exploration.html"><a href="data-exploration.html"><i class="fa fa-check"></i><b>2</b> Data exploration</a>
+<li class="chapter" data-level="2" data-path="data-exploration.html"><a href="data-exploration.html"><i class="fa fa-check"></i><b>2</b> Data exploration<span></span></a>
 <ul>
-<li class="chapter" data-level="2.1" data-path="data-exploration.html"><a href="data-exploration.html#data-analysis-process"><i class="fa fa-check"></i><b>2.1</b> Data analysis process</a>
+<li class="chapter" data-level="2.1" data-path="data-exploration.html"><a href="data-exploration.html#data-analysis-process"><i class="fa fa-check"></i><b>2.1</b> Data analysis process<span></span></a>
 <ul>
-<li class="chapter" data-level="2.1.1" data-path="data-exploration.html"><a href="data-exploration.html#problem-formulation"><i class="fa fa-check"></i><b>2.1.1</b> Problem Formulation</a></li>
-<li class="chapter" data-level="2.1.2" data-path="data-exploration.html"><a href="data-exploration.html#data-collection"><i class="fa fa-check"></i><b>2.1.2</b> Data collection</a></li>
+<li class="chapter" data-level="2.1.1" data-path="data-exploration.html"><a href="data-exploration.html#problem-formulation"><i class="fa fa-check"></i><b>2.1.1</b> Problem Formulation<span></span></a></li>
+<li class="chapter" data-level="2.1.2" data-path="data-exploration.html"><a href="data-exploration.html#data-collection"><i class="fa fa-check"></i><b>2.1.2</b> Data collection<span></span></a></li>
 </ul></li>
-<li class="chapter" data-level="2.2" data-path="data-exploration.html"><a href="data-exploration.html#data-exploration-1"><i class="fa fa-check"></i><b>2.2</b> Data exploration</a>
+<li class="chapter" data-level="2.2" data-path="data-exploration.html"><a href="data-exploration.html#data-exploration-1"><i class="fa fa-check"></i><b>2.2</b> Data exploration<span></span></a>
 <ul>
-<li class="chapter" data-level="2.2.1" data-path="data-exploration.html"><a href="data-exploration.html#numerical-summaries-of-data"><i class="fa fa-check"></i><b>2.2.1</b> Numerical summaries of data</a></li>
-<li class="chapter" data-level="2.2.2" data-path="data-exploration.html"><a href="data-exploration.html#visual-summaries-of-data"><i class="fa fa-check"></i><b>2.2.2</b> Visual summaries of data</a></li>
-<li class="chapter" data-level="2.2.3" data-path="data-exploration.html"><a href="data-exploration.html#what-to-look-for"><i class="fa fa-check"></i><b>2.2.3</b> What to look for</a></li>
+<li class="chapter" data-level="2.2.1" data-path="data-exploration.html"><a href="data-exploration.html#numerical-summaries-of-data"><i class="fa fa-check"></i><b>2.2.1</b> Numerical summaries of data<span></span></a></li>
+<li class="chapter" data-level="2.2.2" data-path="data-exploration.html"><a href="data-exploration.html#visual-summaries-of-data"><i class="fa fa-check"></i><b>2.2.2</b> Visual summaries of data<span></span></a></li>
+<li class="chapter" data-level="2.2.3" data-path="data-exploration.html"><a href="data-exploration.html#what-to-look-for"><i class="fa fa-check"></i><b>2.2.3</b> What to look for<span></span></a></li>
 </ul></li>
-<li class="chapter" data-level="2.3" data-path="data-exploration.html"><a href="data-exploration.html#kidney-example"><i class="fa fa-check"></i><b>2.3</b> Kidney Example</a>
+<li class="chapter" data-level="2.3" data-path="data-exploration.html"><a href="data-exploration.html#kidney-example"><i class="fa fa-check"></i><b>2.3</b> Kidney Example<span></span></a>
 <ul>
-<li class="chapter" data-level="2.3.1" data-path="data-exploration.html"><a href="data-exploration.html#numerically-summarizing-the-data"><i class="fa fa-check"></i><b>2.3.1</b> Numerically summarizing the data</a></li>
-<li class="chapter" data-level="2.3.2" data-path="data-exploration.html"><a href="data-exploration.html#cleaning-the-data"><i class="fa fa-check"></i><b>2.3.2</b> Cleaning the data</a></li>
+<li class="chapter" data-level="2.3.1" data-path="data-exploration.html"><a href="data-exploration.html#numerically-summarizing-the-data"><i class="fa fa-check"></i><b>2.3.1</b> Numerically summarizing the data<span></span></a></li>
+<li class="chapter" data-level="2.3.2" data-path="data-exploration.html"><a href="data-exploration.html#cleaning-the-data"><i class="fa fa-check"></i><b>2.3.2</b> Cleaning the data<span></span></a></li>
 </ul></li>
-<li class="chapter" data-level="2.4" data-path="data-exploration.html"><a href="data-exploration.html#visualizing-data-with-base-graphics"><i class="fa fa-check"></i><b>2.4</b> Visualizing data with <strong>base</strong> graphics</a>
+<li class="chapter" data-level="2.4" data-path="data-exploration.html"><a href="data-exploration.html#visualizing-data-with-base-graphics"><i class="fa fa-check"></i><b>2.4</b> Visualizing data with <strong>base</strong> graphics<span></span></a>
 <ul>
-<li class="chapter" data-level="2.4.1" data-path="data-exploration.html"><a href="data-exploration.html#histograms"><i class="fa fa-check"></i><b>2.4.1</b> Histograms</a></li>
-<li class="chapter" data-level="2.4.2" data-path="data-exploration.html"><a href="data-exploration.html#density-plots"><i class="fa fa-check"></i><b>2.4.2</b> Density plots</a></li>
-<li class="chapter" data-level="2.4.3" data-path="data-exploration.html"><a href="data-exploration.html#index-plots"><i class="fa fa-check"></i><b>2.4.3</b> Index plots</a></li>
-<li class="chapter" data-level="2.4.4" data-path="data-exploration.html"><a href="data-exploration.html#bivariate-scatter-plots"><i class="fa fa-check"></i><b>2.4.4</b> Bivariate scatter plots</a></li>
-<li class="chapter" data-level="2.4.5" data-path="data-exploration.html"><a href="data-exploration.html#bivariate-boxplots"><i class="fa fa-check"></i><b>2.4.5</b> Bivariate boxplots</a></li>
-<li class="chapter" data-level="2.4.6" data-path="data-exploration.html"><a href="data-exploration.html#multiple-plots-in-one-figure"><i class="fa fa-check"></i><b>2.4.6</b> Multiple plots in one figure</a></li>
+<li class="chapter" data-level="2.4.1" data-path="data-exploration.html"><a href="data-exploration.html#histograms"><i class="fa fa-check"></i><b>2.4.1</b> Histograms<span></span></a></li>
+<li class="chapter" data-level="2.4.2" data-path="data-exploration.html"><a href="data-exploration.html#density-plots"><i class="fa fa-check"></i><b>2.4.2</b> Density plots<span></span></a></li>
+<li class="chapter" data-level="2.4.3" data-path="data-exploration.html"><a href="data-exploration.html#index-plots"><i class="fa fa-check"></i><b>2.4.3</b> Index plots<span></span></a></li>
+<li class="chapter" data-level="2.4.4" data-path="data-exploration.html"><a href="data-exploration.html#bivariate-scatter-plots"><i class="fa fa-check"></i><b>2.4.4</b> Bivariate scatter plots<span></span></a></li>
+<li class="chapter" data-level="2.4.5" data-path="data-exploration.html"><a href="data-exploration.html#bivariate-boxplots"><i class="fa fa-check"></i><b>2.4.5</b> Bivariate boxplots<span></span></a></li>
+<li class="chapter" data-level="2.4.6" data-path="data-exploration.html"><a href="data-exploration.html#multiple-plots-in-one-figure"><i class="fa fa-check"></i><b>2.4.6</b> Multiple plots in one figure<span></span></a></li>
 </ul></li>
-<li class="chapter" data-level="2.5" data-path="data-exploration.html"><a href="data-exploration.html#visualizing-data-with-ggplot2"><i class="fa fa-check"></i><b>2.5</b> Visualizing data with <strong>ggplot2</strong></a>
+<li class="chapter" data-level="2.5" data-path="data-exploration.html"><a href="data-exploration.html#visualizing-data-with-ggplot2"><i class="fa fa-check"></i><b>2.5</b> Visualizing data with <strong>ggplot2</strong><span></span></a>
 <ul>
-<li class="chapter" data-level="2.5.1" data-path="data-exploration.html"><a href="data-exploration.html#a-ggplot2-histogram"><i class="fa fa-check"></i><b>2.5.1</b> A <strong>ggplot2</strong> histogram</a></li>
-<li class="chapter" data-level="2.5.2" data-path="data-exploration.html"><a href="data-exploration.html#a-ggplot2-density-plot"><i class="fa fa-check"></i><b>2.5.2</b> A <strong>ggplot2</strong> density plot</a></li>
-<li class="chapter" data-level="2.5.3" data-path="data-exploration.html"><a href="data-exploration.html#a-ggplot2-scatter-plot"><i class="fa fa-check"></i><b>2.5.3</b> A <strong>ggplot2</strong> scatter plot</a></li>
-<li class="chapter" data-level="2.5.4" data-path="data-exploration.html"><a href="data-exploration.html#scaling-ggplot2-plots"><i class="fa fa-check"></i><b>2.5.4</b> Scaling <strong>ggplot2</strong> plots</a></li>
-<li class="chapter" data-level="2.5.5" data-path="data-exploration.html"><a href="data-exploration.html#facetting-in-ggplot2"><i class="fa fa-check"></i><b>2.5.5</b> Facetting in <code>ggplot2</code></a></li>
-<li class="chapter" data-level="2.5.6" data-path="data-exploration.html"><a href="data-exploration.html#summary-of-ggplot2"><i class="fa fa-check"></i><b>2.5.6</b> Summary of <strong>ggplot2</strong></a></li>
+<li class="chapter" data-level="2.5.1" data-path="data-exploration.html"><a href="data-exploration.html#a-ggplot2-histogram"><i class="fa fa-check"></i><b>2.5.1</b> A <strong>ggplot2</strong> histogram<span></span></a></li>
+<li class="chapter" data-level="2.5.2" data-path="data-exploration.html"><a href="data-exploration.html#a-ggplot2-density-plot"><i class="fa fa-check"></i><b>2.5.2</b> A <strong>ggplot2</strong> density plot<span></span></a></li>
+<li class="chapter" data-level="2.5.3" data-path="data-exploration.html"><a href="data-exploration.html#a-ggplot2-scatter-plot"><i class="fa fa-check"></i><b>2.5.3</b> A <strong>ggplot2</strong> scatter plot<span></span></a></li>
+<li class="chapter" data-level="2.5.4" data-path="data-exploration.html"><a href="data-exploration.html#scaling-ggplot2-plots"><i class="fa fa-check"></i><b>2.5.4</b> Scaling <strong>ggplot2</strong> plots<span></span></a></li>
+<li class="chapter" data-level="2.5.5" data-path="data-exploration.html"><a href="data-exploration.html#facetting-in-ggplot2"><i class="fa fa-check"></i><b>2.5.5</b> Facetting in <code>ggplot2</code><span></span></a></li>
+<li class="chapter" data-level="2.5.6" data-path="data-exploration.html"><a href="data-exploration.html#summary-of-ggplot2"><i class="fa fa-check"></i><b>2.5.6</b> Summary of <strong>ggplot2</strong><span></span></a></li>
 </ul></li>
-<li class="chapter" data-level="2.6" data-path="data-exploration.html"><a href="data-exploration.html#summary-of-data-exploration"><i class="fa fa-check"></i><b>2.6</b> Summary of data exploration</a></li>
+<li class="chapter" data-level="2.6" data-path="data-exploration.html"><a href="data-exploration.html#summary-of-data-exploration"><i class="fa fa-check"></i><b>2.6</b> Summary of data exploration<span></span></a></li>
 </ul></li>
-<li class="chapter" data-level="3" data-path="review-of-probability-random-variables-and-random-vectors.html"><a href="review-of-probability-random-variables-and-random-vectors.html"><i class="fa fa-check"></i><b>3</b> Review of probability, random variables, and random vectors</a>
+<li class="chapter" data-level="3" data-path="review-of-probability-random-variables-and-random-vectors.html"><a href="review-of-probability-random-variables-and-random-vectors.html"><i class="fa fa-check"></i><b>3</b> Review of probability, random variables, and random vectors<span></span></a>
 <ul>
-<li class="chapter" data-level="3.1" data-path="review-of-probability-random-variables-and-random-vectors.html"><a href="review-of-probability-random-variables-and-random-vectors.html#probability-basics"><i class="fa fa-check"></i><b>3.1</b> Probability Basics</a></li>
-<li class="chapter" data-level="3.2" data-path="review-of-probability-random-variables-and-random-vectors.html"><a href="review-of-probability-random-variables-and-random-vectors.html#random-variables"><i class="fa fa-check"></i><b>3.2</b> Random Variables</a>
+<li class="chapter" data-level="3.1" data-path="review-of-probability-random-variables-and-random-vectors.html"><a href="review-of-probability-random-variables-and-random-vectors.html#probability-basics"><i class="fa fa-check"></i><b>3.1</b> Probability Basics<span></span></a></li>
+<li class="chapter" data-level="3.2" data-path="review-of-probability-random-variables-and-random-vectors.html"><a href="review-of-probability-random-variables-and-random-vectors.html#random-variables"><i class="fa fa-check"></i><b>3.2</b> Random Variables<span></span></a>
 <ul>
-<li class="chapter" data-level="3.2.1" data-path="review-of-probability-random-variables-and-random-vectors.html"><a href="review-of-probability-random-variables-and-random-vectors.html#discrete-random-variables"><i class="fa fa-check"></i><b>3.2.1</b> Discrete random variables</a></li>
-<li class="chapter" data-level="3.2.2" data-path="review-of-probability-random-variables-and-random-vectors.html"><a href="review-of-probability-random-variables-and-random-vectors.html#continuous-random-variables"><i class="fa fa-check"></i><b>3.2.2</b> Continuous random variables</a></li>
-<li class="chapter" data-level="3.2.3" data-path="review-of-probability-random-variables-and-random-vectors.html"><a href="review-of-probability-random-variables-and-random-vectors.html#useful-facts-for-transformation-of-random-variables"><i class="fa fa-check"></i><b>3.2.3</b> Useful facts for transformation of random variables</a></li>
+<li class="chapter" data-level="3.2.1" data-path="review-of-probability-random-variables-and-random-vectors.html"><a href="review-of-probability-random-variables-and-random-vectors.html#discrete-random-variables"><i class="fa fa-check"></i><b>3.2.1</b> Discrete random variables<span></span></a></li>
+<li class="chapter" data-level="3.2.2" data-path="review-of-probability-random-variables-and-random-vectors.html"><a href="review-of-probability-random-variables-and-random-vectors.html#continuous-random-variables"><i class="fa fa-check"></i><b>3.2.2</b> Continuous random variables<span></span></a></li>
+<li class="chapter" data-level="3.2.3" data-path="review-of-probability-random-variables-and-random-vectors.html"><a href="review-of-probability-random-variables-and-random-vectors.html#useful-facts-for-transformation-of-random-variables"><i class="fa fa-check"></i><b>3.2.3</b> Useful facts for transformation of random variables<span></span></a></li>
 </ul></li>
-<li class="chapter" data-level="3.3" data-path="review-of-probability-random-variables-and-random-vectors.html"><a href="review-of-probability-random-variables-and-random-vectors.html#multivariate-distributions"><i class="fa fa-check"></i><b>3.3</b> Multivariate distributions</a>
+<li class="chapter" data-level="3.3" data-path="review-of-probability-random-variables-and-random-vectors.html"><a href="review-of-probability-random-variables-and-random-vectors.html#multivariate-distributions"><i class="fa fa-check"></i><b>3.3</b> Multivariate distributions<span></span></a>
 <ul>
-<li class="chapter" data-level="3.3.1" data-path="review-of-probability-random-variables-and-random-vectors.html"><a href="review-of-probability-random-variables-and-random-vectors.html#basic-properties"><i class="fa fa-check"></i><b>3.3.1</b> Basic properties</a></li>
-<li class="chapter" data-level="3.3.2" data-path="review-of-probability-random-variables-and-random-vectors.html"><a href="review-of-probability-random-variables-and-random-vectors.html#marginal-distributions"><i class="fa fa-check"></i><b>3.3.2</b> Marginal distributions</a></li>
-<li class="chapter" data-level="3.3.3" data-path="review-of-probability-random-variables-and-random-vectors.html"><a href="review-of-probability-random-variables-and-random-vectors.html#independence-of-random-variables"><i class="fa fa-check"></i><b>3.3.3</b> Independence of random variables</a></li>
-<li class="chapter" data-level="3.3.4" data-path="review-of-probability-random-variables-and-random-vectors.html"><a href="review-of-probability-random-variables-and-random-vectors.html#conditional-distributions"><i class="fa fa-check"></i><b>3.3.4</b> Conditional distributions</a></li>
-<li class="chapter" data-level="3.3.5" data-path="review-of-probability-random-variables-and-random-vectors.html"><a href="review-of-probability-random-variables-and-random-vectors.html#covariance"><i class="fa fa-check"></i><b>3.3.5</b> Covariance</a></li>
-<li class="chapter" data-level="3.3.6" data-path="review-of-probability-random-variables-and-random-vectors.html"><a href="review-of-probability-random-variables-and-random-vectors.html#useful-facts-for-transformations-of-multiple-random-variables"><i class="fa fa-check"></i><b>3.3.6</b> Useful facts for transformations of multiple random variables</a></li>
+<li class="chapter" data-level="3.3.1" data-path="review-of-probability-random-variables-and-random-vectors.html"><a href="review-of-probability-random-variables-and-random-vectors.html#basic-properties"><i class="fa fa-check"></i><b>3.3.1</b> Basic properties<span></span></a></li>
+<li class="chapter" data-level="3.3.2" data-path="review-of-probability-random-variables-and-random-vectors.html"><a href="review-of-probability-random-variables-and-random-vectors.html#marginal-distributions"><i class="fa fa-check"></i><b>3.3.2</b> Marginal distributions<span></span></a></li>
+<li class="chapter" data-level="3.3.3" data-path="review-of-probability-random-variables-and-random-vectors.html"><a href="review-of-probability-random-variables-and-random-vectors.html#independence-of-random-variables"><i class="fa fa-check"></i><b>3.3.3</b> Independence of random variables<span></span></a></li>
+<li class="chapter" data-level="3.3.4" data-path="review-of-probability-random-variables-and-random-vectors.html"><a href="review-of-probability-random-variables-and-random-vectors.html#conditional-distributions"><i class="fa fa-check"></i><b>3.3.4</b> Conditional distributions<span></span></a></li>
+<li class="chapter" data-level="3.3.5" data-path="review-of-probability-random-variables-and-random-vectors.html"><a href="review-of-probability-random-variables-and-random-vectors.html#covariance"><i class="fa fa-check"></i><b>3.3.5</b> Covariance<span></span></a></li>
+<li class="chapter" data-level="3.3.6" data-path="review-of-probability-random-variables-and-random-vectors.html"><a href="review-of-probability-random-variables-and-random-vectors.html#useful-facts-for-transformations-of-multiple-random-variables"><i class="fa fa-check"></i><b>3.3.6</b> Useful facts for transformations of multiple random variables<span></span></a></li>
 </ul></li>
-<li class="chapter" data-level="3.4" data-path="review-of-probability-random-variables-and-random-vectors.html"><a href="review-of-probability-random-variables-and-random-vectors.html#random-vectors"><i class="fa fa-check"></i><b>3.4</b> Random vectors</a>
+<li class="chapter" data-level="3.4" data-path="review-of-probability-random-variables-and-random-vectors.html"><a href="review-of-probability-random-variables-and-random-vectors.html#random-vectors"><i class="fa fa-check"></i><b>3.4</b> Random vectors<span></span></a>
 <ul>
-<li class="chapter" data-level="3.4.1" data-path="review-of-probability-random-variables-and-random-vectors.html"><a href="review-of-probability-random-variables-and-random-vectors.html#definition"><i class="fa fa-check"></i><b>3.4.1</b> Definition</a></li>
-<li class="chapter" data-level="3.4.2" data-path="review-of-probability-random-variables-and-random-vectors.html"><a href="review-of-probability-random-variables-and-random-vectors.html#mean-variance-and-covariance"><i class="fa fa-check"></i><b>3.4.2</b> Mean, variance, and covariance</a></li>
+<li class="chapter" data-level="3.4.1" data-path="review-of-probability-random-variables-and-random-vectors.html"><a href="review-of-probability-random-variables-and-random-vectors.html#definition"><i class="fa fa-check"></i><b>3.4.1</b> Definition<span></span></a></li>
+<li class="chapter" data-level="3.4.2" data-path="review-of-probability-random-variables-and-random-vectors.html"><a href="review-of-probability-random-variables-and-random-vectors.html#mean-variance-and-covariance"><i class="fa fa-check"></i><b>3.4.2</b> Mean, variance, and covariance<span></span></a></li>
 </ul></li>
-<li class="chapter" data-level="3.5" data-path="review-of-probability-random-variables-and-random-vectors.html"><a href="review-of-probability-random-variables-and-random-vectors.html#properties-of-transformations-of-random-vectors"><i class="fa fa-check"></i><b>3.5</b> Properties of transformations of random vectors</a></li>
-<li class="chapter" data-level="3.6" data-path="review-of-probability-random-variables-and-random-vectors.html"><a href="review-of-probability-random-variables-and-random-vectors.html#multivariate-normal-gaussian-distribution"><i class="fa fa-check"></i><b>3.6</b> Multivariate normal (Gaussian) distribution</a>
+<li class="chapter" data-level="3.5" data-path="review-of-probability-random-variables-and-random-vectors.html"><a href="review-of-probability-random-variables-and-random-vectors.html#properties-of-transformations-of-random-vectors"><i class="fa fa-check"></i><b>3.5</b> Properties of transformations of random vectors<span></span></a></li>
+<li class="chapter" data-level="3.6" data-path="review-of-probability-random-variables-and-random-vectors.html"><a href="review-of-probability-random-variables-and-random-vectors.html#multivariate-normal-gaussian-distribution"><i class="fa fa-check"></i><b>3.6</b> Multivariate normal (Gaussian) distribution<span></span></a>
 <ul>
-<li class="chapter" data-level="3.6.1" data-path="review-of-probability-random-variables-and-random-vectors.html"><a href="review-of-probability-random-variables-and-random-vectors.html#definition-1"><i class="fa fa-check"></i><b>3.6.1</b> Definition</a></li>
-<li class="chapter" data-level="3.6.2" data-path="review-of-probability-random-variables-and-random-vectors.html"><a href="review-of-probability-random-variables-and-random-vectors.html#useful-facts"><i class="fa fa-check"></i><b>3.6.2</b> Useful facts</a></li>
+<li class="chapter" data-level="3.6.1" data-path="review-of-probability-random-variables-and-random-vectors.html"><a href="review-of-probability-random-variables-and-random-vectors.html#definition-1"><i class="fa fa-check"></i><b>3.6.1</b> Definition<span></span></a></li>
+<li class="chapter" data-level="3.6.2" data-path="review-of-probability-random-variables-and-random-vectors.html"><a href="review-of-probability-random-variables-and-random-vectors.html#useful-facts"><i class="fa fa-check"></i><b>3.6.2</b> Useful facts<span></span></a></li>
 </ul></li>
-<li class="chapter" data-level="3.7" data-path="review-of-probability-random-variables-and-random-vectors.html"><a href="review-of-probability-random-variables-and-random-vectors.html#example-1-1"><i class="fa fa-check"></i><b>3.7</b> Example 1</a>
+<li class="chapter" data-level="3.7" data-path="review-of-probability-random-variables-and-random-vectors.html"><a href="review-of-probability-random-variables-and-random-vectors.html#example-1-1"><i class="fa fa-check"></i><b>3.7</b> Example 1<span></span></a>
 <ul>
-<li class="chapter" data-level="3.7.1" data-path="review-of-probability-random-variables-and-random-vectors.html"><a href="review-of-probability-random-variables-and-random-vectors.html#bernoulli-distribution"><i class="fa fa-check"></i><b>3.7.1</b> Bernoulli distribution</a></li>
-<li class="chapter" data-level="3.7.2" data-path="review-of-probability-random-variables-and-random-vectors.html"><a href="review-of-probability-random-variables-and-random-vectors.html#binomial-distribution"><i class="fa fa-check"></i><b>3.7.2</b> Binomial distribution</a></li>
-<li class="chapter" data-level="3.7.3" data-path="review-of-probability-random-variables-and-random-vectors.html"><a href="review-of-probability-random-variables-and-random-vectors.html#poisson-distribution"><i class="fa fa-check"></i><b>3.7.3</b> Poisson Distribution</a></li>
+<li class="chapter" data-level="3.7.1" data-path="review-of-probability-random-variables-and-random-vectors.html"><a href="review-of-probability-random-variables-and-random-vectors.html#bernoulli-distribution"><i class="fa fa-check"></i><b>3.7.1</b> Bernoulli distribution<span></span></a></li>
+<li class="chapter" data-level="3.7.2" data-path="review-of-probability-random-variables-and-random-vectors.html"><a href="review-of-probability-random-variables-and-random-vectors.html#binomial-distribution"><i class="fa fa-check"></i><b>3.7.2</b> Binomial distribution<span></span></a></li>
+<li class="chapter" data-level="3.7.3" data-path="review-of-probability-random-variables-and-random-vectors.html"><a href="review-of-probability-random-variables-and-random-vectors.html#poisson-distribution"><i class="fa fa-check"></i><b>3.7.3</b> Poisson Distribution<span></span></a></li>
 </ul></li>
-<li class="chapter" data-level="3.8" data-path="review-of-probability-random-variables-and-random-vectors.html"><a href="review-of-probability-random-variables-and-random-vectors.html#example-2-1"><i class="fa fa-check"></i><b>3.8</b> Example 2</a>
+<li class="chapter" data-level="3.8" data-path="review-of-probability-random-variables-and-random-vectors.html"><a href="review-of-probability-random-variables-and-random-vectors.html#example-2-1"><i class="fa fa-check"></i><b>3.8</b> Example 2<span></span></a>
 <ul>
-<li class="chapter" data-level="3.8.1" data-path="review-of-probability-random-variables-and-random-vectors.html"><a href="review-of-probability-random-variables-and-random-vectors.html#problem-1"><i class="fa fa-check"></i><b>3.8.1</b> Problem 1</a></li>
-<li class="chapter" data-level="3.8.2" data-path="review-of-probability-random-variables-and-random-vectors.html"><a href="review-of-probability-random-variables-and-random-vectors.html#problem-2"><i class="fa fa-check"></i><b>3.8.2</b> Problem 2</a></li>
-<li class="chapter" data-level="3.8.3" data-path="review-of-probability-random-variables-and-random-vectors.html"><a href="review-of-probability-random-variables-and-random-vectors.html#problem-3"><i class="fa fa-check"></i><b>3.8.3</b> Problem 3</a></li>
-<li class="chapter" data-level="3.8.4" data-path="review-of-probability-random-variables-and-random-vectors.html"><a href="review-of-probability-random-variables-and-random-vectors.html#problem-4"><i class="fa fa-check"></i><b>3.8.4</b> Problem 4</a></li>
-<li class="chapter" data-level="3.8.5" data-path="review-of-probability-random-variables-and-random-vectors.html"><a href="review-of-probability-random-variables-and-random-vectors.html#problem-5"><i class="fa fa-check"></i><b>3.8.5</b> Problem 5</a></li>
-<li class="chapter" data-level="3.8.6" data-path="review-of-probability-random-variables-and-random-vectors.html"><a href="review-of-probability-random-variables-and-random-vectors.html#problem-6"><i class="fa fa-check"></i><b>3.8.6</b> Problem 6</a></li>
-<li class="chapter" data-level="3.8.7" data-path="review-of-probability-random-variables-and-random-vectors.html"><a href="review-of-probability-random-variables-and-random-vectors.html#problem-7"><i class="fa fa-check"></i><b>3.8.7</b> Problem 7</a></li>
-</ul></li>
-</ul></li>
-<li class="chapter" data-level="4" data-path="useful-matrix-facts.html"><a href="useful-matrix-facts.html"><i class="fa fa-check"></i><b>4</b> Useful matrix facts</a>
-<ul>
-<li class="chapter" data-level="4.1" data-path="useful-matrix-facts.html"><a href="useful-matrix-facts.html#notation"><i class="fa fa-check"></i><b>4.1</b> Notation</a></li>
-<li class="chapter" data-level="4.2" data-path="useful-matrix-facts.html"><a href="useful-matrix-facts.html#basic-mathematical-properties"><i class="fa fa-check"></i><b>4.2</b> Basic mathematical properties</a>
-<ul>
-<li class="chapter" data-level="4.2.1" data-path="useful-matrix-facts.html"><a href="useful-matrix-facts.html#addition-and-subtraction"><i class="fa fa-check"></i><b>4.2.1</b> Addition and subtraction</a></li>
-<li class="chapter" data-level="4.2.2" data-path="useful-matrix-facts.html"><a href="useful-matrix-facts.html#scalar-multiplication"><i class="fa fa-check"></i><b>4.2.2</b> Scalar multiplication</a></li>
-<li class="chapter" data-level="4.2.3" data-path="useful-matrix-facts.html"><a href="useful-matrix-facts.html#matrix-multiplication"><i class="fa fa-check"></i><b>4.2.3</b> Matrix multiplication</a></li>
-<li class="chapter" data-level="4.2.4" data-path="useful-matrix-facts.html"><a href="useful-matrix-facts.html#associative-property"><i class="fa fa-check"></i><b>4.2.4</b> Associative property</a></li>
-<li class="chapter" data-level="4.2.5" data-path="useful-matrix-facts.html"><a href="useful-matrix-facts.html#distributive-property"><i class="fa fa-check"></i><b>4.2.5</b> Distributive property</a></li>
-<li class="chapter" data-level="4.2.6" data-path="useful-matrix-facts.html"><a href="useful-matrix-facts.html#no-commutative-property"><i class="fa fa-check"></i><b>4.2.6</b> No commutative property</a></li>
-</ul></li>
-<li class="chapter" data-level="4.3" data-path="useful-matrix-facts.html"><a href="useful-matrix-facts.html#transpose-and-related-properties"><i class="fa fa-check"></i><b>4.3</b> Transpose and related properties</a>
-<ul>
-<li class="chapter" data-level="4.3.1" data-path="useful-matrix-facts.html"><a href="useful-matrix-facts.html#definition-2"><i class="fa fa-check"></i><b>4.3.1</b> Definition</a></li>
-<li class="chapter" data-level="4.3.2" data-path="useful-matrix-facts.html"><a href="useful-matrix-facts.html#transpose-and-mathematical-operations"><i class="fa fa-check"></i><b>4.3.2</b> Transpose and mathematical operations</a></li>
-</ul></li>
-<li class="chapter" data-level="4.4" data-path="useful-matrix-facts.html"><a href="useful-matrix-facts.html#special-matrices"><i class="fa fa-check"></i><b>4.4</b> Special matrices</a>
-<ul>
-<li class="chapter" data-level="4.4.1" data-path="useful-matrix-facts.html"><a href="useful-matrix-facts.html#square-matrices"><i class="fa fa-check"></i><b>4.4.1</b> Square matrices</a></li>
-<li class="chapter" data-level="4.4.2" data-path="useful-matrix-facts.html"><a href="useful-matrix-facts.html#identity-matrix"><i class="fa fa-check"></i><b>4.4.2</b> Identity matrix</a></li>
-<li class="chapter" data-level="4.4.3" data-path="useful-matrix-facts.html"><a href="useful-matrix-facts.html#symmetric"><i class="fa fa-check"></i><b>4.4.3</b> Symmetric</a></li>
-<li class="chapter" data-level="4.4.4" data-path="useful-matrix-facts.html"><a href="useful-matrix-facts.html#idempotent"><i class="fa fa-check"></i><b>4.4.4</b> Idempotent</a></li>
-</ul></li>
-<li class="chapter" data-level="4.5" data-path="useful-matrix-facts.html"><a href="useful-matrix-facts.html#matrix-inverse"><i class="fa fa-check"></i><b>4.5</b> Matrix inverse</a></li>
-<li class="chapter" data-level="4.6" data-path="useful-matrix-facts.html"><a href="useful-matrix-facts.html#matrix-derivatives"><i class="fa fa-check"></i><b>4.6</b> Matrix derivatives</a></li>
-</ul></li>
-<li class="chapter" data-level="5" data-path="linear-model-definition-and-properties.html"><a href="linear-model-definition-and-properties.html"><i class="fa fa-check"></i><b>5</b> Linear model definition and properties</a>
-<ul>
-<li class="chapter" data-level="5.1" data-path="linear-model-definition-and-properties.html"><a href="linear-model-definition-and-properties.html#background-and-terminology"><i class="fa fa-check"></i><b>5.1</b> Background and terminology</a></li>
-<li class="chapter" data-level="5.2" data-path="linear-model-definition-and-properties.html"><a href="linear-model-definition-and-properties.html#goals-of-regression"><i class="fa fa-check"></i><b>5.2</b> Goals of regression</a></li>
-<li class="chapter" data-level="5.3" data-path="linear-model-definition-and-properties.html"><a href="linear-model-definition-and-properties.html#regression-for-pearsons-height-data"><i class="fa fa-check"></i><b>5.3</b> Regression for Pearson’s height data</a></li>
-<li class="chapter" data-level="5.4" data-path="linear-model-definition-and-properties.html"><a href="linear-model-definition-and-properties.html#definition-of-a-linear-model"><i class="fa fa-check"></i><b>5.4</b> Definition of a linear model</a>
-<ul>
-<li class="chapter" data-level="5.4.1" data-path="linear-model-definition-and-properties.html"><a href="linear-model-definition-and-properties.html#basic-construction-and-relationships"><i class="fa fa-check"></i><b>5.4.1</b> Basic construction and relationships</a></li>
-<li class="chapter" data-level="5.4.2" data-path="linear-model-definition-and-properties.html"><a href="linear-model-definition-and-properties.html#as-a-system-of-equations"><i class="fa fa-check"></i><b>5.4.2</b> As a system of equations</a></li>
-<li class="chapter" data-level="5.4.3" data-path="linear-model-definition-and-properties.html"><a href="linear-model-definition-and-properties.html#using-matrix-notation"><i class="fa fa-check"></i><b>5.4.3</b> Using matrix notation</a></li>
-</ul></li>
-<li class="chapter" data-level="5.5" data-path="linear-model-definition-and-properties.html"><a href="linear-model-definition-and-properties.html#summarizing-the-components-of-a-linear-model"><i class="fa fa-check"></i><b>5.5</b> Summarizing the components of a linear model</a></li>
-<li class="chapter" data-level="5.6" data-path="linear-model-definition-and-properties.html"><a href="linear-model-definition-and-properties.html#types-of-regression-models"><i class="fa fa-check"></i><b>5.6</b> Types of regression models</a></li>
-<li class="chapter" data-level="5.7" data-path="linear-model-definition-and-properties.html"><a href="linear-model-definition-and-properties.html#standard-linear-model-assumptions-and-implications"><i class="fa fa-check"></i><b>5.7</b> Standard linear model assumptions and implications</a></li>
-<li class="chapter" data-level="5.8" data-path="linear-model-definition-and-properties.html"><a href="linear-model-definition-and-properties.html#mathematical-interpretation-of-coefficients"><i class="fa fa-check"></i><b>5.8</b> Mathematical interpretation of coefficients</a>
-<ul>
-<li class="chapter" data-level="5.8.1" data-path="linear-model-definition-and-properties.html"><a href="linear-model-definition-and-properties.html#coefficient-interpretation-in-simple-linear-regression"><i class="fa fa-check"></i><b>5.8.1</b> Coefficient interpretation in simple linear regression</a></li>
-<li class="chapter" data-level="5.8.2" data-path="linear-model-definition-and-properties.html"><a href="linear-model-definition-and-properties.html#coefficient-interpretation-in-multiple-linear-regression"><i class="fa fa-check"></i><b>5.8.2</b> Coefficient interpretation in multiple linear regression</a></li>
-</ul></li>
-<li class="chapter" data-level="5.9" data-path="linear-model-definition-and-properties.html"><a href="linear-model-definition-and-properties.html#exercises"><i class="fa fa-check"></i><b>5.9</b> Exercises</a></li>
-</ul></li>
-<li class="chapter" data-level="6" data-path="fitting-a-linear-model.html"><a href="fitting-a-linear-model.html"><i class="fa fa-check"></i><b>6</b> Fitting a linear model</a>
-<ul>
-<li class="chapter" data-level="6.1" data-path="fitting-a-linear-model.html"><a href="fitting-a-linear-model.html#ols-estimation-of-the-simple-linear-regression-model"><i class="fa fa-check"></i><b>6.1</b> OLS estimation of the simple linear regression model</a>
-<ul>
-<li class="chapter" data-level="6.1.1" data-path="fitting-a-linear-model.html"><a href="fitting-a-linear-model.html#visualizing-the-rss-as-a-function-of-the-estimated-coefficients"><i class="fa fa-check"></i><b>6.1.1</b> Visualizing the RSS as a function of the estimated coefficients</a></li>
-<li class="chapter" data-level="6.1.2" data-path="fitting-a-linear-model.html"><a href="fitting-a-linear-model.html#ols-estimators-of-the-simple-linear-regression-coefficents"><i class="fa fa-check"></i><b>6.1.2</b> OLS estimators of the simple linear regression coefficents</a></li>
-</ul></li>
-<li class="chapter" data-level="6.2" data-path="fitting-a-linear-model.html"><a href="fitting-a-linear-model.html#penguins-simple-linear-regression-example"><i class="fa fa-check"></i><b>6.2</b> Penguins simple linear regression example</a></li>
-<li class="chapter" data-level="6.3" data-path="fitting-a-linear-model.html"><a href="fitting-a-linear-model.html#fitting-a-linear-model-using-r"><i class="fa fa-check"></i><b>6.3</b> Fitting a linear model using R</a>
-<ul>
-<li class="chapter" data-level="6.3.1" data-path="fitting-a-linear-model.html"><a href="fitting-a-linear-model.html#derivation-of-ols-simple-linear-regression-estimators"><i class="fa fa-check"></i><b>6.3.1</b> Derivation of OLS simple linear regression estimators</a></li>
-<li class="chapter" data-level="6.3.2" data-path="fitting-a-linear-model.html"><a href="fitting-a-linear-model.html#expected-value-of-ols-simple-linear-regression-estimators"><i class="fa fa-check"></i><b>6.3.2</b> Expected value of OLS simple linear regression estimators</a></li>
+<li class="chapter" data-level="3.8.1" data-path="review-of-probability-random-variables-and-random-vectors.html"><a href="review-of-probability-random-variables-and-random-vectors.html#problem-1"><i class="fa fa-check"></i><b>3.8.1</b> Problem 1<span></span></a></li>
+<li class="chapter" data-level="3.8.2" data-path="review-of-probability-random-variables-and-random-vectors.html"><a href="review-of-probability-random-variables-and-random-vectors.html#problem-2"><i class="fa fa-check"></i><b>3.8.2</b> Problem 2<span></span></a></li>
+<li class="chapter" data-level="3.8.3" data-path="review-of-probability-random-variables-and-random-vectors.html"><a href="review-of-probability-random-variables-and-random-vectors.html#problem-3"><i class="fa fa-check"></i><b>3.8.3</b> Problem 3<span></span></a></li>
+<li class="chapter" data-level="3.8.4" data-path="review-of-probability-random-variables-and-random-vectors.html"><a href="review-of-probability-random-variables-and-random-vectors.html#problem-4"><i class="fa fa-check"></i><b>3.8.4</b> Problem 4<span></span></a></li>
+<li class="chapter" data-level="3.8.5" data-path="review-of-probability-random-variables-and-random-vectors.html"><a href="review-of-probability-random-variables-and-random-vectors.html#problem-5"><i class="fa fa-check"></i><b>3.8.5</b> Problem 5<span></span></a></li>
+<li class="chapter" data-level="3.8.6" data-path="review-of-probability-random-variables-and-random-vectors.html"><a href="review-of-probability-random-variables-and-random-vectors.html#problem-6"><i class="fa fa-check"></i><b>3.8.6</b> Problem 6<span></span></a></li>
+<li class="chapter" data-level="3.8.7" data-path="review-of-probability-random-variables-and-random-vectors.html"><a href="review-of-probability-random-variables-and-random-vectors.html#problem-7"><i class="fa fa-check"></i><b>3.8.7</b> Problem 7<span></span></a></li>
 </ul></li>
 </ul></li>
-<li class="chapter" data-level="7" data-path="interpreting-a-fitted-linear-model.html"><a href="interpreting-a-fitted-linear-model.html"><i class="fa fa-check"></i><b>7</b> Interpreting a fitted linear model</a></li>
-<li class="chapter" data-level="8" data-path="categorical-predictors.html"><a href="categorical-predictors.html"><i class="fa fa-check"></i><b>8</b> Categorical predictors</a>
+<li class="chapter" data-level="4" data-path="useful-matrix-facts.html"><a href="useful-matrix-facts.html"><i class="fa fa-check"></i><b>4</b> Useful matrix facts<span></span></a>
 <ul>
-<li class="chapter" data-level="8.1" data-path="categorical-predictors.html"><a href="categorical-predictors.html#indicatordummy-variables"><i class="fa fa-check"></i><b>8.1</b> Indicator/dummy variables</a></li>
-<li class="chapter" data-level="8.2" data-path="categorical-predictors.html"><a href="categorical-predictors.html#common-of-linear-models-with-categorical-predictors"><i class="fa fa-check"></i><b>8.2</b> Common of linear models with categorical predictors</a>
+<li class="chapter" data-level="4.1" data-path="useful-matrix-facts.html"><a href="useful-matrix-facts.html#notation"><i class="fa fa-check"></i><b>4.1</b> Notation<span></span></a></li>
+<li class="chapter" data-level="4.2" data-path="useful-matrix-facts.html"><a href="useful-matrix-facts.html#basic-mathematical-properties"><i class="fa fa-check"></i><b>4.2</b> Basic mathematical properties<span></span></a>
 <ul>
-<li class="chapter" data-level="8.2.1" data-path="categorical-predictors.html"><a href="categorical-predictors.html#one-way-anova"><i class="fa fa-check"></i><b>8.2.1</b> One-way ANOVA</a></li>
-<li class="chapter" data-level="8.2.2" data-path="categorical-predictors.html"><a href="categorical-predictors.html#main-effects-models"><i class="fa fa-check"></i><b>8.2.2</b> Main effects models</a></li>
-<li class="chapter" data-level="8.2.3" data-path="categorical-predictors.html"><a href="categorical-predictors.html#interaction-models"><i class="fa fa-check"></i><b>8.2.3</b> Interaction models</a></li>
-<li class="chapter" data-level="8.2.4" data-path="categorical-predictors.html"><a href="categorical-predictors.html#extensions"><i class="fa fa-check"></i><b>8.2.4</b> Extensions</a></li>
+<li class="chapter" data-level="4.2.1" data-path="useful-matrix-facts.html"><a href="useful-matrix-facts.html#addition-and-subtraction"><i class="fa fa-check"></i><b>4.2.1</b> Addition and subtraction<span></span></a></li>
+<li class="chapter" data-level="4.2.2" data-path="useful-matrix-facts.html"><a href="useful-matrix-facts.html#scalar-multiplication"><i class="fa fa-check"></i><b>4.2.2</b> Scalar multiplication<span></span></a></li>
+<li class="chapter" data-level="4.2.3" data-path="useful-matrix-facts.html"><a href="useful-matrix-facts.html#matrix-multiplication"><i class="fa fa-check"></i><b>4.2.3</b> Matrix multiplication<span></span></a></li>
+<li class="chapter" data-level="4.2.4" data-path="useful-matrix-facts.html"><a href="useful-matrix-facts.html#associative-property"><i class="fa fa-check"></i><b>4.2.4</b> Associative property<span></span></a></li>
+<li class="chapter" data-level="4.2.5" data-path="useful-matrix-facts.html"><a href="useful-matrix-facts.html#distributive-property"><i class="fa fa-check"></i><b>4.2.5</b> Distributive property<span></span></a></li>
+<li class="chapter" data-level="4.2.6" data-path="useful-matrix-facts.html"><a href="useful-matrix-facts.html#no-commutative-property"><i class="fa fa-check"></i><b>4.2.6</b> No commutative property<span></span></a></li>
 </ul></li>
+<li class="chapter" data-level="4.3" data-path="useful-matrix-facts.html"><a href="useful-matrix-facts.html#transpose-and-related-properties"><i class="fa fa-check"></i><b>4.3</b> Transpose and related properties<span></span></a>
+<ul>
+<li class="chapter" data-level="4.3.1" data-path="useful-matrix-facts.html"><a href="useful-matrix-facts.html#definition-2"><i class="fa fa-check"></i><b>4.3.1</b> Definition<span></span></a></li>
+<li class="chapter" data-level="4.3.2" data-path="useful-matrix-facts.html"><a href="useful-matrix-facts.html#transpose-and-mathematical-operations"><i class="fa fa-check"></i><b>4.3.2</b> Transpose and mathematical operations<span></span></a></li>
 </ul></li>
-<li class="chapter" data-level="9" data-path="assessing-and-addressing-collinearity.html"><a href="assessing-and-addressing-collinearity.html"><i class="fa fa-check"></i><b>9</b> Assessing and addressing collinearity</a></li>
-<li class="chapter" data-level="" data-path="references.html"><a href="references.html"><i class="fa fa-check"></i>References</a></li>
+<li class="chapter" data-level="4.4" data-path="useful-matrix-facts.html"><a href="useful-matrix-facts.html#special-matrices"><i class="fa fa-check"></i><b>4.4</b> Special matrices<span></span></a>
+<ul>
+<li class="chapter" data-level="4.4.1" data-path="useful-matrix-facts.html"><a href="useful-matrix-facts.html#square-matrices"><i class="fa fa-check"></i><b>4.4.1</b> Square matrices<span></span></a></li>
+<li class="chapter" data-level="4.4.2" data-path="useful-matrix-facts.html"><a href="useful-matrix-facts.html#identity-matrix"><i class="fa fa-check"></i><b>4.4.2</b> Identity matrix<span></span></a></li>
+<li class="chapter" data-level="4.4.3" data-path="useful-matrix-facts.html"><a href="useful-matrix-facts.html#symmetric"><i class="fa fa-check"></i><b>4.4.3</b> Symmetric<span></span></a></li>
+<li class="chapter" data-level="4.4.4" data-path="useful-matrix-facts.html"><a href="useful-matrix-facts.html#idempotent"><i class="fa fa-check"></i><b>4.4.4</b> Idempotent<span></span></a></li>
+</ul></li>
+<li class="chapter" data-level="4.5" data-path="useful-matrix-facts.html"><a href="useful-matrix-facts.html#matrix-inverse"><i class="fa fa-check"></i><b>4.5</b> Matrix inverse<span></span></a></li>
+<li class="chapter" data-level="4.6" data-path="useful-matrix-facts.html"><a href="useful-matrix-facts.html#matrix-derivatives"><i class="fa fa-check"></i><b>4.6</b> Matrix derivatives<span></span></a></li>
+</ul></li>
+<li class="chapter" data-level="5" data-path="defining-and-fitting-a-linear-model.html"><a href="defining-and-fitting-a-linear-model.html"><i class="fa fa-check"></i><b>5</b> Defining and fitting a linear model<span></span></a>
+<ul>
+<li class="chapter" data-level="5.1" data-path="defining-and-fitting-a-linear-model.html"><a href="defining-and-fitting-a-linear-model.html#background-and-terminology"><i class="fa fa-check"></i><b>5.1</b> Background and terminology<span></span></a></li>
+<li class="chapter" data-level="5.2" data-path="defining-and-fitting-a-linear-model.html"><a href="defining-and-fitting-a-linear-model.html#goals-of-regression"><i class="fa fa-check"></i><b>5.2</b> Goals of regression<span></span></a></li>
+<li class="chapter" data-level="5.3" data-path="defining-and-fitting-a-linear-model.html"><a href="defining-and-fitting-a-linear-model.html#definition-of-a-linear-model"><i class="fa fa-check"></i><b>5.3</b> Definition of a linear model<span></span></a>
+<ul>
+<li class="chapter" data-level="5.3.1" data-path="defining-and-fitting-a-linear-model.html"><a href="defining-and-fitting-a-linear-model.html#basic-construction-and-relationships"><i class="fa fa-check"></i><b>5.3.1</b> Basic construction and relationships<span></span></a></li>
+<li class="chapter" data-level="5.3.2" data-path="defining-and-fitting-a-linear-model.html"><a href="defining-and-fitting-a-linear-model.html#as-a-system-of-equations"><i class="fa fa-check"></i><b>5.3.2</b> As a system of equations<span></span></a></li>
+<li class="chapter" data-level="5.3.3" data-path="defining-and-fitting-a-linear-model.html"><a href="defining-and-fitting-a-linear-model.html#using-matrix-notation"><i class="fa fa-check"></i><b>5.3.3</b> Using matrix notation<span></span></a></li>
+</ul></li>
+<li class="chapter" data-level="5.4" data-path="defining-and-fitting-a-linear-model.html"><a href="defining-and-fitting-a-linear-model.html#summarizing-the-components-of-a-linear-model"><i class="fa fa-check"></i><b>5.4</b> Summarizing the components of a linear model<span></span></a></li>
+<li class="chapter" data-level="5.5" data-path="defining-and-fitting-a-linear-model.html"><a href="defining-and-fitting-a-linear-model.html#types-of-regression-models"><i class="fa fa-check"></i><b>5.5</b> Types of regression models<span></span></a></li>
+<li class="chapter" data-level="5.6" data-path="defining-and-fitting-a-linear-model.html"><a href="defining-and-fitting-a-linear-model.html#standard-linear-model-assumptions-and-implications"><i class="fa fa-check"></i><b>5.6</b> Standard linear model assumptions and implications<span></span></a></li>
+<li class="chapter" data-level="5.7" data-path="defining-and-fitting-a-linear-model.html"><a href="defining-and-fitting-a-linear-model.html#mathematical-interpretation-of-coefficients"><i class="fa fa-check"></i><b>5.7</b> Mathematical interpretation of coefficients<span></span></a>
+<ul>
+<li class="chapter" data-level="5.7.1" data-path="defining-and-fitting-a-linear-model.html"><a href="defining-and-fitting-a-linear-model.html#coefficient-interpretation-in-simple-linear-regression"><i class="fa fa-check"></i><b>5.7.1</b> Coefficient interpretation in simple linear regression<span></span></a></li>
+<li class="chapter" data-level="5.7.2" data-path="defining-and-fitting-a-linear-model.html"><a href="defining-and-fitting-a-linear-model.html#coefficient-interpretation-in-multiple-linear-regression"><i class="fa fa-check"></i><b>5.7.2</b> Coefficient interpretation in multiple linear regression<span></span></a></li>
+</ul></li>
+<li class="chapter" data-level="5.8" data-path="defining-and-fitting-a-linear-model.html"><a href="defining-and-fitting-a-linear-model.html#exercises"><i class="fa fa-check"></i><b>5.8</b> Exercises<span></span></a></li>
+</ul></li>
+<li class="chapter" data-level="6" data-path="linear-model-estimation.html"><a href="linear-model-estimation.html"><i class="fa fa-check"></i><b>6</b> Linear model estimation<span></span></a>
+<ul>
+<li class="chapter" data-level="6.1" data-path="linear-model-estimation.html"><a href="linear-model-estimation.html#a-simple-motivating-example"><i class="fa fa-check"></i><b>6.1</b> A simple motivating example<span></span></a></li>
+<li class="chapter" data-level="6.2" data-path="linear-model-estimation.html"><a href="linear-model-estimation.html#defining-a-linear-model"><i class="fa fa-check"></i><b>6.2</b> Defining a linear model<span></span></a>
+<ul>
+<li class="chapter" data-level="6.2.1" data-path="linear-model-estimation.html"><a href="linear-model-estimation.html#ss-necessary-components"><i class="fa fa-check"></i><b>6.2.1</b> Necessary components and notation<span></span></a></li>
+<li class="chapter" data-level="6.2.2" data-path="linear-model-estimation.html"><a href="linear-model-estimation.html#standard-definition-of-linear-model"><i class="fa fa-check"></i><b>6.2.2</b> Standard definition of linear model<span></span></a></li>
+</ul></li>
+<li class="chapter" data-level="6.3" data-path="linear-model-estimation.html"><a href="linear-model-estimation.html#estimation-of-the-simple-linear-regression-model"><i class="fa fa-check"></i><b>6.3</b> Estimation of the simple linear regression model<span></span></a>
+<ul>
+<li class="chapter" data-level="6.3.1" data-path="linear-model-estimation.html"><a href="linear-model-estimation.html#ss:fv-resid-rss"><i class="fa fa-check"></i><b>6.3.1</b> Fitted values, residuals, and RSS<span></span></a></li>
+<li class="chapter" data-level="6.3.2" data-path="linear-model-estimation.html"><a href="linear-model-estimation.html#ols-estimators-of-the-simple-linear-regression-parameters"><i class="fa fa-check"></i><b>6.3.2</b> OLS estimators of the simple linear regression parameters<span></span></a></li>
+</ul></li>
+<li class="chapter" data-level="6.4" data-path="linear-model-estimation.html"><a href="linear-model-estimation.html#s:penguins-slr"><i class="fa fa-check"></i><b>6.4</b> Penguins simple linear regression example<span></span></a></li>
+<li class="chapter" data-level="6.5" data-path="linear-model-estimation.html"><a href="linear-model-estimation.html#estimation-of-the-multiple-linear-regression-coefficients"><i class="fa fa-check"></i><b>6.5</b> Estimation of the multiple linear regression coefficients)<span></span></a>
+<ul>
+<li class="chapter" data-level="6.5.1" data-path="linear-model-estimation.html"><a href="linear-model-estimation.html#using-matrix-notation-to-represent-a-linear-model"><i class="fa fa-check"></i><b>6.5.1</b> Using matrix notation to represent a linear model<span></span></a></li>
+<li class="chapter" data-level="6.5.2" data-path="linear-model-estimation.html"><a href="linear-model-estimation.html#ss:fv-resid-rss-mlr"><i class="fa fa-check"></i><b>6.5.2</b> Residuals, fitted values, and RSS for multiple linear regression<span></span></a></li>
+<li class="chapter" data-level="6.5.3" data-path="linear-model-estimation.html"><a href="linear-model-estimation.html#as-a-system-of-equations-1"><i class="fa fa-check"></i><b>6.5.3</b> As a system of equations<span></span></a></li>
+<li class="chapter" data-level="6.5.4" data-path="linear-model-estimation.html"><a href="linear-model-estimation.html#using-matrix-notation-1"><i class="fa fa-check"></i><b>6.5.4</b> Using matrix notation<span></span></a></li>
+</ul></li>
+<li class="chapter" data-level="6.6" data-path="linear-model-estimation.html"><a href="linear-model-estimation.html#summarizing-the-components-of-a-linear-model-1"><i class="fa fa-check"></i><b>6.6</b> Summarizing the components of a linear model<span></span></a></li>
+<li class="chapter" data-level="6.7" data-path="linear-model-estimation.html"><a href="linear-model-estimation.html#types-of-regression-models-1"><i class="fa fa-check"></i><b>6.7</b> Types of regression models<span></span></a></li>
+<li class="chapter" data-level="6.8" data-path="linear-model-estimation.html"><a href="linear-model-estimation.html#standard-linear-model-assumptions-and-implications-1"><i class="fa fa-check"></i><b>6.8</b> Standard linear model assumptions and implications<span></span></a></li>
+<li class="chapter" data-level="6.9" data-path="linear-model-estimation.html"><a href="linear-model-estimation.html#mathematical-interpretation-of-coefficients-1"><i class="fa fa-check"></i><b>6.9</b> Mathematical interpretation of coefficients<span></span></a>
+<ul>
+<li class="chapter" data-level="6.9.1" data-path="linear-model-estimation.html"><a href="linear-model-estimation.html#coefficient-interpretation-in-simple-linear-regression-1"><i class="fa fa-check"></i><b>6.9.1</b> Coefficient interpretation in simple linear regression<span></span></a></li>
+<li class="chapter" data-level="6.9.2" data-path="linear-model-estimation.html"><a href="linear-model-estimation.html#coefficient-interpretation-in-multiple-linear-regression-1"><i class="fa fa-check"></i><b>6.9.2</b> Coefficient interpretation in multiple linear regression<span></span></a></li>
+</ul></li>
+<li class="chapter" data-level="6.10" data-path="linear-model-estimation.html"><a href="linear-model-estimation.html#exercises-1"><i class="fa fa-check"></i><b>6.10</b> Exercises<span></span></a></li>
+</ul></li>
+<li class="chapter" data-level="7" data-path="linear-model-inference.html"><a href="linear-model-inference.html"><i class="fa fa-check"></i><b>7</b> Linear model inference<span></span></a></li>
+<li class="chapter" data-level="8" data-path="assumptions-stated-and-prioritized.html"><a href="assumptions-stated-and-prioritized.html"><i class="fa fa-check"></i><b>8</b> Assumptions Stated and Prioritized<span></span></a>
+<ul>
+<li class="chapter" data-level="8.1" data-path="assumptions-stated-and-prioritized.html"><a href="assumptions-stated-and-prioritized.html#standard-assumptions-concisely-stated"><i class="fa fa-check"></i><b>8.1</b> Standard assumptions concisely stated<span></span></a></li>
+<li class="chapter" data-level="8.2" data-path="assumptions-stated-and-prioritized.html"><a href="assumptions-stated-and-prioritized.html#standard-assumptions-prioritized"><i class="fa fa-check"></i><b>8.2</b> Standard assumptions prioritized<span></span></a></li>
+</ul></li>
 <li class="divider"></li>
 <li><a href="https://github.com/rstudio/bookdown" target="blank">Published with bookdown</a></li>
 
@@ -404,11 +411,11 @@ div.csl-indent {
           <div class="page-inner">
 
             <section class="normal" id="section-">
-<div id="data-exploration" class="section level1" number="2">
-<h1><span class="header-section-number">Chapter 2</span> Data exploration</h1>
+<div id="data-exploration" class="section level1 hasAnchor" number="2">
+<h1><span class="header-section-number">Chapter 2</span> Data exploration<a href="data-exploration.html#data-exploration" class="anchor-section" aria-label="Anchor link to header"></a></h1>
 <p>Based on Chapter 1 of LMWR2, Chapter 1 of ALR4</p>
-<div id="data-analysis-process" class="section level2" number="2.1">
-<h2><span class="header-section-number">2.1</span> Data analysis process</h2>
+<div id="data-analysis-process" class="section level2 hasAnchor" number="2.1">
+<h2><span class="header-section-number">2.1</span> Data analysis process<a href="data-exploration.html#data-analysis-process" class="anchor-section" aria-label="Anchor link to header"></a></h2>
 <ol style="list-style-type: decimal">
 <li>Define a statistical question of interest.</li>
 <li>Collect relevant data.</li>
@@ -417,8 +424,8 @@ div.csl-indent {
 <li>Make a decision.</li>
 </ol>
 <p>“The formulation of a problem is often more essential than its solution, which may be merely a matter of mathematical or experimental skill” - Albert Einstein</p>
-<div id="problem-formulation" class="section level3" number="2.1.1">
-<h3><span class="header-section-number">2.1.1</span> Problem Formulation</h3>
+<div id="problem-formulation" class="section level3 hasAnchor" number="2.1.1">
+<h3><span class="header-section-number">2.1.1</span> Problem Formulation<a href="data-exploration.html#problem-formulation" class="anchor-section" aria-label="Anchor link to header"></a></h3>
 <ul>
 <li>Understand the physical background.
 <ul>
@@ -436,8 +443,8 @@ div.csl-indent {
 </ul></li>
 </ul>
 </div>
-<div id="data-collection" class="section level3" number="2.1.2">
-<h3><span class="header-section-number">2.1.2</span> Data collection</h3>
+<div id="data-collection" class="section level3 hasAnchor" number="2.1.2">
+<h3><span class="header-section-number">2.1.2</span> Data collection<a href="data-exploration.html#data-collection" class="anchor-section" aria-label="Anchor link to header"></a></h3>
 <p>Data collection:</p>
 <ul>
 <li>How the data were collected has a crucial impact on what conclusions can be made.
@@ -462,12 +469,12 @@ div.csl-indent {
 </ul>
 </div>
 </div>
-<div id="data-exploration-1" class="section level2" number="2.2">
-<h2><span class="header-section-number">2.2</span> Data exploration</h2>
+<div id="data-exploration-1" class="section level2 hasAnchor" number="2.2">
+<h2><span class="header-section-number">2.2</span> Data exploration<a href="data-exploration.html#data-exploration-1" class="anchor-section" aria-label="Anchor link to header"></a></h2>
 <p>An initial exploration of the data should be performed prior to any formal analysis or modeling.</p>
 <p>Initial data analysis should consist of numerical summaries and appropriate plots.</p>
-<div id="numerical-summaries-of-data" class="section level3" number="2.2.1">
-<h3><span class="header-section-number">2.2.1</span> Numerical summaries of data</h3>
+<div id="numerical-summaries-of-data" class="section level3 hasAnchor" number="2.2.1">
+<h3><span class="header-section-number">2.2.1</span> Numerical summaries of data<a href="data-exploration.html#numerical-summaries-of-data" class="anchor-section" aria-label="Anchor link to header"></a></h3>
 <p>Statistics can be used to numerically summarize aspects of the data:</p>
 <ul>
 <li>mean</li>
@@ -477,8 +484,8 @@ div.csl-indent {
 <li>other measures, as appropriate</li>
 </ul>
 </div>
-<div id="visual-summaries-of-data" class="section level3" number="2.2.2">
-<h3><span class="header-section-number">2.2.2</span> Visual summaries of data</h3>
+<div id="visual-summaries-of-data" class="section level3 hasAnchor" number="2.2.2">
+<h3><span class="header-section-number">2.2.2</span> Visual summaries of data<a href="data-exploration.html#visual-summaries-of-data" class="anchor-section" aria-label="Anchor link to header"></a></h3>
 <p>Plots can provide a useful visual summary of the data.</p>
 <ul>
 <li>For one numerical variable: boxplots, histograms, density plots, etc.</li>
@@ -496,8 +503,8 @@ div.csl-indent {
 <li>Graphics can be more convincing than text at times.</li>
 </ul>
 </div>
-<div id="what-to-look-for" class="section level3" number="2.2.3">
-<h3><span class="header-section-number">2.2.3</span> What to look for</h3>
+<div id="what-to-look-for" class="section level3 hasAnchor" number="2.2.3">
+<h3><span class="header-section-number">2.2.3</span> What to look for<a href="data-exploration.html#what-to-look-for" class="anchor-section" aria-label="Anchor link to header"></a></h3>
 <p>When summarizing the data, look for:</p>
 <ul>
 <li>outliers</li>
@@ -508,8 +515,8 @@ div.csl-indent {
 </ul>
 </div>
 </div>
-<div id="kidney-example" class="section level2" number="2.3">
-<h2><span class="header-section-number">2.3</span> Kidney Example</h2>
+<div id="kidney-example" class="section level2 hasAnchor" number="2.3">
+<h2><span class="header-section-number">2.3</span> Kidney Example<a href="data-exploration.html#kidney-example" class="anchor-section" aria-label="Anchor link to header"></a></h2>
 <p>The National Institute of Diabetes and Digestive and Kidney Diseases conducted a study on 768 adult female Pima Native Americans living near Phoenix. The following variables were recorded:</p>
 <ul>
 <li><code>pregnant</code> - number of times pregnant</li>
@@ -552,8 +559,8 @@ div.csl-indent {
 <span id="cb24-26"><a href="data-exploration.html#cb24-26" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; 766        5     121        72      23     112 26.2    0.245  30    0</span></span>
 <span id="cb24-27"><a href="data-exploration.html#cb24-27" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; 767        1     126        60       0       0 30.1    0.349  47    1</span></span>
 <span id="cb24-28"><a href="data-exploration.html#cb24-28" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; 768        1      93        70      31       0 30.4    0.315  23    0</span></span></code></pre></div>
-<div id="numerically-summarizing-the-data" class="section level3" number="2.3.1">
-<h3><span class="header-section-number">2.3.1</span> Numerically summarizing the data</h3>
+<div id="numerically-summarizing-the-data" class="section level3 hasAnchor" number="2.3.1">
+<h3><span class="header-section-number">2.3.1</span> Numerically summarizing the data<a href="data-exploration.html#numerically-summarizing-the-data" class="anchor-section" aria-label="Anchor link to header"></a></h3>
 <p>The <code>summary</code> command is a useful way to numerically summarize a data frame.</p>
 <p>The <code>summary</code> function will compute the minimum, 0.25 quantile, mean, median, 0.75 quantile, and maximum of a <code>numeric</code> variable.</p>
 <p>The <code>summary</code> function will count the number of values having each level for a <code>factor</code> variable.</p>
@@ -581,8 +588,8 @@ div.csl-indent {
 <span id="cb25-21"><a href="data-exploration.html#cb25-21" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;  3rd Qu.:1.000  </span></span>
 <span id="cb25-22"><a href="data-exploration.html#cb25-22" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;  Max.   :1.000</span></span></code></pre></div>
 </div>
-<div id="cleaning-the-data" class="section level3" number="2.3.2">
-<h3><span class="header-section-number">2.3.2</span> Cleaning the data</h3>
+<div id="cleaning-the-data" class="section level3 hasAnchor" number="2.3.2">
+<h3><span class="header-section-number">2.3.2</span> Cleaning the data<a href="data-exploration.html#cleaning-the-data" class="anchor-section" aria-label="Anchor link to header"></a></h3>
 <p>Cleaning data involves finding and correcting data quality issues.</p>
 <p>The <code>pima</code> data set has some odd characterics:</p>
 <ul>
@@ -632,10 +639,10 @@ div.csl-indent {
 <span id="cb29-4"><a href="data-exploration.html#cb29-4" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;      500      268</span></span></code></pre></div>
 </div>
 </div>
-<div id="visualizing-data-with-base-graphics" class="section level2" number="2.4">
-<h2><span class="header-section-number">2.4</span> Visualizing data with <strong>base</strong> graphics</h2>
-<div id="histograms" class="section level3" number="2.4.1">
-<h3><span class="header-section-number">2.4.1</span> Histograms</h3>
+<div id="visualizing-data-with-base-graphics" class="section level2 hasAnchor" number="2.4">
+<h2><span class="header-section-number">2.4</span> Visualizing data with <strong>base</strong> graphics<a href="data-exploration.html#visualizing-data-with-base-graphics" class="anchor-section" aria-label="Anchor link to header"></a></h2>
+<div id="histograms" class="section level3 hasAnchor" number="2.4.1">
+<h3><span class="header-section-number">2.4.1</span> Histograms<a href="data-exploration.html#histograms" class="anchor-section" aria-label="Anchor link to header"></a></h3>
 <p>The <code>hist</code> function can be used create a histogram of a numerical vector.</p>
 <ul>
 <li>The labels of the plot can be customized using the <code>xlab</code> and <code>ylab</code> arguments.</li>
@@ -650,8 +657,8 @@ div.csl-indent {
 <div class="sourceCode" id="cb31"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb31-1"><a href="data-exploration.html#cb31-1" aria-hidden="true" tabindex="-1"></a><span class="fu">hist</span>(pima<span class="sc">$</span>diastolic, <span class="at">xlab =</span> <span class="st">&quot;diastolic blood pressure&quot;</span>, <span class="at">main =</span> <span class="st">&quot;&quot;</span>, <span class="at">breaks =</span> <span class="dv">20</span>)</span></code></pre></div>
 <p><img src="Data-Analysis-with-Linear-Regression_files/figure-html/unnamed-chunk-34-1.png" width="672" /></p>
 </div>
-<div id="density-plots" class="section level3" number="2.4.2">
-<h3><span class="header-section-number">2.4.2</span> Density plots</h3>
+<div id="density-plots" class="section level3 hasAnchor" number="2.4.2">
+<h3><span class="header-section-number">2.4.2</span> Density plots<a href="data-exploration.html#density-plots" class="anchor-section" aria-label="Anchor link to header"></a></h3>
 <p>Many people prefer the density plot over the histogram because the histogram is more sensitive to its options.</p>
 <p>A density plot is essentially a smoothed version of a histogram.</p>
 <ul>
@@ -663,8 +670,8 @@ div.csl-indent {
 <p><img src="Data-Analysis-with-Linear-Regression_files/figure-html/unnamed-chunk-35-1.png" width="672" /></p>
 <p>In the example above, we have to specify <code>na.rm = TRUE</code> so that the density is only computed using the non-missing values.</p>
 </div>
-<div id="index-plots" class="section level3" number="2.4.3">
-<h3><span class="header-section-number">2.4.3</span> Index plots</h3>
+<div id="index-plots" class="section level3 hasAnchor" number="2.4.3">
+<h3><span class="header-section-number">2.4.3</span> Index plots<a href="data-exploration.html#index-plots" class="anchor-section" aria-label="Anchor link to header"></a></h3>
 <p>An index plot is a scatter plot of a <code>numeric</code> variable versus the index of each value (i.e., the position of the value in the vector).</p>
 <ul>
 <li>This is most useful for sorted vectors.</li>
@@ -674,23 +681,23 @@ div.csl-indent {
 <p><img src="Data-Analysis-with-Linear-Regression_files/figure-html/unnamed-chunk-36-1.png" width="672" /></p>
 <p>The flat spots in the plot above show that the <code>diastolic</code> variable has many repeated values.</p>
 </div>
-<div id="bivariate-scatter-plots" class="section level3" number="2.4.4">
-<h3><span class="header-section-number">2.4.4</span> Bivariate scatter plots</h3>
+<div id="bivariate-scatter-plots" class="section level3 hasAnchor" number="2.4.4">
+<h3><span class="header-section-number">2.4.4</span> Bivariate scatter plots<a href="data-exploration.html#bivariate-scatter-plots" class="anchor-section" aria-label="Anchor link to header"></a></h3>
 <p>Bivariate scatter plots can be used to identify the relationship between two <code>numeric</code> variables.</p>
 <p>A scatter plot of diabetes vs diastolic blood pressure is shown below.</p>
 <div class="sourceCode" id="cb34"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb34-1"><a href="data-exploration.html#cb34-1" aria-hidden="true" tabindex="-1"></a><span class="fu">plot</span>(diabetes <span class="sc">~</span> diastolic, <span class="at">data =</span> pima)</span></code></pre></div>
 <p><img src="Data-Analysis-with-Linear-Regression_files/figure-html/unnamed-chunk-37-1.png" width="672" /></p>
 <p>There is no clear pattern in the points, so it’s difficult to claim a relationship between the two variables.</p>
 </div>
-<div id="bivariate-boxplots" class="section level3" number="2.4.5">
-<h3><span class="header-section-number">2.4.5</span> Bivariate boxplots</h3>
+<div id="bivariate-boxplots" class="section level3 hasAnchor" number="2.4.5">
+<h3><span class="header-section-number">2.4.5</span> Bivariate boxplots<a href="data-exploration.html#bivariate-boxplots" class="anchor-section" aria-label="Anchor link to header"></a></h3>
 <p>A parallel boxplot of <code>diabetes</code> score versus <code>test</code> result is shown below.</p>
 <div class="sourceCode" id="cb35"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb35-1"><a href="data-exploration.html#cb35-1" aria-hidden="true" tabindex="-1"></a><span class="fu">plot</span>(diabetes <span class="sc">~</span> test, <span class="at">data =</span> pima)</span></code></pre></div>
 <p><img src="Data-Analysis-with-Linear-Regression_files/figure-html/unnamed-chunk-38-1.png" width="672" /></p>
 <p>The median <code>diabetes</code> score seems to be a bit higher for positive tests in comparison to the negative tests.</p>
 </div>
-<div id="multiple-plots-in-one-figure" class="section level3" number="2.4.6">
-<h3><span class="header-section-number">2.4.6</span> Multiple plots in one figure</h3>
+<div id="multiple-plots-in-one-figure" class="section level3 hasAnchor" number="2.4.6">
+<h3><span class="header-section-number">2.4.6</span> Multiple plots in one figure<a href="data-exploration.html#multiple-plots-in-one-figure" class="anchor-section" aria-label="Anchor link to header"></a></h3>
 <p>The <code>par</code> function can be used to construct multiple plots in one figure.</p>
 <ul>
 <li>The <code>mfrow</code> argument can be used to specify the number of rows and columns of plots you need.</li>
@@ -703,8 +710,8 @@ div.csl-indent {
 <div class="sourceCode" id="cb37"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb37-1"><a href="data-exploration.html#cb37-1" aria-hidden="true" tabindex="-1"></a><span class="fu">par</span>(<span class="at">mfrow =</span> <span class="fu">c</span>(<span class="dv">1</span>, <span class="dv">1</span>)) <span class="co"># reset to a single plot</span></span></code></pre></div>
 </div>
 </div>
-<div id="visualizing-data-with-ggplot2" class="section level2" number="2.5">
-<h2><span class="header-section-number">2.5</span> Visualizing data with <strong>ggplot2</strong></h2>
+<div id="visualizing-data-with-ggplot2" class="section level2 hasAnchor" number="2.5">
+<h2><span class="header-section-number">2.5</span> Visualizing data with <strong>ggplot2</strong><a href="data-exploration.html#visualizing-data-with-ggplot2" class="anchor-section" aria-label="Anchor link to header"></a></h2>
 <p>The previous plots were created using R’s <strong>base</strong> graphics system.</p>
 <ul>
 <li><strong>base</strong> graphics are fast and simple to produce while looking professional.</li>
@@ -728,8 +735,8 @@ div.csl-indent {
 <li>This is where you specify which variable with be the <code>x</code> variable, the <code>y</code> variable, which variable will control color in the plots, etc.</li>
 </ul></li>
 </ul>
-<div id="a-ggplot2-histogram" class="section level3" number="2.5.1">
-<h3><span class="header-section-number">2.5.1</span> A <strong>ggplot2</strong> histogram</h3>
+<div id="a-ggplot2-histogram" class="section level3 hasAnchor" number="2.5.1">
+<h3><span class="header-section-number">2.5.1</span> A <strong>ggplot2</strong> histogram<a href="data-exploration.html#a-ggplot2-histogram" class="anchor-section" aria-label="Anchor link to header"></a></h3>
 <div class="sourceCode" id="cb38"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb38-1"><a href="data-exploration.html#cb38-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(ggplot2)</span>
 <span id="cb38-2"><a href="data-exploration.html#cb38-2" aria-hidden="true" tabindex="-1"></a>ggpima <span class="ot">&lt;-</span>  <span class="fu">ggplot</span>(pima)</span>
 <span id="cb38-3"><a href="data-exploration.html#cb38-3" aria-hidden="true" tabindex="-1"></a>ggpima <span class="sc">+</span> <span class="fu">geom_histogram</span>(<span class="fu">aes</span>(<span class="at">x=</span>diastolic))</span>
@@ -737,20 +744,20 @@ div.csl-indent {
 <span id="cb38-5"><a href="data-exploration.html#cb38-5" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; Warning: Removed 35 rows containing non-finite values (stat_bin).</span></span></code></pre></div>
 <p><img src="Data-Analysis-with-Linear-Regression_files/figure-html/unnamed-chunk-40-1.png" width="672" /></p>
 </div>
-<div id="a-ggplot2-density-plot" class="section level3" number="2.5.2">
-<h3><span class="header-section-number">2.5.2</span> A <strong>ggplot2</strong> density plot</h3>
+<div id="a-ggplot2-density-plot" class="section level3 hasAnchor" number="2.5.2">
+<h3><span class="header-section-number">2.5.2</span> A <strong>ggplot2</strong> density plot<a href="data-exploration.html#a-ggplot2-density-plot" class="anchor-section" aria-label="Anchor link to header"></a></h3>
 <div class="sourceCode" id="cb39"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb39-1"><a href="data-exploration.html#cb39-1" aria-hidden="true" tabindex="-1"></a>ggpima <span class="sc">+</span> <span class="fu">geom_density</span>(<span class="fu">aes</span>(<span class="at">x =</span> diastolic))</span>
 <span id="cb39-2"><a href="data-exploration.html#cb39-2" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; Warning: Removed 35 rows containing non-finite values (stat_density).</span></span></code></pre></div>
 <p><img src="Data-Analysis-with-Linear-Regression_files/figure-html/unnamed-chunk-41-1.png" width="672" /></p>
 </div>
-<div id="a-ggplot2-scatter-plot" class="section level3" number="2.5.3">
-<h3><span class="header-section-number">2.5.3</span> A <strong>ggplot2</strong> scatter plot</h3>
+<div id="a-ggplot2-scatter-plot" class="section level3 hasAnchor" number="2.5.3">
+<h3><span class="header-section-number">2.5.3</span> A <strong>ggplot2</strong> scatter plot<a href="data-exploration.html#a-ggplot2-scatter-plot" class="anchor-section" aria-label="Anchor link to header"></a></h3>
 <div class="sourceCode" id="cb40"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb40-1"><a href="data-exploration.html#cb40-1" aria-hidden="true" tabindex="-1"></a>ggpima <span class="sc">+</span> <span class="fu">geom_point</span>(<span class="fu">aes</span>(<span class="at">x =</span> diastolic, <span class="at">y =</span> diabetes))</span>
 <span id="cb40-2"><a href="data-exploration.html#cb40-2" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; Warning: Removed 35 rows containing missing values (geom_point).</span></span></code></pre></div>
 <p><img src="Data-Analysis-with-Linear-Regression_files/figure-html/unnamed-chunk-42-1.png" width="672" /></p>
 </div>
-<div id="scaling-ggplot2-plots" class="section level3" number="2.5.4">
-<h3><span class="header-section-number">2.5.4</span> Scaling <strong>ggplot2</strong> plots</h3>
+<div id="scaling-ggplot2-plots" class="section level3 hasAnchor" number="2.5.4">
+<h3><span class="header-section-number">2.5.4</span> Scaling <strong>ggplot2</strong> plots<a href="data-exploration.html#scaling-ggplot2-plots" class="anchor-section" aria-label="Anchor link to header"></a></h3>
 <p>In general, <em>scaling</em> is the process by which <strong>ggplot2</strong> maps variables to unique values. When this is done for discrete variables, <strong>ggplot2</strong> will often scale the variable to distinct colors, symbols, or sizes, depending on the aesthetic mapped.</p>
 <p>In the example below, we map the <code>test</code> variable to the <code>shape</code> aesthetic, which is then scaled to different shapes for the different <code>test</code> levels.</p>
 <div class="sourceCode" id="cb41"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb41-1"><a href="data-exploration.html#cb41-1" aria-hidden="true" tabindex="-1"></a>ggpima <span class="sc">+</span></span>
@@ -768,8 +775,8 @@ div.csl-indent {
 <span id="cb43-3"><a href="data-exploration.html#cb43-3" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; Warning: Removed 35 rows containing missing values (geom_point).</span></span></code></pre></div>
 <p><img src="Data-Analysis-with-Linear-Regression_files/figure-html/unnamed-chunk-45-1.png" width="672" /></p>
 </div>
-<div id="facetting-in-ggplot2" class="section level3" number="2.5.5">
-<h3><span class="header-section-number">2.5.5</span> Facetting in <code>ggplot2</code></h3>
+<div id="facetting-in-ggplot2" class="section level3 hasAnchor" number="2.5.5">
+<h3><span class="header-section-number">2.5.5</span> Facetting in <code>ggplot2</code><a href="data-exploration.html#facetting-in-ggplot2" class="anchor-section" aria-label="Anchor link to header"></a></h3>
 <p>Facetting creates separate panels (facets) of a data frame based on one or more facetting variables.</p>
 <p>Below, we facet the data by the <code>test</code> result.</p>
 <div class="sourceCode" id="cb44"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb44-1"><a href="data-exploration.html#cb44-1" aria-hidden="true" tabindex="-1"></a>ggpima <span class="sc">+</span></span>
@@ -778,8 +785,8 @@ div.csl-indent {
 <span id="cb44-4"><a href="data-exploration.html#cb44-4" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; Warning: Removed 35 rows containing missing values (geom_point).</span></span></code></pre></div>
 <p><img src="Data-Analysis-with-Linear-Regression_files/figure-html/unnamed-chunk-46-1.png" width="672" /></p>
 </div>
-<div id="summary-of-ggplot2" class="section level3" number="2.5.6">
-<h3><span class="header-section-number">2.5.6</span> Summary of <strong>ggplot2</strong></h3>
+<div id="summary-of-ggplot2" class="section level3 hasAnchor" number="2.5.6">
+<h3><span class="header-section-number">2.5.6</span> Summary of <strong>ggplot2</strong><a href="data-exploration.html#summary-of-ggplot2" class="anchor-section" aria-label="Anchor link to header"></a></h3>
 <p>To create a <strong>ggplot2</strong> plot:</p>
 <ul>
 <li>Create a<code>ggplot</code> object using the <code>ggplot</code> function.
@@ -801,8 +808,8 @@ div.csl-indent {
 </ul>
 </div>
 </div>
-<div id="summary-of-data-exploration" class="section level2" number="2.6">
-<h2><span class="header-section-number">2.6</span> Summary of data exploration</h2>
+<div id="summary-of-data-exploration" class="section level2 hasAnchor" number="2.6">
+<h2><span class="header-section-number">2.6</span> Summary of data exploration<a href="data-exploration.html#summary-of-data-exploration" class="anchor-section" aria-label="Anchor link to header"></a></h2>
 <p>You should use both numerical and graphical summaries of data <strong>prior</strong> to modeling data.</p>
 <p>Data exploration helps us to:</p>
 <ul>
