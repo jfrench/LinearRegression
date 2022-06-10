@@ -1,0 +1,358 @@
+---
+title: "Interpreting Coefficients Part 1"
+date: "`r format(Sys.time(), '%Y-%m-%d')`"
+output:
+  pdf_document: default
+  html_document:
+    df_print: paged
+---
+
+```{r, setup, include=FALSE}
+# This option means all R code is NOT evaluated
+# Delete or comment out if you want to run 
+# R commands when knitting
+knitr::opts_chunk$set(eval = FALSE)
+```
+
+```{r}
+#install.packages("alr4") #install package one time
+library(alr4) #load datasets from Weisberg text
+```
+
+# Example: Fuel Consumption Data
+
+```{r}
+data(fuel2001, package = "alr4")
+```
+
+The variables (for the year 2001 unless otherwise noted) are:
+
+- `Drivers`: Number of Licensed drivers in the state
+- `FuelC`: Gasoline sold for road use (1000s of gal.)
+- `Miles`: Miles of Federal-aid highway miles in the state
+- `Pop`: 2001 population age 16 and over
+- `Tax`: Gasoline state tax rate (cents/gallon)
+
+## Setting Up a Linear Model
+
+What is the relationship between fuel consumption and various regressors for the 50 United States and the District of Columbia?  
+
+### Adjusting Units
+
+- Some of the variables are adjusted for population. Others are are not.
+- Some dollar values are given in thousands of dollars. Others are given in dollars.
+- Some units of fuel are given in gallons. Others are given in 1000's of gallons.
+- Our model should have regressor variables with compatible units with the response variable.
+
+1. **Create a new variable called `Fuel` that converts units of `FuelC` from 1000's of gallons to gallons per person**.
+2. **Create a new variable called `Income1k`that converts the units of `Income` from dollars per capita to 1000's of dollars per capita.**
+3. **Convert the units of `Drivers` from number of drivers to number of drivers per capita**.
+
+- `Fuel`: Average amount of gasoline sold for road use per person (Gallons/person)
+- `Income1K`: Average personal income (in thousands) for the year 2000 per person ($1K/person)
+- `Dlic`: Number of licensed drivers per 1000 persons (licensed drivers/1K persons) 
+
+```{r}
+# create new regressors/transformed responses to fuel2001 data frame
+fuel2001$Fuel <- ??
+fuel2001$Dlic <- ??
+fuel2001$Income1K <- ??
+```
+
+```{r}
+summary(fuel2001)
+```
+
+### Fitting a Model
+
+We will set up a regression model to determine how `Fuel` (gallons per person) is related to `Tax` (cents per gallon),
+`Dlic` (drivers per capita), `Income1k` (thousands of dollars of income per capita), and `Miles` (federal highway miles).
+
+$$E( \mbox{Fuel} \ | \ \mbox{Tax, Dlic, Income1K, Miles})=\beta_0+\beta_1 (\mbox{Tax}) +\beta_2 (\mbox{Dlic}) + \beta_3 (\mbox{Income1K}) + \beta_4 \log{(\mbox{Miles})}$$
+
+```{r}
+# fit model
+lmod <- lm(Fuel ~ Tax + Dlic + Income1K + log(Miles), data = fuel2001)
+
+# summarize model
+faraway::sumary(lmod)
+```
+
+We see the fitted model is:
+
+$$\widehat{\mbox{E}}(\mbox{Fuel} \ | \ \mbox{Tax, Dlic, Income1k, Miles}) = 154.19 - 4.24 (\mbox{Tax}) + 0.47 (\mbox{Dlic}) - 6.14(\mbox{Income1K}) + 26.76 \log{(\mbox{26.76})}$$
+
+This equation represents the estimated conditional mean of Fuel given fixed values of the regressors Tax, Dlic, Income1K, and Miles.
+
+## Interpreting the Coefficients
+
+Estimated coefficients are usually interpreted as a **rate of change.** 
+
+- If we increase a regressor by 1 unit (and hold all others constant), what is the predicted change in the response variable?
+
+4. **Interpret the practical meaning of $\beta_1 = -4.24$. Pay attention to units when giving your interpretation.**
+
+
+
+- The sign of a parameter estimate indicates the direction of the relationship between the regressor and the response (when all other regressors are constant).
+- The sign of the effect of a regressor is often more important than its magnitude.
+- If regressors are highly correlated with other regressors, both the magnitude and sign of an estimated coefficient may change depending on the values of the other regressors are in the model.
+
+# Example: Berkeley Guidance Study
+
+Data from the Berkeley guidance study of children born in 1928-29 in Berkeley, CA. BGSgirls contains data from just the girls in the study.
+
+```{r}
+data(BGSgirls, package = "alr4")
+head(BGSgirls)
+```
+
+## Dictionary of Data
+
+- `BMI18`: the body mass index at age 18
+-  `WT2`, `WT9`, and `WT18`: the weights at ages 2, 9, and 18 (in kg) for the $n=70$ girls in the study.
+
+## Analysing Relations Between Regressors
+
+```{r}
+# basic scatterplot matrix
+pairs(~ BMI18 + WT2 + WT9 + WT18, data = BGSgirls)
+```
+
+5. **Based on the scatter plot matrix above, does there seem to be any relations among the regressors? Explain why these relations make practical sense.**
+
+
+6. **How can we adjust our model to account for the relations between the regressors?**
+
+
+## Adjusting the Regressors
+
+7. **Create a new regressor called `DW9` that is the weight gain from age 2 to 9.**
+
+8. **Create a new regressor called `DW18` that is the weight gain from age 9 to 18.**
+
+```{r}
+BGSgirls$DW9 <- ??
+BGSgirls$DW18 <- ??
+```
+
+```{r}
+# basic scatterplot matrix
+pairs(~ BMI18 + DW9 + DW18, data = BGSgirls)
+```
+
+9. **Based on the scatter plot matrix above, how can you tell that the new regressors seem to be more independent from each other?**
+
+## Comparing Different Models
+
+### BMI relation to WT2, WT9 and WT18
+
+```{r}
+m1 <- lm(BMI18 ~ WT2 + WT9 + WT18, BGSgirls)
+faraway::sumary(m1)
+```
+
+### BMI relation to WT2, DW9 and DW18
+
+```{r}
+m2 <- lm(BMI18 ~ WT2 + DW9 + DW18, BGSgirls)
+faraway::sumary(m2)
+```
+
+### BMI relation to WT2, WT9, WT18, DW9 and DW18
+
+```{r}
+m3 <- lm(BMI18 ~ WT2 + WT9 + WT18 + DW9 + DW18, BGSgirls)
+faraway::sumary(m3)
+```
+
+```{r}
+coef(m1)
+coef(m2)
+coef(m3)
+```
+
+Regressor | Model 1 | Model 2 | Model 3    
+----------|---------|---------|----------      
+Intercept  | 8.298         | 8.298        | 8.298   
+  CI         | (5.00,11.62)  | (5.00,11.62) | (5.00,11.62)
+WT2  | -0.383        | -0.065       | -0.383
+ CI  | (-0.69,-0.08) | (-0.32,0.19) | (-0.69,-0.08)
+WT9  | 0.032         | --           | 0.032 
+ CI  | (-0.06,0.13)  | --           | (-0.06,0.13)
+WT18 | 0.287         | --           | --
+CI   | (0.23,0.34)   | --           | --
+DW9  |  --           | 0.318        | NA
+ CI  |  --           | (0.24,0.40)  | NA
+DW18 |  --           | 0.287        | NA
+  CI |  --           | (0.23,0.34)  | NA
+  
+10. **Comment on how the WT2 coefficient is the same/different in the different models.**
+
+
+When regressors are correlated, interpretation of the effect of a regressor depends not only on the other regressors in the model, but also upon the linear transformation of the variables used.
+
+11. **Why are their NAs in Model 3?**
+
+
+
+# Effect Plots
+
+An **effect plot** displays effect of a regressor on the mean response while holding the other regressors at their mean values.
+
+$$ \hat{y} = \beta_0 + \beta_1 (\bar{X}_1) + \beta_2 (\bar{X}_2) + \ldots + \beta_{i-1} (\bar{X}_{i-1}) + \beta_i (X_i) + \beta_{i+1} (\bar{X}_{i+1}) + \ldots + + \beta_{p-1} (\bar{X}_{p-1})$$
+
+```{r}
+summary(lmod)$coefficients
+```
+
+12. **Complete the code below to extract each of the coefficients in the Fuel Consumption model `lmod` from the coefficient array above.**
+
+```{r}
+b0 <- summary(lmod)$coefficients[??] #beta_0
+b1 <- summary(lmod)$coefficients[??] #beta_1
+b2 <- summary(lmod)$coefficients[??] #beta_2
+b3 <- summary(lmod)$coefficients[??] #beta_3
+b4 <- summary(lmod)$coefficients[??] #beta_4
+```
+
+12. Complete the R code below to compute the sample means for each of the regressors.
+
+```{r}
+xbar.Tax <- ??
+xbar.Dlic <- ??
+xbar.Income1K <- ??
+xbar.Miles <- ??
+```
+
+13. **What is the effect of `Tax` on expected Fuel consumption when the other regressors are fixed at the sample mean values? Write a formula to express this relation.**
+
+
+
+Thus we have the model
+$$\mbox{E}(\mbox{Fuel} \ | \ \mbox{Tax, Dlic=??, Income1K=??, log(Miles) = ??}) = ?? - ??(\mbox{Tax})$$
+
+```{r}
+library(effects) # for Effect function
+# effect plot for Tax regressor
+plot(Effect("Tax", lmod))
+```
+
+14. **If instead of fixing the values of the regressors at their mean, we choose other values such as the minimum value of each of regressors. What effect (if any) would this have on the graph above?**
+
+
+# Regressors on Logarithmic Scale
+
+Logarithms are commonly used both for the response and for regressors.
+
+```{r}
+summary(fuel2001)
+```
+
+
+15. **Based on the summary output above, why do you think we used a log scale on `Miles`?**
+
+
+In the code block below, we create new variables that are the natural log and log base 10 of Miles and recreate the linear model using each of these new variables.
+
+```{r}
+fuel2001$LnMiles <- log(fuel2001$Miles)
+fuel2001$LogMiles <- log10(fuel2001$Miles)
+
+lmod.ln <- lm(Fuel ~ Tax + Dlic + Income1K + LnMiles, data = fuel2001)
+lmod.log <- lm(Fuel ~ Tax + Dlic + Income1K + LogMiles, data = fuel2001)
+
+faraway::sumary(lmod.ln) #Check that model is the same
+faraway::sumary(lmod.log) #Check that model is the same
+```
+
+## Below we create an effects plot on a natural log scale.
+
+```{r}
+plot(Effect("LnMiles", lmod.ln), 
+     main = "ln(Miles) effect plot")
+```
+
+## Below we create an effects plot on a log10 scale.
+
+```{r}
+plot(Effect("LogMiles", lmod.log), 
+     main = "log(Miles) effect plot")
+```
+
+## Below we create an effects plot on a regular scale.
+
+```{r}
+plot(Effect("Miles", lmod, 
+            xlevels = list(Miles = seq(1, 3e5, len = 301))))
+```
+
+The effect of increasing Miles is greater in states with fewer miles of roadway, with relatively little change in states with the most roadway. 
+
+This is the usual effect of logarithms: the fitted effect changes most rapidly when the regressor is small and less rapidly when the predictor is large.
+
+## Interpreting Coefficients with Log Scale on Regressor
+
+### Natural Log Scale 
+
+Regressor $X_j$ increasing by 1% while the other regressors remain constant is associated with a $\beta_j/100$ increase in the response variable, on average.
+
+16. **Interpret the meaning of the coefficient associated to the natural log of Miles which you can find below.**
+
+```{r}
+summary(lmod.ln)$coefficients[5, 1] #ln coeff
+```
+
+### Common Log (base 10) Scale 
+
+Regressor $X_j$ increasing by a factor of 10 (an increase of 900%) while the other regressors remain constant is associated with a $\beta_j$ increase in the response variable, on average.
+
+17. **Interpret the meaning of the coefficient associated to the log base 10 of Miles which you can find below.**
+
+```{r}
+summary(lmod.log)$coefficients[5, 1] #log coeff
+```
+
+# Log-Level Interpretation
+
+It is common for responses to be transformed to a logarithmic scale for theoretical or practical considerations.  
+
+$$\mbox{E}( \log{Y} \ | \ X)= \beta_0 + \beta_1 X.$$
+
+This is sometimes called a **log-level model**. 
+
+- A unit increase in $X$ is associated with a change in the mean $Y$ by the multiplicative effect $\exp^{\beta_1}$.
+- **Thus $beta_1$ is the continuous exponential growth/decay rate.**
+
+It is often acceptable to approximate the expected value of a log by the log of the expected value:
+
+$$\log{( \mbox{E}(Y \ | \ X=x) )} \approx\mbox{E}(\log{Y} \ | \ X=x)$$
+
+Thus, we have
+
+$$\mbox{E}(Y \ | \ X=x) \approx e^{\rm{E}(\log{Y} \ | \ X=x)} = e^{\beta_0 + \beta_1 X}=e^{\beta_0}e^{\beta_1X}.$$
+# Log-log Interpretation
+
+Consider the log-log simple linear regression model
+
+$$\mbox{E}( \log{Y} \ | \ X) = \beta_0 + \beta_1 \log{X}.$$
+
+When we scale $X$ by a factor of $c$, the response is predicted to grow by a factor of $c^{\beta_1}$, on average.
+
+# Summary of Interpretations (Simple Linear Regression)
+
+**Level-level**: $\mathbf{\mbox{E}(Y \ | \ X=x)} = \boldsymbol\beta_0 + \boldsymbol\beta_1 X$: The predicted change in the response is $\beta_1$ when we increase $X$ by 1 unit, on average.
+
+**Level-log**: $\mathbf{\mbox{E}(Y \ | \ X=x)} = \boldsymbol\beta_0 + \boldsymbol\beta_1 \log{X}$: When we increase $X$ by 1%, the response is predicted to increase by  $\beta_j/100$, on average.
+
+**Log-level**: $\mathbf{\mbox{E}(\log{Y} \ | \ X=x) = \boldsymbol\beta_0 + \boldsymbol\beta_1 X}$: A unit increase in $X$ is predicted to change the response by a factor of $e^{\beta_1}$, on average. The continuous growth rate is $\beta_1$.
+
+**Log-log**: $\mathbf{\mbox{E}(\log{Y} \ | \ X=x) = \boldsymbol\beta_0 + \boldsymbol\beta_1 \log{X}}$: When we scale $X$ by a factor of $c$, the response is predicted to grow by a factor of $c^{\beta_1}$, on average.
+
+# More Practice
+
+1. For a log-level model, interpret the relationship between $X$ and the mean of $Y$ when $X$ increases by 1 unit and $\beta_j=0.3$ and the other predictors do not change.
+
+2. For a log-log model, what is the expected change in $Y$ if we multiply $X$ by a factor of $c$.
+
+3. For a log-log model, interpret the relationship between $X$ and the expected value of $Y$ when $X$ increases by $10\%$ and $\beta_1=0.3$.

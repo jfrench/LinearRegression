@@ -1,0 +1,120 @@
+---
+title: "Random Vectors and Linear Algebra with R"
+date: "`r format(Sys.time(), '%Y-%m-%d')`"
+output:
+  pdf_document: default
+  html_document:
+    df_print: paged
+---
+
+```{r, setup, include=FALSE}
+# This option means all R code is NOT evaluated
+# Delete or comment out if you want to run 
+# R commands when knitting
+knitr::opts_chunk$set(eval = FALSE)
+```
+
+
+# Loading the World Bank Data Library
+
+If you have not installed `wbstats` then you will need to uncomment out the first line of code one time.
+
+```{r}
+#install.packages("wbstats")
+library(wbstats) # World Bank Data
+```
+
+# Load most recent literacy rate data
+```{r}
+edu <- wb_data(
+  country = "countries_only",
+  indicator = "SE.ADT.LITR.ZS",  # Literacy rate  (% of pop above 15)
+  mrnev = 1 #returns most recent non-empty value
+)
+edu <- edu[,c(3,5)]
+names(edu) <- c("country", "literacy_rate")
+```
+
+
+# Load Life Expectancy - SP.DYN.LE00.IN (years)
+
+```{r}
+health <- wb_data(
+  country = "countries_only", indicator = "SP.DYN.LE00.IN", mrnev = 1)
+health <- health[,c(3,5)]
+names(health) <- c("country", "life_exp")
+
+# Land Area - AG.LND.TOTL.K2 (sq.km)
+area <- wb_data(
+  country = "countries_only", indicator = "AG.LND.TOTL.K2", mrnev = 1)
+area <- area[,c(3,5)]
+names(area) <- c("country", "land_area")
+```
+
+# Load GDP per cap (ppp) - NY.GDP.PCAP.PP.CD
+```{r}
+wealth <- wb_data(
+  country = "countries_only",  indicator =  "NY.GDP.PCAP.PP.CD",mrnev = 1)
+wealth <- wealth[,c(3,5)]
+names(wealth) <- c("country", "gdp_per_cap")
+```
+
+# Merge the three separate datasets together and preview
+
+```{r}
+country <- merge(edu, merge(health, merge(area, wealth)))
+head(country)
+```
+
+# Remove country identifiers when we do numerical analysis
+
+```{r}
+mydata <- country[,2:5]
+```
+
+# Analyzing Correlations Between Pairs
+
+```{r}
+#summary(mydata) #summary statistics for each variable alone
+var(mydata) #variance matrix
+cor(mydata) #correlation matrix
+pairs(mydata) #generate pairwise scatterplots
+```
+
+```{r}
+plot(density(mydata$literacy_rate))
+```
+
+# Entering Matrices in R
+
+```{r}
+# First Define matrices
+a <- matrix(1:6, nrow = 2, ncol = 3, byrow=TRUE)
+b <- matrix(c(2, 9, 1, 1, 3, 1), nrow = 2, ncol = 3, byrow=TRUE)
+c <- matrix(1:6, nrow = 3, ncol = 2, byrow=FALSE)
+```
+
+
+# Matrices operations in R
+
+```{r}
+# First Define matrices
+add <- a + b #matrix addition
+scalar.prod <- 2*b #matrix times a scalar
+diff <- a - scalar.prod #combining operations
+matrix.prod <- c %*% b #matrix multiplication uses %*%
+trans <- t(c) #transpose of matrix c
+```
+
+
+# Creating special matrices in R
+
+```{r}
+d <- diag(c(2, 4, 6, 8), nrow=4, ncol=4) #diagonal matrix
+id <- diag(4) #4 by 4 identity matrix
+```
+
+```{r}
+d.inv <- solve(d) # Find inverse matrix of d
+d.det <- det(d) #Compute determinant of matrix d
+```

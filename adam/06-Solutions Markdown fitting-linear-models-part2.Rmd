@@ -1,0 +1,150 @@
+---
+title: "Fitting a Linear Model Part 2"
+date: "`r format(Sys.time(), '%Y-%m-%d')`"
+output:
+  html_document:
+    df_print: paged
+---
+
+# Loading the Galapagos Data
+
+```{r}
+#load Galapagos data from faraway package
+data(gala, package = "faraway")
+str(gala) # basic structure of gala data
+```
+
+# Fitting a linear model
+Fit a linear model regressing Species on Area, Elevation, Nearest, Scruz, and Adjacent. 
+
+```{r}
+# Fit linear model using R.
+# Must use data = gala since data vectors are in gala data.frame
+lmod <- lm(Species ~ Area + Elevation + Nearest + Scruz + Adjacent, data = gala)
+summary(lmod)
+```
+
+# Summarizing the Model
+
+```{r}
+faraway::sumary(lmod) # the author's modified version of summary
+```
+
+```{r}
+coef(lmod) # pulls off just the values reg coef.
+```
+
+# Construct Matrix Predictors X
+
+```{r}
+x <- model.matrix( ~ Area + Elevation + Nearest + Scruz + Adjacent, data = gala)
+```
+
+# Construct Vector of Observed Response Variable
+
+```{r}
+y <- gala$Species
+```
+
+# Estimate the regression coefficents
+
+We use the formula
+
+$$\hat{\boldsymbol\beta} = (X^TX)^{-1}(X^T)\mathbf{y}$$
+```{r}
+# t(x) gives transpose of matrix x
+# %*% is matrix multiplication
+# solve(a) solves finds inverse matrix of a
+solve(t(x) %*% x) %*% t(x) %*% y
+```
+
+Which is equivalent to solving the matrix equation
+$$ (X^TX)\hat{\boldsymbol\beta} = (X^T)\mathbf{y}$$
+
+```{r}
+# solve(a, b) Solves ax = b
+solve(t(x) %*% x, t(x) %*% y)
+```
+
+Given an $n \times m$ matrix $X$ and an $n \times p$ matrix $Y$, we define the **matrix cross product** as
+
+$$X \times Y = X^TY$$
+Using the matrix cross product, we can express the conditions for the regression coefficicents as
+
+$$(X \times X) \hat{\boldsymbol\beta} = X \times \mathbf{y}$$
+
+```{r}
+# Even better
+solve(crossprod(x), crossprod(x, y))
+```
+
+
+# Quantities we can extract from model object
+
+```{r}
+names(lmod)
+```
+
+# Estimating the Variance
+
+The OLS estimator for $\mbox{Var} (\boldsymbol\epsilon)$ is given by
+$$\hat{\boldsymbol\sigma}^2 = \frac{ \hat{\boldsymbol\epsilon}^T \hat{\boldsymbol\epsilon} }{n-p} = \frac{ \mbox{RSS} }{n-p} .$$
+```{r}
+e <- residuals(lmod) # Vector of residuals
+n <- length(y) # number of observations
+p <- 6 # number of predictors
+
+rss <- crossprod(residuals(lmod))
+rss/(n-p)
+sqrt(rss/(n-p))
+```
+
+## Another way to compute RSS
+
+```{r}
+deviance(lmod)
+```
+
+# Quantities we can extract from summary object
+
+```{r}
+lmodsum <- summary(lmod)
+names(lmodsum)
+```
+
+# Estimating the Variance (Again and Again and ...)
+
+
+```{r}
+sqrt(deviance(lmod)/df.residual(lmod))
+lmodsum$sigma
+sqrt(sum(residuals(lmod)^2)/df.residual(lmod))
+sigma(lmod)
+```
+
+
+
+# Standard Error of Coefficient Estimates
+
+```{r}
+#lmodsum$coef
+lmodsum$coef[,2]
+```
+
+# Estimated variance/covariance matrix of the regression coefficients
+
+```{r}
+vcov(lmod)
+```
+
+# Standard Error of Coefficient Estimates (Again)
+
+```{r}
+sqrt(diag(vcov(lmod)))
+```
+
+# Extracting the fitted values
+
+```{r}
+yhat <- fitted(lmod)
+```

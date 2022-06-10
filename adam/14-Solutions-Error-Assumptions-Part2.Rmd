@@ -1,0 +1,524 @@
+---
+title: "Solutions Checking Error Assumptions Part 2"
+date: "`r format(Sys.time(), '%Y-%m-%d')`"
+output:
+  pdf_document
+---
+
+```{r}
+library(car)
+#library(ggplot2)
+```
+
+# Motivating Example
+
+The dataset `savings` in the `faraway` package contains savings data from 50 different countries. The variables in the dataset are: 
+
+- `sr` is the savings rate, personal saving divided by disposable income.
+- `pop15` is the percent of the population under age of 15.
+- `pop75` is the percent of the population over age of 75.
+- `dpi` is the per-capita disposable income in dollars.
+- `ddpi` is the percent growth rate of dpi.
+
+```{r}
+data(savings, package = "faraway") # load data
+lmod <- lm(sr ~ ., data = savings) #fit full model
+faraway::sumary(lmod)
+```
+
+# Standard Assumptions Revisited
+
+There are several standard assumptions made when performing linear regression.
+
+## Theoretical Properties 
+
+The ones related to theoretical properties:
+
+1. $E( \mathbf{y} \ | \ X ) = X \boldsymbol\beta$.
+2. 	$\epsilon_1, \epsilon_2, \ldots , \epsilon_n \overset{\mbox{i.i.d.}}{\sim} N(0, \sigma^2)$.
+
+      a. $E(\epsilon \ | \ \mathbb{X} )$ (essentially same as first condition).
+      b. $\mbox{Var}(\epsilon \ | \ \mathbb{X} ) = \sigma^2$.
+      c. $\mbox{Cov}( \epsilon_i , \epsilon_j \ | \ \mathbb{X}) = 0$ for all $i \ne j$
+      d. Each of the errors, regardless of the regressor values, are normally distributed
+
+## Practical Considerations
+
+3. The columns of $X$ are linearly independent, i.e., none of the regressors are linear combinations of each other. This assumption is checking by assessing **whether collinearity is present**. This assumption is critical for ensuring that our model is identifiable (estimable).
+
+4. **No observations are substantially more influential than other observations** in determining the fit of the model to the observed data. Influential observations can make it difficult to determine whether Assumptions 1 and 2 are satisfied.
+
+## Standard Assumptions Prioritized
+
+We assume that any issues with collinearity and identifiability (Assumption 3) have already been addressed. We have discussed this process.
+
+1.	**The structure of the model is correct (Assumption 1).** Which regressors should be included/excluded. Should we transform any predictors? The response? 
+2.	**No points are overly influential in determining the model fit (Assumption 4).** An overly influential observation can make it seem like the model is correctly specified when it is not.
+3. **The errors have constant variance (Assumption 2).**  If this assumption isn’t satisfied, then standard confidence intervals for the regression coefficients and mean function and prediction intervals for new observations are not trustworthy.
+4. **The errors are uncorrelated (Assumption 2).**
+5. **The errors are normally distributed (Assumption 2).** 
+
+- This is the least important assumption. If the previous assumptions are satisfied, then our OLS estimator of $\beta$ is still the best linear unbiased estimator regardless of the normality of the errors.
+- If the sample size is large enough, the central limit theorem tells us that our confidence intervals for the regression coefficients and the mean function are still approximately valid. 
+- However, if our sample size is small or we are interested in constructing a prediction interval, then non-normal errors can lead to untrustworthy confidence and prediction intervals.
+
+
+```{r}
+# plot of residuals versus fitted values
+residualPlot(lmod, quadratic = FALSE) # We do not want to draw the quad reg
+
+# plot of residuals versus fitted values
+plot(lmod, which = 1) 
+
+# plot sqrt absolute value of residuals vs fitted values
+plot(sqrt(abs(residuals(lmod))) ~ fitted(lmod), xlab = "fitted", 
+     ylab= expression(sqrt(hat(epsilon)))) 
+
+# plot of Standardized residuals versus fitted values
+plot(lmod, which = 3) 
+```
+
+
+- **Expected value of error is zero.** Residuals look like a cloud of points with a value of zero splitting the points into approximately two mirror images above and below zero.
+- **Constant variance assumption looks good.** Equally wide spread of residual values regardless of the fitted value.
+
+```{r}
+# plot of residuals versus predictors
+residualPlots(lmod, quadratic = FALSE, fitted = FALSE, tests = FALSE)
+```
+
+- We see similar properties (expected value zero and constant mean) in the residual plots against each regressor.
+
+### Running a Statistical Test
+
+- H~0~: The variance of the residuals for `Pop15` $> 35$ and `Pop15` $< 35$ are the same. The ratio of the two variances is equal to 1.
+- H~a~: The variance of the residuals for `Pop15` $> 35$  and `Pop15`$< 35$ are NOT the same. The ratio of the two variances is NOT equal to 1.
+
+
+```{r}
+var.test(residuals(lmod)[savings$pop15 > 35], residuals(lmod)[savings$pop15 < 35])
+```
+
+# Checking Normality of Residuals
+
+- Tests and confidence intervals are based on the assumption that the errors are normally distributed.
+
+
+- We seem to have detected an issue. 
+- This test does not tell us how to fix it!
+- Maybe construct two different models? Maybe a transformation of the variables will address this issue?
+
+When the errors are nonnormal:
+
+- Estimates will still be unbiased (assuming the model is correct and the error mean is zero).
+- Tests and confidence intervals will not be exact, but the central limit theorem says that the intervals and tests will be increasingly accurate as the sample size increases.
+- The consequences can generally be ignored for short-tailed distributions.
+- For skewed errors, a transformation may solve the problem.
+- For heavy-tailed errors, it is best to use robust methods that give less weight to outlying observations.
+- You may go back to step 1 and maybe consider a different model, though the problem may not be present in a different model.
+
+
+## Q-Q Plots
+
+- **q-q plots** are great plots for checking the normality assumption.
+- On the x-axis goes z-scores for the sorted residuals (if they were normally distributed)
+- A reference line is often plotted for comparison with $N(0,1)$
+- If the residuals are distributed similarly to observations coming from a normal distribution, then the points of a q-q plot will lie approximately in a straight line at a $45^{\circ}$ angle.
+
+
+```{r}
+# Using base R
+qqnorm(residuals(lmod), ylab = "Residuals")
+qqline(residuals(lmod))
+```
+
+
+- We can plot the residuals from the summary output we stored in `lmod`. This will produce a q-q plot for the **standardized residuals**, along with a helpful reference line.
+
+```{r}
+plot(lmod, which = 2)
+```
+
+- The ``car::qqPlot` function is q-q plot for the **studentized residuals**, along with pointwise confidence bands for what is expected if $\boldsymbol\epsilon \sim N(0, \sigma^2 I)$.
+
+
+```{r}
+# Using car package
+qqPlot(lmod) 
+```
+
+
+### Interpreting q-q Plots
+
+If the marked points are:
+
+- **Flatter than the line**, there is less data than we'd have if normal
+- **Steeper than the line**, there is more data than we'd have if normal.
+
+```{r}
+set.seed(53)
+qqPlot(rnorm(50), ylab = "observed data",
+       xlab = "normal quantiles", main = "normal data")
+#hist(rnorm(50), ylab = "frequency",
+#       xlab = "observed data", main = "normal data")
+```
+
+```{r}
+set.seed(53)
+qqPlot(exp(rnorm(50)), ylab = "observed data",
+       xlab = "normal quantiles", main = "positively-skewed data") 
+#hist(exp(rnorm(50)), ylab = "frequency",
+#       xlab = "observed data", main = "positively-skewed data")
+```
+
+```{r}
+# Heavy tailed data
+# Middle hump taller and more narrow
+# Tails go further out to left and right
+set.seed(53)
+qqPlot(rcauchy(50), ylab = "observed data",
+       xlab = "normal quantiles", main = "heavy-tailed data")
+hist(rcauchy(50), ylab = "frequency", breaks = 20,
+       xlab = "observed data", main = "heavy-tailed data")
+```
+
+```{r}
+# Light tailed data
+# Middle hump less tall and wider
+# Less tails than normal distribution
+set.seed(53)
+qqPlot(runif(50), ylab = "observed data",
+       xlab = "normal quantiles", main = "light-tailed data")
+hist(runif(50), ylab = "frequency", breaks = 20,
+       xlab = "observed data", main = "light-tailed data")
+```
+
+```{r}
+# Skewed Data
+set.seed(53)
+qqPlot(rexp(50), ylab = "observed data",
+       xlab = "normal quantiles", main = "Skewed Right")
+hist(rexp(50), ylab = "frequency", breaks = 20,
+       xlab = "observed data", main = "Skewed Right")
+```
+
+## The Shapiro-Wilk test for Normality
+
+A formal test of normality can be performed using the **Shapiro-Wilk test**.  
+
+- The null hypothesis of the Shapiro-Wilk test is that the residuals are a random sample from a normal distribution.  
+- The alternative is that the residuals are not a sample from a normal distribution.
+- `shapiro.test(residuals(lmod))` will perform a Shapiro-Wilk test.
+- A statistical decision is made using the usual approach with $p$-values.  
+
+```{r}
+shapiro.test(residuals(lmod)) # Shapiro-Wilk test.
+```
+
+## Question 1: Interpret the result of this test in practical terms.
+
+- There is insufficient evidence to conclude the residuals come from a non-normal distribution. 
+
+While the Shapiro-Wilk test is a tidy way to assess normality, it is not as flexible as the q-q plot.
+
+- It does not suggest a way to correct the problem.
+- It is easily influenced by the number of observations so that even minor departures from normality are detected, even when there is little reason to abandon the least squares approach.
+
+# Checking for Correlated Errorrs
+
+- It is difficult to check for correlated errors because there are so many possible patterns of correlation that may occur.
+  - The structure of temporal or spatial data makes this easier to check.
+- If the errors $\boldsymbol\epsilon$ are uncorrelated, then the residuals $\hat{\boldsymbol\epsilon}$ are typically close to uncorrelated.
+
+
+## Motivating Example: Global warming
+
+The dataset `faraway::globwarm` consists of 1001 observations related to the average northern hemisphere temperature from 1856-2000 and eight climate proxies from 1000-2000 AD. Data can be used to predict temperatures prior to 1856.
+
+```{r}
+data(globwarm, package = "faraway")
+summary(globwarm)
+```
+
+
+- This is **temporal** data since each observation has an associated time (`year`). 
+- There are 856 observations prior to 1856 that are missing `nhtemp` values.
+  - By default, these observations are omitted from our model (by R)
+
+```{r}
+# We exclude year from the model but include all other regressors
+lmod2 <- lm(nhtemp ~ . - year, data = globwarm)
+summary(lmod2)
+```
+
+## Plotting Residuals Against Time
+
+If the errors are uncorrelated, we expect a random scatter of points around $\hat{\epsilon}=0$.
+
+```{r}
+# residuals vs time
+plot(residuals(lmod2) ~ year, 
+     data = na.omit(globwarm), ylab = "residuals")
+abline(h = 0)
+```
+
+## Question 2: Do you notice any correlation in the errors?
+
+There seems to be a cyclical pattern to the residuals over time.
+
+- A positive error in one period carries over into a positive error in the next year.
+- A negative error in one year carries over to a negative error in the next year.
+- This suggests a positive serial correlation.
+
+## Plotting Successive Pairs of Residuals
+
+Another approach to check for serial correlation is to plot successive pairs of residuals.
+
+```{r}
+n = nobs(lmod2)
+plot(tail(residuals(lmod2), n - 1) ~      # extracts (e_1, e_2, ..., e_49)
+      head(residuals(lmod2), n - 1),      # extracts (e_2, e_3, ..., e_50)
+     xlab = expression(hat(epsilon)[i]),
+     ylab =expression(hat(epsilon)[i+1]))
+abline(h= 0 , v = 0, col = grey(0.75))
+```
+
+## Question 3: Interpret the plot above. How does this confirm a positive serial correlation?
+
+
+- The positive linear trend in the previous plot suggests positive serial correlation.
+- If there was no association, we would expect a cloud of points.
+
+## The Durbin-Watson Test for Uncorrelated Errors 
+
+A formal test for serial correlation between residuals can be performed using the **Durbin-Watson test**.  
+
+
+- Let $\rho$ denote the temporal correlation between residuals.
+  - H~0~: The residuals are uncorrelated, $\rho = 0$.
+  - H~a~: The residuals are related in some way ($\rho = 0$, $\rho > 0$, or $\rho < 0$).
+- The test statistic is:
+
+$$DW = \frac{\sum_{i=2}^n(\hat{\epsilon}_i - \hat{\epsilon}_{i-1})^2}{\sum_{i=1}^n \hat{\epsilon}_i^2}$$
+
+- The test can be implemented in the `lmtest` package.
+
+```{r}
+library(lmtest)
+dwtest(lmod2, alternative = "greater") # note greater is the default
+```
+
+## Question 4: Interpret the result of this test in practical terms.
+
+We can reject the null hypothesis and we have significant evidence in support of the alternative hypothesis that the residuals have  a positive serial correlation.
+
+
+- **Generalized least squares** (which takes into account dependence) can be used for data with correlated errors.
+- When there is no apparent temporal or spatial link between observations, it is almost impossible to check for correlation between errors.	On the other hand, there is generally no reason to suspect it either!
+
+----
+
+# Practice Example: A Model for SAT Scores  
+
+1. Using the `sat` dataset in the `faraway` package, fit a model with the total SAT score as the response and `expend`, `salary`, `ratio`, and `takers` as predictors. 
+
+```{r}
+library(car)
+data(sat, package = "faraway")
+summary(sat)
+```
+
+```{r}
+# fit model
+lmod2 <- lm(total ~ expend + salary + ratio + takers, data = sat)
+faraway::sumary(lmod2)
+```
+
+
+2. Perform regression diagnostics on this model to answer the following questions. 
+
+  a. Check the mean-zero error assumption.
+
+```{r}
+# plot residuals vs fitted values.  
+residualPlot(lmod2, quadratic = FALSE)
+```
+
+- This assumptions seems to be satisfied. There is one prediction which had a large (negative) residual, but that is likely due to variability in sampling and not a violation of this assumption.
+
+
+  b. Check the constant error variance assumption.
+
+- From the plot above, this seems okay, but the variance does seem a little smaller in the middle? There is not as much data in the middle, so we can't rule out this assumption.
+
+```{r}
+# More resolution
+plot(lmod2, which = 3)
+```
+
+```{r}
+# fitted values vs regressors
+residualPlots(lmod2, fitted = FALSE, tests = FALSE, quadratic = TRUE)
+```
+
+- Nothing too alarming in the plots above. The residuals against takers plot probably looks the most problematic, but no clear indications of heteroscedasticity.
+- Maybe a slight nonlinear, quadratic pattern with `takers`?
+
+
+```{r}
+# fit model
+lmod3 <- lm(total ~ expend + salary + ratio + takers + I(takers^2), data = sat)
+faraway::sumary(lmod3)
+```
+
+```{r}
+# plot residuals vs fitted values.  
+par(mfrow = c(1, 2))
+residualPlot(lmod2, quadratic = FALSE)
+residualPlot(lmod3, quadratic = FALSE)
+```
+
+```{r}
+par(mfrow = c(1, 2))
+# More resolution
+plot(lmod2, which = 3)
+plot(lmod3, which = 3)
+par(mfrow = c(1, 1))
+```
+
+```{r}
+# fitted values vs regressors
+residualPlots(lmod3, fitted = FALSE, tests = FALSE, quadratic = TRUE)
+```
+
+- Did we fix the problem or cause more problems?
+
+```{r}
+# fit model
+lmod4 <- lm(total ~ expend + salary + ratio + takers + I(expend^2) + I(salary^2) + I(takers^2), data = sat)
+faraway::sumary(lmod4)
+```
+
+```{r}
+# fitted values vs regressors
+residualPlots(lmod4, fitted = FALSE, tests = FALSE, quadratic = TRUE)
+```
+
+```{r}
+# plot residuals vs fitted values.  
+par(mfrow = c(1, 3))
+residualPlot(lmod2, quadratic = FALSE)
+residualPlot(lmod3, quadratic = FALSE)
+residualPlot(lmod4, quadratic = FALSE)
+par(mfrow = c(1, 1))
+```
+
+  c. Check the normal error assumption. 
+
+```{r}
+# check normality assumption
+# no major evidence of a problem
+qqPlot(residuals(lmod2))
+```
+
+- This assumption looks good too!
+
+
+  d. Should we check for correlated errors?
+  
+- There are tons of possible patterns we could try to investigate, but we really have no reason to suspect any correlation in the errors. 
+- All of the data is from the same years (1994-1995), and we do not know which observations were taken at what time. So there is no temporal data.
+- I suppose we do have some spatial data, such as state, so we could look for a pattern by region for example? 
+
+
+```{r}
+ # 9 states is south
+sat$region[row.names(sat) == "Alabama" | row.names(sat) == "Arkansas" | row.names(sat) == "Louisiana" | row.names(sat) == "Tennessee" | row.names(sat) == "North Carolina" | row.names(sat) =="South Carolina" | row.names(sat) == "Georgia" | row.names(sat) == "Florida" | row.names(sat) == "Mississippi"]  <- "South"
+
+ # 13 states is northeast
+sat$region[row.names(sat) == "Maine" | row.names(sat) == "Vermont" | row.names(sat) == "New Hampshire" | row.names(sat) == "Massachusetts" | row.names(sat) == "Connecticut" | row.names(sat) == "Rhode Island" | row.names(sat) == "New York" | row.names(sat) == "New Jersey" | row.names(sat) == "Pennsylvania" | row.names(sat) == "West Virginia" | row.names(sat) == "Virginia" | row.names(sat) == "Maryland" | row.names(sat) == "Delaware"]  <- "Northeast" 
+
+# 9 states in Midwest
+sat$region[row.names(sat) == "Minnesota" | row.names(sat) == "Wisconsin" | row.names(sat) == "Illinois" | row.names(sat) == "Iowa" | row.names(sat) == "Missouri" | row.names(sat) == "Kentucky" | row.names(sat) == "Indiana" | row.names(sat) == "Ohio" | row.names(sat) == "Michigan"]  <- "Midwest" 
+
+# 10 states in plains
+sat$region[row.names(sat) == "Montana" | row.names(sat) == "North Dakota" | row.names(sat) == "Wyoming" | row.names(sat) == "Colorado" | row.names(sat) == "New Mexico" | row.names(sat) == "Texas" | row.names(sat) == "Kansas" | row.names(sat) == "Nebraska" | row.names(sat) == "South Dakota" | row.names(sat) == "Oklahoma"]  <- "Plains" 
+
+# 9 States in Pacific
+sat$region[row.names(sat) == "Washington" | row.names(sat) == "Oregon" | row.names(sat) == "Idaho" | row.names(sat) == "California" | row.names(sat) == "Nevada" | row.names(sat) == "Arizona" | row.names(sat) == "Utah" | row.names(sat) == "Alaska" | row.names(sat) == "Hawaii"]  <- "Pacific" 
+```
+
+```{r}
+sat$region <- factor(sat$region)
+levels(sat$region)
+```
+
+```{r}
+# plot residuals vs fitted values.  
+residualPlot(lmod2, quadratic = FALSE, groups = sat$region)
+```
+
+```{r}
+# Remove Utah
+sat <- sat[!(row.names(sat) %in% "Utah"), ]
+
+# plot residuals vs fitted values.  
+residualPlot(lmod2, quadratic = FALSE, groups = sat$region)
+```
+
+-----
+
+# Summary of Methods for Checking Error Assumptions
+
+**Mean-zero error assumption**: 
+
+- Plot of residuals versus fitted values
+
+**Constant error variance assumption**:
+
+- Plot of residuals versus fitted values
+- Plot of $\sqrt{| \hat{\epsilon} |}$ versus fitted values.
+- Plot of standardized residuals versus fitted values.
+- Plot of residuals versus each regressor.
+	
+	
+**Normal error assumption**:
+
+- q-q of residuals
+- Shapiro-Wilk test
+
+**Autocorrelated errors**:
+
+- Plot of residuals versus time
+- Plot of successive pairs of residuals
+- Durbin-Watson test
+
+
+# Summary of useful R functions for checking error assumptions
+
+## Residuals:
+
+- `residuals(lmod)` extracts the OLS residuals.
+- `rstandard(lmod)` extracts the standardized residuals.
+- `rstudent(lmod)` extracts the studentized residuals.
+
+## Mean-zero error assumption:
+
+- `car::residualPlot` constructs a plot of the residuals versus fitted values.
+- `plot(lmod, which = 1)` constructs a plot of the residuals versus fitted values.
+
+## Constant error variance assumption:
+
+- `car::residualPlots` constructs a plots of the residuals versus each predictor and the residuals versus the fitted values.
+- `plot(lmod, which = 3)` constructs a plot of **square root of standardized residuals** versus the fitted values to increase resolution.
+
+## To assess error normality: 
+
+- `car::qqPlot(lmod)` will produce a q-q plot for the **studentized residuals**, along with the appropriate t-based, pointwise confidence bands for what is expected if $\boldsymbol\epsilon \sim N(0, \sigma^2 I)$.
+- `plot(lmod, which = 2)` will produce a q-q plot for the **standardized residuals**, along with a helpful reference line.
+- `shapiro.test(residuals(lmod))` performs a Shapiro-Wilk test on the residuals.
+
+## Correlated Errors
+
+- `lmtest::dwtest` performs a Durbin-Watson test on the residuals of a fitted model
+

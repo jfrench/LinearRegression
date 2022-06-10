@@ -1,0 +1,139 @@
+---
+title: "Solutions: Categorical Predictors Part 1"
+date: "`r format(Sys.time(), '%Y-%m-%d')`"
+output:
+  pdf_document: default
+  html_document:
+    df_print: paged
+---
+
+```{r, message = FALSE}
+# Here we load libraries used in this file
+# You may need to install if not already done so
+library(alr4) #datasets from Weisberg text
+```
+
+# Categorical Predictors
+
+Categorical predictors are often called factors.  
+
+- Factors can have two levels (e.g., survived or died) or
+- Multiple levels (single, married, divorced, widowed).
+
+# Exploring Data for One-Factor Models: Example with United Nations Dataset
+
+### 1. Load the `UN11` dataset below and read the help documentation to familiarize yourself with the data. How many observations are in the dataset? How many variables?
+
+```{r}
+data(UN11)
+?UN11
+```
+
+```{r}
+nrow(UN11)
+ncol(UN11)
+head(UN11)
+```
+There are 199 observations (countries) with 6 variables.
+
+We'll be working with following variables.
+
+- **ppgdp**: the gross national product per person in U.S. dollars
+- **fertility**: Average number of children per birth parent
+- **lifeExpF**: Female life expectancy, years
+- **pctUrban**: A percentage of population living in urban areas
+- **group**: A factor with level **oecd** for countries that are members of the Organization for Economic Cooperation and Development, are located in **africa**, and **other** for all other countries.
+
+If the only predictor is a factor, then the regression model is called a **one-factor** or **one-way** design.
+
+```{r}
+levels(UN11$group)
+```
+
+## Exploratory Data Analysis
+
+### 2. Create side-by-side boxplots for the variable **lifeExpF** for each of the categories of the **group** variable and describe any interesting observations about the data.
+
+```{r}
+boxplot(lifeExpF ~ group, data = UN11) 
+```
+
+- The oecd countries generally have the largest female life expectancy and africa countries typically have the lowest.  
+- Nauru and Afghanistan have unusually low female life expectancy for the other group.  
+- Japan has high female life expectancy, and Turkey has low life expectancy compared to the other members of the oecd.  
+- The variation of female life expectancy in oecd is smallest, but in africa is largest.
+
+**Tips on reading boxplots:**  
+
+- The thick middle line indicates the median value.
+- The box extends to the 25th and 75th percentiles.  The distance between the quartiles is known as the interquartile range (IQR).
+- The whiskers generally extend to the most extreme values that are within 1.5 IQRs from the quartiles.
+- Values outside the whiskers are outliers and are indicated by a dot or star.
+
+## How do we include factor variables as regressors?
+
+**Dummy** or **indicator variables** are used to include categorical predictors in a regression model.
+
+- A dummy variable $U_j$ for factor level $j$ is 1 if an observation has level $j$, but $0$ otherwise.
+- Note that -1 and 1, or 1 and 2, are sometimes used, but this is less common and more difficult to interpret.
+- Assignment labels are mostly arbitrary and do not affect the results.
+
+Since group has $d=3$ levels, the $j^{\mbox{th}}$ dummy variable $U_j$ for the factor $j=1,2, \ldots,d$ has $i^{\mbox{th}}$ value $u_{ij}$, for $i=1,2, \ldots,n$ given by 
+
+$$u_{ij} = \left\{ \begin{array}{ll} 1 & \mbox{if } \mbox{group}_i=j^{\mbox{th}} \mbox{ category of group} \\
+0 & \mbox{otherwise} \end{array} \right.$$
+
+For the **group** variable, we set up three dummy variables
+
+- $U_1$ (is country OECD?), 
+- $U_2$ (is country Other?), and 
+- $U_3$ (is country in Africa?).
+
+### 3. Explain what the code below is doing? What happens if we remove the $+ 0$ from the commands?
+
+```{r}
+# with functions means: using this data frame, 
+# perform the following actions ...
+U1 <- with(UN11, (group == levels(group)[1]) + 0) 
+U2 <- with(UN11, (group == levels(group)[2]) + 0)
+U3 <- with(UN11, (group == levels(group)[3]) + 0)
+head(data.frame(group = UN11$group, U1, U2, U3), 10)
+```
+
+Using the UN11 data frame:
+
+- If an observation is in the first level, then it returns TRUE which when added to 0 gives 1.
+- If an observation is not in the first level, then it returns FALSE which when added to 0 gives 0.
+- Similar for the other groups.
+
+
+- Using the UN11 data frame, if an observation is the first level, then it returns TRUE which when added to 0 gives 1.
+
+
+## The one-factor model
+
+Regression coefficients for factor variables in a one-way model are often called **effects**.
+
+### 4. Let $Y$ denote the response variable `lifeExpF`. What would be problematic about using the linear model proposed below?
+
+$$Y =  \beta_0 + \beta_1 U_1 + \beta_2 U_2 + \beta_3 U_3 + \epsilon$$
+Since $U_1 + U_2 + U_3 =1$, the first column (intercept) of the model matrix is linearly dependent with the last three columns. Since the model matrix is not full rank, we would not be able to invert $X^TX$ and solve for the regression coefficients $\boldsymbol{\beta}$.
+
+We only need $d-1$ dummy variables to represent $d$ levels because the last level represented when all the other dummy variables were 0.  
+
+- Any of the $d$ dummy variables could be excluded, though generally it is the first or last level.
+- R drops the first level by default.
+- The level dropped is known as the **reference** or **baseline level**.
+- In R, this method for creating the dummy variables is known as the **treatment contrast**.
+
+
+Other possibilities for avoiding linear dependence are:  
+
+- Drop $\beta_0$ from the model.
+- Assume $\sum_{i=1}^{d-1} \beta_i = 0$.  
+
+  - This is known as a **sum contrast** and does NOT use dummy variables.
+  - Interpretation is generally more difficult.
+
+# WE STOPPED HERE ON TUESDAY!!
+

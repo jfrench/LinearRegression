@@ -1,0 +1,311 @@
+---
+title: "Inference Part 1"
+date: "`r format(Sys.time(), '%Y-%m-%d')`"
+output:
+  pdf_document: default
+  html_document:
+    df_print: paged
+---
+
+# Galapogos Example: Testing All Regressors
+
+```{r}
+data(gala, package = "faraway")
+head(gala)
+summary(gala)
+```
+
+The data set `gala` contains 30 observations (one for each island in the Galapagos). There are 6 variables in the dataset. The relationship between the number of plant species and several geographic variables is of interest.
+
+- **Species:** The number of plant species found on the island.
+- **Area:** The area of the island ($\mbox{km}^2$).
+- **Elevation:** The highest elevation of the island (m).
+- **Nearest:** The distance from the nearest island (km).
+- **Scruz:** The distance from Santa Cruz Island (km).
+- **Adjacent:** The area of the adjacent island ($\mbox{km}^2$).
+
+```{r}
+lmod <- lm(Species ~ Area + Elevation + Nearest +
+            Scruz + Adjacent, data = gala)
+summary(lmod)
+```
+
+## Question 1 
+
+Write out a formula for the fitted model based on the output above.
+
+**Complete the formula below.**
+
+$$\widehat{\mbox{Species}} = ?? + ?? \mbox{Area} + ?? \mbox{Elevation} + ?? \mbox{Nearest} + ?? \mbox{Scruz} + ?? \mbox{Adjacent}$$
+
+
+## Question 2
+
+Which regressor has the strongest association with the number species on the island?
+
+**Enter solution here.**
+
+## Setting Up The Hypotheses
+
+How can we decide whether all or some of the regressor variables should be included in our model?
+
+
+- Let $\Omega$ denote the proposed full model.
+- Let $\omega$ denote a simpler model that uses a subset of all regressors.
+
+## Question 3
+
+What do you think would be suitable hypothesis to test whether $\Omega$ is a better model than $\omega$?
+
+**Enter solution here.**
+
+
+## Measuring Significance
+
+- If the models have a similar fit, then we prefer $\omega$ since it is simpler.
+- If the model $\Omega$  is a much better model than $\omega$, then we prefer $\Omega$.
+- If $\mbox{RSS}_{\omega} - \mbox{RSS}_{\Omega}$ is large, then $\Omega$ has a superior fit.
+- How large of a difference is large enough?
+
+$$\mbox{test stat} = \frac{\mbox{fit of observed model} - \mbox{fit of null model}}{\mbox{variability due to sampling}} = \frac{\mbox{RSS}_{\omega} - \mbox{RSS}_{\Omega}}{RSS_{\Omega}}.$$
+
+
+## General $F$ Test for Comparing Two Nested Regression Models:
+
+**H~0~: Model $\omega$ is an adequate model.**
+
+**H~a~:  Model $\Omega$ is better.**
+
+Suppose that model $\Omega$ has $p$ estimated regression coefficients and model $\omega$ has $q$ estimated regression coefficients. Then we use rescaling to get an
+**F-statistic** which has **F-distribution** under the null hypothesis given by:
+
+$$F =  \frac{(\mbox{RSS}_{\omega} - \mbox{RSS}_{\Omega})/(df_{\omega}-df_{\Omega})}{RSS_{\Omega}/df_{\Omega}} =  \frac{(\mbox{RSS}_{\omega} - \mbox{RSS}_{\Omega})/(df_{\omega}-df_{\Omega})}{\hat{\sigma}_{\Omega}^2} \sim F_{p-q,n-p} ,$$
+where $df_{\omega} = n -q$,  $df_{\Omega} = n -p$, and $\hat{\sigma}_{\Omega}^2 = RSS_{\Omega}/df_{\Omega}$.
+
+
+Are any of the predictors useful? We compare the full model $\Omega$ given by $\mathbf{y} = \mathbf{X} \boldsymbol{\beta} + \boldsymbol{\epsilon}$ to the null model $\omega$ which is the constant mean model $y = \mu + \epsilon$ which we estimate with $\hat{y} = \bar{y}$.
+
+
+- Set up the hypotheses:
+
+  + $H_0$: The null model $\omega$ is adequate.  $\beta_1 = \beta_2 = \ldots = \beta_{p-1} = 0$.
+  + $H_a$: At least one of the regression coefficients is not zero.
+
+- Calculate the $F$-statistic setting $q=1$.
+
+$$F =  \frac{(\mbox{RSS}_{\omega} - \mbox{RSS}_{\Omega})/(df_{\omega}-df_{\Omega})}{RSS_{\Omega}/df_{\Omega}} =  \frac{(\mbox{TSS} - \mbox{RSS})/(p-1)}{RSS/(n-p)} = \frac{\mbox{SS}_{\rm reg}/(p-1)}{RSS/(n-p)}.$$
+
+- Calculate the $p$-value using $F_{p-q,n-p}$ where $\mbox{df}_1 = p-q$ is the number of additional regressors in $\Omega$ and $\mbox{df}_2=n-p=\mbox{df}_{\Omega}$ (setting $q=1$). 
+
+
+The information above is often presented in an **analysis of variation (ANOVA) table** which is convenient for summarizing and organizing the various ingredients in the $F$-statistic. Below is a typical ANOVA table when $q=1$.
+
+Source | Deg. of Freedom | Sum of Squares | Mean Square | F 
+------|------------------|----------------|-------------|---
+Regression | $p-1$ | $\mbox{SS}_{\rm reg}$ | $\mbox{SS}_{\rm reg}/(p-1)$ | $F$ 
+Residual | $n-p$ | RSS | $\mbox{RSS}/(n-p)$ 
+Total | $n-1$ | TSS | | 
+
+- **Source**: The source of the variation in the data.
+- **Regression**: The variability due to the variable of interest (which is `Area` in this example). Sometimes, the variable is a factor and this row is labeled **Treatment** or **Between**. 
+- **Residuals**: The unexplained random error (of the full model $\Omega$). Sometimes when the variable of interest is a factor, the row heading is labeled as **Within** to make it clear that the row concerns the variation within the groups.
+- **Total**: The total variation in the data from the null (constant mean) model $\omega$.
+
+
+### Comparing with Fit of Null Model
+
+```{r}
+nullmod <- lm(Species ~ 1, data = gala) 
+anova(nullmod, lmod)
+```
+
+## Question 4 
+
+What is the first line of code above doing?
+
+**Enter solution here.**
+
+
+## Question 5
+
+Interpret the output from the `anova` function.
+
+**Enter solution here.**
+
+
+## Question 6
+
+Arrange the output of the anova function above into an ANOVA table such as the one shown earlier.
+
+**Replace each ?? with an appropriate value based on output above.**
+
+
+Source | Deg. of Freedom | Sum of Squares | Mean Square | F 
+------|------------------|----------------|-------------|---
+Variability due to `Area` | ?? | ?? | ?? | ?? 
+Error of $\Omega$ | ?? | ?? | ?? 
+Error of $\omega$ | ?? | ?? | | 
+
+
+## Question 7 
+
+Compare these calculations with the `summary` output from earlier.
+
+**Enter solution here.**
+
+### Verifying the Output Again
+
+```{r}
+# Compute the sum of squares
+(rss0 <- deviance(nullmod)) # RSS of null (TSS)
+(rss <- deviance(lmod)) # RSS of proposed model
+
+# Compute the degrees of freedom
+(df0 <- df.residual(nullmod)) # df of null model
+(df <- df.residual(lmod)) #  df of proposed model
+
+# Compute the F-statistic
+(f <- ((rss0 - rss)/(df0 - df))/(rss/df)) # F-stat
+
+# Compute the P-value with pf
+# pf(q, df1, df2) computes area to left of q
+# This is a right-tail test (so 1-pf)
+1 - pf(f, df1 = df0 - df, df2 = df) # P-value
+```
+
+### Compare with Summary of `lm`
+
+```{r}
+summary(lmod)
+```
+
+
+### Visualizing the F-dist
+
+```{r}
+library(dplyr)
+library(ggplot2)
+library(tidyr)
+
+data.frame(f = 0:1000 / 100) %>% 
+           mutate(df_25_26 = df(x = f, df1 = 25, df2 = 26),
+                  df_05_26 = df(x = f, df1 = 5, df2 = 26),
+                  df_05_10 = df(x = f, df1 = 5, df2 = 10)) %>%
+#                  df_05_10 = df(x = f, df1 = 5, df2 = 10)) %>%
+  gather(key = "df", value = "density", -f) %>%
+
+  ggplot() +
+  geom_line(aes(x = f, y = density, color = df, linetype=df)) +
+  labs(title = "F at Various Degrees of Freedom",
+       x = "F",
+       y = "Density") + 
+  xlim(0, 5) + 
+  theme_bw()
+```
+
+- If $\mbox{df}_1 = p-1$ is constant and we increase $\mbox{df}_2 = \mbox{df}_{\Omega} = n-p$, the center hump is centered around the same $F$ value, but there is more area in the hump and less in the right tail.
+  - Same number of predictors but more observations has less variability!
+
+- If $\mbox{df}_2 = n-p$ is constant and we increase $\mbox{df}_1 = \mbox{df}_{\Omega} = p-1$, the center hump shifts to the right and there is more area concentrated near the peak and less in the tail to the right.
+
+
+## Interpreting the Results
+
+## Question 8 
+
+You perform a hypothesis test to test the following claims:
+
+H~0~: The null model $\omega$ is adequate.  $\beta_1 = \beta_2 = \ldots = \beta_{p-1} = 0$.
+
+H~a~: At least one of the regression coefficients is not zero.
+
+In the Galapagos example, the $F$-statistic is $15.699$ and the $p$-value is given as $6.838e-07\ast\ast\ast$
+
+a. Interpret the meaning of the $p$-value. 
+
+**Enter solution here.**
+
+b.  If you fail to reject $H_0$, does this mean there is no relation between the regressors and the response?
+
+**Enter solution here.**
+
+c. If you reject $H_0$, does this mean you have found the best model for $y$? 
+
+**Enter solution here.**
+
+
+# Galapogos Example: Testing Just the Area Regressor
+
+To test whether a single regressor (regressor j) can be dropped from the model, we choose between $H_0:\beta_j = 0$ and $H_a: \beta_j \ne 0$.
+
+We have two options in this case:
+
+- Use the previous approach, letting the reduced model be the one without that regressor.
+- Use a $t$-statistic approach.
+
+
+## Question 9 
+
+Repeat the previous process to test whether the regressor `Area` is significant (assuming all others are in the model).
+
+a. State the hypotheses.
+
+
+b. Compute the $F$-statistic and $p$-value.
+
+
+c. Conclusion in this context.
+
+
+### Using a t-statistic
+
+An alternative approach is to use a $t$-statistic for testing the hypotheses:
+
+$$ t_i = \frac{\widehat{\beta}_i-0}{\mbox{se}(\widehat{\beta}_i)}= \frac{\widehat{\beta}_i}{\mbox{se}(\widehat{\beta}_i)}$$
+using a $t$-distribution with $\mbox{df}_{\Omega}=n-p$ degrees of freedom.
+
+```{r}
+# calculation of t-stat
+beta.area <- summary(lmod)$coeff[2,1]
+se.area <- summary(lmod)$coeff[2,2]
+(t <- beta.area/se.area)
+
+# verifying p-value
+2*pt(t, df.residual(lmod))
+
+# matching F-stat
+t^2
+```
+
+## Question 10 
+
+What is the difference between the test being run in the code below and the previous test? Does the test below lead to the same conclusion?
+
+**Enter solution here.**
+
+
+### Be Specific When Stating Your Hypotheses.
+
+```{r}
+# compare results to test of beta_Area = 0 when no other predictors in model
+summary(lm(Species ~ Area, gala))
+```
+
+
+# Testing a Pair of Regressors
+
+## Question 11
+
+Test whether the `Area` and `Adjacent` regressor variables should be simultaneously dropped from the model that already includes `Elevation`, `Nearest`, and `Scruz` in the model.  Make sure to specify the regressors that are the model when stating H~0~ and H~a~.
+
+a. State the hypotheses. 
+
+**Enter solution here.**
+
+b. Compute the $F$-statistic and $p$-value.
+
+**Enter solution here.**
+
+c. Conclusion in this context.
+
+**Enter solution here.**

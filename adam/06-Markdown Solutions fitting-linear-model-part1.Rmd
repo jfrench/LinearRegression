@@ -1,0 +1,126 @@
+---
+title: "Fitting a Linear Model Part 1"
+date: "`r format(Sys.time(), '%Y-%m-%d')`"
+output:
+  pdf_document: default
+  html_document:
+    df_print: paged
+---
+
+```{r, setup, include=FALSE}
+# This option means all R code is NOT evaluated
+# Delete or comment out if you want to run 
+# R commands when knitting
+knitr::opts_chunk$set(eval = FALSE)
+```
+
+# Penguins simple linear regression example
+
+We will use the `penguins` data set in the **palmerpenguins** package [@R-palmerpenguins] to illustrate a very basic simple linear regression analysis. The `penguins` data set was collected and made available by Dr. Kristen Gorman and the Palmer Station, Antarctica LTER, a member of the Long Term Ecological Research Network.
+
+1.  Load the penguins data into R and answer the following questions.
+
+```{r}
+#install.packages("palmerpenguins")
+library(palmerpenguins)
+```
+
+
+a.  How many observations are in the data?
+b.  How many variables? Which variables are categorical and which are numeric?
+c.  Do you think the association between bill length of body mass will be positive or negative? Explain why.
+d.  Create a scatter plot of where bill length is the response variable and body mass is the predictor.
+e.  Do a summary on penguins, and determine whether the data needs to be cleaned.
+
+```{r}
+?penguins
+nrow(penguins)
+ncol(penguins)
+```
+
+## Creating a scatter plot
+
+```{r}
+plot(bill_length_mm ~ body_mass_g, data = penguins)
+```
+
+## Summarizing the Data
+
+We first perform a single linear regression analysis manually using the equations previously provided by regressing `bill_length_mm` on `body_mass_g`.
+
+Using the `summary` function on the `penguins` data frame, we see that both `bill_length_mm` and `body_mass_g` have `NA` values.
+
+```{r}
+summary(penguins)
+```
+
+## Cleaning the Data
+
+2.  Explain what the code block will do.
+
+```{r}
+penguins_clean <- na.omit(penguins[,c("bill_length_mm", "body_mass_g")])
+```
+
+## Loading Cleaned Data
+
+We extract the `bill_length_mm` variable from the `penguins` data frame and assign it the name `y` since it will be the response variable. We extract the `body_mass_g` variable from the `penguins` data frame and assign it the name `y` since it will be the predictor variable. We also determine the number of observations and assign that value the name `n`.
+
+```{r}
+# extract response and predictor from penguins_clean
+y <- penguins_clean$bill_length_mm
+x <- penguins_clean$body_mass_g
+# determine number of observations
+n <- length(y)
+```
+
+## Estimating the regression coefficents
+
+We now compute $\hat{\beta}_1$ and $\hat{\beta}_0$. Note that placing `()` around the assignment operations will both perform the assign and print the results.
+
+```{r}
+# compute OLS estimates of beta1 and beta0
+(b1 <- (sum(x * y) - sum(x) * sum(y) / n)/(sum(x^2) - sum(x)^2/n))
+(b0 <- mean(y) - b1 * mean(x))        
+```
+
+3.  After running the code above, what are the estimated values for $\widehat{\beta}_0$ and $\widehat{\beta}_1$?
+4.  Interpret the practical meaning of these values in terms of penguins.
+
+- $\widehat{\beta}_0$ is the vertical intercept of the line of best fit. Practically speaking, it is the predicted bill length of a penguin that has a body mass of 0 grams. In this context, $\widehat{\beta}_0$ does not make practical sense since no penguin has a body mass of 0 grams.
+
+- $\widehat{\beta}_1$ is the slope of the line of best fit. For each additional 1 gram of body mass, the bill length is predicted to increase by 0.00405 mm.
+
+## Plotting the Line of Best Fit
+
+We can use the `abline` function to overlay the fitted model on the observed data. Note that in simple linear regression, $\hat{\beta}_1$ corresponds to the slope of the fitted line and $\hat{\beta}_0$ will be the intercept.
+
+```{r}
+plot(bill_length_mm ~ body_mass_g, data = penguins,
+     ylab = "bill length (mm)", xlab = "body mass (g)",
+     main = "Penguin size measurements")
+# a is the intercept and b is the slope
+abline(a = b0, b = b1, col = "red")
+```
+
+## Computing the RSS
+
+We can also compute the residuals, $\hat{\epsilon}_1,\ldots,\hat{\epsilon}_n$, the fitted values $\hat{y}_1,\ldots,\hat{y}_n$, and the associated RSS, $RSS=\sum_{i=1}^n \hat{\epsilon}_i^2$.
+
+5. Replace each of the ?? in the R code below to compute the values for $\widehat{y}$,$\widehat{\epsilon}$ and the RSS.
+
+```{r}
+yhat <- b0 + b1 * x # compute fitted values
+ehat <- y-yhat # compute residuals
+(rss <- sum(ehat^2)) # sum of the squared residuals
+(sigmasqhat <- rss/(n-2)) # estimated error variance
+```
+
+## Comparing with `lm()`
+
+```{r}
+(penguin.lm <- lm(penguins_clean)) # calc estimators for b0 and b1
+penguin.resid <- resid(penguin.lm) # calc errors
+sum(penguin.resid^2) # calc RSS
+var(penguin.resid) # compute var of errors
+```
