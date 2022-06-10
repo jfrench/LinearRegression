@@ -83,20 +83,20 @@ cv_loo_slow = trainControl(method = "cv", number = 50) # loo crossvalidation tra
 # train the full model
 f1 = Life.Exp ~ . # formula for full model
 # formula for reduced model with p = 5
-f2 = Life.Exp ~ Population + Murder + HS.Grad + Frost 
+f2 = Life.Exp ~ Population + Murder + HS.Grad + Frost
 # formula for reduced model 2 with p = 4
-f3 = Life.Exp ~ Murder + HS.Grad + Frost 
+f3 = Life.Exp ~ Murder + HS.Grad + Frost
 
 # the train function needs:
 # formula - to formula for the model you want to fit,
 # data - the data frame where the variables are located
 # trControl - the training/testing data sets created using the trainControl function
 # method - the type of model you want to fit.  There are a lot of choices.  We simply need "lm"
-modela = train(f1, data = statedata, trControl = cv_10fold, 
+modela = train(f1, data = statedata, trControl = cv_10fold,
                method = "lm")
-modelb = train(f2, data = statedata, trControl = cv_10fold, 
+modelb = train(f2, data = statedata, trControl = cv_10fold,
                method = "lm")
-modelc = train(f3, data = statedata, trControl = cv_10fold, 
+modelc = train(f3, data = statedata, trControl = cv_10fold,
                method = "lm")
 
 # compare mse (rmse) for the two models using 10-fold cv
@@ -104,11 +104,11 @@ print(modela) # full, 10-fold
 print(modelb) # reduced, 10-fold
 print(modelc) # reduced 2, 10-fold
 
-modeld = train(f1, data = statedata, trControl = cv_loo, 
+modeld = train(f1, data = statedata, trControl = cv_loo,
                method = "lm")
-modele = train(f2, data = statedata, trControl = cv_loo, 
+modele = train(f2, data = statedata, trControl = cv_loo,
                method = "lm")
-modelf = train(f3, data = statedata, trControl = cv_loo, 
+modelf = train(f3, data = statedata, trControl = cv_loo,
                method = "lm")
 # compare mse (rmse) for the two models using loo cv
 print(modeld) # full, loo
@@ -116,7 +116,7 @@ print(modele) # reduced, loo
 print(modelf) # reduced 2, loo
 
 # slow loo cross-validation
-modelg = train(f1, data = statedata, trControl = cv_loo_slow, 
+modelg = train(f1, data = statedata, trControl = cv_loo_slow,
                method = "lm")
 
 # test performance of the two loo methods
@@ -134,7 +134,7 @@ library(car)
 influencePlot(lmod)
 
 # excluding Alaska
-b = regsubsets(Life.Exp ~., data = statedata, 
+b = regsubsets(Life.Exp ~., data = statedata,
                subset = (state.abb != "AK"))
 rs = summary(b)
 rs$which[which.max(rs$adjr), ]
@@ -142,7 +142,7 @@ rs$which[which.max(rs$adjr), ]
 
 # plot of scaled predictors
 par(mfrow = c(1, 1))
-stripchart(data.frame(scale(statedata)), vertical = TRUE, 
+stripchart(data.frame(scale(statedata)), vertical = TRUE,
            method = "jitter")
 
 # model selection for transformed data
@@ -151,5 +151,3 @@ b <- regsubsets(Life.Exp ~ log(Population) + Income + Illiteracy +
 rs <- summary(b)
 rs$which[which.max(rs$adjr),]
 rs$adjr[which.max(rs$adjr)]
-
-
