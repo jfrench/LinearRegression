@@ -1,0 +1,336 @@
+---
+title: "Solutions Model Structure"
+date: "`r format(Sys.time(), '%Y-%m-%d')`"
+output:
+  pdf_document
+---
+
+```{r, include = FALSE}
+library(faraway)
+library(car)
+```
+
+# Introduction
+
+Estimation and inference for a regression model depend on several assumptions. These assumptions must be checked using **regression diagnostics**.   
+
+Diagnostics techniques may be:
+	
+- Graphical: More flexible, but require interpretation
+- Numerical: Narrower in scope, but easier to interpret
+
+There are three main categories of linear regression assumptions:
+
+1. **Model**:  The structural (mean) part of the model is correct, i.e., $E(\mathbf{y})=X \boldsymbol\beta$.
+2. **Error**: $\epsilon_1, \epsilon_2, \ldots , \epsilon_n \overset{\mbox{i.i.d.}}{\sim} N(0, \sigma^2)$ 
+3. **Unusual observations**: All observations are equally reliable and have approximately equal role in determining the regression results and in influencing conclusions.
+
+
+Model building is an iterative process! Regression diagnostics often suggest improvements, causing you to fit another model, do more diagnostics, etc.  
+
+
+We will now focus on checking model structure, which is the most important assumption that should be checked prior to checking error assumptions or identifying unusual observations.
+
+# Residual Plots
+
+If the linear model is correctly specified, then $\mbox{cor}(\widehat{\boldsymbol\epsilon}, \widehat{\mathbf{y}})$ and  $\mbox{cor}(\widehat{\boldsymbol\epsilon},\mathbf{X}_j)=0$.
+
+**Patterns in the plots** of  $\widehat{\boldsymbol\epsilon}$ against fitted values $\widehat{\mathbf{y}}$ and  $\widehat{\boldsymbol\epsilon}$ against $\mathbf{X}_j$ can occur only if **some of the model assumptions are violated**.
+
+Residual plots should be "null plots", with no systematic features.
+
+- The conditional mean of the residuals should not change with the fitted values or the regressors.
+- There shouldn’t be any systematic curves or patterns.
+- The residuals should be symmetrically scattered around a horizontal line at  $\widehat{\epsilon}=0$.
+
+## Example
+
+We examine the relationship between occupational "prestige" and various predictors among Canadians.  
+
+The data include the variables:
+
+- `education`: Average education of occupational incumbents, years, in 1971.
+- `income`: Average income of incumbents, dollars, in 1971.
+- `women`: Percentage of incumbents who are women.
+- `prestige`: Pineo-Porter prestige score for occupation, from a social survey conducted in the mid-1960s.
+- `census`: Canadian Census occupational code.
+- `type`: Type of occupation. A factor variable with levels (note: out of order): bc, Blue Collar; prof, Professional, Managerial, and Technical; wc, White Collar.
+
+```{r}
+library(car)
+data(Prestige, package = "carData") # load data
+lmod <- lm(prestige ~ education + income + type, data = Prestige) # fit model
+residualPlots(lmod, tests = FALSE) # examine residual plots
+```
+
+## Question 1: Comment on any patterns you observe in the residual plots above.
+
+- The education variable shows no systematic patterns.
+- The income variable has a somewhat nonlinear pattern.
+- The type variable shows no clear systematic pattern (prof has a median slightly above 0, but that can certainly happen due to sampling variation).
+- There is clear nonlinearity in the plot of the residuals versus fitted values
+
+
+# Tests to Determine Nonlinearity
+
+## Lack of Fit Test
+
+A **lack-of-fit** test can be used to examine a plot of the residuals versus the regressors. This is simply a test of whether the squared regressor is significant when added to the original fitted model.
+
+```{r}
+# Lack of fit test for income
+lmod.lofi <- lm(prestige ~ education + income + I(income^2) + type, data = Prestige)
+summary(lmod.lofi)
+```
+
+## Question 2: Does the output above support the claim that the income variable has a somewhat nonlinear pattern? Explain why or why not.
+
+
+We can see that the test statistic and $p$-value for `I(income^2)` are $-2.89$ and $0.0049$. This implies the coefficient for `I(income^2)` is significant, and thus we have confirmed that the income variable has a somewhat nonlinear pattern.
+
+## Tukey’s Test for Nonadditivity
+
+**Tukey’s test for nonadditivity** can be used to examine the plot of the residuals versus fitted values.
+
+- This is simply a test of whether the square of $\widehat{\mathbf{y}}$  is significant when added to the original fitted model.
+
+```{r}
+# mimic tukey's test
+yhatall <- predict(lmod, newdata = Prestige)
+lmod.tukeytest <- lm(prestige ~ education + income + type + I(yhatall^2), data = Prestige)
+summary(lmod.tukeytest)
+```
+
+- If either of these tests are significant, it suggests there is unaccounted curvature in the data that is not captured by the fitted model.
+- The `residualPlots` function can be used to perform the associated tests.
+
+```{r}
+residualPlots(lmod, plot = FALSE)
+```
+
+## Question 3: Summarize the output above in practical terms.
+
+- The education variable shows no systematic patterns.
+- The income variable has a nonlinear pattern.
+- There is clear nonlinearity in the plot of the residuals versus fitted values.
+
+**Residual plots can detect nonlinearity, but they cannot be used to determine whether the nonlinearity is monotonic (think a log relationship) or non-monotonic (think a quadratic relationship).**
+
+
+# Marginal Model Plot
+
+The **marginal model plot** compares the marginal relationship between the response and each regressor. This plot consists of:
+
+- The plot of $\mathbf{y}$ vs $\mathbf{X}_j$ for each quantitative, non-interactive regressor.
+- A nonparametric, smoothed line of $\widehat{\mathbf{y}}$ versus $\mathbf{X}_j$.  Call this the "model" line.
+- A nonparametric, smoothed line of $\mathbf{y}$ versus $\mathbf{X}_j$. Call this the "data" line.
+- Note that the `car` package uses the `loess` smoother (locally weighted scatterplot smoothing).
+- The `marginalModelPlots` function generates these graphs.
+
+```{r}
+marginalModelPlots(lmod) # examine marginal model plot
+```
+
+For a non-problematic fitted model:
+
+- The model and data lines should be similar.  
+- The lines should follow the pattern of the data.
+- For genuine, real-life, noisy data, it is possible neither line fits the data very well, but they should match any obvious structural patterns.
+- Caution: Not seeing a problem does NOT indicate we have a good model, only that there are no apparent problems
+
+
+## Question 4: Interpret the output of the marginal model plots above.
+
+- The marginal model plots do not provide evidence of a model problem for the `education` variable.
+- The discrepancies between the model and data lines near the edges of `income` are curious. 
+- The marginal model plot of  $\mathbf{y}$ against $\widehat{\mathbf{y}}$ shows slight evidence of an inappropriately modeled curve in the data.
+
+# Added Variable Plots
+
+**Added variable (av) plots** (or partial regression plots) help to isolate the impact of regressor $\mathbf{X}_j$ on the response $\mathbf{y}$, after accounting for the effect of the other regressors in the model. Marginal model plots display the marginal relationships between the response and regressors while ignoring the other regressors in the model.
+
+
+To construct an added variable plot:
+
+- Regress $\mathbf{y}$ on all regressors except $\mathbf{X}_j$, then get the residuals, $\widehat{\boldsymbol\delta}$.
+  - This represents the part of $\mathbf{y}$ not explained by the the other regressors.
+- Regress $\mathbf{X}_j$ on all regressors except $\mathbf{X}_j $, then get the residuals $\widehat{\boldsymbol\gamma}$.  
+  - This represents the part of $X_j$ not explained by the other regressors.
+- The added variable plot displays $\widehat{\boldsymbol\delta}$ versus $\widehat{\boldsymbol\gamma}$.
+
+```{r}
+# recreating the av plot for education manually
+# regress y on all regressors but education
+deltahat <- residuals(lm(prestige ~ income + type, data = Prestige)) 
+
+# regress education on all other regressors
+gammahat <- residuals(lm(education ~ income + type, data = Prestige))
+
+# plotting deltahat vs gammahat
+plot(deltahat ~ gammahat)
+
+# adding a loess smoother to the added variable plot
+loess_fit <- loess(deltahat ~ gammahat)
+
+# create a sequence of x-values to make predictions
+x_values <- seq(min(gammahat), max(gammahat), len = 100)
+# predict the response for the sequence of x-values
+y_values <- predict(loess_fit, newdata = data.frame(gammahat = x_values))
+# connect the points together
+lines(x_values, y_values, col = "blue")
+```
+
+## Creating Added Variable Plots 
+
+The `avPlots` function can be used to generate added variable plots for a fitted model.
+
+```{r}
+avPlots(lmod, id = FALSE)
+#avPlot(lmod, "education")
+```
+
+## Interpreting Added Variable Plots 
+
+```{r}
+# Here we use the women variable as a regressor and remove type
+lmod <- lm(prestige ~ education + income + women, data = Prestige)
+avPlots(lmod, id = FALSE)
+#avPlot(lmod, "education")
+```
+
+Added variable plots can identify a non-linear relationship between the response and a regressor.
+
+- If the data follow a clear non-linear pattern in comparison with the least-squares line, then there is a structural problem with our model.
+- A curve in the points and a dramatic change in the structure of the points would indicate a problem with the structural component of the model.
+- The added variable plot cannot suggest a transformation because the $x$-axis is not the original predictor.
+- The plot CAN indicate whether the transformation should be monotonic or non-monotonic.
+
+Some properties:
+
+- The OLS linear fit to the data in an added variable plot for regressor $\mathbf{X}_j$ will have slope $\widehat{\beta}_j$ and intercept 0.
+- Though scaled differently, we can still see which observations have high leverage with respect to each regressor.
+- For factor variables, an added variable plot is constructed for each contrast that is used to define the factor, so redefining the contrasts will change the added variable plots. 
+
+
+Added variable plots can be used to assess the strength of the relationship between the response and a regressor.
+
+- A flat band of points around the fitted line would indicate that there is no relationship or a weak relationship between the response and regressor $x_i$, after accounting for the other regressors.
+
+Added variable plots can be used to identify outliers and/or high leverage observations that seem to be influential in determining the estimated coefficient for $x_i$.
+
+- Does the OLS line follow the overall pattern of the data, or are there a few points that seem to be “pulling” the line toward them?
+
+## Question 5: Interpret the output of the added value plots above.
+
+- The education variable seems to have a linear correlation with prestige as the line follows the patter of the points in the scatterplot.
+- The education variable does not seem to have issues with high leverage points.
+- The income variable does have levarage points that are outliers and seem to be influencing the model.
+- There does not seem to be a very strong correlation between women and prestige.
+- There does not seem to be a big issue with unusual observations in regards to the women variable.
+
+
+# Component Plus Residual Plots
+
+The **component plus residual (cr) plot**  (a.k.a, **partial residual plot**) is a competitor to the added variable plot.
+
+The cr plot shows $\mathbf{X}_j \widehat{\boldsymbol\beta}_j + \widehat{\boldsymbol\epsilon}$ versus $\mathbf{X}_j$.
+
+- $\mathbf{X}_j \widehat{\boldsymbol\beta}_j$ is the "component" for $\mathbf{X}_j$
+- This is motivated by the relationship
+$$\mathbf{y} - \sum_{k \ne j} \mathbf{X}_k \widehat{\boldsymbol\beta}_k = \widehat{\mathbf{y}} + \widehat{\boldsymbol\epsilon} - \sum_{k \ne j} \mathbf{X}_k \widehat{\boldsymbol\beta}_k = \mathbf{X}_j \widehat{\boldsymbol\beta}_j+ \widehat{\boldsymbol\epsilon}.$$
+
+- The idea is to compare the impact of the $i$^th^ regressor on the fitted values.
+- cr plots are useful for checking nonlinear relationships in the variable being considered for inclusion in the model.
+- They can also suggest potential transformation of the data so that the relationship is linear.
+- If the scatter plot does not appear to be linear, then there is a nonlinear relationship between the regressor and the response (after accounting for the other regressors).
+- The slope of the line fit to the cr plot is $\widehat{\boldsymbol\beta}_i$.
+
+The `crPlots` function can be used to generate component plus residual plots for a fitted model.
+
+- The plot includes the OLS line for the data (with slope $\widehat{\beta}_i$) and well as a the line from a nonparametric smooth.
+- Ideally, the two lines would be similar and match the pattern of the data.
+- The nonparametric smooth makes it easier to see deficient fits.
+
+
+## Question 6: Do the cr plots provide evidence of clear nonlinear relationships for any of the variables?
+
+```{r}
+crPlots(lmod)
+```
+
+The component plus residual plot for income was very nonlinear whereas education and women look linear.
+
+
+- Note: if regressors are correlated, nonlinearity in one variable can “leak” into another.
+- Fox (2015) recommends transforming one variable at a time if remedial measures are taken.
+
+# Transformations
+
+If a relationship is nonlinear but monotone and simple, Mosteller and Tukey’s bulging rule can be used to guide the selection of linearizing transformations.
+
+```{r, echo = FALSE}
+setwd("~/Dropbox/CUDenver/Math4387/RCode/Model\ Structure")
+```
+
+![Mosteller and Tukeys bulging rule](tukey_bulge.png "Mosteller and Tukey’s bulging rule")
+
+- Note: In multiple regression, transforming the response will impact the relationship with all of the regressors, while transforming a single regressor will have less impact on the relationship between the response and the other regressors.
+
+## Question 7: Compare the graphic below with the type of "bulge" seen in your data; move along the "ladder of transformations" for your response or predictors to determine a helpful transformation.
+
+
+ Going back to our last fitted model, we noted that the component plus residual plot for income was very nonlinear. **The bulge suggests a log or square root transformation of income.**
+
+```{r}
+lmod.sqrt <- lm(prestige ~ education + sqrt(income) + women, data = Prestige)
+crPlots(lmod.sqrt)
+```
+
+
+```{r}
+lmod.log <- lm(prestige ~ education + log(income) + women, data = Prestige)
+crPlots(lmod.log)
+```
+
+## Question 8: Which transformation of income seems like a better fit?
+
+The log transformation of income is substantially better.
+
+## Polynomial Transformations
+
+Adding raw polynomials $(X,X^2,X^3, \ldots)$ to our model can be problematic.
+
+- They can induce instability in the model since they can become highly correlated.
+- It is generally recommended that one centers $X$ (i.e., subtract the mean) before generating the polynomials.
+- Use the `poly` function to generate orthogonal polynomials, which reduce the potential for model instability.
+- Orthogonal polynomials have the benefit that adding the higher order term doesn’t impact the estimated coefficients for the other polynomials!
+
+```{r}
+lmod.quad <- lm(prestige ~ education + log(income) + poly(women, 2), data = Prestige)
+crPlots(lmod.quad)
+```
+
+## Logistic Transforation
+
+When a predictor variable is a number between 0 and 1 (or a percentage between 0 and 100), it is not uncommon to observe a **logistic relationship** between the predictor and the response (e.g, in the cr plot).  
+
+In that case, one might transform that predictor using the `logit` function in the `car` package to help improve the model fit.
+
+```{r}
+# the logistic function
+x = seq(0.01, 0.99, len = 100)
+plot(x, logit(x), type = "l", xlab = "probability")
+```
+
+## Closing Comments on Transformations
+
+The transformation approaches presented here are simple, and only work for data with simple non-linearities.
+
+Other approaches (available in the car package) are the:
+
+- Box-Cox transformation for the response variable
+- Box-Tidwell transformation for the predictors.
+
+For complicated data, no simple transformation or basic linear regression may capture the relationship between the response and regressors.
+
+

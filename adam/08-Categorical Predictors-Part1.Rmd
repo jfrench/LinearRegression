@@ -1,0 +1,184 @@
+---
+title: "Categorical Predictors Part 1"
+date: "`r format(Sys.time(), '%Y-%m-%d')`"
+output:
+  pdf_document: default
+  html_document:
+    df_print: paged
+---
+
+
+```{r, setup, include=FALSE}
+# This option means all R code is NOT evaluated
+# Delete or comment out if you want to run 
+# R commands when knitting
+knitr::opts_chunk$set(eval = FALSE)
+```
+
+```{r, message = FALSE}
+# Here we load libraries used in this file
+# You may need to install if not already done so
+library(alr4) #datasets from Weisberg text
+```
+
+# Categorical Predictors
+
+Categorical predictors are often called factors.  
+
+- Factors can have two levels (e.g., survived or died) or
+- Multiple levels (single, married, divorced, widowed).
+
+# Exploring Data for One-Factor Models: Example with United Nations Dataset
+
+### 1. Load the `UN11` dataset below and read the help documentation to familiarize yourself with the data. How many observations are in the dataset? How many variables?
+
+```{r}
+data(UN11)
+?UN11
+```
+
+We'll be working with following variables.
+
+- **ppgdp**: the gross national product per person in U.S. dollars
+- **fertility**: Average number of children per birth parent
+- **lifeExpF**: Female life expectancy, years
+- **pctUrban**: A percentage of population living in urban areas
+- **group**: A factor with level **oecd** for countries that are members of the Organization for Economic Cooperation and Development, are located in **africa**, and **other** for all other countries.
+
+If the only predictor is a factor, then the regression model is called a **one-factor** or **one-way** design.
+
+```{r}
+levels(UN11$group)
+```
+
+## Exploratory Data Analysis
+
+### 2. Create side-by-side boxplots for the variable **lifeExpF** for each of the categories of the **group** variable and describe any interesting observations about the data.
+
+```{r}
+boxplot(??) 
+```
+
+
+## How do we include factor variables as regressors?
+
+**Dummy** or **indicator variables** are used to include categorical predictors in a regression model.
+
+- A dummy variable $U_j$ for factor level $j$ is 1 if an observation has level $j$, but $0$ otherwise.
+- Note that -1 and 1, or 1 and 2, are sometimes used, but this is less common and more difficult to interpret.
+- Assignment labels are mostly arbitrary and do not affect the results.
+
+Since group has $d=3$ levels, the $j^{\mbox{th}}$ dummy variable $U_j$ for the factor $j=1,2, \ldots,d$ has $i^{\mbox{th}}$ value $u_{ij}$, for $i=1,2, \ldots,n$ given by 
+
+$$u_{ij} = \left\{ \begin{array}{ll} 1 & \mbox{if } \mbox{group}_i=j^{\mbox{th}} \mbox{ category of group} \\
+0 & \mbox{otherwise} \end{array} \right.$$
+
+For the **group** variable, we set up three dummy variables
+
+- $U_1$ (is country OECD?), 
+- $U_2$ (is country Other?), and 
+- $U_3$ (is country in Africa?).
+
+### 3. Explain what the code below is doing? What happens if we remove the $+ 0$ from the commands?
+
+```{r}
+# with functions means: using this data frame, 
+# perform the following actions ...
+U1 <- with(UN11, (group == levels(group)[1]) + 0) 
+U2 <- with(UN11, (group == levels(group)[2]) + 0)
+U3 <- with(UN11, (group == levels(group)[3]) + 0)
+head(data.frame(group = UN11$group, U1, U2, U3), 10)
+```
+
+## The one-factor model
+
+Regression coefficients for factor variables in a one-way model are often called **effects**.
+
+### 4. Let $Y$ denote the response variable `lifeExpF`. What would be problematic about using the linear model proposed below?
+
+$$Y =  \beta_0 + \beta_1 U_1 + \beta_2 U_2 + \beta_3 U_3 + \epsilon$$
+
+We only need $d-1$ dummy variables to represent $d$ levels.
+
+- Any of the $d$ dummy variables could be excluded, though generally it is the first or last level.
+- R drops the first level by default.
+- The level dropped is known as the **reference** or **baseline level**.
+- In R, this method for creating the dummy variables is known as the **treatment contrast**.
+
+
+Other possibilities for avoiding linear dependence are: 
+
+- Drop $\beta_0$ from the model.
+- Assume $\sum_{i=1}^{d-1} \beta_i = 0$.  
+  - This is known as a **sum contrast** and does NOT use dummy variables.
+  - Interpretation is generally more difficult.
+
+### 5. Using a treatment contrast with the first level of group as the reference level (oecd), what would be our model?
+
+
+
+For the OECD group, since $U_2=U_3=0$, we have
+
+$$\mbox{E}(\mbox{lifeExpF } \vert \mbox{ group=oecd})= \beta_0 + \beta_2 0+ \beta_3 0= \beta_0$$.
+
+
+### 6. Find similar formulas for E(lifeExpF $\vert$ group=other) and E(lifeExpF $\vert$ group=africa).
+
+
+## Fitting a One-Factor Model with R
+
+R will fit a one-factor model if you: 
+
+- Add the necessary dummy variables manually to the `formula` argument of `lm`.
+- Include the factor variable in the formula of `lm` (dropping the dummy variable for the first level of the factor automatically).
+
+```{r}
+# First we add dummy variables to the dataframe
+UN11$U1 = U1
+UN11$U2 = U2
+UN11$U3 = U3
+```
+
+```{r}
+# fit overparameterized model
+lm(lifeExpF ~ U1 + U2 + U3, data = UN11)
+```
+
+```{r}
+# fit proper model
+lm(lifeExpF ~ U2 + U3, data = UN11)
+```
+
+```{r}
+# what R does by default
+lm(lifeExpF ~ group, data = UN11)
+```
+
+### 7. Compare the output from the previous three models and commment on the differences, similarlities of each.
+
+Using the second model above with dummy variables $U_2$ and $U_3$, we have the following:
+
+$\widehat{\mbox{E}} (\mbox{lifeExpF }\vert\mbox{ group = oecd}) = \widehat{\beta}_0 = 82.45$, 
+
+$\widehat{\mbox{E}} (\mbox{lifeExpF }\vert \mbox{ group = other}) = \widehat{\beta}_0 + \widehat{\beta}_2 = 75.33$
+
+$\widehat{\mbox{E}} (\mbox{lifeExpF }\vert \mbox{ group = africa})= \widehat{\beta}_0 + \widehat{\beta}_3 = 59.79$. 
+
+### 8. Interpret the practical meaning of the regression coefficents $\widehat{\beta}_0$,  $\widehat{\beta}_2$ and  $\widehat{\beta}_3$
+
+
+### 9. Explain what the code below does, and compare the output to your previous answers.
+
+```{r}
+tapply(UN11$lifeExpF, UN11$group, mean)
+```
+
+## Visualizing the Model: Group Effect Plot
+
+```{r}
+lmod <- lm(lifeExpF ~ group, data = UN11)
+
+# effects plot of one-way model
+plot(allEffects(lmod, default.levels=50), ylim=c(55, 85),
+     grid=TRUE, multiline=TRUE)
+```

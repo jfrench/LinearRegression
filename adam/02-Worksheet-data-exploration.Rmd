@@ -1,0 +1,349 @@
+---
+title: "MATH 4387/5387 Week 2: Data Exploration"
+date: "`r format(Sys.time(), '%Y-%m-%d')`"
+output:
+  pdf_document: default
+  html_document:
+    df_print: paged
+---
+
+# Data exploration
+
+Based on Chapter 1 of LMWR2, Chapter 1 of ALR4
+
+
+```{r, setup, include=FALSE}
+# This option means all R code is NOT evaluated
+# Delete or comment out if you want to run 
+# R commands when knitting
+knitr::opts_chunk$set(eval = FALSE)
+```
+
+## Data analysis process:
+
+1. Define a statistical question of interest.
+2. Collect relevant data.
+3. Analyze the data.
+4. Interpret your analysis.
+5. Make a decision.
+
+
+### Problem Formulation:
+
+* **Understand the physical background.** Statisticians often work in collaboration with others and need to understand something about the subject area.
+* **Understand the objective.** What are your goals? Make sure you know what the collaborator wants.
+* **Put the problem into statistical terms.** This is often the most challenging step and where irreparable errors are sometimes made.
+
+### Data collection:
+
+* How the data were collected has a crucial impact on what conclusions can be made. What sampling method? Observational study or randomized controlled experiment?
+* Is there nonresponse bias? The data you do not see may be just as important as the data you do see.
+* Are there missing values? If so, how (if at all) are these coded?
+* What are the variables in the data? What are their units of measurement? Quantitative or qualitative? How are they stored in the data? 
+* Beware of data entry errors and other corruption of the data.
+
+## Summaries of Data
+
+An initial exploration of the data should be performed prior to any formal analysis or modeling. Initial data analysis should consist of numerical summaries and appropriate plots.
+
+* Statistics can be used to numerically summarize aspects of the data such as:  mean, median, standard deviation (SD), maximum and minimum, correlation, other measures, as appropriate.
+
+* Plots can provide a useful visual summary of the data.
+  * **For one numerical variable:** boxplots, histograms, density plots, etc.
+  * **For one categorial variable:** bar charts.
+  * **For two numerical variables:** scatter plots.
+  * **For one numerical and one categorical variables:** parallel boxplots or density plots that distinguish between category level.
+  * **For two categorical variables:** panels of bar charts.
+  * **For three or more variables:** one or two variable plots with distinguishing colors or line types, interactive and dynamic graphics.
+
+
+Good graphics are essential in data analysis.
+
+* They help us to understand our data structure so that we can avoid mistakes.
+* They help us decide on a model.
+* They help communicate the results of our analysis.
+* Depending on the audience, graphics might be the most convincing part of your analysis.
+
+When summarizing the data, look for:
+
+* outliers
+* data-entry errors
+* skewness
+* unusual distributions
+* patterns or structure
+
+
+## Inspecting the Data
+
+```{r}
+# Have you already installed the faraway package?  
+#install.packages("faraway") # run this line if not.
+
+library(faraway) #loads all datasets
+#data(pima, package = "faraway") #loads just one dataset
+```
+
+### Understanding Your Data
+
+<font color="red">**Enter a command in the code block below to get help documentation on the `pima` dataset before doing some analysis.** *Note: The eval = FALSE option means this code block will be skipped when you knit and render the entire document to a HTML.*</font>
+
+```{r} 
+ # How can you get help?
+````
+
+
+```{r}
+str(pima) # structure
+head(pima) # first six rows
+tail(pima) # last six rows
+```
+
+### Numerically Summarize the Data
+
+The `summary` command is a useful way to numerically summarize a data frame.
+
+```{r}
+summary(pima)
+```
+
+<font color="red">**After looking at the output above, what potential issues do you see with the data?**</font>
+
+### Cleaning the Data
+
+<font color="red">**Explain what the R command below does? Then run it. What potential issues do you see?**</font>
+
+```{r}
+sort(pima$diastolic)[1:40]
+```
+
+
+<font color="red">**Replace each ?? in the R code below with the missing value indicator we use in R. Then interpret what each command is doing.**</font>
+
+```{r}
+pima$diastolic[pima$diastolic == 0]  <- NA
+pima$glucose[pima$glucose == 0] <- NA
+pima$triceps[pima$triceps == 0]  <- NA
+pima$insulin[pima$insulin == 0] <- NA
+pima$bmi[pima$bmi == 0] <- NA
+```
+
+<font color="red">**The `test` variable is a categorical variable, not numerical. Explain what the first line of code below is doing.**</font>
+
+
+```{r}
+ pima$test <- factor(pima$test)
+ summary(pima$test)
+```
+
+<font color="red">**Compare the output from the second line to the original summary we obtained for `test`.**</font>
+
+
+<font color="blue">We can provide more descriptive labels using the `levels` function.</font>
+
+We change the `0` and `1` levels to `negative` and `positive` to make the data more descriptive. A `summary` of the updates `test` variable shows why this is useful.
+
+```{r}
+levels(pima$test) <- c("negative", "positive")
+summary(pima$test)
+```
+
+## Visualizing data with **base** graphics
+
+### Histograms
+
+<font color="red">**The `hist` function can be used create a histogram of a numerical vector. Run the code below and describe the distribution of diastolic values.**</font>
+
+```{r}
+hist(pima$diastolic, xlab = "diastolic blood pressure", main = "")
+```
+
+<font color="red">**Add an additional option to the `hist` function so the histogram has 20 breaks.**</font>
+
+```{r}
+hist(pima$diastolic, ??
+     xlab = "diastolic blood pressure", main = "")
+```
+
+### Density plots
+
+Many people prefer the **density plot** over the histogram because the histogram is more sensitive to its options.
+
+```{r}
+plot(density(pima$diastolic, na.rm = TRUE), main = "",
+     type = "l", # "l" is line, "p" is point, and so on
+     col = "SeaGreen", #my personal favorite R color
+     lwd = 2 # set line width 
+     )
+```
+
+In the example above, we have to specify `na.rm = TRUE` so that the density is only computed using the non-missing values.
+
+### Index plots
+
+An index plot is a scatter plot of a `numeric` variable versus the index of each value (i.e., the position of the value in the  vector).
+
+* This is most useful for sorted vectors.
+
+```{r}
+plot(sort(pima$diastolic), ylab = "sorted diastolic bp")
+```
+
+<font color="red">**Give some interesting observations about the diastolic data based on the plot above.**</font>
+
+### Quantile-Quantile Plots
+
+A **Q-Q plot** is a graphical method for comparing two probability distributions by plotting their quantiles against each other. The commands below create a Normal Q-Q plot to help determine whether a normal distribution is a reasonable model.
+
+```{r}
+qqnorm(pima$diastolic)
+qqline(pima$diastolic)
+```
+
+### Bivariate scatter plots
+
+Bivariate scatter plots can be used to identify the relationship between two `numeric` variables.
+
+A **scatter plot** of diabetes vs diastolic blood pressure is shown below.
+
+```{r}
+plot(diabetes ~ diastolic, data = pima)
+```
+
+<font color="red">**Do you see any pattern in the data? Create another scatter plot to compare another pair of variables in the `pima` dataset.**</font>
+
+### Bivariate boxplots
+
+A parallel boxplot of `diabetes` score versus `test` result is shown below.
+
+```{r}
+plot(diabetes ~ test, data = pima)
+```
+
+<font color="red">**Do you see any pattern in the data? Create another side-by-side boxplot to compare another pair of variables in the `pima` dataset.**</font>
+
+### Multiple plots in one figure
+
+The `par` function can be used to construct multiple plots in one figure.
+
+* The `mfrow` argument can be used to specify the number of rows and columns of plots you need. 
+* As usual in arrays, first number is rows, then columns.
+
+```{r}
+par(mfrow = c(1, 2))
+plot(diabetes ~ diastolic, data = pima)
+plot(diabetes ~ test, data = pima)
+par(mfrow = c(1, 1)) # reset to a single plot
+```
+
+## Visualizing data with **ggplot2**
+
+The previous plots were created using R's **base** graphics system.
+
+* **base** graphics are fast and simple to produce while looking professional.
+
+A fancier alternative is to construct plots using the **ggplot2** package.
+
+In its simplest form, to construct a (useful) plot in **ggplot2**, you need to provide:
+
+* A `ggplot` object.
+  * This is usually the object that holds your data frame.
+  * The data frame is passed to `ggplot` via the `data` argument.
+* A geometry object.
+  * Roughly speaking, this is the *kind* of plot you want.
+  * e.g., `geom_hist` for a histogram, `geom_point` for a scatter plot, `geom_density` for a density plot.
+* An aesthetic mapping.
+  * Aesthetic mappings describe how variables in the data are mapped to visual properties of a geometry.
+  * This is where you specify which variable with be the `x` variable, the `y` variable, which variable will control color in the plots, etc.
+* See https://ggplot2.tidyverse.org for documentation.
+* Go to `Help -> Cheat Sheets -> Data Visualization with ggplot2`.
+
+### A **ggplot2** histogram
+
+```{r}
+library(ggplot2)
+ggpima <-  ggplot(pima)
+ggplot(pima) + geom_histogram(aes(x=diastolic))
+# ggplot(pima, aes(x = diastolic)) + geom_histogram()
+```
+
+* The object is the data ggplot which is loaded first with `ggplot2(pima)`
+* The geometry object is specified by `geom_histogram()`
+* The aesthetic mapping is plot diastolic blood pressure on the x-axis.
+
+<font color="red">**Use ggplot2 to create a density plot for diastolic blood pressure**</font>
+
+```{r}
+ggplot(pima) + geom_density(aes(x=diastolic))
+```
+
+<font color="red">**Use ggplot2 to create a scatter plot with diastolic blood pressure on the x axis and diabetes on the y axis.**</font>
+
+```{r}
+ggplot(pima)+geom_point(aes(x=diastolic, y=diabetes))
+```
+
+### Scaling **ggplot2** plots
+
+In general, *scaling* is the process by which **ggplot2** maps variables to unique values. When this is done for discrete variables, **ggplot2** will often scale the variable to distinct colors, symbols, or sizes, depending on the aesthetic mapped.
+
+In the example below, we map the `test` variable to the `shape` aesthetic, which is then scaled to different shapes for the different `test` levels.
+
+```{r}
+ggpima +
+  geom_point(aes(x = diastolic, y = diabetes, shape = test))
+```
+
+Alternatively, we can map the `test` variable to the `color` aesthetic, which creates a plot with different colors for each observation based on the `test` level.
+
+```{r}
+ggpima +
+  geom_point(aes(x = diastolic, y = diabetes, color = test))
+```
+
+We can even combine these two aesthetic mappings in a single plot to get different colors and symbols for each level of `test`.
+
+```{r}
+ggpima +
+  geom_point(aes(x = diastolic, y = diabetes, shape = test, color = test))
+```
+
+### Facetting in `ggplot2`
+
+Facetting creates separate panels (facets) of a data frame based on one or more facetting variables.
+
+Below, we facet the data by the `test` result.
+
+```{r}
+ggpima +
+  geom_point(aes(x = diastolic, y = diabetes)) +
+  facet_grid(~ pregnant)
+```
+
+### Summary of **ggplot2**
+
+To create a **ggplot2** plot:
+
+* Create a`ggplot` object using the `ggplot` function.
+  * Specify the data frame the data is contained in (e.g., the data frame is `pima`).
+* Specify the geometry for the plot (the kind of plot you want to produce)
+* Specify the aesthetics using `aes`.
+  * The aesthetic specifies what you see, such as position in the $x$ or $y$ direction or aspects such as shape or color.
+  * The aesthetic can be specified in the geometry, or if you have consistent aesthetics across multiple geometries, in the `ggplot` statement.
+
+The advantage of **ggplot2** is more apparent in producing complex plots involving more than two variables.
+
+  * **ggplot2** makes it easy to plot the data for each group with different colors, symbols, line types, etc.
+  * **ggplot2** will automatically provide a legend mapping the attributes to the different groups.
+  * **ggplot2** makes it easy to create separate panels with plots for the observations having a certain characteristic.
+
+## Summary of data exploration
+
+You should use both numerical and graphical summaries of data **prior** to modeling data.
+
+Data exploration helps us to:
+
+* Gain understanding about our data
+* Identify problems or unusual features of our data
+* Identify patterns in our data
+* Decide on a modeling approach for the data
+* etc.
