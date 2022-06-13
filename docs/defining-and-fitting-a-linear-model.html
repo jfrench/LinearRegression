@@ -4,34 +4,34 @@
 
   <meta charset="utf-8" />
   <meta http-equiv="X-UA-Compatible" content="IE=edge" />
-  <title>Chapter 5 Defining and fitting a linear model | Joshua French</title>
+  <title>Chapter 17 Defining and fitting a linear model | Joshua French</title>
   <meta name="description" content="A collection of R notebooks that progressively introduction how to fit and use linear models." />
   <meta name="generator" content="bookdown 0.25 and GitBook 2.6.7" />
 
-  <meta property="og:title" content="Chapter 5 Defining and fitting a linear model | Joshua French" />
+  <meta property="og:title" content="Chapter 17 Defining and fitting a linear model | Joshua French" />
   <meta property="og:type" content="book" />
   
   <meta property="og:description" content="A collection of R notebooks that progressively introduction how to fit and use linear models." />
   
 
   <meta name="twitter:card" content="summary" />
-  <meta name="twitter:title" content="Chapter 5 Defining and fitting a linear model | Joshua French" />
+  <meta name="twitter:title" content="Chapter 17 Defining and fitting a linear model | Joshua French" />
   
   <meta name="twitter:description" content="A collection of R notebooks that progressively introduction how to fit and use linear models." />
   
 
-<meta name="author" content="Chapter 5 Defining and fitting a linear model | Joshua French" />
+<meta name="author" content="Chapter 17 Defining and fitting a linear model | Joshua French" />
 
 
-<meta name="date" content="2022-06-10" />
+<meta name="date" content="2022-06-13" />
 
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <meta name="apple-mobile-web-app-capable" content="yes" />
   <meta name="apple-mobile-web-app-status-bar-style" content="black" />
   
   
-<link rel="prev" href="useful-matrix-facts.html"/>
-<link rel="next" href="linear-model-estimation.html"/>
+<link rel="prev" href="references.html"/>
+
 <script src="libs/jquery-3.6.0/jquery-3.6.0.min.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/fuse.js@6.4.6/dist/fuse.min.js"></script>
 <link href="libs/gitbook-2.6.7/css/style.css" rel="stylesheet" />
@@ -334,62 +334,192 @@ div.csl-indent {
 <li class="chapter" data-level="4.5" data-path="useful-matrix-facts.html"><a href="useful-matrix-facts.html#matrix-inverse"><i class="fa fa-check"></i><b>4.5</b> Matrix inverse<span></span></a></li>
 <li class="chapter" data-level="4.6" data-path="useful-matrix-facts.html"><a href="useful-matrix-facts.html#matrix-derivatives"><i class="fa fa-check"></i><b>4.6</b> Matrix derivatives<span></span></a></li>
 </ul></li>
-<li class="chapter" data-level="5" data-path="defining-and-fitting-a-linear-model.html"><a href="defining-and-fitting-a-linear-model.html"><i class="fa fa-check"></i><b>5</b> Defining and fitting a linear model<span></span></a>
+<li class="chapter" data-level="5" data-path="linear-model-estimation.html"><a href="linear-model-estimation.html"><i class="fa fa-check"></i><b>5</b> Linear model estimation<span></span></a>
 <ul>
-<li class="chapter" data-level="5.1" data-path="defining-and-fitting-a-linear-model.html"><a href="defining-and-fitting-a-linear-model.html#background-and-terminology"><i class="fa fa-check"></i><b>5.1</b> Background and terminology<span></span></a></li>
-<li class="chapter" data-level="5.2" data-path="defining-and-fitting-a-linear-model.html"><a href="defining-and-fitting-a-linear-model.html#goals-of-regression"><i class="fa fa-check"></i><b>5.2</b> Goals of regression<span></span></a></li>
-<li class="chapter" data-level="5.3" data-path="defining-and-fitting-a-linear-model.html"><a href="defining-and-fitting-a-linear-model.html#definition-of-a-linear-model"><i class="fa fa-check"></i><b>5.3</b> Definition of a linear model<span></span></a>
+<li class="chapter" data-level="5.1" data-path="linear-model-estimation.html"><a href="linear-model-estimation.html#a-simple-motivating-example"><i class="fa fa-check"></i><b>5.1</b> A simple motivating example<span></span></a></li>
+<li class="chapter" data-level="5.2" data-path="linear-model-estimation.html"><a href="linear-model-estimation.html#defining-a-linear-model"><i class="fa fa-check"></i><b>5.2</b> Defining a linear model<span></span></a>
 <ul>
-<li class="chapter" data-level="5.3.1" data-path="defining-and-fitting-a-linear-model.html"><a href="defining-and-fitting-a-linear-model.html#basic-construction-and-relationships"><i class="fa fa-check"></i><b>5.3.1</b> Basic construction and relationships<span></span></a></li>
-<li class="chapter" data-level="5.3.2" data-path="defining-and-fitting-a-linear-model.html"><a href="defining-and-fitting-a-linear-model.html#as-a-system-of-equations"><i class="fa fa-check"></i><b>5.3.2</b> As a system of equations<span></span></a></li>
-<li class="chapter" data-level="5.3.3" data-path="defining-and-fitting-a-linear-model.html"><a href="defining-and-fitting-a-linear-model.html#using-matrix-notation"><i class="fa fa-check"></i><b>5.3.3</b> Using matrix notation<span></span></a></li>
+<li class="chapter" data-level="5.2.1" data-path="linear-model-estimation.html"><a href="linear-model-estimation.html#ss-necessary-components"><i class="fa fa-check"></i><b>5.2.1</b> Necessary components and notation<span></span></a></li>
+<li class="chapter" data-level="5.2.2" data-path="linear-model-estimation.html"><a href="linear-model-estimation.html#standard-definition-of-linear-model"><i class="fa fa-check"></i><b>5.2.2</b> Standard definition of linear model<span></span></a></li>
 </ul></li>
-<li class="chapter" data-level="5.4" data-path="defining-and-fitting-a-linear-model.html"><a href="defining-and-fitting-a-linear-model.html#summarizing-the-components-of-a-linear-model"><i class="fa fa-check"></i><b>5.4</b> Summarizing the components of a linear model<span></span></a></li>
-<li class="chapter" data-level="5.5" data-path="defining-and-fitting-a-linear-model.html"><a href="defining-and-fitting-a-linear-model.html#types-of-regression-models"><i class="fa fa-check"></i><b>5.5</b> Types of regression models<span></span></a></li>
-<li class="chapter" data-level="5.6" data-path="defining-and-fitting-a-linear-model.html"><a href="defining-and-fitting-a-linear-model.html#standard-linear-model-assumptions-and-implications"><i class="fa fa-check"></i><b>5.6</b> Standard linear model assumptions and implications<span></span></a></li>
-<li class="chapter" data-level="5.7" data-path="defining-and-fitting-a-linear-model.html"><a href="defining-and-fitting-a-linear-model.html#mathematical-interpretation-of-coefficients"><i class="fa fa-check"></i><b>5.7</b> Mathematical interpretation of coefficients<span></span></a>
+<li class="chapter" data-level="5.3" data-path="linear-model-estimation.html"><a href="linear-model-estimation.html#estimation-of-the-simple-linear-regression-model"><i class="fa fa-check"></i><b>5.3</b> Estimation of the simple linear regression model<span></span></a>
 <ul>
-<li class="chapter" data-level="5.7.1" data-path="defining-and-fitting-a-linear-model.html"><a href="defining-and-fitting-a-linear-model.html#coefficient-interpretation-in-simple-linear-regression"><i class="fa fa-check"></i><b>5.7.1</b> Coefficient interpretation in simple linear regression<span></span></a></li>
-<li class="chapter" data-level="5.7.2" data-path="defining-and-fitting-a-linear-model.html"><a href="defining-and-fitting-a-linear-model.html#coefficient-interpretation-in-multiple-linear-regression"><i class="fa fa-check"></i><b>5.7.2</b> Coefficient interpretation in multiple linear regression<span></span></a></li>
+<li class="chapter" data-level="5.3.1" data-path="linear-model-estimation.html"><a href="linear-model-estimation.html#ss:fv-resid-rss"><i class="fa fa-check"></i><b>5.3.1</b> Fitted values, residuals, and RSS<span></span></a></li>
+<li class="chapter" data-level="5.3.2" data-path="linear-model-estimation.html"><a href="linear-model-estimation.html#ols-estimators-of-the-simple-linear-regression-parameters"><i class="fa fa-check"></i><b>5.3.2</b> OLS estimators of the simple linear regression parameters<span></span></a></li>
 </ul></li>
-<li class="chapter" data-level="5.8" data-path="defining-and-fitting-a-linear-model.html"><a href="defining-and-fitting-a-linear-model.html#exercises"><i class="fa fa-check"></i><b>5.8</b> Exercises<span></span></a></li>
-</ul></li>
-<li class="chapter" data-level="6" data-path="linear-model-estimation.html"><a href="linear-model-estimation.html"><i class="fa fa-check"></i><b>6</b> Linear model estimation<span></span></a>
+<li class="chapter" data-level="5.4" data-path="linear-model-estimation.html"><a href="linear-model-estimation.html#s:penguins-slr"><i class="fa fa-check"></i><b>5.4</b> Penguins simple linear regression example<span></span></a></li>
+<li class="chapter" data-level="5.5" data-path="linear-model-estimation.html"><a href="linear-model-estimation.html#estimation-of-the-multiple-linear-regression-coefficients"><i class="fa fa-check"></i><b>5.5</b> Estimation of the multiple linear regression coefficients)<span></span></a>
 <ul>
-<li class="chapter" data-level="6.1" data-path="linear-model-estimation.html"><a href="linear-model-estimation.html#a-simple-motivating-example"><i class="fa fa-check"></i><b>6.1</b> A simple motivating example<span></span></a></li>
-<li class="chapter" data-level="6.2" data-path="linear-model-estimation.html"><a href="linear-model-estimation.html#defining-a-linear-model"><i class="fa fa-check"></i><b>6.2</b> Defining a linear model<span></span></a>
-<ul>
-<li class="chapter" data-level="6.2.1" data-path="linear-model-estimation.html"><a href="linear-model-estimation.html#ss-necessary-components"><i class="fa fa-check"></i><b>6.2.1</b> Necessary components and notation<span></span></a></li>
-<li class="chapter" data-level="6.2.2" data-path="linear-model-estimation.html"><a href="linear-model-estimation.html#standard-definition-of-linear-model"><i class="fa fa-check"></i><b>6.2.2</b> Standard definition of linear model<span></span></a></li>
+<li class="chapter" data-level="5.5.1" data-path="linear-model-estimation.html"><a href="linear-model-estimation.html#using-matrix-notation-to-represent-a-linear-model"><i class="fa fa-check"></i><b>5.5.1</b> Using matrix notation to represent a linear model<span></span></a></li>
+<li class="chapter" data-level="5.5.2" data-path="linear-model-estimation.html"><a href="linear-model-estimation.html#ss:fv-resid-rss-mlr"><i class="fa fa-check"></i><b>5.5.2</b> Residuals, fitted values, and RSS for multiple linear regression<span></span></a></li>
+<li class="chapter" data-level="5.5.3" data-path="linear-model-estimation.html"><a href="linear-model-estimation.html#ols-estimator-of-the-linear-model-parameters"><i class="fa fa-check"></i><b>5.5.3</b> OLS estimator of the linear model parameters<span></span></a></li>
 </ul></li>
-<li class="chapter" data-level="6.3" data-path="linear-model-estimation.html"><a href="linear-model-estimation.html#estimation-of-the-simple-linear-regression-model"><i class="fa fa-check"></i><b>6.3</b> Estimation of the simple linear regression model<span></span></a>
+<li class="chapter" data-level="5.6" data-path="linear-model-estimation.html"><a href="linear-model-estimation.html#s:penguins-mlr"><i class="fa fa-check"></i><b>5.6</b> Penguins multiple linear regression example<span></span></a></li>
+<li class="chapter" data-level="5.7" data-path="linear-model-estimation.html"><a href="linear-model-estimation.html#categorical-predictors"><i class="fa fa-check"></i><b>5.7</b> Categorical predictors<span></span></a></li>
+<li class="chapter" data-level="5.8" data-path="linear-model-estimation.html"><a href="linear-model-estimation.html#s:penguins-mlr2"><i class="fa fa-check"></i><b>5.8</b> Penguins multiple linear regression example with categorical predictor<span></span></a></li>
+<li class="chapter" data-level="5.9" data-path="linear-model-estimation.html"><a href="linear-model-estimation.html#evaluating-model-fit"><i class="fa fa-check"></i><b>5.9</b> Evaluating model fit<span></span></a></li>
+<li class="chapter" data-level="5.10" data-path="linear-model-estimation.html"><a href="linear-model-estimation.html#summary-of-notation"><i class="fa fa-check"></i><b>5.10</b> Summary of notation<span></span></a></li>
+<li class="chapter" data-level="5.11" data-path="linear-model-estimation.html"><a href="linear-model-estimation.html#summary-of-functions-used-in-this-chapter"><i class="fa fa-check"></i><b>5.11</b> Summary of functions used in this chapter<span></span></a></li>
+<li class="chapter" data-level="5.12" data-path="linear-model-estimation.html"><a href="linear-model-estimation.html#summarizing-the-components-of-a-linear-model"><i class="fa fa-check"></i><b>5.12</b> Summarizing the components of a linear model<span></span></a></li>
+<li class="chapter" data-level="5.13" data-path="linear-model-estimation.html"><a href="linear-model-estimation.html#going-deeper"><i class="fa fa-check"></i><b>5.13</b> Going Deeper<span></span></a>
 <ul>
-<li class="chapter" data-level="6.3.1" data-path="linear-model-estimation.html"><a href="linear-model-estimation.html#ss:fv-resid-rss"><i class="fa fa-check"></i><b>6.3.1</b> Fitted values, residuals, and RSS<span></span></a></li>
-<li class="chapter" data-level="6.3.2" data-path="linear-model-estimation.html"><a href="linear-model-estimation.html#ols-estimators-of-the-simple-linear-regression-parameters"><i class="fa fa-check"></i><b>6.3.2</b> OLS estimators of the simple linear regression parameters<span></span></a></li>
+<li class="chapter" data-level="5.13.1" data-path="linear-model-estimation.html"><a href="linear-model-estimation.html#manually-estimating-the-simple-linear-regression-coefficients"><i class="fa fa-check"></i><b>5.13.1</b> Manually estimating the simple linear regression coefficients<span></span></a></li>
+<li class="chapter" data-level="5.13.2" data-path="linear-model-estimation.html"><a href="linear-model-estimation.html#manually-estimating-the-multiple-linear-regression-coefficients"><i class="fa fa-check"></i><b>5.13.2</b> Manually estimating the multiple linear regression coefficients<span></span></a></li>
+<li class="chapter" data-level="5.13.3" data-path="linear-model-estimation.html"><a href="linear-model-estimation.html#parameter-estimation-and-matrix-decompositions"><i class="fa fa-check"></i><b>5.13.3</b> Parameter estimation and matrix decompositions<span></span></a></li>
+<li class="chapter" data-level="5.13.4" data-path="linear-model-estimation.html"><a href="linear-model-estimation.html#updating-a-model"><i class="fa fa-check"></i><b>5.13.4</b> Updating a model<span></span></a></li>
+<li class="chapter" data-level="5.13.5" data-path="linear-model-estimation.html"><a href="linear-model-estimation.html#more-discussion-of-formula-for-model-building"><i class="fa fa-check"></i><b>5.13.5</b> More discussion of <code>formula</code> for model-building<span></span></a></li>
 </ul></li>
-<li class="chapter" data-level="6.4" data-path="linear-model-estimation.html"><a href="linear-model-estimation.html#s:penguins-slr"><i class="fa fa-check"></i><b>6.4</b> Penguins simple linear regression example<span></span></a></li>
-<li class="chapter" data-level="6.5" data-path="linear-model-estimation.html"><a href="linear-model-estimation.html#estimation-of-the-multiple-linear-regression-coefficients"><i class="fa fa-check"></i><b>6.5</b> Estimation of the multiple linear regression coefficients)<span></span></a>
+</ul></li>
+<li class="chapter" data-level="6" data-path="interpreting-a-fitted-linear-model.html"><a href="interpreting-a-fitted-linear-model.html"><i class="fa fa-check"></i><b>6</b> Interpreting a fitted linear model<span></span></a>
 <ul>
-<li class="chapter" data-level="6.5.1" data-path="linear-model-estimation.html"><a href="linear-model-estimation.html#using-matrix-notation-to-represent-a-linear-model"><i class="fa fa-check"></i><b>6.5.1</b> Using matrix notation to represent a linear model<span></span></a></li>
-<li class="chapter" data-level="6.5.2" data-path="linear-model-estimation.html"><a href="linear-model-estimation.html#ss:fv-resid-rss-mlr"><i class="fa fa-check"></i><b>6.5.2</b> Residuals, fitted values, and RSS for multiple linear regression<span></span></a></li>
-<li class="chapter" data-level="6.5.3" data-path="linear-model-estimation.html"><a href="linear-model-estimation.html#as-a-system-of-equations-1"><i class="fa fa-check"></i><b>6.5.3</b> As a system of equations<span></span></a></li>
-<li class="chapter" data-level="6.5.4" data-path="linear-model-estimation.html"><a href="linear-model-estimation.html#using-matrix-notation-1"><i class="fa fa-check"></i><b>6.5.4</b> Using matrix notation<span></span></a></li>
-</ul></li>
-<li class="chapter" data-level="6.6" data-path="linear-model-estimation.html"><a href="linear-model-estimation.html#summarizing-the-components-of-a-linear-model-1"><i class="fa fa-check"></i><b>6.6</b> Summarizing the components of a linear model<span></span></a></li>
-<li class="chapter" data-level="6.7" data-path="linear-model-estimation.html"><a href="linear-model-estimation.html#types-of-regression-models-1"><i class="fa fa-check"></i><b>6.7</b> Types of regression models<span></span></a></li>
-<li class="chapter" data-level="6.8" data-path="linear-model-estimation.html"><a href="linear-model-estimation.html#standard-linear-model-assumptions-and-implications-1"><i class="fa fa-check"></i><b>6.8</b> Standard linear model assumptions and implications<span></span></a></li>
-<li class="chapter" data-level="6.9" data-path="linear-model-estimation.html"><a href="linear-model-estimation.html#mathematical-interpretation-of-coefficients-1"><i class="fa fa-check"></i><b>6.9</b> Mathematical interpretation of coefficients<span></span></a>
+<li class="chapter" data-level="6.1" data-path="interpreting-a-fitted-linear-model.html"><a href="interpreting-a-fitted-linear-model.html#orthogonality"><i class="fa fa-check"></i><b>6.1</b> Orthogonality<span></span></a></li>
+<li class="chapter" data-level="6.2" data-path="interpreting-a-fitted-linear-model.html"><a href="interpreting-a-fitted-linear-model.html#example-fuel-consumption-data"><i class="fa fa-check"></i><b>6.2</b> Example: Fuel Consumption Data<span></span></a></li>
+<li class="chapter" data-level="6.3" data-path="interpreting-a-fitted-linear-model.html"><a href="interpreting-a-fitted-linear-model.html#setting-up-a-linear-model"><i class="fa fa-check"></i><b>6.3</b> Setting Up a Linear Model<span></span></a>
 <ul>
-<li class="chapter" data-level="6.9.1" data-path="linear-model-estimation.html"><a href="linear-model-estimation.html#coefficient-interpretation-in-simple-linear-regression-1"><i class="fa fa-check"></i><b>6.9.1</b> Coefficient interpretation in simple linear regression<span></span></a></li>
-<li class="chapter" data-level="6.9.2" data-path="linear-model-estimation.html"><a href="linear-model-estimation.html#coefficient-interpretation-in-multiple-linear-regression-1"><i class="fa fa-check"></i><b>6.9.2</b> Coefficient interpretation in multiple linear regression<span></span></a></li>
+<li class="chapter" data-level="6.3.1" data-path="interpreting-a-fitted-linear-model.html"><a href="interpreting-a-fitted-linear-model.html#adjusting-units"><i class="fa fa-check"></i><b>6.3.1</b> Adjusting Units<span></span></a></li>
+<li class="chapter" data-level="6.3.2" data-path="interpreting-a-fitted-linear-model.html"><a href="interpreting-a-fitted-linear-model.html#fitting-a-model"><i class="fa fa-check"></i><b>6.3.2</b> Fitting a Model<span></span></a></li>
 </ul></li>
-<li class="chapter" data-level="6.10" data-path="linear-model-estimation.html"><a href="linear-model-estimation.html#exercises-1"><i class="fa fa-check"></i><b>6.10</b> Exercises<span></span></a></li>
+<li class="chapter" data-level="6.4" data-path="interpreting-a-fitted-linear-model.html"><a href="interpreting-a-fitted-linear-model.html#interpreting-the-coefficients"><i class="fa fa-check"></i><b>6.4</b> Interpreting the Coefficients<span></span></a></li>
+<li class="chapter" data-level="6.5" data-path="interpreting-a-fitted-linear-model.html"><a href="interpreting-a-fitted-linear-model.html#example-berkeley-guidance-study"><i class="fa fa-check"></i><b>6.5</b> Example: Berkeley Guidance Study<span></span></a></li>
+<li class="chapter" data-level="6.6" data-path="interpreting-a-fitted-linear-model.html"><a href="interpreting-a-fitted-linear-model.html#dictionary-of-data"><i class="fa fa-check"></i><b>6.6</b> Dictionary of Data<span></span></a></li>
+<li class="chapter" data-level="6.7" data-path="interpreting-a-fitted-linear-model.html"><a href="interpreting-a-fitted-linear-model.html#analysing-relations-between-regressors"><i class="fa fa-check"></i><b>6.7</b> Analysing Relations Between Regressors<span></span></a></li>
+<li class="chapter" data-level="6.8" data-path="interpreting-a-fitted-linear-model.html"><a href="interpreting-a-fitted-linear-model.html#adjusting-the-regressors"><i class="fa fa-check"></i><b>6.8</b> Adjusting the Regressors<span></span></a></li>
+<li class="chapter" data-level="6.9" data-path="interpreting-a-fitted-linear-model.html"><a href="interpreting-a-fitted-linear-model.html#comparing-different-models"><i class="fa fa-check"></i><b>6.9</b> Comparing Different Models<span></span></a>
+<ul>
+<li class="chapter" data-level="6.9.1" data-path="interpreting-a-fitted-linear-model.html"><a href="interpreting-a-fitted-linear-model.html#bmi-relation-to-wt2-wt9-and-wt18"><i class="fa fa-check"></i><b>6.9.1</b> BMI relation to WT2, WT9 and WT18<span></span></a></li>
+<li class="chapter" data-level="6.9.2" data-path="interpreting-a-fitted-linear-model.html"><a href="interpreting-a-fitted-linear-model.html#bmi-relation-to-wt2-dw9-and-dw18"><i class="fa fa-check"></i><b>6.9.2</b> BMI relation to WT2, DW9 and DW18<span></span></a></li>
+<li class="chapter" data-level="6.9.3" data-path="interpreting-a-fitted-linear-model.html"><a href="interpreting-a-fitted-linear-model.html#bmi-relation-to-wt2-wt9-wt18-dw9-and-dw18"><i class="fa fa-check"></i><b>6.9.3</b> BMI relation to WT2, WT9, WT18, DW9 and DW18<span></span></a></li>
+</ul></li>
+<li class="chapter" data-level="6.10" data-path="interpreting-a-fitted-linear-model.html"><a href="interpreting-a-fitted-linear-model.html#effect-plots"><i class="fa fa-check"></i><b>6.10</b> Effect Plots<span></span></a></li>
+<li class="chapter" data-level="6.11" data-path="interpreting-a-fitted-linear-model.html"><a href="interpreting-a-fitted-linear-model.html#regressors-on-logarithmic-scale"><i class="fa fa-check"></i><b>6.11</b> Regressors on Logarithmic Scale<span></span></a></li>
+<li class="chapter" data-level="6.12" data-path="interpreting-a-fitted-linear-model.html"><a href="interpreting-a-fitted-linear-model.html#below-we-create-an-effects-plot-on-a-natural-log-scale."><i class="fa fa-check"></i><b>6.12</b> Below we create an effects plot on a natural log scale.<span></span></a></li>
+<li class="chapter" data-level="6.13" data-path="interpreting-a-fitted-linear-model.html"><a href="interpreting-a-fitted-linear-model.html#below-we-create-an-effects-plot-on-a-log10-scale."><i class="fa fa-check"></i><b>6.13</b> Below we create an effects plot on a log10 scale.<span></span></a></li>
+<li class="chapter" data-level="6.14" data-path="interpreting-a-fitted-linear-model.html"><a href="interpreting-a-fitted-linear-model.html#below-we-create-an-effects-plot-on-a-regular-scale."><i class="fa fa-check"></i><b>6.14</b> Below we create an effects plot on a regular scale.<span></span></a></li>
+<li class="chapter" data-level="6.15" data-path="interpreting-a-fitted-linear-model.html"><a href="interpreting-a-fitted-linear-model.html#interpreting-coefficients-with-log-scale-on-regressor"><i class="fa fa-check"></i><b>6.15</b> Interpreting Coefficients with Log Scale on Regressor<span></span></a>
+<ul>
+<li class="chapter" data-level="6.15.1" data-path="interpreting-a-fitted-linear-model.html"><a href="interpreting-a-fitted-linear-model.html#natural-log-scale"><i class="fa fa-check"></i><b>6.15.1</b> Natural Log Scale<span></span></a></li>
+<li class="chapter" data-level="6.15.2" data-path="interpreting-a-fitted-linear-model.html"><a href="interpreting-a-fitted-linear-model.html#common-log-base-10-scale"><i class="fa fa-check"></i><b>6.15.2</b> Common Log (base 10) Scale<span></span></a></li>
+</ul></li>
+<li class="chapter" data-level="6.16" data-path="interpreting-a-fitted-linear-model.html"><a href="interpreting-a-fitted-linear-model.html#log-level-interpretation"><i class="fa fa-check"></i><b>6.16</b> Log-Level Interpretation<span></span></a></li>
+<li class="chapter" data-level="6.17" data-path="interpreting-a-fitted-linear-model.html"><a href="interpreting-a-fitted-linear-model.html#log-log-interpretation"><i class="fa fa-check"></i><b>6.17</b> Log-log Interpretation<span></span></a></li>
+<li class="chapter" data-level="6.18" data-path="interpreting-a-fitted-linear-model.html"><a href="interpreting-a-fitted-linear-model.html#summary-of-interpretations-simple-linear-regression"><i class="fa fa-check"></i><b>6.18</b> Summary of Interpretations (Simple Linear Regression)<span></span></a></li>
+<li class="chapter" data-level="6.19" data-path="interpreting-a-fitted-linear-model.html"><a href="interpreting-a-fitted-linear-model.html#more-practice"><i class="fa fa-check"></i><b>6.19</b> More Practice<span></span></a></li>
 </ul></li>
 <li class="chapter" data-level="7" data-path="linear-model-inference.html"><a href="linear-model-inference.html"><i class="fa fa-check"></i><b>7</b> Linear model inference<span></span></a></li>
-<li class="chapter" data-level="8" data-path="assumptions-stated-and-prioritized.html"><a href="assumptions-stated-and-prioritized.html"><i class="fa fa-check"></i><b>8</b> Assumptions Stated and Prioritized<span></span></a>
+<li class="chapter" data-level="8" data-path="prediction.html"><a href="prediction.html"><i class="fa fa-check"></i><b>8</b> Prediction<span></span></a></li>
+<li class="chapter" data-level="9" data-path="assumptions-stated-and-prioritized.html"><a href="assumptions-stated-and-prioritized.html"><i class="fa fa-check"></i><b>9</b> Assumptions Stated and Prioritized<span></span></a>
 <ul>
-<li class="chapter" data-level="8.1" data-path="assumptions-stated-and-prioritized.html"><a href="assumptions-stated-and-prioritized.html#standard-assumptions-concisely-stated"><i class="fa fa-check"></i><b>8.1</b> Standard assumptions concisely stated<span></span></a></li>
-<li class="chapter" data-level="8.2" data-path="assumptions-stated-and-prioritized.html"><a href="assumptions-stated-and-prioritized.html#standard-assumptions-prioritized"><i class="fa fa-check"></i><b>8.2</b> Standard assumptions prioritized<span></span></a></li>
+<li class="chapter" data-level="9.1" data-path="assumptions-stated-and-prioritized.html"><a href="assumptions-stated-and-prioritized.html#standard-assumptions-concisely-stated"><i class="fa fa-check"></i><b>9.1</b> Standard assumptions concisely stated<span></span></a></li>
+<li class="chapter" data-level="9.2" data-path="assumptions-stated-and-prioritized.html"><a href="assumptions-stated-and-prioritized.html#standard-assumptions-prioritized"><i class="fa fa-check"></i><b>9.2</b> Standard assumptions prioritized<span></span></a></li>
+</ul></li>
+<li class="chapter" data-level="10" data-path="basic-regression-diagnostics.html"><a href="basic-regression-diagnostics.html"><i class="fa fa-check"></i><b>10</b> Basic regression diagnostics<span></span></a></li>
+<li class="chapter" data-level="11" data-path="assessing-and-addressing-collinearity.html"><a href="assessing-and-addressing-collinearity.html"><i class="fa fa-check"></i><b>11</b> Assessing and addressing collinearity<span></span></a>
+<ul>
+<li class="chapter" data-level="11.1" data-path="assessing-and-addressing-collinearity.html"><a href="assessing-and-addressing-collinearity.html#loading-the-data"><i class="fa fa-check"></i><b>11.1</b> Loading the Data<span></span></a></li>
+<li class="chapter" data-level="11.2" data-path="assessing-and-addressing-collinearity.html"><a href="assessing-and-addressing-collinearity.html#question-1-why-might-it-be-a-bad-a-idea-to-simply-include-all-regressors"><i class="fa fa-check"></i><b>11.2</b> Question 1: Why might it be a bad a idea to simply include all regressors?<span></span></a></li>
+<li class="chapter" data-level="11.3" data-path="assessing-and-addressing-collinearity.html"><a href="assessing-and-addressing-collinearity.html#question-2-what-metricsmethods-have-we-used-to-compare-models-thus-far"><i class="fa fa-check"></i><b>11.3</b> Question 2: What metrics/methods have we used to compare models thus far?<span></span></a></li>
+</ul></li>
+<li class="chapter" data-level="12" data-path="variable-selection.html"><a href="variable-selection.html"><i class="fa fa-check"></i><b>12</b> Variable Selection<span></span></a>
+<ul>
+<li class="chapter" data-level="12.1" data-path="variable-selection.html"><a href="variable-selection.html#testing-based-procedures"><i class="fa fa-check"></i><b>12.1</b> Testing-Based Procedures<span></span></a></li>
+<li class="chapter" data-level="12.2" data-path="variable-selection.html"><a href="variable-selection.html#backward-elimination"><i class="fa fa-check"></i><b>12.2</b> Backward elimination<span></span></a></li>
+<li class="chapter" data-level="12.3" data-path="variable-selection.html"><a href="variable-selection.html#question-3-which-of-the-predictors-would-you-remove-from-the-full-model-what-criteria-did-you-use-to-make-that-decision"><i class="fa fa-check"></i><b>12.3</b> Question 3: Which of the predictors would you remove from the full model? What criteria did you use to make that decision?<span></span></a></li>
+<li class="chapter" data-level="12.4" data-path="variable-selection.html"><a href="variable-selection.html#forward-selection"><i class="fa fa-check"></i><b>12.4</b> Forward Selection<span></span></a></li>
+<li class="chapter" data-level="12.5" data-path="variable-selection.html"><a href="variable-selection.html#stepwise-regression"><i class="fa fa-check"></i><b>12.5</b> Stepwise Regression<span></span></a></li>
+<li class="chapter" data-level="12.6" data-path="variable-selection.html"><a href="variable-selection.html#model-hierarchy"><i class="fa fa-check"></i><b>12.6</b> Model Hierarchy<span></span></a></li>
+<li class="chapter" data-level="12.7" data-path="variable-selection.html"><a href="variable-selection.html#criterion-based-procedures"><i class="fa fa-check"></i><b>12.7</b> Criterion-Based Procedures<span></span></a></li>
+<li class="chapter" data-level="12.8" data-path="variable-selection.html"><a href="variable-selection.html#akaikes-information-criterion-aic"><i class="fa fa-check"></i><b>12.8</b> Akaike’s Information Criterion (AIC)<span></span></a>
+<ul>
+<li class="chapter" data-level="12.8.1" data-path="variable-selection.html"><a href="variable-selection.html#interpreting-aic"><i class="fa fa-check"></i><b>12.8.1</b> Interpreting AIC<span></span></a></li>
+<li class="chapter" data-level="12.8.2" data-path="variable-selection.html"><a href="variable-selection.html#exhaustive-model-searches"><i class="fa fa-check"></i><b>12.8.2</b> Exhaustive Model Searches<span></span></a></li>
+</ul></li>
+<li class="chapter" data-level="12.9" data-path="variable-selection.html"><a href="variable-selection.html#question-4-interpret-the-output-from-the-code-above.-is-this-consistent-with-the-model-we-obtained-using-backward-elimination"><i class="fa fa-check"></i><b>12.9</b> Question 4: Interpret the output from the code above. Is this consistent with the model we obtained using backward elimination?<span></span></a>
+<ul>
+<li class="chapter" data-level="12.9.1" data-path="variable-selection.html"><a href="variable-selection.html#computing-the-aic"><i class="fa fa-check"></i><b>12.9.1</b> Computing the AIC<span></span></a></li>
+<li class="chapter" data-level="12.9.2" data-path="variable-selection.html"><a href="variable-selection.html#question-5-interpret-the-output-from-the-aic-plots-above.-what-is-the-best-model-according-to-this-metric"><i class="fa fa-check"></i><b>12.9.2</b> Question 5: Interpret the output from the AIC plots above. What is the best model according to this metric?<span></span></a></li>
+</ul></li>
+<li class="chapter" data-level="12.10" data-path="variable-selection.html"><a href="variable-selection.html#bayesian-information-criterion-bic"><i class="fa fa-check"></i><b>12.10</b> Bayesian Information Criterion (BIC)<span></span></a></li>
+<li class="chapter" data-level="12.11" data-path="variable-selection.html"><a href="variable-selection.html#question-6-interpret-the-output-from-the-bic-plot-above.-what-is-the-best-model-according-to-this-metric"><i class="fa fa-check"></i><b>12.11</b> Question 6: Interpret the output from the BIC plot above. What is the best model according to this metric?<span></span></a>
+<ul>
+<li class="chapter" data-level="12.11.1" data-path="variable-selection.html"><a href="variable-selection.html#pros-of-using-mles-to-estimate-population-parameters"><i class="fa fa-check"></i><b>12.11.1</b> Pros of Using MLE’s to Estimate Population Parameters<span></span></a></li>
+</ul></li>
+<li class="chapter" data-level="12.12" data-path="variable-selection.html"><a href="variable-selection.html#model-selection-what-is-the-right-number-of-regressors-we-should-include"><i class="fa fa-check"></i><b>12.12</b> Model Selection: What is the right number of regressors we should include?<span></span></a></li>
+<li class="chapter" data-level="12.13" data-path="variable-selection.html"><a href="variable-selection.html#motivating-example-predicting-life-expectancy"><i class="fa fa-check"></i><b>12.13</b> Motivating Example: Predicting Life Expectancy<span></span></a></li>
+<li class="chapter" data-level="12.14" data-path="variable-selection.html"><a href="variable-selection.html#loading-the-data-1"><i class="fa fa-check"></i><b>12.14</b> Loading the Data<span></span></a></li>
+<li class="chapter" data-level="12.15" data-path="variable-selection.html"><a href="variable-selection.html#recap-from-last-class"><i class="fa fa-check"></i><b>12.15</b> Recap from Last Class<span></span></a></li>
+<li class="chapter" data-level="12.16" data-path="variable-selection.html"><a href="variable-selection.html#testing-based-procedures-1"><i class="fa fa-check"></i><b>12.16</b> Testing Based Procedures<span></span></a></li>
+<li class="chapter" data-level="12.17" data-path="variable-selection.html"><a href="variable-selection.html#search-strategies"><i class="fa fa-check"></i><b>12.17</b> Search Strategies<span></span></a>
+<ul>
+<li class="chapter" data-level="12.17.1" data-path="variable-selection.html"><a href="variable-selection.html#finding-the-best-subsets"><i class="fa fa-check"></i><b>12.17.1</b> Finding the Best Subsets<span></span></a></li>
+</ul></li>
+<li class="chapter" data-level="12.18" data-path="variable-selection.html"><a href="variable-selection.html#review-of-criterion-based-procedures-thus-far"><i class="fa fa-check"></i><b>12.18</b> Review of Criterion-Based Procedures Thus Far<span></span></a></li>
+<li class="chapter" data-level="12.19" data-path="variable-selection.html"><a href="variable-selection.html#akaikes-information-criterion-aic-and-bayesian-information-criteria-bic"><i class="fa fa-check"></i><b>12.19</b> Akaike’s Information Criterion (AIC) and Bayesian Information Criteria (BIC)<span></span></a>
+<ul>
+<li class="chapter" data-level="12.19.1" data-path="variable-selection.html"><a href="variable-selection.html#optional-if-you-want-to-compare-with-formulas"><i class="fa fa-check"></i><b>12.19.1</b> Optional if You Want to Compare With Formulas<span></span></a></li>
+</ul></li>
+<li class="chapter" data-level="12.20" data-path="variable-selection.html"><a href="variable-selection.html#adjusted-r2"><i class="fa fa-check"></i><b>12.20</b> Adjusted <span class="math inline">\(R^2\)</span><span></span></a></li>
+<li class="chapter" data-level="12.21" data-path="variable-selection.html"><a href="variable-selection.html#mean-square-error-mse"><i class="fa fa-check"></i><b>12.21</b> Mean Square Error (MSE)<span></span></a></li>
+<li class="chapter" data-level="12.22" data-path="variable-selection.html"><a href="variable-selection.html#mallows-c_p-statistic"><i class="fa fa-check"></i><b>12.22</b> Mallow’s <span class="math inline">\(C_p\)</span> Statistic<span></span></a>
+<ul>
+<li class="chapter" data-level="12.22.1" data-path="variable-selection.html"><a href="variable-selection.html#computing-mallows-c_p-statistic"><i class="fa fa-check"></i><b>12.22.1</b> Computing Mallow’s <span class="math inline">\(C_p\)</span> Statistic<span></span></a></li>
+<li class="chapter" data-level="12.22.2" data-path="variable-selection.html"><a href="variable-selection.html#question-7-interpret-the-output-from-the-c_p-plot-above.-what-is-the-best-model-according-to-this-metric"><i class="fa fa-check"></i><b>12.22.2</b> Question 7: Interpret the output from the <span class="math inline">\(C_p\)</span> plot above. What is the best model according to this metric?<span></span></a></li>
+<li class="chapter" data-level="12.22.3" data-path="variable-selection.html"><a href="variable-selection.html#root-mean-squared-error"><i class="fa fa-check"></i><b>12.22.3</b> Root Mean Squared Error<span></span></a></li>
+</ul></li>
+<li class="chapter" data-level="12.23" data-path="variable-selection.html"><a href="variable-selection.html#cross-validation"><i class="fa fa-check"></i><b>12.23</b> Cross-validation<span></span></a>
+<ul>
+<li class="chapter" data-level="12.23.1" data-path="variable-selection.html"><a href="variable-selection.html#leave-one-out-crossvalidation"><i class="fa fa-check"></i><b>12.23.1</b> Leave-One Out Crossvalidation<span></span></a></li>
+<li class="chapter" data-level="12.23.2" data-path="variable-selection.html"><a href="variable-selection.html#k-fold-crossvalidation"><i class="fa fa-check"></i><b>12.23.2</b> <span class="math inline">\(k\)</span>-Fold Crossvalidation<span></span></a></li>
+</ul></li>
+<li class="chapter" data-level="12.24" data-path="variable-selection.html"><a href="variable-selection.html#example-of-k-fold-crossvalidation"><i class="fa fa-check"></i><b>12.24</b> Example of <span class="math inline">\(k\)</span>-fold Crossvalidation<span></span></a></li>
+<li class="chapter" data-level="12.25" data-path="variable-selection.html"><a href="variable-selection.html#theres-still-more-to-consider"><i class="fa fa-check"></i><b>12.25</b> There’s Still More to Consider!<span></span></a></li>
+<li class="chapter" data-level="12.26" data-path="variable-selection.html"><a href="variable-selection.html#summary"><i class="fa fa-check"></i><b>12.26</b> Summary<span></span></a></li>
+<li class="chapter" data-level="12.27" data-path="variable-selection.html"><a href="variable-selection.html#exercise"><i class="fa fa-check"></i><b>12.27</b> Exercise<span></span></a></li>
+</ul></li>
+<li class="chapter" data-level="13" data-path="transformations.html"><a href="transformations.html"><i class="fa fa-check"></i><b>13</b> Transformations<span></span></a></li>
+<li class="chapter" data-level="14" data-path="advanced-regressor-variables.html"><a href="advanced-regressor-variables.html"><i class="fa fa-check"></i><b>14</b> Advanced regressor variables<span></span></a></li>
+<li class="chapter" data-level="15" data-path="categorical-predictors-1.html"><a href="categorical-predictors-1.html"><i class="fa fa-check"></i><b>15</b> Categorical predictors<span></span></a>
+<ul>
+<li class="chapter" data-level="15.1" data-path="categorical-predictors-1.html"><a href="categorical-predictors-1.html#indicatordummy-variables"><i class="fa fa-check"></i><b>15.1</b> Indicator/dummy variables<span></span></a></li>
+<li class="chapter" data-level="15.2" data-path="categorical-predictors-1.html"><a href="categorical-predictors-1.html#common-of-linear-models-with-categorical-predictors"><i class="fa fa-check"></i><b>15.2</b> Common of linear models with categorical predictors<span></span></a>
+<ul>
+<li class="chapter" data-level="15.2.1" data-path="categorical-predictors-1.html"><a href="categorical-predictors-1.html#one-way-anova"><i class="fa fa-check"></i><b>15.2.1</b> One-way ANOVA<span></span></a></li>
+<li class="chapter" data-level="15.2.2" data-path="categorical-predictors-1.html"><a href="categorical-predictors-1.html#main-effects-models"><i class="fa fa-check"></i><b>15.2.2</b> Main effects models<span></span></a></li>
+<li class="chapter" data-level="15.2.3" data-path="categorical-predictors-1.html"><a href="categorical-predictors-1.html#interaction-models"><i class="fa fa-check"></i><b>15.2.3</b> Interaction models<span></span></a></li>
+<li class="chapter" data-level="15.2.4" data-path="categorical-predictors-1.html"><a href="categorical-predictors-1.html#extensions"><i class="fa fa-check"></i><b>15.2.4</b> Extensions<span></span></a></li>
+</ul></li>
+</ul></li>
+<li class="chapter" data-level="16" data-path="advanced-model-structure.html"><a href="advanced-model-structure.html"><i class="fa fa-check"></i><b>16</b> Advanced model structure<span></span></a></li>
+<li><a href="references.html#references">References<span></span></a></li>
+<li class="chapter" data-level="17" data-path="defining-and-fitting-a-linear-model.html"><a href="defining-and-fitting-a-linear-model.html"><i class="fa fa-check"></i><b>17</b> Defining and fitting a linear model<span></span></a>
+<ul>
+<li class="chapter" data-level="17.1" data-path="defining-and-fitting-a-linear-model.html"><a href="defining-and-fitting-a-linear-model.html#background-and-terminology"><i class="fa fa-check"></i><b>17.1</b> Background and terminology<span></span></a></li>
+<li class="chapter" data-level="17.2" data-path="defining-and-fitting-a-linear-model.html"><a href="defining-and-fitting-a-linear-model.html#goals-of-regression"><i class="fa fa-check"></i><b>17.2</b> Goals of regression<span></span></a></li>
+<li class="chapter" data-level="17.3" data-path="defining-and-fitting-a-linear-model.html"><a href="defining-and-fitting-a-linear-model.html#definition-of-a-linear-model"><i class="fa fa-check"></i><b>17.3</b> Definition of a linear model<span></span></a>
+<ul>
+<li class="chapter" data-level="17.3.1" data-path="defining-and-fitting-a-linear-model.html"><a href="defining-and-fitting-a-linear-model.html#basic-construction-and-relationships"><i class="fa fa-check"></i><b>17.3.1</b> Basic construction and relationships<span></span></a></li>
+<li class="chapter" data-level="17.3.2" data-path="defining-and-fitting-a-linear-model.html"><a href="defining-and-fitting-a-linear-model.html#as-a-system-of-equations"><i class="fa fa-check"></i><b>17.3.2</b> As a system of equations<span></span></a></li>
+<li class="chapter" data-level="17.3.3" data-path="defining-and-fitting-a-linear-model.html"><a href="defining-and-fitting-a-linear-model.html#using-matrix-notation"><i class="fa fa-check"></i><b>17.3.3</b> Using matrix notation<span></span></a></li>
+</ul></li>
+<li class="chapter" data-level="17.4" data-path="defining-and-fitting-a-linear-model.html"><a href="defining-and-fitting-a-linear-model.html#summarizing-the-components-of-a-linear-model-1"><i class="fa fa-check"></i><b>17.4</b> Summarizing the components of a linear model<span></span></a></li>
+<li class="chapter" data-level="17.5" data-path="defining-and-fitting-a-linear-model.html"><a href="defining-and-fitting-a-linear-model.html#types-of-regression-models"><i class="fa fa-check"></i><b>17.5</b> Types of regression models<span></span></a></li>
+<li class="chapter" data-level="17.6" data-path="defining-and-fitting-a-linear-model.html"><a href="defining-and-fitting-a-linear-model.html#standard-linear-model-assumptions-and-implications"><i class="fa fa-check"></i><b>17.6</b> Standard linear model assumptions and implications<span></span></a></li>
+<li class="chapter" data-level="17.7" data-path="defining-and-fitting-a-linear-model.html"><a href="defining-and-fitting-a-linear-model.html#mathematical-interpretation-of-coefficients"><i class="fa fa-check"></i><b>17.7</b> Mathematical interpretation of coefficients<span></span></a>
+<ul>
+<li class="chapter" data-level="17.7.1" data-path="defining-and-fitting-a-linear-model.html"><a href="defining-and-fitting-a-linear-model.html#coefficient-interpretation-in-simple-linear-regression"><i class="fa fa-check"></i><b>17.7.1</b> Coefficient interpretation in simple linear regression<span></span></a></li>
+<li class="chapter" data-level="17.7.2" data-path="defining-and-fitting-a-linear-model.html"><a href="defining-and-fitting-a-linear-model.html#coefficient-interpretation-in-multiple-linear-regression"><i class="fa fa-check"></i><b>17.7.2</b> Coefficient interpretation in multiple linear regression<span></span></a></li>
+</ul></li>
+<li class="chapter" data-level="17.8" data-path="defining-and-fitting-a-linear-model.html"><a href="defining-and-fitting-a-linear-model.html#exercises"><i class="fa fa-check"></i><b>17.8</b> Exercises<span></span></a></li>
+<li class="chapter" data-level="17.9" data-path="defining-and-fitting-a-linear-model.html"><a href="defining-and-fitting-a-linear-model.html#parameter-estimation-for-linear-models"><i class="fa fa-check"></i><b>17.9</b> Parameter estimation for linear models<span></span></a></li>
+<li class="chapter" data-level="17.10" data-path="defining-and-fitting-a-linear-model.html"><a href="defining-and-fitting-a-linear-model.html#ols-estimation-of-the-simple-linear-regression-model"><i class="fa fa-check"></i><b>17.10</b> OLS estimation of the simple linear regression model<span></span></a>
+<ul>
+<li class="chapter" data-level="17.10.1" data-path="defining-and-fitting-a-linear-model.html"><a href="defining-and-fitting-a-linear-model.html#visualizing-the-rss-as-a-function-of-the-estimated-coefficients"><i class="fa fa-check"></i><b>17.10.1</b> Visualizing the RSS as a function of the estimated coefficients<span></span></a></li>
+<li class="chapter" data-level="17.10.2" data-path="defining-and-fitting-a-linear-model.html"><a href="defining-and-fitting-a-linear-model.html#ols-estimators-of-the-simple-linear-regression-parameters-1"><i class="fa fa-check"></i><b>17.10.2</b> OLS estimators of the simple linear regression parameters<span></span></a></li>
+</ul></li>
+<li class="chapter" data-level="17.11" data-path="defining-and-fitting-a-linear-model.html"><a href="defining-and-fitting-a-linear-model.html#penguins-simple-linear-regression-example"><i class="fa fa-check"></i><b>17.11</b> Penguins simple linear regression example<span></span></a></li>
+<li class="chapter" data-level="17.12" data-path="defining-and-fitting-a-linear-model.html"><a href="defining-and-fitting-a-linear-model.html#fitting-a-linear-model-using-r"><i class="fa fa-check"></i><b>17.12</b> Fitting a linear model using R<span></span></a>
+<ul>
+<li class="chapter" data-level="17.12.1" data-path="defining-and-fitting-a-linear-model.html"><a href="defining-and-fitting-a-linear-model.html#derivation-of-ols-simple-linear-regression-estimators"><i class="fa fa-check"></i><b>17.12.1</b> Derivation of OLS simple linear regression estimators<span></span></a></li>
+</ul></li>
 </ul></li>
 <li class="divider"></li>
 <li><a href="https://github.com/rstudio/bookdown" target="blank">Published with bookdown</a></li>
@@ -411,11 +541,11 @@ div.csl-indent {
           <div class="page-inner">
 
             <section class="normal" id="section-">
-<div id="defining-and-fitting-a-linear-model" class="section level1 hasAnchor" number="5">
-<h1><span class="header-section-number">Chapter 5</span> Defining and fitting a linear model<a href="defining-and-fitting-a-linear-model.html#defining-and-fitting-a-linear-model" class="anchor-section" aria-label="Anchor link to header"></a></h1>
+<div id="defining-and-fitting-a-linear-model" class="section level1 hasAnchor" number="17">
+<h1><span class="header-section-number">Chapter 17</span> Defining and fitting a linear model<a href="defining-and-fitting-a-linear-model.html#defining-and-fitting-a-linear-model" class="anchor-section" aria-label="Anchor link to header"></a></h1>
 <p>In this chapter, we define a linear model and discuss the basic estimation of its parameters. We leave discussion of more theoretical aspects of the model to subsequent chapters.</p>
-<div id="background-and-terminology" class="section level2 hasAnchor" number="5.1">
-<h2><span class="header-section-number">5.1</span> Background and terminology<a href="defining-and-fitting-a-linear-model.html#background-and-terminology" class="anchor-section" aria-label="Anchor link to header"></a></h2>
+<div id="background-and-terminology" class="section level2 hasAnchor" number="17.1">
+<h2><span class="header-section-number">17.1</span> Background and terminology<a href="defining-and-fitting-a-linear-model.html#background-and-terminology" class="anchor-section" aria-label="Anchor link to header"></a></h2>
 <p>Regression models are used to model the relationship between:</p>
 <ul>
 <li>one or more <strong>response</strong> variables and</li>
@@ -434,8 +564,8 @@ div.csl-indent {
 <li>Classification models attempt to predict the category level a response will have.</li>
 </ul>
 </div>
-<div id="goals-of-regression" class="section level2 hasAnchor" number="5.2">
-<h2><span class="header-section-number">5.2</span> Goals of regression<a href="defining-and-fitting-a-linear-model.html#goals-of-regression" class="anchor-section" aria-label="Anchor link to header"></a></h2>
+<div id="goals-of-regression" class="section level2 hasAnchor" number="17.2">
+<h2><span class="header-section-number">17.2</span> Goals of regression<a href="defining-and-fitting-a-linear-model.html#goals-of-regression" class="anchor-section" aria-label="Anchor link to header"></a></h2>
 <p>The basic goals of a regression model are to:</p>
 <ol style="list-style-type: decimal">
 <li><em>Predict</em> future or unknown response values based on specified values of the predictors.
@@ -460,14 +590,14 @@ div.csl-indent {
 </ol>
 <p><strong>A “true model” doesn’t exist for real data</strong>. The data-generating process is far more complex than the models we can realistically fit to the data. Thus, finding the true model should not be the goal of a regression analysis. A regression analysis should attempt to find a model that adequately describes the relationship between the response and relevant predictor variables (either in terms of prediction, association, generalization, causality, etc.)</p>
 </div>
-<div id="definition-of-a-linear-model" class="section level2 hasAnchor" number="5.3">
-<h2><span class="header-section-number">5.3</span> Definition of a linear model<a href="defining-and-fitting-a-linear-model.html#definition-of-a-linear-model" class="anchor-section" aria-label="Anchor link to header"></a></h2>
+<div id="definition-of-a-linear-model" class="section level2 hasAnchor" number="17.3">
+<h2><span class="header-section-number">17.3</span> Definition of a linear model<a href="defining-and-fitting-a-linear-model.html#definition-of-a-linear-model" class="anchor-section" aria-label="Anchor link to header"></a></h2>
 <p>A <strong>linear model</strong> is a regression model in which the regression coefficients (to be discussed later) enter the model linearly.</p>
 <ul>
 <li>A linear model is just a specific type of regression model.</li>
 </ul>
-<div id="basic-construction-and-relationships" class="section level3 hasAnchor" number="5.3.1">
-<h3><span class="header-section-number">5.3.1</span> Basic construction and relationships<a href="defining-and-fitting-a-linear-model.html#basic-construction-and-relationships" class="anchor-section" aria-label="Anchor link to header"></a></h3>
+<div id="basic-construction-and-relationships" class="section level3 hasAnchor" number="17.3.1">
+<h3><span class="header-section-number">17.3.1</span> Basic construction and relationships<a href="defining-and-fitting-a-linear-model.html#basic-construction-and-relationships" class="anchor-section" aria-label="Anchor link to header"></a></h3>
 <p>We begin by defining notation for the objects we will need and clarifying some of their important properties.</p>
 <ul>
 <li><span class="math inline">\(Y\)</span> denotes the response variable.
@@ -533,8 +663,8 @@ where <span class="math inline">\(c_0, c_1, \ldots, c_{p-1}\)</span> are known v
 </ul>
 <!-- The model in Equation \@ref(eq:lmdef) is a **statistical model** because there is uncertainty in the response.  -->
 </div>
-<div id="as-a-system-of-equations" class="section level3 hasAnchor" number="5.3.2">
-<h3><span class="header-section-number">5.3.2</span> As a system of equations<a href="defining-and-fitting-a-linear-model.html#as-a-system-of-equations" class="anchor-section" aria-label="Anchor link to header"></a></h3>
+<div id="as-a-system-of-equations" class="section level3 hasAnchor" number="17.3.2">
+<h3><span class="header-section-number">17.3.2</span> As a system of equations<a href="defining-and-fitting-a-linear-model.html#as-a-system-of-equations" class="anchor-section" aria-label="Anchor link to header"></a></h3>
 <p>A linear regression analysis will model the data using a linear model. Suppose we have sampled <span class="math inline">\(n\)</span> observations from a population. We now introduce some additional notation:</p>
 <ul>
 <li><span class="math inline">\(Y_1, Y_2, \ldots, Y_n\)</span> denote the response values for the <span class="math inline">\(n\)</span> observations.</li>
@@ -547,15 +677,15 @@ where <span class="math inline">\(c_0, c_1, \ldots, c_{p-1}\)</span> are known v
 <p>The linear model relating the responses, the predictors, and the errors is defined by the system of equations
 <span class="math display" id="eq:lmSystem">\[\begin{equation}
 Y_i = \beta_0 + \beta_1 x_{i,1} + \beta_2 x_{i,2} + \cdots + \beta_{p-1} x_{i,p-1} + \epsilon_i,\quad i=1,2,\ldots,n.
-\tag{5.2}
+\tag{5.10}
 \end{equation}\]</span></p>
-<p>Based on our previous work, we can also write Equation <a href="defining-and-fitting-a-linear-model.html#eq:lmSystem">(5.2)</a> as
+<p>Based on our previous work, we can also write Equation <a href="linear-model-estimation.html#eq:lmSystem">(5.10)</a> as
 <span class="math display">\[\begin{equation}
 Y_i = E(Y_i | X_1 = x_{i,1}, \ldots, X_{p-1} = x_{i,p-1}) + \epsilon_i,\quad i=1,2,\ldots,n.
 \end{equation}\]</span></p>
 </div>
-<div id="using-matrix-notation" class="section level3 hasAnchor" number="5.3.3">
-<h3><span class="header-section-number">5.3.3</span> Using matrix notation<a href="defining-and-fitting-a-linear-model.html#using-matrix-notation" class="anchor-section" aria-label="Anchor link to header"></a></h3>
+<div id="using-matrix-notation" class="section level3 hasAnchor" number="17.3.3">
+<h3><span class="header-section-number">17.3.3</span> Using matrix notation<a href="defining-and-fitting-a-linear-model.html#using-matrix-notation" class="anchor-section" aria-label="Anchor link to header"></a></h3>
 <p>The regression coefficients are said to enter the model linearly, which is why this type of model is called a linear model. To see this more clearly, we represent the model using matrices. We define the following notation:</p>
 <ul>
 <li><span class="math inline">\(\mathbf{y} = [Y_1, Y_2, \ldots, Y_n]^T\)</span> denotes the column vector containing the <span class="math inline">\(n\)</span> responses.</li>
@@ -567,17 +697,17 @@ Y_i = E(Y_i | X_1 = x_{i,1}, \ldots, X_{p-1} = x_{i,p-1}) + \epsilon_i,\quad i=1
 \end{bmatrix}.\]</span></li>
 <li><span class="math inline">\(\boldsymbol{\beta} = [\beta_0, \beta_1, \ldots, \beta_{p-1}]^T\)</span> denotes the column vector containing the <span class="math inline">\(p\)</span> regression coefficients.</li>
 <li><span class="math inline">\(\boldsymbol{\epsilon} = [\epsilon_1, \epsilon_2, \ldots, \epsilon_n]^T\)</span> denotes the column vector contained the <span class="math inline">\(n\)</span> errors.
-Then the system of equations defining the linear model in <a href="defining-and-fitting-a-linear-model.html#eq:lmSystem">(5.2)</a> can be written as
+Then the system of equations defining the linear model in <a href="linear-model-estimation.html#eq:lmSystem">(5.10)</a> can be written as
 <span class="math display">\[\mathbf{y} = \mathbf{X}\mathbf{\beta} + \boldsymbol{\epsilon}.\]</span>
 Thus, a linear model can be represented as a system of linear equations using matrices. A model that cannot be represented as a system of linear equations using matrices is not a linear model.</li>
 </ul>
 </div>
 </div>
-<div id="summarizing-the-components-of-a-linear-model" class="section level2 hasAnchor" number="5.4">
-<h2><span class="header-section-number">5.4</span> Summarizing the components of a linear model<a href="defining-and-fitting-a-linear-model.html#summarizing-the-components-of-a-linear-model" class="anchor-section" aria-label="Anchor link to header"></a></h2>
+<div id="summarizing-the-components-of-a-linear-model-1" class="section level2 hasAnchor" number="17.4">
+<h2><span class="header-section-number">17.4</span> Summarizing the components of a linear model<a href="defining-and-fitting-a-linear-model.html#summarizing-the-components-of-a-linear-model-1" class="anchor-section" aria-label="Anchor link to header"></a></h2>
 <p>We have already introduced a lot of objects. To aid in making sense of their notation, their purpose in the model, whether they can be observed, and whether they are modeled as a random variable (vector) or fixed, non-random values, we summarize things below.</p>
 <p>We’ve already talked about observing the response variable and the predictor variables. So these objects are observable. However, we have no way to measure the regression coefficients or the error. These are not observable.</p>
-<p>On the other hand, we treat the response variable as a random variable. Perhaps surprisingly, we treated the predictor variables as a fixed, non-random variables. The regression coefficients are treated as fixed, non-random but unknown values. This is standard for parameters in a statistical model. The errors are also treated as random variables. In fact, since both the predictor variables and the regression coefficients are non-random, the only way for the response to be a random variable based on Equation <a href="defining-and-fitting-a-linear-model.html#eq:lmSystem">(5.2)</a> is for the errors to be random.</p>
+<p>On the other hand, we treat the response variable as a random variable. Perhaps surprisingly, we treated the predictor variables as a fixed, non-random variables. The regression coefficients are treated as fixed, non-random but unknown values. This is standard for parameters in a statistical model. The errors are also treated as random variables. In fact, since both the predictor variables and the regression coefficients are non-random, the only way for the response to be a random variable based on Equation <a href="linear-model-estimation.html#eq:lmSystem">(5.10)</a> is for the errors to be random.</p>
 <p>We summarize this information in the table below for the objects previously discussed using the various notations introduced.</p>
 <table>
 <colgroup>
@@ -670,8 +800,8 @@ Thus, a linear model can be represented as a system of linear equations using ma
 </tbody>
 </table>
 </div>
-<div id="types-of-regression-models" class="section level2 hasAnchor" number="5.5">
-<h2><span class="header-section-number">5.5</span> Types of regression models<a href="defining-and-fitting-a-linear-model.html#types-of-regression-models" class="anchor-section" aria-label="Anchor link to header"></a></h2>
+<div id="types-of-regression-models" class="section level2 hasAnchor" number="17.5">
+<h2><span class="header-section-number">17.5</span> Types of regression models<a href="defining-and-fitting-a-linear-model.html#types-of-regression-models" class="anchor-section" aria-label="Anchor link to header"></a></h2>
 <p>The are many “named” types of regression models. You may hear or see people use these terms when describing their model. Here is a brief overview of some common regression models.</p>
 <table>
 <colgroup>
@@ -716,8 +846,8 @@ Thus, a linear model can be represented as a system of linear equations using ma
 </tbody>
 </table>
 </div>
-<div id="standard-linear-model-assumptions-and-implications" class="section level2 hasAnchor" number="5.6">
-<h2><span class="header-section-number">5.6</span> Standard linear model assumptions and implications<a href="defining-and-fitting-a-linear-model.html#standard-linear-model-assumptions-and-implications" class="anchor-section" aria-label="Anchor link to header"></a></h2>
+<div id="standard-linear-model-assumptions-and-implications" class="section level2 hasAnchor" number="17.6">
+<h2><span class="header-section-number">17.6</span> Standard linear model assumptions and implications<a href="defining-and-fitting-a-linear-model.html#standard-linear-model-assumptions-and-implications" class="anchor-section" aria-label="Anchor link to header"></a></h2>
 <p>The formulation of a linear model typically makes additional assumptions beyond the
 ones previously mentioned, specifically, about the errors, <span class="math inline">\(\epsilon_1,\epsilon_2,\ldots,\epsilon_n\)</span>.</p>
 <p>We have already mentioned that fact that we are assuming <span class="math inline">\(E(\epsilon_i)=0\)</span> for <span class="math inline">\(i=1,2,\ldots,n\)</span>.</p>
@@ -726,9 +856,9 @@ and that the errors are uncorrelated, i.e., <span class="math display">\[cov(\ep
 <p>Additionally, we assume that the errors are identically distributed. Formally, that may be written as
 <span class="math display" id="eq:errordist">\[\begin{equation}
 \epsilon_i \sim F, i=1,2,\ldots,n,
-\tag{5.3}
+\tag{17.1}
 \end{equation}\]</span>
-where <span class="math inline">\(F\)</span> is some arbitrary distribution. The <span class="math inline">\(\sim\)</span> means “distributed as.” In other words, Equation <a href="defining-and-fitting-a-linear-model.html#eq:errordist">(5.3)</a> means, “<span class="math inline">\(\epsilon_i\)</span> is distributed as <span class="math inline">\(F\)</span> for <span class="math inline">\(i\)</span> equal to <span class="math inline">\(1,2,\ldots,n\)</span>.” However, it is more common to assume the errors have a normal (Gaussian) distribution. Two uncorrelated normal random variables are also independent (this is true for normal random variables, but is not generally true for other distributions). Thus, we may concisely state the typical error assumptions as
+where <span class="math inline">\(F\)</span> is some arbitrary distribution. The <span class="math inline">\(\sim\)</span> means “distributed as.” In other words, Equation <a href="defining-and-fitting-a-linear-model.html#eq:errordist">(17.1)</a> means, “<span class="math inline">\(\epsilon_i\)</span> is distributed as <span class="math inline">\(F\)</span> for <span class="math inline">\(i\)</span> equal to <span class="math inline">\(1,2,\ldots,n\)</span>.” However, it is more common to assume the errors have a normal (Gaussian) distribution. Two uncorrelated normal random variables are also independent (this is true for normal random variables, but is not generally true for other distributions). Thus, we may concisely state the typical error assumptions as
 <span class="math display">\[\epsilon_1,\epsilon_2,\ldots,\epsilon_n \stackrel{i.i.d.}{\sim} N(0, \sigma^2),\]</span>
 which combines the following assumptions:</p>
 <ol style="list-style-type: decimal">
@@ -739,34 +869,34 @@ which combines the following assumptions:</p>
 </ol>
 <p>Using the notation previously developed, the assumptions above may be stated in vector notation as
 <span class="math display" id="eq:error-assumptions">\[\begin{equation}
-\boldsymbol{\epsilon} \sim N(\mathbf{0}_{n\times 1}, \sigma^2 I_n), \tag{5.4}
+\boldsymbol{\epsilon} \sim N(\mathbf{0}_{n\times 1}, \sigma^2 I_n), \tag{17.2}
 \end{equation}\]</span>
 where <span class="math inline">\(\mathbf{0}_{n\times 1}\)</span> is the <span class="math inline">\(n \times 1\)</span> vector of zeros and <span class="math inline">\(I_n\)</span> is the <span class="math inline">\(n\times n\)</span> identity matrix.</p>
-<p>Writing the error assumptions in the form of Equation <a href="defining-and-fitting-a-linear-model.html#eq:error-assumptions">(5.4)</a> allows us to see other important properties of a linear model. Specifically, if we make the assumptions in Equation <a href="defining-and-fitting-a-linear-model.html#eq:error-assumptions">(5.4)</a>, then</p>
+<p>Writing the error assumptions in the form of Equation <a href="defining-and-fitting-a-linear-model.html#eq:error-assumptions">(17.2)</a> allows us to see other important properties of a linear model. Specifically, if we make the assumptions in Equation <a href="defining-and-fitting-a-linear-model.html#eq:error-assumptions">(17.2)</a>, then</p>
 <p><span class="math display" id="eq:dist-properties-y">\[\begin{equation}
 \mathbf{y} \sim N(\mathbf{X}\boldsymbol{\beta}, \sigma^2 I_n).
-\tag{5.5}
+\tag{17.3}
 \end{equation}\]</span></p>
-<p>How do we know that Equation <a href="defining-and-fitting-a-linear-model.html#eq:dist-properties-y">(5.5)</a> is true? Show that:</p>
+<p>How do we know that Equation <a href="defining-and-fitting-a-linear-model.html#eq:dist-properties-y">(17.3)</a> is true? Show that:</p>
 <ul>
 <li><span class="math inline">\(E(\mathbf{y}) = \mathbf{X}\boldsymbol{\beta}\)</span> and</li>
 <li><span class="math inline">\(\mathrm{var}(\mathbf{y}) = \sigma^2 I_n\)</span>.</li>
 <li>Note <span class="math inline">\(\mathbf{y}\)</span> is a linear function of the multivariate normal vector <span class="math inline">\(\boldsymbol{\epsilon}\)</span>, so <span class="math inline">\(\mathbf{y}\)</span> must also have a multivariate normal distribution.</li>
 </ul>
 </div>
-<div id="mathematical-interpretation-of-coefficients" class="section level2 hasAnchor" number="5.7">
-<h2><span class="header-section-number">5.7</span> Mathematical interpretation of coefficients<a href="defining-and-fitting-a-linear-model.html#mathematical-interpretation-of-coefficients" class="anchor-section" aria-label="Anchor link to header"></a></h2>
+<div id="mathematical-interpretation-of-coefficients" class="section level2 hasAnchor" number="17.7">
+<h2><span class="header-section-number">17.7</span> Mathematical interpretation of coefficients<a href="defining-and-fitting-a-linear-model.html#mathematical-interpretation-of-coefficients" class="anchor-section" aria-label="Anchor link to header"></a></h2>
 <p>The regression coefficients have simple mathematical interpretations in basic settings.</p>
-<div id="coefficient-interpretation-in-simple-linear-regression" class="section level3 hasAnchor" number="5.7.1">
-<h3><span class="header-section-number">5.7.1</span> Coefficient interpretation in simple linear regression<a href="defining-and-fitting-a-linear-model.html#coefficient-interpretation-in-simple-linear-regression" class="anchor-section" aria-label="Anchor link to header"></a></h3>
+<div id="coefficient-interpretation-in-simple-linear-regression" class="section level3 hasAnchor" number="17.7.1">
+<h3><span class="header-section-number">17.7.1</span> Coefficient interpretation in simple linear regression<a href="defining-and-fitting-a-linear-model.html#coefficient-interpretation-in-simple-linear-regression" class="anchor-section" aria-label="Anchor link to header"></a></h3>
 <p>Suppose we have a simple linear regression model, so that <span class="math inline">\(E(Y|X)=\beta_0 + \beta_1 X.\)</span> The interpretations of the coefficients are:</p>
 <ul>
 <li><span class="math inline">\(\beta_0\)</span> is the expected response when the predictor is 0, i.e., <span class="math inline">\(\beta_0=E(Y|X=0)\)</span>.</li>
 <li><span class="math inline">\(\beta_1\)</span> is the expected change in the response when the predictor increases 1 unit, i.e., <span class="math inline">\(\beta_1=E(Y|X=x_0+1)-E(Y|X=x_0)\)</span>.</li>
 </ul>
 </div>
-<div id="coefficient-interpretation-in-multiple-linear-regression" class="section level3 hasAnchor" number="5.7.2">
-<h3><span class="header-section-number">5.7.2</span> Coefficient interpretation in multiple linear regression<a href="defining-and-fitting-a-linear-model.html#coefficient-interpretation-in-multiple-linear-regression" class="anchor-section" aria-label="Anchor link to header"></a></h3>
+<div id="coefficient-interpretation-in-multiple-linear-regression" class="section level3 hasAnchor" number="17.7.2">
+<h3><span class="header-section-number">17.7.2</span> Coefficient interpretation in multiple linear regression<a href="defining-and-fitting-a-linear-model.html#coefficient-interpretation-in-multiple-linear-regression" class="anchor-section" aria-label="Anchor link to header"></a></h3>
 <p>Suppose we have a multiple linear regression model, so that <span class="math inline">\(E(Y|X_1,\ldots,X_{p-1})=\beta_0 + \beta_1 X_1 + \cdots + \beta_{p-1} X_{p-1}.\)</span> Let <span class="math inline">\(\mathbb{X} = \{X_1,\ldots,X_{p-1}\}\)</span> be the set of predictors and <span class="math inline">\(\mathbb{X}_{-j} = \mathbb{X}\setminus\{X_j\}\)</span>, i.e., the set of predictors without <span class="math inline">\(X_j\)</span>.</p>
 <p>The interpretations of the coefficients are:</p>
 <ul>
@@ -775,12 +905,12 @@ where <span class="math inline">\(\mathbf{0}_{n\times 1}\)</span> is the <span c
 </ul>
 </div>
 </div>
-<div id="exercises" class="section level2 hasAnchor" number="5.8">
-<h2><span class="header-section-number">5.8</span> Exercises<a href="defining-and-fitting-a-linear-model.html#exercises" class="anchor-section" aria-label="Anchor link to header"></a></h2>
+<div id="exercises" class="section level2 hasAnchor" number="17.8">
+<h2><span class="header-section-number">17.8</span> Exercises<a href="defining-and-fitting-a-linear-model.html#exercises" class="anchor-section" aria-label="Anchor link to header"></a></h2>
 <ol style="list-style-type: decimal">
 <li>If given a set of data with several variables, how would you decide what the response variable and the predictor variables would be?</li>
-<li>Which objects in the linear model formula in Equation <a href="defining-and-fitting-a-linear-model.html#eq:lmdef">(5.1)</a> are considered random? Which are considered fixed?</li>
-<li>Which objects in the linear model formula in Equation <a href="defining-and-fitting-a-linear-model.html#eq:lmdef">(5.1)</a> are observable? Which are not observable?</li>
+<li>Which objects in the linear model formula in Equation <a href="linear-model-estimation.html#eq:lmdef">(5.1)</a> are considered random? Which are considered fixed?</li>
+<li>Which objects in the linear model formula in Equation <a href="linear-model-estimation.html#eq:lmdef">(5.1)</a> are observable? Which are not observable?</li>
 <li>What are the typical goals of a regression analysis?</li>
 <li>List the typical assumptions made for the errors in a linear model.</li>
 <li>Without using a formula, what is the basic difference between a linear model and a non-linear model?</li>
@@ -897,7 +1027,435 @@ where <span class="math inline">\(\mathbf{0}_{n\times 1}\)</span> is the <span c
 <!-- xyplot(Gain ~ Dose, data = turkey, groups = Source, -->
 <!--        auto.key = TRUE, type = "b") -->
 <!-- ``` -->
+</div>
+<div id="parameter-estimation-for-linear-models" class="section level2 hasAnchor" number="17.9">
+<h2><span class="header-section-number">17.9</span> Parameter estimation for linear models<a href="defining-and-fitting-a-linear-model.html#parameter-estimation-for-linear-models" class="anchor-section" aria-label="Anchor link to header"></a></h2>
+<p>In this chapter we focus on estimating the parameters of a linear
+regression model. We also discuss important properties of the parameter
+estimators.</p>
+<p>To make the discussion easier to follow, we start by describing the
+<em>simple</em> linear regression model, which is a linear model with only a
+single predictor.</p>
+<!-- Fitting a regression model is the same thing as estimating the parameters of a simple linear regression model.  -->
+<p>There are many different methods of parameter estimation in statistics:
+method-of-moments, maximum likelihood, Bayesian, etc. The most common
+parameter estimation method for linear models is <strong>least squares
+method</strong>, which is perhaps comonly called <strong>Ordinary Least Squares
+(OLS)</strong> estimation. OLS estimation estimates the regression coefficients
+with the values that minimize the residuals sum of squares (RSS), which
+we will define shortly.</p>
+</div>
+<div id="ols-estimation-of-the-simple-linear-regression-model" class="section level2 hasAnchor" number="17.10">
+<h2><span class="header-section-number">17.10</span> OLS estimation of the simple linear regression model<a href="defining-and-fitting-a-linear-model.html#ols-estimation-of-the-simple-linear-regression-model" class="anchor-section" aria-label="Anchor link to header"></a></h2>
+<p>In a simple linear regression context, we have <span class="math inline">\(n\)</span> observed responses
+<span class="math inline">\(Y_1,Y_2,\ldots,Y_n\)</span> and <span class="math inline">\(n\)</span> predictor values <span class="math inline">\(x_1,x_2,\ldots,x_n\)</span>.</p>
+<p>Recall that for a simple linear regression model
+<span class="math display">\[Y = \beta_0 + \beta_1 X + \epsilon = E(Y|X) + \epsilon\]</span> with
+<span class="math display">\[E(Y|X) = \beta_0 + \beta_1 X.\]</span> We need to define some new notation
+and objects to define the RSS.</p>
+<p>Let <span class="math inline">\(\hat{\beta}_j\)</span> denote the estimated value of <span class="math inline">\(\beta_j\)</span> and the
+estimated mean response as a function of the predictor <span class="math inline">\(X\)</span> is
+<span class="math display">\[\hat{E}(Y|X) = \hat{\beta}_0 + \hat{\beta}_1 X.\]</span></p>
+<p>The <span class="math inline">\(i\)</span>th fitted value is defined as
+<span class="math display">\[\hat{Y}_i = \hat{E}(Y|X = x_i) = \hat{\beta}_0 + \hat{\beta}_1 x_i.\]</span>
+Thus, the <span class="math inline">\(i\)</span>th fitted value is the estimated mean of <span class="math inline">\(Y\)</span> when the
+predictor <span class="math inline">\(X=x_i\)</span>. More specifically, the <span class="math inline">\(i\)</span>th fitted value is the
+estimated mean response of the <span class="math inline">\(i\)</span>th observation.</p>
+<p>The <span class="math inline">\(i\)</span>th residual is defined as <span class="math display">\[\hat{\epsilon}_i = Y_i - \hat{Y}_i.\]</span>
+The <span class="math inline">\(i\)</span>th residual is the difference between the response and estimated
+mean response of observation <span class="math inline">\(i\)</span>.</p>
+<p><strong>The RSS of a regression model is the sum of its squared residuals</strong>.</p>
+<p>The RSS for a simple linear regression model, as a function of the
+estimated regression coefficients, is <span class="math display">\[\begin{align*}
+RSS(\hat{\beta}_0, \hat{\beta}_1) &amp;= \sum_{i=1}^n \hat{\epsilon}_i^2 \\
+&amp;= \sum_{i=1}^n (Y_i - \hat{Y}_i)^2 \\
+&amp;= \sum_{i=1}^n (Y_i - \hat{E}(Y|X=x_i))^2 \\
+ &amp;= \sum_{i=1}^n (Y_i - (\hat{\beta}_0 + \hat{\beta}_1 x_i))^2.
+\end{align*}\]</span></p>
+<p>The <strong>fitted model</strong> is the estimated model that minimizes the RSS. In a
+simple linear regression context, the fitted model is known as the
+<strong>line of best fit</strong>.</p>
+<p>In Figure <a href="defining-and-fitting-a-linear-model.html#fig:rss-viz">17.1</a>, we attempt to visualize the response
+values, fitted values, residuals, and line of best fit in a simple
+linear regression context. Notice that:</p>
+<ul>
+<li>The fitted values are the value returned by the line of best fit
+when it is evaluated at the observed predictor values.
+Alternatively, the fitted value for each observation is the y-value
+obtained when intersecting the line of best fit with a vertical line
+drawn from each observed predictor value.</li>
+<li>The residual is the vertical distance between each response value
+and the fitted value.</li>
+<li>The RSS seeks to minimize the sum of the squared vertical distances
+between the response and fitted values.</li>
+</ul>
+<div class="figure"><span style="display:block;" id="fig:rss-viz"></span>
+<img src="Data-Analysis-with-Linear-Regression_files/figure-html/rss-viz-1.png" alt="Visualization of the response values, fitted values, residuals, and line of best fit." width="672" />
+<p class="caption">
+Figure 17.1: Visualization of the response values, fitted values, residuals, and line of best fit.
+</p>
+</div>
+<div id="visualizing-the-rss-as-a-function-of-the-estimated-coefficients" class="section level3 hasAnchor" number="17.10.1">
+<h3><span class="header-section-number">17.10.1</span> Visualizing the RSS as a function of the estimated coefficients<a href="defining-and-fitting-a-linear-model.html#visualizing-the-rss-as-a-function-of-the-estimated-coefficients" class="anchor-section" aria-label="Anchor link to header"></a></h3>
+<p>As we have attempted to emphasize through its notation,
+<span class="math inline">\(RSS(\hat{\beta}_0, \hat{\beta}_1)\)</span> is a function of <span class="math inline">\(\hat{\beta}_0\)</span> and
+<span class="math inline">\(\hat{\beta}_1\)</span>. OLS estimation for the simple linear regression model
+seeks to find the values of the estimated coefficients that minimize the
+<span class="math inline">\(RSS(\hat{\beta}_0, \hat{\beta}_1)\)</span>. In the example below, we visualize
+this three-dimensional surface to see how difficult it would be to
+optimize the RSS computationally .</p>
+<p>Consider the Pearson and Lee’s height data (<code>PearsonLee</code> in the
+<strong>HistData</strong> package) previously discussed. For that data set, we tried
+to model the child’s height (<code>child</code>) based on the height of the child’s
+parents (<code>parent</code>). Thus, our response variable is <code>child</code> and our
+predictor variable is <code>parent</code>. We seek to estimate the regression
+equation
+<span class="math display">\[E(\mathtt{child} \mid \mathtt{parent}) = \beta_0 + \beta_1 \mathtt{parent}\]</span>
+with the values of <span class="math inline">\(\hat{\beta}_0\)</span> and <span class="math inline">\(\hat{\beta}_1\)</span> that minimize the
+associated RSS.</p>
+<p>We first load the height data, extract the response and predictor and
+assign them the names <code>y</code> and <code>x</code>.</p>
+<div class="sourceCode" id="cb157"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb157-1"><a href="defining-and-fitting-a-linear-model.html#cb157-1" aria-hidden="true" tabindex="-1"></a><span class="co"># load height data</span></span>
+<span id="cb157-2"><a href="defining-and-fitting-a-linear-model.html#cb157-2" aria-hidden="true" tabindex="-1"></a><span class="fu">data</span>(PearsonLee, <span class="at">package =</span> <span class="st">&quot;HistData&quot;</span>)</span>
+<span id="cb157-3"><a href="defining-and-fitting-a-linear-model.html#cb157-3" aria-hidden="true" tabindex="-1"></a><span class="co"># extract response and predictor variables from data set</span></span>
+<span id="cb157-4"><a href="defining-and-fitting-a-linear-model.html#cb157-4" aria-hidden="true" tabindex="-1"></a>y <span class="ot">&lt;-</span> PearsonLee<span class="sc">$</span>child</span>
+<span id="cb157-5"><a href="defining-and-fitting-a-linear-model.html#cb157-5" aria-hidden="true" tabindex="-1"></a>x <span class="ot">&lt;-</span> PearsonLee<span class="sc">$</span>parent</span></code></pre></div>
+<p>We now create a function that computes the RSS as a function of
+<span class="math inline">\(\hat{\beta}_0\)</span> and <span class="math inline">\(\hat{\beta}_1\)</span> (called <code>b0</code> and <code>b1</code>, respectively
+in the code below). The function takes the vector <code>b = c(b0, b1)</code>,
+extracts <code>b0</code> and <code>b1</code> from this vector, computes the fitted values
+(<code>yhat</code>) for the provided <code>b0</code> and <code>b1</code>, computes the corresponding
+residuals (<code>ehat</code>), and the returns the sum of the squared residuals,
+i.e., the RSS.</p>
+<div class="sourceCode" id="cb158"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb158-1"><a href="defining-and-fitting-a-linear-model.html#cb158-1" aria-hidden="true" tabindex="-1"></a><span class="co"># function to compute the RSS</span></span>
+<span id="cb158-2"><a href="defining-and-fitting-a-linear-model.html#cb158-2" aria-hidden="true" tabindex="-1"></a><span class="co"># b = c(b0, b1)</span></span>
+<span id="cb158-3"><a href="defining-and-fitting-a-linear-model.html#cb158-3" aria-hidden="true" tabindex="-1"></a>compute_rss <span class="ot">&lt;-</span> <span class="cf">function</span>(b) {</span>
+<span id="cb158-4"><a href="defining-and-fitting-a-linear-model.html#cb158-4" aria-hidden="true" tabindex="-1"></a>  b0 <span class="ot">=</span> b[<span class="dv">1</span>] <span class="co"># extract b0 from b</span></span>
+<span id="cb158-5"><a href="defining-and-fitting-a-linear-model.html#cb158-5" aria-hidden="true" tabindex="-1"></a>  b1 <span class="ot">=</span> b[<span class="dv">2</span>] <span class="co"># extract b1 from b</span></span>
+<span id="cb158-6"><a href="defining-and-fitting-a-linear-model.html#cb158-6" aria-hidden="true" tabindex="-1"></a>  yhat <span class="ot">&lt;-</span> b0 <span class="sc">+</span> b1 <span class="sc">*</span> x <span class="co"># compute fitted values</span></span>
+<span id="cb158-7"><a href="defining-and-fitting-a-linear-model.html#cb158-7" aria-hidden="true" tabindex="-1"></a>  ehat <span class="ot">&lt;-</span> y <span class="sc">-</span> yhat <span class="co"># compute residuals</span></span>
+<span id="cb158-8"><a href="defining-and-fitting-a-linear-model.html#cb158-8" aria-hidden="true" tabindex="-1"></a>  <span class="fu">return</span>(<span class="fu">sum</span>(ehat<span class="sc">^</span><span class="dv">2</span>)) <span class="co"># return RSS</span></span>
+<span id="cb158-9"><a href="defining-and-fitting-a-linear-model.html#cb158-9" aria-hidden="true" tabindex="-1"></a>}</span></code></pre></div>
+<p>Next, we specify sequences of <code>b0</code> and <code>b1</code> values to consider for
+optimizing the RSS. We create a matrix, <code>rss_mat</code> to store the computed
+RSS for each combination of <code>b0</code> and <code>b1</code>. We then use a double <code>for</code>
+loop to evaluate the RSS for each combination of <code>b0</code> and <code>b1</code> in our
+sequences.</p>
+<div class="sourceCode" id="cb159"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb159-1"><a href="defining-and-fitting-a-linear-model.html#cb159-1" aria-hidden="true" tabindex="-1"></a><span class="co"># sequences of candidate b0 and b1 values</span></span>
+<span id="cb159-2"><a href="defining-and-fitting-a-linear-model.html#cb159-2" aria-hidden="true" tabindex="-1"></a>b0_seq <span class="ot">&lt;-</span> <span class="fu">seq</span>(<span class="fl">41.06</span>, <span class="fl">41.08</span>, <span class="at">len =</span> <span class="dv">101</span>)</span>
+<span id="cb159-3"><a href="defining-and-fitting-a-linear-model.html#cb159-3" aria-hidden="true" tabindex="-1"></a>b1_seq <span class="ot">&lt;-</span> <span class="fu">seq</span>(<span class="fl">0.383</span>, <span class="fl">0.385</span>, <span class="at">len =</span> <span class="dv">101</span>)</span>
+<span id="cb159-4"><a href="defining-and-fitting-a-linear-model.html#cb159-4" aria-hidden="true" tabindex="-1"></a><span class="co"># matrix to store rss values</span></span>
+<span id="cb159-5"><a href="defining-and-fitting-a-linear-model.html#cb159-5" aria-hidden="true" tabindex="-1"></a>rss_mat <span class="ot">&lt;-</span> <span class="fu">matrix</span>(<span class="at">nrow =</span> <span class="fu">length</span>(b0_seq), <span class="at">ncol =</span> <span class="fu">length</span>(b1_seq))</span>
+<span id="cb159-6"><a href="defining-and-fitting-a-linear-model.html#cb159-6" aria-hidden="true" tabindex="-1"></a><span class="co"># use double loop to compute RSS for all combinations of b0_seq and b1_seq</span></span>
+<span id="cb159-7"><a href="defining-and-fitting-a-linear-model.html#cb159-7" aria-hidden="true" tabindex="-1"></a><span class="co"># seq_along(b0_seq) returns the vector 1:length(b0_seq), but is safer </span></span>
+<span id="cb159-8"><a href="defining-and-fitting-a-linear-model.html#cb159-8" aria-hidden="true" tabindex="-1"></a><span class="cf">for</span> (i <span class="cf">in</span> <span class="fu">seq_along</span>(b0_seq)) {</span>
+<span id="cb159-9"><a href="defining-and-fitting-a-linear-model.html#cb159-9" aria-hidden="true" tabindex="-1"></a>  <span class="cf">for</span> (j <span class="cf">in</span> <span class="fu">seq_along</span>(b1_seq)) {</span>
+<span id="cb159-10"><a href="defining-and-fitting-a-linear-model.html#cb159-10" aria-hidden="true" tabindex="-1"></a>    rss_mat[i, j] <span class="ot">&lt;-</span> <span class="fu">compute_rss</span>(<span class="fu">c</span>(b0_seq[i], b1_seq[j]))</span>
+<span id="cb159-11"><a href="defining-and-fitting-a-linear-model.html#cb159-11" aria-hidden="true" tabindex="-1"></a>  }</span>
+<span id="cb159-12"><a href="defining-and-fitting-a-linear-model.html#cb159-12" aria-hidden="true" tabindex="-1"></a>}</span></code></pre></div>
+<p>We draw a contour plot of the RSS surface using the <code>contour</code> function.</p>
+<div class="sourceCode" id="cb160"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb160-1"><a href="defining-and-fitting-a-linear-model.html#cb160-1" aria-hidden="true" tabindex="-1"></a><span class="co"># draw a contour plot of the RSS surface</span></span>
+<span id="cb160-2"><a href="defining-and-fitting-a-linear-model.html#cb160-2" aria-hidden="true" tabindex="-1"></a><span class="fu">contour</span>(<span class="at">x =</span> b0_seq, <span class="at">y =</span> b1_seq, <span class="at">z =</span> rss_mat, <span class="at">xlab =</span> <span class="st">&quot;b0&quot;</span>, <span class="at">ylab =</span> <span class="st">&quot;b1&quot;</span>)</span>
+<span id="cb160-3"><a href="defining-and-fitting-a-linear-model.html#cb160-3" aria-hidden="true" tabindex="-1"></a><span class="fu">title</span>(<span class="st">&quot;RSS surface of Pearson and Lee height data&quot;</span>)</span></code></pre></div>
+<p><img src="Data-Analysis-with-Linear-Regression_files/figure-html/unnamed-chunk-155-1.png" width="672" /></p>
+<p>A contour plot uses contour lines to describe the height of the <span class="math inline">\(z\)</span>
+dimension of a 3-dimensional <span class="math inline">\((x, y, z)\)</span> surface. Each line/contour
+indicates the height of the surface along that line. Note that in the
+graphic above, the contours are basically straight lines. There’s no
+easily identifiable combinations of <code>b0</code> and <code>b1</code> the produce the
+minimum RSS.</p>
+<p>We can approximate the optimal values of <code>b0</code> and <code>b1</code> that minimize the
+RSS through the <code>optim</code> function. The optim function takes two main
+arguments:</p>
+<ul>
+<li><code>par</code>: a vector of starting values for the optimization algorithm.
+In our case, this will be the starting values for <code>b0</code> and <code>b1</code>.</li>
+<li><code>fn</code>: a function of <code>par</code> to minimize.</li>
+</ul>
+<p>The <code>optim</code> function will return a list with several pieces of
+information (see <code>?stats::optim</code>) for details. We want the <code>par</code>
+component of the returned list, which is the <code>par</code> vector that
+(approximately) minimizes <code>fn</code>. We then use the <code>points</code> function to
+plot the “optimal” values of <code>b0</code> and <code>b1</code> that minimize the RSS.</p>
+<div class="sourceCode" id="cb161"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb161-1"><a href="defining-and-fitting-a-linear-model.html#cb161-1" aria-hidden="true" tabindex="-1"></a><span class="co"># use the optim function to find the values of b0 and b1 that minimize the RSS</span></span>
+<span id="cb161-2"><a href="defining-and-fitting-a-linear-model.html#cb161-2" aria-hidden="true" tabindex="-1"></a><span class="co"># par is the vector of initial values</span></span>
+<span id="cb161-3"><a href="defining-and-fitting-a-linear-model.html#cb161-3" aria-hidden="true" tabindex="-1"></a><span class="co"># fn is the function to minimize</span></span>
+<span id="cb161-4"><a href="defining-and-fitting-a-linear-model.html#cb161-4" aria-hidden="true" tabindex="-1"></a><span class="co"># $par extracts the values found by optim to minimize fn</span></span>
+<span id="cb161-5"><a href="defining-and-fitting-a-linear-model.html#cb161-5" aria-hidden="true" tabindex="-1"></a>optimal_b <span class="ot">&lt;-</span> <span class="fu">optim</span>(<span class="at">par =</span> <span class="fu">c</span>(<span class="dv">41</span>, <span class="fl">0.4</span>), <span class="at">fn =</span> compute_rss)<span class="sc">$</span>par</span>
+<span id="cb161-6"><a href="defining-and-fitting-a-linear-model.html#cb161-6" aria-hidden="true" tabindex="-1"></a><span class="co"># print the optimal values of b</span></span>
+<span id="cb161-7"><a href="defining-and-fitting-a-linear-model.html#cb161-7" aria-hidden="true" tabindex="-1"></a>optimal_b</span>
+<span id="cb161-8"><a href="defining-and-fitting-a-linear-model.html#cb161-8" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; [1] 41.0655877  0.3842737</span></span>
+<span id="cb161-9"><a href="defining-and-fitting-a-linear-model.html#cb161-9" aria-hidden="true" tabindex="-1"></a><span class="co"># plot optimal value as an X on the contour plot</span></span>
+<span id="cb161-10"><a href="defining-and-fitting-a-linear-model.html#cb161-10" aria-hidden="true" tabindex="-1"></a><span class="fu">contour</span>(<span class="at">x =</span> b0_seq, <span class="at">y =</span> b1_seq, <span class="at">z =</span> rss_mat, <span class="at">xlab =</span> <span class="st">&quot;b0&quot;</span>, <span class="at">ylab =</span> <span class="st">&quot;b1&quot;</span>)</span>
+<span id="cb161-11"><a href="defining-and-fitting-a-linear-model.html#cb161-11" aria-hidden="true" tabindex="-1"></a><span class="fu">title</span>(<span class="st">&quot;RSS surface of Pearson and Lee height data&quot;</span>)</span>
+<span id="cb161-12"><a href="defining-and-fitting-a-linear-model.html#cb161-12" aria-hidden="true" tabindex="-1"></a><span class="fu">points</span>(<span class="at">x =</span> optimal_b[<span class="dv">1</span>], <span class="at">y =</span> optimal_b[<span class="dv">2</span>], <span class="at">pch =</span> <span class="dv">4</span>)</span></code></pre></div>
+<p><img src="Data-Analysis-with-Linear-Regression_files/figure-html/unnamed-chunk-156-1.png" width="672" /></p>
+<p>What is our takeaway from this example? It’s probably not ideal to
+numerically search for the values of <span class="math inline">\(\hat{\beta}_0\)</span> and <span class="math inline">\(\hat{\beta}_1\)</span>
+that minimize <span class="math inline">\(RSS(\hat{\beta}_0\)</span>, <span class="math inline">\(\hat{\beta}_1)\)</span>. Instead, we should
+seek an exact solution using mathematics.</p>
+</div>
+<div id="ols-estimators-of-the-simple-linear-regression-parameters-1" class="section level3 hasAnchor" number="17.10.2">
+<h3><span class="header-section-number">17.10.2</span> OLS estimators of the simple linear regression parameters<a href="defining-and-fitting-a-linear-model.html#ols-estimators-of-the-simple-linear-regression-parameters-1" class="anchor-section" aria-label="Anchor link to header"></a></h3>
+<p>Define <span class="math inline">\(\bar{x}=\frac{1}{n}\sum_{i=1}^n x_i\)</span> and
+<span class="math inline">\(\bar{Y} = \frac{1}{n}\sum_{i=1}^n Y_i\)</span>.</p>
+<p>The OLS estimators of the regression coefficients for a simple linear
+regression coefficients are</p>
+<p><span class="math display">\[\begin{align*}
+\hat{\beta}_1 &amp;= \frac{\sum_{i=1}^n x_i Y_i - \frac{1}{n} \biggl(\sum_{i=1}^n x_i\biggr)\biggl(\sum_{i=1}^n Y_i\biggr)}{\sum_{i=1}^n x_i^2 - \frac{1}{n} \biggl(\sum_{i=1}^n x_i\biggr)^2} \\
+&amp;= \frac{\sum_{i=1}^n (x_i - \bar{x})(Y_i - \bar{Y})}{\sum_{i=1}^n (x_i - \bar{x})^2} \\
+&amp;= \frac{\sum_{i=1}^n (x_i - \bar{x})Y_i}{\sum_{i=1}^n (x_i - \bar{x})x_i}
+\end{align*}\]</span> and <span class="math display">\[\begin{equation}
+\hat{\beta}_0 = \bar{Y} - \hat{\beta}_1 \bar{x}.
+\end{equation}\]</span></p>
+<p>Thought it’s already been said, we state once again that the OLS
+estimators of <span class="math inline">\(\beta_0\)</span> and <span class="math inline">\(\beta_1\)</span> shown above are the estimators
+that minimize the RSS.</p>
+<p>The other parameter we’ve discussed is the error variance, <span class="math inline">\(\sigma^2\)</span>.
+The most common estimator of the error variance is <span class="math display">\[\begin{equation}
+\hat{\sigma}^2 = \frac{RSS}{n-p}, (\#eq:sigmasq-hat)
+\end{equation}\]</span> where <span class="math inline">\(p\)</span> is the number of regression coefficients. In
+general, <span class="math inline">\(n-p\)</span> is the degrees of freedom of the RSS. In a simple linear
+regression context, the denominator of <a href="linear-model-estimation.html#eq:sigmasq-hat">(5.9)</a> is <span class="math inline">\(n-2\)</span>.</p>
+</div>
+</div>
+<div id="penguins-simple-linear-regression-example" class="section level2 hasAnchor" number="17.11">
+<h2><span class="header-section-number">17.11</span> Penguins simple linear regression example<a href="defining-and-fitting-a-linear-model.html#penguins-simple-linear-regression-example" class="anchor-section" aria-label="Anchor link to header"></a></h2>
+<p>We will use the <code>penguins</code> data set in the <strong>palmerpenguins</strong> package
+<span class="citation">(<a href="#ref-R-palmerpenguins" role="doc-biblioref">Horst, Hill, and Gorman 2020</a>)</span> to illustrate a very basic simple linear regression
+analysis.</p>
+<p>The <code>penguins</code> data set provides data related to various penguin species
+measured in the Palmer Archipelago (Antarctica), originally provided by
+<span class="citation"><a href="#ref-GormanEtAl2014" role="doc-biblioref">Gorman, Williams, and Fraser</a> (<a href="#ref-GormanEtAl2014" role="doc-biblioref">2014</a>)</span>. We start by loading the data into memory.</p>
+<div class="sourceCode" id="cb162"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb162-1"><a href="defining-and-fitting-a-linear-model.html#cb162-1" aria-hidden="true" tabindex="-1"></a><span class="fu">data</span>(penguins, <span class="at">package =</span> <span class="st">&quot;palmerpenguins&quot;</span>)</span></code></pre></div>
+<p>The data set includes 344 observations of
+8 variables. The variables are:</p>
+<ul>
+<li><code>species</code>: a <code>factor</code> indicating the penguin species</li>
+<li><code>island</code>: a <code>factor</code> indicating the island the penguin was observed</li>
+<li><code>bill_length_mm</code>: a <code>numeric</code> variable indicating the bill length in
+millimeters</li>
+<li><code>bill_depth_mm</code>: a <code>numeric</code> variable indicating the bill depth in
+millimeters</li>
+<li><code>flipper_length_mm</code>: an <code>integer</code> variable indicating the flipper
+length in millimeters</li>
+<li><code>body_mass_g</code>: an <code>integer</code> variable indicating the body mass in
+grams</li>
+<li><code>sex</code>: a <code>factor</code> indicating the penguin sex (<code>female</code>, <code>male</code>)</li>
+<li><code>year</code>: an integer denoting the study year the penguin was observed
+(<code>2007</code>, <code>2008</code>, or <code>2009</code>)</li>
+</ul>
+<p>We begin by creating a scatter plot of <code>bill_length_mm</code> versus
+<code>body_mass_g</code> (y-axis versus x-axis) in Figure <a href="defining-and-fitting-a-linear-model.html#fig:penguin-plot">17.2</a>.
+We see a clear positive association between body mass and bill length:
+as the body mass increases, the bill length tends to increase. The
+pattern is linear, i.e., roughly a straight line.</p>
+<div class="sourceCode" id="cb163"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb163-1"><a href="defining-and-fitting-a-linear-model.html#cb163-1" aria-hidden="true" tabindex="-1"></a><span class="fu">plot</span>(bill_length_mm <span class="sc">~</span> body_mass_g, <span class="at">data =</span> penguins,</span>
+<span id="cb163-2"><a href="defining-and-fitting-a-linear-model.html#cb163-2" aria-hidden="true" tabindex="-1"></a>     <span class="at">ylab =</span> <span class="st">&quot;bill length (mm)&quot;</span>, <span class="at">xlab =</span> <span class="st">&quot;body mass (g)&quot;</span>,</span>
+<span id="cb163-3"><a href="defining-and-fitting-a-linear-model.html#cb163-3" aria-hidden="true" tabindex="-1"></a>     <span class="at">main =</span> <span class="st">&quot;Penguin size measurements&quot;</span>)</span></code></pre></div>
+<div class="figure"><span style="display:block;" id="fig:penguin-plot"></span>
+<img src="Data-Analysis-with-Linear-Regression_files/figure-html/penguin-plot-1.png" alt="A scatter plot of penguin bill length (mm) versus body mass (g)" width="672" />
+<p class="caption">
+Figure 17.2: A scatter plot of penguin bill length (mm) versus body mass (g)
+</p>
+</div>
+<p>We first perform a single linear regression analysis manually using the
+equations previously provided by regressing <code>bill_length_mm</code> on
+<code>body_mass_g</code>.</p>
+<p>Using the <code>summary</code> function on the <code>penguins</code> data frame, we see that
+both <code>bill_length_mm</code> and <code>body_mass_g</code> have <code>NA</code> values.</p>
+<div class="sourceCode" id="cb164"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb164-1"><a href="defining-and-fitting-a-linear-model.html#cb164-1" aria-hidden="true" tabindex="-1"></a><span class="fu">summary</span>(penguins)</span>
+<span id="cb164-2"><a href="defining-and-fitting-a-linear-model.html#cb164-2" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;       species          island    bill_length_mm  bill_depth_mm  </span></span>
+<span id="cb164-3"><a href="defining-and-fitting-a-linear-model.html#cb164-3" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;  Adelie   :152   Biscoe   :168   Min.   :32.10   Min.   :13.10  </span></span>
+<span id="cb164-4"><a href="defining-and-fitting-a-linear-model.html#cb164-4" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;  Chinstrap: 68   Dream    :124   1st Qu.:39.23   1st Qu.:15.60  </span></span>
+<span id="cb164-5"><a href="defining-and-fitting-a-linear-model.html#cb164-5" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;  Gentoo   :124   Torgersen: 52   Median :44.45   Median :17.30  </span></span>
+<span id="cb164-6"><a href="defining-and-fitting-a-linear-model.html#cb164-6" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;                                  Mean   :43.92   Mean   :17.15  </span></span>
+<span id="cb164-7"><a href="defining-and-fitting-a-linear-model.html#cb164-7" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;                                  3rd Qu.:48.50   3rd Qu.:18.70  </span></span>
+<span id="cb164-8"><a href="defining-and-fitting-a-linear-model.html#cb164-8" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;                                  Max.   :59.60   Max.   :21.50  </span></span>
+<span id="cb164-9"><a href="defining-and-fitting-a-linear-model.html#cb164-9" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;                                  NA&#39;s   :2       NA&#39;s   :2      </span></span>
+<span id="cb164-10"><a href="defining-and-fitting-a-linear-model.html#cb164-10" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;  flipper_length_mm  body_mass_g       sex           year     </span></span>
+<span id="cb164-11"><a href="defining-and-fitting-a-linear-model.html#cb164-11" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;  Min.   :172.0     Min.   :2700   female:165   Min.   :2007  </span></span>
+<span id="cb164-12"><a href="defining-and-fitting-a-linear-model.html#cb164-12" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;  1st Qu.:190.0     1st Qu.:3550   male  :168   1st Qu.:2007  </span></span>
+<span id="cb164-13"><a href="defining-and-fitting-a-linear-model.html#cb164-13" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;  Median :197.0     Median :4050   NA&#39;s  : 11   Median :2008  </span></span>
+<span id="cb164-14"><a href="defining-and-fitting-a-linear-model.html#cb164-14" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;  Mean   :200.9     Mean   :4202                Mean   :2008  </span></span>
+<span id="cb164-15"><a href="defining-and-fitting-a-linear-model.html#cb164-15" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;  3rd Qu.:213.0     3rd Qu.:4750                3rd Qu.:2009  </span></span>
+<span id="cb164-16"><a href="defining-and-fitting-a-linear-model.html#cb164-16" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;  Max.   :231.0     Max.   :6300                Max.   :2009  </span></span>
+<span id="cb164-17"><a href="defining-and-fitting-a-linear-model.html#cb164-17" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;  NA&#39;s   :2         NA&#39;s   :2</span></span></code></pre></div>
+<p>We want to remove the rows of <code>penguins</code> where either <code>body_mass_g</code> or
+<code>bill_length_mm</code> have <code>NA</code> values. We do that below using the <code>na.omit</code>
+function (selecting only the relevant variables) and assign the cleaned
+object the name <code>penguins_clean</code>.</p>
+<div class="sourceCode" id="cb165"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb165-1"><a href="defining-and-fitting-a-linear-model.html#cb165-1" aria-hidden="true" tabindex="-1"></a><span class="co"># remove rows of penguins where bill_length_mm or body_mass_g have NA values </span></span>
+<span id="cb165-2"><a href="defining-and-fitting-a-linear-model.html#cb165-2" aria-hidden="true" tabindex="-1"></a>penguins_clean <span class="ot">&lt;-</span> <span class="fu">na.omit</span>(penguins[,<span class="fu">c</span>(<span class="st">&quot;bill_length_mm&quot;</span>, <span class="st">&quot;body_mass_g&quot;</span>)])</span></code></pre></div>
+<p>We extract the <code>bill_length_mm</code> variable from the <code>penguins</code> data frame
+and assign it the name <code>y</code> since it will be the response variable. We
+extract the <code>body_mass_g</code> variable from the <code>penguins</code> data frame and
+assign it the name <code>y</code> since it will be the predictor variable. We also
+determine the number of observations and assign that value the name <code>n</code>.</p>
+<div class="sourceCode" id="cb166"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb166-1"><a href="defining-and-fitting-a-linear-model.html#cb166-1" aria-hidden="true" tabindex="-1"></a><span class="co"># extract response and predictor from penguins_clean</span></span>
+<span id="cb166-2"><a href="defining-and-fitting-a-linear-model.html#cb166-2" aria-hidden="true" tabindex="-1"></a>y <span class="ot">&lt;-</span> penguins_clean<span class="sc">$</span>bill_length_mm</span>
+<span id="cb166-3"><a href="defining-and-fitting-a-linear-model.html#cb166-3" aria-hidden="true" tabindex="-1"></a>x <span class="ot">&lt;-</span> penguins_clean<span class="sc">$</span>body_mass_g</span>
+<span id="cb166-4"><a href="defining-and-fitting-a-linear-model.html#cb166-4" aria-hidden="true" tabindex="-1"></a><span class="co"># determine number of observations</span></span>
+<span id="cb166-5"><a href="defining-and-fitting-a-linear-model.html#cb166-5" aria-hidden="true" tabindex="-1"></a>n <span class="ot">&lt;-</span> <span class="fu">length</span>(y)</span></code></pre></div>
+<p>We now compute <span class="math inline">\(\hat{\beta}_1\)</span> and <span class="math inline">\(\hat{\beta}_0\)</span>. Note that placing
+<code>()</code> around the assignment operations will both perform the assign and
+print the results.</p>
+<div class="sourceCode" id="cb167"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb167-1"><a href="defining-and-fitting-a-linear-model.html#cb167-1" aria-hidden="true" tabindex="-1"></a><span class="co"># compute OLS estimates of beta1 and beta0</span></span>
+<span id="cb167-2"><a href="defining-and-fitting-a-linear-model.html#cb167-2" aria-hidden="true" tabindex="-1"></a>(b1 <span class="ot">&lt;-</span> (<span class="fu">sum</span>(x <span class="sc">*</span> y) <span class="sc">-</span> <span class="fu">sum</span>(x) <span class="sc">*</span> <span class="fu">sum</span>(y) <span class="sc">/</span> n)<span class="sc">/</span>(<span class="fu">sum</span>(x<span class="sc">^</span><span class="dv">2</span>) <span class="sc">-</span> <span class="fu">sum</span>(x)<span class="sc">^</span><span class="dv">2</span><span class="sc">/</span>n))</span>
+<span id="cb167-3"><a href="defining-and-fitting-a-linear-model.html#cb167-3" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; [1] 0.004051417</span></span>
+<span id="cb167-4"><a href="defining-and-fitting-a-linear-model.html#cb167-4" aria-hidden="true" tabindex="-1"></a>(b0 <span class="ot">&lt;-</span> <span class="fu">mean</span>(y) <span class="sc">-</span> b1 <span class="sc">*</span> <span class="fu">mean</span>(x))        </span>
+<span id="cb167-5"><a href="defining-and-fitting-a-linear-model.html#cb167-5" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; [1] 26.89887</span></span></code></pre></div>
+<p>The estimated value of <span class="math inline">\(\beta_0\)</span> is <span class="math inline">\(\hat{\beta}_0=26.90\)</span> and the
+estimated value of <span class="math inline">\(\beta_1\)</span> is <span class="math inline">\(\hat{\beta}_1=0.004\)</span>. The basic
+mathematical interpretation of our results is that:</p>
+<ul>
+<li>(<span class="math inline">\(\hat{\beta}_1\)</span>): If a penguin has a body mass 1 gram larger than
+another penguin, we expect the larger penguins bill length to be
+0.004 millimeters longer.</li>
+<li>(<span class="math inline">\(\hat{\beta}_0\)</span>):A penguin with a body mass of 0 grams is expected
+to have a bill length of 26.9 millimeters.</li>
+</ul>
+<p>The latter interpretation is clearly non-sensical and is caused by the
+fact that we are extrapolating far outside the observed body mass
+values. The relationship between body mass and bill length is different
+for penguin chicks versus adults.</p>
+<p>We can use the <code>abline</code> function to overlay the fitted model on the
+observed data. Note that in simple linear regression, <span class="math inline">\(\hat{\beta}_1\)</span>
+corresponds to the slope of the fitted line and <span class="math inline">\(\hat{\beta}_0\)</span> will be
+the intercept.</p>
+<div class="sourceCode" id="cb168"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb168-1"><a href="defining-and-fitting-a-linear-model.html#cb168-1" aria-hidden="true" tabindex="-1"></a><span class="fu">plot</span>(bill_length_mm <span class="sc">~</span> body_mass_g, <span class="at">data =</span> penguins,</span>
+<span id="cb168-2"><a href="defining-and-fitting-a-linear-model.html#cb168-2" aria-hidden="true" tabindex="-1"></a>     <span class="at">ylab =</span> <span class="st">&quot;bill length (mm)&quot;</span>, <span class="at">xlab =</span> <span class="st">&quot;body mass (g)&quot;</span>,</span>
+<span id="cb168-3"><a href="defining-and-fitting-a-linear-model.html#cb168-3" aria-hidden="true" tabindex="-1"></a>     <span class="at">main =</span> <span class="st">&quot;Penguin size measurements&quot;</span>)</span>
+<span id="cb168-4"><a href="defining-and-fitting-a-linear-model.html#cb168-4" aria-hidden="true" tabindex="-1"></a><span class="co"># a is the intercept and b is the slope</span></span>
+<span id="cb168-5"><a href="defining-and-fitting-a-linear-model.html#cb168-5" aria-hidden="true" tabindex="-1"></a><span class="fu">abline</span>(<span class="at">a =</span> b0, <span class="at">b =</span> b1)</span></code></pre></div>
+<p><img src="Data-Analysis-with-Linear-Regression_files/figure-html/unnamed-chunk-162-1.png" width="672" /></p>
+<p>The fit of the model to our observed data seems reasonable.</p>
+<p>We can also compute the residuals,
+<span class="math inline">\(\hat{\epsilon}_1,\ldots,\hat{\epsilon}_n\)</span>, the fitted values
+<span class="math inline">\(\hat{y}_1,\ldots,\hat{y}_n\)</span>, and the associated RSS,
+<span class="math inline">\(RSS=\sum_{i=1}^n \hat{\epsilon}_i^2\)</span>.</p>
+<div class="sourceCode" id="cb169"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb169-1"><a href="defining-and-fitting-a-linear-model.html#cb169-1" aria-hidden="true" tabindex="-1"></a>yhat <span class="ot">&lt;-</span> b0 <span class="sc">+</span> b1 <span class="sc">*</span> x <span class="co"># compute fitted values</span></span>
+<span id="cb169-2"><a href="defining-and-fitting-a-linear-model.html#cb169-2" aria-hidden="true" tabindex="-1"></a>ehat <span class="ot">&lt;-</span> y <span class="sc">-</span> yhat <span class="co"># compute residuals</span></span>
+<span id="cb169-3"><a href="defining-and-fitting-a-linear-model.html#cb169-3" aria-hidden="true" tabindex="-1"></a>(rss <span class="ot">&lt;-</span> <span class="fu">sum</span>(ehat<span class="sc">^</span><span class="dv">2</span>)) <span class="co"># sum of the squared residuals</span></span>
+<span id="cb169-4"><a href="defining-and-fitting-a-linear-model.html#cb169-4" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; [1] 6564.494</span></span>
+<span id="cb169-5"><a href="defining-and-fitting-a-linear-model.html#cb169-5" aria-hidden="true" tabindex="-1"></a>(sigmasqhat <span class="ot">&lt;-</span> rss<span class="sc">/</span>(n<span class="dv">-2</span>)) <span class="co"># estimated error variance</span></span>
+<span id="cb169-6"><a href="defining-and-fitting-a-linear-model.html#cb169-6" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; [1] 19.30734</span></span></code></pre></div>
+</div>
+<div id="fitting-a-linear-model-using-r" class="section level2 hasAnchor" number="17.12">
+<h2><span class="header-section-number">17.12</span> Fitting a linear model using R<a href="defining-and-fitting-a-linear-model.html#fitting-a-linear-model-using-r" class="anchor-section" aria-label="Anchor link to header"></a></h2>
+<p>We now describe how to use R to fit a linear model to data.</p>
+<p>The <code>lm</code> function uses OLS to fit a linear model to data. The function
+has two major arguments:</p>
+<ul>
+<li><p><code>data</code>: the data frame in which the model variables are stored. This
+can be omitted if the variables are already stored in memory.</p></li>
+<li><p><code>formula</code>: a <span class="citation"><a href="#ref-wilkinsonrogers1973" role="doc-biblioref">Wilkinson and Rogers</a> (<a href="#ref-wilkinsonrogers1973" role="doc-biblioref">1973</a>)</span> style formula describing the
+linear regression model. Assuming the <code>y</code> is the response, <code>x</code>,
+<code>x1</code>, <code>x2</code>, <code>x3</code> are available numeric predictors:</p>
+<ul>
+<li><code>y ~ x</code> describes a simple linear regression model based on
+<span class="math inline">\(E(Y|X)=\beta_0+\beta_1 X\)</span>.</li>
+<li><code>y ~ x1 + x2</code> describes a multiple linear regression model based
+on <span class="math inline">\(E(Y|X_1, X_2)=\beta_0+\beta_1 X_1 + \beta_2 X_2\)</span>.</li>
+<li><code>y ~ x1 + x2 + x1:x2</code> and <code>y ~ x1 * x2</code> describe a multiple
+linear regression model based on
+<span class="math inline">\(E(Y|X_1, X_2)=\beta_0+\beta_1 X_1 + \beta_2 X_2 + \beta_3 X_1 X_2\)</span>.</li>
+<li><code>y ~ -1 + x1 + x2</code> describes a multiple linear regression model
+without an intercept, in this case,
+<span class="math inline">\(E(Y|X_1, X_2)=\beta_1 X_1 + \beta_2 X_2\)</span>.</li>
+<li><code>y ~ x + I(x^2)</code> describe a multiple linear regression model
+based on <span class="math inline">\(E(Y|X)=\beta_0+\beta_1 X + \beta_2 X^2\)</span>.</li>
+</ul></li>
+</ul>
+<p>We fit a linear model regressing <code>body_mass_g</code> on <code>bill_length_mm</code> using
+the <code>penguins</code> data frame and store it in the object <code>lmod</code>. <code>lmod</code> is
+an object of class <code>lm</code>.</p>
+<div class="sourceCode" id="cb170"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb170-1"><a href="defining-and-fitting-a-linear-model.html#cb170-1" aria-hidden="true" tabindex="-1"></a>lmod <span class="ot">&lt;-</span> <span class="fu">lm</span>(bill_length_mm <span class="sc">~</span> body_mass_g, <span class="at">data =</span> penguins) <span class="co"># fit model</span></span>
+<span id="cb170-2"><a href="defining-and-fitting-a-linear-model.html#cb170-2" aria-hidden="true" tabindex="-1"></a><span class="fu">class</span>(lmod) <span class="co"># class of lmod</span></span>
+<span id="cb170-3"><a href="defining-and-fitting-a-linear-model.html#cb170-3" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; [1] &quot;lm&quot;</span></span></code></pre></div>
+<p>There are a number of methods (generic function that do something
+specific when applied to a certain type of object). Commonly used ones
+include:</p>
+<ul>
+<li><p><code>residuals</code>: extracts <span class="math inline">\(\hat{\boldsymbol{\epsilon}}\)</span> from an <code>lm</code>
+object.</p></li>
+<li><p><code>fitted</code>: extracts <span class="math inline">\(\hat{\mathbf{y}}\)</span> from an <code>lm</code> object.</p></li>
+<li><p><code>coef</code> or <code>coefficients</code>: extracts <span class="math inline">\(\hat{\boldsymbol{\beta}}\)</span> from
+an <code>lm</code> object.</p></li>
+<li><p><code>deviance</code>: extracts the RSS from an <code>lm</code> object.</p></li>
+<li><p><code>sigma</code>: extracts <span class="math inline">\(\hat{\sigma}\)</span> from an <code>lm</code> object.</p></li>
+<li><p><code>df.residual</code>: extracts <span class="math inline">\(n-p\)</span>, the degrees of freedom for the RSS,
+from an <code>lm</code> object.</p></li>
+<li><p><code>summary</code>: provides:</p>
+<ul>
+<li>A 5-number summary of the <span class="math inline">\(\hat{\boldsymbol{\epsilon}}\)</span></li>
+<li>A table that lists the predictors, the <code>Estimate</code> of the
+associated coefficients, the <strong>estimated</strong> standard error of the
+estimates (<code>Std.Error</code>), the computed test statistic associated
+with testing <span class="math inline">\(H_0: \beta_j = 0\)</span> versus <span class="math inline">\(H_a: \beta_j \neq 0\)</span> for
+<span class="math inline">\(j=0,1,\ldots,p-1\)</span> (<code>t value</code>), and the associated p-value of
+each test <code>Pr(&gt;|t|)</code>.</li>
+</ul></li>
+</ul>
+<p>We now use some of the methods to extract important characteristics of
+our fitted model. We then check whether the values obtained from these
+methods match our manual calculations.</p>
+<div class="sourceCode" id="cb171"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb171-1"><a href="defining-and-fitting-a-linear-model.html#cb171-1" aria-hidden="true" tabindex="-1"></a>(coeffs2 <span class="ot">&lt;-</span> <span class="fu">coefficients</span>(lmod)) <span class="co"># extract, assign, and print coefficients</span></span>
+<span id="cb171-2"><a href="defining-and-fitting-a-linear-model.html#cb171-2" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;  (Intercept)  body_mass_g </span></span>
+<span id="cb171-3"><a href="defining-and-fitting-a-linear-model.html#cb171-3" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; 26.898872424  0.004051417</span></span>
+<span id="cb171-4"><a href="defining-and-fitting-a-linear-model.html#cb171-4" aria-hidden="true" tabindex="-1"></a>ehat2 <span class="ot">&lt;-</span> <span class="fu">residuals</span>(lmod) <span class="co"># extract and assign residuals</span></span>
+<span id="cb171-5"><a href="defining-and-fitting-a-linear-model.html#cb171-5" aria-hidden="true" tabindex="-1"></a>yhat2 <span class="ot">&lt;-</span> <span class="fu">fitted</span>(lmod) <span class="co"># extract and assign fitted values</span></span>
+<span id="cb171-6"><a href="defining-and-fitting-a-linear-model.html#cb171-6" aria-hidden="true" tabindex="-1"></a>rss2 <span class="ot">&lt;-</span> <span class="fu">deviance</span>(lmod) <span class="co"># extract and assign rss</span></span>
+<span id="cb171-7"><a href="defining-and-fitting-a-linear-model.html#cb171-7" aria-hidden="true" tabindex="-1"></a>sigmasqhat2 <span class="ot">&lt;-</span> rss2<span class="sc">/</span><span class="fu">df.residual</span>(lmod) <span class="co"># estimated error variance</span></span>
+<span id="cb171-8"><a href="defining-and-fitting-a-linear-model.html#cb171-8" aria-hidden="true" tabindex="-1"></a><span class="co"># compare to manually computed values</span></span>
+<span id="cb171-9"><a href="defining-and-fitting-a-linear-model.html#cb171-9" aria-hidden="true" tabindex="-1"></a><span class="fu">all.equal</span>(<span class="fu">c</span>(b0, b1), coeffs2, <span class="at">check.attributes =</span> <span class="cn">FALSE</span>)</span>
+<span id="cb171-10"><a href="defining-and-fitting-a-linear-model.html#cb171-10" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; [1] TRUE</span></span>
+<span id="cb171-11"><a href="defining-and-fitting-a-linear-model.html#cb171-11" aria-hidden="true" tabindex="-1"></a><span class="fu">all.equal</span>(ehat, ehat2, <span class="at">check.attributes =</span> <span class="cn">FALSE</span>)</span>
+<span id="cb171-12"><a href="defining-and-fitting-a-linear-model.html#cb171-12" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; [1] TRUE</span></span>
+<span id="cb171-13"><a href="defining-and-fitting-a-linear-model.html#cb171-13" aria-hidden="true" tabindex="-1"></a><span class="fu">all.equal</span>(rss, rss2)</span>
+<span id="cb171-14"><a href="defining-and-fitting-a-linear-model.html#cb171-14" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; [1] TRUE</span></span>
+<span id="cb171-15"><a href="defining-and-fitting-a-linear-model.html#cb171-15" aria-hidden="true" tabindex="-1"></a><span class="fu">all.equal</span>(sigmasqhat, sigmasqhat2)</span>
+<span id="cb171-16"><a href="defining-and-fitting-a-linear-model.html#cb171-16" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; [1] TRUE</span></span>
+<span id="cb171-17"><a href="defining-and-fitting-a-linear-model.html#cb171-17" aria-hidden="true" tabindex="-1"></a><span class="co"># methods(class=&quot;lm&quot;)</span></span></code></pre></div>
+<div id="derivation-of-ols-simple-linear-regression-estimators" class="section level3 hasAnchor" number="17.12.1">
+<h3><span class="header-section-number">17.12.1</span> Derivation of OLS simple linear regression estimators<a href="defining-and-fitting-a-linear-model.html#derivation-of-ols-simple-linear-regression-estimators" class="anchor-section" aria-label="Anchor link to header"></a></h3>
+<p>Use calculus to derive the OLS estimator of the regression coefficients.
+Take the partial derivatives of <span class="math inline">\(RSS(\hat{\beta}_0, \hat{\beta}_1)\)</span> with
+respect to <span class="math inline">\(\hat{\beta}_0\)</span> and <span class="math inline">\(\hat{\beta}_1\)</span>, set the derivatives
+equal to zero, and solve for <span class="math inline">\(\hat{\beta}_0\)</span> and <span class="math inline">\(\hat{\beta}_1\)</span> to find
+the critical points of <span class="math inline">\(RSS(\hat{\beta}_0, \hat{\beta}_1)\)</span>. Technically,
+you must show that the Hessian matrix of
+<span class="math inline">\(RSS(\hat{\beta}_0, \hat{\beta}_1)\)</span> is positive definite to verify that
+our solution minimizes the RSS, but we won’t do that here.</p>
+<p><span class="math display">\[\\[4in]\]</span></p>
 
+<div id="refs" class="references csl-bib-body hanging-indent">
+<div class="csl-entry">
+Gorman, Kristen B., Tony D. Williams, and William R. Fraser. 2014. <span>“Ecological Sexual Dimorphism and Environmental Variability Within a Community of Antarctic Penguins (Genus Pygoscelis).”</span> <em>PLOS ONE</em> 9 (3): 1–14. <a href="https://doi.org/10.1371/journal.pone.0090081">https://doi.org/10.1371/journal.pone.0090081</a>.
+</div>
+<div class="csl-entry">
+Horst, Allison, Alison Hill, and Kristen Gorman. 2020. <em>Palmerpenguins: Palmer Archipelago (Antarctica) Penguin Data</em>. <a href="https://CRAN.R-project.org/package=palmerpenguins">https://CRAN.R-project.org/package=palmerpenguins</a>.
+</div>
+<div class="csl-entry">
+Wilkinson, GN, and CE Rogers. 1973. <span>“Symbolic Description of Factorial Models for Analysis of Variance.”</span> <em>Journal of the Royal Statistical Society: Series C (Applied Statistics)</em> 22 (3): 392–99.
+</div>
+<div class="csl-entry">
+Xie, Yihui. 2022. <em>Bookdown: Authoring Books and Technical Documents with r Markdown</em>. <a href="https://CRAN.R-project.org/package=bookdown">https://CRAN.R-project.org/package=bookdown</a>.
+</div>
+</div>
+</div>
+</div>
+</div>
+<h3>References</h3>
+<div id="refs" class="references csl-bib-body hanging-indent">
+<div id="ref-GormanEtAl2014" class="csl-entry">
+Gorman, Kristen B., Tony D. Williams, and William R. Fraser. 2014. <span>“Ecological Sexual Dimorphism and Environmental Variability Within a Community of Antarctic Penguins (Genus Pygoscelis).”</span> <em>PLOS ONE</em> 9 (3): 1–14. <a href="https://doi.org/10.1371/journal.pone.0090081">https://doi.org/10.1371/journal.pone.0090081</a>.
+</div>
+<div id="ref-R-palmerpenguins" class="csl-entry">
+Horst, Allison, Alison Hill, and Kristen Gorman. 2020. <em>Palmerpenguins: Palmer Archipelago (Antarctica) Penguin Data</em>. <a href="https://CRAN.R-project.org/package=palmerpenguins">https://CRAN.R-project.org/package=palmerpenguins</a>.
+</div>
+<div id="ref-wilkinsonrogers1973" class="csl-entry">
+Wilkinson, GN, and CE Rogers. 1973. <span>“Symbolic Description of Factorial Models for Analysis of Variance.”</span> <em>Journal of the Royal Statistical Society: Series C (Applied Statistics)</em> 22 (3): 392–99.
 </div>
 </div>
             </section>
@@ -905,8 +1463,8 @@ where <span class="math inline">\(\mathbf{0}_{n\times 1}\)</span> is the <span c
           </div>
         </div>
       </div>
-<a href="useful-matrix-facts.html" class="navigation navigation-prev " aria-label="Previous page"><i class="fa fa-angle-left"></i></a>
-<a href="linear-model-estimation.html" class="navigation navigation-next " aria-label="Next page"><i class="fa fa-angle-right"></i></a>
+<a href="references.html" class="navigation navigation-prev navigation-unique" aria-label="Previous page"><i class="fa fa-angle-left"></i></a>
+
     </div>
   </div>
 <script src="libs/gitbook-2.6.7/js/app.min.js"></script>
