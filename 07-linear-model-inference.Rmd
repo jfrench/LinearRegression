@@ -18,3 +18,731 @@ With our regression model, we also hope to be able to:
 Results from a sample of observations typically only generalize to a larger population when the sample is a random sample from a larger population. Some examples of random sampling methods include simple random sampling, stratified random sampling, cluster random sampling, and systematic random sampling. Most inferential methods assume the $n$ observations are a simple random sample from a larger population. Simple random sampling requires that each sample of size $n$ is equally likely to occur.
 
 Causal inference can be made when the data are a
+
+
+## Galapogos Example: Testing All Regressors
+
+```{r}
+data(gala, package = "faraway")
+head(gala)
+summary(gala)
+```
+
+The data set `gala` contains 30 observations (one for each island in the Galapagos). There are 6 variables in the dataset. The relationship between the number of plant species and several geographic variables is of interest.
+
+- **Species:** The number of plant species found on the island.
+- **Area:** The area of the island ($\mbox{km}^2$).
+- **Elevation:** The highest elevation of the island (m).
+- **Nearest:** The distance from the nearest island (km).
+- **Scruz:** The distance from Santa Cruz Island (km).
+- **Adjacent:** The area of the adjacent island ($\mbox{km}^2$).
+
+```{r}
+lmod <- lm(Species ~ Area + Elevation + Nearest +
+            Scruz + Adjacent, data = gala)
+summary(lmod)
+```
+
+## Question 1 
+
+Write out a formula for the fitted model based on the output above.
+
+**Complete the formula below.**
+
+$$\widehat{\mbox{Species}} = ?? + ?? \mbox{Area} + ?? \mbox{Elevation} + ?? \mbox{Nearest} + ?? \mbox{Scruz} + ?? \mbox{Adjacent}$$
+
+
+## Question 2
+
+Which regressor has the strongest association with the number species on the island?
+
+**Enter solution here.**
+
+## Setting Up The Hypotheses
+
+How can we decide whether all or some of the regressor variables should be included in our model?
+
+
+- Let $\Omega$ denote the proposed full model.
+- Let $\omega$ denote a simpler model that uses a subset of all regressors.
+
+## Question 3
+
+What do you think would be suitable hypothesis to test whether $\Omega$ is a better model than $\omega$?
+
+**Enter solution here.**
+
+
+## Measuring Significance
+
+- If the models have a similar fit, then we prefer $\omega$ since it is simpler.
+- If the model $\Omega$  is a much better model than $\omega$, then we prefer $\Omega$.
+- If $\mbox{RSS}_{\omega} - \mbox{RSS}_{\Omega}$ is large, then $\Omega$ has a superior fit.
+- How large of a difference is large enough?
+
+$$\mbox{test stat} = \frac{\mbox{fit of observed model} - \mbox{fit of null model}}{\mbox{variability due to sampling}} = \frac{\mbox{RSS}_{\omega} - \mbox{RSS}_{\Omega}}{RSS_{\Omega}}.$$
+
+
+## General $F$ Test for Comparing Two Nested Regression Models:
+
+**H~0~: Model $\omega$ is an adequate model.**
+
+**H~a~:  Model $\Omega$ is better.**
+
+Suppose that model $\Omega$ has $p$ estimated regression coefficients and model $\omega$ has $q$ estimated regression coefficients. Then we use rescaling to get an
+**F-statistic** which has **F-distribution** under the null hypothesis given by:
+
+$$F =  \frac{(\mbox{RSS}_{\omega} - \mbox{RSS}_{\Omega})/(df_{\omega}-df_{\Omega})}{RSS_{\Omega}/df_{\Omega}} =  \frac{(\mbox{RSS}_{\omega} - \mbox{RSS}_{\Omega})/(df_{\omega}-df_{\Omega})}{\hat{\sigma}_{\Omega}^2} \sim F_{p-q,n-p} ,$$
+where $df_{\omega} = n -q$,  $df_{\Omega} = n -p$, and $\hat{\sigma}_{\Omega}^2 = RSS_{\Omega}/df_{\Omega}$.
+
+
+Are any of the predictors useful? We compare the full model $\Omega$ given by $\mathbf{y} = \mathbf{X} \boldsymbol{\beta} + \boldsymbol{\epsilon}$ to the null model $\omega$ which is the constant mean model $y = \mu + \epsilon$ which we estimate with $\hat{y} = \bar{y}$.
+
+
+- Set up the hypotheses:
+
+  + $H_0$: The null model $\omega$ is adequate.  $\beta_1 = \beta_2 = \ldots = \beta_{p-1} = 0$.
+  + $H_a$: At least one of the regression coefficients is not zero.
+
+- Calculate the $F$-statistic setting $q=1$.
+
+$$F =  \frac{(\mbox{RSS}_{\omega} - \mbox{RSS}_{\Omega})/(df_{\omega}-df_{\Omega})}{RSS_{\Omega}/df_{\Omega}} =  \frac{(\mbox{TSS} - \mbox{RSS})/(p-1)}{RSS/(n-p)} = \frac{\mbox{SS}_{\rm reg}/(p-1)}{RSS/(n-p)}.$$
+
+- Calculate the $p$-value using $F_{p-q,n-p}$ where $\mbox{df}_1 = p-q$ is the number of additional regressors in $\Omega$ and $\mbox{df}_2=n-p=\mbox{df}_{\Omega}$ (setting $q=1$). 
+
+
+The information above is often presented in an **analysis of variation (ANOVA) table** which is convenient for summarizing and organizing the various ingredients in the $F$-statistic. Below is a typical ANOVA table when $q=1$.
+
+Source | Deg. of Freedom | Sum of Squares | Mean Square | F 
+------|------------------|----------------|-------------|---
+Regression | $p-1$ | $\mbox{SS}_{\rm reg}$ | $\mbox{SS}_{\rm reg}/(p-1)$ | $F$ 
+Residual | $n-p$ | RSS | $\mbox{RSS}/(n-p)$ 
+Total | $n-1$ | TSS | | 
+
+- **Source**: The source of the variation in the data.
+- **Regression**: The variability due to the variable of interest (which is `Area` in this example). Sometimes, the variable is a factor and this row is labeled **Treatment** or **Between**. 
+- **Residuals**: The unexplained random error (of the full model $\Omega$). Sometimes when the variable of interest is a factor, the row heading is labeled as **Within** to make it clear that the row concerns the variation within the groups.
+- **Total**: The total variation in the data from the null (constant mean) model $\omega$.
+
+
+### Comparing with Fit of Null Model
+
+```{r}
+nullmod <- lm(Species ~ 1, data = gala) 
+anova(nullmod, lmod)
+```
+
+## Question 4 
+
+What is the first line of code above doing?
+
+**Enter solution here.**
+
+
+## Question 5
+
+Interpret the output from the `anova` function.
+
+**Enter solution here.**
+
+
+## Question 6
+
+Arrange the output of the anova function above into an ANOVA table such as the one shown earlier.
+
+**Replace each ?? with an appropriate value based on output above.**
+
+
+Source | Deg. of Freedom | Sum of Squares | Mean Square | F 
+------|------------------|----------------|-------------|---
+Variability due to `Area` | ?? | ?? | ?? | ?? 
+Error of $\Omega$ | ?? | ?? | ?? 
+Error of $\omega$ | ?? | ?? | | 
+
+
+## Question 7 
+
+Compare these calculations with the `summary` output from earlier.
+
+**Enter solution here.**
+
+### Verifying the Output Again
+
+```{r}
+# Compute the sum of squares
+(rss0 <- deviance(nullmod)) # RSS of null (TSS)
+(rss <- deviance(lmod)) # RSS of proposed model
+
+# Compute the degrees of freedom
+(df0 <- df.residual(nullmod)) # df of null model
+(df <- df.residual(lmod)) #  df of proposed model
+
+# Compute the F-statistic
+(f <- ((rss0 - rss)/(df0 - df))/(rss/df)) # F-stat
+
+# Compute the P-value with pf
+# pf(q, df1, df2) computes area to left of q
+# This is a right-tail test (so 1-pf)
+1 - pf(f, df1 = df0 - df, df2 = df) # P-value
+```
+
+### Compare with Summary of `lm`
+
+```{r}
+summary(lmod)
+```
+
+
+### Visualizing the F-dist
+
+```{r}
+library(dplyr)
+library(ggplot2)
+library(tidyr)
+
+data.frame(f = 0:1000 / 100) %>% 
+           mutate(df_25_26 = df(x = f, df1 = 25, df2 = 26),
+                  df_05_26 = df(x = f, df1 = 5, df2 = 26),
+                  df_05_10 = df(x = f, df1 = 5, df2 = 10)) %>%
+#                  df_05_10 = df(x = f, df1 = 5, df2 = 10)) %>%
+  gather(key = "df", value = "density", -f) %>%
+
+  ggplot() +
+  geom_line(aes(x = f, y = density, color = df, linetype=df)) +
+  labs(title = "F at Various Degrees of Freedom",
+       x = "F",
+       y = "Density") + 
+  xlim(0, 5) + 
+  theme_bw()
+```
+
+- If $\mbox{df}_1 = p-1$ is constant and we increase $\mbox{df}_2 = \mbox{df}_{\Omega} = n-p$, the center hump is centered around the same $F$ value, but there is more area in the hump and less in the right tail.
+  - Same number of predictors but more observations has less variability!
+
+- If $\mbox{df}_2 = n-p$ is constant and we increase $\mbox{df}_1 = \mbox{df}_{\Omega} = p-1$, the center hump shifts to the right and there is more area concentrated near the peak and less in the tail to the right.
+
+
+## Interpreting the Results
+
+## Question 8 
+
+You perform a hypothesis test to test the following claims:
+
+H~0~: The null model $\omega$ is adequate.  $\beta_1 = \beta_2 = \ldots = \beta_{p-1} = 0$.
+
+H~a~: At least one of the regression coefficients is not zero.
+
+In the Galapagos example, the $F$-statistic is $15.699$ and the $p$-value is given as $6.838e-07\ast\ast\ast$
+
+a. Interpret the meaning of the $p$-value. 
+
+**Enter solution here.**
+
+b.  If you fail to reject $H_0$, does this mean there is no relation between the regressors and the response?
+
+**Enter solution here.**
+
+c. If you reject $H_0$, does this mean you have found the best model for $y$? 
+
+**Enter solution here.**
+
+
+# Galapogos Example: Testing Just the Area Regressor
+
+To test whether a single regressor (regressor j) can be dropped from the model, we choose between $H_0:\beta_j = 0$ and $H_a: \beta_j \ne 0$.
+
+We have two options in this case:
+
+- Use the previous approach, letting the reduced model be the one without that regressor.
+- Use a $t$-statistic approach.
+
+
+## Question 9 
+
+Repeat the previous process to test whether the regressor `Area` is significant (assuming all others are in the model).
+
+a. State the hypotheses.
+
+
+b. Compute the $F$-statistic and $p$-value.
+
+
+c. Conclusion in this context.
+
+
+### Using a t-statistic
+
+An alternative approach is to use a $t$-statistic for testing the hypotheses:
+
+$$ t_i = \frac{\widehat{\beta}_i-0}{\mbox{se}(\widehat{\beta}_i)}= \frac{\widehat{\beta}_i}{\mbox{se}(\widehat{\beta}_i)}$$
+using a $t$-distribution with $\mbox{df}_{\Omega}=n-p$ degrees of freedom.
+
+```{r}
+# calculation of t-stat
+beta.area <- summary(lmod)$coeff[2,1]
+se.area <- summary(lmod)$coeff[2,2]
+(t <- beta.area/se.area)
+
+# verifying p-value
+2*pt(t, df.residual(lmod))
+
+# matching F-stat
+t^2
+```
+
+## Question 10 
+
+What is the difference between the test being run in the code below and the previous test? Does the test below lead to the same conclusion?
+
+**Enter solution here.**
+
+
+### Be Specific When Stating Your Hypotheses.
+
+```{r}
+# compare results to test of beta_Area = 0 when no other predictors in model
+summary(lm(Species ~ Area, gala))
+```
+
+
+# Testing a Pair of Regressors
+
+## Question 11
+
+Test whether the `Area` and `Adjacent` regressor variables should be simultaneously dropped from the model that already includes `Elevation`, `Nearest`, and `Scruz` in the model.  Make sure to specify the regressors that are the model when stating H~0~ and H~a~.
+
+a. State the hypotheses. 
+
+**Enter solution here.**
+
+b. Compute the $F$-statistic and $p$-value.
+
+**Enter solution here.**
+
+c. Conclusion in this context.
+
+**Enter solution here.**
+
+
+## Permutation Tests
+
+```{r}
+data(gala, package = "faraway")
+head(gala)
+```
+
+### Assumptions for Testing Regressors
+
+The tests we have considered thus far assume that
+$$\epsilon_i \sim N(0, \sigma^2) \quad \mbox{Cov}(\epsilon_i, \epsilon_j) = 0 \mbox{ for } i \ne j.$$
+
+The **Central Limit Theorem** applies to the estimated regression coefficients, so inference based on the assumption of normality can be approximately correct provided the **sample size is large enough**.
+
+**Permutation tests** do not require an assumption of normal errors.  Instead, the **errors are typically assumed to be independent and identically distributed**, or more generally, the errors should be exchangeable.
+
+$$\epsilon_i \sim F \ \ \mbox{ (where F is some distribution) } \quad \mbox{Cov}(\epsilon_i, \epsilon_j) = 0 \mbox{ for } i \ne j.$$
+
+
+### Motivating idea behind permutation tests
+
+If the response has no relationship with the regressor variables, then we should be able to randomly permute the response variable ($y$) without a substantial difference in the typical model results. **A permutation of a vector can be obtained in R using the `sample` function.**
+
+```{r}
+#Sample permutes the values of Species
+gala$Species <- sample(gala$Species)
+# permuted data
+head(gala) 
+```
+
+```{r}
+#permuted model
+lmodp <- lm(Species ~ Elevation, data = gala) 
+summary(lmodp) 
+plot(Species ~ Elevation, data = gala)
+```
+
+```{r}
+data(gala, package = "faraway")
+lmod <- lm(Species ~ Elevation, data = gala)
+summary(lmod)
+plot(Species ~ Elevation, data = gala)
+```
+
+The test statistic from the general $F$ test is still a good statistic to assess whether the regressors are related to the response (as a linear function of the regression coefficients).
+
+To test this formally, we:
+
+1. Permute the response variable for all possible (n!) permutations
+2. Fit the regression model to each permuted data set.
+3. Calculate the $F$ statistic associated with the general $F$ test for each model.
+4. **The p-value is the proportion of test statistics for the permuted data that are as extreme (i.e., at least as large as) the test statistic for the original data set.**  
+  - The p-value of the permutation test can often be approximated by the p-value from the general F test.
+
+Advantages of the permutation test:
+
+1.	Doesn’t require normal errors.
+2.	More robust than other traditional methods if the errors are not normal.
+
+Disadvantages of the permutation test:  
+
+- Takes more time.
+- The test is not as powerful when the errors are truly normal.
+
+**To speed up computation time for the permutation test, we use only a subset of random permutations instead of all possible permutations.**
+
+## Permutation Test on Two Regressors
+
+We would like to test whether the variables Elevation and Area should be used as regressors for Species.
+
+### Question 1: Set up the hypotheses for this test.
+
+
+
+### Question 2: Compute the $F$-statistic from the general $F$ test.
+
+```{r}
+# Reset to orginal, actual dataset
+data(gala, package = "faraway")
+lmod <- lm(Species ~ Area + Nearest, data = gala)
+lms <- summary(lmod)
+lms$fstat
+```
+
+### Question 3: Compute the $p$-value of the corresponding $F$-statistic from the general $F$ test.
+
+
+```{r}
+# Calculating p-value
+1 - pf(lms$fstat[1], lms$fstat[2], lms$fstat[3])
+```
+
+
+### Sample Permutation Test
+
+```{r}
+## I include this here since I'd like to run permutation test below
+data(gala, package = "faraway")
+lmod <- lm(Species ~ Area + Nearest, data = gala)
+lms <- summary(lmod)
+lms$fstat
+```
+
+```{r}
+# Instead of worrying about all possible permutations
+# We'll select 4000 possible permutations
+nreps <- 4000
+
+# create an empty numeric vector to store results
+fstats <- numeric(nreps)
+
+# Repeat the following 4000 times
+set.seed(123) #So we all get the same results
+for (i in 1:nreps){
+  lmods <- lm(sample(Species) ~ Area + Nearest, data = gala)
+  fstats[i] <- summary(lmods)$fstat[1]
+}
+
+# Compute the p-value using simulated data
+mean(fstats >= lms$fstat[1])
+```
+
+```{r}
+fobs <- lms$fstat[1]
+# compare to observed f statistic (on appropriate scale)
+plot(density(fstats), xlab = "Simulated F-stat", main = "permutation distribution of F-stat", xlim = c(0, max(fstats, fobs)))
+abline(v = fobs)
+mean(fstats >= fobs)
+```
+
+### Question 4: Compare the two p-values from the two methods. Do you think the difference is significant? Which p-value do you think is more accurate? Why?
+
+
+- **If there is some crucial difference in the conclusion, then the permutation-based test is preferred to the test that assumes errors are normally distributed.**
+
+## Testing whether one regressor can be dropped
+
+Testing whether a regressor can be dropped from the regression model also falls within the permutation test framework. 
+
+For a test involving a single regression coefficient $\beta_j$:
+
+- We can permute the observed values of regressor $X_j$ (the column vector $X_j$) instead of the response. 
+- If $X_j$ has no relationship with the response, permuting $X_j$ should have little impact on the model fit.
+
+### Setting up the hypotheses
+
+- $H_0: \beta_2=\beta_{\rm Nearest}=0 \ \mid \beta_0, \beta_1 \in \mathbb{R}$ 
+
+- $H_a: \beta_2 \neq 0$
+
+### Extracting pertinent statistics from theoretical test
+
+```{r}
+summary(lmod)$coef[3,]
+```
+
+
+### Question 5: Perform a pertmutation test to test the hypotheses above.
+
+```{r}
+tobs <- summary(lmod)$coef[3,3]
+nreps <- 4000 # number of permutation resamples
+tstats <- numeric(nreps) # store resampled t-stat
+set.seed(123) #So we all get the same results
+for (i in 1:nreps){
+  lmods <- lm(Species ~ Area + sample(Nearest), data = gala)
+  tstats[i] <- summary(lmods)$coef[3,3]
+}
+
+# Compute the p-value using simulated data
+mean(abs(tstats) >= abs(tobs))
+```
+
+```{r}
+hist(tstats, freq = FALSE)
+abline(v = tobs)
+```
+
+## Confidence Intervals
+
+An alternative way of expressing the uncertainty in our estimates is through **confidence intervals (CIs)** or **confidence regions**.
+
+- A confidence region is the same thing as a CI, except that it may have more than one dimension.
+- A confidence region provides us with plausible values of our target parameter(s).  
+
+### Constructing a 95% CI for Area (assuming all 4 other predictors in the model)
+
+```{r}
+lmod <- lm(Species ~ Area + Elevation + Nearest + Scruz + Adjacent, data = gala)
+faraway::sumary(lmod)
+```
+
+### Question 6: Based on the output above, construct a 95% confidence interval to estimate the value of $\beta_{\rm Area}$.
+
+We use the following formula:
+
+$$\widehat{\beta}_j \pm t_{n-p}^{\alpha/2} \mbox{SE}(\widehat{\beta}_j)$$
+
+```{r}
+# Find value of t_{n-p}
+tstar <- qt(0.975, df = df.residual(lmod))
+(cutoffs <- -0.023938 + c(-1,1) * tstar * 0.022422)
+```
+
+
+CI's have consistent results as two-sided hypothesis tests (with significance level $\alpha$).
+
+## Question 7: Construct a 95% confidence interval to estimate the value of $\beta_{\rm Elevation}$.
+
+```{r}
+tstar <- qt(0.975, df = df.residual(lmod))
+summary(lmod)$coef[3,1] + c(-1,1) * tstar * summary(lmod)$coef[3,2]
+```
+
+### Finding Confidence Intervals for All Regressors
+
+```{r}
+confint(lmod)
+```
+
+## Confidence Regions
+
+When constructing **confidence regions** for more than one parameter, we must decide whether to form the confidence regions individually or simultaneously.
+
+
+```{r}
+# You may need to run install.packages("ellipse") in the console
+library(ellipse) # required package to draw confidence region
+
+# construct 95% joint confidence intervals for beta_area and beta_adjacent.
+plot(ellipse(lmod, c(2, 6)), type="l", ylim = c(-0.13,0))
+
+# Plot the origin and the center point
+points(c(0,coef(lmod)[2]),c(0, coef(lmod)[6]), col = c("red", "blue"), pch = c(19,19))
+
+# add vertical and horizontal lines for individual confidence intervals
+abline(v = confint(lmod)[2,], lty = 2) # plots vertical lines
+abline(h = confint(lmod)[6,], lty = 2) # plots horizontal lines
+```
+
+
+### Question 8: Based on the confidence region above, is it plausible that $\beta_{\rm Area}= \beta_{\rm Adjacent}=0$?  Why or why not?
+
+### Question 9: Based on the confidence region above, is it plausible that $\beta_{\rm Area}= -0.6$ and $\beta_{\rm Adjacent}=-0.045$?  Why or why not?
+
+Note: 
+
+- **Any point that lies within** the $100(1- \alpha)\%$ confidence region for $\beta_i,\beta_j, \ldots, \beta_k$ represents values of $c_i,c_j, \ldots ,c_k$ for which the associated **null hypothesis would not be rejected at significance level $\alpha$**.
+- **Any point outside of the confidence region** represents values of $c_i, c_j, \ldots ,c_k$ for which the associated **null hypothesis would be rejected**.
+- Both the horizontal width and vertical width of the joint confidence region is wider than the widths of the individual confidence intervals.
+- The overall area of the joint region is smaller than the area of the intersection between the two individual confidence regions.
+  - This is because the estimated regression parameters are positively correlated.
+- If the lines of the individual confidence regions were tangential to the joint region, then the individual CIs would be jointly correct (their confidence level would be at least 95%).
+- It is possible to make different conclusions when using individual confidence regions in comparison with the joint confidence regions!
+ - **The joint confidence regions should be preferred**
+- We must be cautious about how we interpret univariate hypothesis tests or confidence intervals because the same conclusions may not be jointly true!
+
+
+## Bootstrap Confidence Intervals
+
+The $F$ and $t$-based confidence regions and intervals we have described depend on the assumption of normal errors.
+
+- In general, **parametric CIs** assume we know the sampling distribution of the statistic that estimates our target parameter. 
+- How would we approximate the sampling distribution of a statistic using simulated data if we do not know the true error distribution?
+
+**We can use the bootstrap method to produce a confidence interval for our regression coefficients when error distribution is unknown or non-normal.**
+
+### Bootstrap Process
+
+1. Generate $\boldsymbol\epsilon^{\ast}$ by sampling with replacement from $\hat{\epsilon}_1, \hat{\epsilon}_2, \ldots , \hat{\epsilon}_n$.
+
+```{r}
+resids <- residuals(lmod) # observed residuals
+boot.resids <- sample(resids, replace = TRUE) # bootstrap resample
+```
+
+2. Form $\mathbf{y}^{\ast} =X \boldsymbol{\hat{\beta}} + \boldsymbol\epsilon^{\ast}$ for fixed $X$ and using the $\boldsymbol{\hat{\beta}}$ from the fitted model of the original data
+
+```{r}
+new.y <- fitted(lmod) + boot.resids
+```
+
+3. 	Compute $\boldsymbol{\hat{\beta}}^{\ast}$ from $(\mathbf{X},\mathbf{y}^{\ast})$.
+
+```{r}
+boot.model <- lm(new.y ~ Area + Elevation + Nearest + Scruz + Adjacent, data = gala)
+faraway::sumary(boot.model)
+faraway::sumary(lmod)
+```
+
+4.	Repeat steps 1-3 many times (4000 times will suffice)
+
+```{r}
+set.seed(123)
+nb <- 4000 # Set the number of bootstrap samples to be generated
+
+# Initially the data is set as NA
+# Number rows = nb 
+# Number columns = 6
+coefmat <- matrix(NA, nb, 6) # Matrix where we will store results
+resids <- residuals(lmod) # observed residuals
+preds <- fitted(lmod) # fitted values
+for (i in 1:nb){
+  boot.y <- preds + sample(resids, replace = TRUE) # randomly assign errors
+  bmod <- lm(boot.y ~ Area + Elevation + Nearest + Scruz + Adjacent, data = gala)
+  coefmat[i,] <- coef(bmod)
+}
+```
+
+5. Estimate the sampling distribution of the estimated coefficients using the bootstrap distribution of the estimated coefficients from the bootstrapped data sets.
+
+```{r}
+colnames(coefmat) <- c("Intercept", colnames(gala[,3:7])) # rename columns of coefmat
+coefmat <- data.frame(coefmat) # convert to data frame
+
+# construct 95% CIs for each coefficients using the apply function
+cis <- apply(coefmat, 2,
+             quantile, probs = c(.025, .975))  # 2 means apply to each column of coefmat
+cis
+```
+
+### Comparing with Parametric Confidence Intervals
+
+```{r}
+confint(lmod)
+```
+
+### Visualizing Bootstrap Confidence Intervals
+
+```{r}
+# plot density for bootstrap coefficients for Area
+# along with the 95% bootstrap CI for Area coefficient
+plot(density(coefmat$Area), xlab = "Area", main = "") # plot density
+title("Bootstrap distribution for betahat_Area") #title
+abline(v = c(-.0628, .0185), lty = 2) # plot CI
+```
+
+```{r}
+# same thing for Adjacent
+plot(density(coefmat$Adjacent), xlab = "Adjacent", main = "") # plot density
+title("Bootstrap distribution for betahat_Adjacent") #title
+abline(v = c(-.104, -.041), lty = 2) # plot CI
+```
+
+```{r}
+library(ggplot2) # same plots using ggplot2
+# x = Area means that we are only doing univariate plot
+# geom_density maps the variables values to the density geometry
+# geom_vline adds vertical lines at the specified values
+# theme_bw makes the plot nicer for printing Black/White
+ggplot(coefmat, aes(x = Area)) + geom_density() + geom_vline(xintercept = c(-.0628, .0185), lty = 2) + theme_bw()
+ggplot(coefmat, aes(x = Adjacent)) + geom_density() + geom_vline(xintercept = c(-.104, -.0409), lty = 2) + theme_bw()
+```
+
+
+- Both densities are roughly symmetric and normal, though this is not always the case.
+- Bootstrap methods can be used for hypothesis testing, but permutation-based methods are generally preferred.  
+- There are other (more complex) methods for constructing bootstrap confidence intervals for the coefficients.
+
+## Sampling Experimentation, Generalization, and Causation
+
+If we have shown that a certain regressor has a coefficient which is not equal to 0 (beyond any reasonable variation due to sampling), this means changing the regressor is **associated with** a change in the value of the response variable. This does not however imply the the change in the regressor caused the change in the response.
+
+**The method of data collection determines the conclusions we can draw.** 
+
+### Designed Experiments
+
+For designed experiments, we can view nature as the computer generating our observed responses.
+
+- We decide the values of the predictors and then record the response $Y$.
+- We can do this as many times as we want in order to learn something about $\beta$.
+
+**For example, the Galapagos data.**
+
+### Observational Studies
+
+In observational studies, we have a finite population from which we draw a sample that is our data.
+
+- We hope to learn about the unknown population value $\beta$ from the sample.
+- A random sample is needed to ensure the sample resembles the population (just smaller in size).
+- Statistical inference relies on the data selected being a random sample.
+- Samples selected by humans (or other non-random methods) are biased and not representative of the larger population.
+  - Conclusions drawn from a sample of convenience are limited to the sample themselves.
+
+Sometimes the sample is the entire population.
+
+- Some might argue that inference is not needed since the sample is the population.
+- Your results are still subject to uncertainty because you can’t measure everything!
+- You need to carefully think about the goals of your model.
+- In these cases, permutation tests make it possible to give meaning to the p-value, though the conclusion applies only to the sample.
+
+
+### Experimental and Observational Predictors
+
+There are two basic types of predictors that can be used in regression analysis: experimental and observational.
+
+- **Experimental predictors** are controlled by the experimenter.  
+- **Observational predictors** are observed rather than chosen.
+- The types of predictors can be mixed in a particular study.  
+
+#### Observational Predictors
+
+For observational data, the idea of holding regressors constant makes no sense:
+
+- These observable values are not under our control.
+- We cannot change them except by some fantastic feat of genetic engineering, mind control, or a time machine.
+- There are probably additional unmeasured variables that have some connection to the response. We cannot possibly hold these constant.
+  - A **lurking variable** (or confounding variable) is a predictor variable not included in the regression model that would change the interpretation of the fitted model if included.
+  - Lurking variables are associated to both the predictor and response variable.
+- **Causal conclusions CANNOT be made for observational data because of the possible existence of lurking variables in our model.**
+- **Observational data allow us to show an association between two or more variables, but we cannot make causal conclusions.**
+
+#### Experimental Predictors
+
+Causal conclusions CAN be made for data obtained from a randomized experiment (i.e., the treatments are randomly assigned to the subjects).
+
+- Randomly assigning experimental factors limits the potential effects of lurking variables.
+  - The treatment and control groups should resemble each in all ways except for the treatment(s) itself.
+- **Conclusions can be generalized from the sample to the population when the subjects were obtained using a random sample of the population.**
+
+**The interpretation of results from a regression analysis depends on the details of the data design and collection.**
+
