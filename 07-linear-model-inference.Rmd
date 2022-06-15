@@ -43,37 +43,37 @@ lmod <- lm(Species ~ Area + Elevation + Nearest +
 summary(lmod)
 ```
 
-## Question 1 
+### Question 1 
 
 Write out a formula for the fitted model based on the output above.
 
-**Complete the formula below.**
-
-$$\widehat{\mbox{Species}} = ?? + ?? \mbox{Area} + ?? \mbox{Elevation} + ?? \mbox{Nearest} + ?? \mbox{Scruz} + ?? \mbox{Adjacent}$$
+$$\widehat{\mbox{Species}} = 7.068 -  0.0239 \mbox{Area} + 0.3195 \mbox{Elevation} + 0.0091 \mbox{Nearest} -0.2405 \mbox{Scruz} - 0.0748 \mbox{Adjacent}$$
 
 
-## Question 2
+### Question 2
 
 Which regressor has the strongest association with the number species on the island?
 
-**Enter solution here.**
+- **Hard to tell at this point. We can see the `Elevation` had the largest slope (in absolute terms) and the smallest p-value, so that seems important!**
 
-## Setting Up The Hypotheses
+- **The regressor `Scruz` has a large slope (in absolute terms), however the variability is quite large as indicated by the standard error, and thus we see it has a relatively large p-value, indicating that is plausible the coefficient is actually 0 or it could be positive.**
+
+### Setting Up The Hypotheses
 
 How can we decide whether all or some of the regressor variables should be included in our model?
 
 
 - Let $\Omega$ denote the proposed full model.
-- Let $\omega$ denote a simpler model that uses a subset of all regressors.
+- Let $\omega$ denote a simplier model that uses a subset of all regressors.
 
 ## Question 3
 
 What do you think would be suitable hypothesis to test whether $\Omega$ is a better model than $\omega$?
 
-**Enter solution here.**
+- **H~0~: Model $\omega$ is adequate.**
+- **H~a~: Model $\Omega$ is preferred.**
 
-
-## Measuring Significance
+### Measuring Significance
 
 - If the models have a similar fit, then we prefer $\omega$ since it is simpler.
 - If the model $\Omega$  is a much better model than $\omega$, then we prefer $\Omega$.
@@ -83,7 +83,7 @@ What do you think would be suitable hypothesis to test whether $\Omega$ is a bet
 $$\mbox{test stat} = \frac{\mbox{fit of observed model} - \mbox{fit of null model}}{\mbox{variability due to sampling}} = \frac{\mbox{RSS}_{\omega} - \mbox{RSS}_{\Omega}}{RSS_{\Omega}}.$$
 
 
-## General $F$ Test for Comparing Two Nested Regression Models:
+### General $F$ Test for Comparing Two Nested Regression Models:
 
 **H~0~: Model $\omega$ is an adequate model.**
 
@@ -111,7 +111,7 @@ $$F =  \frac{(\mbox{RSS}_{\omega} - \mbox{RSS}_{\Omega})/(df_{\omega}-df_{\Omega
 - Calculate the $p$-value using $F_{p-q,n-p}$ where $\mbox{df}_1 = p-q$ is the number of additional regressors in $\Omega$ and $\mbox{df}_2=n-p=\mbox{df}_{\Omega}$ (setting $q=1$). 
 
 
-The information above is often presented in an **analysis of variation (ANOVA) table** which is convenient for summarizing and organizing the various ingredients in the $F$-statistic. Below is a typical ANOVA table when $q=1$.
+The information above is often presented in an **analysis of variation (ANOVA) table** which is convenient for summarizing and organizaing the various ingredients in the $F$-statistic. Below is a typical ANOVA table when $q=1$.
 
 Source | Deg. of Freedom | Sum of Squares | Mean Square | F 
 ------|------------------|----------------|-------------|---
@@ -125,48 +125,50 @@ Total | $n-1$ | TSS | |
 - **Total**: The total variation in the data from the null (constant mean) model $\omega$.
 
 
-### Comparing with Fit of Null Model
+#### Comparing with Fit of Null Model
 
 ```{r}
 nullmod <- lm(Species ~ 1, data = gala) 
 anova(nullmod, lmod)
 ```
 
-## Question 4 
+### Question 4 
 
 What is the first line of code above doing?
 
-**Enter solution here.**
+**It is creating the null model which is our model $\omega$ if we are testing all regressors. This is the constant mean model $y = \beta_0 + \epsilon = \mu + \epsilon$.**
 
-
-## Question 5
+### Question 5
 
 Interpret the output from the `anova` function.
 
-**Enter solution here.**
+**We see the $F$-statistic is $15.699$ which has a $p$-value $=6.838 \times 10^{-7}$ which is extremely small. We see that our test is statistically significant, and we have evidence to support the alternative hypothesis that at least one of the regression coefficients is not zero, though we cannot state specifically which regressor coefficient(s) are likely to be nonzero.**
 
-
-## Question 6
+### Question 6
 
 Arrange the output of the anova function above into an ANOVA table such as the one shown earlier.
 
-**Replace each ?? with an appropriate value based on output above.**
-
+```{r}
+(ss <- 381081-89231) # SS_{reg}
+(mean.ss <- ss/5) #regression mean sum squares
+(mean.rss <- 89231/24) #residual mean sum squares
+(fstat <- mean.ss/mean.rss)
+```
 
 Source | Deg. of Freedom | Sum of Squares | Mean Square | F 
 ------|------------------|----------------|-------------|---
-Variability due to `Area` | ?? | ?? | ?? | ?? 
-Error of $\Omega$ | ?? | ?? | ?? 
-Error of $\omega$ | ?? | ?? | | 
+Variability due to `Area` | $5$ | $291850$ | $58370$ | $15.69948$ 
+Error of $\Omega$ | $24$ | $89231$ | $3717.958$ 
+Error of $\omega$ | $29$ | $381081$ | | 
 
 
-## Question 7 
+### Question 7 
 
 Compare these calculations with the `summary` output from earlier.
 
-**Enter solution here.**
+**They match!**
 
-### Verifying the Output Again
+#### Verifying the Output Again
 
 ```{r}
 # Compute the sum of squares
@@ -186,14 +188,14 @@ Compare these calculations with the `summary` output from earlier.
 1 - pf(f, df1 = df0 - df, df2 = df) # P-value
 ```
 
-### Compare with Summary of `lm`
+#### Compare with Summary of `lm`
 
 ```{r}
 summary(lmod)
 ```
 
 
-### Visualizing the F-dist
+#### Visualizing the F-dist
 
 ```{r}
 library(dplyr)
@@ -222,11 +224,11 @@ data.frame(f = 0:1000 / 100) %>%
 - If $\mbox{df}_2 = n-p$ is constant and we increase $\mbox{df}_1 = \mbox{df}_{\Omega} = p-1$, the center hump shifts to the right and there is more area concentrated near the peak and less in the tail to the right.
 
 
-## Interpreting the Results
+### Interpreting the Results
 
-## Question 8 
+### Question 8 
 
-You perform a hypothesis test to test the following claims:
+You peform a hypothesis test to test the following claims:
 
 H~0~: The null model $\omega$ is adequate.  $\beta_1 = \beta_2 = \ldots = \beta_{p-1} = 0$.
 
@@ -236,15 +238,22 @@ In the Galapagos example, the $F$-statistic is $15.699$ and the $p$-value is giv
 
 a. Interpret the meaning of the $p$-value. 
 
-**Enter solution here.**
+**There is an extremely slim chance (essentially $0\%$) that would would observe so much of the variability in the response explained by model $\Omega$ compared to $\omega$ if $\Omega$ was just as good of a model as $\omega$.**
 
 b.  If you fail to reject $H_0$, does this mean there is no relation between the regressors and the response?
 
-**Enter solution here.**
+**No, it means the relation is not likely to be linear, but there certainly could another (nonlinear) relation besides a linear relation between the predictors and response.**
+
+**Not significant may also imply there is not enough data to confidently conclude a regressor helps describe the mean response.**
 
 c. If you reject $H_0$, does this mean you have found the best model for $y$? 
 
-**Enter solution here.**
+**Even if we conclude H~a~, we’re not sure that model $\Omega$ is the best model, it is simply preferable to model $\omega$.**
+
+- **Not all regressors may be necessary.**
+- **Additional regressors may improve the model further.**
+
+**The F test for a regression relationship is just the beginning of analysis!**
 
 
 # Galapogos Example: Testing Just the Area Regressor
@@ -257,20 +266,38 @@ We have two options in this case:
 - Use a $t$-statistic approach.
 
 
-## Question 9 
+### Question 9 
 
 Repeat the previous process to test whether the regressor `Area` is significant (assuming all others are in the model).
 
 a. State the hypotheses.
 
+- $H_0: \beta_1=\beta_{\rm Area}=0 \mid \beta_0, \beta_2, \beta_3, \beta_4, \beta_5 \in \mathbb{R}$
+
+- $H_a: \beta_1 \neq 0\mid \beta_0, \beta_2, \beta_3, \beta_4, \beta_5 \in \mathbb{R}$
 
 b. Compute the $F$-statistic and $p$-value.
 
+```{r}
+# fit reduced model (full without Area)
+lmods <- lm(Species ~ Elevation + Nearest + Scruz + Adjacent, data = gala)
+anova(lmods, lmod)
+```
+
+**The $F$-statistic is $F=1.1398$ with corresponding $p$-value $=0.2963$.**
 
 c. Conclusion in this context.
 
+**The $p$-value is larger than just about any reasonable significance level, thus the test is not statistically significant and we fail to reject the claim that $\beta_{\rm Area} =0$. However, be careful, we do not accept the claim that $\beta_{\rm Area} =0$ either. We simply say the test is inconclusive.**
 
-### Using a t-statistic
+
+Comparing the output above with full model test.
+
+```{r}
+summary(lmod)
+```
+
+#### Using a t-statistic
 
 An alternative approach is to use a $t$-statistic for testing the hypotheses:
 
@@ -290,45 +317,59 @@ se.area <- summary(lmod)$coeff[2,2]
 t^2
 ```
 
-## Question 10 
+### Question 10 
 
 What is the difference between the test being run in the code below and the previous test? Does the test below lead to the same conclusion?
 
-**Enter solution here.**
+**The test below is comparing the model with one regressor (`Area`) compared to the null (constant mean) model. We are not considering any other predictors.**
+
+- $H_0: \beta_1=\beta_{\rm Area}=0$
+
+- $H_a: \beta_1 \neq 0$
 
 
-### Be Specific When Stating Your Hypotheses.
+#### Be Specific When Stating Your Hypotheses.
 
 ```{r}
 # compare results to test of beta_Area = 0 when no other predictors in model
 summary(lm(Species ~ Area, gala))
 ```
 
+- **According to the test above, it seems that the regression coefficient for `Area` is statistically significant and we do have evidence to support the claim that $\beta_{\rm Area} \ne 0$. This contradicts the previous test. Perhaps it is the other predictors in the full model that have an effect on `Area` that in turn is related to a change in the response. Thus `Area` may be a confounding variable and the other predictors may be responsible for this response in both `Area` and `Species`**
 
-# Testing a Pair of Regressors
+## Testing a Pair of Regressors
 
-## Question 11
+### Question 11
 
 Test whether the `Area` and `Adjacent` regressor variables should be simultaneously dropped from the model that already includes `Elevation`, `Nearest`, and `Scruz` in the model.  Make sure to specify the regressors that are the model when stating H~0~ and H~a~.
 
 a. State the hypotheses. 
 
-**Enter solution here.**
+- $H_0: \beta_{\rm Area}=\beta_{\rm Adjacent} 0 \mid \beta_0, \beta_2, \beta_3, \beta_4 \in \mathbb{R}$
+
+- $H_a: \beta_{\rm Area} \ne 0 \mbox{ or }  \beta_{\rm Adjacent} \ne 0 \mid \beta_0, \beta_2, \beta_3, \beta_4 \in \mathbb{R}$
+
 
 b. Compute the $F$-statistic and $p$-value.
 
-**Enter solution here.**
+```{r}
+# Determine full and reduced models
+lmods <- lm(Species ~ Elevation + Nearest + Scruz, data = gala) # fit reduced model
+anova(lmods, lmod) # compare models using general f-test
+```
+
+**The $F$-statistic is $F=9.2874$ with corresponding $p$-value $=0.0.0013$.**
 
 c. Conclusion in this context.
 
-**Enter solution here.**
-
+**The $p$-value $<0.001$ which is extremely small (less than just about any signficance level that would be chosen). The test is statistically significant. There is very strong evidence that the regression model for `Species` that includes predictors `Area` and `Adjacent` is preferable to the model without both of these terms. We have evidence that at least one of $\beta_{\rm Area}$ and/or $\beta_{\rm Adjacent}$ are nonzero.**
 
 ## Permutation Tests
 
 ```{r}
 data(gala, package = "faraway")
 head(gala)
+#summary(gala)
 ```
 
 ### Assumptions for Testing Regressors
@@ -345,26 +386,22 @@ $$\epsilon_i \sim F \ \ \mbox{ (where F is some distribution) } \quad \mbox{Cov}
 
 ### Motivating idea behind permutation tests
 
-If the response has no relationship with the regressor variables, then we should be able to randomly permute the response variable ($y$) without a substantial difference in the typical model results. **A permutation of a vector can be obtained in R using the `sample` function.**
+If the response has no relationship with the regressor variables, then we should be able to randomly permute the response variable ($y$) without a substantial difference in the typical model results.
 
 ```{r}
-#Sample permutes the values of Species
-gala$Species <- sample(gala$Species)
-# permuted data
-head(gala) 
-```
-
-```{r}
-#permuted model
-lmodp <- lm(Species ~ Elevation, data = gala) 
-summary(lmodp) 
+head(gala)
+#summary(gala)
+lmod <- lm(Species ~ Elevation, data = gala)
+summary(lmod)
 plot(Species ~ Elevation, data = gala)
 ```
 
 ```{r}
-data(gala, package = "faraway")
-lmod <- lm(Species ~ Elevation, data = gala)
-summary(lmod)
+#Sample permutes the values of Species
+gala$Species <- sample(gala$Species)
+head(gala)
+lmodp <- lm(Species ~ Elevation, data = gala)
+summary(lmodp)
 plot(Species ~ Elevation, data = gala)
 ```
 
@@ -379,7 +416,6 @@ To test this formally, we:
   - The p-value of the permutation test can often be approximated by the p-value from the general F test.
 
 Advantages of the permutation test:
-
 1.	Doesn’t require normal errors.
 2.	More robust than other traditional methods if the errors are not normal.
 
@@ -390,12 +426,17 @@ Disadvantages of the permutation test:
 
 **To speed up computation time for the permutation test, we use only a subset of random permutations instead of all possible permutations.**
 
+**A permutation of a vector can be obtained in R using the `sample` function.**
+
 ## Permutation Test on Two Regressors
 
-We would like to test whether the variables Elevation and Area should be used as regressors for Species.
+We would like to test whether the variables **Area** and **Nearest** should be used as regressors for Species.
 
 ### Question 1: Set up the hypotheses for this test.
 
+- $H_0: \beta_1=\beta_{\rm Area}=0$ and $\beta_2=\beta_{\rm Nearest}=0$ (with no other regressors in the model)
+
+- $H_a: \beta_1 \neq 0$ or $\beta_2 \neq 0$
 
 
 ### Question 2: Compute the $F$-statistic from the general $F$ test.
@@ -418,14 +459,6 @@ lms$fstat
 
 
 ### Sample Permutation Test
-
-```{r}
-## I include this here since I'd like to run permutation test below
-data(gala, package = "faraway")
-lmod <- lm(Species ~ Area + Nearest, data = gala)
-lms <- summary(lmod)
-lms$fstat
-```
 
 ```{r}
 # Instead of worrying about all possible permutations
@@ -456,7 +489,8 @@ mean(fstats >= fobs)
 
 ### Question 4: Compare the two p-values from the two methods. Do you think the difference is significant? Which p-value do you think is more accurate? Why?
 
-
+- Our estimated $p$-value of $0.00975$ is very close to the $p$-value of the theory based value of $0.00141992$.
+- In this case, the results are similar and both below a 5% significance level (or even a 1% level).
 - **If there is some crucial difference in the conclusion, then the permutation-based test is preferred to the test that assumes errors are normally distributed.**
 
 ## Testing whether one regressor can be dropped
@@ -464,7 +498,6 @@ mean(fstats >= fobs)
 Testing whether a regressor can be dropped from the regression model also falls within the permutation test framework. 
 
 For a test involving a single regression coefficient $\beta_j$:
-
 - We can permute the observed values of regressor $X_j$ (the column vector $X_j$) instead of the response. 
 - If $X_j$ has no relationship with the response, permuting $X_j$ should have little impact on the model fit.
 
@@ -505,7 +538,6 @@ abline(v = tobs)
 ## Confidence Intervals
 
 An alternative way of expressing the uncertainty in our estimates is through **confidence intervals (CIs)** or **confidence regions**.
-
 - A confidence region is the same thing as a CI, except that it may have more than one dimension.
 - A confidence region provides us with plausible values of our target parameter(s).  
 
@@ -528,10 +560,11 @@ tstar <- qt(0.975, df = df.residual(lmod))
 (cutoffs <- -0.023938 + c(-1,1) * tstar * 0.022422)
 ```
 
+This tells us there is a 95% chance the interval from $-0.07$ to $0.02$ contains the actual value of $\beta_{\rm Area}$. Notice $0$ is inside the confidence interval, which means it is plausible that $\beta_{\rm Area} = 0$.
 
 CI's have consistent results as two-sided hypothesis tests (with significance level $\alpha$).
 
-## Question 7: Construct a 95% confidence interval to estimate the value of $\beta_{\rm Elevation}$.
+### Question 7: Cconstruct a 95% confidence interval to estimate the value of $\beta_{\rm Elevation}$.
 
 ```{r}
 tstar <- qt(0.975, df = df.residual(lmod))
@@ -667,13 +700,12 @@ plot(density(coefmat$Adjacent), xlab = "Adjacent", main = "") # plot density
 title("Bootstrap distribution for betahat_Adjacent") #title
 abline(v = c(-.104, -.041), lty = 2) # plot CI
 ```
-
 ```{r}
 library(ggplot2) # same plots using ggplot2
 # x = Area means that we are only doing univariate plot
 # geom_density maps the variables values to the density geometry
 # geom_vline adds vertical lines at the specified values
-# theme_bw makes the plot nicer for printing Black/White
+# theme_bs makes the plot nicer for printing Black/White
 ggplot(coefmat, aes(x = Area)) + geom_density() + geom_vline(xintercept = c(-.0628, .0185), lty = 2) + theme_bw()
 ggplot(coefmat, aes(x = Adjacent)) + geom_density() + geom_vline(xintercept = c(-.104, -.0409), lty = 2) + theme_bw()
 ```
@@ -692,7 +724,6 @@ If we have shown that a certain regressor has a coefficient which is not equal t
 ### Designed Experiments
 
 For designed experiments, we can view nature as the computer generating our observed responses.
-
 - We decide the values of the predictors and then record the response $Y$.
 - We can do this as many times as we want in order to learn something about $\beta$.
 
@@ -701,7 +732,6 @@ For designed experiments, we can view nature as the computer generating our obse
 ### Observational Studies
 
 In observational studies, we have a finite population from which we draw a sample that is our data.
-
 - We hope to learn about the unknown population value $\beta$ from the sample.
 - A random sample is needed to ensure the sample resembles the population (just smaller in size).
 - Statistical inference relies on the data selected being a random sample.
@@ -709,7 +739,6 @@ In observational studies, we have a finite population from which we draw a sampl
   - Conclusions drawn from a sample of convenience are limited to the sample themselves.
 
 Sometimes the sample is the entire population.
-
 - Some might argue that inference is not needed since the sample is the population.
 - Your results are still subject to uncertainty because you can’t measure everything!
 - You need to carefully think about the goals of your model.
@@ -727,7 +756,6 @@ There are two basic types of predictors that can be used in regression analysis:
 #### Observational Predictors
 
 For observational data, the idea of holding regressors constant makes no sense:
-
 - These observable values are not under our control.
 - We cannot change them except by some fantastic feat of genetic engineering, mind control, or a time machine.
 - There are probably additional unmeasured variables that have some connection to the response. We cannot possibly hold these constant.
