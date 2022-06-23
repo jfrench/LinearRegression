@@ -9,6 +9,524 @@ html_document:
 
 # Basic regression diagnostics
 
+## Motivating Example
+
+```{r}
+library(car)
+library(ggplot2)
+```
+
+The dataset `savings` in the `faraway` package contains savings data from 50 different countries. The variables in the dataset are: 
+
+- `sr` is the savings rate, personal saving divided by disposable income.
+- `pop15` is the percent of the population under age of 15.
+- `pop75` is the percent of the population over age of 75.
+- `dpi` is the per-capita disposable income in dollars.
+- `ddpi` is the percent growth rate of dpi.
+
+```{r}
+data(savings, package = "faraway") # load data
+lmod <- lm(sr ~ ., data = savings) #fit full model
+faraway::sumary(lmod)
+```
+
+## Standard Assumptions Revisited
+
+There are several standard assumptions made when performing linear regression.
+
+## Theoretical Properties 
+
+The ones related to theoretical properties:
+
+1. $E( \mathbf{y} \ | \ X ) = X \boldsymbol\beta$.
+2. 	$\epsilon_1, \epsilon_2, \ldots , \epsilon_n \overset{\mbox{i.i.d.}}{\sim} N(0, \sigma^2)$.
+
+      a. $E(\epsilon \ | \ \mathbb{X} )$ (essentially same as first condition).
+      b. $\mbox{Var}(\epsilon \ | \ \mathbb{X} ) = \sigma^2$.
+      c. $\mbox{Cov}( \epsilon_i , \epsilon_j \ | \ \mathbb{X}) = 0$ for all $i \ne j$
+      d. Each of the errors, regardless of the regressor values, are normally distributed
+
+## Practical Considerations
+
+3. The columns of $X$ are linearly independent, i.e., none of the regressors are linear combinations of each other. This assumption is checking by assessing **whether collinearity is present**. This assumption is critical for ensuring that our model is identifiable (estimable).
+
+4. **No observations are substantially more influential than other observations** in determining the fit of the model to the observed data. Influential observations can make it difficult to determine whether Assumptions 1 and 2 are satisfied.
+
+## Standard Assumptions Prioritized
+
+We assume that any issues with collinearity and identifiability (Assumption 3) have already been addressed. We have discussed this process.
+
+1.	**The structure of the model is correct (Assumption 1).** Which regressors should be included/excluded. Should we transform any predictors? The response? 
+2.	**No points are overly influential in determining the model fit (Assumption 4).** An overly influential observation can make it seem like the model is correctly specified when it is not.
+3. **The errors have constant variance (Assumption 2).**  If this assumption isn’t satisfied, then standard confidence intervals for the regression coefficients and mean function and prediction intervals for new observations are not trustworthy.
+4. **The errors are uncorrelated (Assumption 2).**
+5. **The errors are normally distributed (Assumption 2).** 
+
+- This is the least important assumption. If the previous assumptions are satisfied, then our OLS estimator of $\beta$ is still the best linear unbiased estimator regardless of the normality of the errors.
+- If the sample size is large enough, the central limit theorem tells us that our confidence intervals for the regression coefficients and the mean function are still approximately valid. 
+- However, if our sample size is small or we are interested in constructing a prediction interval, then non-normal errors can lead to untrustworthy confidence and prediction intervals.
+
+
+```{r}
+# plot of residuals versus fitted values
+residualPlot(lmod, quadratic = FALSE) # We do not want to draw the quad reg
+
+# plot of residuals versus fitted values
+plot(lmod, which = 1) 
+
+# plot sqrt absolute value of residuals vs fitted values
+plot(sqrt(abs(residuals(lmod))) ~ fitted(lmod), xlab = "fitted", 
+     ylab= expression(sqrt(hat(epsilon)))) 
+
+# plot of Standardized residuals versus fitted values
+plot(lmod, which = 3) 
+```
+
+
+- **Expected value of error is zero.** Residuals look like a cloud of points with a value of zero splitting the points into approximately two mirror images above and below zero.
+- **Constant variance assumption looks good.** Equally wide spread of residual values regardless of the fitted value.
+
+```{r}
+# plot of residuals versus predictors
+residualPlots(lmod, quadratic = FALSE, fitted = FALSE, tests = FALSE)
+```
+
+- We see similar properties (expected value zero and constant mean) in the residual plots against each regressor.
+
+### Running a Statistical Test
+
+- H~0~: The variance of the residuals for `Pop15` $> 35$ and `Pop15` $< 35$ are the same. The ratio of the two variances is equal to 1.
+- H~a~: The variance of the residuals for `Pop15` $> 35$  and `Pop15`$< 35$ are NOT the same. The ratio of the two variances is NOT equal to 1.
+
+
+```{r}
+var.test(residuals(lmod)[savings$pop15 > 35], residuals(lmod)[savings$pop15 < 35])
+```
+
+## Checking Normality of Residuals
+
+- Tests and confidence intervals are based on the assumption that the errors are normally distributed.
+
+
+- We seem to have detected an issue. 
+- This test does not tell us how to fix it!
+- Maybe construct two different models? Maybe a transformation of the variables will address this issue?
+
+When the errors are nonnormal:
+
+- Estimates will still be unbiased (assuming the model is correct and the error mean is zero).
+- Tests and confidence intervals will not be exact, but the central limit theorem says that the intervals and tests will be increasingly accurate as the sample size increases.
+- The consequences can generally be ignored for short-tailed distributions.
+- For skewed errors, a transformation may solve the problem.
+- For heavy-tailed errors, it is best to use robust methods that give less weight to outlying observations.
+- You may go back to step 1 and maybe consider a different model, though the problem may not be present in a different model.
+
+
+## Q-Q Plots
+
+- **q-q plots** are great plots for checking the normality assumption.
+- On the x-axis goes z-scores for the sorted residuals (if they were normally distributed)
+- A reference line is often plotted for comparison with $N(0,1)$
+- If the residuals are distributed similarly to observations coming from a normal distribution, then the points of a q-q plot will lie approximately in a straight line at a $45^{\circ}$ angle.
+
+
+```{r}
+# Using base R
+qqnorm(residuals(lmod), ylab = "Residuals")
+qqline(residuals(lmod))
+```
+
+
+- We can plot the residuals from the summary output we stored in `lmod`. This will produce a q-q plot for the **standardized residuals**, along with a helpful reference line.
+
+```{r}
+plot(lmod, which = 2)
+```
+
+- The ``car::qqPlot` function is q-q plot for the **studentized residuals**, along with pointwise confidence bands for what is expected if $\boldsymbol\epsilon \sim N(0, \sigma^2 I)$.
+
+
+```{r}
+# Using car package
+qqPlot(lmod) 
+```
+
+
+### Interpreting q-q Plots
+
+If the marked points are:
+
+- **Flatter than the line**, there is less data than we'd have if normal
+- **Steeper than the line**, there is more data than we'd have if normal.
+
+```{r}
+set.seed(53)
+qqPlot(rnorm(50), ylab = "observed data",
+       xlab = "normal quantiles", main = "normal data")
+#hist(rnorm(50), ylab = "frequency",
+#       xlab = "observed data", main = "normal data")
+```
+
+```{r}
+set.seed(53)
+qqPlot(exp(rnorm(50)), ylab = "observed data",
+       xlab = "normal quantiles", main = "positively-skewed data") 
+#hist(exp(rnorm(50)), ylab = "frequency",
+#       xlab = "observed data", main = "positively-skewed data")
+```
+
+```{r}
+# Heavy tailed data
+# Middle hump taller and more narrow
+# Tails go further out to left and right
+set.seed(53)
+qqPlot(rcauchy(50), ylab = "observed data",
+       xlab = "normal quantiles", main = "heavy-tailed data")
+hist(rcauchy(50), ylab = "frequency", breaks = 20,
+       xlab = "observed data", main = "heavy-tailed data")
+```
+
+```{r}
+# Light tailed data
+# Middle hump less tall and wider
+# Less tails than normal distribution
+set.seed(53)
+qqPlot(runif(50), ylab = "observed data",
+       xlab = "normal quantiles", main = "light-tailed data")
+hist(runif(50), ylab = "frequency", breaks = 20,
+       xlab = "observed data", main = "light-tailed data")
+```
+
+```{r}
+# Skewed Data
+set.seed(53)
+qqPlot(rexp(50), ylab = "observed data",
+       xlab = "normal quantiles", main = "Skewed Right")
+hist(rexp(50), ylab = "frequency", breaks = 20,
+       xlab = "observed data", main = "Skewed Right")
+```
+
+## The Shapiro-Wilk test for Normality
+
+A formal test of normality can be performed using the **Shapiro-Wilk test**.  
+
+- The null hypothesis of the Shapiro-Wilk test is that the residuals are a random sample from a normal distribution.  
+- The alternative is that the residuals are not a sample from a normal distribution.
+- `shapiro.test(residuals(lmod))` will perform a Shapiro-Wilk test.
+- A statistical decision is made using the usual approach with $p$-values.  
+
+```{r}
+shapiro.test(residuals(lmod)) # Shapiro-Wilk test.
+```
+
+## Question 1: Interpret the result of this test in practical terms.
+
+- There is insufficient evidence to conclude the residuals come from a non-normal distribution. 
+
+While the Shapiro-Wilk test is a tidy way to assess normality, it is not as flexible as the q-q plot.
+
+- It does not suggest a way to correct the problem.
+- It is easily influenced by the number of observations so that even minor departures from normality are detected, even when there is little reason to abandon the least squares approach.
+
+## Checking for Correlated Errorrs
+
+- It is difficult to check for correlated errors because there are so many possible patterns of correlation that may occur.
+  - The structure of temporal or spatial data makes this easier to check.
+- If the errors $\boldsymbol\epsilon$ are uncorrelated, then the residuals $\hat{\boldsymbol\epsilon}$ are typically close to uncorrelated.
+
+
+## Motivating Example: Global warming
+
+The dataset `faraway::globwarm` consists of 1001 observations related to the average northern hemisphere temperature from 1856-2000 and eight climate proxies from 1000-2000 AD. Data can be used to predict temperatures prior to 1856.
+
+```{r}
+data(globwarm, package = "faraway")
+summary(globwarm)
+```
+
+
+- This is **temporal** data since each observation has an associated time (`year`). 
+- There are 856 observations prior to 1856 that are missing `nhtemp` values.
+  - By default, these observations are omitted from our model (by R)
+
+```{r}
+# We exclude year from the model but include all other regressors
+lmod2 <- lm(nhtemp ~ . - year, data = globwarm)
+summary(lmod2)
+```
+
+## Plotting Residuals Against Time
+
+If the errors are uncorrelated, we expect a random scatter of points around $\hat{\epsilon}=0$.
+
+```{r}
+# residuals vs time
+plot(residuals(lmod2) ~ year, 
+     data = na.omit(globwarm), ylab = "residuals")
+abline(h = 0)
+```
+
+## Question 2: Do you notice any correlation in the errors?
+
+There seems to be a cyclical pattern to the residuals over time.
+
+- A positive error in one period carries over into a positive error in the next year.
+- A negative error in one year carries over to a negative error in the next year.
+- This suggests a positive serial correlation.
+
+## Plotting Successive Pairs of Residuals
+
+Another approach to check for serial correlation is to plot successive pairs of residuals.
+
+```{r}
+n = nobs(lmod2)
+plot(tail(residuals(lmod2), n - 1) ~      # extracts (e_1, e_2, ..., e_49)
+      head(residuals(lmod2), n - 1),      # extracts (e_2, e_3, ..., e_50)
+     xlab = expression(hat(epsilon)[i]),
+     ylab =expression(hat(epsilon)[i+1]))
+abline(h= 0 , v = 0, col = grey(0.75))
+```
+
+## Question 3: Interpret the plot above. How does this confirm a positive serial correlation?
+
+
+- The positive linear trend in the previous plot suggests positive serial correlation.
+- If there was no association, we would expect a cloud of points.
+
+## The Durbin-Watson Test for Uncorrelated Errors 
+
+A formal test for serial correlation between residuals can be performed using the **Durbin-Watson test**.  
+
+
+- Let $\rho$ denote the temporal correlation between residuals.
+  - H~0~: The residuals are uncorrelated, $\rho = 0$.
+  - H~a~: The residuals are related in some way ($\rho = 0$, $\rho > 0$, or $\rho < 0$).
+- The test statistic is:
+
+$$DW = \frac{\sum_{i=2}^n(\hat{\epsilon}_i - \hat{\epsilon}_{i-1})^2}{\sum_{i=1}^n \hat{\epsilon}_i^2}$$
+
+- The test can be implemented in the `lmtest` package.
+
+```{r}
+library(lmtest)
+dwtest(lmod2, alternative = "greater") # note greater is the default
+```
+
+## Question 4: Interpret the result of this test in practical terms.
+
+We can reject the null hypothesis and we have significant evidence in support of the alternative hypothesis that the residuals have  a positive serial correlation.
+
+
+- **Generalized least squares** (which takes into account dependence) can be used for data with correlated errors.
+- When there is no apparent temporal or spatial link between observations, it is almost impossible to check for correlation between errors.	On the other hand, there is generally no reason to suspect it either!
+
+----
+
+## Practice Example: A Model for SAT Scores  
+
+1. Using the `sat` dataset in the `faraway` package, fit a model with the total SAT score as the response and `expend`, `salary`, `ratio`, and `takers` as predictors. 
+
+```{r}
+library(car)
+data(sat, package = "faraway")
+summary(sat)
+```
+
+```{r}
+# fit model
+lmod2 <- lm(total ~ expend + salary + ratio + takers, data = sat)
+faraway::sumary(lmod2)
+```
+
+
+2. Perform regression diagnostics on this model to answer the following questions. 
+
+  a. Check the mean-zero error assumption.
+
+```{r}
+# plot residuals vs fitted values.  
+residualPlot(lmod2, quadratic = FALSE)
+```
+
+- This assumptions seems to be satisfied. There is one prediction which had a large (negative) residual, but that is likely due to variability in sampling and not a violation of this assumption.
+
+
+  b. Check the constant error variance assumption.
+
+- From the plot above, this seems okay, but the variance does seem a little smaller in the middle? There is not as much data in the middle, so we can't rule out this assumption.
+
+```{r}
+# More resolution
+plot(lmod2, which = 3)
+```
+
+```{r}
+# fitted values vs regressors
+residualPlots(lmod2, fitted = FALSE, tests = FALSE, quadratic = TRUE)
+```
+
+- Nothing too alarming in the plots above. The residuals against takers plot probably looks the most problematic, but no clear indications of heteroscedasticity.
+- Maybe a slight nonlinear, quadratic pattern with `takers`?
+
+
+```{r}
+# fit model
+lmod3 <- lm(total ~ expend + salary + ratio + takers + I(takers^2), data = sat)
+faraway::sumary(lmod3)
+```
+
+```{r}
+# plot residuals vs fitted values.  
+par(mfrow = c(1, 2))
+residualPlot(lmod2, quadratic = FALSE)
+residualPlot(lmod3, quadratic = FALSE)
+```
+
+```{r}
+par(mfrow = c(1, 2))
+# More resolution
+plot(lmod2, which = 3)
+plot(lmod3, which = 3)
+par(mfrow = c(1, 1))
+```
+
+```{r}
+# fitted values vs regressors
+residualPlots(lmod3, fitted = FALSE, tests = FALSE, quadratic = TRUE)
+```
+
+- Did we fix the problem or cause more problems?
+
+```{r}
+# fit model
+lmod4 <- lm(total ~ expend + salary + ratio + takers + I(expend^2) + I(salary^2) + I(takers^2), data = sat)
+faraway::sumary(lmod4)
+```
+
+```{r}
+# fitted values vs regressors
+residualPlots(lmod4, fitted = FALSE, tests = FALSE, quadratic = TRUE)
+```
+
+```{r}
+# plot residuals vs fitted values.  
+par(mfrow = c(1, 3))
+residualPlot(lmod2, quadratic = FALSE)
+residualPlot(lmod3, quadratic = FALSE)
+residualPlot(lmod4, quadratic = FALSE)
+par(mfrow = c(1, 1))
+```
+
+  c. Check the normal error assumption. 
+
+```{r}
+# check normality assumption
+# no major evidence of a problem
+qqPlot(residuals(lmod2))
+```
+
+- This assumption looks good too!
+
+
+  d. Should we check for correlated errors?
+  
+- There are tons of possible patterns we could try to investigate, but we really have no reason to suspect any correlation in the errors. 
+- All of the data is from the same years (1994-1995), and we do not know which observations were taken at what time. So there is no temporal data.
+- I suppose we do have some spatial data, such as state, so we could look for a pattern by region for example? 
+
+
+```{r}
+ # 9 states is south
+sat$region[row.names(sat) == "Alabama" | row.names(sat) == "Arkansas" | row.names(sat) == "Louisiana" | row.names(sat) == "Tennessee" | row.names(sat) == "North Carolina" | row.names(sat) =="South Carolina" | row.names(sat) == "Georgia" | row.names(sat) == "Florida" | row.names(sat) == "Mississippi"]  <- "South"
+
+ # 13 states is northeast
+sat$region[row.names(sat) == "Maine" | row.names(sat) == "Vermont" | row.names(sat) == "New Hampshire" | row.names(sat) == "Massachusetts" | row.names(sat) == "Connecticut" | row.names(sat) == "Rhode Island" | row.names(sat) == "New York" | row.names(sat) == "New Jersey" | row.names(sat) == "Pennsylvania" | row.names(sat) == "West Virginia" | row.names(sat) == "Virginia" | row.names(sat) == "Maryland" | row.names(sat) == "Delaware"]  <- "Northeast" 
+
+# 9 states in Midwest
+sat$region[row.names(sat) == "Minnesota" | row.names(sat) == "Wisconsin" | row.names(sat) == "Illinois" | row.names(sat) == "Iowa" | row.names(sat) == "Missouri" | row.names(sat) == "Kentucky" | row.names(sat) == "Indiana" | row.names(sat) == "Ohio" | row.names(sat) == "Michigan"]  <- "Midwest" 
+
+# 10 states in plains
+sat$region[row.names(sat) == "Montana" | row.names(sat) == "North Dakota" | row.names(sat) == "Wyoming" | row.names(sat) == "Colorado" | row.names(sat) == "New Mexico" | row.names(sat) == "Texas" | row.names(sat) == "Kansas" | row.names(sat) == "Nebraska" | row.names(sat) == "South Dakota" | row.names(sat) == "Oklahoma"]  <- "Plains" 
+
+# 9 States in Pacific
+sat$region[row.names(sat) == "Washington" | row.names(sat) == "Oregon" | row.names(sat) == "Idaho" | row.names(sat) == "California" | row.names(sat) == "Nevada" | row.names(sat) == "Arizona" | row.names(sat) == "Utah" | row.names(sat) == "Alaska" | row.names(sat) == "Hawaii"]  <- "Pacific" 
+```
+
+```{r}
+sat$region <- factor(sat$region)
+levels(sat$region)
+```
+
+```{r}
+# plot residuals vs fitted values.  
+residualPlot(lmod2, quadratic = FALSE, groups = sat$region)
+```
+
+```{r}
+# Remove Utah
+sat <- sat[!(row.names(sat) %in% "Utah"), ]
+
+# plot residuals vs fitted values.  
+residualPlot(lmod2, quadratic = FALSE, groups = sat$region)
+```
+
+-----
+
+## Summary of Methods for Checking Error Assumptions
+
+**Mean-zero error assumption**: 
+
+- Plot of residuals versus fitted values
+
+**Constant error variance assumption**:
+
+- Plot of residuals versus fitted values
+- Plot of $\sqrt{| \hat{\epsilon} |}$ versus fitted values.
+- Plot of standardized residuals versus fitted values.
+- Plot of residuals versus each regressor.
+	
+	
+**Normal error assumption**:
+
+- q-q of residuals
+- Shapiro-Wilk test
+
+**Autocorrelated errors**:
+
+- Plot of residuals versus time
+- Plot of successive pairs of residuals
+- Durbin-Watson test
+
+
+## Summary of useful R functions for checking error assumptions
+
+## Residuals:
+
+- `residuals(lmod)` extracts the OLS residuals.
+- `rstandard(lmod)` extracts the standardized residuals.
+- `rstudent(lmod)` extracts the studentized residuals.
+
+## Mean-zero error assumption:
+
+- `car::residualPlot` constructs a plot of the residuals versus fitted values.
+- `plot(lmod, which = 1)` constructs a plot of the residuals versus fitted values.
+
+## Constant error variance assumption:
+
+- `car::residualPlots` constructs a plots of the residuals versus each predictor and the residuals versus the fitted values.
+- `plot(lmod, which = 3)` constructs a plot of **square root of standardized residuals** versus the fitted values to increase resolution.
+
+## To assess error normality: 
+
+- `car::qqPlot(lmod)` will produce a q-q plot for the **studentized residuals**, along with the appropriate t-based, pointwise confidence bands for what is expected if $\boldsymbol\epsilon \sim N(0, \sigma^2 I)$.
+- `plot(lmod, which = 2)` will produce a q-q plot for the **standardized residuals**, along with a helpful reference line.
+- `shapiro.test(residuals(lmod))` performs a Shapiro-Wilk test on the residuals.
+
+## Correlated Errors
+
+- `lmtest::dwtest` performs a Durbin-Watson test on the residuals of a fitted model
+
+
 ## Unusual Observations
 
 An implicit assumption made when fitting a regression model is that **all observations should be equally reliable and have approximately equal role** in determining the regression results and in influencing conclusions.
@@ -642,4 +1160,332 @@ data(sat, package = "faraway")
 - `car::influencePlot` constructs an influence plot of the studentized residuals versus the leverage values.
 - `plot(lmod, which = 4)` constructs an influence plot of the standardized residuals versus the leverage values.
 - `influence(lmod)` computes a number of leave-one-out-related measures of observational influence.
+
+```{r, include = FALSE}
+library(faraway)
+library(car)
+```
+
+## Model Structure
+
+Estimation and inference for a regression model depend on several assumptions. These assumptions must be checked using **regression diagnostics**.   
+
+Diagnostics techniques may be:
+	
+- Graphical: More flexible, but require interpretation
+- Numerical: Narrower in scope, but easier to interpret
+
+There are three main categories of linear regression assumptions:
+
+1. **Model**:  The structural (mean) part of the model is correct, i.e., $E(\mathbf{y})=X \boldsymbol\beta$.
+2. **Error**: $\epsilon_1, \epsilon_2, \ldots , \epsilon_n \overset{\mbox{i.i.d.}}{\sim} N(0, \sigma^2)$ 
+3. **Unusual observations**: All observations are equally reliable and have approximately equal role in determining the regression results and in influencing conclusions.
+
+
+Model building is an iterative process! Regression diagnostics often suggest improvements, causing you to fit another model, do more diagnostics, etc.  
+
+
+We will now focus on checking model structure, which is the most important assumption that should be checked prior to checking error assumptions or identifying unusual observations.
+
+### Residual Plots
+
+If the linear model is correctly specified, then $\mbox{cor}(\widehat{\boldsymbol\epsilon}, \widehat{\mathbf{y}})$ and  $\mbox{cor}(\widehat{\boldsymbol\epsilon},\mathbf{X}_j)=0$.
+
+**Patterns in the plots** of  $\widehat{\boldsymbol\epsilon}$ against fitted values $\widehat{\mathbf{y}}$ and  $\widehat{\boldsymbol\epsilon}$ against $\mathbf{X}_j$ can occur only if **some of the model assumptions are violated**.
+
+Residual plots should be "null plots", with no systematic features.
+
+- The conditional mean of the residuals should not change with the fitted values or the regressors.
+- There shouldn’t be any systematic curves or patterns.
+- The residuals should be symmetrically scattered around a horizontal line at  $\widehat{\epsilon}=0$.
+
+### Example
+
+We examine the relationship between occupational "prestige" and various predictors among Canadians.  
+
+The data include the variables:
+
+- `education`: Average education of occupational incumbents, years, in 1971.
+- `income`: Average income of incumbents, dollars, in 1971.
+- `women`: Percentage of incumbents who are women.
+- `prestige`: Pineo-Porter prestige score for occupation, from a social survey conducted in the mid-1960s.
+- `census`: Canadian Census occupational code.
+- `type`: Type of occupation. A factor variable with levels (note: out of order): bc, Blue Collar; prof, Professional, Managerial, and Technical; wc, White Collar.
+
+```{r}
+library(car)
+data(Prestige, package = "carData") # load data
+lmod <- lm(prestige ~ education + income + type, data = Prestige) # fit model
+residualPlots(lmod, tests = FALSE) # examine residual plots
+```
+
+### Question 1: Comment on any patterns you observe in the residual plots above.
+
+- The education variable shows no systematic patterns.
+- The income variable has a somewhat nonlinear pattern.
+- The type variable shows no clear systematic pattern (prof has a median slightly above 0, but that can certainly happen due to sampling variation).
+- There is clear nonlinearity in the plot of the residuals versus fitted values
+
+
+## Tests to Determine Nonlinearity
+
+### Lack of Fit Test
+
+A **lack-of-fit** test can be used to examine a plot of the residuals versus the regressors. This is simply a test of whether the squared regressor is significant when added to the original fitted model.
+
+```{r}
+# Lack of fit test for income
+lmod.lofi <- lm(prestige ~ education + income + I(income^2) + type, data = Prestige)
+summary(lmod.lofi)
+```
+
+### Question 2: Does the output above support the claim that the income variable has a somewhat nonlinear pattern? Explain why or why not.
+
+
+We can see that the test statistic and $p$-value for `I(income^2)` are $-2.89$ and $0.0049$. This implies the coefficient for `I(income^2)` is significant, and thus we have confirmed that the income variable has a somewhat nonlinear pattern.
+
+### Tukey’s Test for Nonadditivity
+
+**Tukey’s test for nonadditivity** can be used to examine the plot of the residuals versus fitted values.
+
+- This is simply a test of whether the square of $\widehat{\mathbf{y}}$  is significant when added to the original fitted model.
+
+```{r}
+# mimic tukey's test
+yhatall <- predict(lmod, newdata = Prestige)
+lmod.tukeytest <- lm(prestige ~ education + income + type + I(yhatall^2), data = Prestige)
+summary(lmod.tukeytest)
+```
+
+- If either of these tests are significant, it suggests there is unaccounted curvature in the data that is not captured by the fitted model.
+- The `residualPlots` function can be used to perform the associated tests.
+
+```{r}
+residualPlots(lmod, plot = FALSE)
+```
+
+### Question 3: Summarize the output above in practical terms.
+
+- The education variable shows no systematic patterns.
+- The income variable has a nonlinear pattern.
+- There is clear nonlinearity in the plot of the residuals versus fitted values.
+
+**Residual plots can detect nonlinearity, but they cannot be used to determine whether the nonlinearity is monotonic (think a log relationship) or non-monotonic (think a quadratic relationship).**
+
+
+## Marginal Model Plot
+
+The **marginal model plot** compares the marginal relationship between the response and each regressor. This plot consists of:
+
+- The plot of $\mathbf{y}$ vs $\mathbf{X}_j$ for each quantitative, non-interactive regressor.
+- A nonparametric, smoothed line of $\widehat{\mathbf{y}}$ versus $\mathbf{X}_j$.  Call this the "model" line.
+- A nonparametric, smoothed line of $\mathbf{y}$ versus $\mathbf{X}_j$. Call this the "data" line.
+- Note that the `car` package uses the `loess` smoother (locally weighted scatterplot smoothing).
+- The `marginalModelPlots` function generates these graphs.
+
+```{r}
+marginalModelPlots(lmod) # examine marginal model plot
+```
+
+For a non-problematic fitted model:
+
+- The model and data lines should be similar.  
+- The lines should follow the pattern of the data.
+- For genuine, real-life, noisy data, it is possible neither line fits the data very well, but they should match any obvious structural patterns.
+- Caution: Not seeing a problem does NOT indicate we have a good model, only that there are no apparent problems
+
+
+### Question 4: Interpret the output of the marginal model plots above.
+
+- The marginal model plots do not provide evidence of a model problem for the `education` variable.
+- The discrepancies between the model and data lines near the edges of `income` are curious. 
+- The marginal model plot of  $\mathbf{y}$ against $\widehat{\mathbf{y}}$ shows slight evidence of an inappropriately modeled curve in the data.
+
+## Added Variable Plots
+
+**Added variable (av) plots** (or partial regression plots) help to isolate the impact of regressor $\mathbf{X}_j$ on the response $\mathbf{y}$, after accounting for the effect of the other regressors in the model. Marginal model plots display the marginal relationships between the response and regressors while ignoring the other regressors in the model.
+
+
+To construct an added variable plot:
+
+- Regress $\mathbf{y}$ on all regressors except $\mathbf{X}_j$, then get the residuals, $\widehat{\boldsymbol\delta}$.
+  - This represents the part of $\mathbf{y}$ not explained by the the other regressors.
+- Regress $\mathbf{X}_j$ on all regressors except $\mathbf{X}_j $, then get the residuals $\widehat{\boldsymbol\gamma}$.  
+  - This represents the part of $X_j$ not explained by the other regressors.
+- The added variable plot displays $\widehat{\boldsymbol\delta}$ versus $\widehat{\boldsymbol\gamma}$.
+
+```{r}
+# recreating the av plot for education manually
+# regress y on all regressors but education
+deltahat <- residuals(lm(prestige ~ income + type, data = Prestige)) 
+
+# regress education on all other regressors
+gammahat <- residuals(lm(education ~ income + type, data = Prestige))
+
+# plotting deltahat vs gammahat
+plot(deltahat ~ gammahat)
+
+# adding a loess smoother to the added variable plot
+loess_fit <- loess(deltahat ~ gammahat)
+
+# create a sequence of x-values to make predictions
+x_values <- seq(min(gammahat), max(gammahat), len = 100)
+# predict the response for the sequence of x-values
+y_values <- predict(loess_fit, newdata = data.frame(gammahat = x_values))
+# connect the points together
+lines(x_values, y_values, col = "blue")
+```
+
+### Creating Added Variable Plots 
+
+The `avPlots` function can be used to generate added variable plots for a fitted model.
+
+```{r}
+avPlots(lmod, id = FALSE)
+#avPlot(lmod, "education")
+```
+
+### Interpreting Added Variable Plots 
+
+```{r}
+# Here we use the women variable as a regressor and remove type
+lmod <- lm(prestige ~ education + income + women, data = Prestige)
+avPlots(lmod, id = FALSE)
+#avPlot(lmod, "education")
+```
+
+Added variable plots can identify a non-linear relationship between the response and a regressor.
+
+- If the data follow a clear non-linear pattern in comparison with the least-squares line, then there is a structural problem with our model.
+- A curve in the points and a dramatic change in the structure of the points would indicate a problem with the structural component of the model.
+- The added variable plot cannot suggest a transformation because the $x$-axis is not the original predictor.
+- The plot CAN indicate whether the transformation should be monotonic or non-monotonic.
+
+Some properties:
+
+- The OLS linear fit to the data in an added variable plot for regressor $\mathbf{X}_j$ will have slope $\widehat{\beta}_j$ and intercept 0.
+- Though scaled differently, we can still see which observations have high leverage with respect to each regressor.
+- For factor variables, an added variable plot is constructed for each contrast that is used to define the factor, so redefining the contrasts will change the added variable plots. 
+
+
+Added variable plots can be used to assess the strength of the relationship between the response and a regressor.
+
+- A flat band of points around the fitted line would indicate that there is no relationship or a weak relationship between the response and regressor $x_i$, after accounting for the other regressors.
+
+Added variable plots can be used to identify outliers and/or high leverage observations that seem to be influential in determining the estimated coefficient for $x_i$.
+
+- Does the OLS line follow the overall pattern of the data, or are there a few points that seem to be “pulling” the line toward them?
+
+### Question 5: Interpret the output of the added value plots above.
+
+- The education variable seems to have a linear correlation with prestige as the line follows the patter of the points in the scatterplot.
+- The education variable does not seem to have issues with high leverage points.
+- The income variable does have levarage points that are outliers and seem to be influencing the model.
+- There does not seem to be a very strong correlation between women and prestige.
+- There does not seem to be a big issue with unusual observations in regards to the women variable.
+
+
+## Component Plus Residual Plots
+
+The **component plus residual (cr) plot**  (a.k.a, **partial residual plot**) is a competitor to the added variable plot.
+
+The cr plot shows $\mathbf{X}_j \widehat{\boldsymbol\beta}_j + \widehat{\boldsymbol\epsilon}$ versus $\mathbf{X}_j$.
+
+- $\mathbf{X}_j \widehat{\boldsymbol\beta}_j$ is the "component" for $\mathbf{X}_j$
+- This is motivated by the relationship
+$$\mathbf{y} - \sum_{k \ne j} \mathbf{X}_k \widehat{\boldsymbol\beta}_k = \widehat{\mathbf{y}} + \widehat{\boldsymbol\epsilon} - \sum_{k \ne j} \mathbf{X}_k \widehat{\boldsymbol\beta}_k = \mathbf{X}_j \widehat{\boldsymbol\beta}_j+ \widehat{\boldsymbol\epsilon}.$$
+
+- The idea is to compare the impact of the $i$^th^ regressor on the fitted values.
+- cr plots are useful for checking nonlinear relationships in the variable being considered for inclusion in the model.
+- They can also suggest potential transformation of the data so that the relationship is linear.
+- If the scatter plot does not appear to be linear, then there is a nonlinear relationship between the regressor and the response (after accounting for the other regressors).
+- The slope of the line fit to the cr plot is $\widehat{\boldsymbol\beta}_i$.
+
+The `crPlots` function can be used to generate component plus residual plots for a fitted model.
+
+- The plot includes the OLS line for the data (with slope $\widehat{\beta}_i$) and well as a the line from a nonparametric smooth.
+- Ideally, the two lines would be similar and match the pattern of the data.
+- The nonparametric smooth makes it easier to see deficient fits.
+
+
+### Question 6: Do the cr plots provide evidence of clear nonlinear relationships for any of the variables?
+
+```{r}
+crPlots(lmod)
+```
+
+The component plus residual plot for income was very nonlinear whereas education and women look linear.
+
+
+- Note: if regressors are correlated, nonlinearity in one variable can “leak” into another.
+- Fox (2015) recommends transforming one variable at a time if remedial measures are taken.
+
+## Transformations
+
+If a relationship is nonlinear but monotone and simple, Mosteller and Tukey’s bulging rule can be used to guide the selection of linearizing transformations.
+
+```{r, echo = FALSE}
+setwd("~/Dropbox/CUDenver/Math4387/RCode/Model\ Structure")
+```
+
+![Mosteller and Tukeys bulging rule](tukey_bulge.png "Mosteller and Tukey’s bulging rule")
+
+- Note: In multiple regression, transforming the response will impact the relationship with all of the regressors, while transforming a single regressor will have less impact on the relationship between the response and the other regressors.
+
+### Question 7: Compare the graphic below with the type of "bulge" seen in your data; move along the "ladder of transformations" for your response or predictors to determine a helpful transformation.
+
+
+ Going back to our last fitted model, we noted that the component plus residual plot for income was very nonlinear. **The bulge suggests a log or square root transformation of income.**
+
+```{r}
+lmod.sqrt <- lm(prestige ~ education + sqrt(income) + women, data = Prestige)
+crPlots(lmod.sqrt)
+```
+
+
+```{r}
+lmod.log <- lm(prestige ~ education + log(income) + women, data = Prestige)
+crPlots(lmod.log)
+```
+
+### Question 8: Which transformation of income seems like a better fit?
+
+The log transformation of income is substantially better.
+
+### Polynomial Transformations
+
+Adding raw polynomials $(X,X^2,X^3, \ldots)$ to our model can be problematic.
+
+- They can induce instability in the model since they can become highly correlated.
+- It is generally recommended that one centers $X$ (i.e., subtract the mean) before generating the polynomials.
+- Use the `poly` function to generate orthogonal polynomials, which reduce the potential for model instability.
+- Orthogonal polynomials have the benefit that adding the higher order term doesn’t impact the estimated coefficients for the other polynomials!
+
+```{r}
+lmod.quad <- lm(prestige ~ education + log(income) + poly(women, 2), data = Prestige)
+crPlots(lmod.quad)
+```
+
+### Logistic Transforation
+
+When a predictor variable is a number between 0 and 1 (or a percentage between 0 and 100), it is not uncommon to observe a **logistic relationship** between the predictor and the response (e.g, in the cr plot).  
+
+In that case, one might transform that predictor using the `logit` function in the `car` package to help improve the model fit.
+
+```{r}
+# the logistic function
+x = seq(0.01, 0.99, len = 100)
+plot(x, logit(x), type = "l", xlab = "probability")
+```
+
+### Closing Comments on Transformations
+
+The transformation approaches presented here are simple, and only work for data with simple non-linearities.
+
+Other approaches (available in the car package) are the:
+
+- Box-Cox transformation for the response variable
+- Box-Tidwell transformation for the predictors.
+
+For complicated data, no simple transformation or basic linear regression may capture the relationship between the response and regressors.
 
