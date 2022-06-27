@@ -127,3 +127,549 @@ In the models above, we have only discussed possibilities with a single numeric 
 <!-- We could fit other ANCOVA models, such as the common intercept model, but the parallel lines and separate lines models are the most common. -->
 
 <!-- You can add additional interactions, squared and cubic explanatory variables to the model, etc. -->
+
+## Exploring Data for One-Factor Models: Example with United Nations Dataset
+
+### 1. Load the `UN11` dataset below and read the help documentation to familiarize yourself with the data. How many observations are in the dataset? How many variables?
+
+```{r}
+data(UN11)
+# ?UN11
+```
+
+```{r}
+nrow(UN11)
+ncol(UN11)
+head(UN11)
+```
+There are 199 observations (countries) with 6 variables.
+
+We'll be working with following variables.
+
+- **ppgdp**: the gross national product per person in U.S. dollars
+- **fertility**: Average number of children per birth parent
+- **lifeExpF**: Female life expectancy, years
+- **pctUrban**: A percentage of population living in urban areas
+- **group**: A factor with level **oecd** for countries that are members of the Organization for Economic Cooperation and Development, are located in **africa**, and **other** for all other countries.
+
+If the only predictor is a factor, then the regression model is called a **one-factor** or **one-way** design.
+
+```{r}
+levels(UN11$group)
+```
+
+## Exploratory Data Analysis
+
+### 2. Create side-by-side boxplots for the variable **lifeExpF** for each of the categories of the **group** variable and describe any interesting observations about the data.
+
+```{r}
+boxplot(lifeExpF ~ group, data = UN11) 
+```
+
+- The oecd countries generally have the largest female life expectancy and africa countries typically have the lowest.  
+- Nauru and Afghanistan have unusually low female life expectancy for the other group.  
+- Japan has high female life expectancy, and Turkey has low life expectancy compared to the other members of the oecd.  
+- The variation of female life expectancy in oecd is smallest, but in africa is largest.
+
+**Tips on reading boxplots:**  
+
+- The thick middle line indicates the median value.
+- The box extends to the 25th and 75th percentiles.  The distance between the quartiles is known as the interquartile range (IQR).
+- The whiskers generally extend to the most extreme values that are within 1.5 IQRs from the quartiles.
+- Values outside the whiskers are outliers and are indicated by a dot or star.
+
+## How do we include factor variables as regressors?
+
+**Dummy** or **indicator variables** are used to include categorical predictors in a regression model.
+
+- A dummy variable $U_j$ for factor level $j$ is 1 if an observation has level $j$, but $0$ otherwise.
+- Note that -1 and 1, or 1 and 2, are sometimes used, but this is less common and more difficult to interpret.
+- Assignment labels are mostly arbitrary and do not affect the results.
+
+Since group has $d=3$ levels, the $j^{\mbox{th}}$ dummy variable $U_j$ for the factor $j=1,2, \ldots,d$ has $i^{\mbox{th}}$ value $u_{ij}$, for $i=1,2, \ldots,n$ given by 
+
+$$u_{ij} = \left\{ \begin{array}{ll} 1 & \mbox{if } \mbox{group}_i=j^{\mbox{th}} \mbox{ category of group} \\
+0 & \mbox{otherwise} \end{array} \right.$$
+
+For the **group** variable, we set up three dummy variables
+
+- $U_1$ (is country OECD?), 
+- $U_2$ (is country Other?), and 
+- $U_3$ (is country in Africa?).
+
+### 3. Explain what the code below is doing? What happens if we remove the $+ 0$ from the commands?
+
+```{r}
+# with functions means: using this data frame, 
+# perform the following actions ...
+U1 <- with(UN11, (group == levels(group)[1]) + 0) 
+U2 <- with(UN11, (group == levels(group)[2]) + 0)
+U3 <- with(UN11, (group == levels(group)[3]) + 0)
+head(data.frame(group = UN11$group, U1, U2, U3), 10)
+```
+
+Using the UN11 data frame:
+
+- If an observation is in the first level, then it returns TRUE which when added to 0 gives 1.
+- If an observation is not in the first level, then it returns FALSE which when added to 0 gives 0.
+- Similar for the other groups.
+
+
+- Using the UN11 data frame, if an observation is the first level, then it returns TRUE which when added to 0 gives 1.
+
+
+## The one-factor model
+
+Regression coefficients for factor variables in a one-way model are often called **effects**.
+
+### 4. Let $Y$ denote the response variable `lifeExpF`. What would be problematic about using the linear model proposed below?
+
+$$Y =  \beta_0 + \beta_1 U_1 + \beta_2 U_2 + \beta_3 U_3 + \epsilon$$
+Since $U_1 + U_2 + U_3 =1$, the first column (intercept) of the model matrix is linearly dependent with the last three columns. Since the model matrix is not full rank, we would not be able to invert $X^TX$ and solve for the regression coefficients $\boldsymbol{\beta}$.
+
+We only need $d-1$ dummy variables to represent $d$ levels because the last level represented when all the other dummy variables were 0.  
+
+- Any of the $d$ dummy variables could be excluded, though generally it is the first or last level.
+- R drops the first level by default.
+- The level dropped is known as the **reference** or **baseline level**.
+- In R, this method for creating the dummy variables is known as the **treatment contrast**.
+
+
+Other possibilities for avoiding linear dependence are:  
+
+- Drop $\beta_0$ from the model.
+- Assume $\sum_{i=1}^{d-1} \beta_i = 0$.  
+
+  - This is known as a **sum contrast** and does NOT use dummy variables.
+  - Interpretation is generally more difficult.
+
+```{r, message = FALSE}
+# Here we load libraries used in this file
+# You may need to install if not already done so
+library(alr4) #datasets from Weisberg text
+library(ggplot2) #To make some pretty plots
+library(lattice) #data visualization
+library(HH) #datasets from text by Heiberger and Holland
+```
+
+
+```{r}
+levels(UN11$group)
+```
+
+```{r}
+U1 <- with(UN11, (group == levels(group)[1]) + 0) #oecd =1
+U2 <- with(UN11, (group == levels(group)[2]) + 0) #other =1
+U3 <- with(UN11, (group == levels(group)[3]) + 0) #africa =1
+UN11$U1 = U1
+UN11$U2 = U2
+UN11$U3 = U3
+lm(lifeExpF ~ U2 + U3, data = UN11)
+```
+
+
+# Factors and Quantitative Predictors
+
+It is common to study the effect of a factor AFTER adjusting for one or more other quantitative regressors.  
+
+If we have a mixture of factors and quantitative variables in our data, it’s useful to create a scatterplot of the response versus the covariate that distinguishes the observations for each level.
+
+- This helps us assess whether the relationship between the response and quantitative regressor differs for the levels of the factor.
+
+```{r}
+# compute mean lifeExpF for each group
+(mean_lifeExpF <- tapply(UN11$lifeExpF, UN11$group, mean))
+```
+
+## Exploratory Data Analsis with `ggplot2`
+
+```{r}
+ggplot(UN11, aes(x = log(ppgdp), y = lifeExpF, col = group, pch = group)) + geom_point()
+```
+
+## Exploratory Data Analsis with `lattice`
+
+```{r}
+# A similar plot using the lattice package
+library(lattice)
+xyplot(lifeExpF ~ log(ppgdp), data = UN11, group = group, auto.key = TRUE)
+```
+
+## Exploratory Data Analsis with Base Graphics
+
+```{r}
+# using base graphics
+# create different colors/symbols for each group
+grp_col = as.numeric(UN11$group)
+
+# plot data, using different colors/symbols for each group
+plot(lifeExpF ~ log(ppgdp), data = UN11, 
+     col = grp_col, pch = grp_col)
+
+# create the legend
+legend("topleft", legend = c("oecd", "other", "africa"), col = 1:3, pch = 1:3)
+```
+
+
+### 1. What are some interesting observations/patterns you can see in the plots above?
+
+We see:
+
+- The linear relationship between `lifeExpF` and `log(ppgdp)` is fairly weak for the African countries
+- The linear relationship is reasonably strong for the other countries
+- The linear relationship is reasonably strong for OECD countries.
+- It’s unclear whether the average rate of change between `lifeExpF` and `log(ppgdp)` (the slope) is the same for the three factor levels.
+- The average `lifeExpF` seems to differ vertically for the same levels of `log(ppgdp)` for the different factor levels.
+
+
+## Comparing Different Models
+
+Suppose we have a response $Y$, a quantitative regressor $X$, and a two-level factor variable represented by a dummy variable $U$:
+
+$$U = \left\{ \begin{array}{ll} 
+0 & \mbox{for the reference level} \\
+1 & \mbox{for the treatment level} \end{array} \right.$$
+
+Consider several possible regression models. Note models described extend naturally when the factor has more than 2 levels (as in our case).
+
+- The same one regression line for both levels (combined), $Y= \beta_0 + \beta_1 X + \epsilon$.  
+  - In R: `y ~ x`
+  - This is a **simple linear model**.
+
+### 2. Enter code to fit a simple linear model with `log(ppgdp)` as the regressor and `lifeExpF` as the response.
+
+```{r}
+lmods <- lm(lifeExpF ~  log(ppgdp), data = UN11)
+faraway::sumary(lmods)
+```
+
+- A factor predictor but no quantitative predictor, $Y= \beta_0 + \beta_2 U + \epsilon$.  
+  - In R: `y ~ u`
+  - This is a **one-way model**.
+
+### 3. Enter code to fit a one-way model with `U2` and `U3` as the treatment levels and `lifeExpF` as the response.
+
+```{r}
+lmodo <- lm(lifeExpF ~  U2 + U3, data = UN11)
+#lmodo2 <- lm(lifeExpF ~  group, data = UN11)
+faraway::sumary(lmodo)
+```
+
+- Separate regression lines for each group having the same slope, $Y= \beta_0+ \beta_1 X+ \beta_2 U + \epsilon$.  
+	- In R: `y ~ x + u`.
+	- This is known as a **parallel lines** or **main effects model**.
+	- $\beta_2$ represents the vertical distance between the regression lines (the effect of the treatment).
+
+### 4. Enter code to fit a main effects model with `log(ppgdp)` as a predictor with `U2` and `U3` as the treatment levels and `lifeExpF` as the response.
+
+
+```{r}
+lmodm <- lm(lifeExpF ~ log(ppgdp) + U2 + U3, data = UN11)
+#lmodm2 <- lm(lifeExpF ~ log(ppgdp) + group, data = UN11)
+faraway::sumary(lmodm)
+```
+
+- Separate lines for each group with different slopes, $Y= \beta_0+ \beta_1 X+ \beta_2 U+ \beta_3 XU + \epsilon$.  
+	- In R: `y ~ x + u + x:u` or `y ~ x*u`
+	- This is known as a **separate lines** or **interaction model**.
+	- `x:u` means the interaction between `x` and `u`.
+	- `x*u` means the cross between `x` and `u` (`x`, `u`, and the interaction between `x` and `u`). 
+
+### 5. Enter code to fit an interaction  model with `log(ppgdp)` as a predictor with `U2` and `U3` as the treatment levels and `lifeExpF` as the response
+
+```{r}
+lmodi <- lm(lifeExpF ~ log(ppgdp)*group, data = UN11)
+faraway::sumary(lmodi)
+```
+
+```{r}
+coef(lmods)
+coef(lmodo)
+coef(lmodm)
+coef(lmodi)
+```
+
+
+## Model Matrix for the Interaction Model
+
+```{r}
+head(model.matrix(lmodi), 10)
+```
+
+### 6. How are the last two columns of $X$ computed?
+
+The dummy variables are exactly like they were in the one-way model, but this model has additional regressors that are the product of the covariate and the dummy variables
+
+### 7. Find formulas for E(lifeExpF $\vert$ ppgdp = x, group=oecd), E(lifeExpF $\vert$ ppgdp = x, group = other) and E(lifeExpF $\vert$ ppgdp = x, group = africa).
+
+$$\begin{aligned} \widehat{\mbox{lifeExpF}} =& \widehat{\mbox{E}}(\mbox{lifeExpF} \vert \mbox{ppgdp}, \mbox{group})\\
+&= 59.21 + 2.24 \log{(\mbox{ppgdp})} -11.17 U_2 -22.98 U_3 + 0.93 \log{(\mbox{ppgdp})}U_2 + 1.09 \log{(\mbox{ppgdp})}U_3
+\end{aligned}$$
+
+If the group is oecd, then $U_2=0$ and $U_3=0$ giving
+
+$$\begin{aligned}
+\widehat{\mbox{lifeExpF}} &= \widehat{\mbox{E}}(\mbox{lifeExpF} \vert \mbox{ppgdp}=x, \mbox{group=oecd})\\
+&= 59.21 + 2.24 \log{(x)}
+\end{aligned}$$
+
+
+If the group is other, then $U_2=1$ and $U_3=0$ giving
+
+$$\begin{aligned}
+\widehat{\mbox{lifeExpF}} &= \widehat{\mbox{E}}(\mbox{lifeExpF} \vert \mbox{ppgdp}=x, \mbox{group=other})\\
+&= 59.21 + 2.24 \log{(x)} -11.17 + 0.93 \log{(x)}\\
+&= 48.02 + 3.17 \log{(x)}
+\end{aligned}$$
+
+If the group is africa, then $U_2=0$ and $U_3=1$ giving
+
+$$\begin{aligned}
+\widehat{\mbox{lifeExpF}} &= \widehat{\mbox{E}}(\mbox{lifeExpF} \vert \mbox{ppgdp}=x, \mbox{group=africa})\\
+&= 59.21 + 2.24 \log{(x)} -22.98 +1.09 \log{(x)}\\
+&= 36.23 + 5.41 \log{(x)}
+\end{aligned}$$
+
+## Plotting the Interaction Model
+
+```{r}
+# using ggplot2
+ggplot(UN11, aes(x = log(ppgdp), y = lifeExpF, col = group)) + geom_point() + geom_smooth(method = "lm") + theme_bw() + theme(legend.position="top")
+```
+
+```{r}
+# using lattice
+xyplot(lifeExpF ~ log(ppgdp), data = UN11, 
+       group = group, type = c("p", "r"), 
+       auto.key = TRUE)
+```
+
+```{r}
+# using base graphics
+# create different colors/symbols for each group
+grp_col = as.numeric(UN11$group)
+
+# plot data, using different colors/symbols for each group
+plot(lifeExpF ~ log(ppgdp), data = UN11, 
+     col = grp_col, pch = grp_col)
+# fitted lines for each group, 
+# changing color for each group.  
+# Make sure to match the color number with color number used in plot!
+abline(59.21366, 2.24254, col = 1)
+abline(59.21366 - 11.17310, 2.24254 + 0.92944, col = 2)
+abline(59.21366 - 22.98484, 2.24254 + 1.09498, col = 3)
+
+# create the legend
+legend("topleft", legend = c("oecd", "other", "africa"), col = 1:3, pch = 1:3, lty = 1)
+```
+
+
+### 8. Interpret each coefficient in your previous formulas in the context of this dataset.
+
+When **group = oecd** we have the following interpretations. For OECD countries:
+ - For every $1\%$ increase in an OECD country's GDP per capita, the life expectancy of females is predicted to increase by about $0.0224$ years, on average.
+ - If an OECD's country has GDP per capita equal to $\$1$, the life expectancy of females is predicted to be 59 years. 
+
+When **group = other** we have the following interpretations. For OECD countries:
+ - For every $1\%$ increase in an `other` country's GDP per capita, the life expectancy of females is predicted to increase by about $0.0317$ years, on average.
+ - If an `other` country has GDP per capita equal to $\$1$, the life expectancy of females is predicted to be 48 years. 
+
+When **group = africa** we have the following interpretations. For OECD countries:
+ - For every $1\%$ increase in an African country's GDP per capita, the life expectancy of females is predicted to increase by about $0.0541$ years, on average.
+ - If an African country has GDP per capita equal to $\$1$, the life expectancy of females is predicted to be 36 years. 
+
+Comparing slopes in the the three models, we can see that if a country increases its GDP per capita by $1\%$, then the corresponding increase in life expectancy of females is greatest in Africa, second greatest in the `other` group, and least for OECD countries.
+
+Note: The interpretation of the **intercept terms** for an interaction model **can be problematic in practice** because the size difference between the coefficients might not represent a typical difference **if the range of the quantitative regressor doesn’t include zero**.
+
+## Interpreting Coefficients in the Interaction Model
+
+
+**Interpretation is easier if we eliminate the interaction term.** One solution is to center the quantitative regressor at its mean and recompute the model.
+
+- The intercept-related coefficients are interpreted as the effect when the regressor is at its mean value.
+
+## Effects Plot for Interaction Model
+
+```{r}
+# Compute effects
+ppgdpEffect <- Effect(c("ppgdp", "group"),
+                     mod = lmodi,
+                     xlevels = list(ppgdp = seq(1, 106000, len = 1000)))
+# Plot the effects
+# (multiline = TRUE) means all lines plotted on same graph 
+plot(ppgdpEffect,
+     multiline = TRUE)
+```
+
+## Effects Plot for Interaction Model with Log Scale
+
+```{r}
+plot(ppgdpEffect,
+     rug=FALSE, grid=TRUE, multiline=TRUE,
+     xlab = "log(ppgdp)",
+     transform.x=list(ppgdp=list(trans=log, inverse=exp)),
+     ticks.x =list(ppgdp = list(at= c(100, 1000, 5000, 30000))))
+```
+
+```{r}
+#Another way to plot on log-scale
+plot(ppgdpEffect, multiline=TRUE, grid=TRUE,rug=FALSE,
+     axes=list(
+       x=list(ppgdp=list(transform=list(trans=log, inverse=exp),
+                        lab = "ppdgd, log-scale",
+                        ticks=list(at=c(100,1000,5000,30000)),
+                        lim = c(100,200000)
+                         ))))
+```
+
+### 9. What are some interesting observations we can infer from the plot above?
+
+- The increase in female life expectancy is greater for smaller starting values of ppgdp.
+- The effect is generally largest for OECD locations, closely followed by other locations.
+
+## Main Effects Model
+
+A **main effects model assumes the slope is the same for all factor levels** but allows each group to have its own intercept.  
+
+```{r}
+lmodm <- lm(lifeExpF ~ log(ppgdp) + group, data = UN11)
+faraway::sumary(lmodm)
+```
+
+
+### 10. Find formulas for E(lifeExpF $\vert$ ppgdp = x, group=oecd), E(lifeExpF $\vert$ ppgdp = x, group = other) and E(lifeExpF $\vert$ ppgdp = x, group = africa).
+
+
+$$\begin{aligned} \widehat{\mbox{lifeExpF}} =& \widehat{\mbox{E}}(\mbox{lifeExpF} \vert \mbox{ppgdp}, \mbox{group})\\
+&= 49.53 + 3.18 \log{(\mbox{ppgdp})} -1.53 U_2 -12.17 U_3
+\end{aligned}$$
+
+If the group is oecd, then $U_2=0$ and $U_3=0$ giving
+
+$$\begin{aligned}
+\widehat{\mbox{lifeExpF}} &= \widehat{\mbox{E}}(\mbox{lifeExpF} \vert \mbox{ppgdp}=x, \mbox{group=oecd})\\
+&= 49.53 + 3.18 \log{(x)}
+\end{aligned}$$
+
+
+If the group is other, then $U_2=1$ and $U_3=0$ giving
+
+$$\begin{aligned}
+\widehat{\mbox{lifeExpF}} &= \widehat{\mbox{E}}(\mbox{lifeExpF} \vert \mbox{ppgdp}=x, \mbox{group=other})\\
+&= 49.53 + 3.18 \log{(\mbox{ppgdp})} -1.53(1) -12.17(0)\\
+&= 48 + 3.18 \log{(x)}
+\end{aligned}$$
+
+If the group is africa, then $U_2=0$ and $U_3=1$ giving
+
+$$\begin{aligned}
+\widehat{\mbox{lifeExpF}} &= \widehat{\mbox{E}}(\mbox{lifeExpF} \vert \mbox{ppgdp}=x, \mbox{group=africa})\\
+&= 49.53 + 3.18 \log{(\mbox{ppgdp})} -1.53(0) -12.17(1)\\
+&= 37.36 + 3.18 \log{(x)}
+\end{aligned}$$
+
+- Main effects models are easier to interpret since the effect of the quantitative regressor is the same for all levels of the factor.
+- This model is called the Analysis of Covariance (ANCOVA) when the factor levels indicate a randomly assigned treatment for subjects.
+
+
+## Plotting the Main Effects Model
+
+```{r}
+# using ggplot2
+
+# this limits the line to the range of the observed data (avoiding extrapolation)
+predx <- unlist(tapply(log(UN11$ppgdp), UN11$group, function(x) seq(min(x), max(x), len = 2)))
+
+# associated group for each x-value
+g = rep(c("oecd", "other", "africa"), each = 2)
+
+# predict response for each combination of x, group
+predy = predict(lmodm, newdata = data.frame(ppgdp = exp(predx), group = g))
+
+# combine together in new data frame
+fitted_df = data.frame(ppgdp = exp(predx), group = g, lifeExpF = predy)
+
+# plot main effects/ancova model using ggplot2
+ggplot(UN11, aes(x = log(ppgdp), y = lifeExpF, col = group)) + geom_point() + geom_line(data = fitted_df, aes(x = log(ppgdp), y = lifeExpF)) + theme_bw()  + theme(legend.position="top")
+```
+
+```{r}
+# using lattice package (essentially)
+#library(HH) #you will need to install this package
+# doesn't like log(ppgdp), so we need to create this variable
+UN11$lppgdp = log(UN11$ppgdp)
+
+ancovaplot(lifeExpF ~ lppgdp + group, data = UN11)
+```
+
+```{r}
+# using base graphics
+# create different colors/symbols for each group
+grp_pch = as.numeric(UN11$group)
+grp_col = grp_pch + 3
+
+# plot data, using different colors/symbols for each group
+plot(lifeExpF ~ log(ppgdp), data = UN11, col = grp_col, pch = grp_pch)
+
+# fitted lines for each group, changing color for each group.  
+# Be sure to match the color number with color number used in plot!
+abline(49.53, 3.2, col = 4)
+abline(48, 3.2, col = 5)
+abline(37.36, 3.2, col = 6)
+
+# create the legend
+legend("topleft", legend = c("oecd", "other", "africa"),
+       col = 4:6, pch = 1:3, lty = 1)
+```
+
+## Effects Plot for the Main Effects Model
+
+Recall that the effects plot for the **interaction model** simply **shows a separate line for each combination of quantitative regressor and factor level because they interact and the effects cannot be separated**.
+
+```{r}
+# We have already seen this plot
+# Compute effects
+#ppgdpEffect <- Effect(c("ppgdp", "group"),
+#                     mod = lmodi,
+#                     xlevels = list(ppgdp = seq(1, 106000, len = #1000)))
+
+# Plot the effects
+plot(ppgdpEffect,
+     rug=FALSE, grid=TRUE, multiline=TRUE,
+     xlab = "log(ppgdp)",
+     transform.x=list(ppgdp=list(trans=log, inverse=exp)),
+     ticks.x =list(ppgdp = list(at= c(100, 1000, 5000, 30000))))
+```
+
+```{r}
+#Another way to plot on log-scale
+plot(ppgdpEffect, multiline=TRUE, grid=TRUE,rug=FALSE,
+     axes=list(
+       x=list(ppgdp=list(transform=list(trans=log, inverse=exp),
+                        lab = "ppdgd, log-scale",
+                        ticks=list(at=c(100,1000,5000,30000)),
+                        lim = c(100,200000)
+                         ))))
+```
+
+In the **main effects model**, the **effect of the factor level can be distinguished separately from the quantitative regressor**.
+
+```{r}
+# effect plot for log(ppgdp) by group
+ppgdpEffect <- allEffects(mod = lmodm,
+                     xlevels = list(ppgdp = seq(1, 106000, len = 1000)))
+
+# effect plot of ppgdp on original scale for main effects model
+plot(ppgdpEffect)
+```
+
+- The main effects model effects plot separates the effect of the factor (holding the regressor constant at its mean) and the effect of the regressor (which has only a single line since the effect is the same for all levels of the factor).
+
+**Note:**
+
+- The vertical bars/shading in each plot indicate +/- 1 standard error of the estimated effect size.
+- The ppgdp effects plot is a weighted average of the fitted lines for the three levels of group.  
+- The absolute scale doesn’t mean very much, but the shape is quite important.
+
+
