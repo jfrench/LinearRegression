@@ -2,9 +2,9 @@
 title: "Joshua French"
 date: "`r format(Sys.time(), '%Y-%m-%d')`"
 output:
-  pdf_document: default
   html_document:
     df_print: paged
+  pdf_document: default
 ---
 
 
@@ -102,6 +102,13 @@ We see that the `penguins_raw` object is a `tibble`, a special kind of data fram
 ```{r}
 is.data.frame(penguins_raw)
 ```
+
+Another option is the `glimpse` function from the `dplyr` package. This function behaves similarly to `str` but it additionally formats the output to your console.
+
+```{r}
+dplyr::glimpse(penguins_raw)
+```
+
 
 Another thing that we notice about `penguins_raw` is that it has terrible variable names. The variable names have a mixture of lowercase and uppercase letters, parentheses, and even spaces! This makes it complicated to access variables in the data frame. To access the flipper length variable, we would have to use something like the command below. Note the `` ` ` `` around "Flipper Length (mm)" because of the spaces in the variable name.
 
