@@ -120,8 +120,6 @@ A new Script file can be obtained by:
 - Clicking File &rarr; New File &rarr; R Script in the R Studio menu bar.
 - Pressing `Ctrl + Shift + n` on a PC or `Cmd + Shift + n` on a Mac.
 
-In R Studio, you can have multiple script files open. But when you execute code, the commands are sent to the same console. This can lead to mistakes where you refer to an object that was defined in another script, and the script will lead to an error if run by itself. After developing code, it is good practice to  clear your environment using the broom icon in the Environment pane and rerun everything to make sure it behaves as you expected.
-
 There are various ways to run code from a Script file. The most common ones are:
 
 1. Highlight the code you want to run and click the Run button `r knitr::include_graphics("pictures/run_button.png")` at the top of the Script pane.
@@ -190,7 +188,7 @@ A function is an object that performs a certain action or set of actions based o
 
 To use a function, you type the function's name in the Console (or Script) and then supply the function's "arguments" between parentheses, `()`. 
 
-The arguments of a function are pieces of data or information the function needs to perform the requested task. Each argument you supply is separated by a comma, `,`. Some functions have default values for certain arguments and do not need to specified unless something beside the default behavior is desired.
+The arguments of a function are pieces of data or information the function needs to perform the requested task (i.e., the function "inputs"). Each argument you supply is separated by a comma, `,`. Some functions have default values for certain arguments and do not need to specified unless something beside the default behavior is desired.
 
 e.g., the `mean` function computes the sample mean of an R object `x`. (How do I know? Because I looked at the documentation for the function by running `?mean` in the Console. We'll talk more about getting help with R shortly.) The `mean` function also has a `trim` argument that indicates the, "... fraction ... of observations to be trimmed from each end of `x` before the mean is computed" (@R-base, `?mean`).
 
@@ -255,13 +253,22 @@ The output returned by the two functions is different because the functions are 
 
 There are many ways to get help in R.
 
-* If you know the command for which you want help, then run `?command` (where command is replaced the name of the relevant command) in the Console, to access the documentation for the object.
-    * This approach will also work with data sets, package names, object classes, etc.
-    * When reading help pages, the **Arguments** section describes function inputs and the **Value** section describes outputs
-    * It is helpful to scroll down the the **Examples** section, where you should be able to directly copy and paste a reproducible example into your R session.
-    * If you need to refer to a function in a specific package, you can use `?package::function` to get help on a specific function, e.g., `?dplyr::filter`.
-* If you need to find a command to help you with a certain *topic*, then `??topic` will search for the topic through all installed documentation and bring up any vignettes, code demonstrations, or help pages that include the topic for which you searched.
-* If you are trying to figure out why an error is being produced, what packages can be used to perform a certain analysis, how to perform a complex task that you can't seem to figure out, etc., then simply do a web search for what you're trying to figure out! Because R is such a popular programming language, it is likely you will find a [stackoverflow](https://www.stackoverflow.com) response, a helpful blog post, an R users forum response, etc., that at least partially addresses your question.
+If you know the command for which you want help, then run `?command` (where command is replaced the name of the relevant command) in the Console, to access the documentation for the object. This approach will also work with data sets, package names, object classes, etc. If you need to refer to a function in a specific package, you can use `?package::function` to get help on a specific function, e.g., `?dplyr::filter`.
+
+
+The documentation will provide:
+
+- A **Description** section with general information about the function or object.
+- A **Usage* section with a generic template for using the function or object.
+- An **Arguments** section summarizing the function inputs the function needs.
+- A **Details** section may be provided with additional information about how the function or object.
+- A **Value** section that describes what is returned by the function.
+- A **Examples** section providing examples of how to use the function. Usually, these can be copied and pasted into the Console to better understand the function arguments and what it produced.
+
+If you need to find a command to help you with a certain *topic*, then `??topic` will search for the topic through all installed documentation and bring up any vignettes, code demonstrations, or help pages that include the topic for which you searched.
+
+
+If you are trying to figure out why an error is being produced, what packages can be used to perform a certain analysis, how to perform a complex task that you can't seem to figure out, etc., then simply do a web search for what you're trying to figure out! Because R is such a popular programming language, it is likely you will find a [stackoverflow](https://www.stackoverflow.com) response, a helpful blog post, an R users forum response, etc., that at least partially addresses your question.
 
 ::: {.yourturn data-latex=""}
 
@@ -934,7 +941,7 @@ mtcars |>
   subset(select = c(mpg, disp, hp))
 ```
 
-When reading code with pipes, consider the pipe to be the word "then". In the code above, we take `mtcars` *then* subset it based on `disp` *then* select some columns.
+When reading code with pipes, the pipe can be thought of as the word "then". In the code above, we take `mtcars` *then* subset it based on `disp` and *then* select some columns.
 
 Most parts of the world do not use miles per gallon to measure fuel economy because they don't measure distance in miles nor volume in gallons. A common measure of fuel economy is the liters of fuel required to travel 100 kilometers. Noting that 3.8 liters is (approximately) equivalent to 1 (U.S.) gallon and 1.6 kilometers is (approxiomately) equivalent to 1 mile, we can convert fuel economy of $x$ miles per gallon to liters per 100 kilometers by noting: 
 
@@ -975,6 +982,19 @@ mtcars |>
 
 The function `dplyr::arrange` orders the rows of a data frame based on a column variable, while the `dplyr::desc` causes this to be done in descending order.
 
+## Dealing with common problems
+
+You are going to have to deal with many errors and problems as you use R because of inexperience, simple mistakes, misunderstanding. It happens even to the best programmers.
+
+Every problem is unique, but there are common mistakes that we try to provide insight for below.
+
+**`Error in ...: could not find function "..."`**. You probably forgot to load the package needed to use the function. You also may have misspelled the function name.
+
+**`Error: object '...' not found`**. The object doesn't exist in loaded memory. Perhaps you forget to assign that name to an object or misspelled the name of the object you are trying to access.
+
+**`Error in plot.new() : figure margins too large`**. This typically happens because your Plots pane is too small. Increase its size and try again.
+
+**Code was working, but isn't anymore**. You may have run code out of order. It may work if you run it in order. Or you may have run something in the Console that you don't have in your Script file. It is good practice to  clear your environment (the objects R has loaded in memory) using the broom icon `r knitr::include_graphics("pictures/broom_button.png")` in the Environment pane and rerun your entire Script file to ensure it behaves as expected.
 
 ## Ecosystem debate
 
