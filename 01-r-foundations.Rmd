@@ -916,7 +916,7 @@ It is difficult to look at base R code and immediately tell what it happening, s
 
 R's native pipe operator (`|>`) allows you to "pipe" the object on the left side of the operator into the first argument of the function on the right side of the operator. There are ways to modify this default behavior, but we will not discuss them.
 
-The pipe operator is a convenient way to string together numerous steps in a string of commands. This coding style is generally considered more readable than other approaches because you can incrementally modify the object through each pipe and each step of the pipe is easy to understand. Ultimately, it's a stylistic choice that can decide to adopt or ignore.
+The pipe operator is a convenient way to string together numerous steps in a string of commands. This coding style is generally considered more readable than other approaches because you can incrementally modify the object through each pipe and each step of the pipe is easy to understand. Ultimately, it's a stylistic choice that can decide to adopt or ignore. 
 
 Consider the following approaches to extracting part of `mtcars`. We choose the rows for which engine displacement is more than 400 and only keep the `mpg`, `disp`, and `hp` columns. We can do this in a single function call, but the piping approach breaks the action into smaller parts. 
 
@@ -929,6 +929,8 @@ mtcars |>
   subset(subset = disp > 400) |>
   subset(select = c(mpg, disp, hp))
 ```
+
+When reading code with pipes, consider the pipe to be the word "then". In the code above, we take `mtcars` *then* subset it based on `disp` *then* select some columns.
 
 Most parts of the world do not use miles per gallon to measure fuel economy because they don't measure distance in miles nor volume in gallons. A common measure of fuel economy is the liters of fuel required to travel 100 kilometers. Noting that 3.8 liters is (approximately) equivalent to 1 (U.S.) gallon and 1.6 kilometers is (approxiomately) equivalent to 1 mile, we can convert fuel economy of $x$ miles per gallon to liters per 100 kilometers by noting: 
 
