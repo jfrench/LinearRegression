@@ -2,11 +2,11 @@
 title: "Joshua French"
 date: "`r format(Sys.time(), '%Y-%m-%d')`"
 output:
+  html_document:
+    css: style.css
   pdf_document:
     includes:
       in_header: preamble.tex
-  html_document:
-    css: style.css
 ---
 
 ```{r, include=FALSE}
@@ -907,6 +907,10 @@ Run the following commands in the Console to use the `subset` function to extrac
 - `subset(mtcars, select = c(disp, hp, gear))`. This command will select the `disp`, `hp`, and `gear` variables of `mtcars` but will exclude the other columns.
 - `subset(mtcars, subset = gear > 4, select = c(disp, hp, gear))` combines the previous two subsets into a single command.
 :::
+
+An advantage of the `subset` function is that it makes code easily readable. This is important for collaborating with others, including your future self! Using base R, the final code example above would be: `mtcars[mtcars$gear>4, c("disp", "hp", "gear")]`
+
+It is difficult to look at base R code and immediately tell what it happening, so the `subset` function adds clarity.
 
 ## Using the pipe operator
 
