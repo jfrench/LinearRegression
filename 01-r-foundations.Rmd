@@ -2,11 +2,11 @@
 title: "Joshua French"
 date: "`r format(Sys.time(), '%Y-%m-%d')`"
 output:
+  html_document:
+    css: style.css
   pdf_document:
     includes:
       in_header: preamble.tex
-  html_document:
-    css: style.css
 ---
 
 ```{r, include=FALSE}
@@ -119,6 +119,8 @@ A new Script file can be obtained by:
 
 - Clicking File &rarr; New File &rarr; R Script in the R Studio menu bar.
 - Pressing `Ctrl + Shift + n` on a PC or `Cmd + Shift + n` on a Mac.
+
+In R Studio, you can have multiple script files open. But when you execute code, the commands are sent to the same console. This can lead to mistakes where you refer to an object that was defined in another script, and the script will lead to an error if run by itself. After developing code, it is good practice to  clear your environment using the broom icon in the Environment pane and rerun everything to make sure it behaves as you expected.
 
 There are various ways to run code from a Script file. The most common ones are:
 
@@ -255,6 +257,8 @@ There are many ways to get help in R.
 
 * If you know the command for which you want help, then run `?command` (where command is replaced the name of the relevant command) in the Console, to access the documentation for the object.
     * This approach will also work with data sets, package names, object classes, etc.
+    * When reading help pages, the **Arguments** section describes function inputs and the **Value** section describes outputs
+    * It is helpful to scroll down the the **Examples** section, where you should be able to directly copy and paste a reproducible example into your R session.
     * If you need to refer to a function in a specific package, you can use `?package::function` to get help on a specific function, e.g., `?dplyr::filter`.
 * If you need to find a command to help you with a certain *topic*, then `??topic` will search for the topic through all installed documentation and bring up any vignettes, code demonstrations, or help pages that include the topic for which you searched.
 * If you are trying to figure out why an error is being produced, what packages can be used to perform a certain analysis, how to perform a complex task that you can't seem to figure out, etc., then simply do a web search for what you're trying to figure out! Because R is such a popular programming language, it is likely you will find a [stackoverflow](https://www.stackoverflow.com) response, a helpful blog post, an R users forum response, etc., that at least partially addresses your question.
@@ -908,11 +912,15 @@ Run the following commands in the Console to use the `subset` function to extrac
 - `subset(mtcars, subset = gear > 4, select = c(disp, hp, gear))` combines the previous two subsets into a single command.
 :::
 
+An advantage of the `subset` function is that it makes code easily readable. This is important for collaborating with others, including your future self! Using base R, the final code example above would be: `mtcars[mtcars$gear>4, c("disp", "hp", "gear")]`
+
+It is difficult to look at base R code and immediately tell what it happening, so the `subset` function adds clarity.
+
 ## Using the pipe operator
 
 R's native pipe operator (`|>`) allows you to "pipe" the object on the left side of the operator into the first argument of the function on the right side of the operator. There are ways to modify this default behavior, but we will not discuss them.
 
-The pipe operator is a convenient way to string together numerous steps in a string of commands. This coding style is generally considered more readable than other approaches because you can incrementally modify the object through each pipe and each step of the pipe is easy to understand. Ultimately, it's a stylistic choice that can decide to adopt or ignore.
+The pipe operator is a convenient way to string together numerous steps in a string of commands. This coding style is generally considered more readable than other approaches because you can incrementally modify the object through each pipe and each step of the pipe is easy to understand. Ultimately, it's a stylistic choice that can decide to adopt or ignore. 
 
 Consider the following approaches to extracting part of `mtcars`. We choose the rows for which engine displacement is more than 400 and only keep the `mpg`, `disp`, and `hp` columns. We can do this in a single function call, but the piping approach breaks the action into smaller parts. 
 
@@ -925,6 +933,8 @@ mtcars |>
   subset(subset = disp > 400) |>
   subset(select = c(mpg, disp, hp))
 ```
+
+When reading code with pipes, consider the pipe to be the word "then". In the code above, we take `mtcars` *then* subset it based on `disp` *then* select some columns.
 
 Most parts of the world do not use miles per gallon to measure fuel economy because they don't measure distance in miles nor volume in gallons. A common measure of fuel economy is the liters of fuel required to travel 100 kilometers. Noting that 3.8 liters is (approximately) equivalent to 1 (U.S.) gallon and 1.6 kilometers is (approxiomately) equivalent to 1 mile, we can convert fuel economy of $x$ miles per gallon to liters per 100 kilometers by noting: 
 
