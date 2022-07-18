@@ -47,7 +47,7 @@ The variables in a regression analysis may be divided into two types: the respon
 
 The outcome variable we are trying to predict is known as the **response variable**. Response variables are also known as **outcome**, **output**, or **dependent** variables. The response variable is denoted by $Y$.
 
-The variables available to model the response variable are known as **predictors variables**.  Predictor variables are also known as **explanatory**, **regressor**, **input**, or **dependent** variables or simply as **features**. Following the convention of @alr4, we use the term **regressor** to refer to the variables used in our regression model, whether that is the original predictor variable, some transformation of a predictor, some combination of predictors, etc. Thus, every predictor can be a regressor but not all regressors are a predictor. The regressor variables are denoted as $X_1, X_2, \ldots, X_{p-1}$.
+The variables available to model the response variable are known as **predictors variables**.  Predictor variables are also known as **explanatory**, **regressor**, **input**, **dependent** variables, or simply as **features**. Following the convention of @alr4, we use the term **regressor** to refer to the variables used in our regression model, whether that is the original predictor variable, some transformation of a predictor, some combination of predictors, etc. Thus, every predictor can be a regressor but not all regressors are a predictor. The regressor variables are denoted as $X_1, X_2, \ldots, X_{p-1}$.
 
 A regression analysis assumes that we have observed variables $X_1, X_2, X_3, \ldots, X_{p-1}, Y$ for each of $n$ subjects from some population, with $x_{i,j}$ denoting the value of $X_j$ for observation $i$ and $Y_i$ denoting the value of $Y$ for observation $i$. Note: if there is only a single regressor, we can denote the regressor as $X$ and the observed values as $x_1, x_2, \ldots, x_n$.
 
@@ -72,14 +72,14 @@ between the response and regressors.
 
 A **simple linear regression model** assumes the regression model between $Y$ and $X$ is a straight line using the equation
 \[E(Y\mid X)=\beta_0 + \beta_1 X.\]
-The $\beta_0$ and $\beta_1$ terms of our equation are known as the intercept and slope. In general, $\beta_0$ and $\beta_1$ are known as **regression coefficients** and are model parameters that we estimate from our data.
+The $\beta_0$ and $\beta_1$ terms of our equation are known as the intercept and slope, and are read as "beta knot" and "beta one", respectively. In general, $\beta_0$ and $\beta_1$ are known as **regression coefficients** and are model parameters that we estimate from our data.
 
 The estimated regression model is denoted by
-\[\hat{E}(Y|X)=\hat{\beta}_0 + \hat{\beta}_1 X,\] where $\hat{\beta}_0$ and $\hat{\beta}_1$ are values of $\beta_0$ and $\beta_1$ that we estimate from the data. A $\hat{}$ above a term indicates it is an estimate. We will refer to $\hat{E}(Y|X)$ as the **fitted model** or **estimated regression model**.
+\[\hat{E}(Y|X)=\hat{\beta}_0 + \hat{\beta}_1 X,\] where $\hat{\beta}_0$ and $\hat{\beta}_1$ are values of $\beta_0$ and $\beta_1$ that we estimate from the data. A $\hat{}$ above a term, which is read as "hat", indicates it is an estimate. We will refer to $\hat{E}(Y|X)$ as the **fitted model** or **estimated regression model**.
 
 How do we determine the "best fitting" model? Consider Figure \@ref(fig:three-fitted-lines), in which 2 potential "best fitting" models are drawn on the scatter plot of the height data. Which one is best?
 
-```{r three-fitted-lines, fig.cap = "Comparison of three potential fitted models to some observed data. The fitted models are shown in grey.", echo=FALSE}
+```{r three-fitted-lines, fig.cap = "Comparison of two potential fitted models to some observed data. The fitted models are shown in grey.", echo=FALSE}
 lmod <- lm(y ~ x)
 coef_ls <- coef(lmod) # OLS estimates
 lad <- function(b) {
@@ -167,19 +167,19 @@ Some examples of non-linear regression models:
 
 The latter regression models are non-linear models because there is no way to express them using the expression in Equation \@ref(eq:lmdef-cj).
 
-There are many different methods of parameter estimation in statistics: method-of-moments, maximum likelihood, Bayesian, etc. The most common parameter estimation method for linear models is the **least squares method**, which is commonly called **Ordinary Least Squares (OLS)** estimation. OLS estimation estimates the regression coefficients with the values that minimize the residual sum of squares (RSS), which we will define shortly.
+**Parameter estimation** is the process of using observed data to estimate values for the regression coefficients. There are many different methods of parameter estimation in statistics: method-of-moments, maximum likelihood, Bayesian, etc. The most common parameter estimation method for linear models is the **least squares method**, which is commonly called **Ordinary Least Squares (OLS)** estimation. OLS estimation estimates the regression coefficients with the values that minimize the residual sum of squares (RSS), which we will define shortly.
 
 ## Estimation of the simple linear regression model
 
 ### Fitted values, residuals, and RSS {#ss:fv-resid-rss}
 
 Recall that a simple linear regression model is defined by the equation
-\[Y = \beta_0 + \beta_1 X + \epsilon = E(Y|X) + \epsilon\]
+\[Y = \beta_0 + \beta_1 X + \epsilon \\ = E(Y|X) + \epsilon\]
 where
 \[E(Y|X) = \beta_0 + \beta_1 X.\]
 In a simple linear regression context, we have $n$ observed responses $Y_1,Y_2,\ldots,Y_n$ and $n$ regressor values $x_1,x_2,\ldots,x_n$.
 
-Let $\hat{\beta}_j$ denote the estimated value of $\beta_j$ and 
+Let $\hat{\beta}_j$ denote the estimated value of $\beta_j$ and let 
 $\hat{E}(Y|X) = \hat{\beta}_0 + \hat{\beta}_1 X$ denote the estimated regression model.
 
 The $i$th **fitted value** is defined as
@@ -193,7 +193,7 @@ The $i$th **residual** is defined as
 \hat{\epsilon}_i = Y_i - \hat{Y}_i. (\#eq:def-residual-slr)
 \end{equation}
 The $i$th residual is the difference between the response and estimated
-mean response of observation $i$.
+mean response of observation $i$. 
 
 The **residual sum of squares (RSS)** of a regression model is the sum of its squared residuals. The RSS for a simple linear regression model, as a function of the estimated regression coefficients $\hat{\beta}_0$ and $\hat{\beta}_1$, is defined as 
 \begin{equation}
@@ -217,13 +217,13 @@ In a simple linear regression context, the fitted model is known as the **line o
 In Figure \@ref(fig:rss-viz2), we visualize the response values, fitted values, residuals, and fitted model in a simple linear regression context. Note that:
 
 -   The fitted model is shown as the dashed grey line and minimizes the RSS.
+- The response values, shown as black dots, are the observed values of $Y$.
 -   The fitted values, shown as blue x's, are the values returned by evaluating the fitted
     model at the observed regressor values.
 -   The residuals, shown as solid orange lines, indicate the distance and direction between the observed responses and their corresponding fitted value. If the response is larger than the fitted value then the residual is positive, otherwise it is negative.
--   The RSS is the sum of the squared vertical distances between the
-    response and fitted values.
+-   The RSS is the sum of the squared vertical distances between the response and fitted values. 
 
-```{r rss-viz2, fig.cap = "Visualization of the response values, fitted values, residuals, and fitted model.", echo=FALSE}
+```{r rss-viz2, fig.cap = "Visualization of the fitted model, response values, fitted values, and residuals.", echo=FALSE}
 set.seed(2)
 x <- c(3, 5, 7, 8, 9)
 y <- 2 + 2 * x + rnorm(5, sd = 4)
@@ -246,8 +246,7 @@ legend("topleft",
 The estimates of $\beta_0$ and $\beta_1$ that minimize the RSS for a simple linear regression model can be obtained analytically using basic calculus under minimal assumptions. Specifically, the optimal analytical solutions for $\hat{\beta}_0$ and $\hat{\beta}_1$ are valid as long as the regressor values are not a constant value, i.e, $x_i \neq x_j$ for at least some $i,j\in \{1,2,\ldots,n\}$.
 
 Define $\bar{x}=\frac{1}{n}\sum_{i=1}^n x_i$ and
-$\bar{Y} = \frac{1}{n}\sum_{i=1}^n Y_i$. The OLS estimators of the
-simple linear regression coefficients are
+$\bar{Y} = \frac{1}{n}\sum_{i=1}^n Y_i$. The expression $\bar{x}$ is read "x bar", and it is the sample mean of the observed $x_i$ values. The OLS estimators of the simple linear regression coefficients are
 
 \begin{align}
 \hat{\beta}_1 &= \frac{\sum_{i=1}^n x_i Y_i - \frac{1}{n} \biggl(\sum_{i=1}^n x_i\biggr)\biggl(\sum_{i=1}^n Y_i\biggr)}{\sum_{i=1}^n x_i^2 - \frac{1}{n} \biggl(\sum_{i=1}^n x_i\biggr)^2} \notag \\
@@ -262,12 +261,11 @@ A derivation of the estimators for $\hat{\beta}_0$ and $\hat{\beta}_1$ is provid
 
 We emphasize once again that the OLS estimators of $\beta_0$ and $\beta_1$ are the estimators that minimize the RSS.
 
-In edition to the regression coefficients, the other parameter we discussed in Section \@ref(ss-necessary-components) is the error
-variance, $\sigma^2$. The most common estimator of the error variance is
+In addition to the regression coefficients, the other parameter we discussed in Section \@ref(ss-necessary-components) is the error variance: $\sigma^2$. The most common estimator of the error variance is
 \begin{equation}
 \hat{\sigma}^2 = \frac{RSS}{n-p}, (#eq:sigmasq-hat)
 \end{equation}
-where $p$ is the number of estimated regression coefficients. In general, $n-p$ is the degrees of freedom of the RSS. In a simple linear
+where $p$ is the number of estimated regression coefficients. In general, $n-p$ is the **degrees of freedom** of the RSS. In a simple linear
 regression context, the denominator of Equation \@ref(eq:sigmasq-hat) is $n-2$.
 
 ## Penguins simple linear regression example {#s:penguins-slr}
