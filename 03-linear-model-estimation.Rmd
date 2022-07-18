@@ -150,7 +150,7 @@ it can be written as
 E(Y\mid \mathbb{X}) = \sum_{j=0}^{p-1} g_j(\mathbb{X})\beta_j.
 \]
 
-Some examples of linear regression models:
+A model is linear because of its *form*, not the shape it produces. Many of the linear model examples given below do not result in a straight line or surface, but are curved. Some examples of linear regression models:
 
 -   $E(Y|X) = \beta_0$.
 -   $E(Y|X) = \beta_0 + +\beta_1 X + \beta_2 X^2$.
@@ -160,7 +160,7 @@ Some examples of linear regression models:
 -   $E(\ln(Y)|X_1, X_2) = \beta_0 + \beta_1 X_1 + \beta_2 X_2$.
 -   $E(Y^{-1}|X_1, X_2) = \beta_0 + \beta_1 X_1 + \beta_2 X_2$.
 
-Some examples of non-linear regression models:
+Some examples of non-linear regression models are:
 
 -   $E(Y|X) = \beta_0 + e^{\beta_1 X}$.
 -   $E(Y|X) = \beta_0 + \beta_1 X/(\beta_2 + X)$.
@@ -333,7 +333,7 @@ The `summary` function is commonly used to summarize the results of our fitted m
     - `t value`: the computed test statistic associated with testing $H_0: \beta_j = 0$ versus $H_a: \beta_j \neq 0$ for $j=0,1,\ldots,p-1$.
     - `Pr(>|t|)`: the associated p-value of each test.
 - Various summary statistics:
-    - `Residual standard error` is the value of $\hat{\sigma}$, the estimate of the error standard deviation. The degrees of freedom is `n-p`, i.e., the number of observations used in the model fit minus the number of estimated regression coefficients.
+    - `Residual standard error` is the value of $\hat{\sigma}$, the estimate of the error standard deviation. The degrees of freedom is `n-p`, i.e., the number of observations used in the model fit minus the number of estimated regression coefficients. See Section \@ref(degrees-of-freedom) for more comments about degrees of freedom.
     - `Multiple R-squared` is an estimate of model fit discussed in Section \@ref(evaluating-model-fit).
     - `Adjusted R-squared` is a modified version of `Multiple R-squared`.
     - `F-statistic` is the test statistic for the test that compares the model with an only an intercept to the fitted model. The `DF` (degrees of freedom) values relate to the statistic under the null hypothesis, and the `p-value` is the p-value for the test.
@@ -355,7 +355,7 @@ In the context of a simple linear regression model, the intercerpt term is the e
 -   $\hat{\beta}_1$: If a penguin has a body mass 1 gram larger than another penguin, we expect the larger penguin's bill length to be 0.004 millimeters longer.
 -   $\hat{\beta}_0$: A penguin with a body mass of 0 grams is expected to have a bill length of 26.9 millimeters.
 
-The latter interpretation is clearly nonsensical and is caused by the fact that we are extrapolating far outside the observed body mass values. The relationship between body mass and bill length is different for penguin chicks versus adults.
+The latter interpretation is nonsensical. It doesn't make sense to discuss a penguin with a body mass of 0 grams unless we are talking about an embryo, and an embryo will certainly not have a bill length that length. This is caused by the fact that we are extrapolating far outside the observed body mass values. Our data only includes information for adult penguins, so we should be cautious about drawing conclusions for penguins at other life stages.
 
 The `abline` function can be used to automatically overlay the fitted model on the observed data. We run the code below to produce Figure \@ref(fig:slr-penguin-fit). The fit of the model to our observed data seems reasonable.
 
@@ -953,6 +953,17 @@ knitr::kable(data.frame(func, purpose),
 ```
 
 ## Going Deeper
+
+### Degrees of freedom
+
+The degrees of freedom of a statistics refers to the number of independent pieces of information that go into its calculation.
+
+Consider the sample mean
+\[\bar{x}=\sum_{i=1}^n x_i.\]
+
+The calculation involves $n$ pieces of information to compute. However, the statistics only has $n-1$ degrees of freedom. The reason for this is that once you know there sample mean, only $n-1$ values are independent, while the last is constrained to be a certain value.
+
+Let's say $n=3$ and $\bar{x} = 10$. Then $x_1$ and $x_2$ can be any numbers, but the last value MUST equal $30 - x_1 - x_2$ so that $x_1 + x2 + x3 = 30$ (otherwise the sample mean won't equal 10). To be more specific, if $x_1 = 5$ and $x_2 = 25$, then $x_3$ must be 0, otherwise the sample mean won't be 10.
 
 ### Derivation of the OLS estimator for the simple linear regression model coefficients {#slr-derivation}
 
