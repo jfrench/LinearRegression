@@ -239,41 +239,6 @@ How do we know that Equation \@ref(eq:dist-properties-y) is true? Show that:
 * $\mathrm{var}(\mathbf{y}) = \sigma^2 I_n$.
 * Note $\mathbf{y}$ is a linear function of the multivariate normal vector $\boldsymbol{\epsilon}$, so $\mathbf{y}$ must also have a multivariate normal distribution.
 
-## Mathematical interpretation of coefficients
-
-The regression coefficients have simple mathematical interpretations in basic settings.
-
-### Coefficient interpretation in simple linear regression
-Suppose we have a simple linear regression model, so that $E(Y|X)=\beta_0 + \beta_1 X.$ The interpretations of the coefficients are:
-
-* $\beta_0$ is the expected response when the predictor is 0, i.e., $\beta_0=E(Y|X=0)$.
-* $\beta_1$ is the expected change in the response when the predictor increases 1 unit, i.e., $\beta_1=E(Y|X=x_0+1)-E(Y|X=x_0)$.
-
-### Coefficient interpretation in multiple linear regression
-Suppose we have a multiple linear regression model, so that $E(Y|X_1,\ldots,X_{p-1})=\beta_0 + \beta_1 X_1 + \cdots + \beta_{p-1} X_{p-1}.$ Let $\mathbb{X} = \{X_1,\ldots,X_{p-1}\}$ be the set of predictors and $\mathbb{X}_{-j} = \mathbb{X}\setminus\{X_j\}$, i.e., the set of predictors without $X_j$.
-
-The interpretations of the coefficients are:
-
-* $\beta_0$ is the expected response when all predictors are 0, i.e., $\beta_0=E(Y|X_1=0,\ldots,X_{p-1}=0)$.
-* $\beta_j$ is the expected change in the response when predictor $j$ increases 1 unit and the other predictors stay the same, i.e., $\beta_j=E(Y|\mathbb{X}_{-j} = \mathbf{x}^*, X_{j+1} = x_{0}+1)-E(Y|\mathbb{X}_{-j} = \mathbf{x}^*, X_{j+1} = x_{0})$ where $\mathbf{x}^*\in \mathbb{R}^{p-2}$ is a fixed vector of length $p-2$ (the number of predictors excluding $X_j$).
-
-## Exercises
-
-1. If given a set of data with several variables, how would you decide what the response variable and the predictor variables would be?
-1. Which objects in the linear model formula in Equation \@ref(eq:lmdef) are considered random? Which are considered fixed?
-1. Which objects in the linear model formula in Equation \@ref(eq:lmdef) are observable? Which are not observable?
-1. What are the typical goals of a regression analysis?
-1. List the typical assumptions made for the errors in a linear model.
-1. Without using a formula, what is the basic difference between a linear model and a non-linear model?
-1. Assuming that $\boldsymbol{\epsilon} ~ N(\mathbf{0}_{n\times 1}, \sigma^2 I_n)$ and $\mathbf{y}  = \mathbf{X}\boldsymbol{\beta} + \boldsymbol{\epsilon}$, show that:
-    a. $E(\mathbf{y}) = \mathbf{X}\boldsymbol{\beta}$.
-    a. $\mathrm{var}(\mathbf{y}) = \sigma^2 I_n$.
-1. In the context of simple linear regression under the standard assumptions, show that:
-    a. $\beta_0=E(Y|X=0)$.
-    a. $\beta_1=E(Y|X=x_0+1)-E(Y|X=x_0)$.
-1. In the context of multiple linear regression under the standard assumptions, show that:
-    a. $\beta_0=E(Y|X_1=0,\ldots,X_{p-1}=0)$.
-    b. For $j=1,2,\ldots,p-1$, $\beta_j=E(Y|\mathbb{X}_{-j} = \mathbf{x}^*, X_{j+1} = x_{0}+1)-E(Y|\mathbb{X}_{-j} = \mathbf{x}^*, X_{j+1} = x_{0})$ where $\mathbf{x}^*$ is a fixed vector of the appropriate size.
 
 <!-- ## Regression for Pearson's height data -->
 
