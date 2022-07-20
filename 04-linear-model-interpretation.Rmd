@@ -77,8 +77,8 @@ The interpretations of the coefficients more the model in Equation \@ref(eq:mlr-
 Regarding the interpretation of $\beta_0$, from the regression model in Equation \@ref(eq:mlr-equation), notice that
 \[
 \begin{align}
-E(Y\mid X=x^*+1)-E(Y\mid X=x^*) &= [\beta_0 + \beta_1 (x^* + 1)] - [\beta_0 + \beta_1 x^*] \\
-&= \beta_1.
+E(Y\mid X_1=0,\ldots,X_{p-1}=0) &= [\beta_0 + \beta_1 \cdot 0 + \cdots + \beta_{p-1} \cdot 0]\\
+&= \beta_0.
 \end{align}
 \]
 
@@ -100,27 +100,30 @@ Another notable problem is that the regressors used in our model our often obser
 
 ### Penguins examples
 
-To apply the examples given above, we interpret the models fit to the `penguins` data introduced in Section \@ref(s:penguins-slr) and continued in Section \@ref(s:penguins-mlr).
+To apply the interpretations given above, we interpret the models fit to the `penguins` data in Sections \@ref(s:penguins-slr) and \@ref(s:penguins-mlr).
 
 From Section \@ref(s:penguins-slr), the fitted simple linear regression model is 
 \[
 \hat{E}(\mathtt{bill\_length\_mm}\mid \mathtt{body\_mass\_g})=26.9+0.004 \,\mathtt{body\_mass\_g}.
 \]
+Some basic interpretations of the coefficients are:
 
-The expected bill length of a penguin with a body mass of 0 grams is 26.9 mm. We discussed the absurdity of this interpretation in Section \@ref(s:penguins-slr). If two penguins were identical except that one penguin was 1 gram heavier, then we would expect the heavier penguin to have a bill length 0.004 mm longer.
+- Intercept: The expected bill length of a penguin with a body mass of 0 grams is 26.9 mm. We discussed the absurdity of this interpretation in Section \@ref(s:penguins-slr).
+- $\mathtt{body\_mass\_g}$: If two penguins were identical except that one penguin was 1 gram heavier, then we would expect the heavier penguin to have a bill length 0.004 mm longer.
 
 From Section \@ref(s:penguins-mlr), the fitted multiple linear regression model is
 \[
 \hat{E}(\mathtt{bill\_length\_mm}\mid \mathtt{body\_mass\_g}, \mathtt{flipper\_length\_mm})=-3.44+0.0007 \,\mathtt{body\_mass\_g}+0.22\,\mathtt{flipper\_length\_mm}.
-\] We discuss basic interpretation of multiple linear regression model in Chapter \@ref(interpreting-a-fitted linear-model).
+\]
 
-Some interpretations of the coefficients are:
+Some basic interpretations of the coefficients are:
 
-- We expect a penguin with a body mass of 0 grams and a flipper length of 0 mm to to have a bill length of -3.44 mm.
-- For two penguins that are identical except that one penguin has a body mass 1 gram larger, we expect the heavier penguin to have a bill length 0.0007 mm longer than the other penguin.
-- For two penguins that are identical except that one penguin has a flipper length 1 mm longer, we expect the penguin with longer flippers to have a bill length 0.22 mm longer.
+- Intercept: We expect a penguin with a body mass of 0 grams and a flipper length of 0 mm to to have a bill length of -3.44 mm.
+- $\mathtt{body\_mass\_g}$: For two penguins that are identical except that one penguin has a body mass 1 gram larger, we expect the heavier penguin to have a bill length 0.0007 mm longer than the other penguin.
+- $\mathtt{flipper\_length\_mm}$: For two penguins that are identical except that one penguin has a flipper length 1 mm longer, we expect the penguin with longer flippers to have a bill length 0.22 mm longer.
 
-
+|  Some text here
+|    Some different text here
 
 ## Going deeper
 
