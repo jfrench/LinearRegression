@@ -1038,6 +1038,69 @@ $$
 \hat\beta_1=\frac{\sum_ix_iY_i -\frac{1}{n}\sum_ix_i\sum_i Y_i}{\left(\sum_ix_i^2-\frac{1}{n}\left(\sum_i x_i\right)^2\right)}
 $$
 
+#### Unbiasedness of Estimators
+
+We examine whether the OLS estimators we derived are unbiased. An estimator is unbiased if the expected value is equal to the parameter it is estimating.
+
+First, we examine whether $\hat\beta_0$ is unbiased, or if $E(\hat\beta_0)=\beta_0$.
+
+Recall that $E(Y_i)=\beta_0+\beta_1 x_i$.
+
+Next, we note:
+$$
+E\left(\sum x_iY_i\right) \\
+= \sum E(x_iY_i) \;\tiny\text{ (by the linearity of the expectation operator)}\\
+=\sum x_iE(Y_i)\;\tiny(x_i\text{ is a fixed value, so it can be brought out})\\
+=\sum x_i(\beta_0+\beta_1 x_i)\;\tiny\text{(using above definition)}\\
+=\sum x_i\beta_0+\sum x_i\beta_1 x_i\;\tiny\text{(distribute sum)}\\
+=\beta_0\sum x_i+\beta_1\sum x_i^2\;\tiny\text{(factor out constants)}
+$$
+Also,
+$$
+E(\bar Y)\\
+= E\left(\frac{1}{n}\sum Y_i \right)\;\tiny\text{(definition of sample mean)}\\
+= \frac{1}{n}E\left(\sum Y_i \right)\;\tiny\text{(factor out constant)}\\
+= \frac{1}{n}\sum E\left(Y_i \right)\;\tiny\text{(linearity of expectation)}\\
+= \frac{1}{n}\sum(\beta_0+\beta_1 x_i)\;\tiny\text{(substitute expected value of }Y_i)\\
+$$
+$$
+= \frac{1}{n}\left(\sum\beta_0+\sum\beta_1 x_i\right)\;\tiny\text{(distribute sum)}\\
+= \frac{1}{n}\left(n\beta_0+\beta_1 n \bar x\right)\;\tiny\text{(sum over }n)\\
+= \beta_0+\beta_1\bar x
+$$
+Thus,
+
+$$
+E(\hat\beta_1) \\
+= E\left(\frac{\Sigma x_iY_i -\frac{1}{n}\Sigma x_i\Sigma Y_i}{\left(\Sigma x_i^2-\frac{1}{n}\left(\Sigma  x_i\right)^2\right)} \right) \;\tiny\text{(OLS estimator)} \\
+= \frac{1}{\Sigma x_i^2-\frac{1}{n}(\Sigma x_i)^2}E(\Sigma x_iY_i-\frac{1}{n}\Sigma x_i\Sigma Y_i)\;\tiny\text{(factor out constant denominator)}
+$$
+$$
+= \frac{1}{\Sigma x_i^2-\frac{1}{n}(\Sigma x_i)^2}\left[E(\Sigma x_iY_i)-E\left(\frac{1}{n}\Sigma x_i\Sigma Y_i\right)\right]\;\tiny\text{(linearity of expectation)}\\
+= \frac{1}{\Sigma x_i^2-\frac{1}{n}(\Sigma x_i)^2}\left[E(\Sigma x_iY_i)-(\Sigma x_i)E\left(\bar Y\right)\right]\;\tiny\text{(factor out constant }\Sigma x_i\text{, mean definition for }Y_i)\\
+= \frac{1}{\Sigma x_i^2-\frac{1}{n}(\Sigma x_i)^2}\left[(\beta_0\Sigma x_i + \beta_1\Sigma x_i^2)-(\Sigma x_i)(\beta_0+\beta_1\bar x)\right]\;\tiny\text{(substitute previous expressions)}\\
+= \frac{1}{\Sigma x_i^2-\frac{1}{n}(\Sigma x_i)^2}\left[\beta_0\Sigma x_i+\beta_1\Sigma x_i^2-\beta_0\Sigma x_i-\beta_1\bar x\Sigma x_iright]\;\tiny\text{(expand product and reorder)}
+$$
+$$
+= \frac{1}{\Sigma x_i^2-\frac{1}{n}(\Sigma x_i)^2}\left[\beta_1\Sigma x_i^2-\beta_1\bar x\Sigma x_i\right]\;\tiny\text{(cancel terms)}\\
+= \frac{1}{\Sigma x_i^2-\frac{1}{n}(\Sigma x_i)^2}\left[\beta_1\Sigma x_i^2-\beta_1\frac{1}{n}\Sigma x_i\Sigma x_i\right]\;\tiny\text{(using definition of sample mean)}\\
+= \frac{1}{\Sigma x_i^2-\frac{1}{n}(\Sigma x_i)^2}\beta_1\left[\Sigma x_i^2-\frac{1}{n}(\Sigma x_i)^2\right]\;\tiny\text{(factor out}\beta_1\text{, combine terms})\\
+=\beta_1 \;\tiny\text{(numerator and denominator are equal)}
+$$
+Therefore, $\hat\beta_1$ is an unbiased estimator of $\beta_1$.
+$$\square$$
+
+Next, we examine $\hat\beta_0$:
+$$
+E(\hat\beta_0)\\
+= E(\bar Y - \hat\beta_1\bar x) \;\tiny\text{(OLS estimator of}\beta_0) \\
+= E(\bar Y) - E(\hat\beta_1\bar x) \;\tiny\text{(linearity of expectation})\\
+= \beta_0 +\beta_1\bar x-\bar x\beta_1 \;\tiny\text{(substitute previous derivations})\\
+= \beta_0
+$$
+Therefore, $\hat\beta_0$ is an unbiased estimator of $\beta_0$.
+$$\square$$
+
 ### Manual calculation Penguins simple linear regression example
 
 In this section, we manually produce (i.e., without the `lm` function) the `penguins` simple linear regression example in Section \@ref(s:penguins-slr).
