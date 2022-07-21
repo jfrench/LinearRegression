@@ -967,6 +967,77 @@ Let's say $n=3$ and $\bar{x} = 10$. Then $x_1$ and $x_2$ can be any numbers, but
 
 ### Derivation of the OLS estimator for the simple linear regression model coefficients {#slr-derivation}
 
+Assume a simple linear regression model with $n$ observations. 
+
+#### OLS Estimator of $\beta_0$
+
+We start with the residual sum of squares:
+
+$$
+RSS(\hat\beta_0, \hat\beta_1) = \sum_i(Y_i - \hat\beta_0 - \hat\beta_1x_i)^2
+$$
+Next, we take the partial derivative of the RSS with respect to $\hat\beta_0$:
+
+$$
+\frac{\partial RSS(\hat\beta_0, \hat\beta_1)}{\partial \hat\beta_0} = \frac{\partial}{\partial \hat\beta_0}\sum_i(Y_i - \hat\beta_0 - \hat\beta_1x_i)^2
+$$
+$$
+= \sum_i \frac{\partial}{\partial \hat\beta_0}(Y_i - \hat\beta_0 - \hat\beta_1x_i)^2 \;\tiny\text{ (by the linearity property of derivatives)}
+$$
+$$
+= -2\sum_i(Y_i - \hat\beta_0 - \hat\beta_1x_i)\;\tiny\text{ (chain rule, factoring out -2)}
+$$
+We set the derivative equal to zero:
+$$
+\frac{\partial RSS(\hat\beta_0, \hat\beta_1)}{\partial \hat\beta_0}=0\; \rightarrow \\
+0 = -2\sum_i(Y_i - \hat\beta_0 - \hat\beta_1x_i) \\
+0 = \sum_i(Y_i - \hat\beta_0 - \hat\beta_1x_i)\;\tiny\text{ (divide by sides by -2)}
+$$
+$$
+0 = \sum_iY_i - \sum_i\hat\beta_0 - \sum_i\hat\beta_1x_i\;\tiny\text{ (by linearity of sum)} \\
+0 = \sum_iY_i - n\hat\beta_0 - \sum_i\hat\beta_1x_i\;\tiny(\text{Summing }\hat\beta_0\ n\text{ times equals }n\hat\beta_0) \\
+n\hat\beta_0 = \sum_iY_i-\sum_i\hat\beta_1x_i\;\tiny\text{ (algebra rearrange)}
+$$
+
+Finally, we divide both sides by $n$ to get the OLS estimate for $\hat\beta_0$ in terms of $\hat\beta_1$:
+
+$$
+\hat\beta_0 = \bar Y-\hat\beta_1\bar x
+$$
+
+#### OLS Estimator of $\beta_1$
+
+We use the same strategy of differentiating with respect to the parameter estimate of interest, setting the derivative equal to zero, and solving algebraically.
+
+$$
+\frac{\partial RSS(\hat\beta_0, \hat\beta_1)}{\partial \hat\beta_1} = \frac{\partial}{\partial \hat\beta_1}\sum_i(Y_i - \hat\beta_0 - \hat\beta_1x_i)^2
+$$
+$$
+= \sum_i \frac{\partial}{\partial \hat\beta_1}(Y_i - \hat\beta_0 - \hat\beta_1x_i)^2 \\
+= -2\sum_i(Y_i-\hat\beta_0-\hat\beta_1x_i)x_i \;\tiny\text{ (chain rule, factor out -2)}
+$$
+$$
+\frac{\partial RSS(\hat\beta_0, \hat\beta_1)}{\partial \hat\beta_1}=0\; \rightarrow \\
+0 = -2\sum_i(Y_i-\hat\beta_0-\hat\beta_1x_i)x_i \\
+0 = \sum_i(Y_i-(\bar Y -\hat \beta_1\bar x)-\hat\beta_1x_i)x_i \;\tiny\text{(substitute OLS estimate of }\hat\beta_0, \text{ divide by -2}) \\
+0 = \sum_ix_iY_i -\sum_ix_i\bar Y+\hat\beta_1\bar x\sum_ix_i-\hat\beta_1\sum_ix_i^2 \;\tiny\text{(expand inner term, use linearity of sum)}
+$$
+$$
+\hat\beta_1\sum_ix_i^2-\hat\beta_1\bar x\sum_ix_i=\sum_ix_iY_i -\sum_ix_i\bar Y \;\tiny\text{(move estimator to other side)}\\
+\hat\beta_1\sum_ix_i^2-\hat\beta_1\frac{1}{n}\sum_i x_i\sum_ix_i=\sum_ix_iY_i -\sum_ix_i\frac{1}{n}\sum_i Y_i \;\tiny\text{(rewrite using definition of sample means)}
+$$
+$$
+\hat\beta_1\sum_ix_i^2-\hat\beta_1\frac{1}{n}\left(\sum_i x_i\right)^2=\sum_ix_iY_i -\frac{1}{n}\sum_ix_i\sum_i Y_i \;\tiny\text{(reorder and simplify)} \\
+\hat\beta_1\left(\sum_ix_i^2-\frac{1}{n}\left(\sum_i x_i\right)^2\right)=\sum_ix_iY_i -\frac{1}{n}\sum_ix_i\sum_i Y_i \;\tiny\text{(factoring)}\\
+\hat\beta_1=\frac{\sum_ix_iY_i -\frac{1}{n}\sum_ix_i\sum_i Y_i}{\left(\sum_ix_i^2-\frac{1}{n}\left(\sum_i x_i\right)^2\right)} \;\tiny\text{(solve for }\hat\beta_1)
+$$
+
+Thus, we have the following OLS estimates for thge simple regression parameters:
+$$
+\hat\beta_0 = \bar Y-\hat\beta_1\bar x \\
+\hat\beta_1=\frac{\sum_ix_iY_i -\frac{1}{n}\sum_ix_i\sum_i Y_i}{\left(\sum_ix_i^2-\frac{1}{n}\left(\sum_i x_i\right)^2\right)}
+$$
+
 ### Manual calculation Penguins simple linear regression example
 
 In this section, we manually produce (i.e., without the `lm` function) the `penguins` simple linear regression example in Section \@ref(s:penguins-slr).
