@@ -1079,7 +1079,7 @@ $$
 = \frac{1}{\Sigma x_i^2-\frac{1}{n}(\Sigma x_i)^2}\left[E(\Sigma x_iY_i)-E\left(\frac{1}{n}\Sigma x_i\Sigma Y_i\right)\right]\;\tiny\text{(linearity of expectation)}\\
 = \frac{1}{\Sigma x_i^2-\frac{1}{n}(\Sigma x_i)^2}\left[E(\Sigma x_iY_i)-(\Sigma x_i)E\left(\bar Y\right)\right]\;\tiny\text{(factor out constant }\Sigma x_i\text{, mean definition for }Y_i)\\
 = \frac{1}{\Sigma x_i^2-\frac{1}{n}(\Sigma x_i)^2}\left[(\beta_0\Sigma x_i + \beta_1\Sigma x_i^2)-(\Sigma x_i)(\beta_0+\beta_1\bar x)\right]\;\tiny\text{(substitute previous expressions)}\\
-= \frac{1}{\Sigma x_i^2-\frac{1}{n}(\Sigma x_i)^2}\left[\beta_0\Sigma x_i+\beta_1\Sigma x_i^2-\beta_0\Sigma x_i-\beta_1\bar x\Sigma x_iright]\;\tiny\text{(expand product and reorder)}
+= \frac{1}{\Sigma x_i^2-\frac{1}{n}(\Sigma x_i)^2}\left[\beta_0\Sigma x_i+\beta_1\Sigma x_i^2-\beta_0\Sigma x_i-\beta_1\bar x\Sigma x_i\right]\;\tiny\text{(expand product and reorder)}
 $$
 $$
 = \frac{1}{\Sigma x_i^2-\frac{1}{n}(\Sigma x_i)^2}\left[\beta_1\Sigma x_i^2-\beta_1\bar x\Sigma x_i\right]\;\tiny\text{(cancel terms)}\\
@@ -1100,6 +1100,46 @@ E(\hat\beta_0)\\
 $$
 Therefore, $\hat\beta_0$ is an unbiased estimator of $\beta_0$.
 $$\square$$
+
+#### Variance of estimators
+
+To find the variance $\text{var}(\hat\beta_1)$, we use the following results:
+First,
+$$
+\text{var}(Y_i)\\
+= \text{var}(\beta_0+\beta_1x_i+\epsilon_i)\;\tiny\text{(substitute model definition)} \\
+= \text{var}(\epsilon_i)\;\tiny(\beta_0, \beta_1, x_i\text{ are fixed, so zero variance)} \\
+= \sigma^2 \;\tiny\text{(by assumption)}
+$$
+
+Second,
+$$
+\text{cov}(Y_i, Y_j)\\
+= \text{cov}(\beta_0+\beta_1x_i+\epsilon_i, \beta_0+\beta_1x_j+\epsilon_j)\;\tiny\text{(substitute model definition)} \\
+= \text{cov}(\epsilon_i,\epsilon_j)\;\tiny\text{(other values are fixed)} \\
+= \text{var}(\epsilon_i) \;\tiny\text{(errors i.i.d.)}\\
+= \sigma^2\;\tiny\text{(by assumption)}
+$$
+
+Next, to simplify the derivation, we use a different for of $\hat\beta_1$ from above:
+
+$$
+\text{var}(\hat\beta_1)\\
+=\text{var}\left(\frac{\Sigma(x_i-\bar x)Y_i}{\Sigma(x_i-\bar x)^2}\right)\;\tiny\text{(expression for }\hat\beta_1)\\
+=\frac{1}{\left[\Sigma(x_i-\bar x)^2\right]^2}\text{var}(\Sigma(x_i-\bar x)Y_i)\;\tiny\text{(factor out constant denominator)}
+$$
+
+$$
+=\frac{1}{\left[\Sigma(x_i-\bar x)^2\right]^2}\left[\Sigma\text{var}((x_i-\bar x)Y_i)+\sum_{i=1}^{n}\sum_{i\neq j}\text{cov}((x_i-\bar x)Y_i, (x_j-\bar x)Y_j)\right]\;\tiny\text{(variance of a sum formula)}\\
+=\frac{1}{\left[\Sigma(x_i-\bar x)^2\right]^2}\left[\Sigma(x_i-\bar x)^2\text{var}(Y_i)+\sum_{i=1}^{n}\sum_{i\neq j}(x_i-\bar x)(x_j-\bar x)\text{cov}(Y_i,Y_j)\right]\;\tiny\text{(factor out constants)}
+$$
+$$
+=\frac{1}{\left[\Sigma(x_i-\bar x)^2\right]^2}\left[\Sigma(x_i-\bar x)^2\text{var}(Y_i)\right]\;\tiny\text{(simplify using }\text{cov}(Y_i, Y_j)=0 \text{ for } i\neq j)\\
+=\frac{1}{\left[\Sigma(x_i-\bar x)^2\right]^2}\left[\sigma^2\Sigma(x_i-\bar x)^2\right]\;\tiny\text{(substitute known variance)}\\
+=\frac{\sigma^2}{\Sigma(x_i-\bar x)^2}\;\tiny\text{(cancel out numerator and denominator)}\\
+\square
+$$
+
 
 ### Manual calculation Penguins simple linear regression example
 
