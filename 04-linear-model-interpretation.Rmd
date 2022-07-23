@@ -1,5 +1,11 @@
 # Interpreting a fitted linear model
 
+```{r, include=FALSE}
+# change Console output behavior
+# knitr::opts_chunk$set(comment = "#>", collapse = TRUE)
+knitr::opts_chunk$set(collapse = TRUE)
+```
+
 Interpreting a fitted model is a critical part of a regression analysis and aids us in determining the roles and impact each variable plays in describing the behavior of the response variable.
 
 ## Standard mathemtical interpretation
@@ -32,7 +38,7 @@ Recall that we use the notation $\mathbb{X} = \{X_1,\ldots,X_{p-1}\}$ to denote 
 \]
 since all terms in the first summand of line 4 are fixed, non-random values conditional on $\mathbb{X}$ and the second summand is 0 by assumption. If you are rusty with properties of random variables, consider reviewing the material in Appendix \@ref(prob-review).
 
-Using the facts above we discuss interpretation of simple linear regression models, multiple linear regression models with basic numeric predictors as regressors, and interpretation for parallel and separate lines regression model. 
+Using the facts above, we discuss interpretation of simple linear regression models, multiple linear regression models with basic numeric predictors as regressors, and interpretation for parallel and separate lines regression model. 
 
 ### Coefficient interpretation in simple linear regression
 Suppose we have a simple linear regression model, so that
@@ -62,7 +68,7 @@ E(Y\mid X=x^*+1)-E(Y\mid X=x^*) &= [\beta_0 + \beta_1 (x^* + 1)] - [\beta_0 + \b
 \]
 Thus, $\beta_1$ literally equals the change in the expected response when the regressor increases by 1 unit.
 
-### Coefficient interpretation for first-order multiple linear regression models
+### Coefficient interpretation for first-order multiple linear regression models {#interp-1st-order-ml}
 Suppose we have a multiple linear regression model, so that 
 \begin{equation}
 E(Y\mid X_1,\ldots,X_{p-1})=\beta_0 + \beta_1 X_1 + \cdots + \beta_{p-1} X_{p-1}.(\#eq:mlr-equation)
@@ -94,11 +100,15 @@ For $\beta_j$, we notice that
 \end{align}
 \]
 
-A notable problem with the mathematical interpretation of multiple regression models is that a single predictor can be used more than once in the model. E.g., in the regression model $E(Y\mid X) = \beta_0 + \beta_1 X + \beta_2 X^2$, $X$ is used in both the second and third terms. So it is not possible to increase $X$ while keeping $X^2$ fixed. The mathematical interpretation given in this section is applicable to first-order linear regression models, where a **first-order linear regression model** is a multiple linear regression model in which no regressor is a function of any other regressor.
+### An interpretation conundrum
 
-Another notable problem is that the regressors used in our model our often observational in nature, meaning that we do not control them. Thus, it doesn't make sense to say "we increase variable $X$ by 1 unit". An alternative approach, suggested in @lmwr2, is to consider the expected response difference between observations that are identical with respect to all attributes except the variable under consideration, which varies by only a single unit. While mathematically, the result is the same, the interpretation is more philosophically palatable.
+A notable problem with the mathematical interpretation of multiple regression models is that a single predictor can be used more than once in the model. E.g., in the regression model $E(Y\mid X) = \beta_0 + \beta_1 X + \beta_2 X^2$, $X$ is used in both the second and third terms. So it is not possible to increase $X$ while keeping $X^2$ fixed. The mathematical interpretation given in Section \@ref(interp-1st-order-ml) is applicable to first-order linear regression models, where a **first-order linear regression model** is a multiple linear regression model in which no regressor is a function of any other regressor.
 
-### Penguins examples
+Another notable problem is that the regressors used in our model are often observational in nature, meaning that we do not control them. Thus, it doesn't make sense to say "we increase variable $X$ by 1 unit". An alternative approach, alluded to by @lmwr2, is to consider the expected response difference between observations that are identical with respect to all attributes (or at least the attributes we include in our model) except the variable under consideration, which varies by only a single unit. While mathematically, the result is the same, the interpretation is more philosophically palatable.
+
+Regardless, interpretation is a bit of an art. There can be many correct ways to interpret a coefficient or the impact of a variable. Always double-check that the mathematics of your model supports your conclusions.
+
+### Penguins examples {#penguins-slr-mlr-interpretations}
 
 To apply the interpretations given above, we interpret the models fit to the `penguins` data in Sections \@ref(s:penguins-slr) and \@ref(s:penguins-mlr).
 
@@ -109,11 +119,14 @@ From Section \@ref(s:penguins-slr), the fitted simple linear regression model is
 Some basic interpretations of the coefficients are:
 
 - Intercept: The expected bill length of a penguin with a body mass of 0 grams is 26.9 mm. We discussed the absurdity of this interpretation in Section \@ref(s:penguins-slr).
-- $\mathtt{body\_mass\_g}$: If two penguins were identical except that one penguin was 1 gram heavier, then we would expect the heavier penguin to have a bill length 0.004 mm longer.
+- $\mathtt{body\_mass\_g}$: If two penguins are identical except that one penguin is 1 gram heavier, then we would expect the heavier penguin to have a bill length 0.004 mm longer.
 
 From Section \@ref(s:penguins-mlr), the fitted multiple linear regression model is
 \[
-\hat{E}(\mathtt{bill\_length\_mm}\mid \mathtt{body\_mass\_g}, \mathtt{flipper\_length\_mm})=-3.44+0.0007 \,\mathtt{body\_mass\_g}+0.22\,\mathtt{flipper\_length\_mm}.
+\begin{align}
+&\hat{E}(\mathtt{bill\_length\_mm}\mid \mathtt{body\_mass\_g}, \mathtt{flipper\_length\_mm})\\
+&=-3.44+0.0007 \,\mathtt{body\_mass\_g}+0.22\,\mathtt{flipper\_length\_mm}.
+\end{align}
 \]
 
 Some basic interpretations of the coefficients are:
@@ -122,12 +135,334 @@ Some basic interpretations of the coefficients are:
 - $\mathtt{body\_mass\_g}$: For two penguins that are identical except that one penguin has a body mass 1 gram larger, we expect the heavier penguin to have a bill length 0.0007 mm longer than the other penguin.
 - $\mathtt{flipper\_length\_mm}$: For two penguins that are identical except that one penguin has a flipper length 1 mm longer, we expect the penguin with longer flippers to have a bill length 0.22 mm longer.
 
-|  Some text here
-|    Some different text here
+## Roles of regressor variables
+
+Did you notice that the estimated coefficients for the intercept and $\mathtt{body\_mass\_g}$ changed between the fitted simple linear model and the fitted multiple linear regression model in the Penguins example in Section \@ref(penguins-slr-mlr-interpretations)? What is happening?
+
+Unless all the regressors are orthogonal to each other, which essentially means that they don't affect the estimation of the coefficients of the other regressors (see Section \@ref(orthogonality)), then adding or removing regressors from a regression model will impact the estimated coefficients. The estimated coefficient for a regressor tends to change dramatically when it is highly correlated with the added or deleted regressor, but regardless, it will change at least somewhat when the regressors aren't orthogonal.
+
+The role a regressor plays in a regression model depends on what other regressors are in the model. Recall a team setting you've been in where you had to work with others to accomplish something; it could be related to school, work, sports, etc. Depending on the skills and knowledge your team members have, you will try to find a role in which you can effectively help the team. E.g., I end up doing most of the house painting in our family because I have a lot of experience, so it's better for my family to serve in other roles. But if I was working with a more experienced painter, then it's likely that I would serve in a different capacity. Something similar happens in regression models. The regressors most effective in explaining the response tend to dominate the regressors with less explanatory power, but it always depends on the regressors in the model.
+
+## Interpretation for categorical predictors
+
+We now discuss the interpretation of regression coefficients in the context of a parallel lines and separate lines models.
+
+### Coefficient interpretation for parallel lines models {#pl-interp}
+
+Consider a parallel lines model with numeric regressor $X$ and categorical predictor $C$ with levels $L_1$, $L_2$, and $L_3$. Following the discussion in Section \@ref(categorical-predictors), predictor $C$ must be transformed into two indicator variables, $D_2$ and $D_3$, for category levels $L_2$ and $L_3$, to be included in our linear model. $L_1$ is the reference level. The parallel lines model is formulated as
+\[
+\begin{equation}
+E(Y \mid X, C) = \beta_{int} + \beta_{X} X + \beta_{L_2} D_2 +  \beta_{L_3} D_3, (\#eq:pl-def-interp)
+\end{equation}
+\]
+where we replace the usual $\beta_0$, $\beta_1$, $\beta_2$, and $\beta_3$ with notation the indicates the regressor each coefficient is associated with.
+
+When an observation has level $L_1$ and $X=0$, then the expected response is 
+\[
+\begin{align}
+E(Y|X = 0, C=L_1) &= \beta_{int} + \beta_X \cdot 0 + \beta_{L_2} \cdot 0 + \beta_{L_3} \cdot 0 \\
+&= \beta_{int}.
+\end{align}
+\]
+Thus, $\beta_{int}$ is the expected response for an observation with level $L_1$ when $X=0$.
+
+When an observation has a fixed level $L_j$ (it doesn't matter which level) and $X$ increases from $x^*$ to $x^*+1$, then the change in the expected response is 
+\[
+\begin{align}
+E(Y|X = x^* + 1, C=L_j) - E(Y|X = x^*, C=L_j)&= \beta_X.
+\end{align}
+\]
+Thus, $\beta_X$ is the expected change in the response for an observation with fixed level $L_j$ when $X$ increases by 1 unit.
+
+When an observation has level $L_2$, the expected response is  
+\[
+\begin{align}
+E(Y\mid X = x^*, C=L_2) &= \beta_{int} + \beta_X x^* + \beta_{L_2} \cdot 1 + \beta_{L_3} \cdot 0 \\
+&= \beta_{int} + \beta_X x^* + \beta_{L_2}.
+\end{align}
+\]
+Thus, 
+\[E(Y\mid X=x^*, C=L_2) - E(Y\mid X=x^*, C=L_1) = (\beta_{int} + \beta_X x^* + \beta_{L_2}) - (\beta_{int} + \beta_X x^*) = \beta_{L_2}.
+\]
+A similar result holds for $\beta_{L_3}$ when $C=L_3$. Thus, $\beta_{L_2}$ is the expected change in the response for a fixed value of $X$ when comparing on observation having level $L_1$ to level $L_2$ of predictor $C$. A similar interpretation holds for $\beta_{L_3}$. $L_1$ is known as as the reference level because we must refer to it to interpret our model with respect to other levels of $C$.
+
+To summarize the interpretation of the coefficients in parallel lines models like Equation \@ref(eq:pl-def-interp), assuming categorical predictor $C$ has $K$ levels instead of 3:
+
+- $\beta_{int}$ represents the expected response for observations having the reference level when the numeric regressor $X = 0$.
+- $\beta_X$ is the expected change in the response when $X$ increases by 1 unit for a fixed level of $C$.
+- $\beta_{L_j}$, for $j=2,\ldots,K$, represents the expected change in the response when comparing observations having level $L_1$ and $L_j$ with $X$ fixed at the same value.
+
+### Coefficient interpretation for separate lines models {#sl-interp}
+
+Consider a separate lines model with numeric regressor $X$ and categorical predictor $C$ with levels $L_1$, $L_2$, and $L_3$. The predictor $C$ will be transformed into two indicator variables, $D_2$ and $D_3$, for category levels $L_2$ and $L_3$, with $L_1$ being the reference level. The separate lines model is formulated as
+\[
+\begin{equation}
+E(Y \mid X, C) = \beta_{int} + \beta_{X} X + \beta_{L_2} D_2 +  \beta_{L_3} D_3 + \beta_{XL_2} XD_2+\beta_{XL_3}XD_3. (\#eq:sl-def-interp)
+\end{equation}
+\]
+
+When an observation has level $L_1$ and $X=x^*$, then the expected response is 
+\[
+\begin{align}
+& E(Y\mid X = x^*, C=L_1) \\
+&= \beta_{int} + \beta_X \cdot x^* + \beta_{L_2} \cdot 0 + \beta_{L_3} \cdot 0  + \beta_{X L_2} \cdot x^* \cdot 0 + \beta_{X L_3}\cdot x^* \cdot 0 \\
+&= \beta_{int} + \beta_X x^*.(\#eq:slr-mean-L1)
+\end{align}
+\]
+
+Using Equation \@ref(\#eq:slr-mean-L1), we can verify that:
+
+- $\beta_{int} = E(Y\mid X = 0, C=L_1)$.
+- $\beta_{X} = E(Y\mid X = x^* + 1, C=L_1) - E(Y\mid X = x^*, C=L_1)$.
+
+
+Additionally, for $j=2$,
+\[
+\begin{align}
+& E(Y|X = x^*, C=L_2) \\
+&= \beta_{int} + \beta_X \cdot x^* + \beta_{L_3} \cdot 1 + \beta_{L_3} \cdot 0  + \beta_{X L_2} \cdot x^* \cdot 1 + \beta_{X L_3}\cdot x^* \cdot 0 \\
+&= \beta_{int} + \beta_X x^* + \beta_{L_2} + \beta_{XL_2}x^*\\
+&= (\beta_{int} + \beta_{L_2}) + (\beta_X + \beta_{XL_2})x^*.(\#eq:slr-mean-L2)
+\end{align}
+\]
+Similarly,
+\[
+\begin{equation}
+E(Y|X = x^*, C=L_3) = (\beta_{int} + \beta_{L_3}) + (\beta_X + \beta_{XL_3})x^*. (\#eq:slr-mean-L3) 
+\end{equation}
+\]
+A similar results holds for $C=L_3$.
+
+Using Equations \@ref(\#eq:slr-mean-L1), \@ref(\#eq:slr-mean-L2), and \@ref(\#eq:slr-mean-L3), we can verify that:
+
+- For $j=2,3$, $\beta_{L_j}= E(Y\mid X = 0, C=L_j) - E(Y\mid X = 0, C=L_1)$.
+- For $j=2,3$,
+\[\beta_{XL_j}= [E(Y\mid X = x^*+1, C=L_j) - E(Y\mid X = x^*, C=L_j)]-[E(Y\mid X = x^*+1, C=L_1) - E(Y\mid X = x^*, C=L_1)].
+\]
+
+To summarize the interpretation of the coefficients in separate lines models like Equation \@ref(eq:ll-def-interp), assuming categorical predictor $C$ has $K$ levels instead of 3:
+
+* $\beta_{int}$ represents the expected response for observations having the reference level when the numeric regressor $X = 0$.
+* $\beta_{L_j}$, for $j=2,\ldots,K$, represents the expected change in the response when comparing observations having level $L_1$ and $L_j$ with $X=0$.
+* $\beta_X$ represents the expected change in the response when $X$ increases by 1 unit for observations having the reference level.
+* $\beta_X L_j$, for $j=2,\ldots,K$, represents the difference in the expected rate of change when $X$ increases by 1 unit for observations have the reference level in comparison to level $L_j$.
+
+### More Penguins examples {#more-penguins-examples}
+
+In Section \@ref(s:penguins-mlr2), we fit a parallel lines to the `penguins` data. Letting $D_C$ denote the indicator variable for the `Chinstrap` level and $D_G$ denote the indicator variable for the `Gentoo` level, the fitted parallel lines model was
+\[
+\hat{E}(\mathtt{bill\_length\_mm} \mid \mathtt{body\_mass\_g}, \mathtt{species}) = 24.92 + 0.004 \mathtt{body\_mass\_g} + 9.92 D_C + 3.56 D_G.
+\]
+In the context of this model:
+
+- The expected bill length for an Adelie penguin with a body mass of 0 grams is 24.92 mm.
+- A penguin identical in all ways with another penguin (including the same species) except that it has a body mass 1 gram larger is expected to have a bill length 0.004 mm longer than the smaller penguin.
+- A Chinstrap penguin is expected to have a bill length 9.92 mm longer than an Adelie penguin, assuming their other characteristics are the same.
+- A Gentoo penguin is expected to have a bill length 3.56 mm longer than an Adelie penguin, assuming their other characteristics are the same.
+
+We also fit a separate lines model to the `penguins` data in Section in Section \@ref(s:penguins-mlr2). The fitted separate lines model was
+\[
+\begin{align}
+&\hat{E}(\mathtt{bill\_length\_mm} \mid \mathtt{body\_mass\_g}, \mathtt{species}) \\
+&= 26.99 + 0.003 \mathtt{body\_mass\_g} + 5.18 D_C - 0.25 D_G \\
+&\quad + 0.001 D_C \mathtt{body\_mass\_g} + 0.0009 D_G \mathtt{body\_mass\_g}
+\end{align}
+\]
+In the context of this model:
+
+- The expected bill length for an Adelie penguin with a body mass of 0 grams is 26.99 mm.
+- If two Adelie penguins are identical in all ways except that one has a body mass 1 gram larger, the larger penguins is expected to have a bill length 0.003 mm longer than the smaller penguin.
+- A Chinstrap penguin is expected to have a bill length 5.18 mm longer than an Adelie penguin when both have a body mass of 0 grams.
+- A Gentoo penguin is expected to have a bill length 0.25 mm shorter than an Adelie penguin when both have a body mass of 0 grams.
+- For each 1 gram increase in body mass, we expect the bill length of Chinstrap penguins to grow 0.001 mm more than the bill length growth of Adelie penguins.
+- For each 1 gram increase in body mass, we expect the bill length of Gentoo penguins to grow 0.0009 mm more than the bill length growth of Adelie penguins.
+
+## Effect plots
+
+An effect plot is a visual display that aids in helping us intuitively interpret the impact of a *predictor* in a model. Specifically, **an effect plot** is a plot of the estimated mean response as a function of a *predictor* with the other *predictors* being held at their observed sample mean. The emphasis on *predictor* is intentional. Recall from Section \@ref(a-simple-motivating-example) that a predictor variable is a variable available to model the response variable. A **regressor** variable is a variable used in our regression model, whether that is an unmodified predictor variable, some transformation of a predictor, some combination of predictors, etc. Thus, for the models considered so far in this chapter, `body_mass_g`, `flipper_length_mm`, and `species` are predictor variables. The original information available to build a model. Additionally, based on how we used them, `body_mass_g` and `flipper_length_mm` were also regressors in certain models. Additional regressors were `speciesChinstrap` and `speciesGentoo` (the indicator variables for Chinstrap and Gentoo penguins based on the variable `species`, respectively) and `body_mass_g:speciesChinstrap` and `body_mass_g:speciesGentoo`, the regressors created by multiplying the indicator variables with the `body_mass_g` predictor. This distinction is important when discussing effect plots, because we can create effect plots for each predictor but not necessarily each regressor.
+
+### Effect plots for numeric predictors
+
+Consider the the fitted multiple linear regression model for the `penguins` data from Section \@ref(s:penguins-mlr):
+\[
+\begin{align}
+&\hat{E}(\mathtt{bill\_length\_mm}\mid \mathtt{body\_mass\_g}, \mathtt{flipper\_length\_mm})\\
+&=-3.44+0.0007 \,\mathtt{body\_mass\_g}+0.22\,\mathtt{flipper\_length\_mm}. 
+\end{align}
+(\#eq:mlr-effect-equation)
+\]
+
+The sample means of the observed $\mathtt{body\_mass\_g}$ and $\mathtt{flipper\_length\_mm}$ for the `penguins` data are $\overline{\mathtt{body\_mass\_g}}=4201.75$ and $\overline{\mathtt{flipper\_length\_mm}}=200.92$, as demonstrated in the code below.
+
+```{r}
+# load penguins data since it hasn't been loaded in this chapter
+data(penguins, package = "palmerpenguins")
+# compute sample means of body_mass_g and flipper_length_mm
+mean(penguins$body_mass_g, na.rm = TRUE)
+mean(penguins$flipper_length_mm, na.rm = TRUE)
+```
+The effect plot for $\mathtt{body\_mass\_g}$ (on the response $\mathtt{bill\_length\_mm}$) is a plot of
+\[
+\begin{align}
+&\hat{E}(\mathtt{bill\_length\_mm}\mid \mathtt{body\_mass\_g}, \mathtt{flipper\_length\_mm} = 200.92)\\
+&=-3.44+0.0007 \,\mathtt{body\_mass\_g}+0.22\cdot 200.92 \\
+&=41.14+0.0007 \,\mathtt{body\_mass\_g}
+\end{align}
+\]
+as a function of $\mathtt{body\_mass\_g}$. We used exact values in the result above. The intercept will be 40.76 instead of 41.14 if you use the rounded values.
+
+Similarly, the effect plot for $\mathtt{flipper\_length\_mm}$ is a plot of
+\[
+\begin{align}
+&\hat{E}(\mathtt{bill\_length\_mm}\mid \mathtt{body\_mass\_g} = 4201.75,\mathtt{flipper\_length\_mm}) \\
+&=-3.44+0.0007 \cdot 4201.75+0.22\mathtt{flipper\_length\_mm} \\
+&=41.14+0.0007 \,\mathtt{body\_mass\_g}
+\end{align}
+\]
+as a function of $\mathtt{flipper\_length\_mm}$.
+
+The **effects** package [@R-effects] can be used to generate effect plots for the predictors of a fitted linear model. We start by using the `effects::predictorEffect` function to compute the information needed to draw the plot, then the `plot` function to display the information. 
+
+The `predictorEffect` function computes the estimated mean response for different values of the focal predictor while holding the other predictors at their sample mean (or at a fixed level of a categorical predictor). The main arguments of `predictorEffect` are:
+
+- `predictor`: the name of the predictor you want to plot. This is the "focal predictor".
+- `mod`: the fitted model. The function works with `lm` objects, but also many other types of fitted models.
+
+The `plot` function will take the output of the `predictorEffect` function and produce the desired effect plot.
+
+We refit the model in Equation \@ref(eq:mlr-effect-equation) below for completeness.
+
+```{r}
+# refit model
+mlmod <- lm(bill_length_mm ~ body_mass_g + flipper_length_mm, data = penguins)
+# extract estimated coefficients
+coef(mlmod)
+```
+In the code below, we load the **effects** package (so that we can use the `predictorEffect` function) and then combine calls to the `plot` and `predictorEffect` functions to create an effect plot for `body_mass_g`, which is shown in Figure \@ref(fig:effect-plot-body-mass). We see from Figure \@ref(fig:effect-plot-body-mass) that there is a clear positive association between `body_mass_g` and `bill_length_mm`. The shaded area indicates the 95% confidence interval bands for the estimated mean response. We do not discuss confidence interval bands here, except to say that they provide a visual picture of the uncertainty of our estimated mean (wider bands indicates more uncertainty. Chapter \@ref(inference) discusses confidence intervals for linear models in some detail. The many tick marks along the the x-axis of the effect plot indicate observed values of the x-axis variable.
+
+```{r effect-plot-body-mass, fig.cap = "Effect plot for body mass based on the fitted model in Equation \\@ref(eq:mlr-effect-equation)."}
+# load effects package
+library(effects)
+# draw effect plot for body_mass_g
+plot(predictorEffect("body_mass_g", mlmod))
+```
+
+We next create an effect plot for `flipper_length_mm`, which is shown in Figure \@ref(fig:effect-plot-body-mass), using the code below. There is a clear positive association between `flipper_length_mm` and `bill_length_mm`.
+
+```{r effect-plot-flipper-length, fig.cap = "Effect plot for flipper length based on the fitted model in Equation \\@ref(eq:mlr-effect-equation)."}
+# draw effect plot for flipper_length_mm
+plot(predictorEffect("flipper_length_mm", mlmod))
+```
+
+Alternatively, we call use `effects::allEffects` to compute the necessary effect plot information for all predictors simultaneously, then use `plot` to create a display of the effect plots for all predictors in one graphic. This approach is quicker, but the individual effect plots can sometimes be too small for practical use. We demonstrate this faster approach in the code below, which produces Figure \@ref(fig:mlmod-effect-plots-all).
+
+```{r mlmod-effect-plots-all, fig.cap = "All effect plots for predictors of the fitted model in Equation \\@ref(eq:mlr-effect-equation)."}
+plot(allEffects(mlmod))
+```
+
+In Section \@ref(more-penguins-examples), the fitted parallel lines for the `penguins` data was
+\[
+\begin{align}
+&\hat{E}(\mathtt{bill\_length\_mm} \mid \mathtt{body\_mass\_g}, \mathtt{species}) \\
+&= 24.92 + 0.004 \mathtt{body\_mass\_g} + 9.92 D_C + 3.56 D_G,
+\end{align}
+(\#eq:lmodp-effect-plot)
+\]
+The fitted model is recreated and assigned the name `lmodp` in the code below.
+
+```{r}
+# refit the parallel lines model
+lmodp <- lm(bill_length_mm ~ body_mass_g + species, data = penguins)
+# double-check coefficients
+coef(lmodp)
+```
+
+### Effect plots with categorical predictors
+
+We now construct effect plots for models with categorical predictors, specifically, the parallel lines and separate lines models for the penguins examples previously discussed.
+
+The effect plot of `body_mass_g` for the parallel lines model should technically depend on the level of  `species`. To get a "typical" effect for a categorical predictor, the **effects** package displays the "average effect" based on a weighted average of the results for each level (run `vignette("predictor-effects-gallery", package = "effects")` in the Console for more details). We see the result of this in Figure \@ref(fig:effect-plot-body-mass-lmodp). The association between body mass and bill length is positive for this model.
+
+```{r, effect-plot-body-mass-lmodp, fig.cap = "Effect plot for body mass based on the fitted model in Equation \\@ref(eq:lmodp-effect-plot)."}
+plot(predictorEffect("body_mass_g", lmodp))
+```
+
+The effect plot of `species` is a plot of the function
+\[
+\begin{align}
+&\hat{E}(\mathtt{bill\_length\_mm} \mid \mathtt{body\_mass\_g =4201.75}, \mathtt{species}) \\
+&= 24.92 + 0.004 \cdot 4201.75 + 9.92 D_C + 3.56 D_G \\
+&= 40.67 + 9.92 D_C + 3.56 D_G.
+\end{align}
+\]
+Based on the levels of `species` this simplifies to 
+\[
+\hat{E}(\mathtt{bill\_length\_mm} \mid \mathtt{body\_mass\_g =4201.75}, \mathtt{species}=\mathtt{Adelie}) = 40.67,
+\]
+\[
+\hat{E}(\mathtt{bill\_length\_mm} \mid \mathtt{body\_mass\_g =4201.75}, \mathtt{species}=\mathtt{Chinstrap}) = 40.67 + 9.92 = 50.59,
+\]
+and
+\[
+\hat{E}(\mathtt{bill\_length\_mm} \mid \mathtt{body\_mass\_g =4201.75}, \mathtt{species}=\mathtt{Gentoo}) = 40.67 + 3.56 = 44.23.
+\]
+Thus, the effect plot for `species` will be a series of single values that depends on the level of `species`. This is shown in Figure \@ref(fig:effect-plot-species-lmodp), which is created using the code below. For a fixed value of body mass, Adelie penguins will typically have the smallest bill length, Chinstrap penguins the largest bill length, and Gentoo will typically be somewhere in between.
+
+```{r, effect-plot-species-lmodp, fig.cap = "Effect plot for species based on the fitted model in Equation \\@ref(eq:lmodp-effect-plot)."}
+plot(predictorEffect("species", lmodp))
+```
+
+We now consider the effect plots for a separate lines model using the separate lines model fit the `penguins` data in Section \@ref(s:penguins-mlr2). The fitted separate lines model previously fit for the `penguins` data was
+\[
+\begin{align}
+&\hat{E}(\mathtt{bill\_length\_mm} \mid \mathtt{body\_mass\_g}, \mathtt{species}) \\
+&= 26.99 + 0.003 \mathtt{body\_mass\_g} + 5.18 D_C - 0.25 D_G \\
+&\quad + 0.001 D_C \mathtt{body\_mass\_g} + 0.0009 D_G \mathtt{body\_mass\_g},
+\end{align} 
+(\#eq:sl-model-penguins-effect-plot)
+\]
+which we refit and assign the name `lmods` in the code below.
+```{r}
+# fit separate lines model
+lmods <- lm(bill_length_mm ~ body_mass_g + species + body_mass_g:species,
+            data = penguins)
+# extract estimated coefficients
+coef(lmods)
+```
+
+We determined that the model simplifies depending on the level of species. We previously derived in Section \@ref(s:penguins-mlr2) that:
+\[
+\begin{align}
+&\hat{E}(\mathtt{bill\_length\_mm} \mid \mathtt{body\_mass\_g}, \mathtt{species}=\mathtt{Adelie}) \\
+&= 26.99 + 0.003 \mathtt{body\_mass\_g},\\
+&\hat{E}(\mathtt{bill\_length\_mm} \mid \mathtt{body\_mass\_g}, \mathtt{species}=\mathtt{Chinstrap}) \\
+&= 31.17 + 0.004 \mathtt{body\_mass\_g},\\
+&\hat{E}(\mathtt{bill\_length\_mm} \mid \mathtt{body\_mass\_g}, \mathtt{species}=\mathtt{Chinstrap}) \\
+&= 26.74 + 0.004 \mathtt{body\_mass\_g}.
+\end{align}
+(\#eq:separate-lines-equations-effects-plot)
+\]
+
+The effect plot of `body_mass_g` for the separate lines model will be a plot of each equation given in Equation \@ref(eq:separate-lines-equations-effects-plot). Figure \@ref(fig:effect-plot-body-mass-lmods) displays this effect plot, which was created using the code below.
+
+```{r, effect-plot-body-mass-lmods, fig.cap = "Effect plot for body mass based on the equations in Equation \\@ref(eq:separate-lines-equations-effects-plot)."}
+# effect plot of body mass for separate lines model
+# axes ... rotates the x-axis labels 90 degrees
+plot(predictorEffect("body_mass_g", lmods), axes = list(x = list(rotate = 90)))
+```
+
+```{r, effect-plot-species-lmods, fig.cap = "Effect plot for species based on the equations in Equation \\@ref(eq:separate-lines-equations-effects-plot)."}
+# effect plot of body mass for separate lines model
+# axes ... rotates the x-axis labels 90 degrees
+plot(predictorEffect("species", lmods), axes = list(x = list(rotate = 90)), lines=list(multiline=TRUE))
+```
+
+
+## Added variable plots
 
 ## Going deeper
 
-### Orthogonality
+### Orthogonality {#orthogonality}
 
 Let
 \[\mathbf{X}_[j]=[x_{1,j},\ldots,x_{n,j}]\]

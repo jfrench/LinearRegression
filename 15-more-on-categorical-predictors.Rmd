@@ -78,46 +78,10 @@ $$E(Y|F=L_j) = \beta_{int} + \beta_{D_j},\quad j=2,\ldots,K.$$
 
 ### Main effects models
 
-A main effects model is also called a parallel lines model since the regression equations for each factor level produce lines parallel to one another.
-
-A parallel lines model is formulated as
-$$ Y_i = \beta_{int} + \beta_{X} x_i + \beta_{L_2} d_{i,2} + \cdots + \beta_{L_K} d_{i,K} + \epsilon_i,\quad i=1,2,\ldots n.$$
-
-When an observation has level $L_1$, then the expected response is $\beta_{int} + \beta_1 X$. More specifically, $$E(Y|X = x, F=L_1) = \beta_{int} + \beta_X x + \beta_{L_2} 0 + \cdots + \beta_{L_K} 0 = \beta_{int} + \beta_X x.$$ Thus, $E(Y|X = 0, F=L_1) = \beta_{int}.$
-
-When an observation has level $L_2$, the expected response is $\beta_{int} + \beta_{X} X + \beta_{L_2}$. More formally, 
-$$E(Y|X = x, F=L_2) = \beta_{int} + \beta_X x + \beta_{L_2} 1 + \beta_{L_3} 0 + \cdots + \beta_{L_K} 0 = \beta_{int} + \beta_X x + \beta_{L_2}.$$ Thus, the mean response for observations having level $L_2$ is $\beta_{int} + \beta_{L_2} + \beta_{X} x$. In general, 
-$$E(Y|X = x, F=L_j) = \beta_{int} + \beta_X x + \beta_{L_j},\quad j = 2,\ldots,K.$$ Thus,
-
-$$E(Y|X=x, F=L_j) - E(Y|X=x, F=L_1) = (\beta_{int} + \beta_X x + \beta_{L_j}) - (\beta_{int} + \beta_X x) = \beta_{L_j}.$$
-
-In the context of parallel lines models:
-
-* $\beta_{int}$ represents the expected response for observations having the reference level when the numeric regressor $X = 0$.
-* $\beta_X$ is the expected change in the response when $X$ increases by 1 unit for a fixed level of $F$.
-* $\beta_{L_j}$, for $j=2,\ldots,K$ represents the expected change in the response when comparing observations having level $L_1$ and $L_j$ with $X$ fixed at the same value. 
 
 ### Interaction models 
 
 An interaction model is also called a separate lines model since the regression equations for each factor level produce lines that are distinct and separate.
-
-A separate lines model is formulated as
-$$ Y_i = \beta_{int} + \beta_{X} x_i + \beta_{L_2} d_{i,2} + \cdots + \beta_{L_K} d_{i,K} + + \beta_{X L_2} x_i d_{i,2} + \cdots +  \beta_{X L_j} x_i d_{i,K} + \epsilon_i,\quad i=1,2,\ldots n.$$
-When an observation has level $L_1$, then the expected response is $\beta_{int} + \beta_1 X$. More specifically, $$E(Y|X = x, F=L_1) = \beta_{int} + \beta_X x + \beta_{L_2} 0 + \cdots + \beta_{L_K} 0  + \beta_{X L_2} x_i 0 + \cdots +  \beta_{X L_K} x_i 0 = \beta_{int} + \beta_X x.$$ Thus, $E(Y|X = 0, F=L_1) = \beta_{int}.$
-
-When an observation has level $L_j$, for $j=2,\ldots,K$, the expected response is $\beta_{int} + \beta_{X} X + \beta_{L_j} + \beta_{X L_J} X.$ More formally, 
-$$E(Y|X = x, F=L_j) = \beta_{int} + \beta_X x + \beta_{L_j} + \beta_{X L_j} x.$$
-
-
-Note that $$E(Y|X=0, F=L_1) = \beta_{int}.$$ 
-Additionally, we note that $$E(Y|X=0, F=L_j) - E(Y|X=0, F=L_1) = (\beta_{int} + \beta_X 0 + \beta_{L_j} + \beta_{X L_J} 0) - (\beta_{int} + \beta_X 0) = \beta_{L_j}.$$
-
-In the context of separate lines models:
-
-* $\beta_{int}$ represents the expected response for observations having the reference level when the numeric regressor $X = 0$.
-* $\beta_{L_j}$, for $j=2,\ldots,K$, represents the expected change in the response when comparing observations having level $L_1$ and $L_j$ with $X=0$.
-* $\beta_X$ represents the expected change in the response when $X$ increases by 1 unit for observations having the reference level.
-* $\beta_X L_j$, for $j=2,\ldots,K$, represents the difference in the expected rate of change when $X$ increases by 1 unit for observations have the baseline level in comparison to level $L_j$.
 
 ### Extensions
 
