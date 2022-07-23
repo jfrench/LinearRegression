@@ -967,6 +967,180 @@ Let's say $n=3$ and $\bar{x} = 10$. Then $x_1$ and $x_2$ can be any numbers, but
 
 ### Derivation of the OLS estimator for the simple linear regression model coefficients {#slr-derivation}
 
+Assume a simple linear regression model with $n$ observations. 
+
+#### OLS Estimator of $\beta_0$
+
+We start with the residual sum of squares:
+
+$$
+RSS(\hat\beta_0, \hat\beta_1) = \sum_i(Y_i - \hat\beta_0 - \hat\beta_1x_i)^2
+$$
+Next, we take the partial derivative of the RSS with respect to $\hat\beta_0$:
+
+$$
+\frac{\partial RSS(\hat\beta_0, \hat\beta_1)}{\partial \hat\beta_0} = \frac{\partial}{\partial \hat\beta_0}\sum_i(Y_i - \hat\beta_0 - \hat\beta_1x_i)^2
+$$
+$$
+= \sum_i \frac{\partial}{\partial \hat\beta_0}(Y_i - \hat\beta_0 - \hat\beta_1x_i)^2 \;\tiny\text{ (by the linearity property of derivatives)}
+$$
+$$
+= -2\sum_i(Y_i - \hat\beta_0 - \hat\beta_1x_i)\;\tiny\text{ (chain rule, factoring out -2)}
+$$
+We set the derivative equal to zero:
+$$
+\frac{\partial RSS(\hat\beta_0, \hat\beta_1)}{\partial \hat\beta_0}=0\; \rightarrow \\
+0 = -2\sum_i(Y_i - \hat\beta_0 - \hat\beta_1x_i) \\
+0 = \sum_i(Y_i - \hat\beta_0 - \hat\beta_1x_i)\;\tiny\text{ (divide by sides by -2)}
+$$
+$$
+0 = \sum_iY_i - \sum_i\hat\beta_0 - \sum_i\hat\beta_1x_i\;\tiny\text{ (by linearity of sum)} \\
+0 = \sum_iY_i - n\hat\beta_0 - \sum_i\hat\beta_1x_i\;\tiny(\text{Summing }\hat\beta_0\ n\text{ times equals }n\hat\beta_0) \\
+n\hat\beta_0 = \sum_iY_i-\sum_i\hat\beta_1x_i\;\tiny\text{ (algebra rearrange)}
+$$
+
+Finally, we divide both sides by $n$ to get the OLS estimate for $\hat\beta_0$ in terms of $\hat\beta_1$:
+
+$$
+\hat\beta_0 = \bar Y-\hat\beta_1\bar x
+$$
+
+#### OLS Estimator of $\beta_1$
+
+We use the same strategy of differentiating with respect to the parameter estimate of interest, setting the derivative equal to zero, and solving algebraically.
+
+$$
+\frac{\partial RSS(\hat\beta_0, \hat\beta_1)}{\partial \hat\beta_1} = \frac{\partial}{\partial \hat\beta_1}\sum_i(Y_i - \hat\beta_0 - \hat\beta_1x_i)^2
+$$
+$$
+= \sum_i \frac{\partial}{\partial \hat\beta_1}(Y_i - \hat\beta_0 - \hat\beta_1x_i)^2 \\
+= -2\sum_i(Y_i-\hat\beta_0-\hat\beta_1x_i)x_i \;\tiny\text{ (chain rule, factor out -2)}
+$$
+$$
+\frac{\partial RSS(\hat\beta_0, \hat\beta_1)}{\partial \hat\beta_1}=0\; \rightarrow \\
+0 = -2\sum_i(Y_i-\hat\beta_0-\hat\beta_1x_i)x_i \\
+0 = \sum_i(Y_i-(\bar Y -\hat \beta_1\bar x)-\hat\beta_1x_i)x_i \;\tiny\text{(substitute OLS estimate of }\hat\beta_0, \text{ divide by -2}) \\
+0 = \sum_ix_iY_i -\sum_ix_i\bar Y+\hat\beta_1\bar x\sum_ix_i-\hat\beta_1\sum_ix_i^2 \;\tiny\text{(expand inner term, use linearity of sum)}
+$$
+$$
+\hat\beta_1\sum_ix_i^2-\hat\beta_1\bar x\sum_ix_i=\sum_ix_iY_i -\sum_ix_i\bar Y \;\tiny\text{(move estimator to other side)}\\
+\hat\beta_1\sum_ix_i^2-\hat\beta_1\frac{1}{n}\sum_i x_i\sum_ix_i=\sum_ix_iY_i -\sum_ix_i\frac{1}{n}\sum_i Y_i \;\tiny\text{(rewrite using definition of sample means)}
+$$
+$$
+\hat\beta_1\sum_ix_i^2-\hat\beta_1\frac{1}{n}\left(\sum_i x_i\right)^2=\sum_ix_iY_i -\frac{1}{n}\sum_ix_i\sum_i Y_i \;\tiny\text{(reorder and simplify)} \\
+\hat\beta_1\left(\sum_ix_i^2-\frac{1}{n}\left(\sum_i x_i\right)^2\right)=\sum_ix_iY_i -\frac{1}{n}\sum_ix_i\sum_i Y_i \;\tiny\text{(factoring)}\\
+\hat\beta_1=\frac{\sum_ix_iY_i -\frac{1}{n}\sum_ix_i\sum_i Y_i}{\left(\sum_ix_i^2-\frac{1}{n}\left(\sum_i x_i\right)^2\right)} \;\tiny\text{(solve for }\hat\beta_1)
+$$
+
+Thus, we have the following OLS estimates for thge simple regression parameters:
+$$
+\hat\beta_0 = \bar Y-\hat\beta_1\bar x \\
+\hat\beta_1=\frac{\sum_ix_iY_i -\frac{1}{n}\sum_ix_i\sum_i Y_i}{\left(\sum_ix_i^2-\frac{1}{n}\left(\sum_i x_i\right)^2\right)}
+$$
+
+#### Unbiasedness of Estimators
+
+We examine whether the OLS estimators we derived are unbiased. An estimator is unbiased if the expected value is equal to the parameter it is estimating.
+
+First, we examine whether $\hat\beta_0$ is unbiased, or if $E(\hat\beta_0)=\beta_0$.
+
+Recall that $E(Y_i)=\beta_0+\beta_1 x_i$.
+
+Next, we note:
+$$
+E\left(\sum x_iY_i\right) \\
+= \sum E(x_iY_i) \;\tiny\text{ (by the linearity of the expectation operator)}\\
+=\sum x_iE(Y_i)\;\tiny(x_i\text{ is a fixed value, so it can be brought out})\\
+=\sum x_i(\beta_0+\beta_1 x_i)\;\tiny\text{(using above definition)}\\
+=\sum x_i\beta_0+\sum x_i\beta_1 x_i\;\tiny\text{(distribute sum)}\\
+=\beta_0\sum x_i+\beta_1\sum x_i^2\;\tiny\text{(factor out constants)}
+$$
+Also,
+$$
+E(\bar Y)\\
+= E\left(\frac{1}{n}\sum Y_i \right)\;\tiny\text{(definition of sample mean)}\\
+= \frac{1}{n}E\left(\sum Y_i \right)\;\tiny\text{(factor out constant)}\\
+= \frac{1}{n}\sum E\left(Y_i \right)\;\tiny\text{(linearity of expectation)}\\
+= \frac{1}{n}\sum(\beta_0+\beta_1 x_i)\;\tiny\text{(substitute expected value of }Y_i)\\
+$$
+$$
+= \frac{1}{n}\left(\sum\beta_0+\sum\beta_1 x_i\right)\;\tiny\text{(distribute sum)}\\
+= \frac{1}{n}\left(n\beta_0+\beta_1 n \bar x\right)\;\tiny\text{(sum over }n)\\
+= \beta_0+\beta_1\bar x
+$$
+Thus,
+
+$$
+E(\hat\beta_1) \\
+= E\left(\frac{\Sigma x_iY_i -\frac{1}{n}\Sigma x_i\Sigma Y_i}{\left(\Sigma x_i^2-\frac{1}{n}\left(\Sigma  x_i\right)^2\right)} \right) \;\tiny\text{(OLS estimator)} \\
+= \frac{1}{\Sigma x_i^2-\frac{1}{n}(\Sigma x_i)^2}E(\Sigma x_iY_i-\frac{1}{n}\Sigma x_i\Sigma Y_i)\;\tiny\text{(factor out constant denominator)}
+$$
+$$
+= \frac{1}{\Sigma x_i^2-\frac{1}{n}(\Sigma x_i)^2}\left[E(\Sigma x_iY_i)-E\left(\frac{1}{n}\Sigma x_i\Sigma Y_i\right)\right]\;\tiny\text{(linearity of expectation)}\\
+= \frac{1}{\Sigma x_i^2-\frac{1}{n}(\Sigma x_i)^2}\left[E(\Sigma x_iY_i)-(\Sigma x_i)E\left(\bar Y\right)\right]\;\tiny\text{(factor out constant }\Sigma x_i\text{, mean definition for }Y_i)\\
+= \frac{1}{\Sigma x_i^2-\frac{1}{n}(\Sigma x_i)^2}\left[(\beta_0\Sigma x_i + \beta_1\Sigma x_i^2)-(\Sigma x_i)(\beta_0+\beta_1\bar x)\right]\;\tiny\text{(substitute previous expressions)}\\
+= \frac{1}{\Sigma x_i^2-\frac{1}{n}(\Sigma x_i)^2}\left[\beta_0\Sigma x_i+\beta_1\Sigma x_i^2-\beta_0\Sigma x_i-\beta_1\bar x\Sigma x_i\right]\;\tiny\text{(expand product and reorder)}
+$$
+$$
+= \frac{1}{\Sigma x_i^2-\frac{1}{n}(\Sigma x_i)^2}\left[\beta_1\Sigma x_i^2-\beta_1\bar x\Sigma x_i\right]\;\tiny\text{(cancel terms)}\\
+= \frac{1}{\Sigma x_i^2-\frac{1}{n}(\Sigma x_i)^2}\left[\beta_1\Sigma x_i^2-\beta_1\frac{1}{n}\Sigma x_i\Sigma x_i\right]\;\tiny\text{(using definition of sample mean)}\\
+= \frac{1}{\Sigma x_i^2-\frac{1}{n}(\Sigma x_i)^2}\beta_1\left[\Sigma x_i^2-\frac{1}{n}(\Sigma x_i)^2\right]\;\tiny\text{(factor out}\beta_1\text{, combine terms})\\
+=\beta_1 \;\tiny\text{(numerator and denominator are equal)}
+$$
+Therefore, $\hat\beta_1$ is an unbiased estimator of $\beta_1$.
+$$\square$$
+
+Next, we examine $\hat\beta_0$:
+$$
+E(\hat\beta_0)\\
+= E(\bar Y - \hat\beta_1\bar x) \;\tiny\text{(OLS estimator of}\beta_0) \\
+= E(\bar Y) - E(\hat\beta_1\bar x) \;\tiny\text{(linearity of expectation})\\
+= \beta_0 +\beta_1\bar x-\bar x\beta_1 \;\tiny\text{(substitute previous derivations})\\
+= \beta_0
+$$
+Therefore, $\hat\beta_0$ is an unbiased estimator of $\beta_0$.
+$$\square$$
+
+#### Variance of estimators
+
+To find the variance $\text{var}(\hat\beta_1)$, we use the following results:
+First,
+$$
+\text{var}(Y_i)\\
+= \text{var}(\beta_0+\beta_1x_i+\epsilon_i)\;\tiny\text{(substitute model definition)} \\
+= \text{var}(\epsilon_i)\;\tiny(\beta_0, \beta_1, x_i\text{ are fixed, so zero variance)} \\
+= \sigma^2 \;\tiny\text{(by assumption)}
+$$
+
+Second,
+$$
+\text{cov}(Y_i, Y_j)\\
+= \text{cov}(\beta_0+\beta_1x_i+\epsilon_i, \beta_0+\beta_1x_j+\epsilon_j)\;\tiny\text{(substitute model definition)} \\
+= \text{cov}(\epsilon_i,\epsilon_j)\;\tiny\text{(other values are fixed)} \\
+= \text{var}(\epsilon_i) \;\tiny\text{(errors i.i.d.)}\\
+= \sigma^2\;\tiny\text{(by assumption)}
+$$
+
+Next, to simplify the derivation, we use a different for of $\hat\beta_1$ from above:
+
+$$
+\text{var}(\hat\beta_1)\\
+=\text{var}\left(\frac{\Sigma(x_i-\bar x)Y_i}{\Sigma(x_i-\bar x)^2}\right)\;\tiny\text{(expression for }\hat\beta_1)\\
+=\frac{1}{\left[\Sigma(x_i-\bar x)^2\right]^2}\text{var}(\Sigma(x_i-\bar x)Y_i)\;\tiny\text{(factor out constant denominator)}
+$$
+
+$$
+=\frac{1}{\left[\Sigma(x_i-\bar x)^2\right]^2}\left[\Sigma\text{var}((x_i-\bar x)Y_i)+\sum_{i=1}^{n}\sum_{i\neq j}\text{cov}((x_i-\bar x)Y_i, (x_j-\bar x)Y_j)\right]\;\tiny\text{(variance of a sum formula)}\\
+=\frac{1}{\left[\Sigma(x_i-\bar x)^2\right]^2}\left[\Sigma(x_i-\bar x)^2\text{var}(Y_i)+\sum_{i=1}^{n}\sum_{i\neq j}(x_i-\bar x)(x_j-\bar x)\text{cov}(Y_i,Y_j)\right]\;\tiny\text{(factor out constants)}
+$$
+$$
+=\frac{1}{\left[\Sigma(x_i-\bar x)^2\right]^2}\left[\Sigma(x_i-\bar x)^2\text{var}(Y_i)\right]\;\tiny\text{(simplify using }\text{cov}(Y_i, Y_j)=0 \text{ for } i\neq j)\\
+=\frac{1}{\left[\Sigma(x_i-\bar x)^2\right]^2}\left[\sigma^2\Sigma(x_i-\bar x)^2\right]\;\tiny\text{(substitute known variance)}\\
+=\frac{\sigma^2}{\Sigma(x_i-\bar x)^2}\;\tiny\text{(cancel out numerator and denominator)}\\
+\square
+$$
+
+
 ### Manual calculation Penguins simple linear regression example
 
 In this section, we manually produce (i.e., without the `lm` function) the `penguins` simple linear regression example in Section \@ref(s:penguins-slr).
