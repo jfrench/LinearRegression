@@ -545,8 +545,8 @@ The RSS for the fitted model is 5764.59, which is substantially less than the RS
 
 We provide a brief overview of different types of linear regression models. Our discussion is not exhaustive, nor are the types exclusive (a model can sometimes be described using more than one of these labels). We have previously discussed some of the terms, but include them for completeness.
 
-- Simple: a model with an intercept and a single regressor.
-- Multiple: a model with 2 or more regressors.
+- **Simple**: a model with an intercept and a single regressor.
+- **Multiple**: a model with 2 or more regressors.
 - **Polynomial**: a model with squared, cubic, quartic predictors, etc. E.g, $E(Y\mid X) = \beta_0 + \beta_1 X + \beta_2 X^2 + \beta_3 X^3$ is a 4th-degree polynomial.
 - **First-order**: a model in which each predictor is used to create no more than one regressor. 
 - **Main effect**: a model in which none of the regressors are functions of more than one predictor. A predictor can be used more than once, but each regressor is only a function of one predictor. E.g., if $X_1$ and $X_2$ are different predictors, then the regression model $E(Y\mid X_1, X_2) = \beta_0 + \beta_1 X_1 + \beta_2 X_1^2 + \beta_3 X_2$ would be a main effect model, but not a first-order model since $X_1$ was used to create two regressors.
@@ -567,7 +567,7 @@ Chapter \@ref(more-on-categorical-predictors) provides more information about us
 ### Indicator variables
 In order to compute $\hat{\boldsymbol{\beta}}$ using Equation \@ref(eq:betahat), both $\mathbf{X}$ and $\mathbf{y}$ must contain numeric values. How can we use a categorical predictor in our regression model when its values are not numeric? To do so, we must transform the categorical predictor into one or more **indicator** or **dummy variables**, which we explain in more detail below.
 
-An **indicator function** is a function that takes the value 1 if a certain property is true and 0 otherwise. An **indicator variable** is the variable that results from applying an indicator function to each observation of a variable. Many notations exist for indicator functions. We use the notation 
+An **indicator function** is a function that takes the value 1 if a certain property is true and 0 otherwise. An **indicator variable** is the variable that results from applying an indicator function to each observation of a variable. Many notations exist for indicator functions. We use the notation,
 \begin{equation*}
 I_S(x) = \begin{cases}
 1 & \textrm{if}\;x \in S\\
@@ -938,7 +938,7 @@ coef(lmod_a4)
 summary(lmod_a4)$r.squared
 ```
 Figure \@ref(fig:anscombe-plots) provides a scatter plot each data set and overlays their fitted models.
-```{r anscombe-plots, fig.cap="Scatter plots of the four Anscombe (1973) data sets along with their line of best fit.", echo = FALSE, message = FALSE}
+```{r anscombe-plots, fig.cap="Scatter plots of the four Anscombe (1973) data sets along with their line of best fit.", fig.asp = .5, echo = FALSE, message = FALSE}
 # par(mfrow = c(1, 4))
 # plot(y1 ~ x1, data = anscombe)
 # title("data set 1")
@@ -1145,7 +1145,6 @@ E(Y_i\mid X=x_i) &= E(\beta_0 + \beta_1 x_i +\epsilon_i\mid X = x_i) & \tiny\tex
 &= \beta_0+\beta_1x_i. & 
 \end{align}
 \]
-]
 
 \begin{align}
 E(Y|X) &= E(\beta_0 + \beta_1  X + \epsilon | X) \\
@@ -1156,57 +1155,59 @@ E(Y|X) &= E(\beta_0 + \beta_1  X + \epsilon | X) \\
 
 
 Next, we note:
-$$
-E\left(\sum x_iY_i\right) \\
-= \sum E(x_iY_i) \;\tiny\text{ (by the linearity of the expectation operator)}\\
-=\sum x_iE(Y_i)\;\tiny(x_i\text{ is a fixed value, so it can be brought out})\\
-=\sum x_i(\beta_0+\beta_1 x_i)\;\tiny\text{(using above definition)}\\
-=\sum x_i\beta_0+\sum x_i\beta_1 x_i\;\tiny\text{(distribute sum)}\\
-=\beta_0\sum x_i+\beta_1\sum x_i^2\;\tiny\text{(factor out constants)}
-$$
+\[
+\begin{align}
+E\left(\sum x_iY_i\right) &= \sum E(x_iY_i) &\tiny\text{ (by the linearity of the expectation operator)}\\
+&=\sum x_iE(Y_i)&\tiny(x_i\text{ is a fixed value, so it can be brought out})\\
+&=\sum x_i(\beta_0+\beta_1 x_i)&\tiny\text{(using above definition)}\\
+&=\sum x_i\beta_0+\sum x_i\beta_1 x_i&\tiny\text{(distribute sum)}\\
+&=\beta_0\sum x_i+\beta_1\sum x_i^2&\tiny\text{(factor out constants)}
+\end{align}
+\]
+
 Also,
-$$
-E(\bar Y)\\
-= E\left(\frac{1}{n}\sum Y_i \right)\;\tiny\text{(definition of sample mean)}\\
-= \frac{1}{n}E\left(\sum Y_i \right)\;\tiny\text{(factor out constant)}\\
-= \frac{1}{n}\sum E\left(Y_i \right)\;\tiny\text{(linearity of expectation)}\\
-= \frac{1}{n}\sum(\beta_0+\beta_1 x_i)\;\tiny\text{(substitute expected value of }Y_i)\\
-$$
-$$
-= \frac{1}{n}\left(\sum\beta_0+\sum\beta_1 x_i\right)\;\tiny\text{(distribute sum)}\\
-= \frac{1}{n}\left(n\beta_0+\beta_1 n \bar x\right)\;\tiny\text{(sum over }n)\\
-= \beta_0+\beta_1\bar x
-$$
+\[
+\begin{align}
+E(\bar Y)
+&= E\left(\frac{1}{n}\sum Y_i \right)&\tiny\text{(definition of sample mean)}\\
+&= \frac{1}{n}E\left(\sum Y_i \right)&\tiny\text{(factor out constant)}\\
+&= \frac{1}{n}\sum E\left(Y_i \right)&\tiny\text{(linearity of expectation)}\\
+&= \frac{1}{n}\sum(\beta_0+\beta_1 x_i)&\tiny\text{(substitute expected value of }Y_i)\\
+&= \frac{1}{n}\left(\sum\beta_0+\sum\beta_1 x_i\right)&\tiny\text{(distribute sum)}\\
+&= \frac{1}{n}\left(n\beta_0+\beta_1 n \bar x\right)&\tiny\text{(sum over }n)\\
+&= \beta_0+\beta_1\bar x
+\end{align}
+\]
 Thus,
 
-$$
-E(\hat\beta_1) \\
-= E\left(\frac{\Sigma x_iY_i -\frac{1}{n}\Sigma x_i\Sigma Y_i}{\left(\Sigma x_i^2-\frac{1}{n}\left(\Sigma  x_i\right)^2\right)} \right) \;\tiny\text{(OLS estimator)} \\
-= \frac{1}{\Sigma x_i^2-\frac{1}{n}(\Sigma x_i)^2}E(\Sigma x_iY_i-\frac{1}{n}\Sigma x_i\Sigma Y_i)\;\tiny\text{(factor out constant denominator)}
-$$
-$$
-= \frac{1}{\Sigma x_i^2-\frac{1}{n}(\Sigma x_i)^2}\left[E(\Sigma x_iY_i)-E\left(\frac{1}{n}\Sigma x_i\Sigma Y_i\right)\right]\;\tiny\text{(linearity of expectation)}\\
-= \frac{1}{\Sigma x_i^2-\frac{1}{n}(\Sigma x_i)^2}\left[E(\Sigma x_iY_i)-(\Sigma x_i)E\left(\bar Y\right)\right]\;\tiny\text{(factor out constant }\Sigma x_i\text{, mean definition for }Y_i)\\
-= \frac{1}{\Sigma x_i^2-\frac{1}{n}(\Sigma x_i)^2}\left[(\beta_0\Sigma x_i + \beta_1\Sigma x_i^2)-(\Sigma x_i)(\beta_0+\beta_1\bar x)\right]\;\tiny\text{(substitute previous expressions)}\\
-= \frac{1}{\Sigma x_i^2-\frac{1}{n}(\Sigma x_i)^2}\left[\beta_0\Sigma x_i+\beta_1\Sigma x_i^2-\beta_0\Sigma x_i-\beta_1\bar x\Sigma x_i\right]\;\tiny\text{(expand product and reorder)}
-$$
-$$
+\[
+\begin{align}
+E(\hat\beta_1) &= E\left(\frac{\Sigma x_iY_i -\frac{1}{n}\Sigma x_i\Sigma Y_i}{\left(\Sigma x_i^2-\frac{1}{n}\left(\Sigma  x_i\right)^2\right)} \right) &\tiny\text{(OLS estimator)} \\
+&= \frac{1}{\Sigma x_i^2-\frac{1}{n}(\Sigma x_i)^2}E(\Sigma x_iY_i-\frac{1}{n}\Sigma x_i\Sigma Y_i)&\tiny\text{(factor out constant denominator)}\\
+&= \frac{1}{\Sigma x_i^2-\frac{1}{n}(\Sigma x_i)^2}\left[E(\Sigma x_iY_i)-E\left(\frac{1}{n}\Sigma x_i\Sigma Y_i\right)\right]&\tiny\text{(linearity of expectation)}\\
+&= \frac{1}{\Sigma x_i^2-\frac{1}{n}(\Sigma x_i)^2}\left[E(\Sigma x_iY_i)-(\Sigma x_i)E\left(\bar Y\right)\right]&\tiny\text{(factor out constant }\Sigma x_i\text{, mean definition for }Y_i)\\
+&= \frac{1}{\Sigma x_i^2-\frac{1}{n}(\Sigma x_i)^2}\left[(\beta_0\Sigma x_i + \beta_1\Sigma x_i^2)-(\Sigma x_i)(\beta_0+\beta_1\bar x)\right]&\tiny\text{(substitute previous expressions)}\\
+&= \frac{1}{\Sigma x_i^2-\frac{1}{n}(\Sigma x_i)^2}\left[\beta_0\Sigma x_i+\beta_1\Sigma x_i^2-\beta_0\Sigma x_i-\beta_1\bar x\Sigma x_i\right]&\tiny\text{(expand product and reorder)}
 = \frac{1}{\Sigma x_i^2-\frac{1}{n}(\Sigma x_i)^2}\left[\beta_1\Sigma x_i^2-\beta_1\bar x\Sigma x_i\right]\;\tiny\text{(cancel terms)}\\
-= \frac{1}{\Sigma x_i^2-\frac{1}{n}(\Sigma x_i)^2}\left[\beta_1\Sigma x_i^2-\beta_1\frac{1}{n}\Sigma x_i\Sigma x_i\right]\;\tiny\text{(using definition of sample mean)}\\
-= \frac{1}{\Sigma x_i^2-\frac{1}{n}(\Sigma x_i)^2}\beta_1\left[\Sigma x_i^2-\frac{1}{n}(\Sigma x_i)^2\right]\;\tiny\text{(factor out}\beta_1\text{, combine terms})\\
-=\beta_1 \;\tiny\text{(numerator and denominator are equal)}
-$$
+&= \frac{1}{\Sigma x_i^2-\frac{1}{n}(\Sigma x_i)^2}\left[\beta_1\Sigma x_i^2-\beta_1\frac{1}{n}\Sigma x_i\Sigma x_i\right]&\tiny\text{(using definition of sample mean)}\\
+&= \frac{1}{\Sigma x_i^2-\frac{1}{n}(\Sigma x_i)^2}\beta_1\left[\Sigma x_i^2-\frac{1}{n}(\Sigma x_i)^2\right]&\tiny\text{(factor out}\beta_1\text{, combine terms})\\
+&=\beta_1 &\tiny\text{(numerator and denominator are equal)}
+\end{align}
+\]
+
 Therefore, $\hat\beta_1$ is an unbiased estimator of $\beta_1$.
 $$\square$$
 
 Next, we examine $\hat\beta_0$:
-$$
-E(\hat\beta_0)\\
-= E(\bar Y - \hat\beta_1\bar x) \;\tiny\text{(OLS estimator of}\beta_0) \\
-= E(\bar Y) - E(\hat\beta_1\bar x) \;\tiny\text{(linearity of expectation})\\
-= \beta_0 +\beta_1\bar x-\bar x\beta_1 \;\tiny\text{(substitute previous derivations})\\
-= \beta_0
-$$
+\[
+\begin{align}
+E(\hat\beta_0) &= E(\bar Y - \hat\beta_1\bar x) &\tiny\text{(OLS estimator of}\beta_0) \\
+&= E(\bar Y) - E(\hat\beta_1\bar x) &\tiny\text{(linearity of expectation})\\
+&= \beta_0 +\beta_1\bar x-\bar x\beta_1 &\tiny\text{(substitute previous derivations})\\
+&= \beta_0
+\end{align}
+\]
+
 Therefore, $\hat\beta_0$ is an unbiased estimator of $\beta_0$.
 $$\square$$
 
@@ -1214,40 +1215,39 @@ $$\square$$
 
 To find the variance $\text{var}(\hat\beta_1)$, we use the following results:
 First,
-$$
-\text{var}(Y_i)\\
-= \text{var}(\beta_0+\beta_1x_i+\epsilon_i)\;\tiny\text{(substitute model definition)} \\
-= \text{var}(\epsilon_i)\;\tiny(\beta_0, \beta_1, x_i\text{ are fixed, so zero variance)} \\
-= \sigma^2 \;\tiny\text{(by assumption)}
-$$
+\[
+\begin{align}
+\text{var}(Y_i) &= \text{var}(\beta_0+\beta_1x_i+\epsilon_i)&\tiny\text{(substitute model definition)} \\
+&= \text{var}(\epsilon_i)&\tiny(\beta_0, \beta_1, x_i\text{ are fixed, so zero variance)} \\
+&= \sigma^2 &\tiny\text{(by assumption)}
+\end{align}
+\]
 
 Second,
-$$
-\text{cov}(Y_i, Y_j)\\
-= \text{cov}(\beta_0+\beta_1x_i+\epsilon_i, \beta_0+\beta_1x_j+\epsilon_j)\;\tiny\text{(substitute model definition)} \\
-= \text{cov}(\epsilon_i,\epsilon_j)\;\tiny\text{(other values are fixed)} \\
-= \text{var}(\epsilon_i) \;\tiny\text{(errors i.i.d.)}\\
-= \sigma^2\;\tiny\text{(by assumption)}
-$$
+\[
+\begin{align}
+\text{cov}(Y_i, Y_j) &= \text{cov}(\beta_0+\beta_1x_i+\epsilon_i, \beta_0+\beta_1x_j+\epsilon_j)&\tiny\text{(substitute model definition)} \\
+&= \text{cov}(\epsilon_i,\epsilon_j)&\tiny\text{(other values are fixed)} \\
+&= \text{var}(\epsilon_i) &\tiny\text{(errors i.i.d.)}\\
+&= \sigma^2&\tiny\text{(by assumption)}
+\end{align}
+\]
 
 Next, to simplify the derivation, we use a different for of $\hat\beta_1$ from above:
 
-$$
-\text{var}(\hat\beta_1)\\
-=\text{var}\left(\frac{\Sigma(x_i-\bar x)Y_i}{\Sigma(x_i-\bar x)^2}\right)\;\tiny\text{(expression for }\hat\beta_1)\\
-=\frac{1}{\left[\Sigma(x_i-\bar x)^2\right]^2}\text{var}(\Sigma(x_i-\bar x)Y_i)\;\tiny\text{(factor out constant denominator)}
-$$
 
-$$
-=\frac{1}{\left[\Sigma(x_i-\bar x)^2\right]^2}\left[\Sigma\text{var}((x_i-\bar x)Y_i)+\sum_{i=1}^{n}\sum_{i\neq j}\text{cov}((x_i-\bar x)Y_i, (x_j-\bar x)Y_j)\right]\;\tiny\text{(variance of a sum formula)}\\
-=\frac{1}{\left[\Sigma(x_i-\bar x)^2\right]^2}\left[\Sigma(x_i-\bar x)^2\text{var}(Y_i)+\sum_{i=1}^{n}\sum_{i\neq j}(x_i-\bar x)(x_j-\bar x)\text{cov}(Y_i,Y_j)\right]\;\tiny\text{(factor out constants)}
-$$
-$$
-=\frac{1}{\left[\Sigma(x_i-\bar x)^2\right]^2}\left[\Sigma(x_i-\bar x)^2\text{var}(Y_i)\right]\;\tiny\text{(simplify using }\text{cov}(Y_i, Y_j)=0 \text{ for } i\neq j)\\
-=\frac{1}{\left[\Sigma(x_i-\bar x)^2\right]^2}\left[\sigma^2\Sigma(x_i-\bar x)^2\right]\;\tiny\text{(substitute known variance)}\\
-=\frac{\sigma^2}{\Sigma(x_i-\bar x)^2}\;\tiny\text{(cancel out numerator and denominator)}\\
+\[
+\begin{align}
+\text{var}(\hat\beta_1) &=\text{var}\left(\frac{\Sigma(x_i-\bar x)Y_i}{\Sigma(x_i-\bar x)^2}\right)&\tiny\text{(expression for }\hat\beta_1)\\
+&=\frac{1}{\left[\Sigma(x_i-\bar x)^2\right]^2}\text{var}(\Sigma(x_i-\bar x)Y_i)&\tiny\text{(factor out constant denominator)}\\
+&=\frac{1}{\left[\Sigma(x_i-\bar x)^2\right]^2}\left[\Sigma\text{var}((x_i-\bar x)Y_i)+\sum_{i=1}^{n}\sum_{i\neq j}\text{cov}((x_i-\bar x)Y_i, (x_j-\bar x)Y_j)\right]&\tiny\text{(variance of a sum formula)}\\
+&=\frac{1}{\left[\Sigma(x_i-\bar x)^2\right]^2}\left[\Sigma(x_i-\bar x)^2\text{var}(Y_i)+\sum_{i=1}^{n}\sum_{i\neq j}(x_i-\bar x)(x_j-\bar x)\text{cov}(Y_i,Y_j)\right]&\tiny\text{(factor out constants)}\\
+&=\frac{1}{\left[\Sigma(x_i-\bar x)^2\right]^2}\left[\Sigma(x_i-\bar x)^2\text{var}(Y_i)\right]&\tiny\text{(simplify using }\text{cov}(Y_i, Y_j)=0 \text{ for } i\neq j)\\
+&=\frac{1}{\left[\Sigma(x_i-\bar x)^2\right]^2}\left[\sigma^2\Sigma(x_i-\bar x)^2\right]&\tiny\text{(substitute known variance)}\\
+&=\frac{\sigma^2}{\Sigma(x_i-\bar x)^2}&\tiny\text{(cancel out numerator and denominator)}\\
 \square
-$$
+\end{align}
+\]
 
 ### Manual calculation Penguins simple linear regression example
 
