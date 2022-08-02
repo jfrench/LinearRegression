@@ -192,7 +192,33 @@ The hat matrix $\mathbf{H}$ is symmetric and idempotent.
 :::
 
 :::{.proof}
-Some text.
+
+Notice that,
+\[
+\begin{align}
+H^T&=(X(X^TX)^{-1}X^T)^T&\tiny\text{(definition of }H)\\
+&=(X^T)^T((X^TX)^{-1})^TX^T&\tiny\text{(apply transpose to matrix product)}\\
+&=X((X^TX)^T)^{-1}X^T&\tiny\text{(simplification, reversibility of inverse and transpose)}\\
+&=X(X^T(X^T)^T)^{-1}X^T&\tiny\text{(apply transpose to matrix product)}\\
+&=X(X^TX)^{-1}X^T&\tiny\text{(simplification)}\\
+&=H&\square\\
+\end{align}
+\]
+Thus, $H$ is symmetric.
+
+Additionally,
+\[
+\begin{align}
+HH&=(X(X^TX)^{-1}X^T)(X(X^TX)^{-1}X^T)&\tiny\text{(definition)}\\
+&=X(X^TX)^{-1}(X^TX)(X^TX)^{-1}X^t&\tiny\text{(associative property of matrices)}\\
+&=XI(X^TX)^{-1}X^T&\tiny\text{(property of inverse matrices)}\\
+&=X(X^TX)^{-1}X^T&\tiny\text{(simplification)}\\
+&=H&\square
+\end{align}
+\]
+
+Therefore, $H$ is idempotent.
+
 :::
 
 ::: {.theorem #i-h-properties}
@@ -200,7 +226,28 @@ The matrix $\mathbf{I}_{n\times n} - \mathbf{H}$ is symmetric and idempotent.
 :::
 
 :::{.proof}
-Some text.
+
+First, notice that,
+$$
+\begin{align}
+(I-H)^T &= I^T-H^T&\tiny\text{(transpose to matrix sum)}\\
+&= I-H&\tiny\text{(since I and H are symmetric)}\\
+&\square
+\end{align}
+$$
+Thus, $I-H$ is symmetric.
+
+Next,
+$$
+\begin{align}
+(I-H)(I-H)&=I-2H+HH&\tiny\text{(transpose to matrix sum)}\\
+&=I-2H+H&\tiny\text{(since H is idempotent)}\\
+&=I-H&\tiny\text{(simplification)}\\
+&\square
+\end{align}
+$$
+Thus, $I-H$ is idempotent.
+
 :::
 
 ::: {.theorem #mean-residuals}
