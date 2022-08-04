@@ -8,9 +8,9 @@ knitr::opts_chunk$set(collapse = TRUE)
 
 Interpreting a fitted model is a critical part of a regression analysis and aids us in determining the roles and impact each variable plays in describing the behavior of the response variable.
 
-## Standard mathemtical interpretation
+## Standard mathematical interpretation
 
-The standard approach to interpreting the coefficients of a fitted linear model is to consider the expected change in the response in relation to the regressors in the model.
+The standard approach to interpreting the coefficients of a fitted linear model is to consider the expected change in the response in relation to changes in the regressors in the model.
 
 Consider the typical multiple linear regression model of the response
 \[
@@ -503,7 +503,7 @@ We consider a simple example with $n=5$ observations to demonstrate how orthogon
 - `X2` is a column vector of regressor values chosen to be orthogonal to `x1` but not to `ones`.
 - `X3` is a column vector of regressor values orthogonal to both `x1` and `ones`.
 - `X4` is a column vector of regressor values orthogonal to `ones`, `x1`, and `x3`, but not `x2`.
-- `X5` is a column vector of regressor value sorthogonal to `ones` and `x1`, but not the other regressor vectors. 
+- `X5` is a column vector of regressor value orthogonal to `ones` and `x1`, but not the other regressor vectors. 
 
 ```{r, include = FALSE}
 y <- c(1, 4, 6, 8, 9) # response vector
@@ -626,7 +626,7 @@ X5 <- c(1, 0, 0, -1, 0) # orthogonal to ones, x1, not x4
 crossprod(cbind(ones, X1, X4, X5))
 ```
 
-Note the block of zeros in the lower left and uper right corners of the crossproduct matrix above. The block containing `ones` and `X1` is orthogonal to the block containing `X4` and `X5`. This means that if we fit the model with only the column of 1s and `X1`, the model only with `X4` and `X5`, and then fit the model with the column of 1s, `x1`, `x4`, and `x5`, then the coefficients $\hat{\beta}_{0}$ and $\hat{\beta}_{1}$ are not impacted when `X4` and `X5` are added to the model. Similarly, $\hat{\beta}_{4}$ and $\hat{\beta}_{5}$ are not impacted when the column of 1s and `X1` are added to the model with `X4` and `X5`. See the output below.
+Note the block of zeros in the lower left and upper right corners of the crossproduct matrix above. The block containing `ones` and `X1` is orthogonal to the block containing `X4` and `X5`. This means that if we fit the model with only the column of 1s and `X1`, the model only with `X4` and `X5`, and then fit the model with the column of 1s, `x1`, `x4`, and `x5`, then the coefficients $\hat{\beta}_{0}$ and $\hat{\beta}_{1}$ are not impacted when `X4` and `X5` are added to the model. Similarly, $\hat{\beta}_{4}$ and $\hat{\beta}_{5}$ are not impacted when the column of 1s and `X1` are added to the model with `X4` and `X5`. See the output below.
 
 ```{r}
 lm(y ~ x1)           # model with 1s and x1
@@ -727,7 +727,7 @@ lm(y ~ x1 + x4 + x5) # model with 1s, x1, x4, x5
 <!-- - `BMI18`: the body mass index at age 18 -->
 <!-- -  `WT2`, `WT9`, and `WT18`: the weights at ages 2, 9, and 18 (in kg) for the $n=70$ girls in the study. -->
 
-<!-- ## Analysing Relations Between Regressors -->
+<!-- ## Analyzing Relations Between Regressors -->
 
 <!-- ```{r} -->
 <!-- # basic scatterplot matrix -->
