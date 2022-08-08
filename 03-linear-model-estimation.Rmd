@@ -656,9 +656,10 @@ Since $D_2=0$ when $C=L_1$ and $D_2=1$ when $C=L_2$, we see that the model in Eq
 E(Y\mid X, C) =
 \begin{cases}
   \beta_0+\beta_1 X & \mathrm{if}\;C = L_1 \\
-  (\beta_0 + \beta_2) +\beta_X X & \mathrm{if}\;C = L_2
+  (\beta_0 + \beta_2) +\beta_1 X & \mathrm{if}\;C = L_2
 \end{cases}.
 \]
+The parallel lines will be separated vertically by the distance $\beta_2$.
 
 To create a separate lines regression model, we add regressor $D_2$ and the interaction regressor $X D_2$ to our simple linear regression model. Thus, the separate lines regression model is
 \[
@@ -681,7 +682,7 @@ It is easy to imagine using multiple categorical predictors in a model, interact
 
 ### Avoiding an easy mistake
 
-Why didn't we add $D_1$ to the parallel lines model? Or $D_1$ and $D_1 X$ to the separate lines model? We didn't do this because it will create linear dependencies in the columns of the regressor matrix $\mathbf{X}$.
+Why didn't we add $D_1$ to the parallel lines model? Or $D_1$ and $D_1 X$ to the separate lines model? First, we notice that we don't *need* to add them. E.g., if an observation doesn't havel level $L_2$ ($D_2=0$), then it must have level $L_1$. More importantly, we didn't do this because it will create linear dependencies in the columns of the regressor matrix $\mathbf{X}$.
 
 Let $\mathbf{d}_1=[d_{1,1}, d_{2,1}, \ldots, d_{n,1}]$ be the column vector of observed values for indicator variable $D_1$ and $\mathbf{d}_2$ be the column vector for $D_2$. Then for a two-level categorical variable, $\mathbf{d}_1 + \mathbf{d}_2$ is an $n\times 1$ vector of 1s, meaning that $D_1$ and $D_2$ will be linearly dependent with the intercept column of our $\mathbf{X}$ matrix. Thus, adding $D_1$ to the parallel lines model would result in $\mathbf{X}$ having linearly dependent columns, which creates estimation problems.
 
