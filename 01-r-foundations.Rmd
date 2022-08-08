@@ -1,6 +1,4 @@
 ---
-title: "Joshua French"
-date: "`r format(Sys.time(), '%Y-%m-%d')`"
 output:
   html_document:
     css: style.css
@@ -13,32 +11,24 @@ output:
 # change Console output behavior
 # knitr::opts_chunk$set(comment = "#>", collapse = TRUE)
 knitr::opts_chunk$set(collapse = TRUE)
-```
 
-```{r, include = FALSE}
-# from https://community.rstudio.com/t/showing-only-the-first-few-lines-of-the-results-of-a-code-chunk/6963
-library(knitr)
-hook_output <- knit_hooks$get("output")
-knit_hooks$set(output = function(x, options) {
-  lines <- options$output.lines
-  if (is.null(lines)) {
-    return(hook_output(x, options))  # pass to default hook
-  }
-  x <- unlist(strsplit(x, "\n"))
-  more <- "..."
-  if (length(lines)==1) {        # first n lines
-    if (length(x) > lines) {
-      # truncate the output, but add ....
-      x <- c(head(x, lines), more)
+# https://bookdown.org/yihui/rmarkdown-cookbook/hook-truncate.html
+# save the built-in output hook
+hook_output <- knitr::knit_hooks$get("output")
+
+# set a new output hook to truncate text output
+knitr::knit_hooks$set(output = function(x, options) {
+  if (!is.null(n <- options$out.lines)) {
+    x <- xfun::split_lines(x)
+    if (length(x) > n) {
+      # truncate the output
+      x <- c(head(x, n), "....\n")
     }
-  } else {
-    x <- c(more, x[lines], more)
+    x <- paste(x, collapse = "\n")
   }
-  # paste these lines together
-  x <- paste(c(x, ""), collapse = "\n")
   hook_output(x, options)
 })
-``` 
+```
 
 # R Foundations
 
@@ -50,7 +40,7 @@ R statistical software is one of the most popular tools for data analysis in aca
 
 **What is R?**
 
-R is a programming language and environment designed for statistical computing. It was introduced by Robert Gentleman and Robert Ihaka in 1993 as a free implementation of the _S_ programming language developed at Bell Laboraties [(https://www.r-project.org/about.html)](https://www.r-project.org/about.html)
+R is a programming language and environment designed for statistical computing. It was introduced by Robert Gentleman and Robert Ihaka in 1993 as a free implementation of the _S_ programming language developed at Bell Laboratories [(https://www.r-project.org/about.html)](https://www.r-project.org/about.html)
 
 Some important facts about R are that:
 
@@ -828,21 +818,21 @@ Once again, this action returns a vector, not a data frame. The is because the `
 
 To get around this behavior we can change the `drop` argument to `FALSE`, as shown below (some output suppressed).
 
-```{r, output.lines = 4}
+```{r, out.lines = 4}
 # extract mpg variable, keep as data frame
 mtcars[,"mpg", drop = FALSE]
 ```
 
 An easier approach to avoid the default `drop` behavior is the slightly different syntax `df["var"]` (notice we no longer have the comma to separate rows and columns). We use this syntax below, suppressing part of the output, for the `mpg` variable in `mtcars`.
 
-```{r, output.lines = 4}
+```{r, out.lines = 4}
 # extract mpg variable, keep as data frame
 mtcars["mpg"]
 ```
 
 To select multiple variables in a data frame, we can provide a character vector with multiple variable names between `[]`. In the example below, we extract both the `mpg` and `cyl` variables from `mtcars`.
 
-```{r, output.lines = 4}
+```{r, out.lines = 4}
 mtcars[c("mpg", "cyl")]
 ```
 

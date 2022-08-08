@@ -1,43 +1,34 @@
 ---
-title: "Joshua French"
-date: "`r format(Sys.time(), '%Y-%m-%d')`"
 output:
   html_document:
-    df_print: paged
-  pdf_document: default
+    css: style.css
+  pdf_document:
+    includes:
+      in_header: preamble.tex
 ---
-
 
 ```{r, include=FALSE}
 # change Console output behavior
 # knitr::opts_chunk$set(comment = "#>", collapse = TRUE)
 knitr::opts_chunk$set(collapse = TRUE)
-```
 
-```{r, include = FALSE}
-# from https://community.rstudio.com/t/showing-only-the-first-few-lines-of-the-results-of-a-code-chunk/6963
-library(knitr)
-hook_output <- knit_hooks$get("output")
-knit_hooks$set(output = function(x, options) {
-  lines <- options$output.lines
-  if (is.null(lines)) {
-    return(hook_output(x, options))  # pass to default hook
-  }
-  x <- unlist(strsplit(x, "\n"))
-  more <- "..."
-  if (length(lines)==1) {        # first n lines
-    if (length(x) > lines) {
-      # truncate the output, but add ....
-      x <- c(head(x, lines), more)
+# https://bookdown.org/yihui/rmarkdown-cookbook/hook-truncate.html
+# save the built-in output hook
+hook_output <- knitr::knit_hooks$get("output")
+
+# set a new output hook to truncate text output
+knitr::knit_hooks$set(output = function(x, options) {
+  if (!is.null(n <- options$out.lines)) {
+    x <- xfun::split_lines(x)
+    if (length(x) > n) {
+      # truncate the output
+      x <- c(head(x, n), "....\n")
     }
-  } else {
-    x <- c(more, x[lines], more)
+    x <- paste(x, collapse = "\n")
   }
-  # paste these lines together
-  x <- paste(c(x, ""), collapse = "\n")
   hook_output(x, options)
 })
-``` 
+```
 
 # Data cleaning and exploration
 
@@ -61,7 +52,7 @@ This command actually loads two data sets: `penguins_raw`, the data set we will 
 
 We could have also loaded the data set by running the following commands in the Console. 
 
-```{r, eval = FALSE}
+```{r}
 library(palmerpenguins)
 data(penguins)
 ```
@@ -92,14 +83,14 @@ The data set includes `r nrow(penguins_raw)` observations of `r ncol(penguins_ra
 
 ## Initial data cleaning
 
-The `str` function is a great first function to apply on a newly loaded data set that you aren't familiar with because it provides a general overview of the data's structure.
+The `str` function is a great first function to apply on a newly loaded data set that you aren't familiar with because it provides a general overview of the data's structure (normally you wouldn't set the `give.attr` argument to `FALSE`, but we do so here to save space.)
 
-```{r, output.lines = 17}
-str(penguins_raw)
+```{r str_penguins_raw}
+#str(penguins_raw, give.attr = FALSE)
 ```
 We see that the `penguins_raw` object is a `tibble`, a special kind of data frame provided by the **tibble** package [@R-tibble] as part of the broader **tidyverse**. It has 344 rows and 17 columns. In general, a `tibble` will function like a standard data frame, though its behavior may change when **tidyverse** packages are loaded. In the code below, we confirm that `penguins_raw` qualifies as a **base** R `data.frame`.
 
-```{r}
+```{r is_data_frame_penguins_raw}
 is.data.frame(penguins_raw)
 ```
 
@@ -112,7 +103,7 @@ dplyr::glimpse(penguins_raw)
 
 Another thing that we notice about `penguins_raw` is that it has terrible variable names. The variable names have a mixture of lowercase and uppercase letters, parentheses, and even spaces! This makes it complicated to access variables in the data frame. To access the flipper length variable, we would have to use something like the command below. Note the `` ` ` `` around "Flipper Length (mm)" because of the spaces in the variable name.
 
-```{r, output.lines = 5}
+```{r penguins_raw_flipper_length, out.lines = 5}
 penguins_raw$`Flipper Length (mm)`
 ```
 
@@ -173,7 +164,7 @@ Our initial data cleaning process is now completed. As we explore our data furth
 
 Numerical exploration of a data set generally consists of computing various relevant statistics for each of the variables in a data set in order to summarize the data. A relevant statistic will depend on the type of data being analyzed. 
 
-Table @\ref(tab:numsum-table) provides an overview of common numerical summaries used to explore data, the type of data that can be summarized, what is summarized, and the function to compute the summary.
+Table \@ref(tab:numsum-table) provides an overview of common numerical summaries used to explore data, the type of data that can be summarized, what is summarized, and the function to compute the summary.
 
 ```{r numsum-table, echo = FALSE}
 summary = c("mean", "median", "variance", "standard deviation",

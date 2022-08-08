@@ -1,4 +1,4 @@
-# Interpreting a fitted linear model
+# Interpreting a fitted linear model {#interp-chapter}
 
 ```{r, include=FALSE}
 # change Console output behavior
@@ -6,9 +6,7 @@
 knitr::opts_chunk$set(collapse = TRUE)
 ```
 
-Interpreting a fitted model is a critical part of a regression analysis and aids us in determining the roles and impact each variable plays in describing the behavior of the response variable.
-
-## Standard mathemtical interpretation
+Interpreting a fitted model is a critical part of a regression analysis. These interpretations generally describe the roles and impact each variable plays in predicting the behavior of the response variable.
 
 The standard approach to interpreting the coefficients of a fitted linear model is to consider the expected change in the response in relation to the regressors in the model.
 
@@ -40,7 +38,7 @@ since all terms in the first summand of line 4 are fixed, non-random values cond
 
 Using the facts above, we discuss interpretation of simple linear regression models, multiple linear regression models with basic numeric predictors as regressors, and interpretation for parallel and separate lines regression model. 
 
-### Coefficient interpretation in simple linear regression
+## Coefficient interpretation in simple linear regression
 Suppose we have a simple linear regression model, so that
 \begin{equation}
 E(Y\mid X)=\beta_0 + \beta_1 X. (\#eq:slr-equation)
@@ -68,29 +66,38 @@ E(Y\mid X=x^*+1)-E(Y\mid X=x^*) &= [\beta_0 + \beta_1 (x^* + 1)] - [\beta_0 + \b
 \]
 Thus, $\beta_1$ literally equals the change in the expected response when the regressor increases by 1 unit.
 
-### Coefficient interpretation for first-order multiple linear regression models {#interp-1st-order-ml}
-Suppose we have a multiple linear regression model, so that 
+To apply the interpretations given above, we interpret the simple linear regression model fit to the `penguins` data in Section \@ref(s:penguins-slr). From Section \@ref(s:penguins-slr), the fitted simple linear regression model of $\mathtt{body\_mass\_g}$ regressed on $\mathtt{body\_mass\_g}$ is
+\[
+\hat{E}(\mathtt{bill\_length\_mm}\mid \mathtt{body\_mass\_g})=26.9+0.004 \,\mathtt{body\_mass\_g}.
+\]
+Some basic interpretations of the coefficients are:
+
+- Intercept: The expected bill length of a penguin with a body mass of 0 grams is 26.9 mm. We discussed the absurdity of this interpretation in Section \@ref(s:penguins-slr).
+- $\mathtt{body\_mass\_g}$: If two penguins are identical except that one penguin is 1 gram heavier, then we would expect the heavier penguin to have a bill length 0.004 mm longer.
+
+## Coefficient interpretation for first-order multiple linear regression models {#interp-1st-order-ml}
+Suppose we have a multiple linear regression model with $p-1$ regressors, so that
 \begin{equation}
 E(Y\mid X_1,\ldots,X_{p-1})=\beta_0 + \beta_1 X_1 + \cdots + \beta_{p-1} X_{p-1}.(\#eq:mlr-equation)
 \end{equation}
-Extending the definition of $\mathbb{X}$, we denote the set of regressors without $X_j$ as $\mathbb{X}_{-j} = \mathbb{X}\setminus\{X_j\}$.
+Relying on the definition of $\mathbb{X}$, we denote the set of regressors without $X_j$ as $\mathbb{X}_{-j} = \mathbb{X}\setminus\{X_j\}$.
 
-The interpretations of the coefficients more the model in Equation \@ref(eq:mlr-equation) are:
+The interpretations of the coefficients from the model in Equation \@ref(eq:mlr-equation) are:
 
 - $\beta_0$ is the expected response when all regressors are 0, i.e., $\beta_0=E(Y\mid X_1=0,\ldots,X_{p-1}=0)$.
-- $\beta_j$ is the expected change in the response when regressor $j$ increases 1 unit and the other regressors stay the same, i.e., $\beta_j=E(Y\mid \mathbb{X}_{-j} = \mathbf{x}^*_{-j}, X_{j+1} = x_{j}^*+1)-E(Y\mid \mathbb{X}_{-j} = \mathbf{x}^*_{-j}, X_{j+1} = x_{j}^*)$ where $\mathbf{x}_{-j}^*=[x^*_1,\ldots,x_{j-1}^*,x_{j+1}^*,\ldots,x_{p-1}^*]\in \mathbb{R}^{p-2}$ is a vector with $p-2$ fixed values (the number of regressors excluding $X_j$) and $x_j^*$ is a fixed real number.
+- $\beta_j$, $j = 1,\ldots,p-1$, represents the expected change in the response when regressor $j$ increases 1 unit and the other regressors stay the same, i.e., $\beta_j=E(Y\mid \mathbb{X}_{-j} = \mathbf{x}^*_{-j}, X_{j+1} = x_{j}^*+1)-E(Y\mid \mathbb{X}_{-j} = \mathbf{x}^*_{-j}, X_{j+1} = x_{j}^*)$ where $\mathbf{x}_{-j}^*=[x^*_1,\ldots,x_{j-1}^*,x_{j+1}^*,\ldots,x_{p-1}^*]\in \mathbb{R}^{p-2}$ is a vector with $p-2$ fixed values (the number of regressors excluding $X_j$) and $x_j^*$ is a fixed real number. The non-intercept coefficients of a multiple linear regression model are known as **partial slopes**. 
 
 Regarding the interpretation of $\beta_0$, from the regression model in Equation \@ref(eq:mlr-equation), notice that
 \[
 \begin{align}
-E(Y\mid X_1=0,\ldots,X_{p-1}=0) &= [\beta_0 + \beta_1 \cdot 0 + \cdots + \beta_{p-1} \cdot 0]\\
+E(Y\mid X_1=0,\ldots,X_{p-1}=0) &= \beta_0 + \beta_1 \cdot 0 + \cdots + \beta_{p-1} \cdot 0\\
 &= \beta_0.
 \end{align}
 \]
 
-It is quite common for the mathematical interpretation of the intercept to be nonsensical because we are extrapolating outside the range of the observed data. e.g., we might predict the height of a newborn child (age = 0) to be negative, which isn't possible in reality.
+It is quite common for the mathematical interpretation of the intercept to be nonsensical because we are extrapolating outside the range of the observed data.
 
-For $\beta_j$, we notice that 
+For $\beta_j$, $j = 1,\ldots, p-1$, we notice that 
 \[
 \begin{align}
 & E(Y\mid \mathbb{X}_{-j} = \mathbf{x}^*_{-j}, X_{j+1} = x_{j}+1)-E(Y\mid \mathbb{X}_{-j} = \mathbf{x}^*_{-j}, X_{j+1} = x_{j})\\
@@ -100,28 +107,13 @@ For $\beta_j$, we notice that
 \end{align}
 \]
 
-### An interpretation conundrum
+A notable problem with the mathematical interpretation of multiple regression models is that a single predictor can be used more than once in the model. E.g., in the 2nd-degree polynomial regression model \[E(Y\mid X) = \beta_0 + \beta_1 X + \beta_2 X^2,\] $X$ is used in both the second and third terms. So it is not possible to increase $X$ while keeping $X^2$ fixed. The mathematical interpretation given in this section is applicable to first-order linear regression models (cf. Section \@ref(model-types)), where a *first-order linear regression model* is a multiple linear regression model in which no regressor is a function of any other regressor.
 
-A notable problem with the mathematical interpretation of multiple regression models is that a single predictor can be used more than once in the model. E.g., in the regression model $E(Y\mid X) = \beta_0 + \beta_1 X + \beta_2 X^2$, $X$ is used in both the second and third terms. So it is not possible to increase $X$ while keeping $X^2$ fixed. The mathematical interpretation given in Section \@ref(interp-1st-order-ml) is applicable to first-order linear regression models, where a **first-order linear regression model** is a multiple linear regression model in which no regressor is a function of any other regressor.
-
-Another notable problem is that the regressors used in our model are often observational in nature, meaning that we do not control them. Thus, it doesn't make sense to say "we increase variable $X$ by 1 unit". An alternative approach, alluded to by @lmwr2, is to consider the expected response difference between observations that are identical with respect to all attributes (or at least the attributes we include in our model) except the variable under consideration, which varies by only a single unit. While mathematically, the result is the same, the interpretation is more philosophically palatable.
+The regressors used in our model are often observational in nature, meaning that we do not control them. Thus, it doesn't make sense to say "we increase variable $X$ by 1 unit". An alternative approach, alluded to by @lmwr2, is to consider the expected response difference between observations that are identical with respect to all attributes (or at least the attributes we include in our model) except the variable under consideration, which varies by only a single unit. While mathematically, the result is the same, the interpretation is more philosophically palatable.
 
 Regardless, interpretation is a bit of an art. There can be many correct ways to interpret a coefficient or the impact of a variable. Always double-check that the mathematics of your model supports your conclusions.
 
-### Penguins examples {#penguins-slr-mlr-interpretations}
-
-To apply the interpretations given above, we interpret the models fit to the `penguins` data in Sections \@ref(s:penguins-slr) and \@ref(s:penguins-mlr).
-
-From Section \@ref(s:penguins-slr), the fitted simple linear regression model is 
-\[
-\hat{E}(\mathtt{bill\_length\_mm}\mid \mathtt{body\_mass\_g})=26.9+0.004 \,\mathtt{body\_mass\_g}.
-\]
-Some basic interpretations of the coefficients are:
-
-- Intercept: The expected bill length of a penguin with a body mass of 0 grams is 26.9 mm. We discussed the absurdity of this interpretation in Section \@ref(s:penguins-slr).
-- $\mathtt{body\_mass\_g}$: If two penguins are identical except that one penguin is 1 gram heavier, then we would expect the heavier penguin to have a bill length 0.004 mm longer.
-
-From Section \@ref(s:penguins-mlr), the fitted multiple linear regression model is
+To illustrate the interpretations give above, we interpret the first-order multiple linear regression model fit to the `penguins` data in \@ref(s:penguins-mlr). The fitted multiple linear regression model is
 \[
 \begin{align}
 &\hat{E}(\mathtt{bill\_length\_mm}\mid \mathtt{body\_mass\_g}, \mathtt{flipper\_length\_mm})\\
@@ -135,9 +127,13 @@ Some basic interpretations of the coefficients are:
 - $\mathtt{body\_mass\_g}$: For two penguins that are identical except that one penguin has a body mass 1 gram larger, we expect the heavier penguin to have a bill length 0.0007 mm longer than the other penguin.
 - $\mathtt{flipper\_length\_mm}$: For two penguins that are identical except that one penguin has a flipper length 1 mm longer, we expect the penguin with longer flippers to have a bill length 0.22 mm longer.
 
+## Effect plots
+
+An effect
+
 ## Roles of regressor variables
 
-Did you notice that the estimated coefficients for the intercept and $\mathtt{body\_mass\_g}$ changed between the fitted simple linear model and the fitted multiple linear regression model in the Penguins example in Section \@ref(penguins-slr-mlr-interpretations)? What is happening?
+Did you notice that the estimated coefficients for the intercept and $\mathtt{body\_mass\_g}$ changed between the fitted simple linear model and the fitted multiple linear regression model in the Penguins example in the sections above? What is happening?
 
 Unless all the regressors are orthogonal to each other, which essentially means that they don't affect the estimation of the coefficients of the other regressors (see Section \@ref(orthogonality)), then adding or removing regressors from a regression model will impact the estimated coefficients. The estimated coefficient for a regressor tends to change dramatically when it is highly correlated with the added or deleted regressor, but regardless, it will change at least somewhat when the regressors aren't orthogonal.
 
@@ -279,7 +275,14 @@ In the context of this model:
 
 ## Effect plots
 
-An effect plot is a visual display that aids in helping us intuitively interpret the impact of a *predictor* in a model. Specifically, **an effect plot** is a plot of the estimated mean response as a function of a *predictor* with the other *predictors* being held at their observed sample mean. The emphasis on *predictor* is intentional. Recall from Section \@ref(a-simple-motivating-example) that a predictor variable is a variable available to model the response variable. A **regressor** variable is a variable used in our regression model, whether that is an unmodified predictor variable, some transformation of a predictor, some combination of predictors, etc. Thus, for the models considered so far in this chapter, `body_mass_g`, `flipper_length_mm`, and `species` are predictor variables. The original information available to build a model. Additionally, based on how we used them, `body_mass_g` and `flipper_length_mm` were also regressors in certain models. Additional regressors were `speciesChinstrap` and `speciesGentoo` (the indicator variables for Chinstrap and Gentoo penguins based on the variable `species`, respectively) and `body_mass_g:speciesChinstrap` and `body_mass_g:speciesGentoo`, the regressors created by multiplying the indicator variables with the `body_mass_g` predictor. This distinction is important when discussing effect plots, because we can create effect plots for each predictor but not necessarily each regressor.
+An effect plot is a visual display that aids in helping us intuitively interpret the effect of a *predictor* in a model.
+
+As stated by @fox2020predictor:
+
+> Summarization of the effects of predictors using tables of coefficient estimates is often incomplete. Effects, and particularly plots of effects, can in many instances reveal the relationship of the response to the predictors more clearly. This conclusion is especially true for models with linear predictors
+that include interactions and multiple-coefficient terms such as regression splines and polynomials ....
+
+An **effect plot** is a plot of the estimated mean response as a function of a *predictor* with the other *predictors* being held at their "typical" values. The emphasis on *predictor* is intentional. Recall from Section \@ref(a-simple-motivating-example) that a predictor variable is a variable available to model the response variable. A *regressor* variable is a variable used in our regression model, whether that is an unmodified predictor variable, some transformation of a predictor, some combination of predictors, etc. Thus, for the models considered so far in this chapter, `body_mass_g`, `flipper_length_mm`, and `species` are predictor variables. The original information available to build a model. Additionally, based on how we used them, `body_mass_g` and `flipper_length_mm` were also regressors in certain models. Additional regressors were `speciesChinstrap` and `speciesGentoo` (the indicator variables for Chinstrap and Gentoo penguins based on the variable `species`, respectively) and `body_mass_g:speciesChinstrap` and `body_mass_g:speciesGentoo`, the regressors created by multiplying the indicator variables with the `body_mass_g` predictor. This distinction is important when discussing effect plots, because we can create effect plots for each predictor but not necessarily each regressor.
 
 ### Effect plots for numeric predictors
 
