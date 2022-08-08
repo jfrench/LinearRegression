@@ -12,22 +12,22 @@ output:
 # knitr::opts_chunk$set(comment = "#>", collapse = TRUE)
 knitr::opts_chunk$set(collapse = TRUE)
 
-# https://bookdown.org/yihui/rmarkdown-cookbook/hook-truncate.html
-# save the built-in output hook
-hook_output <- knitr::knit_hooks$get("output")
-
-# set a new output hook to truncate text output
-knitr::knit_hooks$set(output = function(x, options) {
-  if (!is.null(n <- options$out.lines)) {
-    x <- xfun::split_lines(x)
-    if (length(x) > n) {
-      # truncate the output
-      x <- c(head(x, n), "....\n")
-    }
-    x <- paste(x, collapse = "\n")
-  }
-  hook_output(x, options)
-})
+# # https://bookdown.org/yihui/rmarkdown-cookbook/hook-truncate.html
+# # save the built-in output hook
+# hook_output <- knitr::knit_hooks$get("output")
+# 
+# # set a new output hook to truncate text output
+# knitr::knit_hooks$set(output = function(x, options) {
+#   if (!is.null(n <- options$out.lines)) {
+#     x <- xfun::split_lines(x)
+#     if (length(x) > n) {
+#       # truncate the output
+#       x <- c(head(x, n), "....\n")
+#     }
+#     x <- paste(x, collapse = "\n")
+#   }
+#   hook_output(x, options)
+# })
 ```
 
 # Data cleaning and exploration
@@ -44,24 +44,24 @@ For brevity, we exclude some of the code output in analysis that follows. The ex
 
 A data set in a package can be loaded into memory using the `data` function, specifying the `name` of the data set to be loaded, and specifying the package that contains the data. We do this for the `penguins_raw` data below.
 
-```{r}
+```{r data_penguins}
 data(penguins, package = "palmerpenguins")
 ```
 
 This command actually loads two data sets: `penguins_raw`, the data set we will be looking at, and `penguins`, a simplified version of `penguins_raw`. Note that this particular data set loads in a nonstandard way; we would normally expect to load the `penguins_raw` data using `data(penguins_raw, package = "palmerpenguins")`.
 
-We could have also loaded the data set by running the following commands in the Console. 
+We could have also loaded the data set by running the following commands in the Console.
 
-```{r}
+```{r library-palmer-penguins}
 library(palmerpenguins)
 data(penguins)
 ```
 
 This second approach is overkill and loads everything the package includes into memory. If you are going to be using many functions or objects from a package, then the second approach is sensible. Otherwise, the first approach is more precise and is better coding practice.
 
-The `penguins_raw` data set provides data related to various penguin species measured in the Palmer Archipelago (Antarctica), originally provided by @GormanEtAl2014. 
+The `penguins_raw` data set provides data related to various penguin species measured in the Palmer Archipelago (Antarctica), originally provided by @GormanEtAl2014.
 
-The data set includes `r nrow(penguins_raw)` observations of `r ncol(penguins_raw)` variables. The variables are:
+The data set includes 344 observations of 17 variables. The variables are:
 
 * `studyName`: a `character` variable indicating the expedition from which the data were collected.
 * `Sample Number`: a `numeric` variable denoting the continuous number sequence for each sample.
@@ -85,12 +85,12 @@ The data set includes `r nrow(penguins_raw)` observations of `r ncol(penguins_ra
 
 The `str` function is a great first function to apply on a newly loaded data set that you aren't familiar with because it provides a general overview of the data's structure (normally you wouldn't set the `give.attr` argument to `FALSE`, but we do so here to save space.)
 
-```{r str_penguins_raw}
+```{r str-penguins-raw}
 #str(penguins_raw, give.attr = FALSE)
 ```
 We see that the `penguins_raw` object is a `tibble`, a special kind of data frame provided by the **tibble** package [@R-tibble] as part of the broader **tidyverse**. It has 344 rows and 17 columns. In general, a `tibble` will function like a standard data frame, though its behavior may change when **tidyverse** packages are loaded. In the code below, we confirm that `penguins_raw` qualifies as a **base** R `data.frame`.
 
-```{r is_data_frame_penguins_raw}
+```{r isdataframe-penguins-raw}
 is.data.frame(penguins_raw)
 ```
 
@@ -117,7 +117,7 @@ Additionally, many variables will be extraneous for our future analyses, so we w
 
 ```{r}
 # select certain columns of penguins_raw, assign new name
-penguins_clean <- 
+penguins_clean <-
   penguins_raw |>
   subset(select = c("Species", "Island", "Culmen Length (mm)", "Culmen Depth (mm)", "Flipper Length (mm)", "Body Mass (g)", "Sex"))
 ```
@@ -134,7 +134,7 @@ There are still some issues with `penguins_clean`. The most notable issues are t
 
 ```{r}
 # convert sex variable to factor, replace original object
-penguins_clean <- 
+penguins_clean <-
   penguins_clean |>
   transform(species = factor(species), island = factor(island), sex = factor(sex))
 # view structure
@@ -162,7 +162,7 @@ Our initial data cleaning process is now completed. As we explore our data furth
 
 ## Numerical summarization of data
 
-Numerical exploration of a data set generally consists of computing various relevant statistics for each of the variables in a data set in order to summarize the data. A relevant statistic will depend on the type of data being analyzed. 
+Numerical exploration of a data set generally consists of computing various relevant statistics for each of the variables in a data set in order to summarize the data. A relevant statistic will depend on the type of data being analyzed.
 
 Table \@ref(tab:numsum-table) provides an overview of common numerical summaries used to explore data, the type of data that can be summarized, what is summarized, and the function to compute the summary.
 
@@ -170,7 +170,7 @@ Table \@ref(tab:numsum-table) provides an overview of common numerical summaries
 summary = c("mean", "median", "variance", "standard deviation",
             "interquartile range", "quantiles", "correlation", "frequency  distribution", "relative frequency distribution")
 variable_type = rep(c("`numeric`", "`factor`"), times = c(7, 2))
-summarizes = c("center", "center", "spread", "spread", "spread", 
+summarizes = c("center", "center", "spread", "spread", "spread",
                "center and spread", "similarity", "counts", "proportions")
 r_function = c("`mean`", "`median`", "`var`", "`sd`", "`quantile` (modified)",
                "`quantile`", "`cor`", "`table`", "`table` (modified)")
@@ -197,9 +197,9 @@ It can also be useful to compute the correlation between two `numeric` variables
 
 The sample mean and median are the most common statistics used to represent the "center" of a set of numeric values.
 
-The sample mean or average is obtained by adding all values in the sample and dividing by the number of observations. The sample mean is the most commonly used measure of center. A weakness of the sample mean is that it is easily affected by outliers (values that are very large or small compared to the rest of the data values). Formally, if $x_1, x_2, \ldots, x_n$ are a sample of $n$ numeric values, then the sample mean is computed as $$\bar{x} = \frac{1}{n}\sum_{i=1}^n x_i.$$ The sample mean can be computed in R using `mean`. 
+The sample mean or average is obtained by adding all values in the sample and dividing by the number of observations. The sample mean is the most commonly used measure of center. A weakness of the sample mean is that it is easily affected by outliers (values that are very large or small compared to the rest of the data values). Formally, if $x_1, x_2, \ldots, x_n$ are a sample of $n$ numeric values, then the sample mean is computed as $$\bar{x} = \frac{1}{n}\sum_{i=1}^n x_i.$$ The sample mean can be computed in R using `mean`.
 
-The sample median is the middle value of an ordered set of values (the actual middle value for when the number of values is odd and the average of the two middle values if there are an even number of values). Alternatively, the median is identical to the 0.5 quantile of the data. The median is considered more "resistant" because it is not so greatly affected by outliers. The median of the values 1, 8, 7, 6, 100 is 7. The median of the values 1, 8, 7, 6, 100, 4 is 6.5. The median can be computed in R using `median`. 
+The sample median is the middle value of an ordered set of values (the actual middle value for when the number of values is odd and the average of the two middle values if there are an even number of values). Alternatively, the median is identical to the 0.5 quantile of the data. The median is considered more "resistant" because it is not so greatly affected by outliers. The median of the values 1, 8, 7, 6, 100 is 7. The median of the values 1, 8, 7, 6, 100, 4 is 6.5. The median can be computed in R using `median`.
 
 We compute the mean of the `body_mass` variable of the `penguins_clean` data in the code below.
 
@@ -220,9 +220,9 @@ We see the that average penguin `body_mass` is approximately 4201 grams, while t
 
 We introduce quantiles before spread because we refer to quantiles in the discussion of spread.
 
-Informally, the *p*th quantile (where $0\leq p \leq 1$) of a set of values is the value that separates the smallest $100 p$% of the values from the upper $100(1-p)$% of the values. e.g., the 0.25 sample quantile (often called Q1) of a set of values is the value that separates the smallest 25% of the values from the largest 75% of the values. 
+Informally, the *p*th quantile (where $0\leq p \leq 1$) of a set of values is the value that separates the smallest $100 p$% of the values from the upper $100(1-p)$% of the values. e.g., the 0.25 sample quantile (often called Q1) of a set of values is the value that separates the smallest 25% of the values from the largest 75% of the values.
 
-The `quantile` function is used to compute sample quantiles. There are actually many competing approaches to computing sample quantiles (which we don't discuss or worry about). Run `?quantile` in the Console if you are interested in learning more about the approaches used by R. 
+The `quantile` function is used to compute sample quantiles. There are actually many competing approaches to computing sample quantiles (which we don't discuss or worry about). Run `?quantile` in the Console if you are interested in learning more about the approaches used by R.
 
 Quantiles are useful quantifying both the center (median) and spread (minimum and maxmimum or interquartile range) of a set of values.
 
@@ -236,11 +236,11 @@ We see that the smallest and largest body masses are 2700 grams and 6300 grams, 
 
 #### Measures of spread
 
-In addition to identifying the center of a set of values, it is important to measure their spread, i.e., how variable the values are. 
+In addition to identifying the center of a set of values, it is important to measure their spread, i.e., how variable the values are.
 
 The sample variance and standard deviation are the most common measures of spread for numeric values. The sample variance of a set of values is the (approximate) average of the squared deviation of each observation from the sample mean, i.e., the sample variance is $$s^2 = \frac{1}{n-1}\sum_{i=1}^n (x_i - \bar{x})^2.$$ The sample standard deviation is the square root of the sample variance and is generally a more useful measure of spread because it is has the same units as the original data. The larger the standard deviation or variance of a set of values, the more they vary from their sample mean. The sample standard deviation and variance can be greatly affected by outliers. The `var` function computes the sample variance while `sd` computes the sample standard deviation.
 
-The interquartile range is a more resistant measure of spread based on quantiles. The interquartile range is the difference between the 0.75 and 0.25 quantiles of a data set. 
+The interquartile range is a more resistant measure of spread based on quantiles. The interquartile range is the difference between the 0.75 and 0.25 quantiles of a data set.
 
 The minimum and maximum (in relation to the sample mean or median) can also be used to ascertain the spread of a data set. The minimum and maximum values are computed using the `min` and `max` functions, respectively.
 
@@ -270,7 +270,7 @@ The correlation between two `numeric` variables quantifies the strength and dire
 
 The closer $r$ is to -1 or 1, the closer the data values fall to a straight line when we plot $(x_i, y_i)$, $i=1,2,\ldots,n$ in a scatter plot (discussed in Section ). Values close to 0 indicate that there is no linear relationship between the two variables. Negative $r$ values indicate a negative relationship between the two variables (as values for one variable increase, the values for the other variable tend to decrease). Positive $r$ values indicate a positive linear relationship between the two variables (as values for one variable increase, the values of the other variable also tend to increase).
 
-In the code below, we compute the sample correlation between all `numeric` variables in `penguins_clean`. We set `use = "pairwise.complete.obs"` so that all non-`NA` pairs of values are used in the calculation. 
+In the code below, we compute the sample correlation between all `numeric` variables in `penguins_clean`. We set `use = "pairwise.complete.obs"` so that all non-`NA` pairs of values are used in the calculation.
 
 ```{r}
 # determine whether each variable is numeric
@@ -286,7 +286,7 @@ We briefly explain why we didn't simply use the `cor` function on `penguins_clea
 
 ### Categorical data
 
-The statistics mentioned in the previous section are generally not appropriate for a categorical variable. Instead, a frequency distribution or relative frequency distribution might be a useful numeric summary of categorical data. 
+The statistics mentioned in the previous section are generally not appropriate for a categorical variable. Instead, a frequency distribution or relative frequency distribution might be a useful numeric summary of categorical data.
 
 The `table` function returns a contingency table summarizing the number of observations having each level. Note that by default, the table ignores `NA` values.
 
@@ -296,7 +296,7 @@ We see that for the `sex` variable, there are 165 female penguins and 168 male p
 table(penguins_clean$sex)
 ```
 
-To count the `NA` values (if present), we can set the `useNA` argument of `table` to `"ifany"`. 
+To count the `NA` values (if present), we can set the `useNA` argument of `table` to `"ifany"`.
 
 We see that 11 of the observations had no available information on `sex`.
 
@@ -330,7 +330,7 @@ A `summary` method is available for a `data.frame` object, which means that we c
 summary(penguins_clean)
 ```
 
-We conveniently get a numeric summary of all of the variables in our data set (you will see different results for variables that are not `factor` or `numeric` type). The `summary` function all makes it easy to identify the presence of any `NA`s in a variable. 
+We conveniently get a numeric summary of all of the variables in our data set (you will see different results for variables that are not `factor` or `numeric` type). The `summary` function all makes it easy to identify the presence of any `NA`s in a variable.
 
 ## Visual summaries of data
 
@@ -346,7 +346,7 @@ viz_sum = c("box plot", "histogram", "density plot", "bar plot",
 variable_types = c(rep("`numeric`", 3), "`factor`",
                    "2 `numeric`", "1 `numeric`, 1 `factor`",
                    "2 `numeric`, 1 `factor`", "mixed", "mixed")
-summary_type = rep(c("univariate", "bivariate", "multivariate"), 
+summary_type = rep(c("univariate", "bivariate", "multivariate"),
                    times = c(4, 2, 3))
 base_functions = c("`boxplot`", "`hist`", "`plot`, `density`",
               "`plot` or `barplot`, `table`",
@@ -360,7 +360,7 @@ viz_sum_df = data.frame(viz_sum, variable_types, summary_type, base_functions, g
 knitr::kable(viz_sum_df, caption = "A summary of common plot types used to explore data, the type of variable(s) they summarize, the number of variables summarized, and the base R and ggplot2 functions used to create the plot.", col.names = c("plot type", "variable types", "number of variables", "base R", "ggplot2"))
 ```
 
-### The ggplot recipe 
+### The ggplot recipe
 
 There are 4 main components needed to produce a graphic using **ggplot2**.
 
@@ -383,7 +383,7 @@ A univariate plot is a plot that only involves a single variable. Examples inclu
 
 #### Bar plots
 
-A bar plot (or bar chart) displays the number or proportion of observations in each category of a categorical variable (or using R terminology, each `level` of a `factor` variable). 
+A bar plot (or bar chart) displays the number or proportion of observations in each category of a categorical variable (or using R terminology, each `level` of a `factor` variable).
 
 What are you looking for? Generally, categories that have substantially more or fewer observations than the other categories.
 
@@ -407,7 +407,7 @@ We see that that there are slightly more male than female penguins, with a handf
 To create a relatively frequency bar plot, we should divide the results of `table` by the number of relevant observations. For this particular example, we could use the code below. We use the `length` function to determine the number of observations to divide the counts with.
 
 ```{r}
-barplot(table(penguins_clean$sex, useNA = "ifany") / 
+barplot(table(penguins_clean$sex, useNA = "ifany") /
           length(penguins_clean$sex),
         names.arg = c("female", "male", "NA"))
 ```
@@ -454,7 +454,7 @@ There are not `bill_length` outliers. The minimum value is approximately 32 mm a
 
 #### Histograms
 
-A histogram displays the distribution of a `numeric` variable. A histogram counts the number of values falling into (usually) equal-sized "bins" running from the smallest value to the largest value. The number of bins and width of the bins affect the shape of the histogram. 
+A histogram displays the distribution of a `numeric` variable. A histogram counts the number of values falling into (usually) equal-sized "bins" running from the smallest value to the largest value. The number of bins and width of the bins affect the shape of the histogram.
 
 Histograms are used to assess skewness, modality (the number of clear "peaks" in the plot), and to some extent, outliers.
 
@@ -579,9 +579,9 @@ gg_penguin +
 
 ### Facetted plots (and alternatives)
 
-Facetting creates separate panels (facets) of plots based on one or more facetting variables. The key functions to do this with **ggplot2** are the `facet_grid` and `facet_wrap` functions. `facet_grid` is used to create a grid of plots based on one or two `factor` variables, while `facet_wrap` wraps facets of panels around the plot. We 
+Facetting creates separate panels (facets) of plots based on one or more facetting variables. The key functions to do this with **ggplot2** are the `facet_grid` and `facet_wrap` functions. `facet_grid` is used to create a grid of plots based on one or two `factor` variables, while `facet_wrap` wraps facets of panels around the plot. We
 
-Below, we facet scatter plots of `bill_length` versus `bill_depth` by `species`. 
+Below, we facet scatter plots of `bill_length` versus `bill_depth` by `species`.
 
 ```{r}
 gg_penguin +
@@ -611,18 +611,18 @@ penguins_temp <-
 In the next plot, we create density plots of the `body_mass` variable. However, we use the `fill` aesthetic to scale the `sex` variable so that the we distinguish the densities of male and female penguins with different colors. We set the `alpha` argument to 0.5 OUTSIDE the `aes` function (because it is being manually specified) so that the colors are translucent and blend. We also facet by species to see what the patterns look like for the different species.
 
 ```{r}
-ggplot(data = penguins_temp) + 
+ggplot(data = penguins_temp) +
   geom_density(aes(x = body_mass, fill = sex), alpha = 0.5) +
   facet_grid(~ species)
 ```
 
-We see that for all species, the body mass of the males tehnds to be larger than the females. 
+We see that for all species, the body mass of the males tehnds to be larger than the females.
 
 The examples above provide a small taste of the complicated graphics you can create with **ggplot2** using only a few lines of code.
 
 #### Interactive graphics
 
-There are many tools for creating interactive graphics in R. We have found the **ggiraph** package [@R-ggiraph] useful for creating interactive graphics based on **ggplot2**. However, it is a bit too complex to discuss here. 
+There are many tools for creating interactive graphics in R. We have found the **ggiraph** package [@R-ggiraph] useful for creating interactive graphics based on **ggplot2**. However, it is a bit too complex to discuss here.
 
 The **plotly** package [@R-plotly] is an R package to provide the capabilities of plotly [https://plotly.com/](https://plotly.com/), a well-known tool for creating interactive scientific plots. The `ggplotly` function will instantly make a `ggplot` interactive (though you may need to customize it for your needs). We provide two examples below.
 
@@ -645,7 +645,7 @@ ggplotly(ggi)
 
 ```{r}
 # assign parallel box plot name
-ggi2 <- 
+ggi2 <-
   gg_penguin +
   geom_boxplot(aes(x = species, y = bill_length))
 # make plot interactive
@@ -656,7 +656,7 @@ The interactive parallel box plot provides information about the box plot of eac
 
 ## A plan for data cleaning and exploration
 
-We have provides many examples of data cleaning and exploration using the `penguins_raw` data. The analysis above is NOT exhaustive, and there are many additional numeric and visual summaries we could consider. We summarize a basic plan below for initial data cleaning and exploration that we have found useful. You will likely augment this process based on your own preferences and things you learn from the data. We assum you are working with a data frame, which is the most common data structure used for data analysis in R. 
+We have provides many examples of data cleaning and exploration using the `penguins_raw` data. The analysis above is NOT exhaustive, and there are many additional numeric and visual summaries we could consider. We summarize a basic plan below for initial data cleaning and exploration that we have found useful. You will likely augment this process based on your own preferences and things you learn from the data. We assum you are working with a data frame, which is the most common data structure used for data analysis in R.
 
 1. Import or the data set.
 2. Use the `str` function to get an idea of the initial structure. This can help to identify clear issues you may have had in importing the data, problems with variable names and types, etc.
@@ -665,7 +665,7 @@ We have provides many examples of data cleaning and exploration using the `pengu
 5. Run the `summary` function on your data frame. Take note of `NAs`, impossible values that are data entry errors, etc. Perhaps perform some additional cleaning based on this information.
 6. Compute any additional numeric summaries of the different variables, as desired.
 7. Create univariate plots of all variables you are considering. Use histograms for discrete `numeric` variables, density plots for continuous `numeric` variables, and bar plots for `factor` variables. Take note of any interesting patterns such as modality, skewness, overall shape, outliers, etc.
-8. Create bivariate plots of any pairs of variables. Use scatter plots for two `numeric` variables. Use parallel boxplots for `numeric` and `factor` variables or perhaps create histogram plots of the `numeric` variable facetted by the `factor` variable, or density plots of the `numeric` variables filled with different colors by the `factor` variable. Once again, notice any patterns. 
+8. Create bivariate plots of any pairs of variables. Use scatter plots for two `numeric` variables. Use parallel boxplots for `numeric` and `factor` variables or perhaps create histogram plots of the `numeric` variable facetted by the `factor` variable, or density plots of the `numeric` variables filled with different colors by the `factor` variable. Once again, notice any patterns.
 9. Create multivariate and interactive graphics based on what you learned in the previous steps.
 
 ## Final notes on missing or erroneous data

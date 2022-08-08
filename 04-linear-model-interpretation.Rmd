@@ -153,7 +153,7 @@ E(Y \mid X, C) = \beta_{int} + \beta_{X} X + \beta_{L_2} D_2 +  \beta_{L_3} D_3,
 \]
 where we replace the usual $\beta_0$, $\beta_1$, $\beta_2$, and $\beta_3$ with notation the indicates the regressor each coefficient is associated with.
 
-When an observation has level $L_1$ and $X=0$, then the expected response is 
+When an observation has level $L_1$ and $X=0$, then the expected response is
 \[
 \begin{align}
 E(Y|X = 0, C=L_1) &= \beta_{int} + \beta_X \cdot 0 + \beta_{L_2} \cdot 0 + \beta_{L_3} \cdot 0 \\
@@ -162,7 +162,7 @@ E(Y|X = 0, C=L_1) &= \beta_{int} + \beta_X \cdot 0 + \beta_{L_2} \cdot 0 + \beta
 \]
 Thus, $\beta_{int}$ is the expected response for an observation with level $L_1$ when $X=0$.
 
-When an observation has a fixed level $L_j$ (it doesn't matter which level) and $X$ increases from $x^*$ to $x^*+1$, then the change in the expected response is 
+When an observation has a fixed level $L_j$ (it doesn't matter which level) and $X$ increases from $x^*$ to $x^*+1$, then the change in the expected response is
 \[
 \begin{align}
 E(Y|X = x^* + 1, C=L_j) - E(Y|X = x^*, C=L_j)&= \beta_X.
@@ -170,14 +170,14 @@ E(Y|X = x^* + 1, C=L_j) - E(Y|X = x^*, C=L_j)&= \beta_X.
 \]
 Thus, $\beta_X$ is the expected change in the response for an observation with fixed level $L_j$ when $X$ increases by 1 unit.
 
-When an observation has level $L_2$, the expected response is  
+When an observation has level $L_2$, the expected response is
 \[
 \begin{align}
 E(Y\mid X = x^*, C=L_2) &= \beta_{int} + \beta_X x^* + \beta_{L_2} \cdot 1 + \beta_{L_3} \cdot 0 \\
 &= \beta_{int} + \beta_X x^* + \beta_{L_2}.
 \end{align}
 \]
-Thus, 
+Thus,
 \[E(Y\mid X=x^*, C=L_2) - E(Y\mid X=x^*, C=L_1) = (\beta_{int} + \beta_X x^* + \beta_{L_2}) - (\beta_{int} + \beta_X x^*) = \beta_{L_2}.
 \]
 A similar result holds for $\beta_{L_3}$ when $C=L_3$. Thus, $\beta_{L_2}$ is the expected change in the response for a fixed value of $X$ when comparing on observation having level $L_1$ to level $L_2$ of predictor $C$. A similar interpretation holds for $\beta_{L_3}$. $L_1$ is known as as the reference level because we must refer to it to interpret our model with respect to other levels of $C$.
@@ -197,7 +197,7 @@ E(Y \mid X, C) = \beta_{int} + \beta_{X} X + \beta_{L_2} D_2 +  \beta_{L_3} D_3 
 \end{equation}
 \]
 
-When an observation has level $L_1$ and $X=x^*$, then the expected response is 
+When an observation has level $L_1$ and $X=x^*$, then the expected response is
 \[
 \begin{align}
 & E(Y\mid X = x^*, C=L_1) \\
@@ -224,19 +224,19 @@ Additionally, for $j=2$,
 Similarly,
 \[
 \begin{equation}
-E(Y|X = x^*, C=L_3) = (\beta_{int} + \beta_{L_3}) + (\beta_X + \beta_{XL_3})x^*. (\#eq:slr-mean-L3) 
+E(Y|X = x^*, C=L_3) = (\beta_{int} + \beta_{L_3}) + (\beta_X + \beta_{XL_3})x^*. (\#eq:slr-mean-L3)
 \end{equation}
 \]
 A similar results holds for $C=L_3$.
 
-Using Equations \@ref(\#eq:slr-mean-L1), \@ref(\#eq:slr-mean-L2), and \@ref(\#eq:slr-mean-L3), we can verify that:
+Using Equations \@ref(eq:slr-mean-L1), \@ref(eq:slr-mean-L2), and \@ref(eq:slr-mean-L3), we can verify that:
 
 - For $j=2,3$, $\beta_{L_j}= E(Y\mid X = 0, C=L_j) - E(Y\mid X = 0, C=L_1)$.
 - For $j=2,3$,
 \[\beta_{XL_j}= [E(Y\mid X = x^*+1, C=L_j) - E(Y\mid X = x^*, C=L_j)]-[E(Y\mid X = x^*+1, C=L_1) - E(Y\mid X = x^*, C=L_1)].
 \]
 
-To summarize the interpretation of the coefficients in separate lines models like Equation \@ref(eq:ll-def-interp), assuming categorical predictor $C$ has $K$ levels instead of 3:
+To summarize the interpretation of the coefficients in separate lines models like Equation \@ref(eq:sl-def-interp), assuming categorical predictor $C$ has $K$ levels instead of 3:
 
 * $\beta_{int}$ represents the expected response for observations having the reference level when the numeric regressor $X = 0$.
 * $\beta_{L_j}$, for $j=2,\ldots,K$, represents the expected change in the response when comparing observations having level $L_1$ and $L_j$ with $X=0$.
@@ -290,7 +290,7 @@ Consider the the fitted multiple linear regression model for the `penguins` data
 \[
 \begin{align}
 &\hat{E}(\mathtt{bill\_length\_mm}\mid \mathtt{body\_mass\_g}, \mathtt{flipper\_length\_mm})\\
-&=-3.44+0.0007 \,\mathtt{body\_mass\_g}+0.22\,\mathtt{flipper\_length\_mm}. 
+&=-3.44+0.0007 \,\mathtt{body\_mass\_g}+0.22\,\mathtt{flipper\_length\_mm}.
 \end{align}
 (\#eq:mlr-effect-equation)
 \]
@@ -324,7 +324,7 @@ Similarly, the effect plot for $\mathtt{flipper\_length\_mm}$ is a plot of
 \]
 as a function of $\mathtt{flipper\_length\_mm}$.
 
-The **effects** package [@R-effects] can be used to generate effect plots for the predictors of a fitted linear model. We start by using the `effects::predictorEffect` function to compute the information needed to draw the plot, then the `plot` function to display the information. 
+The **effects** package [@R-effects] can be used to generate effect plots for the predictors of a fitted linear model. We start by using the `effects::predictorEffect` function to compute the information needed to draw the plot, then the `plot` function to display the information.
 
 The `predictorEffect` function computes the estimated mean response for different values of the focal predictor while holding the other predictors at their sample mean (or at a fixed level of a categorical predictor). The main arguments of `predictorEffect` are:
 
@@ -398,7 +398,7 @@ The effect plot of `species` is a plot of the function
 &= 40.67 + 9.92 D_C + 3.56 D_G.
 \end{align}
 \]
-Based on the levels of `species` this simplifies to 
+Based on the levels of `species` this simplifies to
 \[
 \hat{E}(\mathtt{bill\_length\_mm} \mid \mathtt{body\_mass\_g =4201.75}, \mathtt{species}=\mathtt{Adelie}) = 40.67,
 \]
@@ -421,7 +421,7 @@ We now consider the effect plots for a separate lines model using the separate l
 &\hat{E}(\mathtt{bill\_length\_mm} \mid \mathtt{body\_mass\_g}, \mathtt{species}) \\
 &= 26.99 + 0.003 \mathtt{body\_mass\_g} + 5.18 D_C - 0.25 D_G \\
 &\quad + 0.001 D_C \mathtt{body\_mass\_g} + 0.0009 D_G \mathtt{body\_mass\_g},
-\end{align} 
+\end{align}
 (\#eq:sl-model-penguins-effect-plot)
 \]
 which we refit and assign the name `lmods` in the code below.
@@ -469,15 +469,15 @@ plot(predictorEffect("species", lmods), axes = list(x = list(rotate = 90)), line
 
 Let
 \[\mathbf{X}_[j]=[x_{1,j},\ldots,x_{n,j}]\]
-denote the $n\times 1$ column vector of observed values for regressor $X_j$. (We can't use the notation $\mathbf{x}_j$ because that is the $p\times 1$ vector of regressor values for the $j$th observation). Regressors, $\mathbf{X}_{[j]}$ and $\mathbf{X}_{[k]}$ are **orthogonal** if $\mathbf{X}_{[j]}^T \mathbf{X}_{[k]}=0$. 
+denote the $n\times 1$ column vector of observed values for regressor $X_j$. (We can't use the notation $\mathbf{x}_j$ because that is the $p\times 1$ vector of regressor values for the $j$th observation). Regressors, $\mathbf{X}_{[j]}$ and $\mathbf{X}_{[k]}$ are **orthogonal** if $\mathbf{X}_{[j]}^T \mathbf{X}_{[k]}=0$.
 
 Let $\boldsymbol{1}_{n\times1}$ denote an $n\times 1$ column vector of 1s. The definition of orthogonal vectors above implies that $\mathbf{X}_{[j]}$ is orthogonal to $\boldsymbol{1}_{n\times1}$ if $$
 \mathbf{X}_{[j]}^T \boldsymbol{1}_{n\times1} = \sum_{i=1}^n x_{i,j} = 0,$$
 i.e., if the values in $\mathbf{X}_{[j]}$ sum to zero.
 
-Let $\bar{x}_j = \frac{1}{n}\sum_{i=1}^n x_{i,j}$ denote the sample mean of $\mathbf{X}_{[j]}$ and $\bar{\mathbf{x}}_j = \bar{x}_j \boldsymbol{1}_{n\times 1}$ denote the column vector that repeats $\bar{x}_j$ $n$ times. 
+Let $\bar{x}_j = \frac{1}{n}\sum_{i=1}^n x_{i,j}$ denote the sample mean of $\mathbf{X}_{[j]}$ and $\bar{\mathbf{x}}_j = \bar{x}_j \boldsymbol{1}_{n\times 1}$ denote the column vector that repeats $\bar{x}_j$ $n$ times.
 
-**Centering** $\mathbf{X}_{[j]}$ involves subtracting the sample mean of $\mathbf{X}_{[j]}$ from $\mathbf{X}_{[j]}$, i.e., $\mathbf{X}_{[j]} - \bar{\mathbf{x}}_j$. 
+**Centering** $\mathbf{X}_{[j]}$ involves subtracting the sample mean of $\mathbf{X}_{[j]}$ from $\mathbf{X}_{[j]}$, i.e., $\mathbf{X}_{[j]} - \bar{\mathbf{x}}_j$.
 
 Regressors $\mathbf{X}_{[j]}$ and $\mathbf{X}_{[k]}$ are **uncorrelated** if they are orthogonal after being centered, i.e., if
 \[
@@ -506,7 +506,7 @@ We consider a simple example with $n=5$ observations to demonstrate how orthogon
 - `X2` is a column vector of regressor values chosen to be orthogonal to `x1` but not to `ones`.
 - `X3` is a column vector of regressor values orthogonal to both `x1` and `ones`.
 - `X4` is a column vector of regressor values orthogonal to `ones`, `x1`, and `x3`, but not `x2`.
-- `X5` is a column vector of regressor value sorthogonal to `ones` and `x1`, but not the other regressor vectors. 
+- `X5` is a column vector of regressor value sorthogonal to `ones` and `x1`, but not the other regressor vectors.
 
 ```{r, include = FALSE}
 y <- c(1, 4, 6, 8, 9) # response vector
@@ -525,7 +525,7 @@ lm(y ~ x4 + x5 - 1)
 lm(y ~ x1 + x4 + x5)
 ```
 
-In the code below, we define vectors `y`, `X1`, and `X2`. 
+In the code below, we define vectors `y`, `X1`, and `X2`.
 ```{r}
 y <- c(1, 4, 6, 8, 9)       # create an arbitrary response vector
 X1 <- c(7, 5, 5, 7, 7)      # create regressor 1
@@ -537,7 +537,7 @@ Note that the `crossprod` function computes the crossproduct of two vectors or m
 The regressor vectors `X1` and `X2` are orthogonal since their crossproduct $\mathbf{X}_{[1]}^T \mathbf{X}_{[2]}$ (in R, `crossprod(X1, X2)`) equals zero, as shown in the code below.
 ```{r}
 # crossproduct is zero, so X1 and X2 are orthogonal
-crossprod(X1, X2) 
+crossprod(X1, X2)
 ```
 In the code below, we regress `y` on `x1` without an intercept (`lmod1`). The estimated coefficient for `X1` is $\hat{\beta}_1=0.893$. Next, we then regress `y` on `X1` and `X2` without an intercept (`lmod2`). The estimated coefficients for `X1` and `X2` are $\hat{\beta}_1=0.893$ and $\hat{\beta}_2=0.221$, respectively. Because `X1` and `X2` are orthogonal (and because there are no other regressors to consider in the model), the estimated coefficient for `X1` stays the same in both models.
 ```{r}
@@ -621,7 +621,7 @@ coef(lm(y ~ x1 + x3 + x4))
 
 Lastly, if we can partition our $\mathbf{X}$ matrix such that $\mathbf{X}^T \mathbf{X}$ is a block diagonal matrix, then none of the blocks of variables will affect the estimated coefficients of the other variables.
 
-Define a new regressor `X5` below. `X5` is orthogonal to the column of 1s and `X1`, but not `X4`. 
+Define a new regressor `X5` below. `X5` is orthogonal to the column of 1s and `X1`, but not `X4`.
 
 ```{r}
 X5 <- c(1, 0, 0, -1, 0) # orthogonal to ones, x1, not x4
