@@ -1,0 +1,251 @@
+---
+title: "Variable Selection"
+date: "`r format(Sys.time(), '%Y-%m-%d')`"
+output:
+  html_document:
+    df_print: paged
+---
+
+# Model Selection: What is the right number of regressors we should include?
+
+Variable selection is intended to (objectively) find the "best" subset of predictors. So why not throw the whole kitchen sink into our model?
+
+# Motivating Example: Predicting Life Expectancy
+
+The `state` datasets in the base R package (no package needed to access the data) contains various data sets with data from all 50 states. We'll be working with the dataset `state.x77` which has 50 observations (one for each state) with the following variables of interest:
+
+- `Population`: Population estimate as of July 1, 1975
+- `Income`: Per capita income (1974)
+- `Illiteracy`: Illiteracy rate (1970, percent of population)
+- `Life Exp`: life expectancy in years (1969–71)
+- `Murder`: murder and non-negligent manslaughter rate per 100,000 population (1976)
+- `HS Grad`: percent high-school graduates (1970)
+- `Frost`: mean number of days with minimum temperature below freezing (1931–1960) in capital or large city
+- `Area`: land area in square miles
+
+## Loading the Data
+
+```{r}
+data(state)
+statedata <- data.frame(state.x77, row.names = state.abb)
+#head(statedata)
+summary(statedata)
+```
+
+**Which regressors should we include if we want to predict `Life Exp` as the response variable?**
+
+## Question 1: Why might it be a bad a idea to simply include all regressors?
+
+
+
+## Question 2: What metrics/methods have we used to compare models thus far?
+
+
+# Variable Selection
+
+There are two aspects to variable selection:
+
+- The strategy used to search for the "optimal" model.
+- The criterion used to compare models.
+
+# Testing-Based Procedures
+
+## Backward elimination
+
+**Backward elimination** is the simplest of all variable selection procedures. We start with all predictors and remove the least significant predictor. Stop once all the noise has been removed.
+
+## Question 3: Which of the predictors would you remove from the full model? What criteria did you use to make that decision?
+
+```{r}
+lmod <- lm(Life.Exp ~ ., data = statedata)
+faraway::sumary(lmod)
+```
+
+
+
+```{r}
+back1 <- update(lmod, . ~ . - Area)
+faraway::sumary(back1)
+```
+
+
+- This does not imply the other variables are not related to the response.
+
+```{r}
+lmod1 <- lm(Life.Exp ~ Illiteracy, data = statedata)
+faraway::sumary(lmod1)
+```
+
+## Forward Selection
+
+**Forward selection** starts with the null model (only an intercept), and adds regressors one at a time until we can no longer improve the error criterion by adding a single regressor. 
+
+- For example, first add the predictor with the smallest $p$-value.
+- Then compare models with the first predictor plus a second predictor and add the predictor which has the smallest $p$-value.
+
+## Stepwise Regression
+
+**Stepwise regression** is a combination of backward elimination and forward selection.
+
+- This addresses the situation where variables are added or removed early in the process and we want to change our mind.
+Stepwise selection can miss the optimal model because we do not consider all possible models due to the one-at-a-time nature of adding/removing regressors.
+- $p$-values should not be taken as very accurate in stepwise searches because we are bound to see small $p$-values due to chance alone.
+- Stepwise selection tends to produce simpler models that are not necessarily the best for prediction.
+
+## Model Hierarchy
+
+We must respect hierarchy in models when it is naturally present.
+
+- In polynomial models, $X^2$ is a higher order term than $X$.
+- A lower order term should be retained if a higher order term is retained to increase the flexibility.
+	- The model $Y=\beta_0+\beta_2 X^2+\epsilon$, the maximum/minimum value MUST occur $x=0$ 
+  - For the model $y=\beta_0+\beta_1 X+\beta_2 X^2+\epsilon$, the maximum/minimum value can occur anywhere along the real line (depending on what the data suggest).
+- If we fit the model $y=\beta_0+\beta_1 X+\beta_2 X^2+\epsilon$ and $\beta_1$ is not significant, it would NOT make sense to remove $X$ from the model but still keep $X^2$.
+
+# Criterion-Based Procedures
+
+**Akaike’s Information Criterion (AIC)** and the **Bayesian Information Criterion (BIC)** are two information-based criteria for variable selection.
+
+## Akaike’s Information Criterion (AIC)
+
+$\mbox{AIC}(\mathcal{M})=-2L(\mathcal{M})+2p_{\mathcal{M}}$, where $\mathcal{M}$ is the model, $L(\mathcal{M})$ is the **log-likelihood** of the model using the **MLE** estimates of the parameters, and $p_{\mathcal{M}}$ is the number of regression coefficients in model $\mathcal{M}$.
+
+For linear regression models, $-2L(\mathcal{M})=n\log{(\mbox{RSS}_{\mathcal{M}}/n)} + c$, where $c$ is a constant that depends only on the observed data and not on the model, and $\mbox{RSS}_{\mathcal{M}}$ is the RSS of model $\mathcal{M}$. The constant $c$ is the same for a given data set, so they can be ignored when comparing models that based on the same data set.
+
+### Interpreting AIC
+
+The formula for AIC is derived from a metric that can be used to measure how far a model is from the true model.
+
+- As $\mbox{RSS}_{\mathcal{M}}$ gets smaller (better fit), $n\log{(\mbox{RSS}_{\mathcal{M}}/n)}$ gets smaller (becomes more negative).
+  - Adding more predictors (that are not collinear) will improve the fit.
+- As $p_{\mathcal{M}}$ gets bigger, the second term of AIC gets larger.
+  - The second component penalizes the model according its complexity.
+  - The more parameters, the larger the penalty.
+- Models with more parameters will fit better (reducing the RSS), but will be penalized more for having additional parameters.
+- AIC provides a balance between fit and simplicity.
+  - AIC identifies good fitting models (small RSS) that are simple (not a lot of predictors).
+- **We choose the model the minimizes the AIC**.
+
+### Exhaustive Model Searches
+
+The `leaps` package searches all possible combinations of predictors. 
+
+- For each value of $p$ (number of predictors), it finds the variables that give the minimum RSS.
+- For each value of $p$, the model that minimizes the RSS will have the smallest AIC, BIC, adjusted $R_a^2$, and Mallow’s $C_p$ (we'll discuss these soon).
+- By default, `regsubsets` only goes up to $p=9$.  You have to set `nvmax = j`, where $j$ is the number of regressors you want to consider.
+
+
+```{r}
+# may need to install.package the first time
+library(leaps) # you need to load package every time you want to use it
+
+# model selection by exhaustive search
+b <- regsubsets(Life.Exp ~ ., data = statedata)
+rs <- summary(b) # summarize model that minimizes RSS for each p
+rs$which # nicer output
+```
+
+
+## Question 4: Interpret the output from the code above. Is this consistent with the model we obtained using backward elimination?
+
+
+### Computing the AIC
+
+```{r}
+# What output is stored after running regsubsets
+summary(rs)
+```
+
+```{r}
+n <- nrow(statedata) #number observation n=50
+rss <- rs$rss # rss calculated for each model
+
+# Compute AIC using the formula
+AIC <- n * log(rss/n) + (2:8)*2  # we start at 2 since include intercept in all
+plot(AIC ~ I(1:7), ylab = "AIC", xlab = "Number of Predictors", pch = 16)
+```
+
+
+### Question 5: Interpret the output from the AIC plots above. What is the best model according to this metric?
+
+## Bayesian Information Criterion (BIC)
+
+The Bayesian Information Criterion (BIC) is another criteria that is often and is almost the same as AIC.
+
+
+$$BIC(\mathcal{M})=-2L(\mathcal{M})+\log{(n)}p_{\mathcal{M}}.$$
+
+
+```{r}
+(BIC <- rs$bic) # Exactly values from rs summary
+#(BIC2 <- n * log(rss/n) + log(n)* (2:8))  # Using the formula
+#BIC - BIC2 # The two differ by a constant
+plot(BIC ~ I(1:7), ylab = "BIC", xlab = "Number of Predictors", pch = 16)
+```
+
+## Question 6: Interpret the output from the BIC plot above. What is the best model according to this metric?
+
+
+- The `car` package has a `subsets` function that takes the generates nice, labeled BIC plots generated from the `regsubsets` function.
+
+```{r}
+library(car)
+subsets(b, statistic = "bic", legend = FALSE)
+```
+
+
+-------
+
+# Appendix
+
+## Maximum Likelihood Estimates (MLE)
+
+The **likelihood function** $L(\theta)= L( \theta \mid x_1, x_2, \ldots x_n)$ gives the likelihood of the parameter $\theta$ given the observed data. A **maximum likelihood estimate (MLE)**, $\mathbf{\hat{\theta}_{\rm MLE}}$,}} is
+a value of $\theta$ that maximizes the likelihood function.
+
+**MLE is a process for finding the best parameter(s) for a model based on a given dataset**
+
+
+Let $f(x; \theta)$ denote the pdf of a random variable $X$ with associated parameter $\theta$. Suppose $X_1, X_2, \ldots , X_n$ are random samples from this distribution, and $x_1, x_2, \ldots , x_n$ are the
+corresponding observed values.
+
+$$ L(\theta \mid x_1, x_2, \ldots , x_n) = f(x_1; \theta) f(x_2; \theta) \ldots f(x_n; \theta) = \prod_{i=1}^n f(x_i; \theta).$$
+
+### Example: Finding and MLE
+
+Find the MLE for $\lambda$ where $x_1, x_2, \ldots , x_n$ comes from $X \sim \mbox{Exp}(\lambda)$ with $f(x; \lambda) = \lambda e^{-\lambda x}$.
+
+1. Find a formula for the likelihood function.
+
+$$ L(\lambda \mid x_1, x_2, \ldots , x_n) = \left(\lambda e^{-\lambda x_1} \right)\left(\lambda e^{-\lambda x_2} \right) \ldots \left(\lambda e^{-\lambda x_n} \right) = \lambda^n e^{-\lambda \sum_{i=1}^n x_i} .$$
+
+2. Optimize the likelihood function. Find the value of $\lambda$ that makes the observed data most likely to occur.
+
+$$\frac{d}{d \lambda} \left( \lambda^n e^{-\lambda \sum_{i=1}^n x_i} \right) $$
+
+Often this is really messy to solve. Taking the natural log of both sides often simplifies the calculation.
+
+The **log-likelihood** function is $y = \ln{L(\theta \mid x_1, x_2, \ldots , x_n) }$ (often written with $\log$ though we mean $\ln$).
+
+ - Since the natural log is an increasing function, the value of $\theta$ that maximizes (or minimizes) $L(\theta \mid x_1, x_2, \ldots , x_n)$ is the same value of $\theta$ that maximizes (or minimizes) $y = \ln{L(\theta \mid x_1, x_2, \ldots , x_n) }$.
+ 
+$$y = \ln{\left(\lambda^n e^{-\lambda \sum_{i=1}^n x_i}\right)} = n \ln{(\lambda)}- \lambda \sum_{i=1}^n x_i$$
+It actually is easier to optimize the log-likelihood function in this case:
+
+$$
+\begin{aligned}
+\frac{d}{d \lambda} \ln{\left(\lambda^n e^{-\lambda \sum_{i=1}^n x_i}\right)} &= \frac{d}{d \lambda} \left( n \ln{(\lambda)}- \lambda \sum_{i=1}^n x_i \right) \\
+&= \frac{n}{\lambda} - \sum_{i=1}^n x_i
+\end{aligned}
+$$
+
+We have a critical value at $\lambda = \frac{\sum x_i}{n} = \bar{x}$ which is the value of $\lambda$ that maximizes the likelihood function. If we assume the sample was randomly selected from an exponential distribution, then given the observed data, the most likely value for $\lambda$ is $\bar{x}$. This makes practical sense since if $X \sim \mbox{Exp}(\lambda)$, $E(X) = \mu = \lambda$.
+
+### Pros of Using MLE's to Estimate Population Parameters
+
+- MLE's give estimates that make practical sense (see example above).
+- **Consistency**: As the sample size gets larger and larger, MLE's converge to the actual value of the parameter.
+- **Normality**: As we get more data, MLE's converge to a normal distribution.
+- **Efficiency**: They have the smallest possible variance for a consistent estimator.
+
+

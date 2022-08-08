@@ -2,10 +2,10 @@
 books = c("faraway", "alr4", "car", "rms")
 install.packages(books)
 # packages related to tidy/tidying data
-tidy = c("broom", "tidyr", "dplyr", "tidyverse")
+tidy = c("broom", "tidyverse", "ggthemes")
 install.packages(tidy)
 # packages related to plotting
-moreplots = c("ggplot2", "ggthemes", "lattice", "HH")
+moreplots = c("lattice", "HH")
 install.packages(moreplots)
 # packages related to model diagnostics
 diag = c("leaps", "lmtest", "gvlma", "caret")

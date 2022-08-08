@@ -1,0 +1,77 @@
+---
+title: "Joshua French"
+date: "`r format(Sys.time(), '%Y-%m-%d')`"
+output:
+  html_document:
+    df_print: paged
+---
+
+# Transformations
+
+If a relationship is nonlinear but monotone and simple, Mosteller and Tukey’s bulging rule can be used to guide the selection of linearizing transformations.
+
+```{r, echo = FALSE}
+setwd("~/Dropbox/CUDenver/Math4387/RCode/Model\ Structure")
+```
+
+![Mosteller and Tukeys bulging rule](tukey_bulge.png "Mosteller and Tukey’s bulging rule")
+
+- Note: In multiple regression, transforming the response will impact the relationship with all of the regressors, while transforming a single regressor will have less impact on the relationship between the response and the other regressors.
+
+### Question 7: Compare the graphic below with the type of "bulge" seen in your data; move along the "ladder of transformations" for your response or predictors to determine a helpful transformation.
+
+
+ Going back to our last fitted model, we noted that the component plus residual plot for income was very nonlinear. **The bulge suggests a log or square root transformation of income.**
+
+```{r}
+lmod.sqrt <- lm(prestige ~ education + sqrt(income) + women, data = Prestige)
+crPlots(lmod.sqrt)
+```
+
+
+```{r}
+lmod.log <- lm(prestige ~ education + log(income) + women, data = Prestige)
+crPlots(lmod.log)
+```
+
+### Question 8: Which transformation of income seems like a better fit?
+
+The log transformation of income is substantially better.
+
+### Polynomial Transformations
+
+Adding raw polynomials $(X,X^2,X^3, \ldots)$ to our model can be problematic.
+
+- They can induce instability in the model since they can become highly correlated.
+- It is generally recommended that one centers $X$ (i.e., subtract the mean) before generating the polynomials.
+- Use the `poly` function to generate orthogonal polynomials, which reduce the potential for model instability.
+- Orthogonal polynomials have the benefit that adding the higher order term doesn’t impact the estimated coefficients for the other polynomials!
+
+```{r}
+lmod.quad <- lm(prestige ~ education + log(income) + poly(women, 2), data = Prestige)
+crPlots(lmod.quad)
+```
+
+### Logistic Transforation
+
+When a predictor variable is a number between 0 and 1 (or a percentage between 0 and 100), it is not uncommon to observe a **logistic relationship** between the predictor and the response (e.g, in the cr plot).  
+
+In that case, one might transform that predictor using the `logit` function in the `car` package to help improve the model fit.
+
+```{r}
+# the logistic function
+x = seq(0.01, 0.99, len = 100)
+plot(x, logit(x), type = "l", xlab = "probability")
+```
+
+### Closing Comments on Transformations
+
+The transformation approaches presented here are simple, and only work for data with simple non-linearities.
+
+Other approaches (available in the car package) are the:
+
+- Box-Cox transformation for the response variable
+- Box-Tidwell transformation for the predictors.
+
+For complicated data, no simple transformation or basic linear regression may capture the relationship between the response and regressors.
+

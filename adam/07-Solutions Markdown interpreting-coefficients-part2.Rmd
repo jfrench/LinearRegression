@@ -1,0 +1,199 @@
+---
+title: "Solutions: Interpreting Coefficients Part 2"
+date: "`r format(Sys.time(), '%Y-%m-%d')`"
+output:
+  pdf_document: default
+  html_document:
+    df_print: paged
+---
+
+```{r}
+#install.packages("alr4") #install package one time
+library(alr4) #load datasets from Weisberg text
+library(effects)
+```
+
+# Example: Fuel Consumption Data Continued
+
+```{r}
+data(fuel2001, package = "alr4")
+?fuel2001
+```
+
+The variables (for the year 2001 unless otherwise noted) are:
+
+- `Drivers`: Number of Licensed drivers in the state
+- `FuelC`: Gasoline sold for road use (1000s of gal.)
+- `Miles`: Miles of Federal-aid highway miles in the state
+- `Pop`: 2001 population age 16 and over
+- `Tax`: Gasoline state tax rate (cents/gallon)
+
+## Setting Up a Linear Model
+
+What is the relationship between fuel consumption and various regressors for the 50 United States and the District of Columbia?  
+
+### Adjusting Units
+
+- `Fuel`: Average amount of gasoline sold for road use per person (Gallons/person)
+- `Income1K`: Average personal income (in thousands) for the year 2000 per person ($1K/person)
+- `Dlic`: Number of licensed drivers per 1000 persons (licensed drivers/1K persons) 
+
+```{r}
+# create new regressors/transformed responses to fuel2001 data frame
+fuel2001$Fuel <- 1000*fuel2001$FuelC/fuel2001$Pop
+fuel2001$Dlic <- 1000*fuel2001$Drivers/fuel2001$Pop
+fuel2001$Income1K <- fuel2001$Income/1000
+```
+
+```{r}
+summary(fuel2001)
+```
+
+### Fitting a Model
+
+We will set up a regression model to determine how `Fuel` (gallons per person) is related to `Tax` (cents per gallon),
+`Dlic` (drivers per capita), `Income1k` (thousands of dollars of income per capita), and `Miles` (federal highway miles).
+
+$$E( \mbox{Fuel} \ | \ \mbox{Tax, Dlic, Income1K, Miles})=\beta_0+\beta_1 (\mbox{Tax}) +\beta_2 (\mbox{Dlic}) + \beta_3 (\mbox{Income1K}) + \beta_4 \log{(\mbox{Miles})}$$
+
+```{r}
+# fit model
+lmod <- lm(Fuel ~ Tax + Dlic + Income1K + log(Miles), data = fuel2001)
+
+# summarize model
+faraway::sumary(lmod)
+```
+
+We see the fitted model is:
+
+$$\widehat{\mbox{E}}(\mbox{Fuel} \ | \ \mbox{Tax, Dlic, Income1k, Miles}) = 154.19 - 4.24 (\mbox{Tax}) + 0.47 (\mbox{Dlic}) - 6.14(\mbox{Income1K}) + 26.76 \log{(\mbox{26.76})}$$
+
+This equation represents the estimated conditional mean of Fuel given fixed values of the regressors Tax, Dlic, Income1K, and Miles.
+
+
+# Regressors on Logarithmic Scale
+
+Logarithms are commonly used both for the response and for regressors.
+
+
+### 15. Based on the summary output above, why do you think we used a log scale on `Miles`?
+
+Predictors that span several orders of magnitude should be transformed to the log scale.
+
+In the code block below, we create new variables that are the natural log and log base 10 of Miles and recreate the linear model using each of these new variables.
+
+```{r}
+fuel2001$LnMiles <- log(fuel2001$Miles)
+fuel2001$LogMiles <- log10(fuel2001$Miles)
+
+lmod.ln <- lm(Fuel ~ Tax + Dlic + Income1K + LnMiles, data = fuel2001)
+lmod.log <- lm(Fuel ~ Tax + Dlic + Income1K + LogMiles, data = fuel2001)
+
+faraway::sumary(lmod.ln) #Check that model is the same
+faraway::sumary(lmod.log) #Check that model is the same
+```
+
+## Below we create an effects plot on a natural log scale.
+
+```{r}
+plot(Effect("LnMiles", lmod.ln), 
+     main = "ln(Miles) effect plot")
+```
+
+## Below we create an effects plot on a log10 scale.
+
+```{r}
+plot(Effect("LogMiles", lmod.log), 
+     main = "log(Miles) effect plot")
+```
+
+## Below we create an effects plot on a regular scale.
+
+```{r}
+plot(Effect("Miles", lmod, 
+            xlevels = list(Miles = seq(1, 3e5, len = 301))))
+```
+
+The effect of increasing Miles is greater in states with fewer miles of roadway, with relatively little change in states with the most roadway. 
+
+This is the usual effect of logarithms: the fitted effect changes most rapidly when the regressor is small and less rapidly when the predictor is large.
+
+## Interpreting Coefficients with Log Scale on Regressor
+
+### Natural Log Scale 
+
+Regressor $X_j$ increasing by 1% while the other regressors remain constant is associated with a $\beta_j/100$ increase in the response variable, on average.
+
+### 16. Interpret the meaning of the coefficient associated to the natural log of Miles which you can find below.
+
+```{r}
+summary(lmod.ln)$coefficients[5, 1] #ln coeff
+```
+
+We can interpret the regression coefficient for $\log{(\mbox{Miles})}$ as follows. For every 1% increase in the number of miles of Federal highway in a state, the fuel consumption per capita is expected to increase by $0.26755$ gallons per person, on average.
+
+### Common Log (base 10) Scale 
+
+Regressor $X_j$ increasing by a factor of 10 (an increase of 900%) while the other regressors remain constant is associated with a $\beta_j$ increase in the response variable, on average.
+
+### 17. Interpret the meaning of the coefficient associated to the log base 10 of Miles which you can find below.
+
+```{r}
+summary(lmod.log)$coefficients[5, 1] #log coeff
+```
+
+We can interpret the regression coefficient for $\log_{10}{(\mbox{Miles})}$ as follows. If we increase the number of miles of Federal highway in a state by a factor of 10, the fuel consumption per capita is expected to increase by $61.6$ gallons per person, on average.
+
+# Log-Level Interpretation
+
+It is common for responses to be transformed to a logarithmic scale for theoretical or practical considerations.  
+
+$$\mbox{E}( \log{Y} \ | \ X)= \beta_0 + \beta_1 X.$$
+
+This is sometimes called a **log-level model**. 
+
+- A unit increase in $X$ is associated with a change in the mean $Y$ by the multiplicative effect $\exp^{\beta_1}$.
+- **Thus $beta_1$ is the continuous exponential growth/decay rate.**
+
+It is often acceptable to approximate the expected value of a log by the log of the expected value:
+
+$$\log{( \mbox{E}(Y \ | \ X=x) )} \approx\mbox{E}(\log{Y} \ | \ X=x)$$
+
+Thus, we have
+
+$$\mbox{E}(Y \ | \ X=x) \approx e^{\rm{E}(\log{Y} \ | \ X=x)} = e^{\beta_0 + \beta_1 X}=e^{\beta_0}e^{\beta_1X}.$$
+# Log-log Interpretation
+
+Consider the log-log simple linear regression model
+
+$$\mbox{E}( \log{Y} \ | \ X) = \beta_0 + \beta_1 \log{X}.$$
+
+When we scale $X$ by a factor of $c$, the response is predicted to grow by a factor of $c^{\beta_1}$, on average.
+
+# Summary of Interpretations (Simple Linear Regression)
+
+**Level-level**: $\mathbf{\mbox{E}(Y \ | \ X=x)} = \boldsymbol\beta_0 + \boldsymbol\beta_1 X$: The predicted change in the response is $\beta_1$ when we increase $X$ by 1 unit, on average.
+
+**Level-log**: $\mathbf{\mbox{E}(Y \ | \ X=x)} = \boldsymbol\beta_0 + \boldsymbol\beta_1 \log{X}$: When we increase $X$ by 1%, the response is predicted to increase by  $\beta_j/100$, on average.
+
+**Log-level**: $\mathbf{\mbox{E}(\log{Y} \ | \ X=x) = \boldsymbol\beta_0 + \boldsymbol\beta_1 X}$: A unit increase in $X$ is predicted to change the response by a factor of $e^{\beta_1}$, on average. The continuous growth rate is $\beta_1$.
+
+**Log-log**: $\mathbf{\mbox{E}(\log{Y} \ | \ X=x) = \boldsymbol\beta_0 + \boldsymbol\beta_1 \log{X}}$: When we scale $X$ by a factor of $c$, the response is predicted to grow by a factor of $c^{\beta_1}$, on average.
+
+# More Practice
+
+1. For a log-level model, interpret the relationship between $X$ and the mean of $Y$ when $X$ increases by 1 unit and $\beta_j=0.3$ and the other predictors do not change.
+
+- The expected value of $Y$ is predicted to increase exponentially with a continuous exponential growth rate of $0.3$ or $30\%$.
+- For each increase in $X$ by 1 unit, the expected value of $Y$ is predicted to increase by a factor of $e^{0.3} \approx 1.349859$.
+- For each increase in $X$ by 1 unit, the expected value of $Y$ is predicted to grow by $34.99\%$ on average.
+- All three of the interpretations above are equivalent.
+
+2. For a log-log model, what is the expected change in $Y$ if we multiply $X$ by a factor of $c$.
+
+- When we scale $X$ by a factor of $c$, the response is predicted to grow by a factor of $c^{\beta_1}$, on average.
+
+3. For a log-log model, interpret the relationship between $X$ and the expected value of $Y$ when $X$ increases by $10\%$ and $\beta_1=0.3$.
+
+- When we scale $X$ by a factor of $1.10$ (a 10% increase), the response is predicted to grow by a factor of $(1.1)^{0.3} \approx 1.029$, on average. 
+- Thus, when we increase  $X$ by 10% increase, the response is predicted to grow by by $2.9\%$, on average. 

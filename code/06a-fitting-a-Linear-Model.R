@@ -161,10 +161,11 @@ data(odor, package = "faraway")
 head(odor) #first six rows
 # extract x matrix
 x <- model.matrix(~ temp + gas + pack, data = odor)
-cov(x) #covariance of predictors (excluding response)
-colSums(x) # intercept is orthogonal to predictors since
-# their sum is zero
-crossprod(x)
+crossprod(x) # matrix of crossproducts
+
+# since the regressors are centered, we can also consider the covariance
+cov(x) #covariance of regressors (excluding response)
+colSums(x) # intercept is orthogonal to predictors since their sums are zero
 
 # fit model with all three predictors
 lmod <- lm(odor ~ temp + gas + pack, odor)

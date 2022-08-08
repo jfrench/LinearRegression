@@ -1,0 +1,308 @@
+---
+title: "Solutions Collinearity"
+date: "`r format(Sys.time(), '%Y-%m-%d')`"
+output:
+  pdf_document
+---
+
+# Motivating Example: Driver Seat Settings
+
+Car drivers like to adjust the seat position for their own comfort. Car designers would find it helpful to know where different drivers will position the seat depending on their size and age. Researchers at the HuMoSim laboratory at the University of Michigan collected data on 38 drivers. They measured `Age` in years, `Weight` in pounds, height with shoes and without shoes on cm (`HtShoes` and `Ht`), seated height `Arm` length (in cm), `Thigh` length (in cm), lower `Leg` length (in cm), and `hipcenter` which is the horizontal distance of the midpoint of the hips from a fixed location in the car in mm.
+
+```{r}
+library(faraway)
+data(seatpos)
+summary(seatpos)
+```
+
+```{r}
+# fit model with all predictors
+lmod1 <- lm(hipcenter ~ ., data = seatpos)
+sumary(lmod1) 
+```
+
+## Question 1: Does $R^2$ value of the model seem consistent with the p-values for each coefficient? Why or why not?
+
+- The $R^2$ value is $0.69$ which is indicates a good fit, however, none of the individual predictors is significant.
+
+## Question 2: What are some methods we have use to check for correlations between regressors?
+
+```{r}
+# examine pairwise correlation of predictors
+pairs(seatpos[,-9])
+```
+
+
+```{r}
+round(cor(seatpos[,-9]), 3)
+```
+
+## Question 3: Do you see any large pairwise correlations? Do these make practical sense in this context?
+
+
+It seems there are lots of correlations between regressors which makes sense. For example somebody's `HtShoes` and `Ht` should be very extremely related to each other.
+
+```{r}
+round(cor(seatpos)[,3:8], 2)
+```
+
+# Collinearity
+
+When the columns of $X$ are linearly dependent, then $X^T X$ is singular and there is no unique least squares estimate of $\beta$.
+
+- The columns of $X$ are said to be **exactly collinear** in this case.
+- This causes serious problems with estimation and interpretation.
+
+Even when the columns of $X$ are not perfectly dependent, we still have problems.
+
+## Why is Collinearity Problematic?
+
+Measuring `hipcenter` is difficult. Suppose the measurement error had a standard deviation of 10 mm. Let's see what happens if we add a little bit of measurement error to the response.
+
+```{r}
+set.seed(1) # allows us to reproduce results
+
+# add a little measurement error
+lmod1a <- lm(hipcenter + 10 * rnorm(38) ~ ., data = seatpos) 
+sumary(lmod1a)
+
+library(car) #need for function below.
+compareCoefs(lmod1, lmod1a, se = FALSE) # compare coefficients
+```
+
+
+## Question 4: Comment on the changes to the coefficients from Model 1 and Model 2.
+
+We get a large change in the estimated regression coefficients! However, $R^2$ and standard error of the two models is mostly unchanged. So with some slight error in the response variable, we get a very different model, that seems to fit just as well (judging by $R^2$ and standard error at least).
+
+Collinearity leads to imprecise estimates of $\beta$.  
+
+- The signs of the coefficients can be the opposite of what intuition about the effect of the predictors might suggest.
+- The standard errors become inflated so it may be difficult to detect significant regression coefficients.
+- The fit becomes very sensitive to measurement errors.
+  - Small changes in $y$ can lead to large changes in $\hat{\boldsymbol\beta}$.
+  
+  
+We have too many variables! We can reduce the collinearity by removing carefully chosen variables in order to get a more stable model, and more clear interpretation of the remaining predictors. We should not conclude that the variable(s) we remove from the model are not related to the response.
+
+# Methods for Detecting Collinearity
+
+## Examine the Correlation Matrix
+
+Examine the pairwise correlation matrix of the regressors and look for large pairwise correlations.
+
+- Large is a bit subjective, but the larger the correlation among regressors, the more likely it is that you have a collinearity problem.
+
+```{r}
+round(cor(seatpos[,-9]), 3)
+```
+
+## Regress on Predictor(s)
+
+A regression of $x_i$ on all other predictors gives $R_i^2$. The larger the value of $R^2_j$, the more the variable seems to be correlated to other regressors.
+
+```{r}
+sumary(lm(HtShoes ~ Age + Weight + Ht + Seated + Arm + Thigh + Leg, data = seatpos))
+```
+
+```{r}
+sumary(lm(Age  ~ Weight + HtShoes + Ht + Seated + Arm + Thigh + Leg, data = seatpos))
+```
+
+
+## The Variance Inflation Factor (VIF)
+
+The effect of collinearity is that the some regression coefficients have a large variance, $\widehat{\beta}_j$. The variance $\widehat{\beta}_j$ can be expressed in the form
+
+$$\mbox{var}(\widehat{\beta}_j )= \sigma^2 \left( \frac{1}{1-R_j^2} \right)\frac{1}{(n-1) S_j^2} = \sigma^2 (\mbox{VIF}_j)\frac{1}{(n-1) S_j^2}.$$
+
+- The **variance inflation factor (VIF)** of regressor $j$ is $\displaystyle \mbox{VIF}_j = \frac{1}{1-R_j^2}$.
+- If $R^2_j$ is close to 1, the the **variance inflation factor** $\mbox{VIF}_j=(1-R^2_j)^{-1}$ will large, and thus the variance of $\widehat{\beta}_j$ will be large.
+- **The VIF is the standard diagnostic for assessing collinearity.**
+  - $\mbox{VIF}_j$ **more than 10 indicates a potential problem with collinearity** for regressor $x_j$.
+  - Other more conservative estimates are commonly used, such as $5$.
+- On the other hand, orthogonality implies that $R_j^2=0$, which minimizes the variance.
+- Using the `vif` function in the `faraway` package, we can compute the VIF's of all regressors.
+
+<!-- The formula above provides a recipe to designs will minimize the variance of regression coefficients if we could construct our own $X$. 
+
+- $S_j^2$ denotes the **sample variance of regressor $j$**.
+- If $x_j$ does not vary much, then the variance of $\widehat{\beta}_j$ will be large.
+- If we vary $S_j$ is large, then \widehat{\beta}_j$ will be small.
+-->
+
+## Question 5: Which predictors seem to have a problem with collinearity?
+
+```{r}
+# This function is in the car package
+# The car package is loaded when faraway is loaded
+# calculate the vifs
+vif(lmod1)
+```
+
+- The variables `HtShoes` and `Ht` are definitely extremely problematic (this makes practical sense).
+- The variables `Seated`, `Leg`, and `Arm` also have VIF's that indicate they have problems with collinearity.
+
+### Interpreting VIF
+
+We can interpret $\sqrt{307.4}=17.5$ as meaning that the standard error for `HtShoes` $17.5$ times larger than it would have been without collinearity. This interpretation is not completely perfect since this is observational data and we cannot make orthogonal predictors.
+
+## Question 6: Play around with model and see what happens when your remove correlated variables.
+
+
+```{r}
+# fit a new model - HtShoes removed 
+lmod2 <- lm(hipcenter ~ Age + Weight + Ht + Thigh, data = seatpos)
+sumary(lmod2) 
+sumary(lmod1)
+vif(lmod2)
+```
+
+
+The VIF is not appropriate for assessing collinearity for sets of related regressors like dummy-variable regressors or polynomial regressors.
+
+- The **generalized VIF** should be used in these cases. The VIF is adjusted by the size of their joint confidence region.
+
+
+## Examine the eigenvalues of $X^TX$.
+
+Let $\lambda_1 \leq \lambda_2 \leq \ldots \leq \lambda_{p-1}$ be the eigenvalues of the $p-1$ regressors ordered from largest to smallest.
+
+- An eigenvalue of 0 means exact collinearity.
+- For observational data, when there is a wide range in the eigenvalues, this indicates there is a potential problem with collinearity.
+- When the **condition number** $\kappa= \sqrt{\frac{\lambda_1}{\lambda_{p-1}}} \geq 30$ then **there is a potential problem with collinearity**.
+
+A **condition index** shows the degree of multicollinearity in a regression design matrix. 
+
+
+```{r}
+x <- model.matrix(lmod1)[,-1] # Pull off all observed regressors values
+e <- eigen(t(x) %*% x)
+round(e$val, 3)
+(kappa <- round(sqrt(e$val[1]/e$val), 3))
+```
+
+
+## Including the Intercept and Scaling Regressors
+
+
+```{r}
+seatpos[, -9] <- scale(seatpos[, -9], center = FALSE, scale = TRUE)
+lmod.sc <- lm(hipcenter ~ ., data = seatpos)
+x.sc <- model.matrix(lmod.sc)
+e.sc <- eigen(t(x.sc) %*% x.sc)
+round(e.sc$val, 3)
+(kappa.sc <- round(sqrt(e.sc$val[1]/e.sc$val), 3))
+```
+
+
+- The other condition indices $\sqrt{\frac{\lambda_1}{\lambda_j}}$ are worth examining because they may indicate a problem with more than one linear combination of the regressors.
+- This does not tell us which regressors may be correlated, only that there collinearity is a problem.
+
+### Which Regressors are Leading to Large Condition Indices?
+
+**Variance decomposition proportions** can be examined to determine the regressors that are leading to large condition indices.
+
+- A variable is involved in the linear dependency if its proportion over the rows with large condition indices is more than 50%.
+- This information is provided by the `eigprop` function in the `mctest` package.
+
+```{r}
+library(mctest)
+?eigprop
+```
+
+Note: Belsley^[Belsley, D.A. Computer Science in Economics and Management (1991)] recommends that when using condition indices to assess collinearity that:
+
+- The intercept be included in your $X$ matrix
+- The columns of $X$ should NOT be centered.
+- The columns of $X$ should be scaled (i.e., the standard deviation of each column should be constant).
+
+```{r}
+eigprop(lmod1, Inter = TRUE, prop = 0.5) #both are default options.
+```
+
+
+## Question 7: Based on the output above, which regressors should be removed? Which should we remove first?
+
+- We see that `HtShoes`, `Ht`, `Seated`, `Arm` and `Leg` are involved in the linear dependency of the regressors.
+- Earlier (based on VIF) we determined the variables `HtShoes`, `Ht`,  `Seated`, `Leg`, and `Arm` had problems with collinearity.
+
+Since Row 9 has the highest condition index, and `HtShoes` is the biggest contributor, we remove that first.
+
+## Dropping Regressors from our model
+
+Iteratively remove regressors and recompute condition indices until the problem is fixed.
+
+```{r}
+# Lets first remove HtShoes
+lmod3 <- update(lmod1, . ~ . - HtShoes)
+sumary(lmod3)
+# recheck condition indices
+eigprop(lmod3)
+```
+
+
+
+```{r}
+# Next remove Seated (Ht is easier to measure?) 
+lmod4 <- update(lmod3, . ~ . - Seated)
+sumary(lmod4)
+# recheck condition indices
+eigprop(lmod4)
+```
+
+```{r}
+# Next remove Leg
+lmod5 <- update(lmod4, . ~ . - Leg)
+sumary(lmod5)
+# recheck condition indices
+eigprop(lmod5)
+```
+
+
+```{r}
+# Next remove Arm
+lmod6 <- update(lmod5, . ~ . - Arm)
+sumary(lmod6)
+# recheck condition indices
+eigprop(lmod6)
+```
+
+```{r}
+# Next remove Weight
+lmod7 <- update(lmod6, . ~ . - Weight)
+sumary(lmod7)
+# recheck condition indices
+eigprop(lmod7)
+```
+
+```{r}
+# Next remove Thigh (Ht easier to measure)
+lmod8 <- update(lmod7, . ~ . - Thigh)
+sumary(lmod8)
+# recheck condition indices
+eigprop(lmod8)
+```
+
+# Wrap-Up
+
+Notice that the $R^2$ for the simpler model is $0.66$, which is very close to the $R^2$ of $0.687$ for the original model, but with 6 fewer predictors!
+
+
+**You should assess collinearity right after exploratory data analysis and before variable selection.**
+
+- If your regressors are collinear, then all the subsequent inference is suspect and none of the diagnostics require you to fit a model first.
+- It is better to remove collinear variables first, then proceed with analysis.  
+
+## Note on predictions
+
+- The effect of collinearity on prediction is less serious and depends on where the prediction is to be made.
+- The greater the distance is from the observed data, the more unstable the prediction. 
+
+## Question 8: What methods can be utilized to look for and fix problems with collinearity?
+
+1. Examine the correlation matrix.
+2. Regress one predictor on all others and look at the value of $R_j^2$.
+3. The variance inflation factor. A VIF above 5 or 10 indicates a problem with collinearity.
+4. Variance decompostion proportions. 
+  - A variable is involved in the linear dependency if its proportion over the rows with large condition indices is more than 50%.

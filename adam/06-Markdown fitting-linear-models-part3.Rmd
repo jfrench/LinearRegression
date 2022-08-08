@@ -1,0 +1,114 @@
+---
+title: "Fitting a Linear Model Part 3"
+date: "`r format(Sys.time(), '%Y-%m-%d')`"
+output:
+  html_document:
+    df_print: paged
+---
+
+```{r, setup, include=FALSE}
+# This option means all R code is NOT evaluated
+# Delete or comment out if you want to run 
+# R commands when knitting
+knitr::opts_chunk$set(eval = FALSE)
+```
+
+# Orthogonality: Oder example
+
+## Loading the Odor Data
+
+Consider the relationship between column temperature, gas/liquid ratio, and packing height in reducing the unpleasant odor of a chemical product that was sold in household use.
+
+```{r}
+#load Galapagos data from faraway package
+data(odor, package = "faraway")
+str(odor) # basic structure of gala data
+```
+
+```{r}
+head(odor)
+```
+
+```{r}
+x <- model.matrix(~ temp + gas + pack, 
+                  data = odor)
+crossprod(x) # matrix of crossproducts
+```
+
+## Fitting a linear model
+Since the crossproducts of all the column vectors of X are zero, all the regressors are orthogonal to each other and the intercept.
+
+
+```{r}
+lmod <- lm(odor ~ temp + gas + pack, odor)
+faraway::sumary(lmod)
+```
+
+## Removing an Orthogonal Regressor
+
+Adding or removing `temp` variable doesn’t impact the estimated coefficients.
+
+
+```{r}
+lmod <- lm(odor ~ gas + pack, odor)
+faraway::sumary(lmod)
+```
+
+# Diabetes Example
+
+403 African Americans were interviewed in a study to understand the prevalence of obesity, diabetes, and other cardiovascular risk factors in central Virginia.  The diabetes data are in the faraway package.
+ 
+We will consider the relationship between cholesterol and several of the predictors. 
+
+## Load the data
+
+```{r}
+data(diabetes, package = "faraway")
+summary(diabetes)
+```
+
+## Fit a Linear Model
+
+```{r}
+lmod <- ??
+```
+
+Here we summarize the results of the model.
+
+```{r}
+summary(lmod)
+```
+
+# Finding the Fitted Values
+
+```{r}
+#fitted(lmod) # Shows all fitted values
+fitted(lmod)[3] # pulls off on third column
+lmod$fitted.values[3] # Another way to do same
+```
+
+# residual plot
+
+```{r}
+plot(residuals(lmod) ~ fitted(lmod))
+abline(0, 0, lty = 2)
+```
+
+## Measuring Response Variation 
+
+We compare $y$ (observed) and $\hat{y}$ (fitted) values.
+
+However, there is a NA for one of the $y$ values in the data, so
+note that `lmod$model$chol` are the remaining the $y$ values for the rows without missing data
+
+```{r}
+plot(lmod$model$chol ~ fitted(lmod), xlab = "yhat", ylab = "y")
+abline(lm(lmod$model$chol ~ fitted(lmod)))
+?? # how can you get r-squared for lmod?
+```
+
+# Orthogonality
+
+```{r}
+?? # compuates variance matrix
+```

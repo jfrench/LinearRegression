@@ -1,0 +1,335 @@
+---
+title: "Checking Error Assumptions Part 1"
+date: "`r format(Sys.time(), '%Y-%m-%d')`"
+output:
+  pdf_document: null
+  html_document:
+    df_print: paged
+---
+
+
+```{r}
+library(car)
+library(ggplot2)
+```
+
+# Motivating Example
+
+The dataset `savings` in the `faraway` package contains savings data from 50 different countries. The variables in the dataset are: 
+
+- `sr` is the savings rate, personal saving divided by disposable income.
+- `pop15` is the percent of the population under age of 15.
+- `pop75` is the percent of the population over age of 75.
+- `dpi` is the per-capita disposable income in dollars.
+- `ddpi` is the percent growth rate of dpi.
+
+
+```{r}
+data(savings, package = "faraway") # load data
+#summary(savings)
+```
+
+```{r}
+lmod <- lm(sr ~ ., data = savings) #fit full model
+#summary(lmod)
+```
+
+```{r}
+ggplot(savings, aes(x = pop15, y = sr)) + geom_point() + geom_smooth(method = "lm", formula = y ~ x, color = "blue") + theme_bw() + theme(legend.position="top")
+```
+
+
+# Standard Assumptions Revisited
+
+There are several standard assumptions made when performing linear regression.
+
+## Theoretical Properties 
+
+The ones related to theoretical properties:
+
+1. $E( \mathbf{y} \ | \ X ) = X \boldsymbol\beta$.
+2. 	$\epsilon_1, \epsilon_2, \ldots , \epsilon_n \overset{\mbox{i.i.d.}}{\sim} N(0, \sigma^2)$.
+
+      a. $E(\epsilon \ | \ \mathbb{X} )$ (essentially same as first condition).
+      b. $\mbox{Var}(\epsilon \ | \ \mathbb{X} ) = \sigma^2$.
+      c. $\mbox{Cov}( \epsilon_i , \epsilon_j \ | \ \mathbb{X}) = 0$ for all $i \ne j$
+      d. Each of the errors, regardless of the regressor values, are normally distributed
+
+## Question 1: Interpret the assumptions above in more practical terms, that a non-technical colleague could better understand.
+
+
+## Practical Considerations
+
+3. The columns of $X$ are linearly independent, i.e., none of the regressors are linear combinations of each other. This assumption is checking by assessing **whether collinearity is present**. This assumption is critical for ensuring that our model is identifiable (estimable).
+
+4. **No observations are substantially more influential than other observations** in determining the fit of the model to the observed data. Influential observations can make it difficult to determine whether Assumptions 1 and 2 are satisfied.
+
+## Standard Assumptions Prioritized
+
+We assume that any issues with collinearity and identifiability (Assumption 3) have already been addressed. We have discussed this process.
+
+1.	**The structure of the model is correct (Assumption 1).** If the structure of your model is incorrect, then no conclusions drawn from our model are trustworthy. 
+2.	**No points are overly influential in determining the model fit (Assumption 4).** An overly influential observation can make it seem like the model is correctly specified when it is not.
+3. **The errors have constant variance (Assumption 2).**  If this assumption isn’t satisfied, then standard confidence intervals for the regression coefficients and mean function and prediction intervals for new observations are not trustworthy.
+4. **The errors are uncorrelated (Assumption 2).**
+5. **The errors are normally distributed (Assumption 2).** This is the least important assumption. If the previous assumptions are satisfied, then our OLS estimator of $\beta$ is still the best linear unbiased estimator regardless of the normality of the errors.
+- If the sample size is large enough, the central limit theorem tells us that our confidence intervals for the regression coefficients and the mean function are still approximately valid. 
+- However, if our sample size is small or we are interested in constructing a prediction interval, then non-normal errors can lead to untrustworthy confidence and prediction intervals.
+
+# Checking Error Assumptions with Residuals
+
+- Assumptions for $\boldsymbol\epsilon$ are tricky to check because **$\boldsymbol\epsilon$ is not observed**.
+- Assumptions for $\boldsymbol\epsilon$ allow us to derive expected properties for our residuals, $\hat{\boldsymbol\epsilon}$.
+- The residuals are NOT interchangeable with the errors and have different properties.
+- Assumptions for $\boldsymbol\epsilon$ are checked using $\hat{\boldsymbol\epsilon}$.
+- If the observed residual behavior doesn’t match the expected behavior, we believe this was caused by a violation of the relevant error assumption.
+
+
+Some facts about the OLS residuals (assuming $y=X\boldsymbol\beta+\boldsymbol\epsilon$):
+
+- The residuals are an **unbiased** estimator for the true error. If $E(\boldsymbol\epsilon |X)=0$, then $E(\hat{\boldsymbol\epsilon} |X)=0$.
+- If an intercept is included in the fitted model, then $\sum \hat{\epsilon}_i=0$.
+- We can calculate the variance (**efficiency**) of the residuals.
+  - Note from below that although the variance of the errors is constant, this is not the case for the residuals.
+
+$$\mbox{Var} (\hat{\boldsymbol\epsilon} \  | \ X) = \sigma^2 (I_n-H), \quad \mbox{where} \quad H= X(X^T X)^{-1} X^T \mbox{ is the hat matrix.}$$
+
+- If $E(\boldsymbol\epsilon |  X)=0$ and $\mbox{Var}(\boldsymbol\epsilon | X)=\sigma^2 I_n$, then $\mbox{Cov}(\hat{\boldsymbol\epsilon} ,\hat{y} | X) =0_{n \times n}$.
+- If $\boldsymbol\epsilon |X \sim N(0,\sigma^2 I_n)$, then $\hat{\boldsymbol\epsilon} |X \sim N(0,\sigma^2 (I_n-H))$.
+- If $X_j$ is the $j^{\mbox{th}}$ (observed) regressor, then $\mbox{Cov}(\hat{\boldsymbol\epsilon} ,X_j \ | \ X)=0$.
+
+
+## Checking the Mean Zero Error Assumption
+
+### Plotting Residuals Against Fitted Values
+
+
+The most useful diagnostic is a plot of $\hat{\boldsymbol\epsilon}$ against $\hat{\mathbf{y}}$.
+
+```{r}
+# plot of residuals versus fitted values
+residualPlot(lmod, quadratic = FALSE) # We do not want to draw the quad reg
+```
+
+## Question 2: Based on the residual plot above, does it seem like the mean error assumption is satisfied?
+
+
+```{r}
+# plot of residuals versus fitted values
+plot(lmod, which = 1)
+```
+
+### Plotting Regressors Against Residuals
+
+- **If this assumption IS satisfied**, a plot of $\hat{\boldsymbol\beta}$ versus $\hat{\mathbf{y}}$ or $\hat{\boldsymbol\beta}$ versus $X_j$ should be approximately symmetric around zero.
+- **If this assumption is NOT satisfied**, the a plot of $\hat{\boldsymbol\beta}$ versus $\hat{\mathbf{y}}$ or $X_j$ will have a systematic, asymmetrical pattern deviating from zero.
+
+```{r fig1, fig.height = 6, fig.width = 9}
+# plot of residuals versus predictors
+residualPlots(lmod, quadratic = FALSE, fitted = FALSE, tests = FALSE)
+```
+
+## Checking the Constant Variance Assumption
+
+- Constant, symmetrical variation in the vertical direction is known as **homoscedasticity**.
+- Non-constant variance is called **heteroscedasticity**
+
+
+## Question 3: Consider the plots below. Comment on which seem to have constant variance, strong nonconstant variance, mild nonconstant variance, or have nonlinearity.
+
+```{r}
+set.seed(118)
+n <- 50
+x <- runif(n)
+plot(x,rnorm(n), xlab = "Fitted values", ylab = "Residuals")
+plot(x,x*rnorm(n), xlab = "Fitted values", ylab = "Residuals")
+plot(x,cos(x*pi/25)+rnorm(n,sd=1), xlab = "Fitted values", ylab = "Residuals")
+plot(x,sqrt((x))*rnorm(n), xlab = "Fitted values", ylab = "Residuals")
+```
+
+If you want even more practice, run the code block below.
+
+```{r, eval = FALSE}
+par(mfrow=c(3,3))
+n <- 50
+for(i in 1:3) {x <- runif(n) ; plot(x,rnorm(n))}
+for(i in 1:3) {x <- runif(n) ; plot(x,x*rnorm(n))}
+for(i in 1:3) {x <- runif(n) ; plot(x,sqrt((x))*rnorm(n))}
+for(i in 1:3) {x <- runif(n) ; plot(x,cos(x*pi/25)+rnorm(n,sd=3))}
+par(mfrow=c(1,1))
+```
+
+```{r}
+# plot of residuals versus fitted values
+residualPlot(lmod, quadratic = FALSE) # We do not want to draw the quad reg
+```
+
+## Question 4: Does the constant variance assumption seem to be satisfied?
+
+If we would like to examine the constant variance assumption more closely, a more powerful way is to plot transformed residuals $\sqrt{|\hat{\epsilon}|}$ against $\hat{y}$. We should first check for nonlinearity.
+
+- For truly normal errors $|\hat{\epsilon}|$ follows a half normal distribution, which is skewed.
+- The skewness can be reduced by the square root transformation.
+- The effect is that we nearly double the resolution.
+
+```{r}
+# plot sqrt absolute value of residuals vs fitted values
+plot(sqrt(abs(residuals(lmod))) ~ fitted(lmod), xlab = "fitted", 
+     ylab= expression(sqrt(hat(epsilon))))
+```
+
+```{r}
+# plot sqrt standardized residuals vs fitted values
+plot(lmod, which = 3)
+```
+
+# Checking Normality of Residuals
+
+- Tests and confidence intervals are based on the assumption that the errors are normally distributed.
+- **q-q plots** are great plots for checking the normality assumption.
+- If the residuals are distributed similarly to observations coming from a normal distribution, then the points of a q-q plot will lie approximately in a straight line at a $45^{\circ}$ angle.
+
+## What Is a q-q Plot?
+
+Histograms and boxplots are not as useful for checking normality as a q-q plot.
+
+- Boxplots can obscure a lot of information.
+- The shape of a histogram strongly depends on the number and size of the bins.
+
+```{r}
+hist(residuals(lmod), 
+     breaks = 7, 
+     main = "Distribution of Residuals", 
+     xlab = "Residual", 
+     ylab = "Frequency",
+     col = "steelblue")
+#boxplot(residuals(lmod))
+```
+
+## Empirical Cumulative Distribution Function
+
+We can calculate the empirical cumulative distribution (ECDF) function for the residuals:
+
+```{r fig2, fig.height = 6, fig.width = 9}
+P <- ecdf(residuals(lmod))
+par(mfrow = c(1, 2))
+plot(P, main = "ECDF of Residuals", 
+     xlab = "Residual", 
+     ylab = "Prob")
+plot(ecdf(rnorm(50)), main = "ECDF of Random Sample from N(0,1)", 
+     xlab = "x-value", 
+     ylab = "Prob")
+par(mfrow = c(1, 1))
+```
+
+```{r}
+residd <- sort(residuals(lmod))[1:9]
+probb <- P(residd)
+Q <- qnorm(probb)
+```
+
+```{r}
+knitr::kable(data.frame(Residual = c("resid 1", "resid 2", "resid 3", "resid 4", "resid 5", "resid 6", "resid 7", "resid 8", "resid 9"),
+Value = residd, Prob = probb, z = Q),
+align = "lcr")
+```
+
+
+### Creating Q-Q Plots
+
+- On the x-axis goes z-scores for the sorted residuals (if they were normally distributed)
+- A reference line is often plotted for comparison with $N(0,1)$
+
+```{r}
+# Using base R
+qqnorm(residuals(lmod), ylab = "Residuals")
+qqline(residuals(lmod))
+```
+
+
+- We can plot the residuals from the summary output we stored in `lmod`. This will produce a q-q plot for the **standardized residuals**, along with a helpful reference line.
+
+```{r}
+plot(lmod, which = 2)
+```
+
+- The ``car::qqPlot` function is q-q plot for the **studentized residuals**, along with pointwise confidence bands for what is expected if $\boldsymbol\epsilon \sim N(0, \sigma^2 I)$.
+
+
+```{r}
+# Using car package
+qqPlot(lmod) 
+```
+
+## Interpreting q-q Plots
+
+If the marked points are:
+
+- **Flatter than the line**, there is less data than we'd have if normal
+- **Steeper than the line**, there is more data than we'd have if normal.
+
+## Question 5: Without looking at the histograms, comment on the shape of each sample based on the q-q plots below.
+
+```{r}
+set.seed(53)
+qqPlot(rnorm(50), ylab = "observed data",
+       xlab = "normal quantiles", main = "Sample 1")
+#hist(rnorm(50), ylab = "frequency",
+#       xlab = "observed data", main = "Sample 1")
+```
+
+```{r}
+set.seed(53)
+qqPlot(exp(rnorm(50)), ylab = "observed data",
+       xlab = "normal quantiles", main = "Sample 2") 
+#hist(exp(rnorm(50)), ylab = "frequency",
+#       xlab = "observed data", main = "Sample 2")
+```
+
+```{r}
+set.seed(53)
+qqPlot(rcauchy(50), ylab = "observed data",
+       xlab = "normal quantiles", main = "Sample 3")
+hist(rcauchy(50), ylab = "frequency", breaks = 20,
+       xlab = "observed data", main = "Sample 3")
+```
+
+```{r}
+set.seed(53)
+qqPlot(runif(50), ylab = "observed data",
+       xlab = "normal quantiles", main = "Sample 4")
+hist(runif(50), ylab = "frequency", breaks = 20,
+       xlab = "observed data", main = "Sample 4")
+```
+
+```{r}
+set.seed(53)
+qqPlot(rexp(50), ylab = "observed data",
+       xlab = "normal quantiles", main = "Sample 5")
+hist(rexp(50), ylab = "frequency", breaks = 20,
+       xlab = "observed data", main = "Sample 5")
+```
+
+
+# Summary of useful R functions for checking error assumptions
+
+## Residuals:
+
+- `residuals(lmod)` extracts the OLS residuals.
+- `rstandard(lmod)` extracts the standardized residuals.
+- `rstudent(lmod)` extracts the studentized residuals.
+
+## Mean-zero error assumption:
+
+- `car::residualPlot` constructs a plot of the residuals versus fitted values.
+- `plot(lmod, which = 1)` constructs a plot of the residuals versus fitted values.
+
+## Constant error variance assumption:
+
+- `car::residualPlots` constructs a plots of the residuals versus each predictor and the residuals versus the fitted values.
+- `plot(lmod, which = 3)` constructs a plot of **square root of standardized residuals** versus the fitted values to increase resolution.
+
+## To assess error normality: 
+
+- `car::qqPlot(lmod)` will produce a q-q plot for the **studentized residuals**, along with the appropriate t-based, pointwise confidence bands for what is expected if $\boldsymbol\epsilon \sim N(0, \sigma^2 I)$.
+- `plot(lmod, which = 2)` will produce a q-q plot for the **standardized residuals**, along with a helpful reference line.

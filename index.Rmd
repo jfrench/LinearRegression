@@ -1,12 +1,12 @@
 --- 
-title: "Data Analysis with Linear Regression"
+title: "A progressive introduction to linear models"
 author: "Joshua French"
 site: bookdown::bookdown_site
 documentclass: book
 bibliography: [book.bib, packages.bib]
 biblio-style: apalike
 link-citations: yes
-description: "A collection of R notebooks demonstrating how to perform data analysis with linear regression."
+description: "A collection of R notebooks that progressively introduction how to fit and use linear models."
 ---
 <!-- date: "`r format(Sys.time(), '%Y-%m-%d')`" -->
 
@@ -15,21 +15,28 @@ description: "A collection of R notebooks demonstrating how to perform data anal
 I recommend you execute the following commands install packages we may use in this course.
 
 ```{r, eval = FALSE}
-# packages related to books
-books = c("faraway", "alr4", "car", "rms")
-install.packages(books)
-# packages related to tidy/tidying data
-tidy = c("broom", "tidyr", "dplyr")
-install.packages(tidy)
-# packages related to plotting
-moreplots = c("ggplot2", "ggthemes", "lattice", "HH")
-install.packages(moreplots)
-# packages related to model diagnostics
-diag = c("leaps", "lmtest", "gvlma", "caret")
-install.packages(diag)
-# packages related to workflow
-workflow = c("remotes")
-install.packages(workflow)
+# data-related packages
+install.packages("palmerpenguins")
+# tidyverse
+install.packages("tidyverse")
+# additional plotting-related packages
+install.packages("effects", "plotly")
+# manipulation/
+# # packages related to books
+# books = c("faraway", "alr4", "car", "rms")
+# install.packages(books)
+# # packages related to tidy/tidying data
+# tidy = c("broom", "tidyr", "dplyr", "stringr", "purrr", "tibble", "readr", "forcats")
+# install.packages(tidy)
+# # packages related to plotting
+# moreplots = c("effects", "ggplot2", "ggthemes", "lattice", "HH")
+# install.packages(moreplots)
+# # packages related to model diagnostics
+# diag = c("leaps", "lmtest", "gvlma", "caret")
+# install.packages(diag)
+# # packages related to workflow
+# workflow = c("remotes")
+# install.packages(workflow)
 ```
 
 Lastly, we need to install the **perturb** package, which is currently not available
@@ -47,6 +54,6 @@ The **bookdown** package [@R-bookdown] was used to generate this book.
 ```{r, include=FALSE}
 # automatically create a bib database for R packages
 knitr::write_bib(c(
-  .packages(), 'bookdown', 'knitr', 'rmarkdown'
+  .packages(), 'bookdown', 'knitr', 'rmarkdown', 'HistData', 'ggplot2', 'palmerpenguins', 'broom', 'tidyr', 'dplyr', 'stringr', 'purrr', 'tibble', 'readr', 'forcats', 'tidyverse', 'base', 'readxl', 'magrittr', 'ggiraph', 'plotly', 'datasets', 'effects', 'gt'
 ), 'packages.bib')
 ```

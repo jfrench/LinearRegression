@@ -12,3 +12,34 @@ pre {
 pre code {
   white-space: inherit;
 }
+
+.yourturn {
+  margin: 2em;
+  padding: 2em;
+  border: 1px solid grey;
+  border-radius: 5px;
+  background: #eeeeee;
+}
+
+.center {
+  text-align: center;
+}
+
+.data {
+  display: block;
+  font-style: italic;
+  font-size: 24px;
+  font-family: "Times New Roman";
+  color: black;
+}
+.data::before {
+  content: "data. ";
+  font-weight: bold;
+  font-style: normal;
+}
+.data[text]::before {
+  content: "Data (" attr(text) ") ";
+}
+.data p {
+  display: inline;
+}

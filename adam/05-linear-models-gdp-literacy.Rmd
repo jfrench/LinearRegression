@@ -1,0 +1,144 @@
+---
+pdf_document: default
+date: "`r format(Sys.time(), '%Y-%m-%d')`"
+output:
+  pdf_document: default
+title: 'MATH 4387/5387 Week 4: Linear Models'
+---
+
+```{r, setup, include=FALSE}
+# This option means all R code is NOT evaluated
+# Delete or comment out if you want to run 
+# R commands when knitting
+knitr::opts_chunk$set(eval = FALSE)
+```
+
+
+```{r}    
+# install.packages("wbstats")
+library(wbstats) # World Bank Data
+```
+
+## Load most recent literacy rate
+
+```{r}
+edu <- wb_data(
+  country = "countries_only",
+  indicator = "SE.ADT.LITR.ZS",  # Literacy rate  (% of pop above 15)
+  mrnev = 1 #returns most recent non-empty value
+)
+edu <- edu[,c(3,5)]
+names(edu) <- c("country", "literacy_rate")
+```
+
+## Life Expectancy - SP.DYN.LE00.IN (years)
+
+```{r}
+health <- wb_data(
+  country = "countries_only", indicator = "SP.DYN.LE00.IN", mrnev = 1)
+health <- health[,c(3,5)]
+names(health) <- c("country", "life_exp")
+```
+
+## Land Area - AG.LND.TOTL.K2 (sq.km)
+
+```{r}
+area <- wb_data(
+  country = "countries_only", indicator = "AG.LND.TOTL.K2", mrnev = 1)
+area <- area[,c(3,5)]
+names(area) <- c("country", "land_area")
+```
+
+## GDP per cap (ppp) - NY.GDP.PCAP.PP.CD
+
+```{r}
+wealth <- wb_data(
+  country = "countries_only",  indicator =  "NY.GDP.PCAP.PP.CD" ,mrnev = 1)
+wealth <- wealth[,c(3,5)]
+names(wealth) <- c("country", "gdp_per_cap")
+```
+
+## Merge the four dataframes together 
+
+```{r}
+country <- merge(edu, merge(health, merge(area, wealth)))
+head(country)
+```
+
+## If you want to compare pairwise correlations
+
+```{r}
+summary(country[c(2:5)])
+cor(country[c(2:5)])
+pairs(country[c(2:5)])
+```
+
+## Create dataframe with y first and x second
+
+```{r}
+mydata <- data.frame(country$gdp_per_cap, country$literacy_rate)
+names(mydata) <- c("gdp_per_cap", "literacy_rate")
+```
+
+## Make scatterplot and add regression line
+
+```{r}
+plot(gdp_per_cap ~ literacy_rate, data = country,
+     pch = 20,
+     col=ifelse(literacy_rate > 94.50318 & literacy_rate < 94.5032, "red", "sea green"),
+     main = "Scatterplot of Education vs Wealth",
+     xlab = "Literacy Rate (%)",
+     ylab = "GDP per Capita")
+wealth.lm <- lm(mydata)
+abline(wealth.lm)
+```
+
+## Using a natural log scale
+
+### First we take natural log of gdp_per_cap using `log()`
+
+```{r}
+ln.data <- data.frame(log(country$gdp_per_cap), country$literacy_rate)
+names(ln.data) <- c("gdp_per_cap", "literacy_rate")
+```
+
+### Now do regression using natural log scale
+
+```{r}
+ln.lm <- lm(ln.data)
+
+plot(gdp_per_cap ~ literacy_rate, data = ln.data,
+     pch = 20,
+     col=ifelse(literacy_rate > 94.50318 & literacy_rate < 94.5032, "red", "sea green"),
+     main = "Scatterplot of Education vs Wealth",
+     xlab = "Literacy Rate (%)",
+     ylab = "LN of GDP per Capita")
+abline(ln.lm)
+```
+
+## Comparing errors using residual plots
+
+```{r}
+plot(resid(wealth.lm),
+     main = "Plot of Errors Linear Scale",
+     xlab = "Index",
+     ylab = "Error")
+
+plot(resid(ln.lm),
+     main = "Plot of Errors LN Scale",
+     xlab = "Index",
+     ylab = "Error")
+```
+
+```{r}
+# For MATH 3191 Slides
+train <- country[c(1:3,160),c(2,5)]
+lmod <- lm(gdp_per_cap/1000 ~ literacy_rate, data = train)
+summary(lmod)
+```
+
+```{r}
+plot(train$gdp_per_cap/1000 ~ train$literacy_rate, xlab = "Literacy Rate (%)", ylab = "GDP per Capita", xlim=c(0,100), ylim=c(-2, 14))
+abline(-1.938, 0.126)
+```
+

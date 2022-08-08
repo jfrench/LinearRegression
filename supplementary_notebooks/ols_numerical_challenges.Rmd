@@ -1,0 +1,116 @@
+### Problematic numerical estimation
+
+As we have attempted to emphasize through its notation, $RSS(\hat{\beta}_0, \hat{\beta}_1)$ is a function of $\hat{\beta}_0$ and $\hat{\beta}_1$. OLS estimation for the simple linear regression model seeks to find the values of the estimated coefficients that minimize $RSS(\hat{\beta}_0, \hat{\beta}_1)$. In the example below, we visualize this three-dimensional surface to see how difficult it would be to optimize the RSS numerically.
+
+@wachsmuth_et_al2003 compiled child and parent height data from English familes tabulated by @pearson1897 and @pearson_lee1903. The data are available in the `PearsonLee` data set in the **HistData** package [@R-HistData]. The `PearsonLee` data frame includes the variables:
+
+  * `child`: child height (inches)
+* `parent`: parent height (inches)
+
+and other variables we will not consider here.
+
+It is natural to wonder whether the height of a parent could explain the height of their child. We can consider a regression analysis that regresses child's height (the response variable) on parent's height (the regreoss variable).
+
+Consider a plot of child's height versus parent's height.
+
+```{r}
+data(PearsonLee, package = "HistData") # load data
+library(ggplot2) # load ggplot2 package
+# create ggplot object for repeated use
+# we'll be using common aesthetics across multiple geometries
+# so we put them in the ggplot function
+# also improve the x, y labels
+ggheight <- ggplot(data = PearsonLee,
+                   mapping = aes(x = parent, y = child)) +
+  xlab("parent height (in)") + ylab("child height (in)")
+ggheight + geom_point() # scatter plot of child vs parent height
+```
+
+We see a positive linear association between parent height and child height: as the height of the parent increases, the height of the child also tends to increase.
+
+We seek to estimate the simple linear regression model
+$$E(\mathtt{child} \mid \mathtt{parent}) = \beta_0 + \beta_1 \mathtt{parent}$$
+  with the values of $\hat{\beta}_0$ and $\hat{\beta}_1$ that minimize the associated RSS. We first load the height data, extract the response and regressor variables, and assign them the names `y` and `x`.
+
+```{r}
+# load height data
+data(PearsonLee, package = "HistData")
+# extract response and regressor variables from data set
+y <- PearsonLee$child
+x <- PearsonLee$parent
+```
+
+We now create a function that computes the RSS as a function of $\hat{\beta}_0$ and $\hat{\beta}_1$ (called `b0` and `b1`, respectively in the code below). The function takes the vector `b = c(b0, b1)`, extracts `b0` and `b1` from this vector, computes the fitted values (`yhat`) for the provided `b0` and `b1`, computes the corresponding residuals (`ehat`), and the returns the sum of the squared residuals, i.e., the RSS.
+```{r}
+# function to compute the RSS
+# b = c(b0, b1)
+compute_rss <- function(b) {
+  b0 = b[1] # extract b0 from b
+  b1 = b[2] # extract b1 from b
+  yhat <- b0 + b1 * x # compute fitted values
+  ehat <- y - yhat # compute residuals
+  return(sum(ehat^2)) # return RSS
+}
+```
+
+Next, we specify sequences of `b0` and `b1` values at which to evaluate the RSS. We then use a double `for` loop to evaluate the RSS for each combination of `b0` and `b1` and store the results in `rss_mat`.
+```{r}
+# sequences of candidate b0 and b1 values
+b0_seq <- seq(40, 42, len = 15)
+b1_seq <- seq(0.2, 0.6, len = 15)
+# matrix to store rss values
+rss_mat <- matrix(nrow = length(b0_seq), ncol = length(b1_seq))
+# use double loop to compute RSS for all combinations of b0_seq and b1_seq
+# seq_along(b0_seq) returns the vector 1:length(b0_seq), but is safer
+for (i in seq_along(b0_seq)) {
+  for (j in seq_along(b1_seq)) {
+    rss_mat[i, j] <- compute_rss(c(b0_seq[i], b1_seq[j]))
+  }
+}
+```
+
+We can approximate the optimal values of `b0` and `b1` that minimize the RSS through the `optim` function. The `optim` function takes two main arguments:
+
+  * `par`: a vector of starting values for the optimization algorithm. In our case, this will be the starting values for `b0` and `b1`.
+* `fn`: a function of `par` to minimize.
+
+The `optim` function will return a list with several pieces of information (see `?stats::optim`) for details. We want the `par` component of the returned list, which is the `par` vector that (approximately) minimizes `fn`.
+
+```{r}
+# use the optim function to find the values of b0 and b1 that minimize the RSS
+# par is the vector of initial values
+# fn is the function to minimize
+# $par extracts the values found by optim to minimize fn
+optimal_b <- optim(par = c(41, 0.4), fn = compute_rss)$par
+# print the optimal values of b
+optimal_b
+```
+The `optim` function tells us that $\hat{\beta}_0=41.066$ and $\hat{\beta}_1=0.384$ minimize the RSS. However, if we consider a surface and contour plot of the RSS surface along with the optimal value, we see that perhaps this result isn't as precise as we would like.
+
+The `optim` function tells us that $\hat{\beta}_0=41.066$ and $\hat{\beta}_1=0.384$ minimize the RSS. Consider a surface plot of the RSS function.
+
+```{r, fig.cap="Perspective plot of RSS as a function of `b0` and `b1`."}
+persp(x = b0_seq, y = b1_seq, z = rss_mat,
+      xlab = "b0", ylab = "b1", zlab = "RSS",
+      theta = -45, phi = 15)
+```
+
+
+```{r, include = FALSE}
+# plotly::plot_ly(x = b0_seq, y = b1_seq, z = rss_mat, type = "surface")
+```
+
+There is a flat line in the surface along which different values of $\hat{\beta}_0$ and $\hat{\beta}_1$ will produce nearly identical RSS values. This is even easier to see using a contour plot.
+
+```{r, fig.cap="A contour plot of RSS as a function of `b0` and `b1`. The 'X'
+is the value of (`b0`, `b1`) that numerically minimizes the RSS."}
+# plot optimal value as an X on the contour plot
+contour(x = b0_seq, y = b1_seq, z = rss_mat, xlab = "b0", ylab = "b1")
+title("RSS contours of Pearson and Lee height data")
+points(x = optimal_b[1], y = optimal_b[2], pch = 4)
+par(mfrow = c(1, 1))
+```
+
+A contour plot uses contour lines to describe the height of the $z$ dimension of a 3-dimensional $(x, y, z)$ surface. Each line/contour indicates the height of the surface along that line. Note that in the graphic above, the contours are basically straight lines. There's no easily identifiable combinations of `b0` and `b1` the produce the minimum RSS.
+
+What is our takeaway from this example? It's probably not ideal to numerically search for the values of $\hat{\beta}_0$ and $\hat{\beta}_1$ that minimize $RSS(\hat{\beta}_0$, $\hat{\beta}_1)$. Our numerical approximate of the optimal value may not be nearly as precise as desired. Instead, we should seek an exact solution using mathematics.

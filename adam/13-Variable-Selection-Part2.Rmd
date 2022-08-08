@@ -1,0 +1,384 @@
+---
+title: "Variable Selection Part 2"
+date: "`r format(Sys.time(), '%Y-%m-%d')`"
+output:
+  html_document:
+    df_print: paged
+---
+
+# Model Selection: What is the right number of regressors we should include?
+
+Variable selection is intended to (objectively) find the "best" subset of predictors. So why not throw the whole kitchen sink into our model?
+
+# Motivating Example: Predicting Life Expectancy
+
+The `state` datasets in the base R package (no package needed to access the data) contains various data sets with data from all 50 states. We'll be working with the dataset `state.x77` which has 50 observations (one for each state) with the following variables of interest:
+
+- `Population`: Population estimate as of July 1, 1975
+- `Income`: Per capita income (1974)
+- `Illiteracy`: Illiteracy rate (1970, percent of population)
+- `Life Exp`: life expectancy in years (1969–71)
+- `Murder`: murder and non-negligent manslaughter rate per 100,000 population (1976)
+- `HS Grad`: percent high-school graduates (1970)
+- `Frost`: mean number of days with minimum temperature below freezing (1931–1960) in capital or large city
+- `Area`: land area in square miles
+
+## Loading the Data
+
+```{r}
+data(state)
+statedata <- data.frame(state.x77, row.names = state.abb)
+#head(statedata)
+summary(statedata)
+```
+
+```{r}
+lmod <- lm(Life.Exp ~ ., data = statedata)
+faraway::sumary(lmod)
+```
+
+# Recap from Last Class
+
+- Choosing more variables is not always preferable.
+- A solid yet simple model is often preferred.
+- When deciding how many predictors to include (exclude), its complicated! We should consider several criteria.
+
+
+## Testing Based Procedures
+
+- **Backward elimination** is the simplest of all variable selection procedures. We start with all predictors and remove the least significant predictor. Stop once all the noise has been removed.
+- **Forward selection** starts with the null model (only an intercept), and adds regressors one at a time until we can no longer improve the error criterion by adding a single regressor. 
+- **Stepwise regression** is a combination of backward elimination and forward selection.
+
+
+```{r}
+# This handy function does stepwise regression
+# Evaluation based on AIC
+step(lmod, direction = "both")
+```
+
+## Search Strategies
+
+An exhaustive search looks at all possible models using all available regressors.  
+
+- This is not feasible unless the number of regressors is relatively small.
+- If the number of regressors (including the intercept) is $p$, there are $2^p$ possible models.
+
+Because of our error criteria, our search often simplifies to finding the model that minimizes $\mbox{RSS}_{\mathcal{M}}$ for each value of $p_{\mathcal{M}}$. This is the best subset searching strategy.
+
+### Finding the Best Subsets
+
+The `leaps` package performs a thorough search for the best subsets of predictors for each model size.
+
+- Since the algorithm returns a best model for each size, the results do not depend on the a penalty model (such as AIC and BIC).
+- For each model size ,it finds the variables that give the minimum RSS.
+- By default, `regsubsets` only goes up to $p=9$.  You have to set `nvmax = j`, where $j$ is the number of regressors you want to consider.
+
+
+```{r}
+# may need to install.package the first time
+library(leaps) # you need to load package every time you want to use it
+
+# model selection by best subset search
+best <- regsubsets(Life.Exp ~ ., data = statedata)
+bsum <- summary(best) # summarize model that minimizes RSS for each p
+bsum$which # nicer output
+```
+
+```{r}
+# What output is stored after running regsubsets
+summary(bsum)
+```
+
+
+## Review of Criterion-Based Procedures Thus Far
+
+- RSS (and $R^2$) is a measurement of the error between the data and a model.
+  - RSS will decrease when we add more predictors, regardless if they predict anything.
+  - Therefore $R^2 = 1 - \mbox{RSS}/\mbox{TSS}$ increases, regardless.
+- $p$-values should not be taken as very accurate in stepwise or best subset searches because we'll see small $p$-values due to chance alone.
+
+- So we shouldn't just consider RSS or $R^2$since we'll always choose the most complicated model.
+- We shouldn't just consider $p$-values since we will always get false positives.
+- We only want to add predictors if they significantly help improve the prediction. 
+
+
+## Akaike’s Information Criterion (AIC) and Bayesian Information Criteria (BIC)
+
+$$\mbox{AIC}(\mathcal{M})= n\log{(\mbox{RSS}_{\mathcal{M}}/n)} +2p_{\mathcal{M}} +c.$$
+$$\mbox{BIC}(\mathcal{M})= n\log{(\mbox{RSS}_{\mathcal{M}}/n)} + \log{(n)} p_{\mathcal{M}} +c.$$
+
+- Both AIC and BIC are criteria that balance fit and complexity.
+  - As $RSS$ goes down (yay!), AIC and BIC goes down.
+  - As $p_{\mathcal{M}}$ goes up, there is a penalty for making things more complicated.
+- BIC assigns a bigger penalty for adding more predictors, so it will slightly favor simple models to complex models (compared to AIC).
+- The constant $c$ is the same for all models created from the same data, so it can be ignored.
+- **We choose the model the minimizes the AIC and/or BIC**.
+
+
+```{r}
+# Storing values we'll use
+p <- 2:8 # number of predictors (including intercept)
+n <- nrow(statedata) # n=50 observations
+rss <- bsum$rss # rss of each best subset
+```
+
+```{r}
+BIC <- bsum$bic # Exactly values from rs summary
+plot(BIC ~ p, ylab = "BIC", xlab = "Number of Predictors (incl intercept)", pch = 16)
+```
+
+
+- The `car` package has a `subsets` function that takes the generates nice, labeled BIC (or other statistics, not AIC though) plots generated from the `regsubsets` function.
+
+
+```{r}
+library(car)
+subsets(best, statistic = "bic", legend = FALSE) # stat can be “bic”, “cp”, “adjr2”, “rsq”, “rss”
+```
+
+```{r}
+AIC <- BIC + p * (2 - log(n)) # Compute AIC from BIC
+plot(AIC ~ p, ylab = "BIC", xlab = "Number of Predictors (incl intercept)", pch = 16)
+```
+
+### Optional if You Want to Compare With Formulas
+
+
+```{r, eval = FALSE}
+# This computes BIC from the formula (ignoring the constant c)
+BIC2 <- n * log(rss/n) + log(n) * p  # include the intercept when giving p
+BIC - BIC2  # This tells you what the constant c is.
+```
+
+
+```{r, eval = FALSE}
+# This computes AIC from the formula (ignoring the constant c)
+AIC2 <- n * log(rss/n) + 2 * p  # include the intercept when giving p
+AIC - AIC2  # This tells you what the constant c is.
+```
+
+
+## Adjusted $R^2$
+
+The **adjusted $R^2$** is another criterion that penalizes for the number of parameters in the model. Adjusted $R^2$, $R_a^2$** is a better criterion for assessing model fit than $R^2$. 
+
+For model $\mathcal{M}$ with $p_{\mathcal{M}}$ regression coefficients, 
+
+$$R_a^2=1- \frac{\mbox{RSS}_\mathcal{M}/(n-p_\mathcal{M})}{\mbox{TSS}/(n-1)} = 1 - \left(\frac{n-1}{n-p_{\mathcal{M}}} \right) \left( 1-R^2 \right) = 1 - \frac{\hat{\sigma}^2_{\mathcal{M}}}{\hat{\sigma}^2_{\rm null}}.$$
+
+**Adding a regressor to a model only increases $R_a^2$ if the regressor has some predictive value.**
+
+- Minimizing the variance of the prediction error amounts to minimizing $\hat{\sigma}^2_{\mathcal{M}}$.
+- The smaller that $\hat{\sigma}^2_{\mathcal{M}}$  becomes the larger $R^2_a$ becomes.
+- **We favor models that produce larger $R_a^2$.**
+
+### Computing the Adjusted $R^2$
+
+```{r}
+#faraway::sumary(lmod) #gives R^2 for full model
+#summary(lmod) # both R^2 and R_a^2 for full model
+(adjr <- bsum$adjr) #pulls R_a^2 from regsubsets for each subset
+```
+
+```{r}
+plot(adjr ~ p, ylab = expression({R^2}[a]), 
+     xlab = "Number of Predictors", pch = 16)
+```
+
+```{r}
+subsets(best, statistic = "adjr2", legend = FALSE)
+```
+
+## Mean Square Error (MSE)
+
+The **Mean Square Error (MSE)** of an estimator measures the average squared distance between the estimator and the parameter:
+
+$$\mbox{MSE} (\hat{\theta})  = E \left( (\hat{\theta} - \theta)^2 \right) = \mbox{Var} (\hat{\theta}) + \left( \mbox{Bias}(\hat{\theta})\right)^2$$
+
+- MSE is a criterion the combines bias and efficiency.
+- If two estimators are unbiased, one is more efficient than the other if and only if it has a smaller MSE.
+- We favor models with smaller mean squared error, but the search algorithm is very important, otherwise you just use the model with the most regressors.
+
+
+## Mallow's $C_p$ Statistic
+
+Mallow’s $C_p$ statistic is a criterion designed to quantify the predictive usefulness of a model. Mallow’s $C_p$ statistic is used to estimate the average **mean square error** of the prediction,
+
+$$ \frac{1}{\sigma^2} \sum_i MSE(\hat{y}_i) =  \frac{1}{\sigma^2} \sum_iE\big( (\hat{y}_i - E(y_i))^2 \big)$$
+
+The average of the mean square errors can be approximated by Mallow's $C_p$ Statistic:
+
+$$C_{p_{\mathcal{M}}} = \frac{\mbox{RSS}_{\mathcal{M}}}{\hat{\sigma}^2} + 2p_{\mathcal{M}} - n$$.
+
+- For the model with all regressors (model $\Omega$ with $p_{\Omega}$ regression coefficients), we have $C_{p_{\Omega}}=p_{\Omega}$
+- If a model with $p_{\mathcal{M}}$ regression coefficients fits the data well and has little or no bias, then $E(C_{p_{\mathcal{M}}}) \approx p_{\mathcal{M}}$.
+  - A model with a biased fit will have $C_{p_{\mathcal{M}}}$ much larger than $p_{\mathcal{M}}$. 
+  - Models with $C_{p_{\mathcal{M}}}$ less than $p_{\mathcal{M}}$ do not show evidence of bias.
+- It is common to plot $C_{p_{\mathcal{M}}}$ versus $p_{\mathcal{M}}$ and compare this to $45^{\circ}$ line $C_{p_{\mathcal{M}}}= p_{\mathcal{M}}$ .
+- **We favor models with small $p_{\mathcal{M}}$ and $C_{p_{\mathcal{M}}}$ close to $p_\mathcal{M}$.**
+
+### Computing Mallow's $C_p$ Statistic
+
+```{r}
+cp <- bsum$cp # Display the C_p for each value of p
+plot(cp ~ p, ylab = expression({C_p}), 
+     xlab = "Number of Predictors", pch = 16)
+abline(0,1) # plots line y=x
+```
+
+
+```{r}
+subsets(best, statistic = "cp", legend = FALSE)
+abline(0,1) 
+```
+
+### Question 7: Interpret the output from the $C_p$ plot above. What is the best model according to this metric?
+
+- Four predictors (including the intercept) seems about right.
+- Five predictors could be a suitable choice too.
+
+
+```{r}
+bmod <- lm(Life.Exp ~ Population + Murder + HS.Grad + Frost, data = statedata)
+```
+
+### Root Mean Squared Error
+
+The **RMSE (root mean squared error)** is simply the square root of the MSE, and is sometimes used in place of the MSE.
+
+- The RMSE or MSE will produce identical variable selection results since they are 1-1 transformations of each other.
+
+# Cross-validation 
+
+In the previous example, we can pat ourselves on the back and say we removed four predictors and that causes only a minor reduction in fit. Well done, but a better question might be: **what would the effect of removing these variables be on a new independent sample?**
+
+- Well, we just used all of our sample data to construct this model.
+- We need to see how well our data does with new data (not used in construction of the model).
+- How can we see how good our model works?
+
+**Cross-validation**  breaks the data into a **training dataset** and a **test dataset** to get a more accurate assessment of the predictive accuracy of a model.
+
+1. A model is fit to the training dataset.
+2. The fitted model is used to predict the responses of the test dataset.
+3. An error criterion (e.g, the MSE) is calculated for the test dataset.
+
+**When using cross-validation as your selection criterion, we prefer the model that produces the lowest MSE (or RMSE).**
+
+## Methods For Splitting the Data
+
+There are many variations of how to choose the training and testing datasets for crossvalidation.
+
+### Leave-One Out Crossvalidation
+
+**Leave-one-out crossvalidation** uses each observation (individually) as a test data set, using the other $n-1$ observations as the training data.
+
+
+#### Should We Inlcude Population?
+
+```{r}
+ersq <- numeric(n)
+
+for (i in 1:n){
+  train.ds <- statedata[-i, ]
+  test.ds <- statedata[i, ]
+  tmod <- lm(Life.Exp ~ Population + Murder + HS.Grad + Frost, data = train.ds)
+  predy <- predict(tmod, new = test.ds)
+  y <- test.ds[1,4]
+  ersq[i] <- (predy - y)^2
+}
+
+(tmse <- sum(ersq)) 
+```
+
+```{r}
+ersq <- numeric(n)
+
+for (i in 1:n){
+  train.ds <- statedata[-i, ]
+  test.ds <- statedata[i, ]
+  tmod <- lm(Life.Exp ~ Murder + HS.Grad + Frost, data = train.ds)
+  predy <- predict(tmod, new = test.ds)
+  y <- test.ds[1,4]
+  ersq[i] <- (predy - y)^2
+}
+
+(tmse <- sum(ersq)) 
+```
+
+
+### $k$-Fold Crossvalidation
+
+**$k$-fold crossvalidation** breaks the data into $k$ unique sets.  
+
+- For each set, the other $k-1$ sets are used as training data, and then the fitted model is used to predict the responses for the $k$th testing set.
+- We must fit $k$ models to determine the mean squared error.
+
+## Example of $k$-fold Crossvalidation
+
+Let's comparison the full model to model with `Population`, `Murder`, `HS.Grad`, and `Frost` predictors using the RMSE criterion and both 10-fold crossvalidation and leave-one-out crossvalidation.
+
+The `caret` package (short for Classification And REgression Training) contains functions to streamline the model training process for regression and classification problems.
+
+```{r}
+library(caret)
+
+# define training/test (control) data
+cv_10fold <- trainControl(method="cv", number = 10) # 10-fold crossvalidation train/test data
+
+# Set up fill and model with our 4 regressors
+f1 = Life.Exp ~ . # formula for full model
+f2 = Life.Exp~Population + Murder + HS.Grad + Frost 
+
+# Using training data to construct each model
+modela <- train(f1, data = statedata, trControl=cv_10fold, method = "lm") #full
+modelb <- train(f2, data = statedata, trControl=cv_10fold, method = "lm") #with 4 reg
+print(modela) # full, 10-fold
+```
+
+```{r}
+print(modelb) # reduced, 10-fold
+```
+
+```{r}
+# leave-one-out crossvalidation train/test data
+cv_loo <- trainControl(method="LOOCV") 
+
+modelfull <- train(f1, data = statedata, trControl=cv_loo, method = "lm") #full
+modelred <- train(f2, data = statedata, trControl=cv_loo, method = "lm") #with 4 reg
+print(modelfull) # full, leave one out
+```
+
+```{r}
+print(modelred) # reduced, leave one out
+```
+
+
+# There's Still More to Consider!
+
+```{r}
+#library(car) #needed but we already loaded
+influencePlot(lmod)
+```
+
+Let's remove Alaska since it is a high leverage point. Then identify best subset using $R^2_a$ as our search criterion.
+
+
+```{r}
+best <- regsubsets(Life.Exp ~., data = statedata, subset = (state.abb != "AK"))
+bsum <- summary(best) 
+bsum$which[which.max(bsum$adjr), ]
+```
+
+## Summary
+
+There are other mechanisms for choosing the training and test datasets, but these are the most common.
+
+- **When using cross-validation as your selection criterion, we prefer the model that produces the lowest MSE or RMSE.**
+- You typically don’t do an exhaustive search or stepwise selection search.
+- You often use one of the other selection criteria/search strategies to narrow down the possible models to a few final candidate models and then use cross-validation to make a final decision.
+- Iteration and experimentation are essential to finding better models BUT be very careful not to overtrain your model to the sample data!
+
+# Exercise  
+
+For the teengamb data in the faraway package, use the methods learned in this chapter to identify the “best” models.

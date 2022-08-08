@@ -1,0 +1,294 @@
+---
+title: "Prediction Part 1"
+date: "`r format(Sys.time(), '%Y-%m-%d')`"
+output: 
+  html_document: 
+    fig_height: 3
+    fig_width: 4
+---
+
+# Loading Data For This Exploration
+
+We'll be using the data frame called `fat` from the `faraway` package. The data frame `fat` has variables `Age` (in years), `weight` (in lbs), `height` (inches), and 10 body circumference measurements (all in cm) recorded for 252 men. Each man's percentage of body fat was accurately estimated by an underwater weighing technique. Below are some variables that are probably not well known:
+
+- `brozek`: Percent body fat using Brozek's equation, $457/Density - 414.2$.
+- `siri`:  Percent body fat using Siri's equation, $495/Density - 450$.
+- `density`: Density ($\mbox{gm}/\mbox{cm}^3$)
+- `adipos`: Adiposity index $= \mbox{Weight}/\mbox{Height}^2$ ($\mbox{kg}/\mbox{m}^2$)
+- `free`: Fat Free Weight $= (1 - \mbox{fraction of body fat}) \ast \mbox{Weight}$, using Brozek's formula (lbs)
+
+```{r}
+data(fat, package = "faraway")
+summary(fat)
+```
+
+# Prediction
+
+## Predicting Percent Body Fat
+
+We would like to use this data to build a model using the 13 variables listed below as regressors and `brozek` percent body fat (calculated using `brozek`) as the response. A common application of building a model is to make predictions. 
+
+
+## Question 1: What would the body fat be for a person that has the following measurements (note the first value is a place holder for the intercept in the model)?
+
+```{r}
+x0 <- c(1, fat[1, c("age", "weight", "height", "neck", "chest" , "abdom", "hip",
+                    "thigh", "knee", "ankle", "biceps", "forearm", "wrist")])
+knitr::kable(data.frame(x0))
+```
+
+
+
+```{r}
+# Imagine we have the following model
+lmod <- lm(brozek ~ age + weight + height + neck + chest + abdom + hip + 
+             thigh + knee + ankle + biceps + forearm + wrist, data = fat)
+# Coefficients of Model
+beta.hat <- coef(lmod)
+```
+
+```{r}
+# Predict value for the observed data above
+(y0.hat <- ??)
+```
+
+```{r}
+# Compare the predicted value above to the actual value
+fat[1,1]
+```
+
+
+## The General Setup
+
+Given a set of regressor values,
+$$\mathbf{x}_0=(1,x_{0,1},…,x_{0,p-1} )^T=\begin{pmatrix} 1 \\ x_{0,1} \\ \vdots \\ x_{0,p-1} \end{pmatrix},$$
+the predicted value for the associated response is $\widehat{y}_0 = \mathbf{x}_0^T \widehat{\beta}$.
+
+- For example, we found that $\widehat{y}_0 = 16.16451$ percent body fat.
+- However, we shouldn't state that all men with the given set of observed values have exactly the same percent body fat.
+- Different individuals with the same characteristics will have **about the same percent body fat**.
+- **How can we account for this variability when giving our prediction?**
+
+## Types of Predictions
+
+The uncertainty associated with our prediction depends on the type of inference desired.
+
+1. A specific man has the characteristics $\mathbf{x}_0$ and we would like to predict the percent body fat of this individual. The actual percent body fat of this individual is $y_0 = \mathbf{x}_0^T \boldsymbol\beta + \epsilon$. Since $E(\epsilon)=0$, the predicted price is $\widehat{y}_0 = \mathbf{x}_0^T \widehat{\boldsymbol\beta} =16.16451$ with some variability as a result of the variance of $\epsilon$. 
+
+2. We could ask a different question. "What would be the average percent body fat of ALL men  with characteristics $\mathbf{x}_0$?". The predicted mean percent body fat is again $\widehat{E}( \texttt{brozek} | \mathbf{x} = \mathbf{x}_0) = \widehat{y}_0 = \mathbf{x}_0^T \widehat{\boldsymbol\beta} =16.16451$, but in this case, we only need to take the variance of the $\widehat{\boldsymbol\beta}$.
+
+We are mostly interested in making predictions of the first type listed above, called a **prediction of a future value**. The second case is called a **prediction of the mean response** is less commonly of interest.
+
+## Question 2: Using properties of variance and underlying assumptions of our model, find the variance of $\widehat{y}_0 = \mathbf{x}_0^T \widehat{\boldsymbol\beta}$.
+
+
+$$\mbox{var}(\mathbf{x}_0^T \widehat{\boldsymbol\beta}) = ??$$
+
+**Enter your solution here.**
+
+**See appendix!**
+
+## Quantifying the Uncertainty of a Prediction
+
+- We do not know the value of $\epsilon$ (since we don't know the value of $y_0$), but we know that $E(\epsilon)=0$.
+- Thus, the **point estimate** for $y_0$ is given by $\widehat{y}_0 = \mathbf{x}_0^T \widehat{\boldsymbol\beta}$.
+- It is usually reasonable to assume that $\epsilon$ is independent of $\widehat{\boldsymbol\beta}$, thus a $100(1-\alpha)\%$ **confidence interval for a single future response** is:
+
+$$\widehat{y}_0 \pm t_{n-p}^{\alpha/2} \widehat{\sigma} \sqrt{1 + \mathbf{x}_0^T(X^TX)^{-1}\mathbf{x}_0}.$$
+
+- We typically use the term *confidence interval* to refer to an interval estimate for a parameter whose value is fixed, but unknown.
+- In this instance, we are using an interval to estimate an unknown $y_0$ that is a random variable.
+- For this reason, it is more accurate to refer to interval above as a **prediction interval**.
+- For example, we say there is a 95% chance that a future value falls within this interval.
+- For a confidence interval used to estimate a parameter, we say the interval has a 95% chance of containing the actual value of the parameter. We do not assign the uncertainty to the parameter we are estimating.
+
+# Example: Prediction Interval for Median Man
+
+Let's consider a charming individual, Median Man. Median Man has median values for all of their characteristics. 
+
+```{r}
+x <- model.matrix(lmod) # all observed values stored in X 
+(xmm <- apply(x, 2, median)) # 2 indicates find median value of each column
+```
+
+## Question 3: Predict Median Man's percent body fat.
+
+```{r}
+(ymm <- ??)
+```
+
+## Constructing Interval Estimates Using the `predict` Function
+
+Below is another approach for making future predictions using our model with the `predict` function.
+
+```{r}
+predict(lmod, new=data.frame(t(xmm)))
+```
+
+We can add the `interval` option to the `predict` function to construct both types of predictions we mentioned earlier:
+
+1. What is the percent body fat of Median Man? (just one individual)?
+2. What is the mean percent body fat for all men that have the same characteristics as Median Man?
+
+```{r}
+predict(lmod, new=data.frame(t(xmm)), interval = "prediction") # question 1
+predict(lmod, new=data.frame(t(xmm)), interval = "confidence") # question 2
+```
+
+## Question 4: Give a practical interpretation of each interval estimate above in the context of this example.
+
+**Enter your solution here.**
+
+## Question 5: Explain why it makes sense that the 95% prediction interval is much wider than the 95% confidence interval?
+
+**Enter your solution here.**
+
+
+# Extrapolation
+
+**Extrapolation** is making statistical inference outside the range of the observed data.
+
+## Question 6: What happens to the interval estimates when we predict body fat for a man named Nine D. Five? Why does this make practical sense?
+
+```{r}
+(x95 <- apply(x,2, function(x) quantile(x, 0.95))) # computes 95th percentile of each column
+```
+
+```{r}
+predict(lmod, new=data.frame(t(x95)), interval = "prediction") 
+predict(lmod, new=data.frame(t(x95)), interval = "confidence") 
+```
+
+**Enter your solution here.**
+
+
+# Sources of Uncertainty
+
+An additional source of variation is not accounted for in the previous intervals: 
+
+- Are we sure that our model is correct?
+
+We do our best to find a good model given the available data, but there will always be substantial model uncertainty, i.e., the form the model should take.
+
+- **Parametric uncertainty** is accounted for using the methods we have learned.
+- **Model uncertainty** is much harder to quantify.
+
+# What Can Go Wrong With Predictions?
+
+- **Bad model**: The statistician does a poor job of modeling the data.
+- **Quantitative extrapolation**: We try to predict outcomes for cases with predictor values much different from what we see in the data.  
+  - This is a practical problem in assessing the risk from low exposure to substances that are dangerous in high quantities — consider second-hand tobacco smoke, asbestos, and radon
+- **Qualitative extrapolation**: We try to predict outcomes for observations that come from a different population. 
+  - We used the body fat model for men to predict the body fat for women.
+  - We prefer experimental data to observational data, but sometimes experience from the laboratory does not transfer to real life.
+- **Overconfidence due to overtraining**
+  - Data analysts search for a model that fits their observed data very closely, but the fitted model may not be appropriate for new data.
+  - This can lead to unrealistically small $\widehat{\sigma}$.
+- **Black swans**: Sometimes errors can appear to be normally distributed because you haven't seen enough data to be aware of extremes.
+  - This is of particular concern in financial applications where stock prices are characterized by mostly small changes (normally distributed) but with infrequent large changes (usually falls).
+
+## Question 7: Teen Gambling Example 
+
+(a) Consider the teen gambling data set `teengamb` in the `faraway` R package.  Regress `gamble` on all the other variables in the data set.   
+
+```{r}
+data(teengamb, package = "faraway") #load data
+
+# fit model regressing gamble on all predictors
+lmod <- lm(gamble ~ sex + status + income + verbal, data = teengamb)
+```
+
+(b) Construct a 95% confidence intervals and prediction intervals for the response using the mean regressor values for males and females, separately.
+
+```{r}
+# find average of predictor values
+(male.ave <- apply(teengamb[teengamb$sex == ??, ], ??, ??))
+(female.ave <- apply(teengamb[teengamb$sex == ??, ], ??, ??))
+
+# convert these vectors to data.frames
+male.ave <- as.data.frame(t(male.ave))
+female.ave <- as.data.frame(t(female.ave))
+```
+
+You can use the `colMeans` function as well.
+
+```{r}
+# find average of predictor values
+male.ave <- colMeans(teengamb[teengamb$sex == ??, ])
+female.ave <- colMeans(teengamb[teengamb$sex == ??, ])
+
+# convert these vectors to data.frames
+male.ave <- as.data.frame(t(male.ave))
+female.ave <- as.data.frame(t(female.ave))
+```
+
+
+```{r}
+# confidence int for mean of male w/ average values
+predict(??)
+
+# confidence int for mean of female w/ average values
+predict(??)
+
+# prediction int for actual response of male w/ average values 
+predict(??)
+
+# prediction in for actual response of female w/ average values
+predict(??)
+```
+  
+
+(c) Construct a	98% confidence intervals and prediction intervals for the response using the $0.05$ quantile of the regressor values for males and females, separately.
+
+```{r}
+# find 0.05 quantiles for each column of predictors
+(male.05 <- ??)
+(female.05 <- ??)
+male.05 <- as.data.frame(t(male.05))
+female.05 <- as.data.frame(t(female.05))
+```
+
+```{r}
+# confidence int for mean of male w/ .05 quantiles
+predict(??)
+
+# confidence int for mean of female w/ .05 quantiles
+predict(??)
+
+# prediction int for actual response of male w/ .05 quantiles
+predict(??)
+
+# prediction int for actual response of female w/ .05 quantiles
+predict(??)
+```
+
+# Appendix: Computing Standard Errors for Confidence and Prediction Intervals
+
+## Confidence interval standard error:
+
+$$\begin{aligned}
+\mbox{var}(\mathbf{x}_0^T \widehat{\boldsymbol\beta}) &= \mathbf{x}_0^T \mbox{var}(\widehat{\boldsymbol\beta})\mathbf{x} \ \ \  \mbox{(by prop D.3)}\\
+&= \mathbf{x}_0^T\mbox{var}\big((X^TX)^{-1} \mathbf{y}^TX\big)\mathbf{x} \ \ \  \mbox{(see 06 Fitting linear models part2.pdf)}\\
+&= \mathbf{x}_0^T(X^TX)^{-1}\mbox{var}\big( \mathbf{y}^TX\big)\big((X^TX)^{-1}\big)^T\mathbf{x} \ \ \  \mbox{(by prop D.3)}\\
+&= \mathbf{x}_0^T(X^TX)^{-1}\mbox{var}\big( X^T\mathbf{y}\big)(XX^T)^{-1}\mathbf{x} \ \ \  \mbox{(by prop E.7 and E.10)}\\
+&= \mathbf{x}_0^T(X^TX)^{-1}X^T \mbox{var}\big( \mathbf{y}\big)X(XX^T)^{-1}\mathbf{x} \ \ \  \mbox{(by prop D.3)}\\
+&= \mathbf{x}_0^T(X^TX)^{-1}X^T \sigma^2 X(XX^T)^{-1}\mathbf{x}\\
+&= \mathbf{x}_0^T(X^TX)^{-1}(X^T X)(XX^T)^{-1}\mathbf{x} \sigma^2\\
+&=\mathbf{x}_0^T(X^TX)^{-1}\mathbf{x}_0 \sigma^2.
+\end{aligned}$$
+
+
+## Prediction interval standard error:
+
+$$\begin{aligned}
+\mbox{var}(y_0-\widehat{y}_0) &= \mbox{var}(y_0) +\mbox{var}(\widehat{y}_0) + 2 \mbox{cov}(y_0, \widehat{y}_0) \ \ \ \mbox{(by prop B.6)} \\
+&= \mbox{var}(y_0) +\mbox{var}(\widehat{y}_0) \ \ \ \mbox{(see note below)}\\
+&= \sigma^2 + \mathbf{x}_0^T(X^TX)^{-1}\mathbf{x}_0 \sigma^2 \ \ \ \mbox{(from previous result)}\\
+&= \sigma^2 \left(1 + \mathbf{x}_0^T(X^TX)^{-1}\mathbf{x}_0\right)\\
+\end{aligned}$$
+
+Note: $\mbox{cov}(y_0, \widehat{y}_0)=0$ because $y_0$ and $\widehat{y}_0$ are independent. They are independent because $\widehat{y}_0$ is estimated using $y_1, \ldots , y_n$ and $y_0$ is a new observation independent of them.
+
+## Underlying distrubtion
+
+Since we do not know the value of $\sigma^2$, we use the estimate $\widehat{\sigma}^2$ and thus we use a $t$-distribution with $n-p$ degrees of freedom instead of a normal distribution.

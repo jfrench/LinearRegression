@@ -1,0 +1,65 @@
+---
+title: "Integration in R"
+#date: "`r format(Sys.time(), '%Y-%m-%d')`"
+output:
+  pdf_document: default
+  html_document:
+    df_print: paged
+---
+
+# Integrating using the `pracma` library
+
+You will need to install the `pracma` package one time.
+Then you will need to load it with `library(pracma)` each time you begin a new session in which you wish to use the `integral` and `integral2` functions.
+
+```{r}
+#install.packages("pracma")
+library(pracma)
+```
+
+# Function of 1 variable
+
+```{r}
+f <- function(x) x^2 # first enter the function
+integral(f, 0, 3) # enter x limits first and y limits last
+```
+
+# Function of 2 (or more) variables
+
+```{r}
+f <- function(x,y) x*y # first enter the function
+integral2(f, 5, 30, 10, 30) # enter x limits first and y limits last
+```
+
+# Derivatives and Antiderivatives in R
+
+You will need to run the first line of code one time to install the required `mosaicCalc` package
+
+```{r}
+#install.packages("mosaicCalc")
+library(mosaicCalc)
+der.sq <- D(x^2 ~ x)
+anti.sq <- antiD(x^2 ~ x)
+der.sq
+anti.sq
+```
+
+# Example from Class
+
+```{r}
+int.x <- function(x) x*(6/5*x + 2/5) # first enter the function
+mu.x <- integral(int.x, 0, 1) # enter x limits first and y limits last
+
+int.y <- function(y) y*(6/5*y^2 + 3/5) # first enter the function
+mu.y <- integral(int.y, 0, 1) # enter x limits first and y limits last
+
+mu.x
+mu.y
+```
+
+# E(XY)
+
+```{r}
+int.xy <- function(x,y) x*y*(6/5*(x + y^2)) # first enter the function
+integral2(int.xy, 0, 1, 0, 1) # enter x limits first and y limits last
+```
