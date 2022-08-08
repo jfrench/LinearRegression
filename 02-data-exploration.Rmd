@@ -12,22 +12,22 @@ output:
 # knitr::opts_chunk$set(comment = "#>", collapse = TRUE)
 knitr::opts_chunk$set(collapse = TRUE)
 
-# # https://bookdown.org/yihui/rmarkdown-cookbook/hook-truncate.html
-# # save the built-in output hook
-# hook_output <- knitr::knit_hooks$get("output")
-# 
-# # set a new output hook to truncate text output
-# knitr::knit_hooks$set(output = function(x, options) {
-#   if (!is.null(n <- options$out.lines)) {
-#     x <- xfun::split_lines(x)
-#     if (length(x) > n) {
-#       # truncate the output
-#       x <- c(head(x, n), "....\n")
-#     }
-#     x <- paste(x, collapse = "\n")
-#   }
-#   hook_output(x, options)
-# })
+# https://bookdown.org/yihui/rmarkdown-cookbook/hook-truncate.html
+# save the built-in output hook
+hook_output <- knitr::knit_hooks$get("output")
+
+# set a new output hook to truncate text output
+knitr::knit_hooks$set(output = function(x, options) {
+  if (!is.null(n <- options$out.lines)) {
+    x <- xfun::split_lines(x)
+    if (length(x) > n) {
+      # truncate the output
+      x <- c(head(x, n), "....\n")
+    }
+    x <- paste(x, collapse = "\n")
+  }
+  hook_output(x, options)
+})
 ```
 
 # Data cleaning and exploration
@@ -36,361 +36,6 @@ You should explore every data set numerically and visually prior to modeling it.
 
 In order to properly explore the data, it is likely that you will need to prepare the data. Many data sets are initially poorly structured, have store the variables with an as an inappropriate data type, have poor variable names, etc. The process of preparing the data into a friendly format is known as "cleaning".
 
-<<<<<<< HEAD
-### Problem Formulation
-
-* Understand the physical background.
-  * Statisticians often work in collaboration with others and need to understand something about the subject area.
-* Understand the objective.
-  * What are your goals?
-  * Make sure you know what the client wants.
-* Put the problem into statistical terms.
-  * This is often the most challenging step and where irreparable errors are sometimes made.
-  * That a statistical method can read in and process the data is not enough. The results of an inept analysis may be meaningless.
-
-### Data collection
-
-Data collection:
-
-* How the data were collected has a crucial impact on what conclusions can be made.
-  * Are the data observational or experimental?
-  * Are the data a sample of convenience or were they obtained via a designed sample survey?
-* Is there nonresponse bias?
-  * The data you do not see may be just as important as the data you do see.
-* Are there missing values?
-  * This is a common problem that is troublesome and time consuming to handle.
-  * How are the data coded? How are the qualitative variables represented?
-* What are the units of measurement?
-* Beware of data entry errors and other corruption of the data.
-  * Perform some data sanity checks.
-
-## Data exploration
-
-An initial exploration of the data should be performed prior to any formal analysis or modeling.
-
-Initial data analysis should consist of numerical summaries and appropriate plots.
-
-### Numerical summaries of data
-
-Statistics can be used to numerically summarize aspects of the data:
-
-* mean
-* standard deviation (SD)
-* maximum and minimum
-* correlation
-* other measures, as appropriate
-
-### Visual summaries of data
-
-Plots can provide a useful visual summary of the data.
-
-* For one numerical variable: boxplots, histograms, density plots, etc.
-* For one categorial variable: bar charts.
-* For two numerical variables: scatter plots.
-* For one numerical and one categorical variables: parallel boxplots or density plots that distinguish between category level.
-* For two categorical variables: panels of bar charts.
-* For three or more variables: one or two variable plots with distinguishing colors or line types, interactive and dynamic graphics.
-
-Good graphics are essential in data analysis.
-
-* They help us to understand our data structure so that we can avoid mistakes.
-* They help us decide on a model.
-* They help communicate the results of our analysis.
-* Graphics can be more convincing than text at times.
-
-### What to look for
-When summarizing the data, look for:
-
-* outliers
-* data-entry errors
-* skewness
-* unusual distributions
-* patterns or structure
-
-## Kidney Example
-
-The National Institute of Diabetes and Digestive and Kidney Diseases conducted a study on 768 adult female Pima Indians living near Phoenix. The following variables were recorded:
-
-* `pregnant` - number of times pregnant
-* `glucose` - plasma glucose concentration at 2 hours in an oral glucose tolerance test
-* `diastolic` - diastolic blood pressure (mm Hg)
-* `triceps` - triceps skin fold thickness (mm)
-* `insulin` - 2-hour serum insulin (mu U/ml)
-* `bmi` - body mass index (weight in kg/(height in m2))
-* `diabetes` - diabetes pedigree function
-* `age` - age (years)
-* `test` - test whether the patient showed signs of diabetes (coded zero if negative, one if positive).
-
-The data may be obtained from the UCI Repository of machine learning databases at https://archive.ics.uci.edu/ml.
-
-Let's load and examine the structure of the data
-```{r}
-data(pima, package = "faraway")
-str(pima) # structure
-head(pima) # first six rows
-tail(pima) # last six rows
-```
-### Numerically summarizing the data
-The `summary` command is a useful way to numerically summarize a data frame.
-
-The `summary` function will compute the minimum, 0.25 quantile, mean, median, 0.75 quantile, and maximum of a `numeric` variable.
-
-The `summary` function will count the number of values having each level for a `factor` variable.
-
-Let's summarize the `pima` data frame.
-
-```{r}
-summary(pima)
-```
-
-### Cleaning the data
-
-Cleaning data involves finding and correcting data quality issues.
-
-The `pima` data set has some odd characterics:
-
-* The minimum `diastolic` blood pressure is zero.
-  * That's generally an indication of a health problem.
-* The `test` variable appears to be `numeric` but should be a `factor` (categorical) variable.
-* Many other variables have unusual zeros.
-  * Look for anything unusual or unexpected, perhaps indicating a data-entry error.
-
-Let's look at the first 40 sorted `diastolic` values.
-```{r}
-sort(pima$diastolic)[1:40]
-```
-
-The first 35 values of `diastolic` are zero. That's a problem.
-
-* It seems that 0 was used in place of a missing value.
-* This is very bad since 0 is a real number and this problem may be overlooked, which can lead to faulty analysis!
-* This is why we must check our data carefully for things that don't make sense.
-
-The value for missing data in R is `NA`.
-
-Several variables share this problem.  Let's set the 0s that should be missing values to `NA`.
-
-```{r}
-pima$diastolic[pima$diastolic == 0]  <- NA
-pima$glucose[pima$glucose == 0] <- NA
-pima$triceps[pima$triceps == 0]  <- NA
-pima$insulin[pima$insulin == 0] <- NA
-pima$bmi[pima$bmi == 0] <- NA
-```
-
-The `test` variable is a categorical variable, not numerical.
-
-* R thinks the `test` variable is `numeric`.
-* In R, a categorical variable is a `factor`.
-* We need to convert the `test` variable to a `factor`.
-
-Let's convert `test` to a factor.
-```{r}
- pima$test <- factor(pima$test)
- summary(pima$test)
-```
-
-500 of the cases were negative and 268 were positive.  We can provide more descriptive labels using the `levels` function.
-
-We change the `0` and `1` levels to `negative` and `positive` to make the data more descriptive. A `summary` of the updates `test` variable shows why this is useful.
-
-```{r}
-levels(pima$test) <- c("negative", "positive")
-summary(pima$test)
-```
-
-## Visualizing data with **base** graphics
-
-### Histograms
-The `hist` function can be used create a histogram of a numerical vector.
-
-* The labels of the plot can be customized using the `xlab` and `ylab` arguments.
-* The main title of the plot can be customized using the `main` argument.
-
-Here is a slightly customized histogram of diastolic blood pressure.
-
-```{r}
-hist(pima$diastolic, xlab = "diastolic blood pressure", main = "")
-```
-
-The histogram is approximately bell-shaped and centered around 70.
-
-We can change the number of breaks in the histogram by specifying the `breaks` argument of the `hist` function.
-
-Consider how the plot changes below.
-
-```{r}
-hist(pima$diastolic, xlab = "diastolic blood pressure", main = "", breaks = 20)
-```
-
-### Density plots
-
-Many people prefer the density plot over the histogram because the histogram is more sensitive to its options.
-
-A density plot is essentially a smoothed version of a histogram.
-
-* It isn't as blocky.
-* It sometimes has weird things happen at the boundaries.
-
-The `plot` and `density` function can be combined to construct a density plot.
-
-```{r}
-plot(density(pima$diastolic, na.rm = TRUE), main = "")
-```
-
-In the example above, we have to specify `na.rm = TRUE` so that the density is only computed using the non-missing values.
-
-### Index plots
-
-An index plot is a scatter plot of a `numeric` variable versus the index of each value (i.e., the position of the value in the  vector).
-
-* This is most useful for sorted vectors.
-
-A scatter plot of sorted `numeric` values versus their index can be used to identify outliers and see whether the data has many repeated values.
-
-```{r}
-plot(sort(pima$diastolic), ylab = "sorted diastolic bp")
-```
-
-The flat spots in the plot above show that the `diastolic` variable has many repeated values.
-
-### Bivariate scatter plots
-
-Bivariate scatter plots can be used to identify the relationship between two `numeric` variables.
-
-A scatter plot of diabetes vs diastolic blood pressure is shown below.
-```{r}
-plot(diabetes ~ diastolic, data = pima)
-```
-
-There is no clear pattern in the points, so it's difficult to claim a relationship between the two variables.
-
-### Bivariate boxplots
-
-A parallel boxplot of `diabetes` score versus `test` result is shown below.
-```{r}
-plot(diabetes ~ test, data = pima)
-```
-
-The median `diabetes` score seems to be a bit higher for positive tests in comparison to the negative tests.
-
-### Multiple plots in one figure
-
-The `par` function can be used to construct multiple plots in one figure.
-
-* The `mfrow` argument can be used to specify the number of rows and columns of plots you need.
-
-A 1 by 2 set of plots is shown below.
-```{r}
-par(mfrow = c(1, 2))
-plot(diabetes ~ diastolic, data = pima)
-plot(diabetes ~ test, data = pima)
-par(mfrow = c(1, 1)) # reset to a single plot
-```
-
-## Visualizing data with **ggplot2**
-
-The previous plots were created using R's **base** graphics system.
-
-* **base** graphics are fast and simple to produce while looking professional.
-
-A fancier alternative is to construct plots using the **ggplot2** package.
-
-In its simplest form, to construct a (useful) plot in **ggplot2**, you need to provide:
-
-* A `ggplot` object.
-  * This is usually the object that holds your data frame.
-  * The data frame is passed to `ggplot` via the `data` argument.
-* A geometry object
-  * Roughly speaking, this is the *kind* of plot you want.
-  * e.g., `geom_hist` for a histogram, `geom_point` for a scatter plot, `geom_density` for a density plot.
-* An aesthetic mapping
-  * Aesthetic mappings describe how variables in the data are mapped to visual properties of a geometry.
-  * This is where you specify which variable with be the `x` variable, the `y` variable, which variable will control color in the plots, etc.
-
-### A **ggplot2** histogram
-```{r}
-library(ggplot2)
-ggpima <-  ggplot(pima)
-ggpima + geom_histogram(aes(x=diastolic))
-```
-
-### A **ggplot2** density plot
-```{r}
-ggpima + geom_density(aes(x = diastolic))
-```
-
-### A **ggplot2** scatter plot
-```{r}
-ggpima + geom_point(aes(x = diastolic, y = diabetes))
-```
-
-### Scaling **ggplot2** plots
-
-In general, *scaling* is the process by which **ggplot2** maps variables to unique values. When this is done for discrete variables, **ggplot2** will often scale the variable to distinct colors, symbols, or sizes, depending on the aesthetic mapped.
-
-In the example below, we map the `test` variable to the `shape` aesthetic, which is then scaled to different shapes for the different `test` levels.
-
-```{r}
-ggpima +
-  geom_point(aes(x = diastolic, y = diabetes, shape = test))
-```
-
-Alternatively, we can map the `test` variable to the `color` aesthetic, which creates a plot with different colors for each observation based on the `test` level.
-
-```{r}
-ggpima +
-  geom_point(aes(x = diastolic, y = diabetes, color = test))
-```
-
-We can even combine these two aesthetic mappings in a single plot to get different colors and symbols for each level of `test`.
-
-```{r}
-ggpima +
-  geom_point(aes(x = diastolic, y = diabetes, shape = test, color = test))
-```
-
-### Facetting in `ggplot2`
-
-Facetting creates separate panels (facets) of a data frame based on one or more facetting variables.
-
-Below, we facet the data by the `test` result.
-
-```{r}
-ggpima +
-  geom_point(aes(x = diastolic, y = diabetes)) +
-  facet_grid(~ test)
-```
-
-### Summary of **ggplot2**
-
-To create a **ggplot2** plot:
-
-* Create a`ggplot` object using the `ggplot` function.
-  * Specify the data frame the data is contained in (e.g., the data frame is `pima`).
-* Specify the geometry for the plot (the kind of plot you want to produce)
-* Specify the aesthetics using `aes`.
-  * The aesthetic specifies what you see, such as position in the $x$ or $y$ direction or aspects such as shape or color.
-  * The aesthetic can be specified in the geometry, or if you have consistent aesthetics across multiple geometries, in the `ggplot` statement.
-
-The advantage of **ggplot2** is more apparent in producing complex plots involving more than two variables.
-
-  * **ggplot2** makes it easy to plot the data for each group with different colors, symbols, line types, etc.
-  * **ggplot2** will automatically provide a legend mapping the attributes to the different groups.
-  * **ggplot2** makes it easy to create separate panels with plots for the observations having a certain characteristic.
-
-## Summary of data exploration
-
-You should use both numerical and graphical summaries of data **prior** to modeling data.
-
-Data exploration helps us to:
-
-* Gain understanding about our data
-* Identify problems or unusual features of our data
-* Identify patterns in our data
-* Decide on a modeling approach for the data
-* etc.
-=======
 A systematic exploration of the data is essential to performing a correct analysis. We will demonstrate a systematic (but not exhaustive) exploration of the `penguins_raw` data set from the **palmerpenguins** package [@R-palmerpenguins].
 
 For brevity, we exclude some of the code output in analysis that follows. The excluded portion will be noted with `...`.
@@ -438,10 +83,10 @@ The data set includes 344 observations of 17 variables. The variables are:
 
 ## Initial data cleaning
 
-The `str` function is a great first function to apply on a newly loaded data set that you aren't familiar with because it provides a general overview of the data's structure (normally you wouldn't set the `give.attr` argument to `FALSE`, but we do so here to save space.)
+The `str` function is a great first function to apply on a newly loaded data set that you aren't familiar with because it provides a general overview of the data's structure.
 
-```{r str-penguins-raw}
-#str(penguins_raw, give.attr = FALSE)
+```{r str-penguins-raw, out.lines = 17}
+str(penguins_raw, give.attr = FALSE)
 ```
 We see that the `penguins_raw` object is a `tibble`, a special kind of data frame provided by the **tibble** package [@R-tibble] as part of the broader **tidyverse**. It has 344 rows and 17 columns. In general, a `tibble` will function like a standard data frame, though its behavior may change when **tidyverse** packages are loaded. In the code below, we confirm that `penguins_raw` qualifies as a **base** R `data.frame`.
 
@@ -1032,3 +677,7 @@ If the data are clearly erroneous, attempt to get the correct value. If the valu
 What should you do about `NA`s. There are many approaches for dealing with `NA`s. The proper approach depends a lot on WHY the data are missing. Speaking informally, if there is not systematic reason why the data are missing, then ignoring the observations with missing data isn't a terrible approach. However, if there is a systematic reason why the data are missing (such as individuals not wanting to answer a sensitive question, subjects dying for a specific reason) then ignoring that data can lead to erroneous conclusions.
 
 In what follows, we will generally ignore missing data, assuming the problem is not systematic.
+
+```{r, include = FALSE}
+knitr::knit_hooks$set(output = hook_output)
+```

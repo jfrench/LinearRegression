@@ -1011,3 +1011,7 @@ system.time(result = rnorm(100))
 What's the difference? In the second case, R thinks you are setting the `result` argument of the `system.time` function (which doesn't exist) to the value produced by `rnorm(100)`.
 
 Thus, it is best to use `<-` for assigning a name to an object and reserving `=` for specifying function arguments.
+
+```{r, include = FALSE}
+knitr::knit_hooks$set(output = hook_output)
+```
