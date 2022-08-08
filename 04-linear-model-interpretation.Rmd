@@ -182,7 +182,10 @@ E(Y\mid X = x^*, C=L_2) &= \beta_{int} + \beta_X x^* + \beta_{L_2} \cdot 1 + \be
 \end{align}
 \]
 Thus, 
-\[E(Y\mid X=x^*, C=L_2) - E(Y\mid X=x^*, C=L_1) = (\beta_{int} + \beta_X x^* + \beta_{L_2}) - (\beta_{int} + \beta_X x^*) = \beta_{L_2}.
+\[
+\begin{align}
+E(Y\mid X=x^*, C=L_2) - E(Y\mid X=x^*, C=L_1) &= \\ (\beta_{int} + \beta_X x^* + \beta_{L_2}) - (\beta_{int} + \beta_X x^*)&=  \beta_{L_2}.
+\end{align}
 \]
 A similar result holds for $\beta_{L_3}$ when $C=L_3$. Thus, $\beta_{L_2}$ is the expected change in the response for a fixed value of $X$ when comparing on observation having level $L_1$ to level $L_2$ of predictor $C$. A similar interpretation holds for $\beta_{L_3}$. $L_1$ is known as as the reference level because we must refer to it to interpret our model with respect to other levels of $C$.
 
@@ -279,7 +282,7 @@ In the context of this model:
 
 ## Effect plots
 
-An effect plot is a visual display that aids in helping us intuitively interpret the impact of a *predictor* in a model. Specifically, **an effect plot** is a plot of the estimated mean response as a function of a *predictor* with the other *predictors* being held at their observed sample mean. The emphasis on *predictor* is intentional. Recall from Section \@ref(a-simple-motivating-example) that a predictor variable is a variable available to model the response variable. A **regressor** variable is a variable used in our regression model, whether that is an unmodified predictor variable, some transformation of a predictor, some combination of predictors, etc. Thus, for the models considered so far in this chapter, `body_mass_g`, `flipper_length_mm`, and `species` are predictor variables. The original information available to build a model. Additionally, based on how we used them, `body_mass_g` and `flipper_length_mm` were also regressors in certain models. Additional regressors were `speciesChinstrap` and `speciesGentoo` (the indicator variables for Chinstrap and Gentoo penguins based on the variable `species`, respectively) and `body_mass_g:speciesChinstrap` and `body_mass_g:speciesGentoo`, the regressors created by multiplying the indicator variables with the `body_mass_g` predictor. This distinction is important when discussing effect plots, because we can create effect plots for each predictor but not necessarily each regressor.
+An effect plot is a visual display that aids in helping us intuitively interpret the impact of a *predictor* in a model. Specifically, an **effect plot** is a plot of the estimated mean response as a function of a *predictor* with the other *predictors* being held at their observed sample mean. The emphasis on *predictor* is intentional. Recall from Section \@ref(a-simple-motivating-example) that a predictor variable is a variable available to model the response variable. A **regressor** variable is a variable used in our regression model, whether that is an unmodified predictor variable, some transformation of a predictor, some combination of predictors, etc. Thus, for the models considered so far in this chapter, `body_mass_g`, `flipper_length_mm`, and `species` are predictor variables. The original information available to build a model. Additionally, based on how we used them, `body_mass_g` and `flipper_length_mm` were also regressors in certain models. Additional regressors were `speciesChinstrap` and `speciesGentoo` (the indicator variables for Chinstrap and Gentoo penguins based on the variable `species`, respectively) and `body_mass_g:speciesChinstrap` and `body_mass_g:speciesGentoo`, the regressors created by multiplying the indicator variables with the `body_mass_g` predictor. This distinction is important when discussing effect plots, because we can create effect plots for each predictor but not necessarily each regressor.
 
 ### Effect plots for numeric predictors
 
