@@ -49,9 +49,7 @@ The outcome variable we are trying to predict is known as the **response variabl
 
 The variables available to model the response variable are known as **predictors variables**.  Predictor variables are also known as **explanatory**, **regressor**, **input**, **dependent** variables, or simply as **features**. Following the convention of @alr4, we use the term **regressor** to refer to the variables used in our regression model, whether that is the original predictor variable, some transformation of a predictor, some combination of predictors, etc. Thus, every predictor can be a regressor but not all regressors are a predictor. The regressor variables are denoted as $X_1, X_2, \ldots, X_{p-1}$.
 
-A regression analysis assumes that we have observed variables $X_1$, $X_2$, \ldots, $X_{p-1}$, and $Y$ for each of $n$ subjects from some population, with $x_{i,j}$ denoting the value of $X_j$ for observation $i$ and $Y_i$ denoting the value of $Y$ for observation $i$. Note: if there is only a single regressor, we can denote the regressor as $X$ and the observed values as $x_1, x_2, \ldots, x_n$.
-
-For the height data, the 5 pairs of observed data are denoted
+A regression analysis assumes that we have observed variables $X_1, X_2, \ldots, X_{p-1}$, and $Y$ for each of $n$ subjects from some population, with $x_{i,j}$ denoting the value of $X_j$ for observation $i$ and $Y_i$ denoting the value of $Y$ for observation $i$. If there is only a single regressor, we can denote the single regressor as $X$ and the observed values of $X$ as $x_1, x_2, \ldots, x_n$. For the height data, the 5 pairs of observed data are denoted
 \[(x_1, Y_1), (x_2, Y_2), \ldots, (x_5, Y_5),\]
 with $(x_i, Y_i)$ denoting the data for observation $i$. $x_i$ denotes the mother's height for observation $i$ and $Y_i$ denotes the daughter's height for
 observation $i$. Referring to Table \@ref(tab:mdheights), we see that, e.g., $x_3 = 63.5$ and $Y_5= 66.5$.
@@ -67,19 +65,9 @@ observation $i$. Referring to Table \@ref(tab:mdheights), we see that, e.g., $x_
 <!-- The regression model specifically refers to the expected relationship -->
 <!-- between the response and regressors. -->
 
-The regression model for $Y$ as a function of $X$, denoted $E(Y \mid X)$, is the expected value of $Y$ conditional on the regressor $X$. Thus, a regression model specifically refers to the expected relationship between the response and regressors.
+Suppose we want to find the straight line that best fits the plot of mother and daughter heights in Figure \@ref(fig:mdheights-plot). How do we determine the "best fitting" model? Consider Figure \@ref(fig:three-fitted-lines), in which 2 potential "best fitting" lines are drawn on the scatter plot of the height data. Which one is best?
 
-A **simple linear regression model** assumes the regression model between $Y$ and $X$ is a straight line using the equation
-\[
-\begin{equation}
-E(Y \mid X)=\beta_0 + \beta_1 X. (\#eq:slr-equation)
-\end{equation}
-\] The $\beta_0$ and $\beta_1$ terms of our equation are known as the intercept and slope and are read as "beta knot" and "beta one", respectively. In general, $\beta_0$ and $\beta_1$ are known as **regression coefficients** and are model parameters that we estimate from our data.
-
-The estimated regression model is denoted by
-\[\hat{E}(Y \mid X)=\hat{\beta}_0 + \hat{\beta}_1 X,\] where $\hat{\beta}_0$ and $\hat{\beta}_1$ are values of $\beta_0$ and $\beta_1$ that we estimate from the data. A $\hat{}$ above a term, which is read as "hat", indicates it is an estimate. We will refer to $\hat{E}(Y|X)$ as the **fitted model** or **estimated regression model**.
-
-How do we determine the "best fitting" model? Consider Figure \@ref(fig:three-fitted-lines), in which 2 potential "best fitting" models are drawn on the scatter plot of the height data. Which one is best? The rest of this chapter focuses on defining and estimating the parameters of a *linear* regression model.
+The rest of this chapter focuses on defining and estimating the parameters of a *linear* regression model. We will start with the simplest type of linear regression, called simple linear regression, which only uses a single regressor variable to model the response. We will then start looking at more complicated linear regression models. After that, we discuss how to evaluate how well an estimated regression model fits the data. We conclude with a summary of some important concepts from the chapter.
 
 ```{r three-fitted-lines, fig.cap = "Comparison of two potential fitted models to some observed data. The fitted models are shown in grey.", echo=FALSE}
 lmod <- lm(y ~ x)
@@ -102,15 +90,32 @@ par(mfrow = c(1, 1))
 
 ### Model definition, fitted values, residuals, and RSS {#ss:fv-resid-rss}
 
-The simple linear regression model for a response variable $Y$ is defined by the equation
+The regression model for $Y$ as a function of $X$, denoted $E(Y \mid X)$, is the expected value of $Y$ conditional on the regressor $X$. Thus, a regression model specifically refers to the expected relationship between the response and regressors.
+
+<!-- A **simple linear regression model** assumes the regression model between $Y$ and $X$ is a straight line using the equation -->
+<!-- \[ -->
+<!-- \begin{equation} -->
+<!-- E(Y \mid X)=\beta_0 + \beta_1 X. (\#eq:slr-equation) -->
+<!-- \end{equation} -->
+<!-- \] The $\beta_0$ and $\beta_1$ terms of our equation are known as the intercept and slope and are read as "beta knot" and "beta one", respectively. In general, $\beta_0$ and $\beta_1$ are known as **regression coefficients** and are model parameters that we estimate from our data. -->
+
+<!-- The estimated regression model is denoted by -->
+<!-- \[\hat{E}(Y \mid X)=\hat{\beta}_0 + \hat{\beta}_1 X,\] where $\hat{\beta}_0$ and $\hat{\beta}_1$ are values of $\beta_0$ and $\beta_1$ that we estimate from the data. A $\hat{}$ above a term, which is read as "hat", indicates it is an estimate. We will refer to $\hat{E}(Y|X)$ as the **fitted model** or **estimated regression model**. -->
+
+The **simple linear regression model** for a response variable assumes the mean of $Y$ conditional on a single regressor $X$ is 
 \[
-Y = E(Y \mid X) + \epsilon, (\#eq:slr-model-Y)
+E(Y\mid X) = \beta_0 + \beta_1 X.
 \]
-where the mean of $Y$ conditional on the regressor $X$ is
+
+The response variable $Y$ is modeled as
 \[
-E(Y\mid X) = \beta_0 + \beta_1 X,
+\begin{align}
+Y &= E(Y \mid X) + \epsilon \\
+&= \beta_0 + \beta_1 X + \epsilon,
+\end{align}
+(\#eq:slr-model-Y)
 \]
-and $\epsilon$ is known as the model error. 
+where $\epsilon$ is known as the model error. 
 
 The error term $\epsilon$ is literally the deviation of the response variable from its mean. 
 It is standard to assume that conditional on the regressor variable, the error term has mean 0 and variance $\sigma^2$, which can be written as
@@ -613,7 +618,7 @@ Categorical  predictors can greatly improve the explanatory power or predictive 
 - **parallel lines regression model**, which is a main effect regression model that has a single numeric regressor and a single categorical predictor. The model produces parallel lines for each level of the categorical variable.
 - **separate lines regression model**, which adds an interaction term between the numeric regressor and categorical predictor of the parallel lines regression model. The model produces separate lines for each level of the categorical variable.
 
-Chapter \@ref(more-on-categorical-predictors) provides more information about using categorical predictors in a regression model.
+<!-- Chapter \@ref(more-on-categorical-predictors) provides more information about using categorical predictors in a regression model. -->
 
 ### Indicator variables
 In order to compute $\hat{\boldsymbol{\beta}}$ using Equation \@ref(eq:betahat), both $\mathbf{X}$ and $\mathbf{y}$ must contain numeric values. How can we use a categorical predictor in our regression model when its values are not numeric? To do so, we must transform the categorical predictor into one or more **indicator** or **dummy variables**, which we explain in more detail below.
@@ -651,9 +656,10 @@ Since $D_2=0$ when $C=L_1$ and $D_2=1$ when $C=L_2$, we see that the model in Eq
 E(Y\mid X, C) =
 \begin{cases}
   \beta_0+\beta_1 X & \mathrm{if}\;C = L_1 \\
-  (\beta_0 + \beta_2) +\beta_X X & \mathrm{if}\;C = L_2
+  (\beta_0 + \beta_2) +\beta_1 X & \mathrm{if}\;C = L_2
 \end{cases}.
 \]
+The parallel lines will be separated vertically by the distance $\beta_2$.
 
 To create a separate lines regression model, we add regressor $D_2$ and the interaction regressor $X D_2$ to our simple linear regression model. Thus, the separate lines regression model is
 \[
@@ -676,7 +682,7 @@ It is easy to imagine using multiple categorical predictors in a model, interact
 
 ### Avoiding an easy mistake
 
-Why didn't we add $D_1$ to the parallel lines model? Or $D_1$ and $D_1 X$ to the separate lines model? We didn't do this because it will create linear dependencies in the columns of the regressor matrix $\mathbf{X}$.
+Why didn't we add $D_1$ to the parallel lines model? Or $D_1$ and $D_1 X$ to the separate lines model? First, we notice that we don't *need* to add them. E.g., if an observation doesn't havel level $L_2$ ($D_2=0$), then it must have level $L_1$. More importantly, we didn't do this because it will create linear dependencies in the columns of the regressor matrix $\mathbf{X}$.
 
 Let $\mathbf{d}_1=[d_{1,1}, d_{2,1}, \ldots, d_{n,1}]$ be the column vector of observed values for indicator variable $D_1$ and $\mathbf{d}_2$ be the column vector for $D_2$. Then for a two-level categorical variable, $\mathbf{d}_1 + \mathbf{d}_2$ is an $n\times 1$ vector of 1s, meaning that $D_1$ and $D_2$ will be linearly dependent with the intercept column of our $\mathbf{X}$ matrix. Thus, adding $D_1$ to the parallel lines model would result in $\mathbf{X}$ having linearly dependent columns, which creates estimation problems.
 

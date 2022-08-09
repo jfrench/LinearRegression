@@ -1,0 +1,746 @@
+<!DOCTYPE html>
+<html lang="" xml:lang="">
+<head>
+
+  <meta charset="utf-8" />
+  <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+  <title>Chapter 5 Basic theoretical results for linear models | A progressive introduction to linear models</title>
+  <meta name="description" content="A collection of R notebooks that progressively introduction how to fit and use linear models." />
+  <meta name="generator" content="bookdown 0.27 and GitBook 2.6.7" />
+
+  <meta property="og:title" content="Chapter 5 Basic theoretical results for linear models | A progressive introduction to linear models" />
+  <meta property="og:type" content="book" />
+  
+  <meta property="og:description" content="A collection of R notebooks that progressively introduction how to fit and use linear models." />
+  
+
+  <meta name="twitter:card" content="summary" />
+  <meta name="twitter:title" content="Chapter 5 Basic theoretical results for linear models | A progressive introduction to linear models" />
+  
+  <meta name="twitter:description" content="A collection of R notebooks that progressively introduction how to fit and use linear models." />
+  
+
+<meta name="author" content="Joshua French" />
+
+
+
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <meta name="apple-mobile-web-app-capable" content="yes" />
+  <meta name="apple-mobile-web-app-status-bar-style" content="black" />
+  
+  
+<link rel="prev" href="interp-chapter.html"/>
+<link rel="next" href="inference.html"/>
+<script src="libs/jquery-3.6.0/jquery-3.6.0.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/fuse.js@6.4.6/dist/fuse.min.js"></script>
+<link href="libs/gitbook-2.6.7/css/style.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-table.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-bookdown.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-highlight.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-search.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-fontsettings.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-clipboard.css" rel="stylesheet" />
+
+
+
+
+
+
+
+
+<link href="libs/anchor-sections-1.1.0/anchor-sections.css" rel="stylesheet" />
+<link href="libs/anchor-sections-1.1.0/anchor-sections-hash.css" rel="stylesheet" />
+<script src="libs/anchor-sections-1.1.0/anchor-sections.js"></script>
+
+
+
+
+<link rel="stylesheet" href="style.css" type="text/css" />
+</head>
+
+<body>
+
+
+
+  <div class="book without-animation with-summary font-size-2 font-family-1" data-basepath=".">
+
+    <div class="book-summary">
+      <nav role="navigation">
+
+<ul class="summary">
+<li><a href="./">Data Analysis with Linear Regression</a></li>
+
+<li class="divider"></li>
+<li class="chapter" data-level="" data-path="index.html"><a href="index.html"><i class="fa fa-check"></i>Preliminaries</a></li>
+<li class="chapter" data-level="1" data-path="r-foundations.html"><a href="r-foundations.html"><i class="fa fa-check"></i><b>1</b> R Foundations</a>
+<ul>
+<li class="chapter" data-level="1.1" data-path="r-foundations.html"><a href="r-foundations.html#setting-up-r-and-r-studio-desktop"><i class="fa fa-check"></i><b>1.1</b> Setting up R and R Studio Desktop</a></li>
+<li class="chapter" data-level="1.2" data-path="r-foundations.html"><a href="r-foundations.html#running-code-scripts-and-comments"><i class="fa fa-check"></i><b>1.2</b> Running code, scripts, and comments</a></li>
+<li class="chapter" data-level="1.3" data-path="r-foundations.html"><a href="r-foundations.html#assignment"><i class="fa fa-check"></i><b>1.3</b> Assignment</a></li>
+<li class="chapter" data-level="1.4" data-path="r-foundations.html"><a href="r-foundations.html#functions"><i class="fa fa-check"></i><b>1.4</b> Functions</a></li>
+<li class="chapter" data-level="1.5" data-path="r-foundations.html"><a href="r-foundations.html#packages"><i class="fa fa-check"></i><b>1.5</b> Packages</a></li>
+<li class="chapter" data-level="1.6" data-path="r-foundations.html"><a href="r-foundations.html#getting-help"><i class="fa fa-check"></i><b>1.6</b> Getting help</a></li>
+<li class="chapter" data-level="1.7" data-path="r-foundations.html"><a href="r-foundations.html#data-types-and-structures"><i class="fa fa-check"></i><b>1.7</b> Data types and structures</a>
+<ul>
+<li class="chapter" data-level="1.7.1" data-path="r-foundations.html"><a href="r-foundations.html#basic-data-types"><i class="fa fa-check"></i><b>1.7.1</b> Basic data types</a></li>
+<li class="chapter" data-level="1.7.2" data-path="r-foundations.html"><a href="r-foundations.html#other-important-object-types"><i class="fa fa-check"></i><b>1.7.2</b> Other important object types</a></li>
+<li class="chapter" data-level="1.7.3" data-path="r-foundations.html"><a href="r-foundations.html#data-structures"><i class="fa fa-check"></i><b>1.7.3</b> Data structures</a></li>
+</ul></li>
+<li class="chapter" data-level="1.8" data-path="r-foundations.html"><a href="r-foundations.html#vectors"><i class="fa fa-check"></i><b>1.8</b> Vectors</a>
+<ul>
+<li class="chapter" data-level="1.8.1" data-path="r-foundations.html"><a href="r-foundations.html#creation"><i class="fa fa-check"></i><b>1.8.1</b> Creation</a></li>
+<li class="chapter" data-level="1.8.2" data-path="r-foundations.html"><a href="r-foundations.html#categorical-vectors"><i class="fa fa-check"></i><b>1.8.2</b> Categorical vectors</a></li>
+<li class="chapter" data-level="1.8.3" data-path="r-foundations.html"><a href="r-foundations.html#extracting-parts-of-a-vector"><i class="fa fa-check"></i><b>1.8.3</b> Extracting parts of a vector</a></li>
+</ul></li>
+<li class="chapter" data-level="1.9" data-path="r-foundations.html"><a href="r-foundations.html#helpful-functions"><i class="fa fa-check"></i><b>1.9</b> Helpful functions</a>
+<ul>
+<li class="chapter" data-level="1.9.1" data-path="r-foundations.html"><a href="r-foundations.html#general-functions"><i class="fa fa-check"></i><b>1.9.1</b> General functions</a></li>
+<li class="chapter" data-level="1.9.2" data-path="r-foundations.html"><a href="r-foundations.html#functions-related-to-statistical-distributions"><i class="fa fa-check"></i><b>1.9.2</b> Functions related to statistical distributions</a></li>
+</ul></li>
+<li class="chapter" data-level="1.10" data-path="r-foundations.html"><a href="r-foundations.html#data-frames"><i class="fa fa-check"></i><b>1.10</b> Data Frames</a>
+<ul>
+<li class="chapter" data-level="1.10.1" data-path="r-foundations.html"><a href="r-foundations.html#direct-creation"><i class="fa fa-check"></i><b>1.10.1</b> Direct creation</a></li>
+<li class="chapter" data-level="1.10.2" data-path="r-foundations.html"><a href="r-foundations.html#importing-data"><i class="fa fa-check"></i><b>1.10.2</b> Importing Data</a></li>
+<li class="chapter" data-level="1.10.3" data-path="r-foundations.html"><a href="r-foundations.html#extracting-parts-of-a-data-frame"><i class="fa fa-check"></i><b>1.10.3</b> Extracting parts of a data frame</a></li>
+</ul></li>
+<li class="chapter" data-level="1.11" data-path="r-foundations.html"><a href="r-foundations.html#using-the-pipe-operator"><i class="fa fa-check"></i><b>1.11</b> Using the pipe operator</a></li>
+<li class="chapter" data-level="1.12" data-path="r-foundations.html"><a href="r-foundations.html#dealing-with-common-problems"><i class="fa fa-check"></i><b>1.12</b> Dealing with common problems</a></li>
+<li class="chapter" data-level="1.13" data-path="r-foundations.html"><a href="r-foundations.html#ecosystem-debate"><i class="fa fa-check"></i><b>1.13</b> Ecosystem debate</a></li>
+<li class="chapter" data-level="1.14" data-path="r-foundations.html"><a href="r-foundations.html#additional-information"><i class="fa fa-check"></i><b>1.14</b> Additional information</a>
+<ul>
+<li class="chapter" data-level="1.14.1" data-path="r-foundations.html"><a href="r-foundations.html#comparing-assignment-operators"><i class="fa fa-check"></i><b>1.14.1</b> Comparing assignment operators</a></li>
+</ul></li>
+</ul></li>
+<li class="chapter" data-level="2" data-path="data-cleaning-and-exploration.html"><a href="data-cleaning-and-exploration.html"><i class="fa fa-check"></i><b>2</b> Data cleaning and exploration</a>
+<ul>
+<li class="chapter" data-level="2.1" data-path="data-cleaning-and-exploration.html"><a href="data-cleaning-and-exploration.html#raw-palmer-penguins-data"><i class="fa fa-check"></i><b>2.1</b> Raw Palmer penguins data</a></li>
+<li class="chapter" data-level="2.2" data-path="data-cleaning-and-exploration.html"><a href="data-cleaning-and-exploration.html#initial-data-cleaning"><i class="fa fa-check"></i><b>2.2</b> Initial data cleaning</a></li>
+<li class="chapter" data-level="2.3" data-path="data-cleaning-and-exploration.html"><a href="data-cleaning-and-exploration.html#numerical-summarization-of-data"><i class="fa fa-check"></i><b>2.3</b> Numerical summarization of data</a>
+<ul>
+<li class="chapter" data-level="2.3.1" data-path="data-cleaning-and-exploration.html"><a href="data-cleaning-and-exploration.html#numeric-data"><i class="fa fa-check"></i><b>2.3.1</b> Numeric data</a></li>
+<li class="chapter" data-level="2.3.2" data-path="data-cleaning-and-exploration.html"><a href="data-cleaning-and-exploration.html#categorical-data"><i class="fa fa-check"></i><b>2.3.2</b> Categorical data</a></li>
+<li class="chapter" data-level="2.3.3" data-path="data-cleaning-and-exploration.html"><a href="data-cleaning-and-exploration.html#the-summary-function"><i class="fa fa-check"></i><b>2.3.3</b> The <code>summary</code> function</a></li>
+</ul></li>
+<li class="chapter" data-level="2.4" data-path="data-cleaning-and-exploration.html"><a href="data-cleaning-and-exploration.html#visual-summaries-of-data"><i class="fa fa-check"></i><b>2.4</b> Visual summaries of data</a>
+<ul>
+<li class="chapter" data-level="2.4.1" data-path="data-cleaning-and-exploration.html"><a href="data-cleaning-and-exploration.html#the-ggplot-recipe"><i class="fa fa-check"></i><b>2.4.1</b> The ggplot recipe</a></li>
+<li class="chapter" data-level="2.4.2" data-path="data-cleaning-and-exploration.html"><a href="data-cleaning-and-exploration.html#univariate-plots"><i class="fa fa-check"></i><b>2.4.2</b> Univariate plots</a></li>
+<li class="chapter" data-level="2.4.3" data-path="data-cleaning-and-exploration.html"><a href="data-cleaning-and-exploration.html#bivariate-plots"><i class="fa fa-check"></i><b>2.4.3</b> Bivariate plots</a></li>
+<li class="chapter" data-level="2.4.4" data-path="data-cleaning-and-exploration.html"><a href="data-cleaning-and-exploration.html#multivariate-plots"><i class="fa fa-check"></i><b>2.4.4</b> Multivariate plots</a></li>
+<li class="chapter" data-level="2.4.5" data-path="data-cleaning-and-exploration.html"><a href="data-cleaning-and-exploration.html#facetted-plots-and-alternatives"><i class="fa fa-check"></i><b>2.4.5</b> Facetted plots (and alternatives)</a></li>
+</ul></li>
+<li class="chapter" data-level="2.5" data-path="data-cleaning-and-exploration.html"><a href="data-cleaning-and-exploration.html#a-plan-for-data-cleaning-and-exploration"><i class="fa fa-check"></i><b>2.5</b> A plan for data cleaning and exploration</a></li>
+<li class="chapter" data-level="2.6" data-path="data-cleaning-and-exploration.html"><a href="data-cleaning-and-exploration.html#final-notes-on-missing-or-erroneous-data"><i class="fa fa-check"></i><b>2.6</b> Final notes on missing or erroneous data</a></li>
+</ul></li>
+<li class="chapter" data-level="3" data-path="linear-model-estimation.html"><a href="linear-model-estimation.html"><i class="fa fa-check"></i><b>3</b> Linear model estimation</a>
+<ul>
+<li class="chapter" data-level="3.1" data-path="linear-model-estimation.html"><a href="linear-model-estimation.html#a-simple-motivating-example"><i class="fa fa-check"></i><b>3.1</b> A simple motivating example</a></li>
+<li class="chapter" data-level="3.2" data-path="linear-model-estimation.html"><a href="linear-model-estimation.html#s-slr-estimation"><i class="fa fa-check"></i><b>3.2</b> Estimation of the simple linear regression model</a>
+<ul>
+<li class="chapter" data-level="3.2.1" data-path="linear-model-estimation.html"><a href="linear-model-estimation.html#ss:fv-resid-rss"><i class="fa fa-check"></i><b>3.2.1</b> Model definition, fitted values, residuals, and RSS</a></li>
+<li class="chapter" data-level="3.2.2" data-path="linear-model-estimation.html"><a href="linear-model-estimation.html#ols-estimators-of-the-simple-linear-regression-parameters"><i class="fa fa-check"></i><b>3.2.2</b> OLS estimators of the simple linear regression parameters</a></li>
+</ul></li>
+<li class="chapter" data-level="3.3" data-path="linear-model-estimation.html"><a href="linear-model-estimation.html#s:penguins-slr"><i class="fa fa-check"></i><b>3.3</b> Penguins simple linear regression example</a></li>
+<li class="chapter" data-level="3.4" data-path="linear-model-estimation.html"><a href="linear-model-estimation.html#defining-a-linear-model"><i class="fa fa-check"></i><b>3.4</b> Defining a linear model</a>
+<ul>
+<li class="chapter" data-level="3.4.1" data-path="linear-model-estimation.html"><a href="linear-model-estimation.html#ss-necessary-components"><i class="fa fa-check"></i><b>3.4.1</b> Necessary components and notation</a></li>
+<li class="chapter" data-level="3.4.2" data-path="linear-model-estimation.html"><a href="linear-model-estimation.html#standard-definition-of-linear-model"><i class="fa fa-check"></i><b>3.4.2</b> Standard definition of linear model</a></li>
+</ul></li>
+<li class="chapter" data-level="3.5" data-path="linear-model-estimation.html"><a href="linear-model-estimation.html#estimation-of-the-multiple-linear-regression-model"><i class="fa fa-check"></i><b>3.5</b> Estimation of the multiple linear regression model</a>
+<ul>
+<li class="chapter" data-level="3.5.1" data-path="linear-model-estimation.html"><a href="linear-model-estimation.html#using-matrix-notation-to-represent-a-linear-model"><i class="fa fa-check"></i><b>3.5.1</b> Using matrix notation to represent a linear model</a></li>
+<li class="chapter" data-level="3.5.2" data-path="linear-model-estimation.html"><a href="linear-model-estimation.html#ss:fv-resid-rss-mlr"><i class="fa fa-check"></i><b>3.5.2</b> Residuals, fitted values, and RSS for multiple linear regression</a></li>
+<li class="chapter" data-level="3.5.3" data-path="linear-model-estimation.html"><a href="linear-model-estimation.html#ols-estimator-of-the-regression-coefficients"><i class="fa fa-check"></i><b>3.5.3</b> OLS estimator of the regression coefficients</a></li>
+</ul></li>
+<li class="chapter" data-level="3.6" data-path="linear-model-estimation.html"><a href="linear-model-estimation.html#s:penguins-mlr"><i class="fa fa-check"></i><b>3.6</b> Penguins multiple linear regression example</a></li>
+<li class="chapter" data-level="3.7" data-path="linear-model-estimation.html"><a href="linear-model-estimation.html#model-types"><i class="fa fa-check"></i><b>3.7</b> Types of linear models</a></li>
+<li class="chapter" data-level="3.8" data-path="linear-model-estimation.html"><a href="linear-model-estimation.html#categorical-predictors"><i class="fa fa-check"></i><b>3.8</b> Categorical predictors</a>
+<ul>
+<li class="chapter" data-level="3.8.1" data-path="linear-model-estimation.html"><a href="linear-model-estimation.html#indicator-variables"><i class="fa fa-check"></i><b>3.8.1</b> Indicator variables</a></li>
+<li class="chapter" data-level="3.8.2" data-path="linear-model-estimation.html"><a href="linear-model-estimation.html#parallel-and-separate-lines-models"><i class="fa fa-check"></i><b>3.8.2</b> Parallel and separate lines models</a></li>
+<li class="chapter" data-level="3.8.3" data-path="linear-model-estimation.html"><a href="linear-model-estimation.html#extensions"><i class="fa fa-check"></i><b>3.8.3</b> Extensions</a></li>
+<li class="chapter" data-level="3.8.4" data-path="linear-model-estimation.html"><a href="linear-model-estimation.html#avoiding-an-easy-mistake"><i class="fa fa-check"></i><b>3.8.4</b> Avoiding an easy mistake</a></li>
+</ul></li>
+<li class="chapter" data-level="3.9" data-path="linear-model-estimation.html"><a href="linear-model-estimation.html#s:penguins-mlr2"><i class="fa fa-check"></i><b>3.9</b> Penguins example with categorical predictor</a></li>
+<li class="chapter" data-level="3.10" data-path="linear-model-estimation.html"><a href="linear-model-estimation.html#evaluating-model-fit"><i class="fa fa-check"></i><b>3.10</b> Evaluating model fit</a></li>
+<li class="chapter" data-level="3.11" data-path="linear-model-estimation.html"><a href="linear-model-estimation.html#summary"><i class="fa fa-check"></i><b>3.11</b> Summary</a>
+<ul>
+<li class="chapter" data-level="3.11.1" data-path="linear-model-estimation.html"><a href="linear-model-estimation.html#summary-of-terms"><i class="fa fa-check"></i><b>3.11.1</b> Summary of terms</a></li>
+<li class="chapter" data-level="3.11.2" data-path="linear-model-estimation.html"><a href="linear-model-estimation.html#summary-of-functions"><i class="fa fa-check"></i><b>3.11.2</b> Summary of functions</a></li>
+</ul></li>
+<li class="chapter" data-level="3.12" data-path="linear-model-estimation.html"><a href="linear-model-estimation.html#going-deeper"><i class="fa fa-check"></i><b>3.12</b> Going Deeper</a>
+<ul>
+<li class="chapter" data-level="3.12.1" data-path="linear-model-estimation.html"><a href="linear-model-estimation.html#degrees-of-freedom"><i class="fa fa-check"></i><b>3.12.1</b> Degrees of freedom</a></li>
+<li class="chapter" data-level="3.12.2" data-path="linear-model-estimation.html"><a href="linear-model-estimation.html#slr-derivation"><i class="fa fa-check"></i><b>3.12.2</b> Derivation of the OLS estimators of the simple linear regression model coefficients</a></li>
+<li class="chapter" data-level="3.12.3" data-path="linear-model-estimation.html"><a href="linear-model-estimation.html#unbiasedness-of-ols-estimators"><i class="fa fa-check"></i><b>3.12.3</b> Unbiasedness of OLS estimators</a></li>
+<li class="chapter" data-level="3.12.4" data-path="linear-model-estimation.html"><a href="linear-model-estimation.html#manual-calculation-penguins-simple-linear-regression-example"><i class="fa fa-check"></i><b>3.12.4</b> Manual calculation Penguins simple linear regression example</a></li>
+<li class="chapter" data-level="3.12.5" data-path="linear-model-estimation.html"><a href="linear-model-estimation.html#mlr-derivation"><i class="fa fa-check"></i><b>3.12.5</b> Derivation of the OLS estimator for the multiple linear regression model coefficients</a></li>
+<li class="chapter" data-level="3.12.6" data-path="linear-model-estimation.html"><a href="linear-model-estimation.html#manual-calculation-of-penguins-multiple-linear-regression-example"><i class="fa fa-check"></i><b>3.12.6</b> Manual calculation of Penguins multiple linear regression example</a></li>
+</ul></li>
+</ul></li>
+<li class="chapter" data-level="4" data-path="interp-chapter.html"><a href="interp-chapter.html"><i class="fa fa-check"></i><b>4</b> Interpreting a fitted linear model</a>
+<ul>
+<li class="chapter" data-level="4.1" data-path="interp-chapter.html"><a href="interp-chapter.html#standard-mathematical-interpretation"><i class="fa fa-check"></i><b>4.1</b> Standard mathematical interpretation</a></li>
+<li class="chapter" data-level="4.2" data-path="interp-chapter.html"><a href="interp-chapter.html#coefficient-interpretation-in-simple-linear-regression"><i class="fa fa-check"></i><b>4.2</b> Coefficient interpretation in simple linear regression</a></li>
+<li class="chapter" data-level="4.3" data-path="interp-chapter.html"><a href="interp-chapter.html#interp-1st-order-ml"><i class="fa fa-check"></i><b>4.3</b> Coefficient interpretation for first-order multiple linear regression models</a></li>
+<li class="chapter" data-level="4.4" data-path="interp-chapter.html"><a href="interp-chapter.html#effect-plots"><i class="fa fa-check"></i><b>4.4</b> Effect plots</a></li>
+<li class="chapter" data-level="4.5" data-path="interp-chapter.html"><a href="interp-chapter.html#roles-of-regressor-variables"><i class="fa fa-check"></i><b>4.5</b> Roles of regressor variables</a></li>
+<li class="chapter" data-level="4.6" data-path="interp-chapter.html"><a href="interp-chapter.html#interpretation-for-categorical-predictors"><i class="fa fa-check"></i><b>4.6</b> Interpretation for categorical predictors</a>
+<ul>
+<li class="chapter" data-level="4.6.1" data-path="interp-chapter.html"><a href="interp-chapter.html#pl-interp"><i class="fa fa-check"></i><b>4.6.1</b> Coefficient interpretation for parallel lines models</a></li>
+<li class="chapter" data-level="4.6.2" data-path="interp-chapter.html"><a href="interp-chapter.html#sl-interp"><i class="fa fa-check"></i><b>4.6.2</b> Coefficient interpretation for separate lines models</a></li>
+<li class="chapter" data-level="4.6.3" data-path="interp-chapter.html"><a href="interp-chapter.html#more-penguins-examples"><i class="fa fa-check"></i><b>4.6.3</b> More Penguins examples</a></li>
+</ul></li>
+<li class="chapter" data-level="4.7" data-path="interp-chapter.html"><a href="interp-chapter.html#effect-plots-1"><i class="fa fa-check"></i><b>4.7</b> Effect plots</a>
+<ul>
+<li class="chapter" data-level="4.7.1" data-path="interp-chapter.html"><a href="interp-chapter.html#effect-plots-for-numeric-predictors"><i class="fa fa-check"></i><b>4.7.1</b> Effect plots for numeric predictors</a></li>
+<li class="chapter" data-level="4.7.2" data-path="interp-chapter.html"><a href="interp-chapter.html#effect-plots-with-categorical-predictors"><i class="fa fa-check"></i><b>4.7.2</b> Effect plots with categorical predictors</a></li>
+</ul></li>
+<li class="chapter" data-level="4.8" data-path="interp-chapter.html"><a href="interp-chapter.html#added-variable-plots"><i class="fa fa-check"></i><b>4.8</b> Added variable plots</a></li>
+<li class="chapter" data-level="4.9" data-path="interp-chapter.html"><a href="interp-chapter.html#going-deeper-1"><i class="fa fa-check"></i><b>4.9</b> Going deeper</a>
+<ul>
+<li class="chapter" data-level="4.9.1" data-path="interp-chapter.html"><a href="interp-chapter.html#orthogonality"><i class="fa fa-check"></i><b>4.9.1</b> Orthogonality</a></li>
+</ul></li>
+</ul></li>
+<li class="chapter" data-level="5" data-path="linear-model-theory.html"><a href="linear-model-theory.html"><i class="fa fa-check"></i><b>5</b> Basic theoretical results for linear models</a>
+<ul>
+<li class="chapter" data-level="5.1" data-path="linear-model-theory.html"><a href="linear-model-theory.html#standard-assumptions"><i class="fa fa-check"></i><b>5.1</b> Standard assumptions</a></li>
+<li class="chapter" data-level="5.2" data-path="linear-model-theory.html"><a href="linear-model-theory.html#summary-of-results"><i class="fa fa-check"></i><b>5.2</b> Summary of results</a></li>
+<li class="chapter" data-level="5.3" data-path="linear-model-theory.html"><a href="linear-model-theory.html#results-for-mathbfy"><i class="fa fa-check"></i><b>5.3</b> Results for <span class="math inline">\(\mathbf{y}\)</span></a></li>
+<li class="chapter" data-level="5.4" data-path="linear-model-theory.html"><a href="linear-model-theory.html#results-for-hatboldsymbolbeta"><i class="fa fa-check"></i><b>5.4</b> Results for <span class="math inline">\(\hat{\boldsymbol{\beta}}\)</span></a></li>
+<li class="chapter" data-level="5.5" data-path="linear-model-theory.html"><a href="linear-model-theory.html#results-for-the-residuals"><i class="fa fa-check"></i><b>5.5</b> Results for the residuals</a></li>
+<li class="chapter" data-level="5.6" data-path="linear-model-theory.html"><a href="linear-model-theory.html#the-gauss-markov-theorem"><i class="fa fa-check"></i><b>5.6</b> The Gauss-Markov Theorem</a></li>
+</ul></li>
+<li class="chapter" data-level="6" data-path="inference.html"><a href="inference.html"><i class="fa fa-check"></i><b>6</b> Linear model inference</a></li>
+<li class="appendix"><span><b>Appendix</b></span></li>
+<li class="chapter" data-level="A" data-path="overview-of-matrix-facts.html"><a href="overview-of-matrix-facts.html"><i class="fa fa-check"></i><b>A</b> Overview of matrix facts</a>
+<ul>
+<li class="chapter" data-level="A.1" data-path="overview-of-matrix-facts.html"><a href="overview-of-matrix-facts.html#notation"><i class="fa fa-check"></i><b>A.1</b> Notation</a></li>
+<li class="chapter" data-level="A.2" data-path="overview-of-matrix-facts.html"><a href="overview-of-matrix-facts.html#basic-mathematical-operations"><i class="fa fa-check"></i><b>A.2</b> Basic mathematical operations</a>
+<ul>
+<li class="chapter" data-level="A.2.1" data-path="overview-of-matrix-facts.html"><a href="overview-of-matrix-facts.html#addition-and-subtraction"><i class="fa fa-check"></i><b>A.2.1</b> Addition and subtraction</a></li>
+<li class="chapter" data-level="A.2.2" data-path="overview-of-matrix-facts.html"><a href="overview-of-matrix-facts.html#scalar-multiplication"><i class="fa fa-check"></i><b>A.2.2</b> Scalar multiplication</a></li>
+<li class="chapter" data-level="A.2.3" data-path="overview-of-matrix-facts.html"><a href="overview-of-matrix-facts.html#matrix-multiplication"><i class="fa fa-check"></i><b>A.2.3</b> Matrix multiplication</a></li>
+<li class="chapter" data-level="A.2.4" data-path="overview-of-matrix-facts.html"><a href="overview-of-matrix-facts.html#transpose"><i class="fa fa-check"></i><b>A.2.4</b> Transpose</a></li>
+</ul></li>
+<li class="chapter" data-level="A.3" data-path="overview-of-matrix-facts.html"><a href="overview-of-matrix-facts.html#basic-mathematical-properties"><i class="fa fa-check"></i><b>A.3</b> Basic mathematical properties</a>
+<ul>
+<li class="chapter" data-level="A.3.1" data-path="overview-of-matrix-facts.html"><a href="overview-of-matrix-facts.html#associative-property"><i class="fa fa-check"></i><b>A.3.1</b> Associative property</a></li>
+<li class="chapter" data-level="A.3.2" data-path="overview-of-matrix-facts.html"><a href="overview-of-matrix-facts.html#distributive-property"><i class="fa fa-check"></i><b>A.3.2</b> Distributive property</a></li>
+<li class="chapter" data-level="A.3.3" data-path="overview-of-matrix-facts.html"><a href="overview-of-matrix-facts.html#no-commutative-property"><i class="fa fa-check"></i><b>A.3.3</b> No commutative property</a></li>
+<li class="chapter" data-level="A.3.4" data-path="overview-of-matrix-facts.html"><a href="overview-of-matrix-facts.html#transpose-related-properties"><i class="fa fa-check"></i><b>A.3.4</b> Transpose-related properties</a></li>
+</ul></li>
+<li class="chapter" data-level="A.4" data-path="overview-of-matrix-facts.html"><a href="overview-of-matrix-facts.html#special-matrices"><i class="fa fa-check"></i><b>A.4</b> Special matrices</a>
+<ul>
+<li class="chapter" data-level="A.4.1" data-path="overview-of-matrix-facts.html"><a href="overview-of-matrix-facts.html#square-matrices"><i class="fa fa-check"></i><b>A.4.1</b> Square matrices</a></li>
+<li class="chapter" data-level="A.4.2" data-path="overview-of-matrix-facts.html"><a href="overview-of-matrix-facts.html#identity-matrix"><i class="fa fa-check"></i><b>A.4.2</b> Identity matrix</a></li>
+<li class="chapter" data-level="A.4.3" data-path="overview-of-matrix-facts.html"><a href="overview-of-matrix-facts.html#diagonal-matrices"><i class="fa fa-check"></i><b>A.4.3</b> Diagonal matrices</a></li>
+<li class="chapter" data-level="A.4.4" data-path="overview-of-matrix-facts.html"><a href="overview-of-matrix-facts.html#symmetric-matrices"><i class="fa fa-check"></i><b>A.4.4</b> Symmetric matrices</a></li>
+<li class="chapter" data-level="A.4.5" data-path="overview-of-matrix-facts.html"><a href="overview-of-matrix-facts.html#idempotent-matrices"><i class="fa fa-check"></i><b>A.4.5</b> Idempotent matrices</a></li>
+<li class="chapter" data-level="A.4.6" data-path="overview-of-matrix-facts.html"><a href="overview-of-matrix-facts.html#positive-definite-matrices"><i class="fa fa-check"></i><b>A.4.6</b> Positive definite matrices</a></li>
+<li class="chapter" data-level="A.4.7" data-path="overview-of-matrix-facts.html"><a href="overview-of-matrix-facts.html#inverse-matrix"><i class="fa fa-check"></i><b>A.4.7</b> Inverse matrix</a></li>
+</ul></li>
+<li class="chapter" data-level="A.5" data-path="overview-of-matrix-facts.html"><a href="overview-of-matrix-facts.html#matrix-derivatives"><i class="fa fa-check"></i><b>A.5</b> Matrix derivatives</a></li>
+<li class="chapter" data-level="A.6" data-path="overview-of-matrix-facts.html"><a href="overview-of-matrix-facts.html#additional-topics"><i class="fa fa-check"></i><b>A.6</b> Additional topics</a>
+<ul>
+<li class="chapter" data-level="A.6.1" data-path="overview-of-matrix-facts.html"><a href="overview-of-matrix-facts.html#determinant"><i class="fa fa-check"></i><b>A.6.1</b> Determinant</a></li>
+<li class="chapter" data-level="A.6.2" data-path="overview-of-matrix-facts.html"><a href="overview-of-matrix-facts.html#linearly-independent-vectors"><i class="fa fa-check"></i><b>A.6.2</b> Linearly independent vectors</a></li>
+<li class="chapter" data-level="A.6.3" data-path="overview-of-matrix-facts.html"><a href="overview-of-matrix-facts.html#rank"><i class="fa fa-check"></i><b>A.6.3</b> Rank</a></li>
+</ul></li>
+</ul></li>
+<li class="chapter" data-level="B" data-path="prob-review.html"><a href="prob-review.html"><i class="fa fa-check"></i><b>B</b> Overview of probability, random variables, and random vectors</a>
+<ul>
+<li class="chapter" data-level="B.1" data-path="prob-review.html"><a href="prob-review.html#probability-basics"><i class="fa fa-check"></i><b>B.1</b> Probability Basics</a></li>
+<li class="chapter" data-level="B.2" data-path="prob-review.html"><a href="prob-review.html#random-variables"><i class="fa fa-check"></i><b>B.2</b> Random Variables</a>
+<ul>
+<li class="chapter" data-level="B.2.1" data-path="prob-review.html"><a href="prob-review.html#discrete-random-variables"><i class="fa fa-check"></i><b>B.2.1</b> Discrete random variables</a></li>
+<li class="chapter" data-level="B.2.2" data-path="prob-review.html"><a href="prob-review.html#continuous-random-variables"><i class="fa fa-check"></i><b>B.2.2</b> Continuous random variables</a></li>
+<li class="chapter" data-level="B.2.3" data-path="prob-review.html"><a href="prob-review.html#useful-facts-for-transformations-of-random-variables"><i class="fa fa-check"></i><b>B.2.3</b> Useful facts for transformations of random variables</a></li>
+</ul></li>
+<li class="chapter" data-level="B.3" data-path="prob-review.html"><a href="prob-review.html#multivariate-distributions"><i class="fa fa-check"></i><b>B.3</b> Multivariate distributions</a>
+<ul>
+<li class="chapter" data-level="B.3.1" data-path="prob-review.html"><a href="prob-review.html#basic-properties"><i class="fa fa-check"></i><b>B.3.1</b> Basic properties</a></li>
+<li class="chapter" data-level="B.3.2" data-path="prob-review.html"><a href="prob-review.html#marginal-distributions"><i class="fa fa-check"></i><b>B.3.2</b> Marginal distributions</a></li>
+<li class="chapter" data-level="B.3.3" data-path="prob-review.html"><a href="prob-review.html#independence-of-random-variables"><i class="fa fa-check"></i><b>B.3.3</b> Independence of random variables</a></li>
+<li class="chapter" data-level="B.3.4" data-path="prob-review.html"><a href="prob-review.html#conditional-distributions"><i class="fa fa-check"></i><b>B.3.4</b> Conditional distributions</a></li>
+<li class="chapter" data-level="B.3.5" data-path="prob-review.html"><a href="prob-review.html#covariance"><i class="fa fa-check"></i><b>B.3.5</b> Covariance</a></li>
+<li class="chapter" data-level="B.3.6" data-path="prob-review.html"><a href="prob-review.html#useful-facts-for-transformations-of-multiple-random-variables"><i class="fa fa-check"></i><b>B.3.6</b> Useful facts for transformations of multiple random variables</a></li>
+<li class="chapter" data-level="B.3.7" data-path="prob-review.html"><a href="prob-review.html#binomial-distribution-example"><i class="fa fa-check"></i><b>B.3.7</b> Binomial distribution example</a></li>
+<li class="chapter" data-level="B.3.8" data-path="prob-review.html"><a href="prob-review.html#continuous-bivariate-distribution-example"><i class="fa fa-check"></i><b>B.3.8</b> Continuous bivariate distribution example</a></li>
+</ul></li>
+<li class="chapter" data-level="B.4" data-path="prob-review.html"><a href="prob-review.html#random-vectors"><i class="fa fa-check"></i><b>B.4</b> Random vectors</a>
+<ul>
+<li class="chapter" data-level="B.4.1" data-path="prob-review.html"><a href="prob-review.html#definition"><i class="fa fa-check"></i><b>B.4.1</b> Definition</a></li>
+<li class="chapter" data-level="B.4.2" data-path="prob-review.html"><a href="prob-review.html#mean-variance-and-covariance"><i class="fa fa-check"></i><b>B.4.2</b> Mean, variance, and covariance</a></li>
+<li class="chapter" data-level="B.4.3" data-path="prob-review.html"><a href="prob-review.html#properties-of-transformations-of-random-vectors"><i class="fa fa-check"></i><b>B.4.3</b> Properties of transformations of random vectors</a></li>
+<li class="chapter" data-level="B.4.4" data-path="prob-review.html"><a href="prob-review.html#continuous-bivariate-distribution-example-continued"><i class="fa fa-check"></i><b>B.4.4</b> Continuous bivariate distribution example continued</a></li>
+</ul></li>
+<li class="chapter" data-level="B.5" data-path="prob-review.html"><a href="prob-review.html#multivariate-normal-gaussian-distribution"><i class="fa fa-check"></i><b>B.5</b> Multivariate normal (Gaussian) distribution</a>
+<ul>
+<li class="chapter" data-level="B.5.1" data-path="prob-review.html"><a href="prob-review.html#definition-1"><i class="fa fa-check"></i><b>B.5.1</b> Definition</a></li>
+<li class="chapter" data-level="B.5.2" data-path="prob-review.html"><a href="prob-review.html#linear-functions-of-a-multivariate-normal-random-vector"><i class="fa fa-check"></i><b>B.5.2</b> Linear functions of a multivariate normal random vector</a></li>
+<li class="chapter" data-level="B.5.3" data-path="prob-review.html"><a href="prob-review.html#ols-example"><i class="fa fa-check"></i><b>B.5.3</b> OLS example</a></li>
+</ul></li>
+</ul></li>
+<li class="chapter" data-level="" data-path="references.html"><a href="references.html"><i class="fa fa-check"></i>References</a></li>
+<li class="divider"></li>
+<li><a href="https://github.com/rstudio/bookdown" target="blank">Published with bookdown</a></li>
+
+</ul>
+
+      </nav>
+    </div>
+
+    <div class="book-body">
+      <div class="body-inner">
+        <div class="book-header" role="navigation">
+          <h1>
+            <i class="fa fa-circle-o-notch fa-spin"></i><a href="./">A progressive introduction to linear models</a>
+          </h1>
+        </div>
+
+        <div class="page-wrapper" tabindex="-1" role="main">
+          <div class="page-inner">
+
+            <section class="normal" id="section-">
+<div id="linear-model-theory" class="section level1 hasAnchor" number="5">
+<h1><span class="header-section-number">Chapter 5</span> Basic theoretical results for linear models<a href="linear-model-theory.html#linear-model-theory" class="anchor-section" aria-label="Anchor link to header"></a></h1>
+<p>In this chapter we discuss many basic theoretical results for linear models. The results are not interesting in themselves, but are foundational for the inferential results discussed in Chapter <a href="inference.html#inference">6</a>. Appendices <a href="overview-of-matrix-facts.html#overview-of-matrix-facts">A</a> and <a href="prob-review.html#prob-review">B</a> provide an overview of properties related to matrices and random vectors that are needed for the derivations below.</p>
+<p>We assume the responses can be modeled as
+<span class="math display">\[
+Y_i=\beta_0+\beta_1 x_{i,1} +\ldots + \beta_{p-1}x_{i,[-1}+\epsilon_i,\quad i=1,2,\ldots,n,
+\]</span>
+or using matrix formulation, as
+<span class="math display" id="eq:linear-model-def-matrix">\[
+\begin{equation}
+\mathbf{y} = \mathbf{X}\boldsymbol{\beta}+\boldsymbol{\epsilon}.\tag{5.1}
+\end{equation}
+\]</span>
+using the notation defined in Chapter <a href="linear-model-estimation.html#linear-model-estimation">3</a>.</p>
+<div id="standard-assumptions" class="section level2 hasAnchor" number="5.1">
+<h2><span class="header-section-number">5.1</span> Standard assumptions<a href="linear-model-theory.html#standard-assumptions" class="anchor-section" aria-label="Anchor link to header"></a></h2>
+<p>We assume that the components of our linear model have the characteristics previously described in Table <a href="#tab:term-df"><strong>??</strong></a>. For the results we will derive below, we also need to make several specific assumptions about the errors. We have mentioned some of them previously, but discuss them all for completeness.</p>
+<p>The first error assumption is that conditional on the regressors, the mean of the errors is zero. This means that <span class="math inline">\(E(\epsilon_i \mid \mathbb{X} = \mathbf{x}_i)=0\)</span> for <span class="math inline">\(i=1,2,\ldots,n\)</span>, or using matrix notation,
+<span class="math display">\[
+E(\boldsymbol{\epsilon}\mid \mathbf{X}) = 0_{n\times 1},
+\]</span>
+where “<span class="math inline">\(\mid \mathbf{X}\)</span> is notation meaning”conditional on knowing the regressor values for all observations”.</p>
+<p>We also assume that the errors have constant variances and are uncorrelated, conditional on knowing the regressors, i.e., that <span class="math display">\[\mathrm{var}(\epsilon_i\mid \mathbb{X}=\mathbf{x}_i) = \sigma^2, \quad i=1,2,\ldots,n,\]</span>
+and
+<span class="math display">\[
+\mathrm{cov}(\epsilon_i, \epsilon_j\mid \mathbf{X}) = 0, \quad i,j=1,2,\ldots,n,\quad i\neq j.
+\]</span>
+In matrix notation, this is stated as
+<span class="math display">\[
+\mathrm{var}(\mathbf{y})=\sigma^2\mathbf{I}_{n\times n}.
+\]</span></p>
+<p>Additionally, we assume that the errors are identically distributed. Formally, this may be written as
+<span class="math display" id="eq:errordist">\[\begin{equation}
+\epsilon_i \sim F, i=1,2,\ldots,n,
+\tag{5.2}
+\end{equation}\]</span>
+where <span class="math inline">\(F\)</span> is some arbitrary distribution. The <span class="math inline">\(\sim\)</span> is read as “distributed as”. In other words, Equation <a href="linear-model-theory.html#eq:errordist">(5.2)</a> means, “<span class="math inline">\(\epsilon_i\)</span> is distributed as <span class="math inline">\(F\)</span> for <span class="math inline">\(i\)</span> equal to <span class="math inline">\(1,2,\ldots,n\)</span>”. However, it is more common to assume the errors have a normal (Gaussian) distribution. Two uncorrelated normal random variables are also independent (this is true for normal random variables, but is not generally true for other distributions). Thus, we may concisely state the typical error assumptions as
+<span class="math display">\[
+\epsilon_1,\epsilon_2,\ldots,\epsilon_n \mid \mathbf{X}\stackrel{i.i.d.}{\sim} N(0, \sigma^2),
+\]</span>
+or using matrix notation as
+<span class="math display" id="eq:error-assumptions-matrix">\[
+\begin{equation}
+\mathbf{y}\mid \mathbf{X}\sim \mathsf{N}(0_{n\times 1},\sigma^2 \mathbf{I}_{n\times n}), \tag{5.3}
+\end{equation}
+\]</span>
+where <span class="math inline">\(0_{n\times 1}\)</span> is the <span class="math inline">\(n \times 1\)</span> vector of zeros and <span class="math inline">\(\mathbf{I}_{n\times n}\)</span> is the <span class="math inline">\(n\times n\)</span> identity matrix. Equation <a href="linear-model-theory.html#eq:error-assumptions-matrix">(5.3)</a>
+combines the following assumptions:</p>
+<ol style="list-style-type: decimal">
+<li><span class="math inline">\(E(\epsilon_i \mid \mathbb{X}=\mathbf{x}_i)=0\)</span> for <span class="math inline">\(i=1,2,\ldots,n\)</span>.</li>
+<li><span class="math inline">\(\mathrm{var}(\epsilon_i\mid \mathbb{X}=\mathbf{x}_i)=\sigma^2\)</span> for <span class="math inline">\(i=1,2,\ldots,n\)</span>.</li>
+<li><span class="math inline">\(\mathrm{cov}(\epsilon_i,\epsilon_j\mid \mathbf{X})=0\)</span> for <span class="math inline">\(i\neq j\)</span> with <span class="math inline">\(i,j=1,2,\ldots,n\)</span>.</li>
+<li><span class="math inline">\(\epsilon_i\)</span> has a normal distribution for <span class="math inline">\(i=1,2,\ldots,n\)</span>.</li>
+</ol>
+</div>
+<div id="summary-of-results" class="section level2 hasAnchor" number="5.2">
+<h2><span class="header-section-number">5.2</span> Summary of results<a href="linear-model-theory.html#summary-of-results" class="anchor-section" aria-label="Anchor link to header"></a></h2>
+<p>For the linear model given in Equation <a href="linear-model-theory.html#eq:linear-model-def-matrix">(5.1)</a> and under the assumptions summarized in Equation <a href="linear-model-theory.html#eq:error-assumptions-matrix">(5.3)</a>, we have the following results:</p>
+<ol style="list-style-type: decimal">
+<li><span class="math inline">\(\mathbf{y}\mid \mathbf{X}\sim \mathsf{N}(\mathbf{X}\boldsymbol{\beta}, \sigma^2 \mathbf{I}_{n\times n})\)</span>.</li>
+<li><span class="math inline">\(\hat{\boldsymbol{\beta}}\mid \mathbf{X}\sim \mathsf{N}(\boldsymbol{\beta}, \sigma^2(\mathbf{X}^T\mathbf{X})^{-1})\)</span>.</li>
+<li><span class="math inline">\(\hat{\boldsymbol{\epsilon}}\mid \mathbf{X}\sim \mathsf{N}(0_{n\times n}, \sigma^2 (\mathbf{I}_{n\times n} - \mathbf{H}))\)</span>.</li>
+<li><span class="math inline">\(\hat{\boldsymbol{\beta}}\)</span> has the minimum variance among all unbiased estimators of <span class="math inline">\(\boldsymbol{\beta}\)</span> with the additional assumptions that the model is correct and <span class="math inline">\(\mathbf{X}\)</span> is full-rank.</li>
+</ol>
+<p>We prove these results in the sections below.</p>
+</div>
+<div id="results-for-mathbfy" class="section level2 hasAnchor" number="5.3">
+<h2><span class="header-section-number">5.3</span> Results for <span class="math inline">\(\mathbf{y}\)</span><a href="linear-model-theory.html#results-for-mathbfy" class="anchor-section" aria-label="Anchor link to header"></a></h2>
+<div class="theorem">
+<p><span id="thm:mean-y" class="theorem"><strong>Theorem 5.1  </strong></span>For the linear model given in Equation <a href="linear-model-theory.html#eq:linear-model-def-matrix">(5.1)</a> and under the assumptions summarized in Equation <a href="linear-model-theory.html#eq:error-assumptions-matrix">(5.3)</a>,
+<span class="math display" id="eq:mean-y">\[
+\begin{equation}
+E(\mathbf{y}\mid \mathbf{X})=\mathbf{X}\boldsymbol{\beta}. \tag{5.4}
+\end{equation}
+\]</span></p>
+</div>
+<div class="proof">
+<p><span id="unlabeled-div-1" class="proof"><em>Proof</em>. </span>Some text.</p>
+</div>
+<div class="theorem">
+<p><span id="thm:var-y" class="theorem"><strong>Theorem 5.2  </strong></span>For the linear model given in Equation <a href="linear-model-theory.html#eq:linear-model-def-matrix">(5.1)</a> and under the assumptions summarized in Equation <a href="linear-model-theory.html#eq:error-assumptions-matrix">(5.3)</a>,
+<span class="math display" id="eq:var-y">\[
+\begin{equation}
+\mathrm{var}(\mathbf{y}\mid \mathbf{X})=\sigma^2 \mathbf{I}_{n\times n}.\tag{5.5}
+\end{equation}
+\]</span></p>
+</div>
+<div class="proof">
+<p><span id="unlabeled-div-2" class="proof"><em>Proof</em>. </span>Some text.</p>
+</div>
+<div class="theorem">
+<p><span id="thm:dist-properties-y" class="theorem"><strong>Theorem 5.3  </strong></span>For the linear model given in Equation <a href="linear-model-theory.html#eq:linear-model-def-matrix">(5.1)</a> and under the assumptions summarized in Equation <a href="linear-model-theory.html#eq:error-assumptions-matrix">(5.3)</a>,
+<span class="math display" id="eq:dist-properties-y">\[
+\begin{equation}
+\mathbf{y}\mid \mathbf{X}\sim \mathsf{N}(\mathbf{X}\boldsymbol{\beta}, \sigma^2 \mathbf{I}_{n\times n}).\tag{5.6}
+\end{equation}
+\]</span></p>
+</div>
+<div class="proof">
+<p><span id="unlabeled-div-3" class="proof"><em>Proof</em>. </span>How do we know that Equation <a href="linear-model-theory.html#eq:dist-properties-y">(5.6)</a> is true? Show that:</p>
+<ul>
+<li><span class="math inline">\(E(\mathbf{y}) = \mathbf{X}\boldsymbol{\beta}\)</span> and</li>
+<li><span class="math inline">\(\mathrm{var}(\mathbf{y}) = \sigma^2 I_n\)</span>.</li>
+<li>Note <span class="math inline">\(\mathbf{y}\)</span> is a linear function of the multivariate normal vector <span class="math inline">\(\boldsymbol{\epsilon}\)</span>, so <span class="math inline">\(\mathbf{y}\)</span> must also have a multivariate normal distribution.</li>
+</ul>
+</div>
+</div>
+<div id="results-for-hatboldsymbolbeta" class="section level2 hasAnchor" number="5.4">
+<h2><span class="header-section-number">5.4</span> Results for <span class="math inline">\(\hat{\boldsymbol{\beta}}\)</span><a href="linear-model-theory.html#results-for-hatboldsymbolbeta" class="anchor-section" aria-label="Anchor link to header"></a></h2>
+<div class="theorem">
+<p><span id="thm:unbiasedness-betahat" class="theorem"><strong>Theorem 5.4  </strong></span>For the linear model given in Equation <a href="linear-model-theory.html#eq:linear-model-def-matrix">(5.1)</a> and under the assumptions summarized in Equation <a href="linear-model-theory.html#eq:error-assumptions-matrix">(5.3)</a>, the OLS estimator for <span class="math inline">\(\boldsymbol{\beta}\)</span>,
+<span class="math display">\[
+\hat{\boldsymbol{\beta}}=(\mathbf{X}^T\mathbf{X})^T\mathbf{X}^T\mathbf{y},
+\]</span>
+is an unbiased estimator for <span class="math inline">\(\boldsymbol{\beta}\)</span>, i.e.,
+<span class="math display" id="eq:unbiasedness-betahat">\[
+\begin{equation}
+E(\hat{\boldsymbol{\beta}}\mid \mathbf{X})=\boldsymbol{\beta}.\tag{5.7}
+\end{equation}
+\]</span></p>
+<p><strong>Lemma: </strong> <span class="math inline">\(E(y|X)=X\beta\)</span></p>
+<p><span class="math display">\[
+\begin{align}
+E(y|\beta)&amp;=E(X\beta+\epsilon|X)&amp;\tiny\text{(definition of }y)\\
+&amp;=E(X\beta|X)+E(\epsilon|X)&amp;\tiny\text{(linearity of expectation)}\\
+&amp;=E(X\beta|X)+0&amp;\tiny\text{(by assumption)}\\
+&amp;=X\beta&amp;\tiny(X \text{ and } \beta\text{ are constant objects)}
+\end{align}
+\]</span></p>
+<p><strong>Lemma: </strong> <span class="math inline">\(\text{var}(y|X)=\sigma^2I\)</span></p>
+<p><span class="math display">\[
+\begin{align}
+\text{var}(y|X)&amp;=\text{var}(X\beta+\epsilon|X)\\
+&amp;=var(\epsilon|X)&amp;\tiny(X\beta \text{ is a constant object)}\\
+&amp;=\sigma^2I&amp;\tiny\text{(by assumption)}
+\end{align}
+\]</span></p>
+</div>
+<div class="proof">
+<p><span id="unlabeled-div-4" class="proof"><em>Proof</em>. </span><span class="math display">\[
+\begin{align}
+E(\hat\beta|X)&amp;=E((X^TX)^{-1}X^Ty|X)&amp;\tiny\text{(by OLS formula)}\\
+&amp;=(X^TX)^{-1}X^TE(y|X)&amp;\tiny(X \text{ is a constant matrix)}\\
+&amp;=(X^TX)^{-1}X^TX&amp;\tiny\text{(above result)}\\
+&amp;=I\beta&amp;\tiny\text{(property of inverse matrices)}\\
+&amp;=\beta\\
+&amp;\square
+\end{align}
+\]</span></p>
+</div>
+<div class="theorem">
+<p><span id="thm:var-betahat" class="theorem"><strong>Theorem 5.5  </strong></span>For the linear model given in Equation <a href="linear-model-theory.html#eq:linear-model-def-matrix">(5.1)</a> and under the assumptions summarized in Equation <a href="linear-model-theory.html#eq:error-assumptions-matrix">(5.3)</a>,
+<span class="math display" id="eq:var-betahat">\[
+\begin{equation}
+\mathrm{var}(\hat{\boldsymbol{\beta}}\mid \mathbf{X})=\sigma^2(\mathbf{X}^T\mathbf{X})^{-1}.\tag{5.8}
+\end{equation}
+\]</span></p>
+</div>
+<div class="proof">
+<p><span id="unlabeled-div-5" class="proof"><em>Proof</em>. </span><span class="math display">\[
+\begin{align}
+\text{var}(\hat\beta|X)&amp;=\text{var}((X^TX)^{-1}X^Ty|X)&amp;\tiny\text{(by OLS formula)}\\
+&amp;=(X^TX)^{-1}X^T\text{var}(y|X)((X^TX)^{-1}X^T)^T&amp;\tiny\text{(pull constants out of variance)}\\
+&amp;=(X^TX)^{-1}X^T\text{var}(y|X)X(X^TX)^{-1}&amp;\tiny\text{(simplification)}\\
+&amp;=(X^TX)^{-1}X^T(\sigma^2I)X(X^TX)^{-1}&amp;\tiny\text{(previous result)}\\
+&amp;=\sigma^2(X^TX)^{-1}X^TX(X^TX)^{-1}&amp;\tiny(\sigma^2 \text{ is a scalar)}\\
+&amp;=\sigma^2(X^TX)^{-1}&amp;\tiny\text{(simplpification)}\\
+&amp;\square
+\end{align}
+\]</span></p>
+</div>
+<div class="theorem">
+<p><span id="thm:dist-properties-betahat" class="theorem"><strong>Theorem 5.6  </strong></span>For the linear model given in Equation <a href="linear-model-theory.html#eq:linear-model-def-matrix">(5.1)</a> and under the assumptions summarized in Equation <a href="linear-model-theory.html#eq:error-assumptions-matrix">(5.3)</a>,
+<span class="math display" id="eq:dist-properties-betahat">\[
+\begin{equation}
+\hat{\boldsymbol{\beta}}\mid \mathbf{X}\sim \mathsf{N}(\boldsymbol{\beta}, \sigma^2(\mathbf{X}^T\mathbf{X})^{-1}).\tag{5.9}
+\end{equation}
+\]</span></p>
+</div>
+<div class="proof">
+<p><span id="unlabeled-div-6" class="proof"><em>Proof</em>. </span>Since <span class="math inline">\(\hat\beta=(X^TX)^{-1}X^Ty\)</span> is a linear combination of <span class="math inline">\(y\)</span>, and <span class="math inline">\(y\)</span> is a multivariate normal random vector, then <span class="math inline">\(\hat\beta\)</span> is also a multivariate normal random vector. Using the previous two results for the expectation and variance,</p>
+<p><span class="math display">\[
+\hat\beta|X \sim N(\beta,\sigma^2(X^TX)^{-1})
+\]</span></p>
+</div>
+</div>
+<div id="results-for-the-residuals" class="section level2 hasAnchor" number="5.5">
+<h2><span class="header-section-number">5.5</span> Results for the residuals<a href="linear-model-theory.html#results-for-the-residuals" class="anchor-section" aria-label="Anchor link to header"></a></h2>
+<p>The residual vector can be expressed in various equivalent ways, such as
+<span class="math display">\[
+\begin{align}
+\hat{\boldsymbol{\epsilon}} &amp;= \mathbf{y}-\hat{\mathbf{y}} \\
+&amp;= \mathbf{y}-\mathbf{X}\hat{\boldsymbol{\beta}}.
+\end{align}
+\]</span></p>
+<p>The <strong>hat</strong> matrix is denoted as
+<span class="math display" id="eq:hat-matrix-def">\[
+\begin{equation}
+\mathbf{H}=\mathbf{X}(\mathbf{X}^T\mathbf{X})^{-1}\mathbf{X}^T.\tag{5.10}
+\end{equation}
+\]</span></p>
+<p>Thus, using the substitution <span class="math inline">\(\hat{\boldsymbol{\beta}}=(\mathbf{X}^T\mathbf{X})^{-1}\mathbf{X}^T\mathbf{y}\)</span> and the definition for <span class="math inline">\(\mathbf{H}\)</span> in Equation <a href="linear-model-theory.html#eq:hat-matrix-def">(5.10)</a>, we see that
+<span class="math display" id="eq:residual-hat-def">\[
+\begin{align}
+\hat{\boldsymbol{\epsilon}} &amp;= \mathbf{y}-\mathbf{X}\hat{\boldsymbol{\beta}} \\
+&amp;= \mathbf{y} - \mathbf{X}(\mathbf{X}^T\mathbf{X})^{-1}\mathbf{X}^T\mathbf{y} \\
+&amp;= \mathbf{y} - \mathbf{H}\mathbf{y} \\
+&amp;= (\mathbf{I}-\mathbf{H})\mathbf{y}. \tag{5.11}
+\end{align}
+\]</span></p>
+<p>The hat matrix is an important theoretical matrix, as it projects <span class="math inline">\(\mathbf{y}\)</span> into the space spanned by the vectors in <span class="math inline">\(\mathbf{X}\)</span>. It also has some properties that we will exploit in some of the derivations below.</p>
+<div class="theorem">
+<p><span id="thm:h-properties" class="theorem"><strong>Theorem 5.7  </strong></span>The hat matrix <span class="math inline">\(\mathbf{H}\)</span> is symmetric and idempotent.</p>
+</div>
+<div class="proof">
+<p><span id="unlabeled-div-7" class="proof"><em>Proof</em>. </span>Notice that,
+<span class="math display">\[
+\begin{align}
+H^T&amp;=(X(X^TX)^{-1}X^T)^T&amp;\tiny\text{(definition of }H)\\
+&amp;=(X^T)^T((X^TX)^{-1})^TX^T&amp;\tiny\text{(apply transpose to matrix product)}\\
+&amp;=X((X^TX)^T)^{-1}X^T&amp;\tiny\text{(simplification, reversibility of inverse and transpose)}\\
+&amp;=X(X^T(X^T)^T)^{-1}X^T&amp;\tiny\text{(apply transpose to matrix product)}\\
+&amp;=X(X^TX)^{-1}X^T&amp;\tiny\text{(simplification)}\\
+&amp;=H\\
+&amp;\square
+\end{align}
+\]</span>
+Thus, <span class="math inline">\(H\)</span> is symmetric.</p>
+<p>Additionally,
+<span class="math display">\[
+\begin{align}
+HH&amp;=(X(X^TX)^{-1}X^T)(X(X^TX)^{-1}X^T)&amp;\tiny\text{(definition)}\\
+&amp;=X(X^TX)^{-1}(X^TX)(X^TX)^{-1}X^t&amp;\tiny\text{(associative property of matrices)}\\
+&amp;=XI(X^TX)^{-1}X^T&amp;\tiny\text{(property of inverse matrices)}\\
+&amp;=X(X^TX)^{-1}X^T&amp;\tiny\text{(simplification)}\\
+&amp;=H\\
+&amp;\square
+\end{align}
+\]</span></p>
+<p>Therefore, <span class="math inline">\(H\)</span> is idempotent.</p>
+</div>
+<div class="theorem">
+<p><span id="thm:i-h-properties" class="theorem"><strong>Theorem 5.8  </strong></span>The matrix <span class="math inline">\(\mathbf{I}_{n\times n} - \mathbf{H}\)</span> is symmetric and idempotent.</p>
+</div>
+<div class="proof">
+<p><span id="unlabeled-div-8" class="proof"><em>Proof</em>. </span>First, notice that,
+<span class="math display">\[
+\begin{align}
+(I-H)^T &amp;= I^T-H^T&amp;\tiny\text{(transpose to matrix sum)}\\
+&amp;= I-H&amp;\tiny\text{(since I and H are symmetric)}\\
+&amp;\square
+\end{align}
+\]</span>
+Thus, <span class="math inline">\(I-H\)</span> is symmetric.</p>
+<p>Next,
+<span class="math display">\[
+\begin{align}
+(I-H)(I-H)&amp;=I-2H+HH&amp;\tiny\text{(transpose to matrix sum)}\\
+&amp;=I-2H+H&amp;\tiny\text{(since H is idempotent)}\\
+&amp;=I-H&amp;\tiny\text{(simplification)}\\
+&amp;\square
+\end{align}
+\]</span>
+Thus, <span class="math inline">\(I-H\)</span> is idempotent.</p>
+</div>
+<div class="theorem">
+<p><span id="thm:mean-residuals" class="theorem"><strong>Theorem 5.9  </strong></span>For the linear model given in Equation <a href="linear-model-theory.html#eq:linear-model-def-matrix">(5.1)</a> and under the assumptions summarized in Equation <a href="linear-model-theory.html#eq:error-assumptions-matrix">(5.3)</a>,
+<span class="math display" id="eq:mean-residuals">\[
+\begin{equation}
+E(\hat{\boldsymbol{\epsilon}}\mid \mathbf{X})=0_{n\times 1}.\tag{5.12}
+\end{equation}
+\]</span></p>
+</div>
+<div class="proof">
+<p><span id="unlabeled-div-9" class="proof"><em>Proof</em>. </span><span class="math display">\[
+\begin{align}
+E(\hat\epsilon|X)&amp;=E((I-H)y|H)\\
+&amp;=(I-H)E(y|X)&amp;\tiny(I-H\text{ is non-random)}\\
+&amp;=(I-H)X\beta&amp;\tiny\text{(earlier result)}\\
+&amp;=X\beta-HX\beta&amp;\tiny\text{(distribute the product)}\\
+&amp;=X\beta-X^T(X^TX)^{-1}X^TX\beta&amp;\tiny\text{(definition of H)}\\
+&amp;=X\beta-IX\beta&amp;\tiny\text{(property of inverse matrix)}\\
+&amp;=X\beta-X\beta&amp;\tiny\text{(simplification)}\\
+&amp;=0_{n\times1}&amp;\tiny\text{(simplification)}\\
+&amp;\square
+\end{align}
+\]</span></p>
+</div>
+<div class="theorem">
+<p><span id="thm:var-residuals" class="theorem"><strong>Theorem 5.10  </strong></span>For the linear model given in Equation <a href="linear-model-theory.html#eq:linear-model-def-matrix">(5.1)</a> and under the assumptions summarized in Equation <a href="linear-model-theory.html#eq:error-assumptions-matrix">(5.3)</a>,
+<span class="math display" id="eq:var-residuals">\[
+\begin{equation}
+\mathrm{var}(\hat{\boldsymbol{\epsilon}}\mid \mathbf{X})=\sigma^2 (\mathbf{I}_{n\times n} - \mathbf{H}).\tag{5.13}
+\end{equation}
+\]</span></p>
+</div>
+<div class="proof">
+<p><span id="unlabeled-div-10" class="proof"><em>Proof</em>. </span><span class="math display">\[
+\begin{align}
+\text{var}(\hat\epsilon|X)&amp;=\text{var}((I-H)y|X)\\
+&amp;=(I-H)\text{var}(y|X)(I-H)^T&amp;\tiny(I-H\text{is nonrandom)}\\
+&amp;=(I-H)\sigma^2(I-H)^T&amp;\tiny\text{(earlier result)}\\
+&amp;=\sigma^2(I-H)(I-H)&amp;\tiny(I-H\text{ is symmetric)}\\
+&amp;=\sigma^2(I-H)&amp;\tiny(I-H\text{ is idempotent)}\\
+&amp;\square
+\end{align}
+\]</span></p>
+</div>
+<div class="theorem">
+<p><span id="thm:dist-properties-residuals" class="theorem"><strong>Theorem 5.11  </strong></span>For the linear model given in Equation <a href="linear-model-theory.html#eq:linear-model-def-matrix">(5.1)</a> and under the assumptions summarized in Equation <a href="linear-model-theory.html#eq:error-assumptions-matrix">(5.3)</a>,
+<span class="math display" id="eq:dist-properties-residuals">\[
+\begin{equation}
+\hat{\boldsymbol{\epsilon}}\mid \mathbf{X}\sim \mathsf{N}(0_{n\times n}, \sigma^2 (\mathbf{I}_{n\times n} - \mathbf{H})).\tag{5.14}
+\end{equation}
+\]</span></p>
+</div>
+<div class="proof">
+<p><span id="unlabeled-div-11" class="proof"><em>Proof</em>. </span>Since <span class="math inline">\(\hat\epsilon\)</span> is a linear combination of multivariate normal vectors, and using previous results, it has mean <span class="math inline">\(0_{n\times1}\)</span> and variance-covariance matrix <span class="math inline">\(\sigma^2(I-H)\)</span>.</p>
+<p>The RSS can be represented as,
+<span class="math display">\[
+y^T(I-H)y
+\]</span></p>
+<p>Thus,</p>
+<p><span class="math display">\[
+\begin{align}
+RSS &amp;= \hat\epsilon^T\hat\epsilon\\
+&amp;=((I-H)y)^T(I-H)y&amp;\tiny\text{(previous result)}\\
+&amp;=y^T(I-H)^T(I-H)y&amp;\tiny\text{(apply transpose)}\\
+&amp;=y^T(I-H)(I-H)y&amp;\tiny(I-H \text{ is symmetric)}\\
+&amp;=y^T(I-H)y&amp;\tiny(I-H \text{ is idempotent)}\\
+\end{align}
+\]</span></p>
+</div>
+</div>
+<div id="the-gauss-markov-theorem" class="section level2 hasAnchor" number="5.6">
+<h2><span class="header-section-number">5.6</span> The Gauss-Markov Theorem<a href="linear-model-theory.html#the-gauss-markov-theorem" class="anchor-section" aria-label="Anchor link to header"></a></h2>
+<p>Suppose we will fit the regression model
+<span class="math display">\[
+\mathbf{y}=\mathbf{X}\boldsymbol{\beta} + \boldsymbol{\epsilon}.
+\]</span></p>
+<p>Assume that</p>
+<ol style="list-style-type: decimal">
+<li><span class="math inline">\(E(\boldsymbol{\epsilon}\mid \mathbf{X}) = 0\)</span>.</li>
+<li><span class="math inline">\(\mathrm{var}(\boldsymbol{\epsilon}\mid \mathbf{X}) = \sigma^2 \mathbf{I}_{n\times n}\)</span>, i.e., the errors have constant variance and are uncorrelated.</li>
+<li><span class="math inline">\(E(\mathbf{y}\mid \mathbf{X})=\mathbf{X}\boldsymbol{\beta}\)</span></li>
+<li><span class="math inline">\(\mathbf{X}\)</span> is a full-rank matrix.</li>
+</ol>
+<p>Then the <strong>Gauss-Markov</strong> states that the OLS estimator of <span class="math inline">\(\boldsymbol{\beta}\)</span>,
+<span class="math display">\[
+\hat{\boldsymbol{\beta}}=(\mathbf{X}^T\mathbf{X})^T\mathbf{X}^T\mathbf{y},
+\]</span>
+has the minimum variance among all unbiased estimators of <span class="math inline">\(\boldsymbol{\beta}\)</span> and this estimator is unique.</p>
+<p>Some comments:</p>
+<ul>
+<li>Assumption 3 guarantees that we have hypothesized the correct model, i.e., that we have included exactly the correct regressors in our model. Not only are we fitting a linear model to the data, but our hypothesized model is actually correct.</li>
+<li>Assumption 4 ensures that the OLS estimator can be computed (otherwise, there is no unique solution).</li>
+<li>The Gauss-Markov theorem only applies to unbiased estimators of <span class="math inline">\(\boldsymbol{\beta}\)</span>. Biased estimators could have a smaller variance.</li>
+<li>The Gauss-Markov theorem states that no unbiased estimator of <span class="math inline">\(\boldsymbol{\beta}\)</span> can have a smaller variance than <span class="math inline">\(\hat{\boldsymbol{\beta}}\)</span>.</li>
+<li>The OLS estimator uniquely has the minimum variance property, meaning that if an <span class="math inline">\(\tilde{\boldsymbol{\beta}}\)</span> is another unbiased estimator of <span class="math inline">\(\boldsymbol{\beta}\)</span> and <span class="math inline">\(\mathrm{var}(\tilde{\boldsymbol{\beta}}) = \mathrm{var}(\hat{\boldsymbol{\beta}})\)</span>, then in fact the two estimators are identical and <span class="math inline">\(\tilde{\boldsymbol{\beta}}=\hat{\boldsymbol{\beta}}\)</span>.</li>
+</ul>
+<p>We do not prove this theorem.</p>
+
+</div>
+</div>
+            </section>
+
+          </div>
+        </div>
+      </div>
+<a href="interp-chapter.html" class="navigation navigation-prev " aria-label="Previous page"><i class="fa fa-angle-left"></i></a>
+<a href="inference.html" class="navigation navigation-next " aria-label="Next page"><i class="fa fa-angle-right"></i></a>
+    </div>
+  </div>
+<script src="libs/gitbook-2.6.7/js/app.min.js"></script>
+<script src="libs/gitbook-2.6.7/js/clipboard.min.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-search.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-sharing.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-fontsettings.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-bookdown.js"></script>
+<script src="libs/gitbook-2.6.7/js/jquery.highlight.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-clipboard.js"></script>
+<script>
+gitbook.require(["gitbook"], function(gitbook) {
+gitbook.start({
+"sharing": {
+"github": false,
+"facebook": true,
+"twitter": true,
+"linkedin": false,
+"weibo": false,
+"instapaper": false,
+"vk": false,
+"whatsapp": false,
+"all": ["facebook", "twitter", "linkedin", "weibo", "instapaper"]
+},
+"fontsettings": {
+"theme": "white",
+"family": "sans",
+"size": 2
+},
+"edit": {
+"link": null,
+"text": null
+},
+"history": {
+"link": null,
+"text": null
+},
+"view": {
+"link": null,
+"text": null
+},
+"download": ["A-Progessive-Introduction-to-Linear-Models.pdf", "A-Progessive-Introduction-to-Linear-Models.epub"],
+"search": {
+"engine": "fuse",
+"options": null
+},
+"toc": {
+"collapse": "subsection"
+}
+});
+});
+</script>
+
+<!-- dynamically load mathjax for compatibility with self-contained -->
+<script>
+  (function () {
+    var script = document.createElement("script");
+    script.type = "text/javascript";
+    var src = "true";
+    if (src === "" || src === "true") src = "https://mathjax.rstudio.com/latest/MathJax.js?config=TeX-MML-AM_CHTML";
+    if (location.protocol !== "file:")
+      if (/^https?:/.test(src))
+        src = src.replace(/^https?:/, '');
+    script.src = src;
+    document.getElementsByTagName("head")[0].appendChild(script);
+  })();
+</script>
+</body>
+
+</html>

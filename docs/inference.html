@@ -1,0 +1,987 @@
+<!DOCTYPE html>
+<html lang="" xml:lang="">
+<head>
+
+  <meta charset="utf-8" />
+  <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+  <title>Chapter 6 Linear model inference | A progressive introduction to linear models</title>
+  <meta name="description" content="A collection of R notebooks that progressively introduction how to fit and use linear models." />
+  <meta name="generator" content="bookdown 0.27 and GitBook 2.6.7" />
+
+  <meta property="og:title" content="Chapter 6 Linear model inference | A progressive introduction to linear models" />
+  <meta property="og:type" content="book" />
+  
+  <meta property="og:description" content="A collection of R notebooks that progressively introduction how to fit and use linear models." />
+  
+
+  <meta name="twitter:card" content="summary" />
+  <meta name="twitter:title" content="Chapter 6 Linear model inference | A progressive introduction to linear models" />
+  
+  <meta name="twitter:description" content="A collection of R notebooks that progressively introduction how to fit and use linear models." />
+  
+
+<meta name="author" content="Joshua French" />
+
+
+
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <meta name="apple-mobile-web-app-capable" content="yes" />
+  <meta name="apple-mobile-web-app-status-bar-style" content="black" />
+  
+  
+<link rel="prev" href="linear-model-theory.html"/>
+<link rel="next" href="overview-of-matrix-facts.html"/>
+<script src="libs/jquery-3.6.0/jquery-3.6.0.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/fuse.js@6.4.6/dist/fuse.min.js"></script>
+<link href="libs/gitbook-2.6.7/css/style.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-table.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-bookdown.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-highlight.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-search.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-fontsettings.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-clipboard.css" rel="stylesheet" />
+
+
+
+
+
+
+
+
+<link href="libs/anchor-sections-1.1.0/anchor-sections.css" rel="stylesheet" />
+<link href="libs/anchor-sections-1.1.0/anchor-sections-hash.css" rel="stylesheet" />
+<script src="libs/anchor-sections-1.1.0/anchor-sections.js"></script>
+<script src="libs/htmlwidgets-1.5.4/htmlwidgets.js"></script>
+<script src="libs/plotly-binding-4.10.0/plotly.js"></script>
+<script src="libs/typedarray-0.1/typedarray.min.js"></script>
+<link href="libs/crosstalk-1.2.0/css/crosstalk.min.css" rel="stylesheet" />
+<script src="libs/crosstalk-1.2.0/js/crosstalk.min.js"></script>
+<link href="libs/plotly-htmlwidgets-css-2.5.1/plotly-htmlwidgets.css" rel="stylesheet" />
+<script src="libs/plotly-main-2.5.1/plotly-latest.min.js"></script>
+
+
+<style type="text/css">
+pre > code.sourceCode { white-space: pre; position: relative; }
+pre > code.sourceCode > span { display: inline-block; line-height: 1.25; }
+pre > code.sourceCode > span:empty { height: 1.2em; }
+.sourceCode { overflow: visible; }
+code.sourceCode > span { color: inherit; text-decoration: inherit; }
+pre.sourceCode { margin: 0; }
+@media screen {
+div.sourceCode { overflow: auto; }
+}
+@media print {
+pre > code.sourceCode { white-space: pre-wrap; }
+pre > code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
+}
+pre.numberSource code
+  { counter-reset: source-line 0; }
+pre.numberSource code > span
+  { position: relative; left: -4em; counter-increment: source-line; }
+pre.numberSource code > span > a:first-child::before
+  { content: counter(source-line);
+    position: relative; left: -1em; text-align: right; vertical-align: baseline;
+    border: none; display: inline-block;
+    -webkit-touch-callout: none; -webkit-user-select: none;
+    -khtml-user-select: none; -moz-user-select: none;
+    -ms-user-select: none; user-select: none;
+    padding: 0 4px; width: 4em;
+    color: #aaaaaa;
+  }
+pre.numberSource { margin-left: 3em; border-left: 1px solid #aaaaaa;  padding-left: 4px; }
+div.sourceCode
+  {   }
+@media screen {
+pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
+}
+code span.al { color: #ff0000; font-weight: bold; } /* Alert */
+code span.an { color: #60a0b0; font-weight: bold; font-style: italic; } /* Annotation */
+code span.at { color: #7d9029; } /* Attribute */
+code span.bn { color: #40a070; } /* BaseN */
+code span.bu { } /* BuiltIn */
+code span.cf { color: #007020; font-weight: bold; } /* ControlFlow */
+code span.ch { color: #4070a0; } /* Char */
+code span.cn { color: #880000; } /* Constant */
+code span.co { color: #60a0b0; font-style: italic; } /* Comment */
+code span.cv { color: #60a0b0; font-weight: bold; font-style: italic; } /* CommentVar */
+code span.do { color: #ba2121; font-style: italic; } /* Documentation */
+code span.dt { color: #902000; } /* DataType */
+code span.dv { color: #40a070; } /* DecVal */
+code span.er { color: #ff0000; font-weight: bold; } /* Error */
+code span.ex { } /* Extension */
+code span.fl { color: #40a070; } /* Float */
+code span.fu { color: #06287e; } /* Function */
+code span.im { } /* Import */
+code span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Information */
+code span.kw { color: #007020; font-weight: bold; } /* Keyword */
+code span.op { color: #666666; } /* Operator */
+code span.ot { color: #007020; } /* Other */
+code span.pp { color: #bc7a00; } /* Preprocessor */
+code span.sc { color: #4070a0; } /* SpecialChar */
+code span.ss { color: #bb6688; } /* SpecialString */
+code span.st { color: #4070a0; } /* String */
+code span.va { color: #19177c; } /* Variable */
+code span.vs { color: #4070a0; } /* VerbatimString */
+code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warning */
+</style>
+
+<style type="text/css">
+/* Used with Pandoc 2.11+ new --citeproc when CSL is used */
+div.csl-bib-body { }
+div.csl-entry {
+  clear: both;
+}
+.hanging div.csl-entry {
+  margin-left:2em;
+  text-indent:-2em;
+}
+div.csl-left-margin {
+  min-width:2em;
+  float:left;
+}
+div.csl-right-inline {
+  margin-left:2em;
+  padding-left:1em;
+}
+div.csl-indent {
+  margin-left: 2em;
+}
+</style>
+
+<link rel="stylesheet" href="style.css" type="text/css" />
+</head>
+
+<body>
+
+
+
+  <div class="book without-animation with-summary font-size-2 font-family-1" data-basepath=".">
+
+    <div class="book-summary">
+      <nav role="navigation">
+
+<ul class="summary">
+<li><a href="./">Data Analysis with Linear Regression</a></li>
+
+<li class="divider"></li>
+<li class="chapter" data-level="" data-path="index.html"><a href="index.html"><i class="fa fa-check"></i>Preliminaries</a></li>
+<li class="chapter" data-level="1" data-path="r-foundations.html"><a href="r-foundations.html"><i class="fa fa-check"></i><b>1</b> R Foundations</a>
+<ul>
+<li class="chapter" data-level="1.1" data-path="r-foundations.html"><a href="r-foundations.html#setting-up-r-and-r-studio-desktop"><i class="fa fa-check"></i><b>1.1</b> Setting up R and R Studio Desktop</a></li>
+<li class="chapter" data-level="1.2" data-path="r-foundations.html"><a href="r-foundations.html#running-code-scripts-and-comments"><i class="fa fa-check"></i><b>1.2</b> Running code, scripts, and comments</a></li>
+<li class="chapter" data-level="1.3" data-path="r-foundations.html"><a href="r-foundations.html#assignment"><i class="fa fa-check"></i><b>1.3</b> Assignment</a></li>
+<li class="chapter" data-level="1.4" data-path="r-foundations.html"><a href="r-foundations.html#functions"><i class="fa fa-check"></i><b>1.4</b> Functions</a></li>
+<li class="chapter" data-level="1.5" data-path="r-foundations.html"><a href="r-foundations.html#packages"><i class="fa fa-check"></i><b>1.5</b> Packages</a></li>
+<li class="chapter" data-level="1.6" data-path="r-foundations.html"><a href="r-foundations.html#getting-help"><i class="fa fa-check"></i><b>1.6</b> Getting help</a></li>
+<li class="chapter" data-level="1.7" data-path="r-foundations.html"><a href="r-foundations.html#data-types-and-structures"><i class="fa fa-check"></i><b>1.7</b> Data types and structures</a>
+<ul>
+<li class="chapter" data-level="1.7.1" data-path="r-foundations.html"><a href="r-foundations.html#basic-data-types"><i class="fa fa-check"></i><b>1.7.1</b> Basic data types</a></li>
+<li class="chapter" data-level="1.7.2" data-path="r-foundations.html"><a href="r-foundations.html#other-important-object-types"><i class="fa fa-check"></i><b>1.7.2</b> Other important object types</a></li>
+<li class="chapter" data-level="1.7.3" data-path="r-foundations.html"><a href="r-foundations.html#data-structures"><i class="fa fa-check"></i><b>1.7.3</b> Data structures</a></li>
+</ul></li>
+<li class="chapter" data-level="1.8" data-path="r-foundations.html"><a href="r-foundations.html#vectors"><i class="fa fa-check"></i><b>1.8</b> Vectors</a>
+<ul>
+<li class="chapter" data-level="1.8.1" data-path="r-foundations.html"><a href="r-foundations.html#creation"><i class="fa fa-check"></i><b>1.8.1</b> Creation</a></li>
+<li class="chapter" data-level="1.8.2" data-path="r-foundations.html"><a href="r-foundations.html#categorical-vectors"><i class="fa fa-check"></i><b>1.8.2</b> Categorical vectors</a></li>
+<li class="chapter" data-level="1.8.3" data-path="r-foundations.html"><a href="r-foundations.html#extracting-parts-of-a-vector"><i class="fa fa-check"></i><b>1.8.3</b> Extracting parts of a vector</a></li>
+</ul></li>
+<li class="chapter" data-level="1.9" data-path="r-foundations.html"><a href="r-foundations.html#helpful-functions"><i class="fa fa-check"></i><b>1.9</b> Helpful functions</a>
+<ul>
+<li class="chapter" data-level="1.9.1" data-path="r-foundations.html"><a href="r-foundations.html#general-functions"><i class="fa fa-check"></i><b>1.9.1</b> General functions</a></li>
+<li class="chapter" data-level="1.9.2" data-path="r-foundations.html"><a href="r-foundations.html#functions-related-to-statistical-distributions"><i class="fa fa-check"></i><b>1.9.2</b> Functions related to statistical distributions</a></li>
+</ul></li>
+<li class="chapter" data-level="1.10" data-path="r-foundations.html"><a href="r-foundations.html#data-frames"><i class="fa fa-check"></i><b>1.10</b> Data Frames</a>
+<ul>
+<li class="chapter" data-level="1.10.1" data-path="r-foundations.html"><a href="r-foundations.html#direct-creation"><i class="fa fa-check"></i><b>1.10.1</b> Direct creation</a></li>
+<li class="chapter" data-level="1.10.2" data-path="r-foundations.html"><a href="r-foundations.html#importing-data"><i class="fa fa-check"></i><b>1.10.2</b> Importing Data</a></li>
+<li class="chapter" data-level="1.10.3" data-path="r-foundations.html"><a href="r-foundations.html#extracting-parts-of-a-data-frame"><i class="fa fa-check"></i><b>1.10.3</b> Extracting parts of a data frame</a></li>
+</ul></li>
+<li class="chapter" data-level="1.11" data-path="r-foundations.html"><a href="r-foundations.html#using-the-pipe-operator"><i class="fa fa-check"></i><b>1.11</b> Using the pipe operator</a></li>
+<li class="chapter" data-level="1.12" data-path="r-foundations.html"><a href="r-foundations.html#dealing-with-common-problems"><i class="fa fa-check"></i><b>1.12</b> Dealing with common problems</a></li>
+<li class="chapter" data-level="1.13" data-path="r-foundations.html"><a href="r-foundations.html#ecosystem-debate"><i class="fa fa-check"></i><b>1.13</b> Ecosystem debate</a></li>
+<li class="chapter" data-level="1.14" data-path="r-foundations.html"><a href="r-foundations.html#additional-information"><i class="fa fa-check"></i><b>1.14</b> Additional information</a>
+<ul>
+<li class="chapter" data-level="1.14.1" data-path="r-foundations.html"><a href="r-foundations.html#comparing-assignment-operators"><i class="fa fa-check"></i><b>1.14.1</b> Comparing assignment operators</a></li>
+</ul></li>
+</ul></li>
+<li class="chapter" data-level="2" data-path="data-cleaning-and-exploration.html"><a href="data-cleaning-and-exploration.html"><i class="fa fa-check"></i><b>2</b> Data cleaning and exploration</a>
+<ul>
+<li class="chapter" data-level="2.1" data-path="data-cleaning-and-exploration.html"><a href="data-cleaning-and-exploration.html#raw-palmer-penguins-data"><i class="fa fa-check"></i><b>2.1</b> Raw Palmer penguins data</a></li>
+<li class="chapter" data-level="2.2" data-path="data-cleaning-and-exploration.html"><a href="data-cleaning-and-exploration.html#initial-data-cleaning"><i class="fa fa-check"></i><b>2.2</b> Initial data cleaning</a></li>
+<li class="chapter" data-level="2.3" data-path="data-cleaning-and-exploration.html"><a href="data-cleaning-and-exploration.html#numerical-summarization-of-data"><i class="fa fa-check"></i><b>2.3</b> Numerical summarization of data</a>
+<ul>
+<li class="chapter" data-level="2.3.1" data-path="data-cleaning-and-exploration.html"><a href="data-cleaning-and-exploration.html#numeric-data"><i class="fa fa-check"></i><b>2.3.1</b> Numeric data</a></li>
+<li class="chapter" data-level="2.3.2" data-path="data-cleaning-and-exploration.html"><a href="data-cleaning-and-exploration.html#categorical-data"><i class="fa fa-check"></i><b>2.3.2</b> Categorical data</a></li>
+<li class="chapter" data-level="2.3.3" data-path="data-cleaning-and-exploration.html"><a href="data-cleaning-and-exploration.html#the-summary-function"><i class="fa fa-check"></i><b>2.3.3</b> The <code>summary</code> function</a></li>
+</ul></li>
+<li class="chapter" data-level="2.4" data-path="data-cleaning-and-exploration.html"><a href="data-cleaning-and-exploration.html#visual-summaries-of-data"><i class="fa fa-check"></i><b>2.4</b> Visual summaries of data</a>
+<ul>
+<li class="chapter" data-level="2.4.1" data-path="data-cleaning-and-exploration.html"><a href="data-cleaning-and-exploration.html#the-ggplot-recipe"><i class="fa fa-check"></i><b>2.4.1</b> The ggplot recipe</a></li>
+<li class="chapter" data-level="2.4.2" data-path="data-cleaning-and-exploration.html"><a href="data-cleaning-and-exploration.html#univariate-plots"><i class="fa fa-check"></i><b>2.4.2</b> Univariate plots</a></li>
+<li class="chapter" data-level="2.4.3" data-path="data-cleaning-and-exploration.html"><a href="data-cleaning-and-exploration.html#bivariate-plots"><i class="fa fa-check"></i><b>2.4.3</b> Bivariate plots</a></li>
+<li class="chapter" data-level="2.4.4" data-path="data-cleaning-and-exploration.html"><a href="data-cleaning-and-exploration.html#multivariate-plots"><i class="fa fa-check"></i><b>2.4.4</b> Multivariate plots</a></li>
+<li class="chapter" data-level="2.4.5" data-path="data-cleaning-and-exploration.html"><a href="data-cleaning-and-exploration.html#facetted-plots-and-alternatives"><i class="fa fa-check"></i><b>2.4.5</b> Facetted plots (and alternatives)</a></li>
+</ul></li>
+<li class="chapter" data-level="2.5" data-path="data-cleaning-and-exploration.html"><a href="data-cleaning-and-exploration.html#a-plan-for-data-cleaning-and-exploration"><i class="fa fa-check"></i><b>2.5</b> A plan for data cleaning and exploration</a></li>
+<li class="chapter" data-level="2.6" data-path="data-cleaning-and-exploration.html"><a href="data-cleaning-and-exploration.html#final-notes-on-missing-or-erroneous-data"><i class="fa fa-check"></i><b>2.6</b> Final notes on missing or erroneous data</a></li>
+</ul></li>
+<li class="chapter" data-level="3" data-path="linear-model-estimation.html"><a href="linear-model-estimation.html"><i class="fa fa-check"></i><b>3</b> Linear model estimation</a>
+<ul>
+<li class="chapter" data-level="3.1" data-path="linear-model-estimation.html"><a href="linear-model-estimation.html#a-simple-motivating-example"><i class="fa fa-check"></i><b>3.1</b> A simple motivating example</a></li>
+<li class="chapter" data-level="3.2" data-path="linear-model-estimation.html"><a href="linear-model-estimation.html#s-slr-estimation"><i class="fa fa-check"></i><b>3.2</b> Estimation of the simple linear regression model</a>
+<ul>
+<li class="chapter" data-level="3.2.1" data-path="linear-model-estimation.html"><a href="linear-model-estimation.html#ss:fv-resid-rss"><i class="fa fa-check"></i><b>3.2.1</b> Model definition, fitted values, residuals, and RSS</a></li>
+<li class="chapter" data-level="3.2.2" data-path="linear-model-estimation.html"><a href="linear-model-estimation.html#ols-estimators-of-the-simple-linear-regression-parameters"><i class="fa fa-check"></i><b>3.2.2</b> OLS estimators of the simple linear regression parameters</a></li>
+</ul></li>
+<li class="chapter" data-level="3.3" data-path="linear-model-estimation.html"><a href="linear-model-estimation.html#s:penguins-slr"><i class="fa fa-check"></i><b>3.3</b> Penguins simple linear regression example</a></li>
+<li class="chapter" data-level="3.4" data-path="linear-model-estimation.html"><a href="linear-model-estimation.html#defining-a-linear-model"><i class="fa fa-check"></i><b>3.4</b> Defining a linear model</a>
+<ul>
+<li class="chapter" data-level="3.4.1" data-path="linear-model-estimation.html"><a href="linear-model-estimation.html#ss-necessary-components"><i class="fa fa-check"></i><b>3.4.1</b> Necessary components and notation</a></li>
+<li class="chapter" data-level="3.4.2" data-path="linear-model-estimation.html"><a href="linear-model-estimation.html#standard-definition-of-linear-model"><i class="fa fa-check"></i><b>3.4.2</b> Standard definition of linear model</a></li>
+</ul></li>
+<li class="chapter" data-level="3.5" data-path="linear-model-estimation.html"><a href="linear-model-estimation.html#estimation-of-the-multiple-linear-regression-model"><i class="fa fa-check"></i><b>3.5</b> Estimation of the multiple linear regression model</a>
+<ul>
+<li class="chapter" data-level="3.5.1" data-path="linear-model-estimation.html"><a href="linear-model-estimation.html#using-matrix-notation-to-represent-a-linear-model"><i class="fa fa-check"></i><b>3.5.1</b> Using matrix notation to represent a linear model</a></li>
+<li class="chapter" data-level="3.5.2" data-path="linear-model-estimation.html"><a href="linear-model-estimation.html#ss:fv-resid-rss-mlr"><i class="fa fa-check"></i><b>3.5.2</b> Residuals, fitted values, and RSS for multiple linear regression</a></li>
+<li class="chapter" data-level="3.5.3" data-path="linear-model-estimation.html"><a href="linear-model-estimation.html#ols-estimator-of-the-regression-coefficients"><i class="fa fa-check"></i><b>3.5.3</b> OLS estimator of the regression coefficients</a></li>
+</ul></li>
+<li class="chapter" data-level="3.6" data-path="linear-model-estimation.html"><a href="linear-model-estimation.html#s:penguins-mlr"><i class="fa fa-check"></i><b>3.6</b> Penguins multiple linear regression example</a></li>
+<li class="chapter" data-level="3.7" data-path="linear-model-estimation.html"><a href="linear-model-estimation.html#model-types"><i class="fa fa-check"></i><b>3.7</b> Types of linear models</a></li>
+<li class="chapter" data-level="3.8" data-path="linear-model-estimation.html"><a href="linear-model-estimation.html#categorical-predictors"><i class="fa fa-check"></i><b>3.8</b> Categorical predictors</a>
+<ul>
+<li class="chapter" data-level="3.8.1" data-path="linear-model-estimation.html"><a href="linear-model-estimation.html#indicator-variables"><i class="fa fa-check"></i><b>3.8.1</b> Indicator variables</a></li>
+<li class="chapter" data-level="3.8.2" data-path="linear-model-estimation.html"><a href="linear-model-estimation.html#parallel-and-separate-lines-models"><i class="fa fa-check"></i><b>3.8.2</b> Parallel and separate lines models</a></li>
+<li class="chapter" data-level="3.8.3" data-path="linear-model-estimation.html"><a href="linear-model-estimation.html#extensions"><i class="fa fa-check"></i><b>3.8.3</b> Extensions</a></li>
+<li class="chapter" data-level="3.8.4" data-path="linear-model-estimation.html"><a href="linear-model-estimation.html#avoiding-an-easy-mistake"><i class="fa fa-check"></i><b>3.8.4</b> Avoiding an easy mistake</a></li>
+</ul></li>
+<li class="chapter" data-level="3.9" data-path="linear-model-estimation.html"><a href="linear-model-estimation.html#s:penguins-mlr2"><i class="fa fa-check"></i><b>3.9</b> Penguins example with categorical predictor</a></li>
+<li class="chapter" data-level="3.10" data-path="linear-model-estimation.html"><a href="linear-model-estimation.html#evaluating-model-fit"><i class="fa fa-check"></i><b>3.10</b> Evaluating model fit</a></li>
+<li class="chapter" data-level="3.11" data-path="linear-model-estimation.html"><a href="linear-model-estimation.html#summary"><i class="fa fa-check"></i><b>3.11</b> Summary</a>
+<ul>
+<li class="chapter" data-level="3.11.1" data-path="linear-model-estimation.html"><a href="linear-model-estimation.html#summary-of-terms"><i class="fa fa-check"></i><b>3.11.1</b> Summary of terms</a></li>
+<li class="chapter" data-level="3.11.2" data-path="linear-model-estimation.html"><a href="linear-model-estimation.html#summary-of-functions"><i class="fa fa-check"></i><b>3.11.2</b> Summary of functions</a></li>
+</ul></li>
+<li class="chapter" data-level="3.12" data-path="linear-model-estimation.html"><a href="linear-model-estimation.html#going-deeper"><i class="fa fa-check"></i><b>3.12</b> Going Deeper</a>
+<ul>
+<li class="chapter" data-level="3.12.1" data-path="linear-model-estimation.html"><a href="linear-model-estimation.html#degrees-of-freedom"><i class="fa fa-check"></i><b>3.12.1</b> Degrees of freedom</a></li>
+<li class="chapter" data-level="3.12.2" data-path="linear-model-estimation.html"><a href="linear-model-estimation.html#slr-derivation"><i class="fa fa-check"></i><b>3.12.2</b> Derivation of the OLS estimators of the simple linear regression model coefficients</a></li>
+<li class="chapter" data-level="3.12.3" data-path="linear-model-estimation.html"><a href="linear-model-estimation.html#unbiasedness-of-ols-estimators"><i class="fa fa-check"></i><b>3.12.3</b> Unbiasedness of OLS estimators</a></li>
+<li class="chapter" data-level="3.12.4" data-path="linear-model-estimation.html"><a href="linear-model-estimation.html#manual-calculation-penguins-simple-linear-regression-example"><i class="fa fa-check"></i><b>3.12.4</b> Manual calculation Penguins simple linear regression example</a></li>
+<li class="chapter" data-level="3.12.5" data-path="linear-model-estimation.html"><a href="linear-model-estimation.html#mlr-derivation"><i class="fa fa-check"></i><b>3.12.5</b> Derivation of the OLS estimator for the multiple linear regression model coefficients</a></li>
+<li class="chapter" data-level="3.12.6" data-path="linear-model-estimation.html"><a href="linear-model-estimation.html#manual-calculation-of-penguins-multiple-linear-regression-example"><i class="fa fa-check"></i><b>3.12.6</b> Manual calculation of Penguins multiple linear regression example</a></li>
+</ul></li>
+</ul></li>
+<li class="chapter" data-level="4" data-path="interp-chapter.html"><a href="interp-chapter.html"><i class="fa fa-check"></i><b>4</b> Interpreting a fitted linear model</a>
+<ul>
+<li class="chapter" data-level="4.1" data-path="interp-chapter.html"><a href="interp-chapter.html#standard-mathematical-interpretation"><i class="fa fa-check"></i><b>4.1</b> Standard mathematical interpretation</a></li>
+<li class="chapter" data-level="4.2" data-path="interp-chapter.html"><a href="interp-chapter.html#coefficient-interpretation-in-simple-linear-regression"><i class="fa fa-check"></i><b>4.2</b> Coefficient interpretation in simple linear regression</a></li>
+<li class="chapter" data-level="4.3" data-path="interp-chapter.html"><a href="interp-chapter.html#interp-1st-order-ml"><i class="fa fa-check"></i><b>4.3</b> Coefficient interpretation for first-order multiple linear regression models</a></li>
+<li class="chapter" data-level="4.4" data-path="interp-chapter.html"><a href="interp-chapter.html#effect-plots"><i class="fa fa-check"></i><b>4.4</b> Effect plots</a></li>
+<li class="chapter" data-level="4.5" data-path="interp-chapter.html"><a href="interp-chapter.html#roles-of-regressor-variables"><i class="fa fa-check"></i><b>4.5</b> Roles of regressor variables</a></li>
+<li class="chapter" data-level="4.6" data-path="interp-chapter.html"><a href="interp-chapter.html#interpretation-for-categorical-predictors"><i class="fa fa-check"></i><b>4.6</b> Interpretation for categorical predictors</a>
+<ul>
+<li class="chapter" data-level="4.6.1" data-path="interp-chapter.html"><a href="interp-chapter.html#pl-interp"><i class="fa fa-check"></i><b>4.6.1</b> Coefficient interpretation for parallel lines models</a></li>
+<li class="chapter" data-level="4.6.2" data-path="interp-chapter.html"><a href="interp-chapter.html#sl-interp"><i class="fa fa-check"></i><b>4.6.2</b> Coefficient interpretation for separate lines models</a></li>
+<li class="chapter" data-level="4.6.3" data-path="interp-chapter.html"><a href="interp-chapter.html#more-penguins-examples"><i class="fa fa-check"></i><b>4.6.3</b> More Penguins examples</a></li>
+</ul></li>
+<li class="chapter" data-level="4.7" data-path="interp-chapter.html"><a href="interp-chapter.html#effect-plots-1"><i class="fa fa-check"></i><b>4.7</b> Effect plots</a>
+<ul>
+<li class="chapter" data-level="4.7.1" data-path="interp-chapter.html"><a href="interp-chapter.html#effect-plots-for-numeric-predictors"><i class="fa fa-check"></i><b>4.7.1</b> Effect plots for numeric predictors</a></li>
+<li class="chapter" data-level="4.7.2" data-path="interp-chapter.html"><a href="interp-chapter.html#effect-plots-with-categorical-predictors"><i class="fa fa-check"></i><b>4.7.2</b> Effect plots with categorical predictors</a></li>
+</ul></li>
+<li class="chapter" data-level="4.8" data-path="interp-chapter.html"><a href="interp-chapter.html#added-variable-plots"><i class="fa fa-check"></i><b>4.8</b> Added variable plots</a></li>
+<li class="chapter" data-level="4.9" data-path="interp-chapter.html"><a href="interp-chapter.html#going-deeper-1"><i class="fa fa-check"></i><b>4.9</b> Going deeper</a>
+<ul>
+<li class="chapter" data-level="4.9.1" data-path="interp-chapter.html"><a href="interp-chapter.html#orthogonality"><i class="fa fa-check"></i><b>4.9.1</b> Orthogonality</a></li>
+</ul></li>
+</ul></li>
+<li class="chapter" data-level="5" data-path="linear-model-theory.html"><a href="linear-model-theory.html"><i class="fa fa-check"></i><b>5</b> Basic theoretical results for linear models</a>
+<ul>
+<li class="chapter" data-level="5.1" data-path="linear-model-theory.html"><a href="linear-model-theory.html#standard-assumptions"><i class="fa fa-check"></i><b>5.1</b> Standard assumptions</a></li>
+<li class="chapter" data-level="5.2" data-path="linear-model-theory.html"><a href="linear-model-theory.html#summary-of-results"><i class="fa fa-check"></i><b>5.2</b> Summary of results</a></li>
+<li class="chapter" data-level="5.3" data-path="linear-model-theory.html"><a href="linear-model-theory.html#results-for-mathbfy"><i class="fa fa-check"></i><b>5.3</b> Results for <span class="math inline">\(\mathbf{y}\)</span></a></li>
+<li class="chapter" data-level="5.4" data-path="linear-model-theory.html"><a href="linear-model-theory.html#results-for-hatboldsymbolbeta"><i class="fa fa-check"></i><b>5.4</b> Results for <span class="math inline">\(\hat{\boldsymbol{\beta}}\)</span></a></li>
+<li class="chapter" data-level="5.5" data-path="linear-model-theory.html"><a href="linear-model-theory.html#results-for-the-residuals"><i class="fa fa-check"></i><b>5.5</b> Results for the residuals</a></li>
+<li class="chapter" data-level="5.6" data-path="linear-model-theory.html"><a href="linear-model-theory.html#the-gauss-markov-theorem"><i class="fa fa-check"></i><b>5.6</b> The Gauss-Markov Theorem</a></li>
+</ul></li>
+<li class="chapter" data-level="6" data-path="inference.html"><a href="inference.html"><i class="fa fa-check"></i><b>6</b> Linear model inference</a></li>
+<li class="appendix"><span><b>Appendix</b></span></li>
+<li class="chapter" data-level="A" data-path="overview-of-matrix-facts.html"><a href="overview-of-matrix-facts.html"><i class="fa fa-check"></i><b>A</b> Overview of matrix facts</a>
+<ul>
+<li class="chapter" data-level="A.1" data-path="overview-of-matrix-facts.html"><a href="overview-of-matrix-facts.html#notation"><i class="fa fa-check"></i><b>A.1</b> Notation</a></li>
+<li class="chapter" data-level="A.2" data-path="overview-of-matrix-facts.html"><a href="overview-of-matrix-facts.html#basic-mathematical-operations"><i class="fa fa-check"></i><b>A.2</b> Basic mathematical operations</a>
+<ul>
+<li class="chapter" data-level="A.2.1" data-path="overview-of-matrix-facts.html"><a href="overview-of-matrix-facts.html#addition-and-subtraction"><i class="fa fa-check"></i><b>A.2.1</b> Addition and subtraction</a></li>
+<li class="chapter" data-level="A.2.2" data-path="overview-of-matrix-facts.html"><a href="overview-of-matrix-facts.html#scalar-multiplication"><i class="fa fa-check"></i><b>A.2.2</b> Scalar multiplication</a></li>
+<li class="chapter" data-level="A.2.3" data-path="overview-of-matrix-facts.html"><a href="overview-of-matrix-facts.html#matrix-multiplication"><i class="fa fa-check"></i><b>A.2.3</b> Matrix multiplication</a></li>
+<li class="chapter" data-level="A.2.4" data-path="overview-of-matrix-facts.html"><a href="overview-of-matrix-facts.html#transpose"><i class="fa fa-check"></i><b>A.2.4</b> Transpose</a></li>
+</ul></li>
+<li class="chapter" data-level="A.3" data-path="overview-of-matrix-facts.html"><a href="overview-of-matrix-facts.html#basic-mathematical-properties"><i class="fa fa-check"></i><b>A.3</b> Basic mathematical properties</a>
+<ul>
+<li class="chapter" data-level="A.3.1" data-path="overview-of-matrix-facts.html"><a href="overview-of-matrix-facts.html#associative-property"><i class="fa fa-check"></i><b>A.3.1</b> Associative property</a></li>
+<li class="chapter" data-level="A.3.2" data-path="overview-of-matrix-facts.html"><a href="overview-of-matrix-facts.html#distributive-property"><i class="fa fa-check"></i><b>A.3.2</b> Distributive property</a></li>
+<li class="chapter" data-level="A.3.3" data-path="overview-of-matrix-facts.html"><a href="overview-of-matrix-facts.html#no-commutative-property"><i class="fa fa-check"></i><b>A.3.3</b> No commutative property</a></li>
+<li class="chapter" data-level="A.3.4" data-path="overview-of-matrix-facts.html"><a href="overview-of-matrix-facts.html#transpose-related-properties"><i class="fa fa-check"></i><b>A.3.4</b> Transpose-related properties</a></li>
+</ul></li>
+<li class="chapter" data-level="A.4" data-path="overview-of-matrix-facts.html"><a href="overview-of-matrix-facts.html#special-matrices"><i class="fa fa-check"></i><b>A.4</b> Special matrices</a>
+<ul>
+<li class="chapter" data-level="A.4.1" data-path="overview-of-matrix-facts.html"><a href="overview-of-matrix-facts.html#square-matrices"><i class="fa fa-check"></i><b>A.4.1</b> Square matrices</a></li>
+<li class="chapter" data-level="A.4.2" data-path="overview-of-matrix-facts.html"><a href="overview-of-matrix-facts.html#identity-matrix"><i class="fa fa-check"></i><b>A.4.2</b> Identity matrix</a></li>
+<li class="chapter" data-level="A.4.3" data-path="overview-of-matrix-facts.html"><a href="overview-of-matrix-facts.html#diagonal-matrices"><i class="fa fa-check"></i><b>A.4.3</b> Diagonal matrices</a></li>
+<li class="chapter" data-level="A.4.4" data-path="overview-of-matrix-facts.html"><a href="overview-of-matrix-facts.html#symmetric-matrices"><i class="fa fa-check"></i><b>A.4.4</b> Symmetric matrices</a></li>
+<li class="chapter" data-level="A.4.5" data-path="overview-of-matrix-facts.html"><a href="overview-of-matrix-facts.html#idempotent-matrices"><i class="fa fa-check"></i><b>A.4.5</b> Idempotent matrices</a></li>
+<li class="chapter" data-level="A.4.6" data-path="overview-of-matrix-facts.html"><a href="overview-of-matrix-facts.html#positive-definite-matrices"><i class="fa fa-check"></i><b>A.4.6</b> Positive definite matrices</a></li>
+<li class="chapter" data-level="A.4.7" data-path="overview-of-matrix-facts.html"><a href="overview-of-matrix-facts.html#inverse-matrix"><i class="fa fa-check"></i><b>A.4.7</b> Inverse matrix</a></li>
+</ul></li>
+<li class="chapter" data-level="A.5" data-path="overview-of-matrix-facts.html"><a href="overview-of-matrix-facts.html#matrix-derivatives"><i class="fa fa-check"></i><b>A.5</b> Matrix derivatives</a></li>
+<li class="chapter" data-level="A.6" data-path="overview-of-matrix-facts.html"><a href="overview-of-matrix-facts.html#additional-topics"><i class="fa fa-check"></i><b>A.6</b> Additional topics</a>
+<ul>
+<li class="chapter" data-level="A.6.1" data-path="overview-of-matrix-facts.html"><a href="overview-of-matrix-facts.html#determinant"><i class="fa fa-check"></i><b>A.6.1</b> Determinant</a></li>
+<li class="chapter" data-level="A.6.2" data-path="overview-of-matrix-facts.html"><a href="overview-of-matrix-facts.html#linearly-independent-vectors"><i class="fa fa-check"></i><b>A.6.2</b> Linearly independent vectors</a></li>
+<li class="chapter" data-level="A.6.3" data-path="overview-of-matrix-facts.html"><a href="overview-of-matrix-facts.html#rank"><i class="fa fa-check"></i><b>A.6.3</b> Rank</a></li>
+</ul></li>
+</ul></li>
+<li class="chapter" data-level="B" data-path="prob-review.html"><a href="prob-review.html"><i class="fa fa-check"></i><b>B</b> Overview of probability, random variables, and random vectors</a>
+<ul>
+<li class="chapter" data-level="B.1" data-path="prob-review.html"><a href="prob-review.html#probability-basics"><i class="fa fa-check"></i><b>B.1</b> Probability Basics</a></li>
+<li class="chapter" data-level="B.2" data-path="prob-review.html"><a href="prob-review.html#random-variables"><i class="fa fa-check"></i><b>B.2</b> Random Variables</a>
+<ul>
+<li class="chapter" data-level="B.2.1" data-path="prob-review.html"><a href="prob-review.html#discrete-random-variables"><i class="fa fa-check"></i><b>B.2.1</b> Discrete random variables</a></li>
+<li class="chapter" data-level="B.2.2" data-path="prob-review.html"><a href="prob-review.html#continuous-random-variables"><i class="fa fa-check"></i><b>B.2.2</b> Continuous random variables</a></li>
+<li class="chapter" data-level="B.2.3" data-path="prob-review.html"><a href="prob-review.html#useful-facts-for-transformations-of-random-variables"><i class="fa fa-check"></i><b>B.2.3</b> Useful facts for transformations of random variables</a></li>
+</ul></li>
+<li class="chapter" data-level="B.3" data-path="prob-review.html"><a href="prob-review.html#multivariate-distributions"><i class="fa fa-check"></i><b>B.3</b> Multivariate distributions</a>
+<ul>
+<li class="chapter" data-level="B.3.1" data-path="prob-review.html"><a href="prob-review.html#basic-properties"><i class="fa fa-check"></i><b>B.3.1</b> Basic properties</a></li>
+<li class="chapter" data-level="B.3.2" data-path="prob-review.html"><a href="prob-review.html#marginal-distributions"><i class="fa fa-check"></i><b>B.3.2</b> Marginal distributions</a></li>
+<li class="chapter" data-level="B.3.3" data-path="prob-review.html"><a href="prob-review.html#independence-of-random-variables"><i class="fa fa-check"></i><b>B.3.3</b> Independence of random variables</a></li>
+<li class="chapter" data-level="B.3.4" data-path="prob-review.html"><a href="prob-review.html#conditional-distributions"><i class="fa fa-check"></i><b>B.3.4</b> Conditional distributions</a></li>
+<li class="chapter" data-level="B.3.5" data-path="prob-review.html"><a href="prob-review.html#covariance"><i class="fa fa-check"></i><b>B.3.5</b> Covariance</a></li>
+<li class="chapter" data-level="B.3.6" data-path="prob-review.html"><a href="prob-review.html#useful-facts-for-transformations-of-multiple-random-variables"><i class="fa fa-check"></i><b>B.3.6</b> Useful facts for transformations of multiple random variables</a></li>
+<li class="chapter" data-level="B.3.7" data-path="prob-review.html"><a href="prob-review.html#binomial-distribution-example"><i class="fa fa-check"></i><b>B.3.7</b> Binomial distribution example</a></li>
+<li class="chapter" data-level="B.3.8" data-path="prob-review.html"><a href="prob-review.html#continuous-bivariate-distribution-example"><i class="fa fa-check"></i><b>B.3.8</b> Continuous bivariate distribution example</a></li>
+</ul></li>
+<li class="chapter" data-level="B.4" data-path="prob-review.html"><a href="prob-review.html#random-vectors"><i class="fa fa-check"></i><b>B.4</b> Random vectors</a>
+<ul>
+<li class="chapter" data-level="B.4.1" data-path="prob-review.html"><a href="prob-review.html#definition"><i class="fa fa-check"></i><b>B.4.1</b> Definition</a></li>
+<li class="chapter" data-level="B.4.2" data-path="prob-review.html"><a href="prob-review.html#mean-variance-and-covariance"><i class="fa fa-check"></i><b>B.4.2</b> Mean, variance, and covariance</a></li>
+<li class="chapter" data-level="B.4.3" data-path="prob-review.html"><a href="prob-review.html#properties-of-transformations-of-random-vectors"><i class="fa fa-check"></i><b>B.4.3</b> Properties of transformations of random vectors</a></li>
+<li class="chapter" data-level="B.4.4" data-path="prob-review.html"><a href="prob-review.html#continuous-bivariate-distribution-example-continued"><i class="fa fa-check"></i><b>B.4.4</b> Continuous bivariate distribution example continued</a></li>
+</ul></li>
+<li class="chapter" data-level="B.5" data-path="prob-review.html"><a href="prob-review.html#multivariate-normal-gaussian-distribution"><i class="fa fa-check"></i><b>B.5</b> Multivariate normal (Gaussian) distribution</a>
+<ul>
+<li class="chapter" data-level="B.5.1" data-path="prob-review.html"><a href="prob-review.html#definition-1"><i class="fa fa-check"></i><b>B.5.1</b> Definition</a></li>
+<li class="chapter" data-level="B.5.2" data-path="prob-review.html"><a href="prob-review.html#linear-functions-of-a-multivariate-normal-random-vector"><i class="fa fa-check"></i><b>B.5.2</b> Linear functions of a multivariate normal random vector</a></li>
+<li class="chapter" data-level="B.5.3" data-path="prob-review.html"><a href="prob-review.html#ols-example"><i class="fa fa-check"></i><b>B.5.3</b> OLS example</a></li>
+</ul></li>
+</ul></li>
+<li class="chapter" data-level="" data-path="references.html"><a href="references.html"><i class="fa fa-check"></i>References</a></li>
+<li class="divider"></li>
+<li><a href="https://github.com/rstudio/bookdown" target="blank">Published with bookdown</a></li>
+
+</ul>
+
+      </nav>
+    </div>
+
+    <div class="book-body">
+      <div class="body-inner">
+        <div class="book-header" role="navigation">
+          <h1>
+            <i class="fa fa-circle-o-notch fa-spin"></i><a href="./">A progressive introduction to linear models</a>
+          </h1>
+        </div>
+
+        <div class="page-wrapper" tabindex="-1" role="main">
+          <div class="page-inner">
+
+            <section class="normal" id="section-">
+<div id="inference" class="section level1 hasAnchor" number="6">
+<h1><span class="header-section-number">Chapter 6</span> Linear model inference<a href="inference.html#inference" class="anchor-section" aria-label="Anchor link to header"></a></h1>
+<!-- With our regression model, we also hope to be able to: -->
+<!--   1. *Generalize* our results from the sample to the a larger population of interest. -->
+<!-- * E.g., we want to extend our results from a small set of college students to all college students. -->
+<!-- 2. *Infer causality* between our regressors and the response. -->
+<!-- * E.g., if a person receives the measles vaccine, then this causes a reduction in the person's risk of catching measles. -->
+<!-- Results from a sample of observations typically only generalize to a larger population when the sample is a random sample from a larger population. Some examples of random sampling methods include simple random sampling, stratified random sampling, cluster random sampling, and systematic random sampling. Most inferential methods assume the $n$ observations are a simple random sample from a larger population. Simple random sampling requires that each sample of size $n$ is equally likely to occur. -->
+<!-- Causal inference can be made when the data are a -->
+<!-- ## Galapogos Example: Testing All Regressors -->
+<!-- ```{r} -->
+<!-- data(gala, package = "faraway") -->
+<!-- head(gala) -->
+<!-- summary(gala) -->
+<!-- ``` -->
+<!-- The data set `gala` contains 30 observations (one for each island in the Galapagos). There are 6 variables in the dataset. The relationship between the number of plant species and several geographic variables is of interest. -->
+<!-- - **Species:** The number of plant species found on the island. -->
+<!-- - **Area:** The area of the island ($\mbox{km}^2$). -->
+<!-- - **Elevation:** The highest elevation of the island (m). -->
+<!-- - **Nearest:** The distance from the nearest island (km). -->
+<!-- - **Scruz:** The distance from Santa Cruz Island (km). -->
+<!-- - **Adjacent:** The area of the adjacent island ($\mbox{km}^2$). -->
+<!-- ```{r} -->
+<!-- lmod <- lm(Species ~ Area + Elevation + Nearest + -->
+<!--             Scruz + Adjacent, data = gala) -->
+<!-- summary(lmod) -->
+<!-- ``` -->
+<!-- ### Question 1  -->
+<!-- Write out a formula for the fitted model based on the output above. -->
+<!-- $$\widehat{\mbox{Species}} = 7.068 -  0.0239 \mbox{Area} + 0.3195 \mbox{Elevation} + 0.0091 \mbox{Nearest} -0.2405 \mbox{Scruz} - 0.0748 \mbox{Adjacent}$$ -->
+<!-- ### Question 2 -->
+<!-- Which regressor has the strongest association with the number species on the island? -->
+<!-- - **Hard to tell at this point. We can see the `Elevation` had the largest slope (in absolute terms) and the smallest p-value, so that seems important!** -->
+<!-- - **The regressor `Scruz` has a large slope (in absolute terms), however the variability is quite large as indicated by the standard error, and thus we see it has a relatively large p-value, indicating that is plausible the coefficient is actually 0 or it could be positive.** -->
+<!-- ### Setting Up The Hypotheses -->
+<!-- How can we decide whether all or some of the regressor variables should be included in our model? -->
+<!-- - Let $\Omega$ denote the proposed full model. -->
+<!-- - Let $\omega$ denote a simplier model that uses a subset of all regressors. -->
+<!-- ## Question 3 -->
+<!-- What do you think would be suitable hypothesis to test whether $\Omega$ is a better model than $\omega$? -->
+<!-- - **H~0~: Model $\omega$ is adequate.** -->
+<!-- - **H~a~: Model $\Omega$ is preferred.** -->
+<!-- ### Measuring Significance -->
+<!-- - If the models have a similar fit, then we prefer $\omega$ since it is simpler. -->
+<!-- - If the model $\Omega$  is a much better model than $\omega$, then we prefer $\Omega$. -->
+<!-- - If $\mbox{RSS}_{\omega} - \mbox{RSS}_{\Omega}$ is large, then $\Omega$ has a superior fit. -->
+<!-- - How large of a difference is large enough? -->
+<!-- $$\mbox{test stat} = \frac{\mbox{fit of observed model} - \mbox{fit of null model}}{\mbox{variability due to sampling}} = \frac{\mbox{RSS}_{\omega} - \mbox{RSS}_{\Omega}}{RSS_{\Omega}}.$$ -->
+<!-- ### General $F$ Test for Comparing Two Nested Regression Models: -->
+<!-- **H~0~: Model $\omega$ is an adequate model.** -->
+<!-- **H~a~:  Model $\Omega$ is better.** -->
+<!-- Suppose that model $\Omega$ has $p$ estimated regression coefficients and model $\omega$ has $q$ estimated regression coefficients. Then we use rescaling to get an -->
+<!-- **F-statistic** which has **F-distribution** under the null hypothesis given by: -->
+<!-- $$F =  \frac{(\mbox{RSS}_{\omega} - \mbox{RSS}_{\Omega})/(df_{\omega}-df_{\Omega})}{RSS_{\Omega}/df_{\Omega}} =  \frac{(\mbox{RSS}_{\omega} - \mbox{RSS}_{\Omega})/(df_{\omega}-df_{\Omega})}{\hat{\sigma}_{\Omega}^2} \sim F_{p-q,n-p} ,$$ -->
+<!-- where $df_{\omega} = n -q$,  $df_{\Omega} = n -p$, and $\hat{\sigma}_{\Omega}^2 = RSS_{\Omega}/df_{\Omega}$. -->
+<!-- Are any of the predictors useful? We compare the full model $\Omega$ given by $\mathbf{y} = \mathbf{X} \boldsymbol{\beta} + \boldsymbol{\epsilon}$ to the null model $\omega$ which is the constant mean model $y = \mu + \epsilon$ which we estimate with $\hat{y} = \bar{y}$. -->
+<!-- - Set up the hypotheses: -->
+<!--   + $H_0$: The null model $\omega$ is adequate.  $\beta_1 = \beta_2 = \ldots = \beta_{p-1} = 0$. -->
+<!--   + $H_a$: At least one of the regression coefficients is not zero. -->
+<!-- - Calculate the $F$-statistic setting $q=1$. -->
+<!-- $$F =  \frac{(\mbox{RSS}_{\omega} - \mbox{RSS}_{\Omega})/(df_{\omega}-df_{\Omega})}{RSS_{\Omega}/df_{\Omega}} =  \frac{(\mbox{TSS} - \mbox{RSS})/(p-1)}{RSS/(n-p)} = \frac{\mbox{SS}_{\rm reg}/(p-1)}{RSS/(n-p)}.$$ -->
+<!-- - Calculate the $p$-value using $F_{p-q,n-p}$ where $\mbox{df}_1 = p-q$ is the number of additional regressors in $\Omega$ and $\mbox{df}_2=n-p=\mbox{df}_{\Omega}$ (setting $q=1$).  -->
+<!-- The information above is often presented in an **analysis of variation (ANOVA) table** which is convenient for summarizing and organizaing the various ingredients in the $F$-statistic. Below is a typical ANOVA table when $q=1$. -->
+<!-- Source | Deg. of Freedom | Sum of Squares | Mean Square | F  -->
+<!-- ------|------------------|----------------|-------------|--- -->
+<!-- Regression | $p-1$ | $\mbox{SS}_{\rm reg}$ | $\mbox{SS}_{\rm reg}/(p-1)$ | $F$  -->
+<!-- Residual | $n-p$ | RSS | $\mbox{RSS}/(n-p)$  -->
+<!-- Total | $n-1$ | TSS | |  -->
+<!-- - **Source**: The source of the variation in the data. -->
+<!-- - **Regression**: The variability due to the variable of interest (which is `Area` in this example). Sometimes, the variable is a factor and this row is labeled **Treatment** or **Between**.  -->
+<!-- - **Residuals**: The unexplained random error (of the full model $\Omega$). Sometimes when the variable of interest is a factor, the row heading is labeled as **Within** to make it clear that the row concerns the variation within the groups. -->
+<!-- - **Total**: The total variation in the data from the null (constant mean) model $\omega$. -->
+<!-- #### Comparing with Fit of Null Model -->
+<!-- ```{r} -->
+<!-- nullmod <- lm(Species ~ 1, data = gala)  -->
+<!-- anova(nullmod, lmod) -->
+<!-- ``` -->
+<!-- ### Question 4  -->
+<!-- What is the first line of code above doing? -->
+<!-- **It is creating the null model which is our model $\omega$ if we are testing all regressors. This is the constant mean model $y = \beta_0 + \epsilon = \mu + \epsilon$.** -->
+<!-- ### Question 5 -->
+<!-- Interpret the output from the `anova` function. -->
+<!-- **We see the $F$-statistic is $15.699$ which has a $p$-value $=6.838 \times 10^{-7}$ which is extremely small. We see that our test is statistically significant, and we have evidence to support the alternative hypothesis that at least one of the regression coefficients is not zero, though we cannot state specifically which regressor coefficient(s) are likely to be nonzero.** -->
+<!-- ### Question 6 -->
+<!-- Arrange the output of the anova function above into an ANOVA table such as the one shown earlier. -->
+<!-- ```{r} -->
+<!-- (ss <- 381081-89231) # SS_{reg} -->
+<!-- (mean.ss <- ss/5) #regression mean sum squares -->
+<!-- (mean.rss <- 89231/24) #residual mean sum squares -->
+<!-- (fstat <- mean.ss/mean.rss) -->
+<!-- ``` -->
+<!-- Source | Deg. of Freedom | Sum of Squares | Mean Square | F  -->
+<!-- ------|------------------|----------------|-------------|--- -->
+<!-- Variability due to `Area` | $5$ | $291850$ | $58370$ | $15.69948$  -->
+<!-- Error of $\Omega$ | $24$ | $89231$ | $3717.958$  -->
+<!-- Error of $\omega$ | $29$ | $381081$ | |  -->
+<!-- ### Question 7  -->
+<!-- Compare these calculations with the `summary` output from earlier. -->
+<!-- **They match!** -->
+<!-- #### Verifying the Output Again -->
+<!-- ```{r} -->
+<!-- # Compute the sum of squares -->
+<!-- (rss0 <- deviance(nullmod)) # RSS of null (TSS) -->
+<!-- (rss <- deviance(lmod)) # RSS of proposed model -->
+<!-- # Compute the degrees of freedom -->
+<!-- (df0 <- df.residual(nullmod)) # df of null model -->
+<!-- (df <- df.residual(lmod)) #  df of proposed model -->
+<!-- # Compute the F-statistic -->
+<!-- (f <- ((rss0 - rss)/(df0 - df))/(rss/df)) # F-stat -->
+<!-- # Compute the P-value with pf -->
+<!-- # pf(q, df1, df2) computes area to left of q -->
+<!-- # This is a right-tail test (so 1-pf) -->
+<!-- 1 - pf(f, df1 = df0 - df, df2 = df) # P-value -->
+<!-- ``` -->
+<!-- #### Compare with Summary of `lm` -->
+<!-- ```{r} -->
+<!-- summary(lmod) -->
+<!-- ``` -->
+<!-- #### Visualizing the F-dist -->
+<!-- ```{r} -->
+<!-- library(dplyr) -->
+<!-- library(ggplot2) -->
+<!-- library(tidyr) -->
+<!-- data.frame(f = 0:1000 / 100) %>%  -->
+<!--            mutate(df_25_26 = df(x = f, df1 = 25, df2 = 26), -->
+<!--                   df_05_26 = df(x = f, df1 = 5, df2 = 26), -->
+<!--                   df_05_10 = df(x = f, df1 = 5, df2 = 10)) %>% -->
+<!-- #                  df_05_10 = df(x = f, df1 = 5, df2 = 10)) %>% -->
+<!--   gather(key = "df", value = "density", -f) %>% -->
+<!--   ggplot() + -->
+<!--   geom_line(aes(x = f, y = density, color = df, linetype=df)) + -->
+<!--   labs(title = "F at Various Degrees of Freedom", -->
+<!--        x = "F", -->
+<!--        y = "Density") +  -->
+<!--   xlim(0, 5) +  -->
+<!--   theme_bw() -->
+<!-- ``` -->
+<!-- - If $\mbox{df}_1 = p-1$ is constant and we increase $\mbox{df}_2 = \mbox{df}_{\Omega} = n-p$, the center hump is centered around the same $F$ value, but there is more area in the hump and less in the right tail. -->
+<!--   - Same number of predictors but more observations has less variability! -->
+<!-- - If $\mbox{df}_2 = n-p$ is constant and we increase $\mbox{df}_1 = \mbox{df}_{\Omega} = p-1$, the center hump shifts to the right and there is more area concentrated near the peak and less in the tail to the right. -->
+<!-- ### Interpreting the Results -->
+<!-- ### Question 8  -->
+<!-- You peform a hypothesis test to test the following claims: -->
+<!-- H~0~: The null model $\omega$ is adequate.  $\beta_1 = \beta_2 = \ldots = \beta_{p-1} = 0$. -->
+<!-- H~a~: At least one of the regression coefficients is not zero. -->
+<!-- In the Galapagos example, the $F$-statistic is $15.699$ and the $p$-value is given as $6.838e-07\ast\ast\ast$ -->
+<!-- a. Interpret the meaning of the $p$-value.  -->
+<!-- **There is an extremely slim chance (essentially $0\%$) that would would observe so much of the variability in the response explained by model $\Omega$ compared to $\omega$ if $\Omega$ was just as good of a model as $\omega$.** -->
+<!-- b.  If you fail to reject $H_0$, does this mean there is no relation between the regressors and the response? -->
+<!-- **No, it means the relation is not likely to be linear, but there certainly could another (nonlinear) relation besides a linear relation between the predictors and response.** -->
+<!-- **Not significant may also imply there is not enough data to confidently conclude a regressor helps describe the mean response.** -->
+<!-- c. If you reject $H_0$, does this mean you have found the best model for $y$?  -->
+<!-- **Even if we conclude H~a~, we’re not sure that model $\Omega$ is the best model, it is simply preferable to model $\omega$.** -->
+<!-- - **Not all regressors may be necessary.** -->
+<!-- - **Additional regressors may improve the model further.** -->
+<!-- **The F test for a regression relationship is just the beginning of analysis!** -->
+<!-- # Galapogos Example: Testing Just the Area Regressor -->
+<!-- To test whether a single regressor (regressor j) can be dropped from the model, we choose between $H_0:\beta_j = 0$ and $H_a: \beta_j \ne 0$. -->
+<!-- We have two options in this case: -->
+<!-- - Use the previous approach, letting the reduced model be the one without that regressor. -->
+<!-- - Use a $t$-statistic approach. -->
+<!-- ### Question 9  -->
+<!-- Repeat the previous process to test whether the regressor `Area` is significant (assuming all others are in the model). -->
+<!-- a. State the hypotheses. -->
+<!-- - $H_0: \beta_1=\beta_{\rm Area}=0 \mid \beta_0, \beta_2, \beta_3, \beta_4, \beta_5 \in \mathbb{R}$ -->
+<!-- - $H_a: \beta_1 \neq 0\mid \beta_0, \beta_2, \beta_3, \beta_4, \beta_5 \in \mathbb{R}$ -->
+<!-- b. Compute the $F$-statistic and $p$-value. -->
+<!-- ```{r} -->
+<!-- # fit reduced model (full without Area) -->
+<!-- lmods <- lm(Species ~ Elevation + Nearest + Scruz + Adjacent, data = gala) -->
+<!-- anova(lmods, lmod) -->
+<!-- ``` -->
+<!-- **The $F$-statistic is $F=1.1398$ with corresponding $p$-value $=0.2963$.** -->
+<!-- c. Conclusion in this context. -->
+<!-- **The $p$-value is larger than just about any reasonable significance level, thus the test is not statistically significant and we fail to reject the claim that $\beta_{\rm Area} =0$. However, be careful, we do not accept the claim that $\beta_{\rm Area} =0$ either. We simply say the test is inconclusive.** -->
+<!-- Comparing the output above with full model test. -->
+<!-- ```{r} -->
+<!-- summary(lmod) -->
+<!-- ``` -->
+<!-- #### Using a t-statistic -->
+<!-- An alternative approach is to use a $t$-statistic for testing the hypotheses: -->
+<!-- $$ t_i = \frac{\widehat{\beta}_i-0}{\mbox{se}(\widehat{\beta}_i)}= \frac{\widehat{\beta}_i}{\mbox{se}(\widehat{\beta}_i)}$$ -->
+<!-- using a $t$-distribution with $\mbox{df}_{\Omega}=n-p$ degrees of freedom. -->
+<!-- ```{r} -->
+<!-- # calculation of t-stat -->
+<!-- beta.area <- summary(lmod)$coeff[2,1] -->
+<!-- se.area <- summary(lmod)$coeff[2,2] -->
+<!-- (t <- beta.area/se.area) -->
+<!-- # verifying p-value -->
+<!-- 2*pt(t, df.residual(lmod)) -->
+<!-- # matching F-stat -->
+<!-- t^2 -->
+<!-- ``` -->
+<!-- ### Question 10  -->
+<!-- What is the difference between the test being run in the code below and the previous test? Does the test below lead to the same conclusion? -->
+<!-- **The test below is comparing the model with one regressor (`Area`) compared to the null (constant mean) model. We are not considering any other predictors.** -->
+<!-- - $H_0: \beta_1=\beta_{\rm Area}=0$ -->
+<!-- - $H_a: \beta_1 \neq 0$ -->
+<!-- #### Be Specific When Stating Your Hypotheses. -->
+<!-- ```{r} -->
+<!-- # compare results to test of beta_Area = 0 when no other predictors in model -->
+<!-- summary(lm(Species ~ Area, gala)) -->
+<!-- ``` -->
+<!-- - **According to the test above, it seems that the regression coefficient for `Area` is statistically significant and we do have evidence to support the claim that $\beta_{\rm Area} \ne 0$. This contradicts the previous test. Perhaps it is the other predictors in the full model that have an effect on `Area` that in turn is related to a change in the response. Thus `Area` may be a confounding variable and the other predictors may be responsible for this response in both `Area` and `Species`** -->
+<!-- ## Testing a Pair of Regressors -->
+<!-- ### Question 11 -->
+<!-- Test whether the `Area` and `Adjacent` regressor variables should be simultaneously dropped from the model that already includes `Elevation`, `Nearest`, and `Scruz` in the model.  Make sure to specify the regressors that are the model when stating H~0~ and H~a~. -->
+<!-- a. State the hypotheses.  -->
+<!-- - $H_0: \beta_{\rm Area}=\beta_{\rm Adjacent} 0 \mid \beta_0, \beta_2, \beta_3, \beta_4 \in \mathbb{R}$ -->
+<!-- - $H_a: \beta_{\rm Area} \ne 0 \mbox{ or }  \beta_{\rm Adjacent} \ne 0 \mid \beta_0, \beta_2, \beta_3, \beta_4 \in \mathbb{R}$ -->
+<!-- b. Compute the $F$-statistic and $p$-value. -->
+<!-- ```{r} -->
+<!-- # Determine full and reduced models -->
+<!-- lmods <- lm(Species ~ Elevation + Nearest + Scruz, data = gala) # fit reduced model -->
+<!-- anova(lmods, lmod) # compare models using general f-test -->
+<!-- ``` -->
+<!-- **The $F$-statistic is $F=9.2874$ with corresponding $p$-value $=0.0.0013$.** -->
+<!-- c. Conclusion in this context. -->
+<!-- **The $p$-value $<0.001$ which is extremely small (less than just about any signficance level that would be chosen). The test is statistically significant. There is very strong evidence that the regression model for `Species` that includes predictors `Area` and `Adjacent` is preferable to the model without both of these terms. We have evidence that at least one of $\beta_{\rm Area}$ and/or $\beta_{\rm Adjacent}$ are nonzero.** -->
+<!-- ## Permutation Tests -->
+<!-- ```{r} -->
+<!-- data(gala, package = "faraway") -->
+<!-- head(gala) -->
+<!-- #summary(gala) -->
+<!-- ``` -->
+<!-- ### Assumptions for Testing Regressors -->
+<!-- The tests we have considered thus far assume that -->
+<!-- $$\epsilon_i \sim N(0, \sigma^2) \quad \mbox{Cov}(\epsilon_i, \epsilon_j) = 0 \mbox{ for } i \ne j.$$ -->
+<!-- The **Central Limit Theorem** applies to the estimated regression coefficients, so inference based on the assumption of normality can be approximately correct provided the **sample size is large enough**. -->
+<!-- **Permutation tests** do not require an assumption of normal errors.  Instead, the **errors are typically assumed to be independent and identically distributed**, or more generally, the errors should be exchangeable. -->
+<!-- $$\epsilon_i \sim F \ \ \mbox{ (where F is some distribution) } \quad \mbox{Cov}(\epsilon_i, \epsilon_j) = 0 \mbox{ for } i \ne j.$$ -->
+<!-- ### Motivating idea behind permutation tests -->
+<!-- If the response has no relationship with the regressor variables, then we should be able to randomly permute the response variable ($y$) without a substantial difference in the typical model results. -->
+<!-- ```{r} -->
+<!-- head(gala) -->
+<!-- #summary(gala) -->
+<!-- lmod <- lm(Species ~ Elevation, data = gala) -->
+<!-- summary(lmod) -->
+<!-- plot(Species ~ Elevation, data = gala) -->
+<!-- ``` -->
+<!-- ```{r} -->
+<!-- #Sample permutes the values of Species -->
+<!-- gala$Species <- sample(gala$Species) -->
+<!-- head(gala) -->
+<!-- lmodp <- lm(Species ~ Elevation, data = gala) -->
+<!-- summary(lmodp) -->
+<!-- plot(Species ~ Elevation, data = gala) -->
+<!-- ``` -->
+<!-- The test statistic from the general $F$ test is still a good statistic to assess whether the regressors are related to the response (as a linear function of the regression coefficients). -->
+<!-- To test this formally, we: -->
+<!-- 1. Permute the response variable for all possible (n!) permutations -->
+<!-- 2. Fit the regression model to each permuted data set. -->
+<!-- 3. Calculate the $F$ statistic associated with the general $F$ test for each model. -->
+<!-- 4. **The p-value is the proportion of test statistics for the permuted data that are as extreme (i.e., at least as large as) the test statistic for the original data set.**   -->
+<!--   - The p-value of the permutation test can often be approximated by the p-value from the general F test. -->
+<!-- Advantages of the permutation test: -->
+<!-- 1. Doesn’t require normal errors. -->
+<!-- 2. More robust than other traditional methods if the errors are not normal. -->
+<!-- Disadvantages of the permutation test:   -->
+<!-- - Takes more time. -->
+<!-- - The test is not as powerful when the errors are truly normal. -->
+<!-- **To speed up computation time for the permutation test, we use only a subset of random permutations instead of all possible permutations.** -->
+<!-- **A permutation of a vector can be obtained in R using the `sample` function.** -->
+<!-- ## Permutation Test on Two Regressors -->
+<!-- We would like to test whether the variables **Area** and **Nearest** should be used as regressors for Species. -->
+<!-- ### Question 1: Set up the hypotheses for this test. -->
+<!-- - $H_0: \beta_1=\beta_{\rm Area}=0$ and $\beta_2=\beta_{\rm Nearest}=0$ (with no other regressors in the model) -->
+<!-- - $H_a: \beta_1 \neq 0$ or $\beta_2 \neq 0$ -->
+<!-- ### Question 2: Compute the $F$-statistic from the general $F$ test. -->
+<!-- ```{r} -->
+<!-- # Reset to orginal, actual dataset -->
+<!-- data(gala, package = "faraway") -->
+<!-- lmod <- lm(Species ~ Area + Nearest, data = gala) -->
+<!-- lms <- summary(lmod) -->
+<!-- lms$fstat -->
+<!-- ``` -->
+<!-- ### Question 3: Compute the $p$-value of the corresponding $F$-statistic from the general $F$ test. -->
+<!-- ```{r} -->
+<!-- # Calculating p-value -->
+<!-- 1 - pf(lms$fstat[1], lms$fstat[2], lms$fstat[3]) -->
+<!-- ``` -->
+<!-- ### Sample Permutation Test -->
+<!-- ```{r} -->
+<!-- # Instead of worrying about all possible permutations -->
+<!-- # We'll select 4000 possible permutations -->
+<!-- nreps <- 4000 -->
+<!-- # create an empty numeric vector to store results -->
+<!-- fstats <- numeric(nreps) -->
+<!-- # Repeat the following 4000 times -->
+<!-- set.seed(123) #So we all get the same results -->
+<!-- for (i in 1:nreps){ -->
+<!--   lmods <- lm(sample(Species) ~ Area + Nearest, data = gala) -->
+<!--   fstats[i] <- summary(lmods)$fstat[1] -->
+<!-- } -->
+<!-- # Compute the p-value using simulated data -->
+<!-- mean(fstats >= lms$fstat[1]) -->
+<!-- ``` -->
+<!-- ```{r} -->
+<!-- fobs <- lms$fstat[1] -->
+<!-- # compare to observed f statistic (on appropriate scale) -->
+<!-- plot(density(fstats), xlab = "Simulated F-stat", main = "permutation distribution of F-stat", xlim = c(0, max(fstats, fobs))) -->
+<!-- abline(v = fobs) -->
+<!-- mean(fstats >= fobs) -->
+<!-- ``` -->
+<!-- ### Question 4: Compare the two p-values from the two methods. Do you think the difference is significant? Which p-value do you think is more accurate? Why? -->
+<!-- - Our estimated $p$-value of $0.00975$ is very close to the $p$-value of the theory based value of $0.00141992$. -->
+<!-- - In this case, the results are similar and both below a 5% significance level (or even a 1% level). -->
+<!-- - **If there is some crucial difference in the conclusion, then the permutation-based test is preferred to the test that assumes errors are normally distributed.** -->
+<!-- ## Testing whether one regressor can be dropped -->
+<!-- Testing whether a regressor can be dropped from the regression model also falls within the permutation test framework.  -->
+<!-- For a test involving a single regression coefficient $\beta_j$: -->
+<!-- - We can permute the observed values of regressor $X_j$ (the column vector $X_j$) instead of the response.  -->
+<!-- - If $X_j$ has no relationship with the response, permuting $X_j$ should have little impact on the model fit. -->
+<!-- ### Setting up the hypotheses -->
+<!-- - $H_0: \beta_2=\beta_{\rm Nearest}=0 \ \mid \beta_0, \beta_1 \in \mathbb{R}$  -->
+<!-- - $H_a: \beta_2 \neq 0$ -->
+<!-- ### Extracting pertinent statistics from theoretical test -->
+<!-- ```{r} -->
+<!-- summary(lmod)$coef[3,] -->
+<!-- ``` -->
+<!-- ### Question 5: Perform a pertmutation test to test the hypotheses above. -->
+<!-- ```{r} -->
+<!-- tobs <- summary(lmod)$coef[3,3] -->
+<!-- nreps <- 4000 # number of permutation resamples -->
+<!-- tstats <- numeric(nreps) # store resampled t-stat -->
+<!-- set.seed(123) #So we all get the same results -->
+<!-- for (i in 1:nreps){ -->
+<!--   lmods <- lm(Species ~ Area + sample(Nearest), data = gala) -->
+<!--   tstats[i] <- summary(lmods)$coef[3,3] -->
+<!-- } -->
+<!-- # Compute the p-value using simulated data -->
+<!-- mean(abs(tstats) >= abs(tobs)) -->
+<!-- ``` -->
+<!-- ```{r} -->
+<!-- hist(tstats, freq = FALSE) -->
+<!-- abline(v = tobs) -->
+<!-- ``` -->
+<!-- ## Confidence Intervals -->
+<!-- An alternative way of expressing the uncertainty in our estimates is through **confidence intervals (CIs)** or **confidence regions**. -->
+<!-- - A confidence region is the same thing as a CI, except that it may have more than one dimension. -->
+<!-- - A confidence region provides us with plausible values of our target parameter(s).   -->
+<!-- ### Constructing a 95% CI for Area (assuming all 4 other predictors in the model) -->
+<!-- ```{r} -->
+<!-- lmod <- lm(Species ~ Area + Elevation + Nearest + Scruz + Adjacent, data = gala) -->
+<!-- faraway::sumary(lmod) -->
+<!-- ``` -->
+<!-- ### Question 6: Based on the output above, construct a 95% confidence interval to estimate the value of $\beta_{\rm Area}$. -->
+<!-- We use the following formula: -->
+<!-- $$\widehat{\beta}_j \pm t_{n-p}^{\alpha/2} \mbox{SE}(\widehat{\beta}_j)$$ -->
+<!-- ```{r} -->
+<!-- # Find value of t_{n-p} -->
+<!-- tstar <- qt(0.975, df = df.residual(lmod)) -->
+<!-- (cutoffs <- -0.023938 + c(-1,1) * tstar * 0.022422) -->
+<!-- ``` -->
+<!-- This tells us there is a 95% chance the interval from $-0.07$ to $0.02$ contains the actual value of $\beta_{\rm Area}$. Notice $0$ is inside the confidence interval, which means it is plausible that $\beta_{\rm Area} = 0$. -->
+<!-- CI's have consistent results as two-sided hypothesis tests (with significance level $\alpha$). -->
+<!-- ### Question 7: Cconstruct a 95% confidence interval to estimate the value of $\beta_{\rm Elevation}$. -->
+<!-- ```{r} -->
+<!-- tstar <- qt(0.975, df = df.residual(lmod)) -->
+<!-- summary(lmod)$coef[3,1] + c(-1,1) * tstar * summary(lmod)$coef[3,2] -->
+<!-- ``` -->
+<!-- ### Finding Confidence Intervals for All Regressors -->
+<!-- ```{r} -->
+<!-- confint(lmod) -->
+<!-- ``` -->
+<!-- ## Confidence Regions -->
+<!-- When constructing **confidence regions** for more than one parameter, we must decide whether to form the confidence regions individually or simultaneously. -->
+<!-- ```{r} -->
+<!-- # You may need to run install.packages("ellipse") in the console -->
+<!-- library(ellipse) # required package to draw confidence region -->
+<!-- # construct 95% joint confidence intervals for beta_area and beta_adjacent. -->
+<!-- plot(ellipse(lmod, c(2, 6)), type="l", ylim = c(-0.13,0)) -->
+<!-- # Plot the origin and the center point -->
+<!-- points(c(0,coef(lmod)[2]),c(0, coef(lmod)[6]), col = c("red", "blue"), pch = c(19,19)) -->
+<!-- # add vertical and horizontal lines for individual confidence intervals -->
+<!-- abline(v = confint(lmod)[2,], lty = 2) # plots vertical lines -->
+<!-- abline(h = confint(lmod)[6,], lty = 2) # plots horizontal lines -->
+<!-- ``` -->
+<!-- ### Question 8: Based on the confidence region above, is it plausible that $\beta_{\rm Area}= \beta_{\rm Adjacent}=0$?  Why or why not? -->
+<!-- ### Question 9: Based on the confidence region above, is it plausible that $\beta_{\rm Area}= -0.6$ and $\beta_{\rm Adjacent}=-0.045$?  Why or why not? -->
+<!-- Note:  -->
+<!-- - **Any point that lies within** the $100(1- \alpha)\%$ confidence region for $\beta_i,\beta_j, \ldots, \beta_k$ represents values of $c_i,c_j, \ldots ,c_k$ for which the associated **null hypothesis would not be rejected at significance level $\alpha$**. -->
+<!-- - **Any point outside of the confidence region** represents values of $c_i, c_j, \ldots ,c_k$ for which the associated **null hypothesis would be rejected**. -->
+<!-- - Both the horizontal width and vertical width of the joint confidence region is wider than the widths of the individual confidence intervals. -->
+<!-- - The overall area of the joint region is smaller than the area of the intersection between the two individual confidence regions. -->
+<!--   - This is because the estimated regression parameters are positively correlated. -->
+<!-- - If the lines of the individual confidence regions were tangential to the joint region, then the individual CIs would be jointly correct (their confidence level would be at least 95%). -->
+<!-- - It is possible to make different conclusions when using individual confidence regions in comparison with the joint confidence regions! -->
+<!--  - **The joint confidence regions should be preferred** -->
+<!-- - We must be cautious about how we interpret univariate hypothesis tests or confidence intervals because the same conclusions may not be jointly true! -->
+<!-- ## Bootstrap Confidence Intervals -->
+<!-- The $F$ and $t$-based confidence regions and intervals we have described depend on the assumption of normal errors. -->
+<!-- - In general, **parametric CIs** assume we know the sampling distribution of the statistic that estimates our target parameter.  -->
+<!-- - How would we approximate the sampling distribution of a statistic using simulated data if we do not know the true error distribution? -->
+<!-- **We can use the bootstrap method to produce a confidence interval for our regression coefficients when error distribution is unknown or non-normal.** -->
+<!-- ### Bootstrap Process -->
+<!-- 1. Generate $\boldsymbol\epsilon^{\ast}$ by sampling with replacement from $\hat{\epsilon}_1, \hat{\epsilon}_2, \ldots , \hat{\epsilon}_n$. -->
+<!-- ```{r} -->
+<!-- resids <- residuals(lmod) # observed residuals -->
+<!-- boot.resids <- sample(resids, replace = TRUE) # bootstrap resample -->
+<!-- ``` -->
+<!-- 2. Form $\mathbf{y}^{\ast} =X \boldsymbol{\hat{\beta}} + \boldsymbol\epsilon^{\ast}$ for fixed $X$ and using the $\boldsymbol{\hat{\beta}}$ from the fitted model of the original data -->
+<!-- ```{r} -->
+<!-- new.y <- fitted(lmod) + boot.resids -->
+<!-- ``` -->
+<!-- 3.     Compute $\boldsymbol{\hat{\beta}}^{\ast}$ from $(\mathbf{X},\mathbf{y}^{\ast})$. -->
+<!-- ```{r} -->
+<!-- boot.model <- lm(new.y ~ Area + Elevation + Nearest + Scruz + Adjacent, data = gala) -->
+<!-- faraway::sumary(boot.model) -->
+<!-- faraway::sumary(lmod) -->
+<!-- ``` -->
+<!-- 4. Repeat steps 1-3 many times (4000 times will suffice) -->
+<!-- ```{r} -->
+<!-- set.seed(123) -->
+<!-- nb <- 4000 # Set the number of bootstrap samples to be generated -->
+<!-- # Initially the data is set as NA -->
+<!-- # Number rows = nb  -->
+<!-- # Number columns = 6 -->
+<!-- coefmat <- matrix(NA, nb, 6) # Matrix where we will store results -->
+<!-- resids <- residuals(lmod) # observed residuals -->
+<!-- preds <- fitted(lmod) # fitted values -->
+<!-- for (i in 1:nb){ -->
+<!--   boot.y <- preds + sample(resids, replace = TRUE) # randomly assign errors -->
+<!--   bmod <- lm(boot.y ~ Area + Elevation + Nearest + Scruz + Adjacent, data = gala) -->
+<!--   coefmat[i,] <- coef(bmod) -->
+<!-- } -->
+<!-- ``` -->
+<!-- 5. Estimate the sampling distribution of the estimated coefficients using the bootstrap distribution of the estimated coefficients from the bootstrapped data sets. -->
+<!-- ```{r} -->
+<!-- colnames(coefmat) <- c("Intercept", colnames(gala[,3:7])) # rename columns of coefmat -->
+<!-- coefmat <- data.frame(coefmat) # convert to data frame -->
+<!-- # construct 95% CIs for each coefficients using the apply function -->
+<!-- cis <- apply(coefmat, 2, -->
+<!--              quantile, probs = c(.025, .975))  # 2 means apply to each column of coefmat -->
+<!-- cis -->
+<!-- ``` -->
+<!-- ### Comparing with Parametric Confidence Intervals -->
+<!-- ```{r} -->
+<!-- confint(lmod) -->
+<!-- ``` -->
+<!-- ### Visualizing Bootstrap Confidence Intervals -->
+<!-- ```{r} -->
+<!-- # plot density for bootstrap coefficients for Area -->
+<!-- # along with the 95% bootstrap CI for Area coefficient -->
+<!-- plot(density(coefmat$Area), xlab = "Area", main = "") # plot density -->
+<!-- title("Bootstrap distribution for betahat_Area") #title -->
+<!-- abline(v = c(-.0628, .0185), lty = 2) # plot CI -->
+<!-- ``` -->
+<!-- ```{r} -->
+<!-- # same thing for Adjacent -->
+<!-- plot(density(coefmat$Adjacent), xlab = "Adjacent", main = "") # plot density -->
+<!-- title("Bootstrap distribution for betahat_Adjacent") #title -->
+<!-- abline(v = c(-.104, -.041), lty = 2) # plot CI -->
+<!-- ``` -->
+<!-- ```{r} -->
+<!-- library(ggplot2) # same plots using ggplot2 -->
+<!-- # x = Area means that we are only doing univariate plot -->
+<!-- # geom_density maps the variables values to the density geometry -->
+<!-- # geom_vline adds vertical lines at the specified values -->
+<!-- # theme_bs makes the plot nicer for printing Black/White -->
+<!-- ggplot(coefmat, aes(x = Area)) + geom_density() + geom_vline(xintercept = c(-.0628, .0185), lty = 2) + theme_bw() -->
+<!-- ggplot(coefmat, aes(x = Adjacent)) + geom_density() + geom_vline(xintercept = c(-.104, -.0409), lty = 2) + theme_bw() -->
+<!-- ``` -->
+<!-- - Both densities are roughly symmetric and normal, though this is not always the case. -->
+<!-- - Bootstrap methods can be used for hypothesis testing, but permutation-based methods are generally preferred.   -->
+<!-- - There are other (more complex) methods for constructing bootstrap confidence intervals for the coefficients. -->
+<!-- ## Sampling Experimentation, Generalization, and Causation -->
+<!-- If we have shown that a certain regressor has a coefficient which is not equal to 0 (beyond any reasonable variation due to sampling), this means changing the regressor is **associated with** a change in the value of the response variable. This does not however imply the the change in the regressor caused the change in the response. -->
+<!-- **The method of data collection determines the conclusions we can draw.**  -->
+<!-- ### Designed Experiments -->
+<!-- For designed experiments, we can view nature as the computer generating our observed responses. -->
+<!-- - We decide the values of the predictors and then record the response $Y$. -->
+<!-- - We can do this as many times as we want in order to learn something about $\beta$. -->
+<!-- **For example, the Galapagos data.** -->
+<!-- ### Observational Studies -->
+<!-- In observational studies, we have a finite population from which we draw a sample that is our data. -->
+<!-- - We hope to learn about the unknown population value $\beta$ from the sample. -->
+<!-- - A random sample is needed to ensure the sample resembles the population (just smaller in size). -->
+<!-- - Statistical inference relies on the data selected being a random sample. -->
+<!-- - Samples selected by humans (or other non-random methods) are biased and not representative of the larger population. -->
+<!--   - Conclusions drawn from a sample of convenience are limited to the sample themselves. -->
+<!-- Sometimes the sample is the entire population. -->
+<!-- - Some might argue that inference is not needed since the sample is the population. -->
+<!-- - Your results are still subject to uncertainty because you can’t measure everything! -->
+<!-- - You need to carefully think about the goals of your model. -->
+<!-- - In these cases, permutation tests make it possible to give meaning to the p-value, though the conclusion applies only to the sample. -->
+<!-- ### Experimental and Observational Predictors -->
+<!-- There are two basic types of predictors that can be used in regression analysis: experimental and observational. -->
+<!-- - **Experimental predictors** are controlled by the experimenter.   -->
+<!-- - **Observational predictors** are observed rather than chosen. -->
+<!-- - The types of predictors can be mixed in a particular study.   -->
+<!-- #### Observational Predictors -->
+<!-- For observational data, the idea of holding regressors constant makes no sense: -->
+<!-- - These observable values are not under our control. -->
+<!-- - We cannot change them except by some fantastic feat of genetic engineering, mind control, or a time machine. -->
+<!-- - There are probably additional unmeasured variables that have some connection to the response. We cannot possibly hold these constant. -->
+<!--   - A **lurking variable** (or confounding variable) is a predictor variable not included in the regression model that would change the interpretation of the fitted model if included. -->
+<!--   - Lurking variables are associated to both the predictor and response variable. -->
+<!-- - **Causal conclusions CANNOT be made for observational data because of the possible existence of lurking variables in our model.** -->
+<!-- - **Observational data allow us to show an association between two or more variables, but we cannot make causal conclusions.** -->
+<!-- #### Experimental Predictors -->
+<!-- Causal conclusions CAN be made for data obtained from a randomized experiment (i.e., the treatments are randomly assigned to the subjects). -->
+<!-- - Randomly assigning experimental factors limits the potential effects of lurking variables. -->
+<!--   - The treatment and control groups should resemble each in all ways except for the treatment(s) itself. -->
+<!-- - **Conclusions can be generalized from the sample to the population when the subjects were obtained using a random sample of the population.** -->
+<!-- **The interpretation of results from a regression analysis depends on the details of the data design and collection.** -->
+
+</div>
+
+
+
+</div>
+            </section>
+
+          </div>
+        </div>
+      </div>
+<a href="linear-model-theory.html" class="navigation navigation-prev " aria-label="Previous page"><i class="fa fa-angle-left"></i></a>
+<a href="overview-of-matrix-facts.html" class="navigation navigation-next " aria-label="Next page"><i class="fa fa-angle-right"></i></a>
+    </div>
+  </div>
+<script src="libs/gitbook-2.6.7/js/app.min.js"></script>
+<script src="libs/gitbook-2.6.7/js/clipboard.min.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-search.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-sharing.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-fontsettings.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-bookdown.js"></script>
+<script src="libs/gitbook-2.6.7/js/jquery.highlight.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-clipboard.js"></script>
+<script>
+gitbook.require(["gitbook"], function(gitbook) {
+gitbook.start({
+"sharing": {
+"github": false,
+"facebook": true,
+"twitter": true,
+"linkedin": false,
+"weibo": false,
+"instapaper": false,
+"vk": false,
+"whatsapp": false,
+"all": ["facebook", "twitter", "linkedin", "weibo", "instapaper"]
+},
+"fontsettings": {
+"theme": "white",
+"family": "sans",
+"size": 2
+},
+"edit": {
+"link": null,
+"text": null
+},
+"history": {
+"link": null,
+"text": null
+},
+"view": {
+"link": null,
+"text": null
+},
+"download": ["A-Progessive-Introduction-to-Linear-Models.pdf", "A-Progessive-Introduction-to-Linear-Models.epub"],
+"search": {
+"engine": "fuse",
+"options": null
+},
+"toc": {
+"collapse": "subsection"
+}
+});
+});
+</script>
+
+<!-- dynamically load mathjax for compatibility with self-contained -->
+<script>
+  (function () {
+    var script = document.createElement("script");
+    script.type = "text/javascript";
+    var src = "true";
+    if (src === "" || src === "true") src = "https://mathjax.rstudio.com/latest/MathJax.js?config=TeX-MML-AM_CHTML";
+    if (location.protocol !== "file:")
+      if (/^https?:/.test(src))
+        src = src.replace(/^https?:/, '');
+    script.src = src;
+    document.getElementsByTagName("head")[0].appendChild(script);
+  })();
+</script>
+</body>
+
+</html>

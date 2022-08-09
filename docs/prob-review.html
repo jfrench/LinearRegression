@@ -1,0 +1,904 @@
+<!DOCTYPE html>
+<html lang="" xml:lang="">
+<head>
+
+  <meta charset="utf-8" />
+  <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+  <title>B Overview of probability, random variables, and random vectors | A progressive introduction to linear models</title>
+  <meta name="description" content="A collection of R notebooks that progressively introduction how to fit and use linear models." />
+  <meta name="generator" content="bookdown 0.27 and GitBook 2.6.7" />
+
+  <meta property="og:title" content="B Overview of probability, random variables, and random vectors | A progressive introduction to linear models" />
+  <meta property="og:type" content="book" />
+  
+  <meta property="og:description" content="A collection of R notebooks that progressively introduction how to fit and use linear models." />
+  
+
+  <meta name="twitter:card" content="summary" />
+  <meta name="twitter:title" content="B Overview of probability, random variables, and random vectors | A progressive introduction to linear models" />
+  
+  <meta name="twitter:description" content="A collection of R notebooks that progressively introduction how to fit and use linear models." />
+  
+
+<meta name="author" content="Joshua French" />
+
+
+
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <meta name="apple-mobile-web-app-capable" content="yes" />
+  <meta name="apple-mobile-web-app-status-bar-style" content="black" />
+  
+  
+<link rel="prev" href="overview-of-matrix-facts.html"/>
+<link rel="next" href="references.html"/>
+<script src="libs/jquery-3.6.0/jquery-3.6.0.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/fuse.js@6.4.6/dist/fuse.min.js"></script>
+<link href="libs/gitbook-2.6.7/css/style.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-table.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-bookdown.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-highlight.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-search.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-fontsettings.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-clipboard.css" rel="stylesheet" />
+
+
+
+
+
+
+
+
+<link href="libs/anchor-sections-1.1.0/anchor-sections.css" rel="stylesheet" />
+<link href="libs/anchor-sections-1.1.0/anchor-sections-hash.css" rel="stylesheet" />
+<script src="libs/anchor-sections-1.1.0/anchor-sections.js"></script>
+
+
+
+
+<link rel="stylesheet" href="style.css" type="text/css" />
+</head>
+
+<body>
+
+
+
+  <div class="book without-animation with-summary font-size-2 font-family-1" data-basepath=".">
+
+    <div class="book-summary">
+      <nav role="navigation">
+
+<ul class="summary">
+<li><a href="./">Data Analysis with Linear Regression</a></li>
+
+<li class="divider"></li>
+<li class="chapter" data-level="" data-path="index.html"><a href="index.html"><i class="fa fa-check"></i>Preliminaries</a></li>
+<li class="chapter" data-level="1" data-path="r-foundations.html"><a href="r-foundations.html"><i class="fa fa-check"></i><b>1</b> R Foundations</a>
+<ul>
+<li class="chapter" data-level="1.1" data-path="r-foundations.html"><a href="r-foundations.html#setting-up-r-and-r-studio-desktop"><i class="fa fa-check"></i><b>1.1</b> Setting up R and R Studio Desktop</a></li>
+<li class="chapter" data-level="1.2" data-path="r-foundations.html"><a href="r-foundations.html#running-code-scripts-and-comments"><i class="fa fa-check"></i><b>1.2</b> Running code, scripts, and comments</a></li>
+<li class="chapter" data-level="1.3" data-path="r-foundations.html"><a href="r-foundations.html#assignment"><i class="fa fa-check"></i><b>1.3</b> Assignment</a></li>
+<li class="chapter" data-level="1.4" data-path="r-foundations.html"><a href="r-foundations.html#functions"><i class="fa fa-check"></i><b>1.4</b> Functions</a></li>
+<li class="chapter" data-level="1.5" data-path="r-foundations.html"><a href="r-foundations.html#packages"><i class="fa fa-check"></i><b>1.5</b> Packages</a></li>
+<li class="chapter" data-level="1.6" data-path="r-foundations.html"><a href="r-foundations.html#getting-help"><i class="fa fa-check"></i><b>1.6</b> Getting help</a></li>
+<li class="chapter" data-level="1.7" data-path="r-foundations.html"><a href="r-foundations.html#data-types-and-structures"><i class="fa fa-check"></i><b>1.7</b> Data types and structures</a>
+<ul>
+<li class="chapter" data-level="1.7.1" data-path="r-foundations.html"><a href="r-foundations.html#basic-data-types"><i class="fa fa-check"></i><b>1.7.1</b> Basic data types</a></li>
+<li class="chapter" data-level="1.7.2" data-path="r-foundations.html"><a href="r-foundations.html#other-important-object-types"><i class="fa fa-check"></i><b>1.7.2</b> Other important object types</a></li>
+<li class="chapter" data-level="1.7.3" data-path="r-foundations.html"><a href="r-foundations.html#data-structures"><i class="fa fa-check"></i><b>1.7.3</b> Data structures</a></li>
+</ul></li>
+<li class="chapter" data-level="1.8" data-path="r-foundations.html"><a href="r-foundations.html#vectors"><i class="fa fa-check"></i><b>1.8</b> Vectors</a>
+<ul>
+<li class="chapter" data-level="1.8.1" data-path="r-foundations.html"><a href="r-foundations.html#creation"><i class="fa fa-check"></i><b>1.8.1</b> Creation</a></li>
+<li class="chapter" data-level="1.8.2" data-path="r-foundations.html"><a href="r-foundations.html#categorical-vectors"><i class="fa fa-check"></i><b>1.8.2</b> Categorical vectors</a></li>
+<li class="chapter" data-level="1.8.3" data-path="r-foundations.html"><a href="r-foundations.html#extracting-parts-of-a-vector"><i class="fa fa-check"></i><b>1.8.3</b> Extracting parts of a vector</a></li>
+</ul></li>
+<li class="chapter" data-level="1.9" data-path="r-foundations.html"><a href="r-foundations.html#helpful-functions"><i class="fa fa-check"></i><b>1.9</b> Helpful functions</a>
+<ul>
+<li class="chapter" data-level="1.9.1" data-path="r-foundations.html"><a href="r-foundations.html#general-functions"><i class="fa fa-check"></i><b>1.9.1</b> General functions</a></li>
+<li class="chapter" data-level="1.9.2" data-path="r-foundations.html"><a href="r-foundations.html#functions-related-to-statistical-distributions"><i class="fa fa-check"></i><b>1.9.2</b> Functions related to statistical distributions</a></li>
+</ul></li>
+<li class="chapter" data-level="1.10" data-path="r-foundations.html"><a href="r-foundations.html#data-frames"><i class="fa fa-check"></i><b>1.10</b> Data Frames</a>
+<ul>
+<li class="chapter" data-level="1.10.1" data-path="r-foundations.html"><a href="r-foundations.html#direct-creation"><i class="fa fa-check"></i><b>1.10.1</b> Direct creation</a></li>
+<li class="chapter" data-level="1.10.2" data-path="r-foundations.html"><a href="r-foundations.html#importing-data"><i class="fa fa-check"></i><b>1.10.2</b> Importing Data</a></li>
+<li class="chapter" data-level="1.10.3" data-path="r-foundations.html"><a href="r-foundations.html#extracting-parts-of-a-data-frame"><i class="fa fa-check"></i><b>1.10.3</b> Extracting parts of a data frame</a></li>
+</ul></li>
+<li class="chapter" data-level="1.11" data-path="r-foundations.html"><a href="r-foundations.html#using-the-pipe-operator"><i class="fa fa-check"></i><b>1.11</b> Using the pipe operator</a></li>
+<li class="chapter" data-level="1.12" data-path="r-foundations.html"><a href="r-foundations.html#dealing-with-common-problems"><i class="fa fa-check"></i><b>1.12</b> Dealing with common problems</a></li>
+<li class="chapter" data-level="1.13" data-path="r-foundations.html"><a href="r-foundations.html#ecosystem-debate"><i class="fa fa-check"></i><b>1.13</b> Ecosystem debate</a></li>
+<li class="chapter" data-level="1.14" data-path="r-foundations.html"><a href="r-foundations.html#additional-information"><i class="fa fa-check"></i><b>1.14</b> Additional information</a>
+<ul>
+<li class="chapter" data-level="1.14.1" data-path="r-foundations.html"><a href="r-foundations.html#comparing-assignment-operators"><i class="fa fa-check"></i><b>1.14.1</b> Comparing assignment operators</a></li>
+</ul></li>
+</ul></li>
+<li class="chapter" data-level="2" data-path="data-cleaning-and-exploration.html"><a href="data-cleaning-and-exploration.html"><i class="fa fa-check"></i><b>2</b> Data cleaning and exploration</a>
+<ul>
+<li class="chapter" data-level="2.1" data-path="data-cleaning-and-exploration.html"><a href="data-cleaning-and-exploration.html#raw-palmer-penguins-data"><i class="fa fa-check"></i><b>2.1</b> Raw Palmer penguins data</a></li>
+<li class="chapter" data-level="2.2" data-path="data-cleaning-and-exploration.html"><a href="data-cleaning-and-exploration.html#initial-data-cleaning"><i class="fa fa-check"></i><b>2.2</b> Initial data cleaning</a></li>
+<li class="chapter" data-level="2.3" data-path="data-cleaning-and-exploration.html"><a href="data-cleaning-and-exploration.html#numerical-summarization-of-data"><i class="fa fa-check"></i><b>2.3</b> Numerical summarization of data</a>
+<ul>
+<li class="chapter" data-level="2.3.1" data-path="data-cleaning-and-exploration.html"><a href="data-cleaning-and-exploration.html#numeric-data"><i class="fa fa-check"></i><b>2.3.1</b> Numeric data</a></li>
+<li class="chapter" data-level="2.3.2" data-path="data-cleaning-and-exploration.html"><a href="data-cleaning-and-exploration.html#categorical-data"><i class="fa fa-check"></i><b>2.3.2</b> Categorical data</a></li>
+<li class="chapter" data-level="2.3.3" data-path="data-cleaning-and-exploration.html"><a href="data-cleaning-and-exploration.html#the-summary-function"><i class="fa fa-check"></i><b>2.3.3</b> The <code>summary</code> function</a></li>
+</ul></li>
+<li class="chapter" data-level="2.4" data-path="data-cleaning-and-exploration.html"><a href="data-cleaning-and-exploration.html#visual-summaries-of-data"><i class="fa fa-check"></i><b>2.4</b> Visual summaries of data</a>
+<ul>
+<li class="chapter" data-level="2.4.1" data-path="data-cleaning-and-exploration.html"><a href="data-cleaning-and-exploration.html#the-ggplot-recipe"><i class="fa fa-check"></i><b>2.4.1</b> The ggplot recipe</a></li>
+<li class="chapter" data-level="2.4.2" data-path="data-cleaning-and-exploration.html"><a href="data-cleaning-and-exploration.html#univariate-plots"><i class="fa fa-check"></i><b>2.4.2</b> Univariate plots</a></li>
+<li class="chapter" data-level="2.4.3" data-path="data-cleaning-and-exploration.html"><a href="data-cleaning-and-exploration.html#bivariate-plots"><i class="fa fa-check"></i><b>2.4.3</b> Bivariate plots</a></li>
+<li class="chapter" data-level="2.4.4" data-path="data-cleaning-and-exploration.html"><a href="data-cleaning-and-exploration.html#multivariate-plots"><i class="fa fa-check"></i><b>2.4.4</b> Multivariate plots</a></li>
+<li class="chapter" data-level="2.4.5" data-path="data-cleaning-and-exploration.html"><a href="data-cleaning-and-exploration.html#facetted-plots-and-alternatives"><i class="fa fa-check"></i><b>2.4.5</b> Facetted plots (and alternatives)</a></li>
+</ul></li>
+<li class="chapter" data-level="2.5" data-path="data-cleaning-and-exploration.html"><a href="data-cleaning-and-exploration.html#a-plan-for-data-cleaning-and-exploration"><i class="fa fa-check"></i><b>2.5</b> A plan for data cleaning and exploration</a></li>
+<li class="chapter" data-level="2.6" data-path="data-cleaning-and-exploration.html"><a href="data-cleaning-and-exploration.html#final-notes-on-missing-or-erroneous-data"><i class="fa fa-check"></i><b>2.6</b> Final notes on missing or erroneous data</a></li>
+</ul></li>
+<li class="chapter" data-level="3" data-path="linear-model-estimation.html"><a href="linear-model-estimation.html"><i class="fa fa-check"></i><b>3</b> Linear model estimation</a>
+<ul>
+<li class="chapter" data-level="3.1" data-path="linear-model-estimation.html"><a href="linear-model-estimation.html#a-simple-motivating-example"><i class="fa fa-check"></i><b>3.1</b> A simple motivating example</a></li>
+<li class="chapter" data-level="3.2" data-path="linear-model-estimation.html"><a href="linear-model-estimation.html#s-slr-estimation"><i class="fa fa-check"></i><b>3.2</b> Estimation of the simple linear regression model</a>
+<ul>
+<li class="chapter" data-level="3.2.1" data-path="linear-model-estimation.html"><a href="linear-model-estimation.html#ss:fv-resid-rss"><i class="fa fa-check"></i><b>3.2.1</b> Model definition, fitted values, residuals, and RSS</a></li>
+<li class="chapter" data-level="3.2.2" data-path="linear-model-estimation.html"><a href="linear-model-estimation.html#ols-estimators-of-the-simple-linear-regression-parameters"><i class="fa fa-check"></i><b>3.2.2</b> OLS estimators of the simple linear regression parameters</a></li>
+</ul></li>
+<li class="chapter" data-level="3.3" data-path="linear-model-estimation.html"><a href="linear-model-estimation.html#s:penguins-slr"><i class="fa fa-check"></i><b>3.3</b> Penguins simple linear regression example</a></li>
+<li class="chapter" data-level="3.4" data-path="linear-model-estimation.html"><a href="linear-model-estimation.html#defining-a-linear-model"><i class="fa fa-check"></i><b>3.4</b> Defining a linear model</a>
+<ul>
+<li class="chapter" data-level="3.4.1" data-path="linear-model-estimation.html"><a href="linear-model-estimation.html#ss-necessary-components"><i class="fa fa-check"></i><b>3.4.1</b> Necessary components and notation</a></li>
+<li class="chapter" data-level="3.4.2" data-path="linear-model-estimation.html"><a href="linear-model-estimation.html#standard-definition-of-linear-model"><i class="fa fa-check"></i><b>3.4.2</b> Standard definition of linear model</a></li>
+</ul></li>
+<li class="chapter" data-level="3.5" data-path="linear-model-estimation.html"><a href="linear-model-estimation.html#estimation-of-the-multiple-linear-regression-model"><i class="fa fa-check"></i><b>3.5</b> Estimation of the multiple linear regression model</a>
+<ul>
+<li class="chapter" data-level="3.5.1" data-path="linear-model-estimation.html"><a href="linear-model-estimation.html#using-matrix-notation-to-represent-a-linear-model"><i class="fa fa-check"></i><b>3.5.1</b> Using matrix notation to represent a linear model</a></li>
+<li class="chapter" data-level="3.5.2" data-path="linear-model-estimation.html"><a href="linear-model-estimation.html#ss:fv-resid-rss-mlr"><i class="fa fa-check"></i><b>3.5.2</b> Residuals, fitted values, and RSS for multiple linear regression</a></li>
+<li class="chapter" data-level="3.5.3" data-path="linear-model-estimation.html"><a href="linear-model-estimation.html#ols-estimator-of-the-regression-coefficients"><i class="fa fa-check"></i><b>3.5.3</b> OLS estimator of the regression coefficients</a></li>
+</ul></li>
+<li class="chapter" data-level="3.6" data-path="linear-model-estimation.html"><a href="linear-model-estimation.html#s:penguins-mlr"><i class="fa fa-check"></i><b>3.6</b> Penguins multiple linear regression example</a></li>
+<li class="chapter" data-level="3.7" data-path="linear-model-estimation.html"><a href="linear-model-estimation.html#model-types"><i class="fa fa-check"></i><b>3.7</b> Types of linear models</a></li>
+<li class="chapter" data-level="3.8" data-path="linear-model-estimation.html"><a href="linear-model-estimation.html#categorical-predictors"><i class="fa fa-check"></i><b>3.8</b> Categorical predictors</a>
+<ul>
+<li class="chapter" data-level="3.8.1" data-path="linear-model-estimation.html"><a href="linear-model-estimation.html#indicator-variables"><i class="fa fa-check"></i><b>3.8.1</b> Indicator variables</a></li>
+<li class="chapter" data-level="3.8.2" data-path="linear-model-estimation.html"><a href="linear-model-estimation.html#parallel-and-separate-lines-models"><i class="fa fa-check"></i><b>3.8.2</b> Parallel and separate lines models</a></li>
+<li class="chapter" data-level="3.8.3" data-path="linear-model-estimation.html"><a href="linear-model-estimation.html#extensions"><i class="fa fa-check"></i><b>3.8.3</b> Extensions</a></li>
+<li class="chapter" data-level="3.8.4" data-path="linear-model-estimation.html"><a href="linear-model-estimation.html#avoiding-an-easy-mistake"><i class="fa fa-check"></i><b>3.8.4</b> Avoiding an easy mistake</a></li>
+</ul></li>
+<li class="chapter" data-level="3.9" data-path="linear-model-estimation.html"><a href="linear-model-estimation.html#s:penguins-mlr2"><i class="fa fa-check"></i><b>3.9</b> Penguins example with categorical predictor</a></li>
+<li class="chapter" data-level="3.10" data-path="linear-model-estimation.html"><a href="linear-model-estimation.html#evaluating-model-fit"><i class="fa fa-check"></i><b>3.10</b> Evaluating model fit</a></li>
+<li class="chapter" data-level="3.11" data-path="linear-model-estimation.html"><a href="linear-model-estimation.html#summary"><i class="fa fa-check"></i><b>3.11</b> Summary</a>
+<ul>
+<li class="chapter" data-level="3.11.1" data-path="linear-model-estimation.html"><a href="linear-model-estimation.html#summary-of-terms"><i class="fa fa-check"></i><b>3.11.1</b> Summary of terms</a></li>
+<li class="chapter" data-level="3.11.2" data-path="linear-model-estimation.html"><a href="linear-model-estimation.html#summary-of-functions"><i class="fa fa-check"></i><b>3.11.2</b> Summary of functions</a></li>
+</ul></li>
+<li class="chapter" data-level="3.12" data-path="linear-model-estimation.html"><a href="linear-model-estimation.html#going-deeper"><i class="fa fa-check"></i><b>3.12</b> Going Deeper</a>
+<ul>
+<li class="chapter" data-level="3.12.1" data-path="linear-model-estimation.html"><a href="linear-model-estimation.html#degrees-of-freedom"><i class="fa fa-check"></i><b>3.12.1</b> Degrees of freedom</a></li>
+<li class="chapter" data-level="3.12.2" data-path="linear-model-estimation.html"><a href="linear-model-estimation.html#slr-derivation"><i class="fa fa-check"></i><b>3.12.2</b> Derivation of the OLS estimators of the simple linear regression model coefficients</a></li>
+<li class="chapter" data-level="3.12.3" data-path="linear-model-estimation.html"><a href="linear-model-estimation.html#unbiasedness-of-ols-estimators"><i class="fa fa-check"></i><b>3.12.3</b> Unbiasedness of OLS estimators</a></li>
+<li class="chapter" data-level="3.12.4" data-path="linear-model-estimation.html"><a href="linear-model-estimation.html#manual-calculation-penguins-simple-linear-regression-example"><i class="fa fa-check"></i><b>3.12.4</b> Manual calculation Penguins simple linear regression example</a></li>
+<li class="chapter" data-level="3.12.5" data-path="linear-model-estimation.html"><a href="linear-model-estimation.html#mlr-derivation"><i class="fa fa-check"></i><b>3.12.5</b> Derivation of the OLS estimator for the multiple linear regression model coefficients</a></li>
+<li class="chapter" data-level="3.12.6" data-path="linear-model-estimation.html"><a href="linear-model-estimation.html#manual-calculation-of-penguins-multiple-linear-regression-example"><i class="fa fa-check"></i><b>3.12.6</b> Manual calculation of Penguins multiple linear regression example</a></li>
+</ul></li>
+</ul></li>
+<li class="chapter" data-level="4" data-path="interp-chapter.html"><a href="interp-chapter.html"><i class="fa fa-check"></i><b>4</b> Interpreting a fitted linear model</a>
+<ul>
+<li class="chapter" data-level="4.1" data-path="interp-chapter.html"><a href="interp-chapter.html#standard-mathematical-interpretation"><i class="fa fa-check"></i><b>4.1</b> Standard mathematical interpretation</a></li>
+<li class="chapter" data-level="4.2" data-path="interp-chapter.html"><a href="interp-chapter.html#coefficient-interpretation-in-simple-linear-regression"><i class="fa fa-check"></i><b>4.2</b> Coefficient interpretation in simple linear regression</a></li>
+<li class="chapter" data-level="4.3" data-path="interp-chapter.html"><a href="interp-chapter.html#interp-1st-order-ml"><i class="fa fa-check"></i><b>4.3</b> Coefficient interpretation for first-order multiple linear regression models</a></li>
+<li class="chapter" data-level="4.4" data-path="interp-chapter.html"><a href="interp-chapter.html#effect-plots"><i class="fa fa-check"></i><b>4.4</b> Effect plots</a></li>
+<li class="chapter" data-level="4.5" data-path="interp-chapter.html"><a href="interp-chapter.html#roles-of-regressor-variables"><i class="fa fa-check"></i><b>4.5</b> Roles of regressor variables</a></li>
+<li class="chapter" data-level="4.6" data-path="interp-chapter.html"><a href="interp-chapter.html#interpretation-for-categorical-predictors"><i class="fa fa-check"></i><b>4.6</b> Interpretation for categorical predictors</a>
+<ul>
+<li class="chapter" data-level="4.6.1" data-path="interp-chapter.html"><a href="interp-chapter.html#pl-interp"><i class="fa fa-check"></i><b>4.6.1</b> Coefficient interpretation for parallel lines models</a></li>
+<li class="chapter" data-level="4.6.2" data-path="interp-chapter.html"><a href="interp-chapter.html#sl-interp"><i class="fa fa-check"></i><b>4.6.2</b> Coefficient interpretation for separate lines models</a></li>
+<li class="chapter" data-level="4.6.3" data-path="interp-chapter.html"><a href="interp-chapter.html#more-penguins-examples"><i class="fa fa-check"></i><b>4.6.3</b> More Penguins examples</a></li>
+</ul></li>
+<li class="chapter" data-level="4.7" data-path="interp-chapter.html"><a href="interp-chapter.html#effect-plots-1"><i class="fa fa-check"></i><b>4.7</b> Effect plots</a>
+<ul>
+<li class="chapter" data-level="4.7.1" data-path="interp-chapter.html"><a href="interp-chapter.html#effect-plots-for-numeric-predictors"><i class="fa fa-check"></i><b>4.7.1</b> Effect plots for numeric predictors</a></li>
+<li class="chapter" data-level="4.7.2" data-path="interp-chapter.html"><a href="interp-chapter.html#effect-plots-with-categorical-predictors"><i class="fa fa-check"></i><b>4.7.2</b> Effect plots with categorical predictors</a></li>
+</ul></li>
+<li class="chapter" data-level="4.8" data-path="interp-chapter.html"><a href="interp-chapter.html#added-variable-plots"><i class="fa fa-check"></i><b>4.8</b> Added variable plots</a></li>
+<li class="chapter" data-level="4.9" data-path="interp-chapter.html"><a href="interp-chapter.html#going-deeper-1"><i class="fa fa-check"></i><b>4.9</b> Going deeper</a>
+<ul>
+<li class="chapter" data-level="4.9.1" data-path="interp-chapter.html"><a href="interp-chapter.html#orthogonality"><i class="fa fa-check"></i><b>4.9.1</b> Orthogonality</a></li>
+</ul></li>
+</ul></li>
+<li class="chapter" data-level="5" data-path="linear-model-theory.html"><a href="linear-model-theory.html"><i class="fa fa-check"></i><b>5</b> Basic theoretical results for linear models</a>
+<ul>
+<li class="chapter" data-level="5.1" data-path="linear-model-theory.html"><a href="linear-model-theory.html#standard-assumptions"><i class="fa fa-check"></i><b>5.1</b> Standard assumptions</a></li>
+<li class="chapter" data-level="5.2" data-path="linear-model-theory.html"><a href="linear-model-theory.html#summary-of-results"><i class="fa fa-check"></i><b>5.2</b> Summary of results</a></li>
+<li class="chapter" data-level="5.3" data-path="linear-model-theory.html"><a href="linear-model-theory.html#results-for-mathbfy"><i class="fa fa-check"></i><b>5.3</b> Results for <span class="math inline">\(\mathbf{y}\)</span></a></li>
+<li class="chapter" data-level="5.4" data-path="linear-model-theory.html"><a href="linear-model-theory.html#results-for-hatboldsymbolbeta"><i class="fa fa-check"></i><b>5.4</b> Results for <span class="math inline">\(\hat{\boldsymbol{\beta}}\)</span></a></li>
+<li class="chapter" data-level="5.5" data-path="linear-model-theory.html"><a href="linear-model-theory.html#results-for-the-residuals"><i class="fa fa-check"></i><b>5.5</b> Results for the residuals</a></li>
+<li class="chapter" data-level="5.6" data-path="linear-model-theory.html"><a href="linear-model-theory.html#the-gauss-markov-theorem"><i class="fa fa-check"></i><b>5.6</b> The Gauss-Markov Theorem</a></li>
+</ul></li>
+<li class="chapter" data-level="6" data-path="inference.html"><a href="inference.html"><i class="fa fa-check"></i><b>6</b> Linear model inference</a></li>
+<li class="appendix"><span><b>Appendix</b></span></li>
+<li class="chapter" data-level="A" data-path="overview-of-matrix-facts.html"><a href="overview-of-matrix-facts.html"><i class="fa fa-check"></i><b>A</b> Overview of matrix facts</a>
+<ul>
+<li class="chapter" data-level="A.1" data-path="overview-of-matrix-facts.html"><a href="overview-of-matrix-facts.html#notation"><i class="fa fa-check"></i><b>A.1</b> Notation</a></li>
+<li class="chapter" data-level="A.2" data-path="overview-of-matrix-facts.html"><a href="overview-of-matrix-facts.html#basic-mathematical-operations"><i class="fa fa-check"></i><b>A.2</b> Basic mathematical operations</a>
+<ul>
+<li class="chapter" data-level="A.2.1" data-path="overview-of-matrix-facts.html"><a href="overview-of-matrix-facts.html#addition-and-subtraction"><i class="fa fa-check"></i><b>A.2.1</b> Addition and subtraction</a></li>
+<li class="chapter" data-level="A.2.2" data-path="overview-of-matrix-facts.html"><a href="overview-of-matrix-facts.html#scalar-multiplication"><i class="fa fa-check"></i><b>A.2.2</b> Scalar multiplication</a></li>
+<li class="chapter" data-level="A.2.3" data-path="overview-of-matrix-facts.html"><a href="overview-of-matrix-facts.html#matrix-multiplication"><i class="fa fa-check"></i><b>A.2.3</b> Matrix multiplication</a></li>
+<li class="chapter" data-level="A.2.4" data-path="overview-of-matrix-facts.html"><a href="overview-of-matrix-facts.html#transpose"><i class="fa fa-check"></i><b>A.2.4</b> Transpose</a></li>
+</ul></li>
+<li class="chapter" data-level="A.3" data-path="overview-of-matrix-facts.html"><a href="overview-of-matrix-facts.html#basic-mathematical-properties"><i class="fa fa-check"></i><b>A.3</b> Basic mathematical properties</a>
+<ul>
+<li class="chapter" data-level="A.3.1" data-path="overview-of-matrix-facts.html"><a href="overview-of-matrix-facts.html#associative-property"><i class="fa fa-check"></i><b>A.3.1</b> Associative property</a></li>
+<li class="chapter" data-level="A.3.2" data-path="overview-of-matrix-facts.html"><a href="overview-of-matrix-facts.html#distributive-property"><i class="fa fa-check"></i><b>A.3.2</b> Distributive property</a></li>
+<li class="chapter" data-level="A.3.3" data-path="overview-of-matrix-facts.html"><a href="overview-of-matrix-facts.html#no-commutative-property"><i class="fa fa-check"></i><b>A.3.3</b> No commutative property</a></li>
+<li class="chapter" data-level="A.3.4" data-path="overview-of-matrix-facts.html"><a href="overview-of-matrix-facts.html#transpose-related-properties"><i class="fa fa-check"></i><b>A.3.4</b> Transpose-related properties</a></li>
+</ul></li>
+<li class="chapter" data-level="A.4" data-path="overview-of-matrix-facts.html"><a href="overview-of-matrix-facts.html#special-matrices"><i class="fa fa-check"></i><b>A.4</b> Special matrices</a>
+<ul>
+<li class="chapter" data-level="A.4.1" data-path="overview-of-matrix-facts.html"><a href="overview-of-matrix-facts.html#square-matrices"><i class="fa fa-check"></i><b>A.4.1</b> Square matrices</a></li>
+<li class="chapter" data-level="A.4.2" data-path="overview-of-matrix-facts.html"><a href="overview-of-matrix-facts.html#identity-matrix"><i class="fa fa-check"></i><b>A.4.2</b> Identity matrix</a></li>
+<li class="chapter" data-level="A.4.3" data-path="overview-of-matrix-facts.html"><a href="overview-of-matrix-facts.html#diagonal-matrices"><i class="fa fa-check"></i><b>A.4.3</b> Diagonal matrices</a></li>
+<li class="chapter" data-level="A.4.4" data-path="overview-of-matrix-facts.html"><a href="overview-of-matrix-facts.html#symmetric-matrices"><i class="fa fa-check"></i><b>A.4.4</b> Symmetric matrices</a></li>
+<li class="chapter" data-level="A.4.5" data-path="overview-of-matrix-facts.html"><a href="overview-of-matrix-facts.html#idempotent-matrices"><i class="fa fa-check"></i><b>A.4.5</b> Idempotent matrices</a></li>
+<li class="chapter" data-level="A.4.6" data-path="overview-of-matrix-facts.html"><a href="overview-of-matrix-facts.html#positive-definite-matrices"><i class="fa fa-check"></i><b>A.4.6</b> Positive definite matrices</a></li>
+<li class="chapter" data-level="A.4.7" data-path="overview-of-matrix-facts.html"><a href="overview-of-matrix-facts.html#inverse-matrix"><i class="fa fa-check"></i><b>A.4.7</b> Inverse matrix</a></li>
+</ul></li>
+<li class="chapter" data-level="A.5" data-path="overview-of-matrix-facts.html"><a href="overview-of-matrix-facts.html#matrix-derivatives"><i class="fa fa-check"></i><b>A.5</b> Matrix derivatives</a></li>
+<li class="chapter" data-level="A.6" data-path="overview-of-matrix-facts.html"><a href="overview-of-matrix-facts.html#additional-topics"><i class="fa fa-check"></i><b>A.6</b> Additional topics</a>
+<ul>
+<li class="chapter" data-level="A.6.1" data-path="overview-of-matrix-facts.html"><a href="overview-of-matrix-facts.html#determinant"><i class="fa fa-check"></i><b>A.6.1</b> Determinant</a></li>
+<li class="chapter" data-level="A.6.2" data-path="overview-of-matrix-facts.html"><a href="overview-of-matrix-facts.html#linearly-independent-vectors"><i class="fa fa-check"></i><b>A.6.2</b> Linearly independent vectors</a></li>
+<li class="chapter" data-level="A.6.3" data-path="overview-of-matrix-facts.html"><a href="overview-of-matrix-facts.html#rank"><i class="fa fa-check"></i><b>A.6.3</b> Rank</a></li>
+</ul></li>
+</ul></li>
+<li class="chapter" data-level="B" data-path="prob-review.html"><a href="prob-review.html"><i class="fa fa-check"></i><b>B</b> Overview of probability, random variables, and random vectors</a>
+<ul>
+<li class="chapter" data-level="B.1" data-path="prob-review.html"><a href="prob-review.html#probability-basics"><i class="fa fa-check"></i><b>B.1</b> Probability Basics</a></li>
+<li class="chapter" data-level="B.2" data-path="prob-review.html"><a href="prob-review.html#random-variables"><i class="fa fa-check"></i><b>B.2</b> Random Variables</a>
+<ul>
+<li class="chapter" data-level="B.2.1" data-path="prob-review.html"><a href="prob-review.html#discrete-random-variables"><i class="fa fa-check"></i><b>B.2.1</b> Discrete random variables</a></li>
+<li class="chapter" data-level="B.2.2" data-path="prob-review.html"><a href="prob-review.html#continuous-random-variables"><i class="fa fa-check"></i><b>B.2.2</b> Continuous random variables</a></li>
+<li class="chapter" data-level="B.2.3" data-path="prob-review.html"><a href="prob-review.html#useful-facts-for-transformations-of-random-variables"><i class="fa fa-check"></i><b>B.2.3</b> Useful facts for transformations of random variables</a></li>
+</ul></li>
+<li class="chapter" data-level="B.3" data-path="prob-review.html"><a href="prob-review.html#multivariate-distributions"><i class="fa fa-check"></i><b>B.3</b> Multivariate distributions</a>
+<ul>
+<li class="chapter" data-level="B.3.1" data-path="prob-review.html"><a href="prob-review.html#basic-properties"><i class="fa fa-check"></i><b>B.3.1</b> Basic properties</a></li>
+<li class="chapter" data-level="B.3.2" data-path="prob-review.html"><a href="prob-review.html#marginal-distributions"><i class="fa fa-check"></i><b>B.3.2</b> Marginal distributions</a></li>
+<li class="chapter" data-level="B.3.3" data-path="prob-review.html"><a href="prob-review.html#independence-of-random-variables"><i class="fa fa-check"></i><b>B.3.3</b> Independence of random variables</a></li>
+<li class="chapter" data-level="B.3.4" data-path="prob-review.html"><a href="prob-review.html#conditional-distributions"><i class="fa fa-check"></i><b>B.3.4</b> Conditional distributions</a></li>
+<li class="chapter" data-level="B.3.5" data-path="prob-review.html"><a href="prob-review.html#covariance"><i class="fa fa-check"></i><b>B.3.5</b> Covariance</a></li>
+<li class="chapter" data-level="B.3.6" data-path="prob-review.html"><a href="prob-review.html#useful-facts-for-transformations-of-multiple-random-variables"><i class="fa fa-check"></i><b>B.3.6</b> Useful facts for transformations of multiple random variables</a></li>
+<li class="chapter" data-level="B.3.7" data-path="prob-review.html"><a href="prob-review.html#binomial-distribution-example"><i class="fa fa-check"></i><b>B.3.7</b> Binomial distribution example</a></li>
+<li class="chapter" data-level="B.3.8" data-path="prob-review.html"><a href="prob-review.html#continuous-bivariate-distribution-example"><i class="fa fa-check"></i><b>B.3.8</b> Continuous bivariate distribution example</a></li>
+</ul></li>
+<li class="chapter" data-level="B.4" data-path="prob-review.html"><a href="prob-review.html#random-vectors"><i class="fa fa-check"></i><b>B.4</b> Random vectors</a>
+<ul>
+<li class="chapter" data-level="B.4.1" data-path="prob-review.html"><a href="prob-review.html#definition"><i class="fa fa-check"></i><b>B.4.1</b> Definition</a></li>
+<li class="chapter" data-level="B.4.2" data-path="prob-review.html"><a href="prob-review.html#mean-variance-and-covariance"><i class="fa fa-check"></i><b>B.4.2</b> Mean, variance, and covariance</a></li>
+<li class="chapter" data-level="B.4.3" data-path="prob-review.html"><a href="prob-review.html#properties-of-transformations-of-random-vectors"><i class="fa fa-check"></i><b>B.4.3</b> Properties of transformations of random vectors</a></li>
+<li class="chapter" data-level="B.4.4" data-path="prob-review.html"><a href="prob-review.html#continuous-bivariate-distribution-example-continued"><i class="fa fa-check"></i><b>B.4.4</b> Continuous bivariate distribution example continued</a></li>
+</ul></li>
+<li class="chapter" data-level="B.5" data-path="prob-review.html"><a href="prob-review.html#multivariate-normal-gaussian-distribution"><i class="fa fa-check"></i><b>B.5</b> Multivariate normal (Gaussian) distribution</a>
+<ul>
+<li class="chapter" data-level="B.5.1" data-path="prob-review.html"><a href="prob-review.html#definition-1"><i class="fa fa-check"></i><b>B.5.1</b> Definition</a></li>
+<li class="chapter" data-level="B.5.2" data-path="prob-review.html"><a href="prob-review.html#linear-functions-of-a-multivariate-normal-random-vector"><i class="fa fa-check"></i><b>B.5.2</b> Linear functions of a multivariate normal random vector</a></li>
+<li class="chapter" data-level="B.5.3" data-path="prob-review.html"><a href="prob-review.html#ols-example"><i class="fa fa-check"></i><b>B.5.3</b> OLS example</a></li>
+</ul></li>
+</ul></li>
+<li class="chapter" data-level="" data-path="references.html"><a href="references.html"><i class="fa fa-check"></i>References</a></li>
+<li class="divider"></li>
+<li><a href="https://github.com/rstudio/bookdown" target="blank">Published with bookdown</a></li>
+
+</ul>
+
+      </nav>
+    </div>
+
+    <div class="book-body">
+      <div class="body-inner">
+        <div class="book-header" role="navigation">
+          <h1>
+            <i class="fa fa-circle-o-notch fa-spin"></i><a href="./">A progressive introduction to linear models</a>
+          </h1>
+        </div>
+
+        <div class="page-wrapper" tabindex="-1" role="main">
+          <div class="page-inner">
+
+            <section class="normal" id="section-">
+<div id="prob-review" class="section level1 hasAnchor" number="8">
+<h1><span class="header-section-number">B</span> Overview of probability, random variables, and random vectors<a href="prob-review.html#prob-review" class="anchor-section" aria-label="Anchor link to header"></a></h1>
+<div id="probability-basics" class="section level2 hasAnchor" number="8.1">
+<h2><span class="header-section-number">B.1</span> Probability Basics<a href="prob-review.html#probability-basics" class="anchor-section" aria-label="Anchor link to header"></a></h2>
+<p>The mathematical field of probability attempts to quantify how likely certain outcomes are, where the outcomes are produced by a random experiment (defined below). In what follows, we assume you have a basic understanding of set theory and notation.</p>
+<p>We review some basic probability-related terminology in Table <a href="prob-review.html#tab:prob-tab1">B.1</a>.</p>
+<table>
+<caption><span id="tab:prob-tab1">Table B.1: </span>Basic terminology used in probability.</caption>
+<colgroup>
+<col width="10%" />
+<col width="18%" />
+<col width="70%" />
+</colgroup>
+<thead>
+<tr class="header">
+<th align="left">term</th>
+<th align="left">notation</th>
+<th align="left">definition</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td align="left">experiment</td>
+<td align="left">N/A</td>
+<td align="left">A mechanism that produces outcomes that cannot be predicted with absolute certainty.</td>
+</tr>
+<tr class="even">
+<td align="left">outcome</td>
+<td align="left"><span class="math inline">\(\omega\)</span></td>
+<td align="left">The simplest kind of result produced by an experiment.</td>
+</tr>
+<tr class="odd">
+<td align="left">sample space</td>
+<td align="left"><span class="math inline">\(\Omega\)</span></td>
+<td align="left">The set of all possible outcomes an experiment can produce.</td>
+</tr>
+<tr class="even">
+<td align="left">event</td>
+<td align="left"><span class="math inline">\(A\)</span>, <span class="math inline">\(A_i\)</span>, <span class="math inline">\(B\)</span>, etc.</td>
+<td align="left">Any subset of <span class="math inline">\(\Omega\)</span>.</td>
+</tr>
+<tr class="odd">
+<td align="left">empty set</td>
+<td align="left"><span class="math inline">\(\emptyset\)</span></td>
+<td align="left">The event that includes no outcomes.</td>
+</tr>
+</tbody>
+</table>
+<p>Some comments about the terms in Table <a href="prob-review.html#tab:prob-tab1">B.1</a>:</p>
+<ul>
+<li><strong>Outcomes</strong> may also be referred to as <strong>points</strong>, <strong>realizations</strong>, or <strong>elements</strong>.</li>
+<li>The set of outcomes of <span class="math inline">\(\Omega\)</span> are referred to as the <strong>elements</strong> of <span class="math inline">\(\Omega\)</span>.</li>
+<li>An <strong>event</strong> is a set of outcomes.</li>
+<li>The <strong>empty set</strong> is a subset of <span class="math inline">\(\Omega\)</span> but not an outcome of <span class="math inline">\(\Omega\)</span>.</li>
+<li>The <strong>empty set</strong> is a subset of every event <span class="math inline">\(A\subseteq \Omega\)</span>.</li>
+</ul>
+<p>We now review some basic set operations adn related facts. Let <span class="math inline">\(A\)</span> and <span class="math inline">\(B\)</span> be two events contained in <span class="math inline">\(\Omega\)</span>.</p>
+<ul>
+<li>The <strong>intersection</strong> of <span class="math inline">\(A\)</span> and <span class="math inline">\(B\)</span>, denoted <span class="math inline">\(A \cap B\)</span> is the set of outcomes that are common to both <span class="math inline">\(A\)</span> and <span class="math inline">\(B\)</span>, i.e., <span class="math inline">\(A \cap B = \{\omega \in \Omega: \omega \in A\;\mathrm{and}\;\omega \in B\}\)</span>.
+<ul>
+<li>Events <span class="math inline">\(A\)</span> and <span class="math inline">\(B\)</span> are <strong>disjoint</strong> if <span class="math inline">\(A\cap B = \emptyset\)</span>, i.e., if there are no outcomes common to events <span class="math inline">\(A\)</span> and <span class="math inline">\(B\)</span>.</li>
+</ul></li>
+<li>The <strong>union</strong> of <span class="math inline">\(A\)</span> and <span class="math inline">\(B\)</span>, denoted <span class="math inline">\(A \cup B\)</span> is the set of outcomes that are in <span class="math inline">\(A\)</span> or <span class="math inline">\(B\)</span> or both, i.e., <span class="math inline">\(A \cup B = \{\omega \in \Omega: \omega \in A\;\mathrm{or}\;\omega \in B\}\)</span>.</li>
+<li>The <strong>complement</strong> of <span class="math inline">\(A\)</span>, denoted <span class="math inline">\(A^c\)</span> is the set of outcomes that are in <span class="math inline">\(\Omega\)</span> but are not in <span class="math inline">\(A\)</span>, i.e., <span class="math inline">\(A^c = \{\omega \in \Omega: \omega \not\in A\}\)</span>.
+<ul>
+<li>The complement of <span class="math inline">\(A\)</span> may also be denoted as <span class="math inline">\(\overline{A}\)</span> or <span class="math inline">\(A&#39;\)</span>.</li>
+</ul></li>
+<li>The set <strong>difference</strong> between <span class="math inline">\(A\)</span> and <span class="math inline">\(B\)</span>, denoted <span class="math inline">\(A \setminus B\)</span>, is the elements of <span class="math inline">\(A\)</span> that are not in <span class="math inline">\(B\)</span>, i.e., <span class="math inline">\(A\setminus B = \{\omega \in A: \omega \not\in B\}\)</span>.
+<ul>
+<li>The set difference between <span class="math inline">\(A\)</span> and <span class="math inline">\(B\)</span> may also be denoted by <span class="math inline">\(A-B\)</span>.</li>
+<li>The set difference is order specific, i.e., <span class="math inline">\((A\setminus B) \not= (B\setminus A)\)</span> in general.</li>
+</ul></li>
+</ul>
+<p>A function <span class="math inline">\(P\)</span> that assigns a real number <span class="math inline">\(P(A)\)</span> to every event <span class="math inline">\(A\)</span> is a probability distribution if it satisfies three properties:</p>
+<ol style="list-style-type: decimal">
+<li><span class="math inline">\(P(A)\geq 0\)</span> for all <span class="math inline">\(A\in \Omega\)</span></li>
+<li><span class="math inline">\(P(\Omega)=P(\omega \in \Omega) = 1\)</span></li>
+<li>If <span class="math inline">\(A_1, A_2, \ldots\)</span> are disjoint, then <span class="math inline">\(P\left(\bigcup_{i=1}^\infty A_i \right)=\sum_{i=1}^\infty P(A_i)\)</span>.</li>
+</ol>
+<p>A set of events <span class="math inline">\(\{A_i:i\in I\}\)</span> are <strong>independent</strong> if
+<span class="math display">\[
+P\left(\cap_{i\in J} A_i \right)=\prod_{i\in J} P(A_i )
+\]</span>
+for every finite subset <span class="math inline">\(J\subseteq I\)</span>.</p>
+<p>The <strong>conditional probability</strong> of <span class="math inline">\(A\)</span> given <span class="math inline">\(B\)</span>, denoted as <span class="math inline">\(P(A\mid B)\)</span>, is the probability that <span class="math inline">\(A\)</span> occurs given that <span class="math inline">\(B\)</span> has occurred, and is defined as
+<span class="math display">\[
+P(A\mid B) = \frac{P(A\cap B)}{P(B)}, \quad P(B) &gt; 0.
+\]</span></p>
+<p>Some additional facts about probabilities:</p>
+<ul>
+<li><strong>Complement rule</strong>: <span class="math inline">\(P(A^c) = 1 - P(A)\)</span>.</li>
+<li><strong>Addition rule</strong>: <span class="math inline">\(P(A\cap B) = P(A) + P(B) - P(A \cap B)\)</span>.</li>
+<li><strong>Bayes’ rule</strong>: Assuming $P(A) &gt; 0 $ and <span class="math inline">\(P(B) &gt; 0\)</span>, then
+<span class="math display">\[P(A\mid B) = \frac{P(B\mid A)P(A)}{P(B)}.\]</span></li>
+<li><strong>Law of Total Probability</strong>: Let <span class="math inline">\(B_1, B_2, \ldots\)</span> be a countably infinite partition of <span class="math inline">\(\Omega\)</span>. Then
+<span class="math display">\[P(A) = \sum_{i=1}^{\infty} P(A \cap B_i) = \sum_{i=1}^{\infty} P(A \mid B_i) P(B_i).\]</span></li>
+</ul>
+</div>
+<div id="random-variables" class="section level2 hasAnchor" number="8.2">
+<h2><span class="header-section-number">B.2</span> Random Variables<a href="prob-review.html#random-variables" class="anchor-section" aria-label="Anchor link to header"></a></h2>
+<p>A <strong>random variable</strong> <span class="math inline">\(Y\)</span> is a mapping/function
+<span class="math display">\[
+Y:\Omega\to\mathbb{R}
+\]</span>
+that assigns a real number <span class="math inline">\(Y(\omega)\)</span> to each outcome <span class="math inline">\(\omega\)</span>. We typically drop the <span class="math inline">\((\omega)\)</span> notation for simplicity.</p>
+<p>The <strong>cumulative distribution function (CDF)</strong> of <span class="math inline">\(Y\)</span>, <span class="math inline">\(F_Y\)</span>, is a function <span class="math inline">\(F_Y:\mathbb{R}\to [0,1]\)</span> defined by
+<span class="math display">\[
+F_Y (y)=P(Y \leq y).
+\]</span>
+The subscript of <span class="math inline">\(F\)</span> indicates the random variable the CDF describes. E.g., <span class="math inline">\(F_X\)</span> denotes the CDF of the random variable <span class="math inline">\(X\)</span> and <span class="math inline">\(F_Y\)</span> denotes the CDF of the random variable <span class="math inline">\(Y\)</span>. The subscript can be dropped when the context makes it clear what random variable the CDF describes. An <span class="math inline">\(F\)</span>-distributed random variable is one that has the <span class="math inline">\(F\)</span> distribution.</p>
+<p>The <strong>support</strong> of <span class="math inline">\(Y\)</span>, <span class="math inline">\(\mathcal{S}\)</span>, is the smallest set such that <span class="math inline">\(P(Y\in \mathcal{S})=1\)</span>.</p>
+<div id="discrete-random-variables" class="section level3 hasAnchor" number="8.2.1">
+<h3><span class="header-section-number">B.2.1</span> Discrete random variables<a href="prob-review.html#discrete-random-variables" class="anchor-section" aria-label="Anchor link to header"></a></h3>
+<p><span class="math inline">\(Y\)</span> is a <strong>discrete</strong> random variable if it takes countably many values <span class="math inline">\(\{y_1, y_2, \dots \} = \mathcal{S}\)</span>.</p>
+<p>The <strong>probability mass function (pmf)</strong> for <span class="math inline">\(Y\)</span> is <span class="math inline">\(f_Y (y)=P(Y=y)\)</span>, where <span class="math inline">\(y\in \mathbb{R}\)</span>, and must have the following properties:</p>
+<ol style="list-style-type: decimal">
+<li><span class="math inline">\(0 \leq f_Y(y) \leq 1\)</span>.</li>
+<li><span class="math inline">\(\sum_{y\in \mathcal{S}} f_Y(y) = 1\)</span>.</li>
+</ol>
+<p>Additionally, the following statements are true:</p>
+<ul>
+<li><span class="math inline">\(F_Y(c) = P(Y \leq c) = \sum_{y\in \mathcal{S}:y \leq c} f_Y(y)\)</span>.</li>
+<li><span class="math inline">\(P(Y \in A) = \sum_{y \in A} f_Y(y)\)</span> for some event <span class="math inline">\(A\)</span>.</li>
+<li><span class="math inline">\(P(a \leq Y \leq b) = \sum_{y\in\mathcal{S}:a\leq y\leq b} f_Y(y)\)</span>.</li>
+</ul>
+<p>The <strong>expected value</strong>, <strong>mean</strong>, or first moment of <span class="math inline">\(Y\)</span> is defined as
+<span class="math display">\[ E(Y) = \sum_{y\in \mathcal{S}} y f_Y(y), \]</span>
+assuming the sum is well-defined.</p>
+<p>The <strong>variance</strong> of <span class="math inline">\(Y\)</span> is defined as
+<span class="math display">\[
+\mathrm{var}(Y)=E(Y-E(Y))^2 =
+\sum_{y\in \mathcal{S}} (y - E(Y))^2 f_Y(y).
+\]</span></p>
+<p>Note that <span class="math inline">\(\mathrm{var}(Y)=E(Y-E(Y))^2=E(Y^2)-[E(Y)]^2\)</span>. The last expression is often easier to compute.</p>
+<p>The <strong>standard deviation</strong> of Y is
+<span class="math display">\[SD(Y)=\sqrt{\mathrm{var}(Y)  }.\]</span></p>
+<div id="bernoulli-distribution-example" class="section level4 hasAnchor" number="8.2.1.1">
+<h4><span class="header-section-number">B.2.1.1</span> Bernoulli distribution example<a href="prob-review.html#bernoulli-distribution-example" class="anchor-section" aria-label="Anchor link to header"></a></h4>
+<p>A random variable <span class="math inline">\(Y\)</span> is said to have a Bernoulli distribution with probability <span class="math inline">\(\pi\)</span>, denoted <span class="math inline">\(Y\sim \mathsf{Bernoulli}(\pi)\)</span>, if <span class="math inline">\(\mathcal{S} = \{0, 1\}\)</span> and <span class="math inline">\(P(Y = 1) = \pi\)</span>, where <span class="math inline">\(\pi\in (0,1)\)</span>.</p>
+<p>The pmf of a Bernoulli random variable is
+<span class="math display">\[f_Y(y) = \pi^y (1-\pi)^{(1-y)}.\]</span></p>
+<p>The mean of a Bernoulli random variable is
+<span class="math display">\[E(Y)=0(1-\pi )+1(\pi)=\pi.\]</span></p>
+<p>The variance of a Bernoulli random variable is <span class="math display">\[\mathrm{var}(Y)=(0-\pi)^2(1-\pi)+(1-\pi)^2\pi = \pi(1-\pi).\]</span></p>
+</div>
+</div>
+<div id="continuous-random-variables" class="section level3 hasAnchor" number="8.2.2">
+<h3><span class="header-section-number">B.2.2</span> Continuous random variables<a href="prob-review.html#continuous-random-variables" class="anchor-section" aria-label="Anchor link to header"></a></h3>
+<p><span class="math inline">\(Y\)</span> is a <strong>continuous</strong> random variable if there exists a function <span class="math inline">\(f_Y (y)\)</span> such that:</p>
+<ol style="list-style-type: decimal">
+<li><span class="math inline">\(f_Y (y)\geq 0\)</span> for all <span class="math inline">\(y\)</span>,</li>
+<li><span class="math inline">\(\int_{-\infty}^\infty f_Y (y) dy = 1\)</span>,</li>
+<li><span class="math inline">\(a\leq b\)</span>, <span class="math inline">\(P(a&lt;Y&lt;b)=\int_a^b f_Y (y) dy\)</span>.</li>
+</ol>
+<p>The function <span class="math inline">\(f_Y\)</span> is called the <strong>probability density function (pdf)</strong>.</p>
+<p>Additionally, <span class="math inline">\(F_Y (y)=\int_{-\infty}^y f_Y (y) dy\)</span> and <span class="math inline">\(f_Y (y)=F&#39;_Y(y)\)</span> for any point <span class="math inline">\(y\)</span> at which <span class="math inline">\(F_Y\)</span> is differentiable.</p>
+<p>The <strong>mean</strong> of a continuous random variables <span class="math inline">\(Y\)</span> is defined as
+<span class="math display">\[
+E(Y) =
+\int_{-\infty}^{\infty} y f_Y(y)  dy =
+\int_{y\in\mathcal{S}} y f_Y(y).
+\]</span>
+assuming the integral is well-defined.</p>
+<p>The <strong>variance</strong> of a continuous random variable <span class="math inline">\(Y\)</span> is defined by
+<span class="math display">\[
+\mathrm{var}(Y)=
+E(Y-E(Y))^2=\int_{-\infty}^{\infty} (y - E(Y))^2 f_Y(y)  dy =
+\int_{y\in\mathcal{S}} (y - E(Y))^2 f_Y(y) dy.
+\]</span></p>
+<div id="example-exponential-distribution" class="section level4 hasAnchor" number="8.2.2.1">
+<h4><span class="header-section-number">B.2.2.1</span> Example (Exponential distribution)<a href="prob-review.html#example-exponential-distribution" class="anchor-section" aria-label="Anchor link to header"></a></h4>
+<p>A random variable <span class="math inline">\(Y\)</span> is said to have an exponential distribution rate parameter <span class="math inline">\(\lambda\)</span>, denoted with <span class="math inline">\(Y \sim \mathsf{Exp}(\lambda)\)</span> if <span class="math inline">\(\mathcal{S} = {y\in \mathbb{R}:y\geq 0}\)</span> and
+<span class="math display">\[f_Y(y)=\lambda\exp(-\lambda y).\]</span></p>
+<p>The mean of an exponential random variable is
+<span class="math display">\[E(Y)=
+\int_{0}^{\infty} y\lambda \exp(-\lambda y)\;dy=
+-\exp(-\lambda y)(\lambda^{-1}+y)\biggr]^{\infty}_{0}=
+\lambda^{-1}.\]</span>
+Note that this process involves integration by parts, which is not shown. Similarly, <span class="math inline">\(E(Y^2)=2\lambda^{-2}\)</span>. Thus,
+<span class="math display">\[
+\mathrm{var}(Y)=
+E(Y^2)-[E(Y)]^2=
+2\lambda^{-2}-[\lambda^{-1}]^2=
+\lambda^{-2}.
+\]</span></p>
+</div>
+</div>
+<div id="useful-facts-for-transformations-of-random-variables" class="section level3 hasAnchor" number="8.2.3">
+<h3><span class="header-section-number">B.2.3</span> Useful facts for transformations of random variables<a href="prob-review.html#useful-facts-for-transformations-of-random-variables" class="anchor-section" aria-label="Anchor link to header"></a></h3>
+<p>Let <span class="math inline">\(Y\)</span> be a random variable and <span class="math inline">\(a\in\mathbb{R}\)</span> be a constant. Then:</p>
+<ul>
+<li><span class="math inline">\(E(a) = a\)</span>.</li>
+<li><span class="math inline">\(E(Y) = a E(Y)\)</span>.</li>
+<li><span class="math inline">\(E(a + Y) = a + E(Y)\)</span>.</li>
+<li><span class="math inline">\(\mathrm{var}(a) = 0\)</span>.</li>
+<li><span class="math inline">\(\mathrm{var}(aY) = a^2 \mathrm{var}(Y)\)</span>.</li>
+<li><span class="math inline">\(\mathrm{var}(a + Y) = \mathrm{var}(Y)\)</span>.</li>
+<li>For a discrete random variable and a function <span class="math inline">\(g\)</span>, <span class="math display">\[E(g(Y))=\sum_{y\in\mathcal{S}}g(Y)f_Y(y),\]</span>
+assuming the sum is well-defined.</li>
+<li>For a continuous random variable and a function <span class="math inline">\(g\)</span>, <span class="math display">\[E(g(Y))=\int_{y\in\mathcal{S}}g(Y)f_Y(y)\;dy,\]</span>
+assuming the integral is well-defined.</li>
+</ul>
+</div>
+</div>
+<div id="multivariate-distributions" class="section level2 hasAnchor" number="8.3">
+<h2><span class="header-section-number">B.3</span> Multivariate distributions<a href="prob-review.html#multivariate-distributions" class="anchor-section" aria-label="Anchor link to header"></a></h2>
+<div id="basic-properties" class="section level3 hasAnchor" number="8.3.1">
+<h3><span class="header-section-number">B.3.1</span> Basic properties<a href="prob-review.html#basic-properties" class="anchor-section" aria-label="Anchor link to header"></a></h3>
+<p>Let <span class="math inline">\(Y_1,Y_2,\ldots,Y_n\)</span> denote <span class="math inline">\(n\)</span> random variables with supports <span class="math inline">\(\mathcal{S}_1,\mathcal{S}_2,\ldots,\mathcal{S}_n\)</span>, respectively.</p>
+<p>If the random variables are <strong>jointly discrete</strong> (i.e., all discrete), then the joint pmf <span class="math inline">\(f(y_1,\ldots,y_n)=P(Y_1=y_1,\ldots,Y_n=y_n)\)</span> satisfies the following properties:</p>
+<ol style="list-style-type: decimal">
+<li><span class="math inline">\(0\leq f(y_1,\ldots,y_n )\leq 1\)</span>,</li>
+<li><span class="math inline">\(\sum_{y_1\in\mathcal{S}_1}\cdots \sum_{y_n\in\mathcal{S}_n} f(y_1,\ldots,y_n ) = 1\)</span>,</li>
+<li><span class="math inline">\(P((Y_1,\ldots,Y_n)\in A)=\sum_{(y_1,\ldots,y_n) \in A} f(y_1,\ldots,y_n)\)</span>.</li>
+</ol>
+<p>In this context,
+<span class="math display">\[
+E(Y_1 \cdots Y_n)=\sum_{y_1\in\mathcal{S}_1} \cdots \sum_{y_n\in\mathcal{S}_n}y_1 \cdots y_n  f(y_1,\ldots,y_n).
+\]</span></p>
+<p>In general,
+<span class="math display">\[
+E(g(Y_1,\ldots,Y_n))=\sum_{y_1\in\mathcal{S}_1} \cdots \sum_{y_n\in\mathcal{S}_n} g(y_1, \ldots, y_n) f(y_1,\ldots,y_n),
+\]</span>
+where <span class="math inline">\(g\)</span> is a function of the random variables.</p>
+<p>If the random variables are <strong>jointly continuous</strong>, then <span class="math inline">\(f(y_1,\ldots,y_n)=P(Y_1=y_1,\ldots,Y_n=y_n)\)</span> is the joint pdf if it satisfies the following properties:</p>
+<ol style="list-style-type: decimal">
+<li><span class="math inline">\(f(y_1,\ldots,y_n ) \geq 0\)</span>,</li>
+<li><span class="math inline">\(\int_{y_1\in\mathcal{S}_1}\cdots \int_{y_n\in\mathcal{S}_n} f(y_1,\ldots,y_n ) dy_n \cdots dy_1 = 1\)</span>,</li>
+<li><span class="math inline">\(P((Y_1,\ldots,Y_n)\in A)=\int \cdots \int_{(y_1,\ldots,y_n) \in A} f(y_1,\ldots,y_n) dy_n\ldots dy_1\)</span>.</li>
+</ol>
+<p>In this context,
+<span class="math display">\[
+E(Y_1 \cdots Y_n)=\int_{y_1\in\mathcal{S}_1} \cdots \int_{y_n\in\mathcal{S}_n} y_1 \cdots y_n  f(y_1,\ldots,y_n) dy_n \ldots dy_1.
+\]</span></p>
+<p>In general,
+<span class="math display">\[
+E(g(Y_1,\ldots,Y_n))=\int_{y_1\in\mathcal{S}_1} \cdots \int_{y_n\in\mathcal{S}_n} g(y_1, \ldots, y_n) f(y_1,\ldots,y_n) dy_n \cdots dy_1,
+\]</span>
+where <span class="math inline">\(g\)</span> is a function of the random variables.</p>
+</div>
+<div id="marginal-distributions" class="section level3 hasAnchor" number="8.3.2">
+<h3><span class="header-section-number">B.3.2</span> Marginal distributions<a href="prob-review.html#marginal-distributions" class="anchor-section" aria-label="Anchor link to header"></a></h3>
+<p>If the random variables are jointly discrete, then the marginal pmf of <span class="math inline">\(Y_1\)</span> is
+<span class="math display">\[f_{Y_1}(y_1)=\sum_{y_2\in\mathcal{S}_2}\cdots \sum_{y_n\in\mathcal{S}_n} f(y_1,\ldots,y_n).\]</span></p>
+<p>Similarly, if the random variables are jointly continuous, then the marginal pdf of <span class="math inline">\(Y_1\)</span> is <span class="math display">\[
+f_{Y_1}(y_1)=\int_{y_2\in\mathcal{S}_2}\cdots \int_{y_n\in\mathcal{S}_n} f(y_1,\ldots,y_n) dy_n \cdots dy_2.
+\]</span></p>
+</div>
+<div id="independence-of-random-variables" class="section level3 hasAnchor" number="8.3.3">
+<h3><span class="header-section-number">B.3.3</span> Independence of random variables<a href="prob-review.html#independence-of-random-variables" class="anchor-section" aria-label="Anchor link to header"></a></h3>
+<p>Random variables <span class="math inline">\(X\)</span> and <span class="math inline">\(Y\)</span> are independent if
+<span class="math display">\[F(x, y) = F_X(x) F_Y(y).\]</span></p>
+<p>Alternatively, <span class="math inline">\(X\)</span> and <span class="math inline">\(Y\)</span> are independent if
+<span class="math display">\[f(x, y) = f_X(x)f_Y(y).\]</span></p>
+</div>
+<div id="conditional-distributions" class="section level3 hasAnchor" number="8.3.4">
+<h3><span class="header-section-number">B.3.4</span> Conditional distributions<a href="prob-review.html#conditional-distributions" class="anchor-section" aria-label="Anchor link to header"></a></h3>
+<p>Let <span class="math inline">\(X\)</span> and <span class="math inline">\(Y\)</span> be random variables. Then assuming <span class="math inline">\(f_Y(y)&gt;0\)</span>, the conditional distribution of <span class="math inline">\(X\)</span> given <span class="math inline">\(Y = y\)</span>, denoted <span class="math inline">\(X|Y=y\)</span> is
+<span class="math display">\[f(x|y) = \frac{f(x, y)}{f_{Y}(y)}, \quad f_Y(y)&gt;0.\]</span></p>
+</div>
+<div id="covariance" class="section level3 hasAnchor" number="8.3.5">
+<h3><span class="header-section-number">B.3.5</span> Covariance<a href="prob-review.html#covariance" class="anchor-section" aria-label="Anchor link to header"></a></h3>
+<p>The covariance between random variables <span class="math inline">\(X\)</span> and <span class="math inline">\(Y\)</span> is
+<span class="math display">\[\mathrm{cov}(X,Y)=E[(X-E(X))(Y-E(Y))]=E(XY)-E(X)E(Y).\]</span></p>
+</div>
+<div id="useful-facts-for-transformations-of-multiple-random-variables" class="section level3 hasAnchor" number="8.3.6">
+<h3><span class="header-section-number">B.3.6</span> Useful facts for transformations of multiple random variables<a href="prob-review.html#useful-facts-for-transformations-of-multiple-random-variables" class="anchor-section" aria-label="Anchor link to header"></a></h3>
+<p>Let <span class="math inline">\(a\)</span> and <span class="math inline">\(b\)</span> be scalar constants. Let <span class="math inline">\(Y\)</span> and <span class="math inline">\(Z\)</span> be random variables. Then:</p>
+<ul>
+<li><span class="math inline">\(E(aY+bZ)=aE(Y)+bE(Z)\)</span></li>
+<li><span class="math inline">\(\mathrm{var}(Y+Z)=\mathrm{var}(Y)+\mathrm{var}(Z)+2\mathrm{cov}(Y, Z)\)</span></li>
+<li><span class="math inline">\(\mathrm{cov}(a,Y)=0\)</span></li>
+<li><span class="math inline">\(\mathrm{cov}(Y,Y)=\mathrm{var}(Y)\)</span></li>
+<li><span class="math inline">\(\mathrm{cov}(aY, bZ)=ab\mathrm{cov}(Y, Z)\)</span></li>
+<li><span class="math inline">\(\mathrm{cov}(a + Y,b + Z)=\mathrm{cov}(Y, Z)\)</span></li>
+</ul>
+<p>If <span class="math inline">\(Y\)</span> and <span class="math inline">\(Z\)</span> are also independent, then:</p>
+<ul>
+<li><span class="math inline">\(E(YZ)=E(Y)E(Z)\)</span>.</li>
+<li><span class="math inline">\(\mathrm{cov}(Y, Z)=0\)</span>.</li>
+</ul>
+<p>In general, if <span class="math inline">\(Y_1, Y_2, \ldots, Y_n\)</span> are a set of random variables, then:</p>
+<ul>
+<li><span class="math inline">\(E(\sum_{i=1}^n Y_i) = \sum_{i=1}^n E(Y_i)\)</span>, i.e., the expectation of the sum of random variables is the sum of the expectation of the random variables.</li>
+<li><span class="math inline">\(\mathrm{var}(\sum_{i=1}^n Y_i) = \sum_{i=1}^n \mathrm{var}(Y_i) + \sum_{j=1}^n\sum_{1\leq i&lt;j\leq n}2\mathrm{cov}(Y_i, Y_j)\)</span>, i.e., the variance of the sum of random variables is the sum fo the variables’ variances plus the sum of twice all possible pairwise covariances.</li>
+</ul>
+<p>If in addition, <span class="math inline">\(Y_1, Y_2, \ldots, Y_n\)</span> are all independent of each other, then:</p>
+<ul>
+<li><span class="math inline">\(\mathrm{var}(\sum_{i=1}^n Y_i) = \sum_{i=1}^n \mathrm{var}(Y_i)\)</span> since all pairwise covariances are 0.</li>
+</ul>
+</div>
+<div id="binomial-distribution-example" class="section level3 hasAnchor" number="8.3.7">
+<h3><span class="header-section-number">B.3.7</span> Binomial distribution example<a href="prob-review.html#binomial-distribution-example" class="anchor-section" aria-label="Anchor link to header"></a></h3>
+<p>A random variable <span class="math inline">\(Y\)</span> is said to have a Binomial distribution with <span class="math inline">\(n\)</span> trials and probability of success <span class="math inline">\(\theta\)</span>, denoted <span class="math inline">\(Y\sim \mathsf{Bin}(n,\theta)\)</span> when <span class="math inline">\(\mathcal{S}=\{0,1,2,\ldots,n\}\)</span> and the pmf is
+<span class="math display">\[f(y\mid\theta) = \binom{n}{y} \theta^y (1-\theta)^{(n-y)}.\]</span></p>
+<p>An alternative explanation of a Binomial random variable is that it is the sum of <span class="math inline">\(n\)</span> independent and identically-distributed Bernoulli random variables. Alternatively, let <span class="math inline">\(Y_1,Y_2,\ldots,Y_n\stackrel{i.i.d.}{\sim} \mathsf{Bernoulli}(\theta)\)</span>, where i.i.d. stands for independent and identically distributed, i.e., <span class="math inline">\(Y_1, Y_2, \ldots, Y_n\)</span> are independent random variables with identical distributions. Then <span class="math inline">\(Y=\sum_{i=1}^n Y_i \sim \mathsf{Bin}(n,\theta)\)</span>.</p>
+<p>Using this information and the facts above, we can easily determine the mean and variance of <span class="math inline">\(Y\)</span>.</p>
+<p>Using our results from Section <a href="prob-review.html#bernoulli-distribution-example">B.2.1.1</a>, we can see that <span class="math inline">\(E(Y_i) = \theta\)</span> for <span class="math inline">\(i=1,2,\ldots,n\)</span>. Similarly, <span class="math inline">\(\mathrm{var}(Y_i)=\theta(1-\theta)\)</span> for <span class="math inline">\(i=1,2,\ldots,n\)</span>.</p>
+<p>We determine that:
+<span class="math display">\[
+E(Y)=E\biggl(\sum_{i=1}^n Y_i\biggr)=\sum_{i=1}^n E(Y_i) = \sum_{i=1}^n \theta = n\theta.
+\]</span></p>
+<p>Similarly, since <span class="math inline">\(Y_1, Y_2, \ldots, Y_n\)</span> are i.i.d. and using the fact in Section <a href="prob-review.html#useful-facts-for-transformations-of-multiple-random-variables">B.3.6</a>, we see that
+<span class="math display">\[
+\mathrm{var}(Y) = \mathrm{var}(\sum_{i=1}^n Y_i) = \sum_{i=1}^n\mathrm{var}(Y_i)=\sum_{i=1}^n \theta(1-\theta) = n\theta(1-\theta).
+\]</span></p>
+</div>
+<div id="continuous-bivariate-distribution-example" class="section level3 hasAnchor" number="8.3.8">
+<h3><span class="header-section-number">B.3.8</span> Continuous bivariate distribution example<a href="prob-review.html#continuous-bivariate-distribution-example" class="anchor-section" aria-label="Anchor link to header"></a></h3>
+<p>Hydration is important for health. Like many people, the author has a water bottle he uses to say hydrated through the day and drinks several liters of water per day. Let’s say the author refills his water bottle every 3 hours. Let <span class="math inline">\(Y\)</span> denote the proportion of the water bottle filled with water at the beginning of the 3-hour window. Let <span class="math inline">\(X\)</span> denote the amount of water the author consumes in the 3-hour window (measured in the the proportion of total water bottle capacity. We know that <span class="math inline">\(0\leq X \leq Y \leq 1\)</span>. The joint density of the random variables is</p>
+<p><span class="math display">\[
+f(x,y)=4y^2,\quad 0 \leq x\leq y\leq 1,
+\]</span>
+and 0 otherwise.</p>
+<p>We answer a series of questions about this distribution.</p>
+<p><strong>Q1: Determine <span class="math inline">\(P(0.5\leq X\leq 1, 0.75\leq Y)\)</span></strong>.</p>
+<p>Note that the comma between the two events means “and”.</p>
+<p>Since <span class="math inline">\(X\)</span> must be no more than <span class="math inline">\(Y\)</span>, we can answer this question as</p>
+<p><span class="math display">\[
+\int_{0.75}^{1} \int_{0.5}^{y} 4y^2\;dx\;dy=229/768\approx 0.30.
+\]</span></p>
+<p><strong>Q2: Determine the marginal distributions of <span class="math inline">\(X\)</span> and <span class="math inline">\(Y\)</span>.</strong></p>
+<p>To find the marginal distribution of <span class="math inline">\(X\)</span>, we must integrate the joint pdf with respect to the limits of <span class="math inline">\(Y\)</span>. Don’t forget to include the support of the pdf of <span class="math inline">\(X\)</span> (which after integrating out <span class="math inline">\(Y\)</span>, must be between 0 and 1).</p>
+<p><span class="math display">\[\begin{align*}
+f_X(x) &amp;=\int_{x}^1 4y^2\;dy \\
+&amp;=\frac{4}{3}(1-x^3),\quad 0\leq x \leq 1.
+\end{align*}\]</span></p>
+<p>Similarly,
+<span class="math display">\[\begin{align*}
+f_Y(y) &amp;=\int_{0}^y 4y^2\;dx \\
+&amp;=4y^3,\quad 0\leq y \leq 1.
+\end{align*}\]</span></p>
+<p><strong>Q3: Determine the means of <span class="math inline">\(X\)</span> and <span class="math inline">\(Y\)</span>.</strong></p>
+<p>The mean of <span class="math inline">\(X\)</span> is the integral of <span class="math inline">\(x f_X(x)\)</span> over the support of <span class="math inline">\(X\)</span>, i.e.,
+<span class="math display">\[
+E(X) =\int_{0}^1 x\biggl(\frac{4}{3}(1-x^3)\biggr)\;dx = 2/5.
+\]</span></p>
+<p>Similarly,
+<span class="math display">\[
+E(Y) =\int_{0}^1 y(4y^3)\;dy = 4/5.
+\]</span></p>
+<p><strong>Q4: Determine the variances of <span class="math inline">\(X\)</span> and <span class="math inline">\(Y\)</span>.</strong>
+We use the formula <span class="math inline">\(\mathrm{var}(X)=E(X^2)-[E(X)^2]\)</span> to compute the variances. First,
+<span class="math display">\[
+E(X^2) =\int_{0}^1 x^2\biggl(\frac{4}{3}(1-x^3)\biggr)\;dx = 2/9.
+\]</span>
+Second,
+<span class="math display">\[
+E(Y^2) =\int_{0}^1 y^2(4y^3)\;dy = 2/3.
+\]</span>
+Thus, <span class="math inline">\(\mathrm{var}(X)=2/5-(2/9)^2=142/405\)</span> and <span class="math inline">\(\mathrm{var}(Y)=4/5-(2/3)^2=16/45\)</span>.</p>
+<p><strong>Q5: Determine the mean of <span class="math inline">\(XY\)</span>.</strong></p>
+<p>The mean of <span class="math inline">\(XY\)</span> requires us to integrate the product of <span class="math inline">\(xy\)</span> and the joint pdf over the joint support of <span class="math inline">\(X\)</span> and <span class="math inline">\(Y\)</span>. Specifically,
+<span class="math display">\[
+E(XY)=\int_{0}^{1}\int_{0}^{y} xy(4y^2)\;dx\;dy= 1/12.
+\]</span></p>
+<p><strong>Q6: Determine the covariance of <span class="math inline">\(X\)</span> and <span class="math inline">\(Y\)</span>.</strong>
+Using our previous work, we see that
+<span class="math display">\[
+\mathrm{cov}(X,Y)=E(XY) - E(X)E(Y)=1/12-(2/5)(4/5)=-71/300.
+\]</span></p>
+<p><strong>Q7: Determine the mean and variance of <span class="math inline">\(Y-X\)</span>, i.e., the average amount of water remaining after a 3-hour window and the variability of that amount.</strong></p>
+<p>Using the results in Section <a href="prob-review.html#useful-facts-for-transformations-of-multiple-random-variables">B.3.6</a>, we have that
+<span class="math display">\[E(Y-X)=E(Y)-E(X)=4/5-2/5=2/5,\]</span>
+and
+<span class="math display">\[
+\mathrm{var}(Y-X)=\mathrm{var}(Y)+\mathrm{var}(X)-2\mathrm{cov}(Y,X)=
+16/45+142/405-2(-71/300)\approx 1.18.
+\]</span></p>
+</div>
+</div>
+<div id="random-vectors" class="section level2 hasAnchor" number="8.4">
+<h2><span class="header-section-number">B.4</span> Random vectors<a href="prob-review.html#random-vectors" class="anchor-section" aria-label="Anchor link to header"></a></h2>
+<div id="definition" class="section level3 hasAnchor" number="8.4.1">
+<h3><span class="header-section-number">B.4.1</span> Definition<a href="prob-review.html#definition" class="anchor-section" aria-label="Anchor link to header"></a></h3>
+<p>A <strong>random vector</strong> is a vector of random variables. A random vector is assumed to be a column vector unless otherwise specified.</p>
+<p>Additionally, a <strong>random matrix</strong> is a matrix of random variables.</p>
+</div>
+<div id="mean-variance-and-covariance" class="section level3 hasAnchor" number="8.4.2">
+<h3><span class="header-section-number">B.4.2</span> Mean, variance, and covariance<a href="prob-review.html#mean-variance-and-covariance" class="anchor-section" aria-label="Anchor link to header"></a></h3>
+<p>Let <span class="math inline">\(\mathbf{y}=[Y_1,Y_2,\dots,Y_n]\)</span> be an <span class="math inline">\(n\times1\)</span> random vector.</p>
+<p>The mean of a random vector is the vector containing the means of the random variables in the vector. More specifically, the mean of <span class="math inline">\(\mathbf{y}\)</span> is defined as
+<span class="math display">\[
+E(\mathbf{y})=\begin{bmatrix}E(Y_1)\\E(Y_2)\\\vdots\\E(Y_n)\end{bmatrix}.
+\]</span></p>
+The variance of a random vector isn’t a number. Instead, it is the matrix of all covariances of all pairs of random variables in the random vector. The variance of <span class="math inline">\(\mathbf{y}\)</span> is
+<span class="math display">\[\begin{aligned}
+\mathrm{var}(\mathbf{y}) &amp;= E(\mathbf{y}\mathbf{y}^T )-E(\mathbf{y})E(\mathbf{y})^T\\
+&amp;= \begin{bmatrix}\mathrm{var}(Y_1) &amp; \mathrm{cov}(Y_1,Y_2) &amp;\dots &amp;\mathrm{cov}(Y_1,Y_n)\\\mathrm{cov}(Y_2,Y_1 )&amp;\mathrm{var}(Y_2)&amp;\dots&amp;\mathrm{cov}(Y_2,Y_n)\\\vdots&amp;\vdots&amp;\vdots&amp;\vdots\\
+\mathrm{cov}(Y_n,Y_1)&amp;\mathrm{cov}(Y_n,Y_2)&amp;\dots&amp;\mathrm{var}(Y_n)\end{bmatrix}.
+\end{aligned}\]</span>
+<p>Alternatively, the variance of <span class="math inline">\(\mathbf{y}\)</span> is called the <strong>covariance matrix</strong> of <span class="math inline">\(\mathbf{y}\)</span> or the <strong>variance-covariance matrix</strong> of <span class="math inline">\(\mathbf{y}\)</span>.</p>
+<p>Let <span class="math inline">\(\mathbf{x} = [X_1, X_2, \ldots, X_n]\)</span> be an <span class="math inline">\(n\times 1\)</span> random vector.</p>
+<p>The covariance matrix between <span class="math inline">\(\mathbf{x}\)</span> and <span class="math inline">\(\mathbf{y}\)</span> is defined as
+<span class="math display">\[
+\mathrm{cov}(\mathbf{x}, \mathbf{y}) = E(\mathbf{x}\mathbf{y}^T) - E(\mathbf{x}) E(\mathbf{y})^T.
+\]</span>
+Note that <span class="math inline">\(\mathrm{var}(\mathbf{y})=\mathrm{cov}(\mathbf{y}, \mathbf{y})\)</span>.</p>
+</div>
+<div id="properties-of-transformations-of-random-vectors" class="section level3 hasAnchor" number="8.4.3">
+<h3><span class="header-section-number">B.4.3</span> Properties of transformations of random vectors<a href="prob-review.html#properties-of-transformations-of-random-vectors" class="anchor-section" aria-label="Anchor link to header"></a></h3>
+<p>Define:</p>
+<ul>
+<li><span class="math inline">\(\mathbf{a}\)</span> to be an <span class="math inline">\(n\times 1\)</span> vector of constants (not necessarilly the same constant).</li>
+<li><span class="math inline">\(\mathbf{A}\)</span> to be an <span class="math inline">\(m\times n\)</span> matrix of constants (not necessarily the same constant).</li>
+<li><span class="math inline">\(\mathbf{x}=[X_1,X_2,\ldots,X_n]\)</span> to be an <span class="math inline">\(n\times 1\)</span> random vector.</li>
+<li><span class="math inline">\(\mathbf{y}=[Y_1,Y_2,\ldots,Y_n]\)</span> to be an <span class="math inline">\(n\times 1\)</span> random vector.</li>
+<li><span class="math inline">\(\mathbf{z}=[Z_1,Z_2,\ldots,Z_n]\)</span> to be an <span class="math inline">\(n\times 1\)</span> random vector.</li>
+<li><span class="math inline">\(0_{n\times n}\)</span> to be an <span class="math inline">\(n\times n\)</span> matrix of zeros.</li>
+</ul>
+<p>Then:</p>
+<ul>
+<li><span class="math inline">\(E(\mathbf{A}\mathbf{y})=\mathbf{A}E(\mathbf{y})\)</span>.</li>
+<li><span class="math inline">\(E(\mathbf{y}\mathbf{A}^T )=E(\mathbf{y}) \mathbf{A}^T\)</span>.</li>
+<li><span class="math inline">\(E(\mathbf{x}+\mathbf{y})=E(\mathbf{x})+E(\mathbf{y})\)</span>.</li>
+<li><span class="math inline">\(\mathrm{var}(\mathbf{A}\mathbf{y})=\mathbf{A}\mathrm{var}(\mathbf{y}) \mathbf{A}^T\)</span>.</li>
+<li><span class="math inline">\(\mathrm{cov}(\mathbf{x}+\mathbf{y},\mathbf{z})=\mathrm{cov}(\mathbf{x},\mathbf{z})+\mathrm{cov}(\mathbf{y},\mathbf{z})\)</span>.</li>
+<li><span class="math inline">\(\mathrm{cov}(\mathbf{x},\mathbf{y}+\mathbf{z})=\mathrm{cov}(\mathbf{x},\mathbf{y})+\mathrm{cov}(\mathbf{x},\mathbf{z})\)</span>.</li>
+<li><span class="math inline">\(\mathrm{cov}(\mathbf{A}\mathbf{x},\mathbf{y})=\mathbf{A}\ \mathrm{cov}(\mathbf{x},\mathbf{y})\)</span>.</li>
+<li><span class="math inline">\(\mathrm{cov}(\mathbf{x},\mathbf{A}\mathbf{y})=\mathrm{cov}(\mathbf{x},\mathbf{y}) \mathbf{A}^T\)</span>.</li>
+<li><span class="math inline">\(\mathrm{var}(\mathbf{a})= 0_{n\times n}\)</span>.</li>
+<li><span class="math inline">\(\mathrm{cov}(\mathbf{a},\mathbf{y})=0_{n\times n}\)</span>.</li>
+<li><span class="math inline">\(\mathrm{var}(\mathbf{a}+\mathbf{y})=\mathrm{var}(\mathbf{y})\)</span>.</li>
+</ul>
+</div>
+<div id="continuous-bivariate-distribution-example-continued" class="section level3 hasAnchor" number="8.4.4">
+<h3><span class="header-section-number">B.4.4</span> Continuous bivariate distribution example continued<a href="prob-review.html#continuous-bivariate-distribution-example-continued" class="anchor-section" aria-label="Anchor link to header"></a></h3>
+<p>Using the definitions and results in <a href="prob-review.html#random-vectors">B.4</a>, we want to answer <strong>Q7</strong> of the example in <a href="prob-review.html#continuous-bivariate-distribution-example">B.3.8</a>. Summarizing only the essential details, we have a random vector <span class="math inline">\(\mathbf{z}=[X, Y]\)</span> with mean <span class="math inline">\(E(\mathbf{z})=[2/5, 4/5]\)</span> and covariance matrix
+<span class="math display">\[
+\mathrm{var}(\mathbf{z})=
+\begin{bmatrix}
+142/405 &amp; -71/300 \\
+-71/300 &amp; 16/45
+\end{bmatrix}.
+\]</span> We want to determine <span class="math inline">\(E(Y-X)\)</span> and <span class="math inline">\(\mathrm{var}(Y-X)\)</span>.</p>
+<p>Define <span class="math inline">\(\mathbf{A}=[-1, 1]^T\)</span> (the ROW vector with 1 and -1). Then
+<span class="math display">\[
+\mathbf{Az}=\begin{bmatrix}-1 &amp; 1\end{bmatrix}
+\begin{bmatrix}
+X\\
+Y
+\end{bmatrix}
+=Y-X,\]</span>
+and
+<span class="math display">\[
+E(Y-X)=E(\mathbf{Az})=\begin{bmatrix}-1 &amp; 1\end{bmatrix}
+\begin{bmatrix}
+2/5\\
+4/5
+\end{bmatrix}=-2/5+4/5=2/5.
+\]</span>
+Additionally,
+<span class="math display">\[\begin{align}
+&amp; \mathrm{var}(Y-X) \\
+&amp;=\mathrm{var}(\mathbf{Az}) \\
+&amp;=\mathbf{A}\mathbf{var}(\mathbf{z})\mathbf{A}^T \\
+&amp;=
+\begin{bmatrix}
+-1 &amp; 1
+\end{bmatrix}
+\begin{bmatrix}
+142/405 &amp; -71/300 \\
+-71/300 &amp; 16/45
+\end{bmatrix}
+\begin{bmatrix}
+-1 \\ 1
+\end{bmatrix} \\
+&amp;= \begin{bmatrix}
+-142/405-71/300 &amp; 71/300+16/45
+\end{bmatrix}
+\begin{bmatrix}
+-1 \\ 1
+\end{bmatrix} \\
+&amp;= 142/405 + 16/45 + 2(71/300) \\
+&amp;\approx 1.18.
+\end{align}\]</span></p>
+</div>
+</div>
+<div id="multivariate-normal-gaussian-distribution" class="section level2 hasAnchor" number="8.5">
+<h2><span class="header-section-number">B.5</span> Multivariate normal (Gaussian) distribution<a href="prob-review.html#multivariate-normal-gaussian-distribution" class="anchor-section" aria-label="Anchor link to header"></a></h2>
+<div id="definition-1" class="section level3 hasAnchor" number="8.5.1">
+<h3><span class="header-section-number">B.5.1</span> Definition<a href="prob-review.html#definition-1" class="anchor-section" aria-label="Anchor link to header"></a></h3>
+<p>The random vector <span class="math inline">\(\mathbf{y}=[Y_1,\dots,Y_n]\)</span> has a multivariate normal distribution with mean <span class="math inline">\(E(\mathbf{y})=\boldsymbol{\mu}\)</span> (an <span class="math inline">\(n\times 1\)</span> vector) and covariance matrix <span class="math inline">\(\mathrm{var}(\mathbf{y})=\boldsymbol{\Sigma}\)</span> (an <span class="math inline">\(n\times n\)</span> matrix) if its joint pdf is
+<span class="math display">\[
+f(\mathbf{y})=\frac{1}{(2\pi)^{n/2} |\boldsymbol{\Sigma}|^{1/2} }  \exp\left(-\frac{1}{2} (\mathbf{y}-\boldsymbol{\mu})^T \boldsymbol{\Sigma}^{-1} (\mathbf{y}-\boldsymbol{\mu})\right),
+\]</span>
+where <span class="math inline">\(|\boldsymbol{\Sigma}|\)</span> is the determinant of <span class="math inline">\(\boldsymbol{\Sigma}\)</span>. Note that <span class="math inline">\(\boldsymbol{\Sigma}\)</span> must be symmetric and positive definite.</p>
+<p>In this case, we would denote the distribution of <span class="math inline">\(\mathbf{y}\)</span> as <span class="math display">\[\mathbf{y}\sim \mathsf{N}(\boldsymbol{\mu},\boldsymbol{\Sigma}).\]</span></p>
+</div>
+<div id="linear-functions-of-a-multivariate-normal-random-vector" class="section level3 hasAnchor" number="8.5.2">
+<h3><span class="header-section-number">B.5.2</span> Linear functions of a multivariate normal random vector<a href="prob-review.html#linear-functions-of-a-multivariate-normal-random-vector" class="anchor-section" aria-label="Anchor link to header"></a></h3>
+<p>A linear function of a multivariate normal random vector (i.e., <span class="math inline">\(\mathbf{a}+\mathbf{A}\mathbf{y}\)</span>, where <span class="math inline">\(\mathbf{a}\)</span> is an <span class="math inline">\(m\times 1\)</span> vector of constant values and <span class="math inline">\(\mathbf{A}\)</span> is an <span class="math inline">\(m\times n\)</span> matrix of constant values) is also multivariate normal (though it could collapse to a single random variable if <span class="math inline">\(\mathbf{A}\)</span> is a <span class="math inline">\(1\times n\)</span> vector).</p>
+<p><strong>Application</strong>: Suppose that <span class="math inline">\(\mathbf{y}\sim \mathsf{N}(\boldsymbol{\mu},\boldsymbol{\Sigma})\)</span>. For an <span class="math inline">\(m\times n\)</span> matrix of constants <span class="math inline">\(\mathbf{A}\)</span>, <span class="math inline">\(\mathbf{A}\mathbf{y}\sim \mathsf{N}(\mathbf{A}\boldsymbol{\mu},\mathbf{A}\boldsymbol{\Sigma} \mathbf{A}^T)\)</span>.</p>
+<p>More generally, the most common estimators used in linear regression are linear combinations of a (typically) multivariate normal random vector, meaning that many of the estimators also have a (multivariate) normal distribution.</p>
+</div>
+<div id="ols-example" class="section level3 hasAnchor" number="8.5.3">
+<h3><span class="header-section-number">B.5.3</span> OLS example<a href="prob-review.html#ols-example" class="anchor-section" aria-label="Anchor link to header"></a></h3>
+<p>Ordinary least squares regression is a method for fitting a linear regression model to data. Suppose that we have observed variables <span class="math inline">\(X_1, X_2, X_3, \ldots, X_{p-1}, Y\)</span> for each of <span class="math inline">\(n\)</span> subjects from some population, with <span class="math inline">\(X_{i,j}\)</span> denoting the value of <span class="math inline">\(X_j\)</span> for observation <span class="math inline">\(i\)</span> and <span class="math inline">\(Y_i\)</span> denoting the value of <span class="math inline">\(Y\)</span> for observation <span class="math inline">\(i\)</span>. In general, we want to use <span class="math inline">\(X_1, \ldots, X_{p-1}\)</span> to predict the value of <span class="math inline">\(Y\)</span>. Let
+<span class="math display">\[
+\mathbf{X} =
+\begin{bmatrix}
+1 &amp; X_{1,1} &amp; X_{1,2} &amp; \cdots &amp; X_{1,n} \\
+1 &amp; X_{2,1} &amp; X_{2,2} &amp; \cdots &amp; X_{2,n} \\
+\vdots &amp; \vdots &amp; \vdots &amp; \vdots &amp; \vdots \\
+1 &amp; X_{n,1} &amp; X_{n,2} &amp; \cdots &amp; X_{n,n}
+\end{bmatrix}
+\]</span>
+be a full-rank matrix of size <span class="math inline">\(n\times p\)</span> and
+<span class="math display">\[
+\mathbf{y}=(Y_1, Y_2, \ldots,Y_n)^T,
+\]</span>
+be an <span class="math inline">\(n\times 1\)</span> vector of responses. It is common to assume that
+<span class="math display">\[ \mathbf{y}\sim \mathsf{N}(0_{n\times 1}, \sigma^2 \mathbf{I}_{n\times n}).
+\]</span></p>
+<p>The matrix <span class="math inline">\(\mathbf{H}=\mathbf{X}(\mathbf{X}^T\mathbf{X})^{-1}\mathbf{X}^T\)</span> projects <span class="math inline">\(\mathbf{y}\)</span> into the space spanned by the vectors in <span class="math inline">\(\mathbf{X}\)</span>. Because of what we know about linear functions of a multivariate normal random vector (<a href="prob-review.html#linear-functions-of-a-multivariate-normal-random-vector">B.5.2</a>), we can determine that
+<span class="math display">\[
+\mathbf{Hy}\sim \mathsf{N}(0_{n\times n},\sigma^2 \mathbf{H}).
+\]</span></p>
+
+</div>
+</div>
+</div>
+            </section>
+
+          </div>
+        </div>
+      </div>
+<a href="overview-of-matrix-facts.html" class="navigation navigation-prev " aria-label="Previous page"><i class="fa fa-angle-left"></i></a>
+<a href="references.html" class="navigation navigation-next " aria-label="Next page"><i class="fa fa-angle-right"></i></a>
+    </div>
+  </div>
+<script src="libs/gitbook-2.6.7/js/app.min.js"></script>
+<script src="libs/gitbook-2.6.7/js/clipboard.min.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-search.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-sharing.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-fontsettings.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-bookdown.js"></script>
+<script src="libs/gitbook-2.6.7/js/jquery.highlight.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-clipboard.js"></script>
+<script>
+gitbook.require(["gitbook"], function(gitbook) {
+gitbook.start({
+"sharing": {
+"github": false,
+"facebook": true,
+"twitter": true,
+"linkedin": false,
+"weibo": false,
+"instapaper": false,
+"vk": false,
+"whatsapp": false,
+"all": ["facebook", "twitter", "linkedin", "weibo", "instapaper"]
+},
+"fontsettings": {
+"theme": "white",
+"family": "sans",
+"size": 2
+},
+"edit": {
+"link": null,
+"text": null
+},
+"history": {
+"link": null,
+"text": null
+},
+"view": {
+"link": null,
+"text": null
+},
+"download": ["A-Progessive-Introduction-to-Linear-Models.pdf", "A-Progessive-Introduction-to-Linear-Models.epub"],
+"search": {
+"engine": "fuse",
+"options": null
+},
+"toc": {
+"collapse": "subsection"
+}
+});
+});
+</script>
+
+<!-- dynamically load mathjax for compatibility with self-contained -->
+<script>
+  (function () {
+    var script = document.createElement("script");
+    script.type = "text/javascript";
+    var src = "true";
+    if (src === "" || src === "true") src = "https://mathjax.rstudio.com/latest/MathJax.js?config=TeX-MML-AM_CHTML";
+    if (location.protocol !== "file:")
+      if (/^https?:/.test(src))
+        src = src.replace(/^https?:/, '');
+    script.src = src;
+    document.getElementsByTagName("head")[0].appendChild(script);
+  })();
+</script>
+</body>
+
+</html>

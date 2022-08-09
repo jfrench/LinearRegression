@@ -1,0 +1,1328 @@
+<!DOCTYPE html>
+<html lang="" xml:lang="">
+<head>
+
+  <meta charset="utf-8" />
+  <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+  <title>Chapter 4 Interpreting a fitted linear model | A progressive introduction to linear models</title>
+  <meta name="description" content="A collection of R notebooks that progressively introduction how to fit and use linear models." />
+  <meta name="generator" content="bookdown 0.27 and GitBook 2.6.7" />
+
+  <meta property="og:title" content="Chapter 4 Interpreting a fitted linear model | A progressive introduction to linear models" />
+  <meta property="og:type" content="book" />
+  
+  <meta property="og:description" content="A collection of R notebooks that progressively introduction how to fit and use linear models." />
+  
+
+  <meta name="twitter:card" content="summary" />
+  <meta name="twitter:title" content="Chapter 4 Interpreting a fitted linear model | A progressive introduction to linear models" />
+  
+  <meta name="twitter:description" content="A collection of R notebooks that progressively introduction how to fit and use linear models." />
+  
+
+<meta name="author" content="Joshua French" />
+
+
+
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <meta name="apple-mobile-web-app-capable" content="yes" />
+  <meta name="apple-mobile-web-app-status-bar-style" content="black" />
+  
+  
+<link rel="prev" href="linear-model-estimation.html"/>
+<link rel="next" href="linear-model-theory.html"/>
+<script src="libs/jquery-3.6.0/jquery-3.6.0.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/fuse.js@6.4.6/dist/fuse.min.js"></script>
+<link href="libs/gitbook-2.6.7/css/style.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-table.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-bookdown.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-highlight.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-search.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-fontsettings.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-clipboard.css" rel="stylesheet" />
+
+
+
+
+
+
+
+
+<link href="libs/anchor-sections-1.1.0/anchor-sections.css" rel="stylesheet" />
+<link href="libs/anchor-sections-1.1.0/anchor-sections-hash.css" rel="stylesheet" />
+<script src="libs/anchor-sections-1.1.0/anchor-sections.js"></script>
+
+
+<style type="text/css">
+pre > code.sourceCode { white-space: pre; position: relative; }
+pre > code.sourceCode > span { display: inline-block; line-height: 1.25; }
+pre > code.sourceCode > span:empty { height: 1.2em; }
+.sourceCode { overflow: visible; }
+code.sourceCode > span { color: inherit; text-decoration: inherit; }
+pre.sourceCode { margin: 0; }
+@media screen {
+div.sourceCode { overflow: auto; }
+}
+@media print {
+pre > code.sourceCode { white-space: pre-wrap; }
+pre > code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
+}
+pre.numberSource code
+  { counter-reset: source-line 0; }
+pre.numberSource code > span
+  { position: relative; left: -4em; counter-increment: source-line; }
+pre.numberSource code > span > a:first-child::before
+  { content: counter(source-line);
+    position: relative; left: -1em; text-align: right; vertical-align: baseline;
+    border: none; display: inline-block;
+    -webkit-touch-callout: none; -webkit-user-select: none;
+    -khtml-user-select: none; -moz-user-select: none;
+    -ms-user-select: none; user-select: none;
+    padding: 0 4px; width: 4em;
+    color: #aaaaaa;
+  }
+pre.numberSource { margin-left: 3em; border-left: 1px solid #aaaaaa;  padding-left: 4px; }
+div.sourceCode
+  {   }
+@media screen {
+pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
+}
+code span.al { color: #ff0000; font-weight: bold; } /* Alert */
+code span.an { color: #60a0b0; font-weight: bold; font-style: italic; } /* Annotation */
+code span.at { color: #7d9029; } /* Attribute */
+code span.bn { color: #40a070; } /* BaseN */
+code span.bu { } /* BuiltIn */
+code span.cf { color: #007020; font-weight: bold; } /* ControlFlow */
+code span.ch { color: #4070a0; } /* Char */
+code span.cn { color: #880000; } /* Constant */
+code span.co { color: #60a0b0; font-style: italic; } /* Comment */
+code span.cv { color: #60a0b0; font-weight: bold; font-style: italic; } /* CommentVar */
+code span.do { color: #ba2121; font-style: italic; } /* Documentation */
+code span.dt { color: #902000; } /* DataType */
+code span.dv { color: #40a070; } /* DecVal */
+code span.er { color: #ff0000; font-weight: bold; } /* Error */
+code span.ex { } /* Extension */
+code span.fl { color: #40a070; } /* Float */
+code span.fu { color: #06287e; } /* Function */
+code span.im { } /* Import */
+code span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Information */
+code span.kw { color: #007020; font-weight: bold; } /* Keyword */
+code span.op { color: #666666; } /* Operator */
+code span.ot { color: #007020; } /* Other */
+code span.pp { color: #bc7a00; } /* Preprocessor */
+code span.sc { color: #4070a0; } /* SpecialChar */
+code span.ss { color: #bb6688; } /* SpecialString */
+code span.st { color: #4070a0; } /* String */
+code span.va { color: #19177c; } /* Variable */
+code span.vs { color: #4070a0; } /* VerbatimString */
+code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warning */
+</style>
+
+<style type="text/css">
+/* Used with Pandoc 2.11+ new --citeproc when CSL is used */
+div.csl-bib-body { }
+div.csl-entry {
+  clear: both;
+}
+.hanging div.csl-entry {
+  margin-left:2em;
+  text-indent:-2em;
+}
+div.csl-left-margin {
+  min-width:2em;
+  float:left;
+}
+div.csl-right-inline {
+  margin-left:2em;
+  padding-left:1em;
+}
+div.csl-indent {
+  margin-left: 2em;
+}
+</style>
+
+<link rel="stylesheet" href="style.css" type="text/css" />
+</head>
+
+<body>
+
+
+
+  <div class="book without-animation with-summary font-size-2 font-family-1" data-basepath=".">
+
+    <div class="book-summary">
+      <nav role="navigation">
+
+<ul class="summary">
+<li><a href="./">Data Analysis with Linear Regression</a></li>
+
+<li class="divider"></li>
+<li class="chapter" data-level="" data-path="index.html"><a href="index.html"><i class="fa fa-check"></i>Preliminaries</a></li>
+<li class="chapter" data-level="1" data-path="r-foundations.html"><a href="r-foundations.html"><i class="fa fa-check"></i><b>1</b> R Foundations</a>
+<ul>
+<li class="chapter" data-level="1.1" data-path="r-foundations.html"><a href="r-foundations.html#setting-up-r-and-r-studio-desktop"><i class="fa fa-check"></i><b>1.1</b> Setting up R and R Studio Desktop</a></li>
+<li class="chapter" data-level="1.2" data-path="r-foundations.html"><a href="r-foundations.html#running-code-scripts-and-comments"><i class="fa fa-check"></i><b>1.2</b> Running code, scripts, and comments</a></li>
+<li class="chapter" data-level="1.3" data-path="r-foundations.html"><a href="r-foundations.html#assignment"><i class="fa fa-check"></i><b>1.3</b> Assignment</a></li>
+<li class="chapter" data-level="1.4" data-path="r-foundations.html"><a href="r-foundations.html#functions"><i class="fa fa-check"></i><b>1.4</b> Functions</a></li>
+<li class="chapter" data-level="1.5" data-path="r-foundations.html"><a href="r-foundations.html#packages"><i class="fa fa-check"></i><b>1.5</b> Packages</a></li>
+<li class="chapter" data-level="1.6" data-path="r-foundations.html"><a href="r-foundations.html#getting-help"><i class="fa fa-check"></i><b>1.6</b> Getting help</a></li>
+<li class="chapter" data-level="1.7" data-path="r-foundations.html"><a href="r-foundations.html#data-types-and-structures"><i class="fa fa-check"></i><b>1.7</b> Data types and structures</a>
+<ul>
+<li class="chapter" data-level="1.7.1" data-path="r-foundations.html"><a href="r-foundations.html#basic-data-types"><i class="fa fa-check"></i><b>1.7.1</b> Basic data types</a></li>
+<li class="chapter" data-level="1.7.2" data-path="r-foundations.html"><a href="r-foundations.html#other-important-object-types"><i class="fa fa-check"></i><b>1.7.2</b> Other important object types</a></li>
+<li class="chapter" data-level="1.7.3" data-path="r-foundations.html"><a href="r-foundations.html#data-structures"><i class="fa fa-check"></i><b>1.7.3</b> Data structures</a></li>
+</ul></li>
+<li class="chapter" data-level="1.8" data-path="r-foundations.html"><a href="r-foundations.html#vectors"><i class="fa fa-check"></i><b>1.8</b> Vectors</a>
+<ul>
+<li class="chapter" data-level="1.8.1" data-path="r-foundations.html"><a href="r-foundations.html#creation"><i class="fa fa-check"></i><b>1.8.1</b> Creation</a></li>
+<li class="chapter" data-level="1.8.2" data-path="r-foundations.html"><a href="r-foundations.html#categorical-vectors"><i class="fa fa-check"></i><b>1.8.2</b> Categorical vectors</a></li>
+<li class="chapter" data-level="1.8.3" data-path="r-foundations.html"><a href="r-foundations.html#extracting-parts-of-a-vector"><i class="fa fa-check"></i><b>1.8.3</b> Extracting parts of a vector</a></li>
+</ul></li>
+<li class="chapter" data-level="1.9" data-path="r-foundations.html"><a href="r-foundations.html#helpful-functions"><i class="fa fa-check"></i><b>1.9</b> Helpful functions</a>
+<ul>
+<li class="chapter" data-level="1.9.1" data-path="r-foundations.html"><a href="r-foundations.html#general-functions"><i class="fa fa-check"></i><b>1.9.1</b> General functions</a></li>
+<li class="chapter" data-level="1.9.2" data-path="r-foundations.html"><a href="r-foundations.html#functions-related-to-statistical-distributions"><i class="fa fa-check"></i><b>1.9.2</b> Functions related to statistical distributions</a></li>
+</ul></li>
+<li class="chapter" data-level="1.10" data-path="r-foundations.html"><a href="r-foundations.html#data-frames"><i class="fa fa-check"></i><b>1.10</b> Data Frames</a>
+<ul>
+<li class="chapter" data-level="1.10.1" data-path="r-foundations.html"><a href="r-foundations.html#direct-creation"><i class="fa fa-check"></i><b>1.10.1</b> Direct creation</a></li>
+<li class="chapter" data-level="1.10.2" data-path="r-foundations.html"><a href="r-foundations.html#importing-data"><i class="fa fa-check"></i><b>1.10.2</b> Importing Data</a></li>
+<li class="chapter" data-level="1.10.3" data-path="r-foundations.html"><a href="r-foundations.html#extracting-parts-of-a-data-frame"><i class="fa fa-check"></i><b>1.10.3</b> Extracting parts of a data frame</a></li>
+</ul></li>
+<li class="chapter" data-level="1.11" data-path="r-foundations.html"><a href="r-foundations.html#using-the-pipe-operator"><i class="fa fa-check"></i><b>1.11</b> Using the pipe operator</a></li>
+<li class="chapter" data-level="1.12" data-path="r-foundations.html"><a href="r-foundations.html#dealing-with-common-problems"><i class="fa fa-check"></i><b>1.12</b> Dealing with common problems</a></li>
+<li class="chapter" data-level="1.13" data-path="r-foundations.html"><a href="r-foundations.html#ecosystem-debate"><i class="fa fa-check"></i><b>1.13</b> Ecosystem debate</a></li>
+<li class="chapter" data-level="1.14" data-path="r-foundations.html"><a href="r-foundations.html#additional-information"><i class="fa fa-check"></i><b>1.14</b> Additional information</a>
+<ul>
+<li class="chapter" data-level="1.14.1" data-path="r-foundations.html"><a href="r-foundations.html#comparing-assignment-operators"><i class="fa fa-check"></i><b>1.14.1</b> Comparing assignment operators</a></li>
+</ul></li>
+</ul></li>
+<li class="chapter" data-level="2" data-path="data-cleaning-and-exploration.html"><a href="data-cleaning-and-exploration.html"><i class="fa fa-check"></i><b>2</b> Data cleaning and exploration</a>
+<ul>
+<li class="chapter" data-level="2.1" data-path="data-cleaning-and-exploration.html"><a href="data-cleaning-and-exploration.html#raw-palmer-penguins-data"><i class="fa fa-check"></i><b>2.1</b> Raw Palmer penguins data</a></li>
+<li class="chapter" data-level="2.2" data-path="data-cleaning-and-exploration.html"><a href="data-cleaning-and-exploration.html#initial-data-cleaning"><i class="fa fa-check"></i><b>2.2</b> Initial data cleaning</a></li>
+<li class="chapter" data-level="2.3" data-path="data-cleaning-and-exploration.html"><a href="data-cleaning-and-exploration.html#numerical-summarization-of-data"><i class="fa fa-check"></i><b>2.3</b> Numerical summarization of data</a>
+<ul>
+<li class="chapter" data-level="2.3.1" data-path="data-cleaning-and-exploration.html"><a href="data-cleaning-and-exploration.html#numeric-data"><i class="fa fa-check"></i><b>2.3.1</b> Numeric data</a></li>
+<li class="chapter" data-level="2.3.2" data-path="data-cleaning-and-exploration.html"><a href="data-cleaning-and-exploration.html#categorical-data"><i class="fa fa-check"></i><b>2.3.2</b> Categorical data</a></li>
+<li class="chapter" data-level="2.3.3" data-path="data-cleaning-and-exploration.html"><a href="data-cleaning-and-exploration.html#the-summary-function"><i class="fa fa-check"></i><b>2.3.3</b> The <code>summary</code> function</a></li>
+</ul></li>
+<li class="chapter" data-level="2.4" data-path="data-cleaning-and-exploration.html"><a href="data-cleaning-and-exploration.html#visual-summaries-of-data"><i class="fa fa-check"></i><b>2.4</b> Visual summaries of data</a>
+<ul>
+<li class="chapter" data-level="2.4.1" data-path="data-cleaning-and-exploration.html"><a href="data-cleaning-and-exploration.html#the-ggplot-recipe"><i class="fa fa-check"></i><b>2.4.1</b> The ggplot recipe</a></li>
+<li class="chapter" data-level="2.4.2" data-path="data-cleaning-and-exploration.html"><a href="data-cleaning-and-exploration.html#univariate-plots"><i class="fa fa-check"></i><b>2.4.2</b> Univariate plots</a></li>
+<li class="chapter" data-level="2.4.3" data-path="data-cleaning-and-exploration.html"><a href="data-cleaning-and-exploration.html#bivariate-plots"><i class="fa fa-check"></i><b>2.4.3</b> Bivariate plots</a></li>
+<li class="chapter" data-level="2.4.4" data-path="data-cleaning-and-exploration.html"><a href="data-cleaning-and-exploration.html#multivariate-plots"><i class="fa fa-check"></i><b>2.4.4</b> Multivariate plots</a></li>
+<li class="chapter" data-level="2.4.5" data-path="data-cleaning-and-exploration.html"><a href="data-cleaning-and-exploration.html#facetted-plots-and-alternatives"><i class="fa fa-check"></i><b>2.4.5</b> Facetted plots (and alternatives)</a></li>
+</ul></li>
+<li class="chapter" data-level="2.5" data-path="data-cleaning-and-exploration.html"><a href="data-cleaning-and-exploration.html#a-plan-for-data-cleaning-and-exploration"><i class="fa fa-check"></i><b>2.5</b> A plan for data cleaning and exploration</a></li>
+<li class="chapter" data-level="2.6" data-path="data-cleaning-and-exploration.html"><a href="data-cleaning-and-exploration.html#final-notes-on-missing-or-erroneous-data"><i class="fa fa-check"></i><b>2.6</b> Final notes on missing or erroneous data</a></li>
+</ul></li>
+<li class="chapter" data-level="3" data-path="linear-model-estimation.html"><a href="linear-model-estimation.html"><i class="fa fa-check"></i><b>3</b> Linear model estimation</a>
+<ul>
+<li class="chapter" data-level="3.1" data-path="linear-model-estimation.html"><a href="linear-model-estimation.html#a-simple-motivating-example"><i class="fa fa-check"></i><b>3.1</b> A simple motivating example</a></li>
+<li class="chapter" data-level="3.2" data-path="linear-model-estimation.html"><a href="linear-model-estimation.html#s-slr-estimation"><i class="fa fa-check"></i><b>3.2</b> Estimation of the simple linear regression model</a>
+<ul>
+<li class="chapter" data-level="3.2.1" data-path="linear-model-estimation.html"><a href="linear-model-estimation.html#ss:fv-resid-rss"><i class="fa fa-check"></i><b>3.2.1</b> Model definition, fitted values, residuals, and RSS</a></li>
+<li class="chapter" data-level="3.2.2" data-path="linear-model-estimation.html"><a href="linear-model-estimation.html#ols-estimators-of-the-simple-linear-regression-parameters"><i class="fa fa-check"></i><b>3.2.2</b> OLS estimators of the simple linear regression parameters</a></li>
+</ul></li>
+<li class="chapter" data-level="3.3" data-path="linear-model-estimation.html"><a href="linear-model-estimation.html#s:penguins-slr"><i class="fa fa-check"></i><b>3.3</b> Penguins simple linear regression example</a></li>
+<li class="chapter" data-level="3.4" data-path="linear-model-estimation.html"><a href="linear-model-estimation.html#defining-a-linear-model"><i class="fa fa-check"></i><b>3.4</b> Defining a linear model</a>
+<ul>
+<li class="chapter" data-level="3.4.1" data-path="linear-model-estimation.html"><a href="linear-model-estimation.html#ss-necessary-components"><i class="fa fa-check"></i><b>3.4.1</b> Necessary components and notation</a></li>
+<li class="chapter" data-level="3.4.2" data-path="linear-model-estimation.html"><a href="linear-model-estimation.html#standard-definition-of-linear-model"><i class="fa fa-check"></i><b>3.4.2</b> Standard definition of linear model</a></li>
+</ul></li>
+<li class="chapter" data-level="3.5" data-path="linear-model-estimation.html"><a href="linear-model-estimation.html#estimation-of-the-multiple-linear-regression-model"><i class="fa fa-check"></i><b>3.5</b> Estimation of the multiple linear regression model</a>
+<ul>
+<li class="chapter" data-level="3.5.1" data-path="linear-model-estimation.html"><a href="linear-model-estimation.html#using-matrix-notation-to-represent-a-linear-model"><i class="fa fa-check"></i><b>3.5.1</b> Using matrix notation to represent a linear model</a></li>
+<li class="chapter" data-level="3.5.2" data-path="linear-model-estimation.html"><a href="linear-model-estimation.html#ss:fv-resid-rss-mlr"><i class="fa fa-check"></i><b>3.5.2</b> Residuals, fitted values, and RSS for multiple linear regression</a></li>
+<li class="chapter" data-level="3.5.3" data-path="linear-model-estimation.html"><a href="linear-model-estimation.html#ols-estimator-of-the-regression-coefficients"><i class="fa fa-check"></i><b>3.5.3</b> OLS estimator of the regression coefficients</a></li>
+</ul></li>
+<li class="chapter" data-level="3.6" data-path="linear-model-estimation.html"><a href="linear-model-estimation.html#s:penguins-mlr"><i class="fa fa-check"></i><b>3.6</b> Penguins multiple linear regression example</a></li>
+<li class="chapter" data-level="3.7" data-path="linear-model-estimation.html"><a href="linear-model-estimation.html#model-types"><i class="fa fa-check"></i><b>3.7</b> Types of linear models</a></li>
+<li class="chapter" data-level="3.8" data-path="linear-model-estimation.html"><a href="linear-model-estimation.html#categorical-predictors"><i class="fa fa-check"></i><b>3.8</b> Categorical predictors</a>
+<ul>
+<li class="chapter" data-level="3.8.1" data-path="linear-model-estimation.html"><a href="linear-model-estimation.html#indicator-variables"><i class="fa fa-check"></i><b>3.8.1</b> Indicator variables</a></li>
+<li class="chapter" data-level="3.8.2" data-path="linear-model-estimation.html"><a href="linear-model-estimation.html#parallel-and-separate-lines-models"><i class="fa fa-check"></i><b>3.8.2</b> Parallel and separate lines models</a></li>
+<li class="chapter" data-level="3.8.3" data-path="linear-model-estimation.html"><a href="linear-model-estimation.html#extensions"><i class="fa fa-check"></i><b>3.8.3</b> Extensions</a></li>
+<li class="chapter" data-level="3.8.4" data-path="linear-model-estimation.html"><a href="linear-model-estimation.html#avoiding-an-easy-mistake"><i class="fa fa-check"></i><b>3.8.4</b> Avoiding an easy mistake</a></li>
+</ul></li>
+<li class="chapter" data-level="3.9" data-path="linear-model-estimation.html"><a href="linear-model-estimation.html#s:penguins-mlr2"><i class="fa fa-check"></i><b>3.9</b> Penguins example with categorical predictor</a></li>
+<li class="chapter" data-level="3.10" data-path="linear-model-estimation.html"><a href="linear-model-estimation.html#evaluating-model-fit"><i class="fa fa-check"></i><b>3.10</b> Evaluating model fit</a></li>
+<li class="chapter" data-level="3.11" data-path="linear-model-estimation.html"><a href="linear-model-estimation.html#summary"><i class="fa fa-check"></i><b>3.11</b> Summary</a>
+<ul>
+<li class="chapter" data-level="3.11.1" data-path="linear-model-estimation.html"><a href="linear-model-estimation.html#summary-of-terms"><i class="fa fa-check"></i><b>3.11.1</b> Summary of terms</a></li>
+<li class="chapter" data-level="3.11.2" data-path="linear-model-estimation.html"><a href="linear-model-estimation.html#summary-of-functions"><i class="fa fa-check"></i><b>3.11.2</b> Summary of functions</a></li>
+</ul></li>
+<li class="chapter" data-level="3.12" data-path="linear-model-estimation.html"><a href="linear-model-estimation.html#going-deeper"><i class="fa fa-check"></i><b>3.12</b> Going Deeper</a>
+<ul>
+<li class="chapter" data-level="3.12.1" data-path="linear-model-estimation.html"><a href="linear-model-estimation.html#degrees-of-freedom"><i class="fa fa-check"></i><b>3.12.1</b> Degrees of freedom</a></li>
+<li class="chapter" data-level="3.12.2" data-path="linear-model-estimation.html"><a href="linear-model-estimation.html#slr-derivation"><i class="fa fa-check"></i><b>3.12.2</b> Derivation of the OLS estimators of the simple linear regression model coefficients</a></li>
+<li class="chapter" data-level="3.12.3" data-path="linear-model-estimation.html"><a href="linear-model-estimation.html#unbiasedness-of-ols-estimators"><i class="fa fa-check"></i><b>3.12.3</b> Unbiasedness of OLS estimators</a></li>
+<li class="chapter" data-level="3.12.4" data-path="linear-model-estimation.html"><a href="linear-model-estimation.html#manual-calculation-penguins-simple-linear-regression-example"><i class="fa fa-check"></i><b>3.12.4</b> Manual calculation Penguins simple linear regression example</a></li>
+<li class="chapter" data-level="3.12.5" data-path="linear-model-estimation.html"><a href="linear-model-estimation.html#mlr-derivation"><i class="fa fa-check"></i><b>3.12.5</b> Derivation of the OLS estimator for the multiple linear regression model coefficients</a></li>
+<li class="chapter" data-level="3.12.6" data-path="linear-model-estimation.html"><a href="linear-model-estimation.html#manual-calculation-of-penguins-multiple-linear-regression-example"><i class="fa fa-check"></i><b>3.12.6</b> Manual calculation of Penguins multiple linear regression example</a></li>
+</ul></li>
+</ul></li>
+<li class="chapter" data-level="4" data-path="interp-chapter.html"><a href="interp-chapter.html"><i class="fa fa-check"></i><b>4</b> Interpreting a fitted linear model</a>
+<ul>
+<li class="chapter" data-level="4.1" data-path="interp-chapter.html"><a href="interp-chapter.html#standard-mathematical-interpretation"><i class="fa fa-check"></i><b>4.1</b> Standard mathematical interpretation</a></li>
+<li class="chapter" data-level="4.2" data-path="interp-chapter.html"><a href="interp-chapter.html#coefficient-interpretation-in-simple-linear-regression"><i class="fa fa-check"></i><b>4.2</b> Coefficient interpretation in simple linear regression</a></li>
+<li class="chapter" data-level="4.3" data-path="interp-chapter.html"><a href="interp-chapter.html#interp-1st-order-ml"><i class="fa fa-check"></i><b>4.3</b> Coefficient interpretation for first-order multiple linear regression models</a></li>
+<li class="chapter" data-level="4.4" data-path="interp-chapter.html"><a href="interp-chapter.html#effect-plots"><i class="fa fa-check"></i><b>4.4</b> Effect plots</a></li>
+<li class="chapter" data-level="4.5" data-path="interp-chapter.html"><a href="interp-chapter.html#roles-of-regressor-variables"><i class="fa fa-check"></i><b>4.5</b> Roles of regressor variables</a></li>
+<li class="chapter" data-level="4.6" data-path="interp-chapter.html"><a href="interp-chapter.html#interpretation-for-categorical-predictors"><i class="fa fa-check"></i><b>4.6</b> Interpretation for categorical predictors</a>
+<ul>
+<li class="chapter" data-level="4.6.1" data-path="interp-chapter.html"><a href="interp-chapter.html#pl-interp"><i class="fa fa-check"></i><b>4.6.1</b> Coefficient interpretation for parallel lines models</a></li>
+<li class="chapter" data-level="4.6.2" data-path="interp-chapter.html"><a href="interp-chapter.html#sl-interp"><i class="fa fa-check"></i><b>4.6.2</b> Coefficient interpretation for separate lines models</a></li>
+<li class="chapter" data-level="4.6.3" data-path="interp-chapter.html"><a href="interp-chapter.html#more-penguins-examples"><i class="fa fa-check"></i><b>4.6.3</b> More Penguins examples</a></li>
+</ul></li>
+<li class="chapter" data-level="4.7" data-path="interp-chapter.html"><a href="interp-chapter.html#effect-plots-1"><i class="fa fa-check"></i><b>4.7</b> Effect plots</a>
+<ul>
+<li class="chapter" data-level="4.7.1" data-path="interp-chapter.html"><a href="interp-chapter.html#effect-plots-for-numeric-predictors"><i class="fa fa-check"></i><b>4.7.1</b> Effect plots for numeric predictors</a></li>
+<li class="chapter" data-level="4.7.2" data-path="interp-chapter.html"><a href="interp-chapter.html#effect-plots-with-categorical-predictors"><i class="fa fa-check"></i><b>4.7.2</b> Effect plots with categorical predictors</a></li>
+</ul></li>
+<li class="chapter" data-level="4.8" data-path="interp-chapter.html"><a href="interp-chapter.html#added-variable-plots"><i class="fa fa-check"></i><b>4.8</b> Added variable plots</a></li>
+<li class="chapter" data-level="4.9" data-path="interp-chapter.html"><a href="interp-chapter.html#going-deeper-1"><i class="fa fa-check"></i><b>4.9</b> Going deeper</a>
+<ul>
+<li class="chapter" data-level="4.9.1" data-path="interp-chapter.html"><a href="interp-chapter.html#orthogonality"><i class="fa fa-check"></i><b>4.9.1</b> Orthogonality</a></li>
+</ul></li>
+</ul></li>
+<li class="chapter" data-level="5" data-path="linear-model-theory.html"><a href="linear-model-theory.html"><i class="fa fa-check"></i><b>5</b> Basic theoretical results for linear models</a>
+<ul>
+<li class="chapter" data-level="5.1" data-path="linear-model-theory.html"><a href="linear-model-theory.html#standard-assumptions"><i class="fa fa-check"></i><b>5.1</b> Standard assumptions</a></li>
+<li class="chapter" data-level="5.2" data-path="linear-model-theory.html"><a href="linear-model-theory.html#summary-of-results"><i class="fa fa-check"></i><b>5.2</b> Summary of results</a></li>
+<li class="chapter" data-level="5.3" data-path="linear-model-theory.html"><a href="linear-model-theory.html#results-for-mathbfy"><i class="fa fa-check"></i><b>5.3</b> Results for <span class="math inline">\(\mathbf{y}\)</span></a></li>
+<li class="chapter" data-level="5.4" data-path="linear-model-theory.html"><a href="linear-model-theory.html#results-for-hatboldsymbolbeta"><i class="fa fa-check"></i><b>5.4</b> Results for <span class="math inline">\(\hat{\boldsymbol{\beta}}\)</span></a></li>
+<li class="chapter" data-level="5.5" data-path="linear-model-theory.html"><a href="linear-model-theory.html#results-for-the-residuals"><i class="fa fa-check"></i><b>5.5</b> Results for the residuals</a></li>
+<li class="chapter" data-level="5.6" data-path="linear-model-theory.html"><a href="linear-model-theory.html#the-gauss-markov-theorem"><i class="fa fa-check"></i><b>5.6</b> The Gauss-Markov Theorem</a></li>
+</ul></li>
+<li class="chapter" data-level="6" data-path="inference.html"><a href="inference.html"><i class="fa fa-check"></i><b>6</b> Linear model inference</a></li>
+<li class="appendix"><span><b>Appendix</b></span></li>
+<li class="chapter" data-level="A" data-path="overview-of-matrix-facts.html"><a href="overview-of-matrix-facts.html"><i class="fa fa-check"></i><b>A</b> Overview of matrix facts</a>
+<ul>
+<li class="chapter" data-level="A.1" data-path="overview-of-matrix-facts.html"><a href="overview-of-matrix-facts.html#notation"><i class="fa fa-check"></i><b>A.1</b> Notation</a></li>
+<li class="chapter" data-level="A.2" data-path="overview-of-matrix-facts.html"><a href="overview-of-matrix-facts.html#basic-mathematical-operations"><i class="fa fa-check"></i><b>A.2</b> Basic mathematical operations</a>
+<ul>
+<li class="chapter" data-level="A.2.1" data-path="overview-of-matrix-facts.html"><a href="overview-of-matrix-facts.html#addition-and-subtraction"><i class="fa fa-check"></i><b>A.2.1</b> Addition and subtraction</a></li>
+<li class="chapter" data-level="A.2.2" data-path="overview-of-matrix-facts.html"><a href="overview-of-matrix-facts.html#scalar-multiplication"><i class="fa fa-check"></i><b>A.2.2</b> Scalar multiplication</a></li>
+<li class="chapter" data-level="A.2.3" data-path="overview-of-matrix-facts.html"><a href="overview-of-matrix-facts.html#matrix-multiplication"><i class="fa fa-check"></i><b>A.2.3</b> Matrix multiplication</a></li>
+<li class="chapter" data-level="A.2.4" data-path="overview-of-matrix-facts.html"><a href="overview-of-matrix-facts.html#transpose"><i class="fa fa-check"></i><b>A.2.4</b> Transpose</a></li>
+</ul></li>
+<li class="chapter" data-level="A.3" data-path="overview-of-matrix-facts.html"><a href="overview-of-matrix-facts.html#basic-mathematical-properties"><i class="fa fa-check"></i><b>A.3</b> Basic mathematical properties</a>
+<ul>
+<li class="chapter" data-level="A.3.1" data-path="overview-of-matrix-facts.html"><a href="overview-of-matrix-facts.html#associative-property"><i class="fa fa-check"></i><b>A.3.1</b> Associative property</a></li>
+<li class="chapter" data-level="A.3.2" data-path="overview-of-matrix-facts.html"><a href="overview-of-matrix-facts.html#distributive-property"><i class="fa fa-check"></i><b>A.3.2</b> Distributive property</a></li>
+<li class="chapter" data-level="A.3.3" data-path="overview-of-matrix-facts.html"><a href="overview-of-matrix-facts.html#no-commutative-property"><i class="fa fa-check"></i><b>A.3.3</b> No commutative property</a></li>
+<li class="chapter" data-level="A.3.4" data-path="overview-of-matrix-facts.html"><a href="overview-of-matrix-facts.html#transpose-related-properties"><i class="fa fa-check"></i><b>A.3.4</b> Transpose-related properties</a></li>
+</ul></li>
+<li class="chapter" data-level="A.4" data-path="overview-of-matrix-facts.html"><a href="overview-of-matrix-facts.html#special-matrices"><i class="fa fa-check"></i><b>A.4</b> Special matrices</a>
+<ul>
+<li class="chapter" data-level="A.4.1" data-path="overview-of-matrix-facts.html"><a href="overview-of-matrix-facts.html#square-matrices"><i class="fa fa-check"></i><b>A.4.1</b> Square matrices</a></li>
+<li class="chapter" data-level="A.4.2" data-path="overview-of-matrix-facts.html"><a href="overview-of-matrix-facts.html#identity-matrix"><i class="fa fa-check"></i><b>A.4.2</b> Identity matrix</a></li>
+<li class="chapter" data-level="A.4.3" data-path="overview-of-matrix-facts.html"><a href="overview-of-matrix-facts.html#diagonal-matrices"><i class="fa fa-check"></i><b>A.4.3</b> Diagonal matrices</a></li>
+<li class="chapter" data-level="A.4.4" data-path="overview-of-matrix-facts.html"><a href="overview-of-matrix-facts.html#symmetric-matrices"><i class="fa fa-check"></i><b>A.4.4</b> Symmetric matrices</a></li>
+<li class="chapter" data-level="A.4.5" data-path="overview-of-matrix-facts.html"><a href="overview-of-matrix-facts.html#idempotent-matrices"><i class="fa fa-check"></i><b>A.4.5</b> Idempotent matrices</a></li>
+<li class="chapter" data-level="A.4.6" data-path="overview-of-matrix-facts.html"><a href="overview-of-matrix-facts.html#positive-definite-matrices"><i class="fa fa-check"></i><b>A.4.6</b> Positive definite matrices</a></li>
+<li class="chapter" data-level="A.4.7" data-path="overview-of-matrix-facts.html"><a href="overview-of-matrix-facts.html#inverse-matrix"><i class="fa fa-check"></i><b>A.4.7</b> Inverse matrix</a></li>
+</ul></li>
+<li class="chapter" data-level="A.5" data-path="overview-of-matrix-facts.html"><a href="overview-of-matrix-facts.html#matrix-derivatives"><i class="fa fa-check"></i><b>A.5</b> Matrix derivatives</a></li>
+<li class="chapter" data-level="A.6" data-path="overview-of-matrix-facts.html"><a href="overview-of-matrix-facts.html#additional-topics"><i class="fa fa-check"></i><b>A.6</b> Additional topics</a>
+<ul>
+<li class="chapter" data-level="A.6.1" data-path="overview-of-matrix-facts.html"><a href="overview-of-matrix-facts.html#determinant"><i class="fa fa-check"></i><b>A.6.1</b> Determinant</a></li>
+<li class="chapter" data-level="A.6.2" data-path="overview-of-matrix-facts.html"><a href="overview-of-matrix-facts.html#linearly-independent-vectors"><i class="fa fa-check"></i><b>A.6.2</b> Linearly independent vectors</a></li>
+<li class="chapter" data-level="A.6.3" data-path="overview-of-matrix-facts.html"><a href="overview-of-matrix-facts.html#rank"><i class="fa fa-check"></i><b>A.6.3</b> Rank</a></li>
+</ul></li>
+</ul></li>
+<li class="chapter" data-level="B" data-path="prob-review.html"><a href="prob-review.html"><i class="fa fa-check"></i><b>B</b> Overview of probability, random variables, and random vectors</a>
+<ul>
+<li class="chapter" data-level="B.1" data-path="prob-review.html"><a href="prob-review.html#probability-basics"><i class="fa fa-check"></i><b>B.1</b> Probability Basics</a></li>
+<li class="chapter" data-level="B.2" data-path="prob-review.html"><a href="prob-review.html#random-variables"><i class="fa fa-check"></i><b>B.2</b> Random Variables</a>
+<ul>
+<li class="chapter" data-level="B.2.1" data-path="prob-review.html"><a href="prob-review.html#discrete-random-variables"><i class="fa fa-check"></i><b>B.2.1</b> Discrete random variables</a></li>
+<li class="chapter" data-level="B.2.2" data-path="prob-review.html"><a href="prob-review.html#continuous-random-variables"><i class="fa fa-check"></i><b>B.2.2</b> Continuous random variables</a></li>
+<li class="chapter" data-level="B.2.3" data-path="prob-review.html"><a href="prob-review.html#useful-facts-for-transformations-of-random-variables"><i class="fa fa-check"></i><b>B.2.3</b> Useful facts for transformations of random variables</a></li>
+</ul></li>
+<li class="chapter" data-level="B.3" data-path="prob-review.html"><a href="prob-review.html#multivariate-distributions"><i class="fa fa-check"></i><b>B.3</b> Multivariate distributions</a>
+<ul>
+<li class="chapter" data-level="B.3.1" data-path="prob-review.html"><a href="prob-review.html#basic-properties"><i class="fa fa-check"></i><b>B.3.1</b> Basic properties</a></li>
+<li class="chapter" data-level="B.3.2" data-path="prob-review.html"><a href="prob-review.html#marginal-distributions"><i class="fa fa-check"></i><b>B.3.2</b> Marginal distributions</a></li>
+<li class="chapter" data-level="B.3.3" data-path="prob-review.html"><a href="prob-review.html#independence-of-random-variables"><i class="fa fa-check"></i><b>B.3.3</b> Independence of random variables</a></li>
+<li class="chapter" data-level="B.3.4" data-path="prob-review.html"><a href="prob-review.html#conditional-distributions"><i class="fa fa-check"></i><b>B.3.4</b> Conditional distributions</a></li>
+<li class="chapter" data-level="B.3.5" data-path="prob-review.html"><a href="prob-review.html#covariance"><i class="fa fa-check"></i><b>B.3.5</b> Covariance</a></li>
+<li class="chapter" data-level="B.3.6" data-path="prob-review.html"><a href="prob-review.html#useful-facts-for-transformations-of-multiple-random-variables"><i class="fa fa-check"></i><b>B.3.6</b> Useful facts for transformations of multiple random variables</a></li>
+<li class="chapter" data-level="B.3.7" data-path="prob-review.html"><a href="prob-review.html#binomial-distribution-example"><i class="fa fa-check"></i><b>B.3.7</b> Binomial distribution example</a></li>
+<li class="chapter" data-level="B.3.8" data-path="prob-review.html"><a href="prob-review.html#continuous-bivariate-distribution-example"><i class="fa fa-check"></i><b>B.3.8</b> Continuous bivariate distribution example</a></li>
+</ul></li>
+<li class="chapter" data-level="B.4" data-path="prob-review.html"><a href="prob-review.html#random-vectors"><i class="fa fa-check"></i><b>B.4</b> Random vectors</a>
+<ul>
+<li class="chapter" data-level="B.4.1" data-path="prob-review.html"><a href="prob-review.html#definition"><i class="fa fa-check"></i><b>B.4.1</b> Definition</a></li>
+<li class="chapter" data-level="B.4.2" data-path="prob-review.html"><a href="prob-review.html#mean-variance-and-covariance"><i class="fa fa-check"></i><b>B.4.2</b> Mean, variance, and covariance</a></li>
+<li class="chapter" data-level="B.4.3" data-path="prob-review.html"><a href="prob-review.html#properties-of-transformations-of-random-vectors"><i class="fa fa-check"></i><b>B.4.3</b> Properties of transformations of random vectors</a></li>
+<li class="chapter" data-level="B.4.4" data-path="prob-review.html"><a href="prob-review.html#continuous-bivariate-distribution-example-continued"><i class="fa fa-check"></i><b>B.4.4</b> Continuous bivariate distribution example continued</a></li>
+</ul></li>
+<li class="chapter" data-level="B.5" data-path="prob-review.html"><a href="prob-review.html#multivariate-normal-gaussian-distribution"><i class="fa fa-check"></i><b>B.5</b> Multivariate normal (Gaussian) distribution</a>
+<ul>
+<li class="chapter" data-level="B.5.1" data-path="prob-review.html"><a href="prob-review.html#definition-1"><i class="fa fa-check"></i><b>B.5.1</b> Definition</a></li>
+<li class="chapter" data-level="B.5.2" data-path="prob-review.html"><a href="prob-review.html#linear-functions-of-a-multivariate-normal-random-vector"><i class="fa fa-check"></i><b>B.5.2</b> Linear functions of a multivariate normal random vector</a></li>
+<li class="chapter" data-level="B.5.3" data-path="prob-review.html"><a href="prob-review.html#ols-example"><i class="fa fa-check"></i><b>B.5.3</b> OLS example</a></li>
+</ul></li>
+</ul></li>
+<li class="chapter" data-level="" data-path="references.html"><a href="references.html"><i class="fa fa-check"></i>References</a></li>
+<li class="divider"></li>
+<li><a href="https://github.com/rstudio/bookdown" target="blank">Published with bookdown</a></li>
+
+</ul>
+
+      </nav>
+    </div>
+
+    <div class="book-body">
+      <div class="body-inner">
+        <div class="book-header" role="navigation">
+          <h1>
+            <i class="fa fa-circle-o-notch fa-spin"></i><a href="./">A progressive introduction to linear models</a>
+          </h1>
+        </div>
+
+        <div class="page-wrapper" tabindex="-1" role="main">
+          <div class="page-inner">
+
+            <section class="normal" id="section-">
+<div id="interp-chapter" class="section level1 hasAnchor" number="4">
+<h1><span class="header-section-number">Chapter 4</span> Interpreting a fitted linear model<a href="interp-chapter.html#interp-chapter" class="anchor-section" aria-label="Anchor link to header"></a></h1>
+<p>Interpreting a fitted model is a critical part of a regression analysis and aids us in determining the roles and impact each variable plays in describing the behavior of the response variable.</p>
+<div id="standard-mathematical-interpretation" class="section level2 hasAnchor" number="4.1">
+<h2><span class="header-section-number">4.1</span> Standard mathematical interpretation<a href="interp-chapter.html#standard-mathematical-interpretation" class="anchor-section" aria-label="Anchor link to header"></a></h2>
+<p>The standard approach to interpreting the coefficients of a fitted linear model is to consider the expected change in the response in relation to changes in the regressors in the model.</p>
+<p>Consider the typical multiple linear regression model of the response
+<span class="math display" id="eq:mlr-equation-ch4">\[
+\begin{equation}
+Y=\beta_0+\beta_1 X_1 +\ldots + \beta_{p-1}X_{p-1}+\epsilon.\tag{4.1}
+\end{equation}
+\]</span></p>
+<p>As discussed in Chapter <a href="linear-model-estimation.html#linear-model-estimation">3</a>, we treat the values of our regressor variables as being fixed, known values. The error term is treated as a random variable, and consequently, the response variable is also a random variable. Additionally, we assume that the errors all have mean 0, conditional on the values of the regressor variables. More formally, we write this assumption as</p>
+<p><span class="math display" id="eq:mean-error-assumption">\[\begin{equation}
+E(\epsilon \mid X_1, X_2, \ldots, X_{p-1})=0.\tag{4.2}
+
+\end{equation}\]</span></p>
+<p>Recall that we use the notation <span class="math inline">\(\mathbb{X} = \{X_1,\ldots,X_{p-1}\}\)</span> to denote the set of all regressors, which will help us simplify the derivations below. Thus, the assumption in Equation <a href="interp-chapter.html#eq:mean-error-assumption">(4.2)</a> can be expressed as <span class="math inline">\(E(\epsilon \mid \mathbb{X})=0\)</span>. Using the assumption in Equation <a href="interp-chapter.html#eq:mean-error-assumption">(4.2)</a> and applying it to the model in Equation <a href="interp-chapter.html#eq:mlr-equation-ch4">(4.1)</a>, we see that
+<span class="math display">\[
+\begin{align}
+&amp; E(Y\mid X_1, X_2, \ldots, X_{p-1}) \\
+&amp;= E(Y \mid \mathbb{X}) \\
+&amp;= E(\beta_0+\beta_1 X_1 +\ldots + \beta_{p-1}X_{p-1}+\epsilon \mid \mathbb{X}) \\
+&amp;= E(\beta_0+\beta_1 X_1 +\ldots + \beta_{p-1}X_{p-1}\mid \mathbb{X}) + E(\epsilon \mid \mathbb{X}) \\
+&amp;=\beta_0+\beta_1 X_1 +\ldots + \beta_{p-1}X_{p-1}
+\end{align}
+\]</span>
+since all terms in the first summand of line 4 are fixed, non-random values conditional on <span class="math inline">\(\mathbb{X}\)</span> and the second summand is 0 by assumption. If you are rusty with properties of random variables, consider reviewing the material in Appendix <a href="prob-review.html#prob-review">B</a>.</p>
+<p>Using the facts above, we discuss interpretation of simple linear regression models, multiple linear regression models with basic numeric predictors as regressors, and interpretation for parallel and separate lines regression model.</p>
+</div>
+<div id="coefficient-interpretation-in-simple-linear-regression" class="section level2 hasAnchor" number="4.2">
+<h2><span class="header-section-number">4.2</span> Coefficient interpretation in simple linear regression<a href="interp-chapter.html#coefficient-interpretation-in-simple-linear-regression" class="anchor-section" aria-label="Anchor link to header"></a></h2>
+<p>Suppose we have a simple linear regression model, so that
+<span class="math display" id="eq:slr-equation">\[\begin{equation}
+E(Y\mid X)=\beta_0 + \beta_1 X. \tag{4.3}
+\end{equation}\]</span>
+The interpretations of the coefficients are:</p>
+<ul>
+<li><span class="math inline">\(\beta_0\)</span> is the expected response when the regressor is 0, i.e., <span class="math inline">\(\beta_0=E(Y\mid X=0)\)</span>.</li>
+<li><span class="math inline">\(\beta_1\)</span> is the expected change in the response when the regressor increases 1 unit, i.e., <span class="math inline">\(\beta_1=E(Y\mid X=x^*+1)-E(Y\mid X=x^*)\)</span>, where <span class="math inline">\(x^*\)</span> is a fixed real number.</li>
+</ul>
+<p>Regarding the interpretation of <span class="math inline">\(\beta_0\)</span>, from the regression model in Equation <a href="interp-chapter.html#eq:slr-equation">(4.3)</a>, notice that
+<span class="math display">\[
+\begin{align}
+E(Y\mid X = 0) &amp;= \beta_0 + \beta_1 \cdot 0 \\
+&amp;= \beta_0.
+\end{align}
+\]</span>
+This is why <span class="math inline">\(\beta_0\)</span> is the expected value of the response variable when the regressor is zero.</p>
+<p>Similarly, for <span class="math inline">\(\beta_1\)</span>, we notice that
+<span class="math display">\[
+\begin{align}
+E(Y\mid X=x^*+1)-E(Y\mid X=x^*) &amp;= [\beta_0 + \beta_1 (x^* + 1)] - [\beta_0 + \beta_1 x^*] \\
+&amp;= \beta_1.
+\end{align}
+\]</span>
+Thus, <span class="math inline">\(\beta_1\)</span> literally equals the change in the expected response when the regressor increases by 1 unit.</p>
+<p>To apply the interpretations given above, we interpret the simple linear regression model fit to the <code>penguins</code> data in Section <a href="linear-model-estimation.html#s:penguins-slr">3.3</a>. From Section <a href="linear-model-estimation.html#s:penguins-slr">3.3</a>, the fitted simple linear regression model of <span class="math inline">\(\mathtt{body\_mass\_g}\)</span> regressed on <span class="math inline">\(\mathtt{body\_mass\_g}\)</span> is
+<span class="math display">\[
+\hat{E}(\mathtt{bill\_length\_mm}\mid \mathtt{body\_mass\_g})=26.9+0.004 \,\mathtt{body\_mass\_g}.
+\]</span>
+Some basic interpretations of the coefficients are:</p>
+<ul>
+<li>Intercept: The expected bill length of a penguin with a body mass of 0 grams is 26.9 mm. We discussed the absurdity of this interpretation in Section <a href="linear-model-estimation.html#s:penguins-slr">3.3</a>.</li>
+<li><span class="math inline">\(\mathtt{body\_mass\_g}\)</span>: If two penguins are identical except that one penguin is 1 gram heavier, then we would expect the heavier penguin to have a bill length 0.004 mm longer.</li>
+</ul>
+</div>
+<div id="interp-1st-order-ml" class="section level2 hasAnchor" number="4.3">
+<h2><span class="header-section-number">4.3</span> Coefficient interpretation for first-order multiple linear regression models<a href="interp-chapter.html#interp-1st-order-ml" class="anchor-section" aria-label="Anchor link to header"></a></h2>
+<p>Suppose we have a multiple linear regression model with <span class="math inline">\(p-1\)</span> regressors, so that
+<span class="math display" id="eq:mlr-equation">\[\begin{equation}
+E(Y\mid X_1,\ldots,X_{p-1})=\beta_0 + \beta_1 X_1 + \cdots + \beta_{p-1} X_{p-1}.\tag{4.4}
+\end{equation}\]</span>
+Relying on the definition of <span class="math inline">\(\mathbb{X}\)</span>, we denote the set of regressors without <span class="math inline">\(X_j\)</span> as <span class="math inline">\(\mathbb{X}_{-j} = \mathbb{X}\setminus\{X_j\}\)</span>.</p>
+<p>The interpretations of the coefficients from the model in Equation <a href="interp-chapter.html#eq:mlr-equation">(4.4)</a> are:</p>
+<ul>
+<li><span class="math inline">\(\beta_0\)</span> is the expected response when all regressors are 0, i.e., <span class="math inline">\(\beta_0=E(Y\mid X_1=0,\ldots,X_{p-1}=0)\)</span>.</li>
+<li><span class="math inline">\(\beta_j\)</span>, <span class="math inline">\(j = 1,\ldots,p-1\)</span>, represents the expected change in the response when regressor <span class="math inline">\(j\)</span> increases 1 unit and the other regressors stay the same, i.e., <span class="math inline">\(\beta_j=E(Y\mid \mathbb{X}_{-j} = \mathbf{x}^*_{-j}, X_{j+1} = x_{j}^*+1)-E(Y\mid \mathbb{X}_{-j} = \mathbf{x}^*_{-j}, X_{j+1} = x_{j}^*)\)</span> where <span class="math inline">\(\mathbf{x}_{-j}^*=[x^*_1,\ldots,x_{j-1}^*,x_{j+1}^*,\ldots,x_{p-1}^*]\in \mathbb{R}^{p-2}\)</span> is a vector with <span class="math inline">\(p-2\)</span> fixed values (the number of regressors excluding <span class="math inline">\(X_j\)</span>) and <span class="math inline">\(x_j^*\)</span> is a fixed real number. The non-intercept coefficients of a multiple linear regression model are known as <strong>partial slopes</strong>.</li>
+</ul>
+<p>Regarding the interpretation of <span class="math inline">\(\beta_0\)</span>, from the regression model in Equation <a href="interp-chapter.html#eq:mlr-equation">(4.4)</a>, notice that
+<span class="math display">\[
+\begin{align}
+E(Y\mid X_1=0,\ldots,X_{p-1}=0) &amp;= \beta_0 + \beta_1 \cdot 0 + \cdots + \beta_{p-1} \cdot 0\\
+&amp;= \beta_0.
+\end{align}
+\]</span></p>
+<p>It is quite common for the mathematical interpretation of the intercept to be nonsensical because we are extrapolating outside the range of the observed data.</p>
+<p>For <span class="math inline">\(\beta_j\)</span>, <span class="math inline">\(j = 1,\ldots, p-1\)</span>, we notice that
+<span class="math display">\[
+\begin{align}
+&amp; E(Y\mid \mathbb{X}_{-j} = \mathbf{x}^*_{-j}, X_{j+1} = x_{j}+1)-E(Y\mid \mathbb{X}_{-j} = \mathbf{x}^*_{-j}, X_{j+1} = x_{j})\\
+&amp;=  \biggl[\beta_0 + \sum_{k=1}^{j-1}\beta_kx^*_k + \beta_j(x^*_j+1) + \sum_{k=j+1}^{p-1}\beta_kx^*_k\biggl] \\
+&amp;\quad -\biggl[\beta_0 + \sum_{k=1}^{j-1}\beta_kx^*_k + \beta_jx^*_j + \sum_{k=j+1}^{p-1}\beta_kx^*_k\biggl]\\
+&amp;= \beta_j.
+\end{align}
+\]</span></p>
+<p>A notable problem with the mathematical interpretation of multiple regression models is that a single predictor can be used more than once in the model. E.g., in the 2nd-degree polynomial regression model <span class="math display">\[E(Y\mid X) = \beta_0 + \beta_1 X + \beta_2 X^2,\]</span> <span class="math inline">\(X\)</span> is used in both the second and third terms. So it is not possible to increase <span class="math inline">\(X\)</span> while keeping <span class="math inline">\(X^2\)</span> fixed. The mathematical interpretation given in this section is applicable to first-order linear regression models (cf. Section <a href="linear-model-estimation.html#model-types">3.7</a>), where a <em>first-order linear regression model</em> is a multiple linear regression model in which no regressor is a function of any other regressor.</p>
+<p>The regressors used in our model are often observational in nature, meaning that we do not control them. Thus, it doesn’t make sense to say “we increase variable <span class="math inline">\(X\)</span> by 1 unit”. An alternative approach, alluded to by <span class="citation">Faraway (<a href="#ref-lmwr2" role="doc-biblioref">2014</a>)</span>, is to consider the expected response difference between observations that are identical with respect to all attributes (or at least the attributes we include in our model) except the variable under consideration, which varies by only a single unit. While mathematically, the result is the same, the interpretation is more philosophically palatable.</p>
+<p>Regardless, interpretation is a bit of an art. There can be many correct ways to interpret a coefficient or the impact of a variable. Always double-check that the mathematics of your model supports your conclusions.</p>
+<p>To illustrate the interpretations give above, we interpret the first-order multiple linear regression model fit to the <code>penguins</code> data in <a href="linear-model-estimation.html#s:penguins-mlr">3.6</a>. The fitted multiple linear regression model is
+<span class="math display">\[
+\begin{align}
+&amp;\hat{E}(\mathtt{bill\_length\_mm}\mid \mathtt{body\_mass\_g}, \mathtt{flipper\_length\_mm})\\
+&amp;=-3.44+0.0007 \,\mathtt{body\_mass\_g}+0.22\,\mathtt{flipper\_length\_mm}.
+\end{align}
+\]</span></p>
+<p>Some basic interpretations of the coefficients are:</p>
+<ul>
+<li>Intercept: We expect a penguin with a body mass of 0 grams and a flipper length of 0 mm to to have a bill length of -3.44 mm.</li>
+<li><span class="math inline">\(\mathtt{body\_mass\_g}\)</span>: For two penguins that are identical except that one penguin has a body mass 1 gram larger, we expect the heavier penguin to have a bill length 0.0007 mm longer than the other penguin.</li>
+<li><span class="math inline">\(\mathtt{flipper\_length\_mm}\)</span>: For two penguins that are identical except that one penguin has a flipper length 1 mm longer, we expect the penguin with longer flippers to have a bill length 0.22 mm longer.</li>
+</ul>
+</div>
+<div id="effect-plots" class="section level2 hasAnchor" number="4.4">
+<h2><span class="header-section-number">4.4</span> Effect plots<a href="interp-chapter.html#effect-plots" class="anchor-section" aria-label="Anchor link to header"></a></h2>
+<p>An effect</p>
+</div>
+<div id="roles-of-regressor-variables" class="section level2 hasAnchor" number="4.5">
+<h2><span class="header-section-number">4.5</span> Roles of regressor variables<a href="interp-chapter.html#roles-of-regressor-variables" class="anchor-section" aria-label="Anchor link to header"></a></h2>
+<p>Did you notice that the estimated coefficients for the intercept and <span class="math inline">\(\mathtt{body\_mass\_g}\)</span> changed between the fitted simple linear model and the fitted multiple linear regression model in the Penguins example in the sections above? What is happening?</p>
+<p>Unless all the regressors are orthogonal to each other, which essentially means that they don’t affect the estimation of the coefficients of the other regressors (see Section <a href="interp-chapter.html#orthogonality">4.9.1</a>), then adding or removing regressors from a regression model will impact the estimated coefficients. The estimated coefficient for a regressor tends to change dramatically when it is highly correlated with the added or deleted regressor, but regardless, it will change at least somewhat when the regressors aren’t orthogonal.</p>
+<p>The role a regressor plays in a regression model depends on what other regressors are in the model. Recall a team setting you’ve been in where you had to work with others to accomplish something; it could be related to school, work, sports, etc. Depending on the skills and knowledge your team members have, you will try to find a role in which you can effectively help the team. E.g., I end up doing most of the house painting in our family because I have a lot of experience, so it’s better for my family to serve in other roles. But if I was working with a more experienced painter, then it’s likely that I would serve in a different capacity. Something similar happens in regression models. The regressors most effective in explaining the response tend to dominate the regressors with less explanatory power, but it always depends on the regressors in the model.</p>
+</div>
+<div id="interpretation-for-categorical-predictors" class="section level2 hasAnchor" number="4.6">
+<h2><span class="header-section-number">4.6</span> Interpretation for categorical predictors<a href="interp-chapter.html#interpretation-for-categorical-predictors" class="anchor-section" aria-label="Anchor link to header"></a></h2>
+<p>We now discuss the interpretation of regression coefficients in the context of a parallel lines and separate lines models.</p>
+<div id="pl-interp" class="section level3 hasAnchor" number="4.6.1">
+<h3><span class="header-section-number">4.6.1</span> Coefficient interpretation for parallel lines models<a href="interp-chapter.html#pl-interp" class="anchor-section" aria-label="Anchor link to header"></a></h3>
+<p>Consider a parallel lines model with numeric regressor <span class="math inline">\(X\)</span> and categorical predictor <span class="math inline">\(C\)</span> with levels <span class="math inline">\(L_1\)</span>, <span class="math inline">\(L_2\)</span>, and <span class="math inline">\(L_3\)</span>. Following the discussion in Section <a href="linear-model-estimation.html#categorical-predictors">3.8</a>, predictor <span class="math inline">\(C\)</span> must be transformed into two indicator variables, <span class="math inline">\(D_2\)</span> and <span class="math inline">\(D_3\)</span>, for category levels <span class="math inline">\(L_2\)</span> and <span class="math inline">\(L_3\)</span>, to be included in our linear model. <span class="math inline">\(L_1\)</span> is the reference level. The parallel lines model is formulated as
+<span class="math display" id="eq:pl-def-interp">\[
+\begin{equation}
+E(Y \mid X, C) = \beta_{int} + \beta_{X} X + \beta_{L_2} D_2 +  \beta_{L_3} D_3, \tag{4.5}
+\end{equation}
+\]</span>
+where we replace the usual <span class="math inline">\(\beta_0\)</span>, <span class="math inline">\(\beta_1\)</span>, <span class="math inline">\(\beta_2\)</span>, and <span class="math inline">\(\beta_3\)</span> with notation the indicates the regressor each coefficient is associated with.</p>
+<p>When an observation has level <span class="math inline">\(L_1\)</span> and <span class="math inline">\(X=0\)</span>, then the expected response is
+<span class="math display">\[
+\begin{align}
+E(Y|X = 0, C=L_1) &amp;= \beta_{int} + \beta_X \cdot 0 + \beta_{L_2} \cdot 0 + \beta_{L_3} \cdot 0 \\
+&amp;= \beta_{int}.
+\end{align}
+\]</span>
+Thus, <span class="math inline">\(\beta_{int}\)</span> is the expected response for an observation with level <span class="math inline">\(L_1\)</span> when <span class="math inline">\(X=0\)</span>.</p>
+<p>When an observation has a fixed level <span class="math inline">\(L_j\)</span> (it doesn’t matter which level) and <span class="math inline">\(X\)</span> increases from <span class="math inline">\(x^*\)</span> to <span class="math inline">\(x^*+1\)</span>, then the change in the expected response is
+<span class="math display">\[
+\begin{align}
+E(Y|X = x^* + 1, C=L_j) - E(Y|X = x^*, C=L_j)&amp;= \beta_X.
+\end{align}
+\]</span>
+Thus, <span class="math inline">\(\beta_X\)</span> is the expected change in the response for an observation with fixed level <span class="math inline">\(L_j\)</span> when <span class="math inline">\(X\)</span> increases by 1 unit.</p>
+<p>When an observation has level <span class="math inline">\(L_2\)</span>, the expected response is
+<span class="math display">\[
+\begin{align}
+E(Y\mid X = x^*, C=L_2) &amp;= \beta_{int} + \beta_X x^* + \beta_{L_2} \cdot 1 + \beta_{L_3} \cdot 0 \\
+&amp;= \beta_{int} + \beta_X x^* + \beta_{L_2}.
+\end{align}
+\]</span></p>
+<p>Thus,
+<span class="math display">\[
+\begin{align}
+E(Y\mid X=x^*, C=L_2) - E(Y\mid X=x^*, C=L_1) &amp;= \\ (\beta_{int} + \beta_X x^* + \beta_{L_2}) - (\beta_{int} + \beta_X x^*)&amp;=  \beta_{L_2}.
+\end{align}
+\]</span>
+A similar result holds for <span class="math inline">\(\beta_{L_3}\)</span> when <span class="math inline">\(C=L_3\)</span>. Thus, <span class="math inline">\(\beta_{L_2}\)</span> is the expected change in the response for a fixed value of <span class="math inline">\(X\)</span> when comparing on observation having level <span class="math inline">\(L_1\)</span> to level <span class="math inline">\(L_2\)</span> of predictor <span class="math inline">\(C\)</span>. A similar interpretation holds for <span class="math inline">\(\beta_{L_3}\)</span>. <span class="math inline">\(L_1\)</span> is known as as the reference level because we must refer to it to interpret our model with respect to other levels of <span class="math inline">\(C\)</span>.</p>
+<p>To summarize the interpretation of the coefficients in parallel lines models like Equation <a href="interp-chapter.html#eq:pl-def-interp">(4.5)</a>, assuming categorical predictor <span class="math inline">\(C\)</span> has <span class="math inline">\(K\)</span> levels instead of 3:</p>
+<ul>
+<li><span class="math inline">\(\beta_{int}\)</span> represents the expected response for observations having the reference level when the numeric regressor <span class="math inline">\(X = 0\)</span>.</li>
+<li><span class="math inline">\(\beta_X\)</span> is the expected change in the response when <span class="math inline">\(X\)</span> increases by 1 unit for a fixed level of <span class="math inline">\(C\)</span>.</li>
+<li><span class="math inline">\(\beta_{L_j}\)</span>, for <span class="math inline">\(j=2,\ldots,K\)</span>, represents the expected change in the response when comparing observations having level <span class="math inline">\(L_1\)</span> and <span class="math inline">\(L_j\)</span> with <span class="math inline">\(X\)</span> fixed at the same value.</li>
+</ul>
+</div>
+<div id="sl-interp" class="section level3 hasAnchor" number="4.6.2">
+<h3><span class="header-section-number">4.6.2</span> Coefficient interpretation for separate lines models<a href="interp-chapter.html#sl-interp" class="anchor-section" aria-label="Anchor link to header"></a></h3>
+<p>Consider a separate lines model with numeric regressor <span class="math inline">\(X\)</span> and categorical predictor <span class="math inline">\(C\)</span> with levels <span class="math inline">\(L_1\)</span>, <span class="math inline">\(L_2\)</span>, and <span class="math inline">\(L_3\)</span>. The predictor <span class="math inline">\(C\)</span> will be transformed into two indicator variables, <span class="math inline">\(D_2\)</span> and <span class="math inline">\(D_3\)</span>, for category levels <span class="math inline">\(L_2\)</span> and <span class="math inline">\(L_3\)</span>, with <span class="math inline">\(L_1\)</span> being the reference level. The separate lines model is formulated as
+<span class="math display" id="eq:sl-def-interp">\[
+\begin{equation}
+E(Y \mid X, C) = \beta_{int} + \beta_{X} X + \beta_{L_2} D_2 +  \beta_{L_3} D_3 + \beta_{XL_2} XD_2+\beta_{XL_3}XD_3. \tag{4.6}
+\end{equation}
+\]</span></p>
+<p>When an observation has level <span class="math inline">\(L_1\)</span> and <span class="math inline">\(X=x^*\)</span>, then the expected response is
+<span class="math display" id="eq:slr-mean-L1" id="eq:slr-mean-L1">\[
+\begin{align}
+&amp; E(Y\mid X = x^*, C=L_1) \\
+&amp;= \beta_{int} + \beta_X \cdot x^* + \beta_{L_2} \cdot 0 + \beta_{L_3} \cdot 0  + \beta_{X L_2} \cdot x^* \cdot 0 + \beta_{X L_3}\cdot x^* \cdot 0 \\
+&amp;= \beta_{int} + \beta_X x^*.\tag{4.7}
+\end{align}
+\]</span></p>
+<p>Using Equation @ref\tag{4.7}, we can verify that:</p>
+<ul>
+<li><span class="math inline">\(\beta_{int} = E(Y\mid X = 0, C=L_1)\)</span>.</li>
+<li><span class="math inline">\(\beta_{X} = E(Y\mid X = x^* + 1, C=L_1) - E(Y\mid X = x^*, C=L_1)\)</span>.</li>
+</ul>
+<p>Additionally, for <span class="math inline">\(j=2\)</span>,
+<span class="math display" id="eq:slr-mean-L2">\[
+\begin{align}
+&amp; E(Y|X = x^*, C=L_2) \\
+&amp;= \beta_{int} + \beta_X \cdot x^* + \beta_{L_3} \cdot 1 + \beta_{L_3} \cdot 0  + \beta_{X L_2} \cdot x^* \cdot 1 + \beta_{X L_3}\cdot x^* \cdot 0 \\
+&amp;= \beta_{int} + \beta_X x^* + \beta_{L_2} + \beta_{XL_2}x^*\\
+&amp;= (\beta_{int} + \beta_{L_2}) + (\beta_X + \beta_{XL_2})x^*.\tag{4.8}
+\end{align}
+\]</span>
+Similarly,
+<span class="math display" id="eq:slr-mean-L3">\[
+\begin{equation}
+E(Y|X = x^*, C=L_3) = (\beta_{int} + \beta_{L_3}) + (\beta_X + \beta_{XL_3})x^*. \tag{4.9}
+\end{equation}
+\]</span>
+A similar results holds for <span class="math inline">\(C=L_3\)</span>.</p>
+<p>Using Equations <a href="interp-chapter.html#eq:slr-mean-L1">(4.7)</a>, <a href="interp-chapter.html#eq:slr-mean-L2">(4.8)</a>, and <a href="interp-chapter.html#eq:slr-mean-L3">(4.9)</a>, we can verify that:</p>
+<ul>
+<li>For <span class="math inline">\(j=2,3\)</span>, <span class="math inline">\(\beta_{L_j}= E(Y\mid X = 0, C=L_j) - E(Y\mid X = 0, C=L_1)\)</span>.</li>
+<li>For <span class="math inline">\(j=2,3\)</span>,
+<span class="math display">\[\beta_{XL_j}= [E(Y\mid X = x^*+1, C=L_j) - E(Y\mid X = x^*, C=L_j)]-[E(Y\mid X = x^*+1, C=L_1) - E(Y\mid X = x^*, C=L_1)].
+\]</span></li>
+</ul>
+<p>To summarize the interpretation of the coefficients in separate lines models like Equation <a href="interp-chapter.html#eq:sl-def-interp">(4.6)</a>, assuming categorical predictor <span class="math inline">\(C\)</span> has <span class="math inline">\(K\)</span> levels instead of 3:</p>
+<ul>
+<li><span class="math inline">\(\beta_{int}\)</span> represents the expected response for observations having the reference level when the numeric regressor <span class="math inline">\(X = 0\)</span>.</li>
+<li><span class="math inline">\(\beta_{L_j}\)</span>, for <span class="math inline">\(j=2,\ldots,K\)</span>, represents the expected change in the response when comparing observations having level <span class="math inline">\(L_1\)</span> and <span class="math inline">\(L_j\)</span> with <span class="math inline">\(X=0\)</span>.</li>
+<li><span class="math inline">\(\beta_X\)</span> represents the expected change in the response when <span class="math inline">\(X\)</span> increases by 1 unit for observations having the reference level.</li>
+<li><span class="math inline">\(\beta_X L_j\)</span>, for <span class="math inline">\(j=2,\ldots,K\)</span>, represents the difference in the expected rate of change when <span class="math inline">\(X\)</span> increases by 1 unit for observations have the reference level in comparison to level <span class="math inline">\(L_j\)</span>.</li>
+</ul>
+</div>
+<div id="more-penguins-examples" class="section level3 hasAnchor" number="4.6.3">
+<h3><span class="header-section-number">4.6.3</span> More Penguins examples<a href="interp-chapter.html#more-penguins-examples" class="anchor-section" aria-label="Anchor link to header"></a></h3>
+<p>In Section <a href="linear-model-estimation.html#s:penguins-mlr2">3.9</a>, we fit a parallel lines to the <code>penguins</code> data. Letting <span class="math inline">\(D_C\)</span> denote the indicator variable for the <code>Chinstrap</code> level and <span class="math inline">\(D_G\)</span> denote the indicator variable for the <code>Gentoo</code> level, the fitted parallel lines model was
+<span class="math display">\[
+\hat{E}(\mathtt{bill\_length\_mm} \mid \mathtt{body\_mass\_g}, \mathtt{species}) = 24.92 + 0.004 \mathtt{body\_mass\_g} + 9.92 D_C + 3.56 D_G.
+\]</span>
+In the context of this model:</p>
+<ul>
+<li>The expected bill length for an Adelie penguin with a body mass of 0 grams is 24.92 mm.</li>
+<li>A penguin identical in all ways with another penguin (including the same species) except that it has a body mass 1 gram larger is expected to have a bill length 0.004 mm longer than the smaller penguin.</li>
+<li>A Chinstrap penguin is expected to have a bill length 9.92 mm longer than an Adelie penguin, assuming their other characteristics are the same.</li>
+<li>A Gentoo penguin is expected to have a bill length 3.56 mm longer than an Adelie penguin, assuming their other characteristics are the same.</li>
+</ul>
+<p>We also fit a separate lines model to the <code>penguins</code> data in Section in Section <a href="linear-model-estimation.html#s:penguins-mlr2">3.9</a>. The fitted separate lines model was
+<span class="math display">\[
+\begin{align}
+&amp;\hat{E}(\mathtt{bill\_length\_mm} \mid \mathtt{body\_mass\_g}, \mathtt{species}) \\
+&amp;= 26.99 + 0.003 \mathtt{body\_mass\_g} + 5.18 D_C - 0.25 D_G \\
+&amp;\quad + 0.001 D_C \mathtt{body\_mass\_g} + 0.0009 D_G \mathtt{body\_mass\_g}
+\end{align}
+\]</span>
+In the context of this model:</p>
+<ul>
+<li>The expected bill length for an Adelie penguin with a body mass of 0 grams is 26.99 mm.</li>
+<li>If two Adelie penguins are identical in all ways except that one has a body mass 1 gram larger, the larger penguins is expected to have a bill length 0.003 mm longer than the smaller penguin.</li>
+<li>A Chinstrap penguin is expected to have a bill length 5.18 mm longer than an Adelie penguin when both have a body mass of 0 grams.</li>
+<li>A Gentoo penguin is expected to have a bill length 0.25 mm shorter than an Adelie penguin when both have a body mass of 0 grams.</li>
+<li>For each 1 gram increase in body mass, we expect the bill length of Chinstrap penguins to grow 0.001 mm more than the bill length growth of Adelie penguins.</li>
+<li>For each 1 gram increase in body mass, we expect the bill length of Gentoo penguins to grow 0.0009 mm more than the bill length growth of Adelie penguins.</li>
+</ul>
+</div>
+</div>
+<div id="effect-plots-1" class="section level2 hasAnchor" number="4.7">
+<h2><span class="header-section-number">4.7</span> Effect plots<a href="interp-chapter.html#effect-plots-1" class="anchor-section" aria-label="Anchor link to header"></a></h2>
+<p>An effect plot is a visual display that aids in helping us intuitively interpret the effect of a <em>predictor</em> in a model.</p>
+<p>As stated by <span class="citation">Fox and Weisberg (<a href="#ref-fox2020predictor" role="doc-biblioref">2020</a>)</span>:</p>
+<blockquote>
+<p>Summarization of the effects of predictors using tables of coefficient estimates is often incomplete. Effects, and particularly plots of effects, can in many instances reveal the relationship of the response to the predictors more clearly. This conclusion is especially true for models with linear predictors
+that include interactions and multiple-coefficient terms such as regression splines and polynomials ….</p>
+</blockquote>
+<p>An effect plot is a visual display that aids in helping us intuitively interpret the impact of a <em>predictor</em> in a model. Specifically, an <strong>effect plot</strong> is a plot of the estimated mean response as a function of a <em>predictor</em> with the other <em>predictors</em> being held at their observed sample mean. The emphasis on <em>predictor</em> is intentional. Recall from Section <a href="linear-model-estimation.html#a-simple-motivating-example">3.1</a> that a predictor variable is a variable available to model the response variable. A <strong>regressor</strong> variable is a variable used in our regression model, whether that is an unmodified predictor variable, some transformation of a predictor, some combination of predictors, etc. Thus, for the models considered so far in this chapter, <code>body_mass_g</code>, <code>flipper_length_mm</code>, and <code>species</code> are predictor variables. The original information available to build a model. Additionally, based on how we used them, <code>body_mass_g</code> and <code>flipper_length_mm</code> were also regressors in certain models. Additional regressors were <code>speciesChinstrap</code> and <code>speciesGentoo</code> (the indicator variables for Chinstrap and Gentoo penguins based on the variable <code>species</code>, respectively) and <code>body_mass_g:speciesChinstrap</code> and <code>body_mass_g:speciesGentoo</code>, the regressors created by multiplying the indicator variables with the <code>body_mass_g</code> predictor. This distinction is important when discussing effect plots, because we can create effect plots for each predictor but not necessarily each regressor.</p>
+<div id="effect-plots-for-numeric-predictors" class="section level3 hasAnchor" number="4.7.1">
+<h3><span class="header-section-number">4.7.1</span> Effect plots for numeric predictors<a href="interp-chapter.html#effect-plots-for-numeric-predictors" class="anchor-section" aria-label="Anchor link to header"></a></h3>
+<p>Consider the the fitted multiple linear regression model for the <code>penguins</code> data from Section <a href="linear-model-estimation.html#s:penguins-mlr">3.6</a>:
+<span class="math display" id="eq:mlr-effect-equation">\[
+\begin{align}
+&amp;\hat{E}(\mathtt{bill\_length\_mm}\mid \mathtt{body\_mass\_g}, \mathtt{flipper\_length\_mm})\\
+&amp;=-3.44+0.0007 \,\mathtt{body\_mass\_g}+0.22\,\mathtt{flipper\_length\_mm}.
+\end{align}
+\tag{4.10}
+\]</span></p>
+<p>The sample means of the observed <span class="math inline">\(\mathtt{body\_mass\_g}\)</span> and <span class="math inline">\(\mathtt{flipper\_length\_mm}\)</span> for the <code>penguins</code> data are <span class="math inline">\(\overline{\mathtt{body\_mass\_g}}=4201.75\)</span> and <span class="math inline">\(\overline{\mathtt{flipper\_length\_mm}}=200.92\)</span>, as demonstrated in the code below.</p>
+<div class="sourceCode" id="cb1"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb1-1"><a href="interp-chapter.html#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="co"># load penguins data since it hasn&#39;t been loaded in this chapter</span></span>
+<span id="cb1-2"><a href="interp-chapter.html#cb1-2" aria-hidden="true" tabindex="-1"></a><span class="fu">data</span>(penguins, <span class="at">package =</span> <span class="st">&quot;palmerpenguins&quot;</span>)</span>
+<span id="cb1-3"><a href="interp-chapter.html#cb1-3" aria-hidden="true" tabindex="-1"></a><span class="co"># compute sample means of body_mass_g and flipper_length_mm</span></span>
+<span id="cb1-4"><a href="interp-chapter.html#cb1-4" aria-hidden="true" tabindex="-1"></a><span class="fu">mean</span>(penguins<span class="sc">$</span>body_mass_g, <span class="at">na.rm =</span> <span class="cn">TRUE</span>)</span>
+<span id="cb1-5"><a href="interp-chapter.html#cb1-5" aria-hidden="true" tabindex="-1"></a><span class="do">## [1] 4201.754</span></span>
+<span id="cb1-6"><a href="interp-chapter.html#cb1-6" aria-hidden="true" tabindex="-1"></a><span class="fu">mean</span>(penguins<span class="sc">$</span>flipper_length_mm, <span class="at">na.rm =</span> <span class="cn">TRUE</span>)</span>
+<span id="cb1-7"><a href="interp-chapter.html#cb1-7" aria-hidden="true" tabindex="-1"></a><span class="do">## [1] 200.9152</span></span></code></pre></div>
+<p>The effect plot for <span class="math inline">\(\mathtt{body\_mass\_g}\)</span> (on the response <span class="math inline">\(\mathtt{bill\_length\_mm}\)</span>) is a plot of
+<span class="math display">\[
+\begin{align}
+&amp;\hat{E}(\mathtt{bill\_length\_mm}\mid \mathtt{body\_mass\_g}, \mathtt{flipper\_length\_mm} = 200.92)\\
+&amp;=-3.44+0.0007 \,\mathtt{body\_mass\_g}+0.22\cdot 200.92 \\
+&amp;=41.14+0.0007 \,\mathtt{body\_mass\_g}
+\end{align}
+\]</span>
+as a function of <span class="math inline">\(\mathtt{body\_mass\_g}\)</span>. We used exact values in the result above. The intercept will be 40.76 instead of 41.14 if you use the rounded values.</p>
+<p>Similarly, the effect plot for <span class="math inline">\(\mathtt{flipper\_length\_mm}\)</span> is a plot of
+<span class="math display">\[
+\begin{align}
+&amp;\hat{E}(\mathtt{bill\_length\_mm}\mid \mathtt{body\_mass\_g} = 4201.75,\mathtt{flipper\_length\_mm}) \\
+&amp;=-3.44+0.0007 \cdot 4201.75+0.22\mathtt{flipper\_length\_mm} \\
+&amp;=41.14+0.0007 \,\mathtt{body\_mass\_g}
+\end{align}
+\]</span>
+as a function of <span class="math inline">\(\mathtt{flipper\_length\_mm}\)</span>.</p>
+<p>The <strong>effects</strong> package <span class="citation">(<a href="#ref-R-effects" role="doc-biblioref">Fox et al. 2022</a>)</span> can be used to generate effect plots for the predictors of a fitted linear model. We start by using the <code>effects::predictorEffect</code> function to compute the information needed to draw the plot, then the <code>plot</code> function to display the information.</p>
+<p>The <code>predictorEffect</code> function computes the estimated mean response for different values of the focal predictor while holding the other predictors at their sample mean (or at a fixed level of a categorical predictor). The main arguments of <code>predictorEffect</code> are:</p>
+<ul>
+<li><code>predictor</code>: the name of the predictor you want to plot. This is the “focal predictor”.</li>
+<li><code>mod</code>: the fitted model. The function works with <code>lm</code> objects, but also many other types of fitted models.</li>
+</ul>
+<p>The <code>plot</code> function will take the output of the <code>predictorEffect</code> function and produce the desired effect plot.</p>
+<p>We refit the model in Equation <a href="interp-chapter.html#eq:mlr-effect-equation">(4.10)</a> below for completeness.</p>
+<div class="sourceCode" id="cb2"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb2-1"><a href="interp-chapter.html#cb2-1" aria-hidden="true" tabindex="-1"></a><span class="co"># refit model</span></span>
+<span id="cb2-2"><a href="interp-chapter.html#cb2-2" aria-hidden="true" tabindex="-1"></a>mlmod <span class="ot">&lt;-</span> <span class="fu">lm</span>(bill_length_mm <span class="sc">~</span> body_mass_g <span class="sc">+</span> flipper_length_mm, <span class="at">data =</span> penguins)</span>
+<span id="cb2-3"><a href="interp-chapter.html#cb2-3" aria-hidden="true" tabindex="-1"></a><span class="co"># extract estimated coefficients</span></span>
+<span id="cb2-4"><a href="interp-chapter.html#cb2-4" aria-hidden="true" tabindex="-1"></a><span class="fu">coef</span>(mlmod)</span>
+<span id="cb2-5"><a href="interp-chapter.html#cb2-5" aria-hidden="true" tabindex="-1"></a><span class="do">##       (Intercept)       body_mass_g flipper_length_mm </span></span>
+<span id="cb2-6"><a href="interp-chapter.html#cb2-6" aria-hidden="true" tabindex="-1"></a><span class="do">##     -3.4366939266      0.0006622186      0.2218654584</span></span></code></pre></div>
+<p>In the code below, we load the <strong>effects</strong> package (so that we can use the <code>predictorEffect</code> function) and then combine calls to the <code>plot</code> and <code>predictorEffect</code> functions to create an effect plot for <code>body_mass_g</code>, which is shown in Figure <a href="interp-chapter.html#fig:effect-plot-body-mass">4.1</a>. We see from Figure <a href="interp-chapter.html#fig:effect-plot-body-mass">4.1</a> that there is a clear positive association between <code>body_mass_g</code> and <code>bill_length_mm</code>. The shaded area indicates the 95% confidence interval bands for the estimated mean response. We do not discuss confidence interval bands here, except to say that they provide a visual picture of the uncertainty of our estimated mean (wider bands indicates more uncertainty. Chapter <a href="inference.html#inference">6</a> discusses confidence intervals for linear models in some detail. The many tick marks along the the x-axis of the effect plot indicate observed values of the x-axis variable.</p>
+<div class="sourceCode" id="cb3"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb3-1"><a href="interp-chapter.html#cb3-1" aria-hidden="true" tabindex="-1"></a><span class="co"># load effects package</span></span>
+<span id="cb3-2"><a href="interp-chapter.html#cb3-2" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(effects)</span>
+<span id="cb3-3"><a href="interp-chapter.html#cb3-3" aria-hidden="true" tabindex="-1"></a><span class="do">## Loading required package: carData</span></span>
+<span id="cb3-4"><a href="interp-chapter.html#cb3-4" aria-hidden="true" tabindex="-1"></a><span class="do">## lattice theme set by effectsTheme()</span></span>
+<span id="cb3-5"><a href="interp-chapter.html#cb3-5" aria-hidden="true" tabindex="-1"></a><span class="do">## See ?effectsTheme for details.</span></span>
+<span id="cb3-6"><a href="interp-chapter.html#cb3-6" aria-hidden="true" tabindex="-1"></a><span class="co"># draw effect plot for body_mass_g</span></span>
+<span id="cb3-7"><a href="interp-chapter.html#cb3-7" aria-hidden="true" tabindex="-1"></a><span class="fu">plot</span>(<span class="fu">predictorEffect</span>(<span class="st">&quot;body_mass_g&quot;</span>, mlmod))</span></code></pre></div>
+<div class="figure"><span style="display:block;" id="fig:effect-plot-body-mass"></span>
+<img src="A-Progessive-Introduction-to-Linear-Models_files/figure-html/effect-plot-body-mass-1.png" alt="Effect plot for body mass based on the fitted model in Equation \@ref(eq:mlr-effect-equation)." width="672" />
+<p class="caption">
+Figure 4.1: Effect plot for body mass based on the fitted model in Equation <a href="interp-chapter.html#eq:mlr-effect-equation">(4.10)</a>.
+</p>
+</div>
+<p>We next create an effect plot for <code>flipper_length_mm</code>, which is shown in Figure <a href="interp-chapter.html#fig:effect-plot-body-mass">4.1</a>, using the code below. There is a clear positive association between <code>flipper_length_mm</code> and <code>bill_length_mm</code>.</p>
+<div class="sourceCode" id="cb4"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb4-1"><a href="interp-chapter.html#cb4-1" aria-hidden="true" tabindex="-1"></a><span class="co"># draw effect plot for flipper_length_mm</span></span>
+<span id="cb4-2"><a href="interp-chapter.html#cb4-2" aria-hidden="true" tabindex="-1"></a><span class="fu">plot</span>(<span class="fu">predictorEffect</span>(<span class="st">&quot;flipper_length_mm&quot;</span>, mlmod))</span></code></pre></div>
+<div class="figure"><span style="display:block;" id="fig:effect-plot-flipper-length"></span>
+<img src="A-Progessive-Introduction-to-Linear-Models_files/figure-html/effect-plot-flipper-length-1.png" alt="Effect plot for flipper length based on the fitted model in Equation \@ref(eq:mlr-effect-equation)." width="672" />
+<p class="caption">
+Figure 4.2: Effect plot for flipper length based on the fitted model in Equation <a href="interp-chapter.html#eq:mlr-effect-equation">(4.10)</a>.
+</p>
+</div>
+<p>Alternatively, we call use <code>effects::allEffects</code> to compute the necessary effect plot information for all predictors simultaneously, then use <code>plot</code> to create a display of the effect plots for all predictors in one graphic. This approach is quicker, but the individual effect plots can sometimes be too small for practical use. We demonstrate this faster approach in the code below, which produces Figure <a href="interp-chapter.html#fig:mlmod-effect-plots-all">4.3</a>.</p>
+<div class="sourceCode" id="cb5"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb5-1"><a href="interp-chapter.html#cb5-1" aria-hidden="true" tabindex="-1"></a><span class="fu">plot</span>(<span class="fu">allEffects</span>(mlmod))</span></code></pre></div>
+<div class="figure"><span style="display:block;" id="fig:mlmod-effect-plots-all"></span>
+<img src="A-Progessive-Introduction-to-Linear-Models_files/figure-html/mlmod-effect-plots-all-1.png" alt="All effect plots for predictors of the fitted model in Equation \@ref(eq:mlr-effect-equation)." width="672" />
+<p class="caption">
+Figure 4.3: All effect plots for predictors of the fitted model in Equation <a href="interp-chapter.html#eq:mlr-effect-equation">(4.10)</a>.
+</p>
+</div>
+<p>In Section <a href="interp-chapter.html#more-penguins-examples">4.6.3</a>, the fitted parallel lines for the <code>penguins</code> data was
+<span class="math display" id="eq:lmodp-effect-plot">\[
+\begin{align}
+&amp;\hat{E}(\mathtt{bill\_length\_mm} \mid \mathtt{body\_mass\_g}, \mathtt{species}) \\
+&amp;= 24.92 + 0.004 \mathtt{body\_mass\_g} + 9.92 D_C + 3.56 D_G,
+\end{align}
+\tag{4.11}
+\]</span>
+The fitted model is recreated and assigned the name <code>lmodp</code> in the code below.</p>
+<div class="sourceCode" id="cb6"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb6-1"><a href="interp-chapter.html#cb6-1" aria-hidden="true" tabindex="-1"></a><span class="co"># refit the parallel lines model</span></span>
+<span id="cb6-2"><a href="interp-chapter.html#cb6-2" aria-hidden="true" tabindex="-1"></a>lmodp <span class="ot">&lt;-</span> <span class="fu">lm</span>(bill_length_mm <span class="sc">~</span> body_mass_g <span class="sc">+</span> species, <span class="at">data =</span> penguins)</span>
+<span id="cb6-3"><a href="interp-chapter.html#cb6-3" aria-hidden="true" tabindex="-1"></a><span class="co"># double-check coefficients</span></span>
+<span id="cb6-4"><a href="interp-chapter.html#cb6-4" aria-hidden="true" tabindex="-1"></a><span class="fu">coef</span>(lmodp)</span>
+<span id="cb6-5"><a href="interp-chapter.html#cb6-5" aria-hidden="true" tabindex="-1"></a><span class="do">##      (Intercept)      body_mass_g speciesChinstrap    speciesGentoo </span></span>
+<span id="cb6-6"><a href="interp-chapter.html#cb6-6" aria-hidden="true" tabindex="-1"></a><span class="do">##     24.919470977      0.003748497      9.920884113      3.557977539</span></span></code></pre></div>
+</div>
+<div id="effect-plots-with-categorical-predictors" class="section level3 hasAnchor" number="4.7.2">
+<h3><span class="header-section-number">4.7.2</span> Effect plots with categorical predictors<a href="interp-chapter.html#effect-plots-with-categorical-predictors" class="anchor-section" aria-label="Anchor link to header"></a></h3>
+<p>We now construct effect plots for models with categorical predictors, specifically, the parallel lines and separate lines models for the penguins examples previously discussed.</p>
+<p>The effect plot of <code>body_mass_g</code> for the parallel lines model should technically depend on the level of <code>species</code>. To get a “typical” effect for a categorical predictor, the <strong>effects</strong> package displays the “average effect” based on a weighted average of the results for each level (run <code>vignette("predictor-effects-gallery", package = "effects")</code> in the Console for more details). We see the result of this in Figure <a href="interp-chapter.html#fig:effect-plot-body-mass-lmodp">4.4</a>. The association between body mass and bill length is positive for this model.</p>
+<div class="sourceCode" id="cb7"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb7-1"><a href="interp-chapter.html#cb7-1" aria-hidden="true" tabindex="-1"></a><span class="fu">plot</span>(<span class="fu">predictorEffect</span>(<span class="st">&quot;body_mass_g&quot;</span>, lmodp))</span></code></pre></div>
+<div class="figure"><span style="display:block;" id="fig:effect-plot-body-mass-lmodp"></span>
+<img src="A-Progessive-Introduction-to-Linear-Models_files/figure-html/effect-plot-body-mass-lmodp-1.png" alt="Effect plot for body mass based on the fitted model in Equation \@ref(eq:lmodp-effect-plot)." width="672" />
+<p class="caption">
+Figure 4.4: Effect plot for body mass based on the fitted model in Equation <a href="interp-chapter.html#eq:lmodp-effect-plot">(4.11)</a>.
+</p>
+</div>
+<p>The effect plot of <code>species</code> is a plot of the function
+<span class="math display">\[
+\begin{align}
+&amp;\hat{E}(\mathtt{bill\_length\_mm} \mid \mathtt{body\_mass\_g =4201.75}, \mathtt{species}) \\
+&amp;= 24.92 + 0.004 \cdot 4201.75 + 9.92 D_C + 3.56 D_G \\
+&amp;= 40.67 + 9.92 D_C + 3.56 D_G.
+\end{align}
+\]</span>
+Based on the levels of <code>species</code> this simplifies to
+<span class="math display">\[
+\hat{E}(\mathtt{bill\_length\_mm} \mid \mathtt{body\_mass\_g =4201.75}, \mathtt{species}=\mathtt{Adelie}) = 40.67,
+\]</span>
+<span class="math display">\[
+\hat{E}(\mathtt{bill\_length\_mm} \mid \mathtt{body\_mass\_g =4201.75}, \mathtt{species}=\mathtt{Chinstrap}) = 40.67 + 9.92 = 50.59,
+\]</span>
+and
+<span class="math display">\[
+\hat{E}(\mathtt{bill\_length\_mm} \mid \mathtt{body\_mass\_g =4201.75}, \mathtt{species}=\mathtt{Gentoo}) = 40.67 + 3.56 = 44.23.
+\]</span>
+Thus, the effect plot for <code>species</code> will be a series of single values that depends on the level of <code>species</code>. This is shown in Figure <a href="interp-chapter.html#fig:effect-plot-species-lmodp">4.5</a>, which is created using the code below. For a fixed value of body mass, Adelie penguins will typically have the smallest bill length, Chinstrap penguins the largest bill length, and Gentoo will typically be somewhere in between.</p>
+<div class="sourceCode" id="cb8"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb8-1"><a href="interp-chapter.html#cb8-1" aria-hidden="true" tabindex="-1"></a><span class="fu">plot</span>(<span class="fu">predictorEffect</span>(<span class="st">&quot;species&quot;</span>, lmodp))</span></code></pre></div>
+<div class="figure"><span style="display:block;" id="fig:effect-plot-species-lmodp"></span>
+<img src="A-Progessive-Introduction-to-Linear-Models_files/figure-html/effect-plot-species-lmodp-1.png" alt="Effect plot for species based on the fitted model in Equation \@ref(eq:lmodp-effect-plot)." width="672" />
+<p class="caption">
+Figure 4.5: Effect plot for species based on the fitted model in Equation <a href="interp-chapter.html#eq:lmodp-effect-plot">(4.11)</a>.
+</p>
+</div>
+<p>We now consider the effect plots for a separate lines model using the separate lines model fit the <code>penguins</code> data in Section <a href="linear-model-estimation.html#s:penguins-mlr2">3.9</a>. The fitted separate lines model previously fit for the <code>penguins</code> data was
+<span class="math display" id="eq:sl-model-penguins-effect-plot">\[
+\begin{align}
+&amp;\hat{E}(\mathtt{bill\_length\_mm} \mid \mathtt{body\_mass\_g}, \mathtt{species}) \\
+&amp;= 26.99 + 0.003 \mathtt{body\_mass\_g} + 5.18 D_C - 0.25 D_G \\
+&amp;\quad + 0.001 D_C \mathtt{body\_mass\_g} + 0.0009 D_G \mathtt{body\_mass\_g},
+\end{align}
+\tag{4.12}
+\]</span>
+which we refit and assign the name <code>lmods</code> in the code below.</p>
+<div class="sourceCode" id="cb9"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb9-1"><a href="interp-chapter.html#cb9-1" aria-hidden="true" tabindex="-1"></a><span class="co"># fit separate lines model</span></span>
+<span id="cb9-2"><a href="interp-chapter.html#cb9-2" aria-hidden="true" tabindex="-1"></a>lmods <span class="ot">&lt;-</span> <span class="fu">lm</span>(bill_length_mm <span class="sc">~</span> body_mass_g <span class="sc">+</span> species <span class="sc">+</span> body_mass_g<span class="sc">:</span>species,</span>
+<span id="cb9-3"><a href="interp-chapter.html#cb9-3" aria-hidden="true" tabindex="-1"></a>            <span class="at">data =</span> penguins)</span>
+<span id="cb9-4"><a href="interp-chapter.html#cb9-4" aria-hidden="true" tabindex="-1"></a><span class="co"># extract estimated coefficients</span></span>
+<span id="cb9-5"><a href="interp-chapter.html#cb9-5" aria-hidden="true" tabindex="-1"></a><span class="fu">coef</span>(lmods)</span>
+<span id="cb9-6"><a href="interp-chapter.html#cb9-6" aria-hidden="true" tabindex="-1"></a><span class="do">##                  (Intercept)                  body_mass_g </span></span>
+<span id="cb9-7"><a href="interp-chapter.html#cb9-7" aria-hidden="true" tabindex="-1"></a><span class="do">##                26.9941391367                 0.0031878758 </span></span>
+<span id="cb9-8"><a href="interp-chapter.html#cb9-8" aria-hidden="true" tabindex="-1"></a><span class="do">##             speciesChinstrap                speciesGentoo </span></span>
+<span id="cb9-9"><a href="interp-chapter.html#cb9-9" aria-hidden="true" tabindex="-1"></a><span class="do">##                 5.1800537287                -0.2545906615 </span></span>
+<span id="cb9-10"><a href="interp-chapter.html#cb9-10" aria-hidden="true" tabindex="-1"></a><span class="do">## body_mass_g:speciesChinstrap    body_mass_g:speciesGentoo </span></span>
+<span id="cb9-11"><a href="interp-chapter.html#cb9-11" aria-hidden="true" tabindex="-1"></a><span class="do">##                 0.0012748183                 0.0009029956</span></span></code></pre></div>
+<p>We determined that the model simplifies depending on the level of species. We previously derived in Section <a href="linear-model-estimation.html#s:penguins-mlr2">3.9</a> that:
+<span class="math display" id="eq:separate-lines-equations-effects-plot">\[
+\begin{align}
+&amp;\hat{E}(\mathtt{bill\_length\_mm} \mid \mathtt{body\_mass\_g}, \mathtt{species}=\mathtt{Adelie}) \\
+&amp;= 26.99 + 0.003 \mathtt{body\_mass\_g},\\
+&amp;\hat{E}(\mathtt{bill\_length\_mm} \mid \mathtt{body\_mass\_g}, \mathtt{species}=\mathtt{Chinstrap}) \\
+&amp;= 31.17 + 0.004 \mathtt{body\_mass\_g},\\
+&amp;\hat{E}(\mathtt{bill\_length\_mm} \mid \mathtt{body\_mass\_g}, \mathtt{species}=\mathtt{Chinstrap}) \\
+&amp;= 26.74 + 0.004 \mathtt{body\_mass\_g}.
+\end{align}
+\tag{4.13}
+\]</span></p>
+<p>The effect plot of <code>body_mass_g</code> for the separate lines model will be a plot of each equation given in Equation <a href="interp-chapter.html#eq:separate-lines-equations-effects-plot">(4.13)</a>. Figure <a href="interp-chapter.html#fig:effect-plot-body-mass-lmods">4.6</a> displays this effect plot, which was created using the code below.</p>
+<div class="sourceCode" id="cb10"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb10-1"><a href="interp-chapter.html#cb10-1" aria-hidden="true" tabindex="-1"></a><span class="co"># effect plot of body mass for separate lines model</span></span>
+<span id="cb10-2"><a href="interp-chapter.html#cb10-2" aria-hidden="true" tabindex="-1"></a><span class="co"># axes ... rotates the x-axis labels 90 degrees</span></span>
+<span id="cb10-3"><a href="interp-chapter.html#cb10-3" aria-hidden="true" tabindex="-1"></a><span class="fu">plot</span>(<span class="fu">predictorEffect</span>(<span class="st">&quot;body_mass_g&quot;</span>, lmods), <span class="at">axes =</span> <span class="fu">list</span>(<span class="at">x =</span> <span class="fu">list</span>(<span class="at">rotate =</span> <span class="dv">90</span>)))</span></code></pre></div>
+<div class="figure"><span style="display:block;" id="fig:effect-plot-body-mass-lmods"></span>
+<img src="A-Progessive-Introduction-to-Linear-Models_files/figure-html/effect-plot-body-mass-lmods-1.png" alt="Effect plot for body mass based on the equations in Equation \@ref(eq:separate-lines-equations-effects-plot)." width="672" />
+<p class="caption">
+Figure 4.6: Effect plot for body mass based on the equations in Equation <a href="interp-chapter.html#eq:separate-lines-equations-effects-plot">(4.13)</a>.
+</p>
+</div>
+<div class="sourceCode" id="cb11"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb11-1"><a href="interp-chapter.html#cb11-1" aria-hidden="true" tabindex="-1"></a><span class="co"># effect plot of body mass for separate lines model</span></span>
+<span id="cb11-2"><a href="interp-chapter.html#cb11-2" aria-hidden="true" tabindex="-1"></a><span class="co"># axes ... rotates the x-axis labels 90 degrees</span></span>
+<span id="cb11-3"><a href="interp-chapter.html#cb11-3" aria-hidden="true" tabindex="-1"></a><span class="fu">plot</span>(<span class="fu">predictorEffect</span>(<span class="st">&quot;species&quot;</span>, lmods), <span class="at">axes =</span> <span class="fu">list</span>(<span class="at">x =</span> <span class="fu">list</span>(<span class="at">rotate =</span> <span class="dv">90</span>)), <span class="at">lines=</span><span class="fu">list</span>(<span class="at">multiline=</span><span class="cn">TRUE</span>))</span></code></pre></div>
+<div class="figure"><span style="display:block;" id="fig:effect-plot-species-lmods"></span>
+<img src="A-Progessive-Introduction-to-Linear-Models_files/figure-html/effect-plot-species-lmods-1.png" alt="Effect plot for species based on the equations in Equation \@ref(eq:separate-lines-equations-effects-plot)." width="672" />
+<p class="caption">
+Figure 4.7: Effect plot for species based on the equations in Equation <a href="interp-chapter.html#eq:separate-lines-equations-effects-plot">(4.13)</a>.
+</p>
+</div>
+</div>
+</div>
+<div id="added-variable-plots" class="section level2 hasAnchor" number="4.8">
+<h2><span class="header-section-number">4.8</span> Added variable plots<a href="interp-chapter.html#added-variable-plots" class="anchor-section" aria-label="Anchor link to header"></a></h2>
+</div>
+<div id="going-deeper-1" class="section level2 hasAnchor" number="4.9">
+<h2><span class="header-section-number">4.9</span> Going deeper<a href="interp-chapter.html#going-deeper-1" class="anchor-section" aria-label="Anchor link to header"></a></h2>
+<div id="orthogonality" class="section level3 hasAnchor" number="4.9.1">
+<h3><span class="header-section-number">4.9.1</span> Orthogonality<a href="interp-chapter.html#orthogonality" class="anchor-section" aria-label="Anchor link to header"></a></h3>
+<p>Let
+<span class="math display">\[\mathbf{X}_[j]=[x_{1,j},\ldots,x_{n,j}]\]</span>
+denote the <span class="math inline">\(n\times 1\)</span> column vector of observed values for regressor <span class="math inline">\(X_j\)</span>. (We can’t use the notation <span class="math inline">\(\mathbf{x}_j\)</span> because that is the <span class="math inline">\(p\times 1\)</span> vector of regressor values for the <span class="math inline">\(j\)</span>th observation). Regressors, <span class="math inline">\(\mathbf{X}_{[j]}\)</span> and <span class="math inline">\(\mathbf{X}_{[k]}\)</span> are <strong>orthogonal</strong> if <span class="math inline">\(\mathbf{X}_{[j]}^T \mathbf{X}_{[k]}=0\)</span>.</p>
+<p>Let <span class="math inline">\(\boldsymbol{1}_{n\times1}\)</span> denote an <span class="math inline">\(n\times 1\)</span> column vector of 1s. The definition of orthogonal vectors above implies that <span class="math inline">\(\mathbf{X}_{[j]}\)</span> is orthogonal to <span class="math inline">\(\boldsymbol{1}_{n\times1}\)</span> if <span class="math display">\[
+\mathbf{X}_{[j]}^T \boldsymbol{1}_{n\times1} = \sum_{i=1}^n x_{i,j} = 0,\]</span>
+i.e., if the values in <span class="math inline">\(\mathbf{X}_{[j]}\)</span> sum to zero.</p>
+<p>Let <span class="math inline">\(\bar{x}_j = \frac{1}{n}\sum_{i=1}^n x_{i,j}\)</span> denote the sample mean of <span class="math inline">\(\mathbf{X}_{[j]}\)</span> and <span class="math inline">\(\bar{\mathbf{x}}_j = \bar{x}_j \boldsymbol{1}_{n\times 1}\)</span> denote the column vector that repeats <span class="math inline">\(\bar{x}_j\)</span> <span class="math inline">\(n\)</span> times.</p>
+<p><strong>Centering</strong> <span class="math inline">\(\mathbf{X}_{[j]}\)</span> involves subtracting the sample mean of <span class="math inline">\(\mathbf{X}_{[j]}\)</span> from <span class="math inline">\(\mathbf{X}_{[j]}\)</span>, i.e., <span class="math inline">\(\mathbf{X}_{[j]} - \bar{\mathbf{x}}_j\)</span>.</p>
+<p>Regressors <span class="math inline">\(\mathbf{X}_{[j]}\)</span> and <span class="math inline">\(\mathbf{X}_{[k]}\)</span> are <strong>uncorrelated</strong> if they are orthogonal after being centered, i.e., if
+<span class="math display">\[
+(\mathbf{X}_{[j]} - \bar{\mathbf{x}}_j)^T (\mathbf{X}_{[k]} - \bar{\mathbf{x}}_k)=0.
+\]</span>
+Note that the sample covariance between vectors <span class="math inline">\(\mathbf{X}_{[j]}\)</span> and <span class="math inline">\(\mathbf{X}_{[k]}\)</span> is
+<span class="math display">\[
+\begin{align*}
+\widehat{\mathrm{cov}}(\mathbf{X}_{[j]}, \mathbf{X}_{[k]}) &amp;= \frac{1}{n-1}\sum_{i=1}^n (x_{i,j} - \bar{x}_j)(x_{i,k} - \bar{x}_k) \\
+&amp;= \frac{1}{n-1}(\mathbf{X}_{[j]} - \bar{\mathbf{x}}_j)^T (\mathbf{X}_{[k]} - \bar{\mathbf{x}}_k).
+\end{align*}
+\]</span>
+Thus, two centered regressors are orthogonal if their covariance is zero.</p>
+<p>It is a desirable to have orthogonal regressors in your fitted model because they simplify estimating the relationship between the regressors and the response. Specifically:</p>
+<p><em>If a regressor is orthogonal to all other regressors (and the column of 1s) in a model, adding or removing the orthogonal regressor from your model will not impact the estimated regression coefficients of the other regressors.</em></p>
+<p>Since most linear regression models include an intercept, we should assess whether our regressors are orthogonal to other regressors and the column of 1s.</p>
+<p>We consider a simple example with <span class="math inline">\(n=5\)</span> observations to demonstrate how orthogonality of regressors impacts the estimated regression coefficients. In the code below:</p>
+<ul>
+<li><code>y</code> is a vector of response values.</li>
+<li><code>ones</code> is the column vector of 1s.</li>
+<li><code>X1</code> is a column vector of regressor values.</li>
+<li><code>X2</code> is a column vector of regressor values chosen to be orthogonal to <code>x1</code> but not to <code>ones</code>.</li>
+<li><code>X3</code> is a column vector of regressor values orthogonal to both <code>x1</code> and <code>ones</code>.</li>
+<li><code>X4</code> is a column vector of regressor values orthogonal to <code>ones</code>, <code>x1</code>, and <code>x3</code>, but not <code>x2</code>.</li>
+<li><code>X5</code> is a column vector of regressor values orthogonal to <code>ones</code> and <code>x1</code>, but not the other regressor vectors.</li>
+</ul>
+<p>In the code below, we define vectors <code>y</code>, <code>X1</code>, and <code>X2</code>.</p>
+<div class="sourceCode" id="cb12"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb12-1"><a href="interp-chapter.html#cb12-1" aria-hidden="true" tabindex="-1"></a>y <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="dv">1</span>, <span class="dv">4</span>, <span class="dv">6</span>, <span class="dv">8</span>, <span class="dv">9</span>)       <span class="co"># create an arbitrary response vector</span></span>
+<span id="cb12-2"><a href="interp-chapter.html#cb12-2" aria-hidden="true" tabindex="-1"></a>X1 <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="dv">7</span>, <span class="dv">5</span>, <span class="dv">5</span>, <span class="dv">7</span>, <span class="dv">7</span>)      <span class="co"># create regressor 1</span></span>
+<span id="cb12-3"><a href="interp-chapter.html#cb12-3" aria-hidden="true" tabindex="-1"></a>X2 <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="sc">-</span><span class="dv">1</span>, <span class="dv">2</span>, <span class="sc">-</span><span class="dv">3</span>, <span class="dv">1</span>, <span class="dv">5</span><span class="sc">/</span><span class="dv">7</span>)  <span class="co"># create regressor 2 to be orthogonal to x1</span></span></code></pre></div>
+<p>Note that the <code>crossprod</code> function computes the crossproduct of two vectors or matrices, so that <code>crossprod(A, B)</code> computes <span class="math inline">\(\mathbf{A}^T B\)</span>, where the vectors or matrices must have the correct dimension for the multiplication to be performed.</p>
+<p>The regressor vectors <code>X1</code> and <code>X2</code> are orthogonal since their crossproduct <span class="math inline">\(\mathbf{X}_{[1]}^T \mathbf{X}_{[2]}\)</span> (in R, <code>crossprod(X1, X2)</code>) equals zero, as shown in the code below.</p>
+<div class="sourceCode" id="cb13"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb13-1"><a href="interp-chapter.html#cb13-1" aria-hidden="true" tabindex="-1"></a><span class="co"># crossproduct is zero, so X1 and X2 are orthogonal</span></span>
+<span id="cb13-2"><a href="interp-chapter.html#cb13-2" aria-hidden="true" tabindex="-1"></a><span class="fu">crossprod</span>(X1, X2)</span>
+<span id="cb13-3"><a href="interp-chapter.html#cb13-3" aria-hidden="true" tabindex="-1"></a><span class="do">##      [,1]</span></span>
+<span id="cb13-4"><a href="interp-chapter.html#cb13-4" aria-hidden="true" tabindex="-1"></a><span class="do">## [1,]    0</span></span></code></pre></div>
+<p>In the code below, we regress <code>y</code> on <code>x1</code> without an intercept (<code>lmod1</code>). The estimated coefficient for <code>X1</code> is <span class="math inline">\(\hat{\beta}_1=0.893\)</span>. Next, we then regress <code>y</code> on <code>X1</code> and <code>X2</code> without an intercept (<code>lmod2</code>). The estimated coefficients for <code>X1</code> and <code>X2</code> are <span class="math inline">\(\hat{\beta}_1=0.893\)</span> and <span class="math inline">\(\hat{\beta}_2=0.221\)</span>, respectively. Because <code>X1</code> and <code>X2</code> are orthogonal (and because there are no other regressors to consider in the model), the estimated coefficient for <code>X1</code> stays the same in both models.</p>
+<div class="sourceCode" id="cb14"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb14-1"><a href="interp-chapter.html#cb14-1" aria-hidden="true" tabindex="-1"></a><span class="co"># y regressed on X1 without an intercept</span></span>
+<span id="cb14-2"><a href="interp-chapter.html#cb14-2" aria-hidden="true" tabindex="-1"></a>lmod1 <span class="ot">&lt;-</span> <span class="fu">lm</span>(y <span class="sc">~</span> x1 <span class="sc">-</span> <span class="dv">1</span>)</span>
+<span id="cb14-3"><a href="interp-chapter.html#cb14-3" aria-hidden="true" tabindex="-1"></a><span class="fu">coef</span>(lmod1)</span>
+<span id="cb14-4"><a href="interp-chapter.html#cb14-4" aria-hidden="true" tabindex="-1"></a><span class="do">##       x1 </span></span>
+<span id="cb14-5"><a href="interp-chapter.html#cb14-5" aria-hidden="true" tabindex="-1"></a><span class="do">## 0.893401</span></span>
+<span id="cb14-6"><a href="interp-chapter.html#cb14-6" aria-hidden="true" tabindex="-1"></a><span class="co"># y regressed on X1 and X2 without an intercept</span></span>
+<span id="cb14-7"><a href="interp-chapter.html#cb14-7" aria-hidden="true" tabindex="-1"></a>lmod2 <span class="ot">&lt;-</span> <span class="fu">lm</span>(y <span class="sc">~</span> x1 <span class="sc">+</span> x2 <span class="sc">-</span> <span class="dv">1</span>)</span>
+<span id="cb14-8"><a href="interp-chapter.html#cb14-8" aria-hidden="true" tabindex="-1"></a><span class="fu">coef</span>(lmod2)</span>
+<span id="cb14-9"><a href="interp-chapter.html#cb14-9" aria-hidden="true" tabindex="-1"></a><span class="do">##        x1        x2 </span></span>
+<span id="cb14-10"><a href="interp-chapter.html#cb14-10" aria-hidden="true" tabindex="-1"></a><span class="do">## 0.8934010 0.2210526</span></span></code></pre></div>
+<p>The previous models (<code>lmod1</code> and <code>lmod2</code>) neglect an important characteristic of a typical linear model: we usually include an intercept coefficient (a columns of 1s as a regressor) in our model. If the regressors are not orthogonal to the column of 1s in our <span class="math inline">\(\mathbf{X}\)</span> matrix, then the coefficients for the other regressors in the model will change when the regressors are added or removed from the model because they are not orthogonal to the column of 1s.</p>
+<p>However, neither <code>X1</code> nor <code>X2</code> is orthogonal with the column of ones. We define the vector <code>ones</code> below, which is a column of 1s, and compute the crossproduct between <code>ones</code> and the two regressors. Since the crossproducts are not zero, <code>X1</code> and <code>X2</code> are not orthogonal to the column of ones.</p>
+<div class="sourceCode" id="cb15"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb15-1"><a href="interp-chapter.html#cb15-1" aria-hidden="true" tabindex="-1"></a>ones <span class="ot">&lt;-</span> <span class="fu">rep</span>(<span class="dv">1</span>, <span class="dv">5</span>)   <span class="co"># column of 1s</span></span>
+<span id="cb15-2"><a href="interp-chapter.html#cb15-2" aria-hidden="true" tabindex="-1"></a><span class="fu">crossprod</span>(ones, X1) <span class="co"># not zero, so not orthogonal</span></span>
+<span id="cb15-3"><a href="interp-chapter.html#cb15-3" aria-hidden="true" tabindex="-1"></a><span class="do">##      [,1]</span></span>
+<span id="cb15-4"><a href="interp-chapter.html#cb15-4" aria-hidden="true" tabindex="-1"></a><span class="do">## [1,]   31</span></span>
+<span id="cb15-5"><a href="interp-chapter.html#cb15-5" aria-hidden="true" tabindex="-1"></a><span class="fu">crossprod</span>(ones, X2) <span class="co"># not zero, so not orthogonal</span></span>
+<span id="cb15-6"><a href="interp-chapter.html#cb15-6" aria-hidden="true" tabindex="-1"></a><span class="do">##            [,1]</span></span>
+<span id="cb15-7"><a href="interp-chapter.html#cb15-7" aria-hidden="true" tabindex="-1"></a><span class="do">## [1,] -0.2857143</span></span></code></pre></div>
+<p>We create <code>lmod3</code> by adding adding a column of ones to <code>lmod2</code> (i.e., if we include the intercept in the model). The the coefficients for both <code>X1</code> and <code>X2</code> change when going from <code>lmod2</code> to <code>lmod3</code> because these regressors are not orthogonal to the column of 1s. Comparing the coefficients <code>lmod2</code> above and <code>lmod3</code>, <span class="math inline">\(\hat{\beta}_1\)</span> changes from <span class="math inline">\(0.893\)</span> to <span class="math inline">\(0.397\)</span> and <span class="math inline">\(\hat{\beta}_2\)</span> changes from <span class="math inline">\(0.221\)</span> to <span class="math inline">\(0.279\)</span>.</p>
+<div class="sourceCode" id="cb16"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb16-1"><a href="interp-chapter.html#cb16-1" aria-hidden="true" tabindex="-1"></a><span class="fu">coef</span>(lmod2) <span class="co"># coefficients for lmod2</span></span>
+<span id="cb16-2"><a href="interp-chapter.html#cb16-2" aria-hidden="true" tabindex="-1"></a><span class="do">##        x1        x2 </span></span>
+<span id="cb16-3"><a href="interp-chapter.html#cb16-3" aria-hidden="true" tabindex="-1"></a><span class="do">## 0.8934010 0.2210526</span></span>
+<span id="cb16-4"><a href="interp-chapter.html#cb16-4" aria-hidden="true" tabindex="-1"></a><span class="co"># y regressed on X1 and X2 with an intercept</span></span>
+<span id="cb16-5"><a href="interp-chapter.html#cb16-5" aria-hidden="true" tabindex="-1"></a>lmod3 <span class="ot">&lt;-</span> <span class="fu">lm</span>(y <span class="sc">~</span> x1 <span class="sc">+</span> x2)</span>
+<span id="cb16-6"><a href="interp-chapter.html#cb16-6" aria-hidden="true" tabindex="-1"></a><span class="fu">coef</span>(lmod3) <span class="co"># coefficients for lmod3</span></span>
+<span id="cb16-7"><a href="interp-chapter.html#cb16-7" aria-hidden="true" tabindex="-1"></a><span class="do">## (Intercept)          x1          x2 </span></span>
+<span id="cb16-8"><a href="interp-chapter.html#cb16-8" aria-hidden="true" tabindex="-1"></a><span class="do">##   3.1547101   0.3969746   0.2791657</span></span></code></pre></div>
+<p>For orthogonality of our regressors to be most impactful, the model’s regressors should be orthogonal to each other and the column of 1s. In that context, adding or removing any of the regressors doesn’t impact the estimated coefficients of the other regressors. In the code below, we define centered regressors <code>x3</code> and <code>x4</code> to be uncorrelated, i.e., <code>X3</code> and <code>X4</code> have sample mean zero and are orthogonal to each other.</p>
+<div class="sourceCode" id="cb17"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb17-1"><a href="interp-chapter.html#cb17-1" aria-hidden="true" tabindex="-1"></a>X3 <span class="ot">&lt;-</span>  <span class="fu">c</span>(<span class="dv">0</span>, <span class="sc">-</span><span class="dv">1</span>, <span class="dv">1</span>, <span class="dv">0</span>, <span class="dv">0</span>) <span class="co"># sample mean is zero</span></span>
+<span id="cb17-2"><a href="interp-chapter.html#cb17-2" aria-hidden="true" tabindex="-1"></a>X4 <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="dv">0</span>, <span class="dv">0</span>, <span class="dv">0</span>, <span class="dv">1</span>, <span class="sc">-</span><span class="dv">1</span>)  <span class="co"># sample mean is zero</span></span>
+<span id="cb17-3"><a href="interp-chapter.html#cb17-3" aria-hidden="true" tabindex="-1"></a><span class="fu">cov</span>(X3, X4)              <span class="co"># 0, so X3 and X4 are uncorrelated and orthogonal</span></span>
+<span id="cb17-4"><a href="interp-chapter.html#cb17-4" aria-hidden="true" tabindex="-1"></a><span class="do">## [1] 0</span></span></code></pre></div>
+<p>If we fit linear regression models with any combination of <code>ones</code>, <code>X3</code>, or <code>X4</code> as regressors, the associated regression coefficients will not change. To demonstrate this, we consider all possible combinations of the three variables in the models below. We do not run the code to save space, but we summarize the results below.</p>
+<div class="sourceCode" id="cb18"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb18-1"><a href="interp-chapter.html#cb18-1" aria-hidden="true" tabindex="-1"></a><span class="fu">coef</span>(<span class="fu">lm</span>(y <span class="sc">~</span> <span class="dv">1</span>))           <span class="co"># only column of 1s</span></span>
+<span id="cb18-2"><a href="interp-chapter.html#cb18-2" aria-hidden="true" tabindex="-1"></a><span class="fu">coef</span>(<span class="fu">lm</span>(y <span class="sc">~</span> x3 <span class="sc">-</span> <span class="dv">1</span>))      <span class="co"># only x3</span></span>
+<span id="cb18-3"><a href="interp-chapter.html#cb18-3" aria-hidden="true" tabindex="-1"></a><span class="fu">coef</span>(<span class="fu">lm</span>(y <span class="sc">~</span> x4 <span class="sc">-</span> <span class="dv">1</span>))      <span class="co"># only x4</span></span>
+<span id="cb18-4"><a href="interp-chapter.html#cb18-4" aria-hidden="true" tabindex="-1"></a><span class="fu">coef</span>(<span class="fu">lm</span>(y <span class="sc">~</span> x3))          <span class="co"># 1s and x3</span></span>
+<span id="cb18-5"><a href="interp-chapter.html#cb18-5" aria-hidden="true" tabindex="-1"></a><span class="fu">coef</span>(<span class="fu">lm</span>(y <span class="sc">~</span> x4))          <span class="co"># 1s and x4</span></span>
+<span id="cb18-6"><a href="interp-chapter.html#cb18-6" aria-hidden="true" tabindex="-1"></a><span class="fu">coef</span>(<span class="fu">lm</span>(y <span class="sc">~</span> x3 <span class="sc">+</span> x4 <span class="sc">-</span> <span class="dv">1</span>)) <span class="co"># x3 and x4</span></span>
+<span id="cb18-7"><a href="interp-chapter.html#cb18-7" aria-hidden="true" tabindex="-1"></a><span class="fu">coef</span>(<span class="fu">lm</span>(y <span class="sc">~</span> x3 <span class="sc">+</span> x4))     <span class="co"># 1s, x3, and x4</span></span></code></pre></div>
+<p>We simply note that in each of the previous models, because all of the regressors (and the column of 1s) are orthogonal to each other, adding or removing any regressor doesn’t impact the estimated coefficients for the other regressors in the model. Thus, the estimated coefficients were <span class="math inline">\(\hat{\beta}_{0}=5.6\)</span>, <span class="math inline">\(\hat{\beta}_{3}=1.0\)</span>, <span class="math inline">\(\hat{\beta}_{4}=-0.5\)</span> when the relevant regressor was included in the model.</p>
+<p>The easiest way to determine which vectors are orthogonal to each other and the intercept is to compute the crossproduct of the <span class="math inline">\(\mathbf{X}\)</span> matrix for the largest set of regressors you are considering. Consider the matrix of crossproducts for the columns of 1s, <code>x1</code>, <code>x2</code>, <code>x3</code>, and <code>x4</code>.</p>
+<div class="sourceCode" id="cb19"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb19-1"><a href="interp-chapter.html#cb19-1" aria-hidden="true" tabindex="-1"></a><span class="fu">crossprod</span>(<span class="fu">model.matrix</span>(<span class="sc">~</span> X1 <span class="sc">+</span> X2 <span class="sc">+</span> X3 <span class="sc">+</span> X4))</span>
+<span id="cb19-2"><a href="interp-chapter.html#cb19-2" aria-hidden="true" tabindex="-1"></a><span class="do">##             (Intercept)           X1            X2 X3        X4</span></span>
+<span id="cb19-3"><a href="interp-chapter.html#cb19-3" aria-hidden="true" tabindex="-1"></a><span class="do">## (Intercept)   5.0000000 3.100000e+01 -2.857143e-01  0 0.0000000</span></span>
+<span id="cb19-4"><a href="interp-chapter.html#cb19-4" aria-hidden="true" tabindex="-1"></a><span class="do">## X1           31.0000000 1.970000e+02  1.110223e-16  0 0.0000000</span></span>
+<span id="cb19-5"><a href="interp-chapter.html#cb19-5" aria-hidden="true" tabindex="-1"></a><span class="do">## X2           -0.2857143 1.110223e-16  1.551020e+01 -5 0.2857143</span></span>
+<span id="cb19-6"><a href="interp-chapter.html#cb19-6" aria-hidden="true" tabindex="-1"></a><span class="do">## X3            0.0000000 0.000000e+00 -5.000000e+00  2 0.0000000</span></span>
+<span id="cb19-7"><a href="interp-chapter.html#cb19-7" aria-hidden="true" tabindex="-1"></a><span class="do">## X4            0.0000000 0.000000e+00  2.857143e-01  0 2.0000000</span></span></code></pre></div>
+<p>Consider the sequence of models below.</p>
+<div class="sourceCode" id="cb20"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb20-1"><a href="interp-chapter.html#cb20-1" aria-hidden="true" tabindex="-1"></a><span class="fu">coef</span>(<span class="fu">lm</span>(y <span class="sc">~</span> <span class="dv">1</span>))</span>
+<span id="cb20-2"><a href="interp-chapter.html#cb20-2" aria-hidden="true" tabindex="-1"></a><span class="do">## (Intercept) </span></span>
+<span id="cb20-3"><a href="interp-chapter.html#cb20-3" aria-hidden="true" tabindex="-1"></a><span class="do">##         5.6</span></span></code></pre></div>
+<p>The model with only an intercept has an estimated coefficient of <span class="math inline">\(\hat{\beta}_{int}=5.6\)</span>. If we add the <code>X1</code> to the model with an intercept, then both coefficients change because they are not orthogonal to each other.</p>
+<div class="sourceCode" id="cb21"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb21-1"><a href="interp-chapter.html#cb21-1" aria-hidden="true" tabindex="-1"></a>lmod4 <span class="ot">&lt;-</span> <span class="fu">lm</span>(y <span class="sc">~</span> x1) <span class="co"># model with 1s and x1</span></span>
+<span id="cb21-2"><a href="interp-chapter.html#cb21-2" aria-hidden="true" tabindex="-1"></a><span class="fu">coef</span>(lmod4)</span>
+<span id="cb21-3"><a href="interp-chapter.html#cb21-3" aria-hidden="true" tabindex="-1"></a><span class="do">## (Intercept)          x1 </span></span>
+<span id="cb21-4"><a href="interp-chapter.html#cb21-4" aria-hidden="true" tabindex="-1"></a><span class="do">##         2.5         0.5</span></span></code></pre></div>
+<p>If we add <code>X2</code> to <code>lmod4</code>, we might think that only <span class="math inline">\(\hat{\beta}_{0}\)</span> will change because <code>X1</code> and <code>X2</code> are orthogonal to each other. However, because <code>X2</code> is not orthogonal to all of the other regressors in the model (<code>X1</code> and the column of 1s), both <span class="math inline">\(\hat{\beta}_{0}\)</span> and <span class="math inline">\(\hat{\beta}_1\)</span> will change. The easiest way to realize this is to look at <code>lmod2</code> above with only <code>x1</code> and <code>x2</code>. When we add the column of 1s to <code>lmod2</code>, both <span class="math inline">\(\hat{\beta}_1\)</span> and <span class="math inline">\(\hat{\beta}_2\)</span> will change because neither regressor is orthogonal to the column of 1s needed to include the intercept term.</p>
+<div class="sourceCode" id="cb22"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb22-1"><a href="interp-chapter.html#cb22-1" aria-hidden="true" tabindex="-1"></a><span class="fu">coef</span>(<span class="fu">lm</span>(y <span class="sc">~</span> x1 <span class="sc">+</span> x2))</span>
+<span id="cb22-2"><a href="interp-chapter.html#cb22-2" aria-hidden="true" tabindex="-1"></a><span class="do">## (Intercept)          x1          x2 </span></span>
+<span id="cb22-3"><a href="interp-chapter.html#cb22-3" aria-hidden="true" tabindex="-1"></a><span class="do">##   3.1547101   0.3969746   0.2791657</span></span></code></pre></div>
+<p>However, note that <code>X3</code> is orthogonal to the column of 1s and <code>X1</code>. Thus, if we add <code>X3</code> to <code>lmod4</code>, which includes both a column of 1s and <code>X1</code>, <code>X3</code> will not change the estimated coefficients for the intercept or <code>X1</code>.</p>
+<div class="sourceCode" id="cb23"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb23-1"><a href="interp-chapter.html#cb23-1" aria-hidden="true" tabindex="-1"></a><span class="fu">coef</span>(<span class="fu">lm</span>(y <span class="sc">~</span> x1 <span class="sc">+</span> x3))</span>
+<span id="cb23-2"><a href="interp-chapter.html#cb23-2" aria-hidden="true" tabindex="-1"></a><span class="do">## (Intercept)          x1          x3 </span></span>
+<span id="cb23-3"><a href="interp-chapter.html#cb23-3" aria-hidden="true" tabindex="-1"></a><span class="do">##         2.5         0.5         1.0</span></span></code></pre></div>
+<p>Additionally, since <code>X4</code> is orthogonal to the column of 1s, <code>x1</code>, and <code>x3</code>, adding <code>X4</code> to the previous model will not change the estimated coefficients for any of the other variables already in the model.</p>
+<div class="sourceCode" id="cb24"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb24-1"><a href="interp-chapter.html#cb24-1" aria-hidden="true" tabindex="-1"></a><span class="fu">coef</span>(<span class="fu">lm</span>(y <span class="sc">~</span> x1 <span class="sc">+</span> x3 <span class="sc">+</span> x4))</span>
+<span id="cb24-2"><a href="interp-chapter.html#cb24-2" aria-hidden="true" tabindex="-1"></a><span class="do">## (Intercept)          x1          x3          x4 </span></span>
+<span id="cb24-3"><a href="interp-chapter.html#cb24-3" aria-hidden="true" tabindex="-1"></a><span class="do">##         2.5         0.5         1.0        -0.5</span></span></code></pre></div>
+<p>Lastly, if we can partition our <span class="math inline">\(\mathbf{X}\)</span> matrix such that <span class="math inline">\(\mathbf{X}^T \mathbf{X}\)</span> is a block diagonal matrix, then none of the blocks of variables will affect the estimated coefficients of the other variables.</p>
+<p>Define a new regressor <code>X5</code> below. <code>X5</code> is orthogonal to the column of 1s and <code>X1</code>, but not <code>X4</code>.</p>
+<div class="sourceCode" id="cb25"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb25-1"><a href="interp-chapter.html#cb25-1" aria-hidden="true" tabindex="-1"></a>X5 <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="dv">1</span>, <span class="dv">0</span>, <span class="dv">0</span>, <span class="sc">-</span><span class="dv">1</span>, <span class="dv">0</span>) <span class="co"># orthogonal to ones, x1, not x4</span></span>
+<span id="cb25-2"><a href="interp-chapter.html#cb25-2" aria-hidden="true" tabindex="-1"></a><span class="co"># note block of 0s</span></span>
+<span id="cb25-3"><a href="interp-chapter.html#cb25-3" aria-hidden="true" tabindex="-1"></a><span class="fu">crossprod</span>(<span class="fu">cbind</span>(ones, X1, X4, X5))</span>
+<span id="cb25-4"><a href="interp-chapter.html#cb25-4" aria-hidden="true" tabindex="-1"></a><span class="do">##      ones  X1 X4 X5</span></span>
+<span id="cb25-5"><a href="interp-chapter.html#cb25-5" aria-hidden="true" tabindex="-1"></a><span class="do">## ones    5  31  0  0</span></span>
+<span id="cb25-6"><a href="interp-chapter.html#cb25-6" aria-hidden="true" tabindex="-1"></a><span class="do">## X1     31 197  0  0</span></span>
+<span id="cb25-7"><a href="interp-chapter.html#cb25-7" aria-hidden="true" tabindex="-1"></a><span class="do">## X4      0   0  2 -1</span></span>
+<span id="cb25-8"><a href="interp-chapter.html#cb25-8" aria-hidden="true" tabindex="-1"></a><span class="do">## X5      0   0 -1  2</span></span></code></pre></div>
+<p>Note the block of zeros in the lower left and upper right corners of the crossproduct matrix above. The block containing <code>ones</code> and <code>X1</code> is orthogonal to the block containing <code>X4</code> and <code>X5</code>. This means that if we fit the model with only the column of 1s and <code>X1</code>, the model only with <code>X4</code> and <code>X5</code>, and then fit the model with the column of 1s, <code>x1</code>, <code>x4</code>, and <code>x5</code>, then the coefficients <span class="math inline">\(\hat{\beta}_{0}\)</span> and <span class="math inline">\(\hat{\beta}_{1}\)</span> are not impacted when <code>X4</code> and <code>X5</code> are added to the model. Similarly, <span class="math inline">\(\hat{\beta}_{4}\)</span> and <span class="math inline">\(\hat{\beta}_{5}\)</span> are not impacted when the column of 1s and <code>X1</code> are added to the model with <code>X4</code> and <code>X5</code>. See the output below.</p>
+<div class="sourceCode" id="cb26"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb26-1"><a href="interp-chapter.html#cb26-1" aria-hidden="true" tabindex="-1"></a><span class="fu">lm</span>(y <span class="sc">~</span> x1)           <span class="co"># model with 1s and x1</span></span>
+<span id="cb26-2"><a href="interp-chapter.html#cb26-2" aria-hidden="true" tabindex="-1"></a><span class="do">## </span></span>
+<span id="cb26-3"><a href="interp-chapter.html#cb26-3" aria-hidden="true" tabindex="-1"></a><span class="do">## Call:</span></span>
+<span id="cb26-4"><a href="interp-chapter.html#cb26-4" aria-hidden="true" tabindex="-1"></a><span class="do">## lm(formula = y ~ x1)</span></span>
+<span id="cb26-5"><a href="interp-chapter.html#cb26-5" aria-hidden="true" tabindex="-1"></a><span class="do">## </span></span>
+<span id="cb26-6"><a href="interp-chapter.html#cb26-6" aria-hidden="true" tabindex="-1"></a><span class="do">## Coefficients:</span></span>
+<span id="cb26-7"><a href="interp-chapter.html#cb26-7" aria-hidden="true" tabindex="-1"></a><span class="do">## (Intercept)           x1  </span></span>
+<span id="cb26-8"><a href="interp-chapter.html#cb26-8" aria-hidden="true" tabindex="-1"></a><span class="do">##         2.5          0.5</span></span>
+<span id="cb26-9"><a href="interp-chapter.html#cb26-9" aria-hidden="true" tabindex="-1"></a><span class="fu">lm</span>(y <span class="sc">~</span> x4 <span class="sc">+</span> x5 <span class="sc">-</span> <span class="dv">1</span>)  <span class="co"># model with x4 and x5 only</span></span>
+<span id="cb26-10"><a href="interp-chapter.html#cb26-10" aria-hidden="true" tabindex="-1"></a><span class="do">## </span></span>
+<span id="cb26-11"><a href="interp-chapter.html#cb26-11" aria-hidden="true" tabindex="-1"></a><span class="do">## Call:</span></span>
+<span id="cb26-12"><a href="interp-chapter.html#cb26-12" aria-hidden="true" tabindex="-1"></a><span class="do">## lm(formula = y ~ x4 + x5 - 1)</span></span>
+<span id="cb26-13"><a href="interp-chapter.html#cb26-13" aria-hidden="true" tabindex="-1"></a><span class="do">## </span></span>
+<span id="cb26-14"><a href="interp-chapter.html#cb26-14" aria-hidden="true" tabindex="-1"></a><span class="do">## Coefficients:</span></span>
+<span id="cb26-15"><a href="interp-chapter.html#cb26-15" aria-hidden="true" tabindex="-1"></a><span class="do">## x4  x5  </span></span>
+<span id="cb26-16"><a href="interp-chapter.html#cb26-16" aria-hidden="true" tabindex="-1"></a><span class="do">## -3  -5</span></span>
+<span id="cb26-17"><a href="interp-chapter.html#cb26-17" aria-hidden="true" tabindex="-1"></a><span class="fu">lm</span>(y <span class="sc">~</span> x1 <span class="sc">+</span> x4 <span class="sc">+</span> x5) <span class="co"># model with 1s, x1, x4, x5</span></span>
+<span id="cb26-18"><a href="interp-chapter.html#cb26-18" aria-hidden="true" tabindex="-1"></a><span class="do">## </span></span>
+<span id="cb26-19"><a href="interp-chapter.html#cb26-19" aria-hidden="true" tabindex="-1"></a><span class="do">## Call:</span></span>
+<span id="cb26-20"><a href="interp-chapter.html#cb26-20" aria-hidden="true" tabindex="-1"></a><span class="do">## lm(formula = y ~ x1 + x4 + x5)</span></span>
+<span id="cb26-21"><a href="interp-chapter.html#cb26-21" aria-hidden="true" tabindex="-1"></a><span class="do">## </span></span>
+<span id="cb26-22"><a href="interp-chapter.html#cb26-22" aria-hidden="true" tabindex="-1"></a><span class="do">## Coefficients:</span></span>
+<span id="cb26-23"><a href="interp-chapter.html#cb26-23" aria-hidden="true" tabindex="-1"></a><span class="do">## (Intercept)           x1           x4           x5  </span></span>
+<span id="cb26-24"><a href="interp-chapter.html#cb26-24" aria-hidden="true" tabindex="-1"></a><span class="do">##         2.5          0.5         -3.0         -5.0</span></span></code></pre></div>
+<!-- ## Example: Fuel Consumption Data -->
+<!-- ```{r} -->
+<!-- data(fuel2001, package = "alr4") -->
+<!-- ``` -->
+<!-- The variables (for the year 2001 unless otherwise noted) are: -->
+<!-- - `Drivers`: Number of Licensed drivers in the state -->
+<!-- - `FuelC`: Gasoline sold for road use (1000s of gal.) -->
+<!-- - `Miles`: Miles of Federal-aid highway miles in the state -->
+<!-- - `Pop`: 2001 population age 16 and over -->
+<!-- - `Tax`: Gasoline state tax rate (cents/gallon) -->
+<!-- ## Setting Up a Linear Model -->
+<!-- What is the relationship between fuel consumption and various regressors for the 50 United States and the District of Columbia?   -->
+<!-- ### Adjusting Units -->
+<!-- - Some of the variables are adjusted for population. Others are are not. -->
+<!-- - Some dollar values are given in thousands of dollars. Others are given in dollars. -->
+<!-- - Some units of fuel are given in gallons. Others are given in 1000's of gallons. -->
+<!-- - Our model should have regressor variables with compatible units with the response variable. -->
+<!-- 1. **Create a new variable called `Fuel` that converts units of `FuelC` from 1000's of gallons to gallons per person**. -->
+<!-- 2. **Create a new variable called `Income1k`that converts the units of `Income` from dollars per capita to 1000's of dollars per capita.** -->
+<!-- 3. **Convert the units of `Drivers` from number of drivers to number of drivers per capita**. -->
+<!-- - `Fuel`: Average amount of gasoline sold for road use per person (Gallons/person) -->
+<!-- - `Income1K`: Average personal income (in thousands) for the year 2000 per person ($1K/person) -->
+<!-- - `Dlic`: Number of licensed drivers per 1000 persons (licensed drivers/1K persons)  -->
+<!-- ```{r} -->
+<!-- # create new regressors/transformed responses to fuel2001 data frame -->
+<!-- fuel2001$Fuel <- 1000*fuel2001$FuelC/fuel2001$Pop -->
+<!-- fuel2001$Dlic <- 1000*fuel2001$Drivers/fuel2001$Pop -->
+<!-- fuel2001$Income1K <- fuel2001$Income/1000 -->
+<!-- ``` -->
+<!-- ```{r} -->
+<!-- summary(fuel2001) -->
+<!-- ``` -->
+<!-- ### Fitting a Model -->
+<!-- We will set up a regression model to determine how `Fuel` (gallons per person) is related to `Tax` (cents per gallon), -->
+<!-- `Dlic` (drivers per capita), `Income1k` (thousands of dollars of income per capita), and `Miles` (federal highway miles). -->
+<!-- $$E( \mbox{Fuel} \ | \ \mbox{Tax, Dlic, Income1K, Miles})=\beta_0+\beta_1 (\mbox{Tax}) +\beta_2 (\mbox{Dlic}) + \beta_3 (\mbox{Income1K}) + \beta_4 \log{(\mbox{Miles})}$$ -->
+<!-- ```{r} -->
+<!-- # fit model -->
+<!-- lmod <- lm(Fuel ~ Tax + Dlic + Income1K + log(Miles), data = fuel2001) -->
+<!-- # summarize model -->
+<!-- faraway::sumary(lmod) -->
+<!-- ``` -->
+<!-- We see the fitted model is: -->
+<!-- $$\widehat{\mbox{E}}(\mbox{Fuel} \ | \ \mbox{Tax, Dlic, Income1k, Miles}) = 154.19 - 4.24 (\mbox{Tax}) + 0.47 (\mbox{Dlic}) - 6.14(\mbox{Income1K}) + 26.76 \log{(\mbox{26.76})}$$ -->
+<!-- This equation represents the estimated conditional mean of Fuel given fixed values of the regressors Tax, Dlic, Income1K, and Miles. -->
+<!-- ## Interpreting the Coefficients -->
+<!-- Estimated coefficients are usually interpreted as a **rate of change.**  -->
+<!-- - If we increase a regressor by 1 unit (and hold all others constant), what is the predicted change in the response variable? -->
+<!-- 4. **Interpret the practical meaning of $\beta_1 = -4.24$. Pay attention to units when giving your interpretation.** -->
+<!-- - The sign of a parameter estimate indicates the direction of the relationship between the regressor and the response (when all other regressors are constant). -->
+<!-- - The sign of the effect of a regressor is often more important than its magnitude. -->
+<!-- - If regressors are highly correlated with other regressors, both the magnitude and sign of an estimated coefficient may change depending on the values of the other regressors are in the model. -->
+<!-- ## Example: Berkeley Guidance Study -->
+<!-- Data from the Berkeley guidance study of children born in 1928-29 in Berkeley, CA. BGSgirls contains data from just the girls in the study. -->
+<!-- ```{r} -->
+<!-- data(BGSgirls, package = "alr4") -->
+<!-- head(BGSgirls) -->
+<!-- ``` -->
+<!-- ## Dictionary of Data -->
+<!-- - `BMI18`: the body mass index at age 18 -->
+<!-- -  `WT2`, `WT9`, and `WT18`: the weights at ages 2, 9, and 18 (in kg) for the $n=70$ girls in the study. -->
+<!-- ## Analyzing Relations Between Regressors -->
+<!-- ```{r} -->
+<!-- # basic scatterplot matrix -->
+<!-- pairs(~ BMI18 + WT2 + WT9 + WT18, data = BGSgirls) -->
+<!-- ``` -->
+<!-- 5. **Based on the scatter plot matrix above, does there seem to be any relations among the regressors? Explain why these relations make practical sense.** -->
+<!-- 6. **How can we adjust our model to account for the relations between the regressors?** -->
+<!-- ## Adjusting the Regressors -->
+<!-- 7. **Create a new regressor called `DW9` that is the weight gain from age 2 to 9.** -->
+<!-- 8. **Create a new regressor called `DW18` that is the weight gain from age 9 to 18.** -->
+<!-- ```{r} -->
+<!-- BGSgirls$DW9 <- BGSgirls$WT9-BGSgirls$WT2 -->
+<!-- BGSgirls$DW18 <- BGSgirls$WT18-BGSgirls$WT9 -->
+<!-- BGSgirls$DW218 <- BGSgirls$WT18-BGSgirls$WT2 -->
+<!-- ``` -->
+<!-- ```{r} -->
+<!-- # basic scatterplot matrix -->
+<!-- pairs(~ BMI18 + DW9 + DW18, data = BGSgirls) -->
+<!-- ``` -->
+<!-- 9. **Based on the scatter plot matrix above, how can you tell that the new regressors seem to be more independent from each other?** -->
+<!-- ## Comparing Different Models -->
+<!-- ### BMI relation to WT2, WT9 and WT18 -->
+<!-- ```{r} -->
+<!-- m1 <- lm(BMI18 ~ WT2 + WT9 + WT18, BGSgirls) -->
+<!-- faraway::sumary(m1) -->
+<!-- ``` -->
+<!-- ### BMI relation to WT2, DW9 and DW18 -->
+<!-- ```{r} -->
+<!-- m2 <- lm(BMI18 ~ WT2 + DW9 + DW18, BGSgirls) -->
+<!-- faraway::sumary(m2) -->
+<!-- ``` -->
+<!-- ### BMI relation to WT2, WT9, WT18, DW9 and DW18 -->
+<!-- ```{r} -->
+<!-- m3 <- lm(BMI18 ~ WT2 + WT9 + WT18 + DW9 + DW18, BGSgirls) -->
+<!-- faraway::sumary(m3) -->
+<!-- ``` -->
+<!-- ```{r} -->
+<!-- coef(m1) -->
+<!-- coef(m2) -->
+<!-- coef(m3) -->
+<!-- ``` -->
+<!-- Regressor | Model 1 | Model 2 | Model 3     -->
+<!-- ----------|---------|---------|----------       -->
+<!-- Intercept  | 8.298         | 8.298        | 8.298    -->
+<!--   CI         | (5.00,11.62)  | (5.00,11.62) | (5.00,11.62) -->
+<!-- WT2  | -0.383        | -0.065       | -0.383 -->
+<!--  CI  | (-0.69,-0.08) | (-0.32,0.19) | (-0.69,-0.08) -->
+<!-- WT9  | 0.032         | --           | 0.032  -->
+<!--  CI  | (-0.06,0.13)  | --           | (-0.06,0.13) -->
+<!-- WT18 | 0.287         | --           | -- -->
+<!-- CI   | (0.23,0.34)   | --           | -- -->
+<!-- DW9  |  --           | 0.318        | NA -->
+<!--  CI  |  --           | (0.24,0.40)  | NA -->
+<!-- DW18 |  --           | 0.287        | NA -->
+<!--   CI |  --           | (0.23,0.34)  | NA -->
+<!-- 10. **Comment on how the WT2 coefficient is the same/different in the different models.** -->
+<!-- When regressors are correlated, interpretation of the effect of a regressor depends not only on the other regressors in the model, but also upon the linear transformation of the variables used. -->
+<!-- 11. **Why are their NAs in Model 3?** -->
+<!-- ## Effect Plots -->
+<!-- An **effect plot** displays effect of a regressor on the mean response while holding the other regressors at their mean values. -->
+<!-- $$ \hat{y} = \beta_0 + \beta_1 (\bar{X}_1) + \beta_2 (\bar{X}_2) + \ldots + \beta_{i-1} (\bar{X}_{i-1}) + \beta_i (X_i) + \beta_{i+1} (\bar{X}_{i+1}) + \ldots + + \beta_{p-1} (\bar{X}_{p-1})$$ -->
+<!-- ```{r} -->
+<!-- summary(lmod)$coefficients -->
+<!-- ``` -->
+<!-- 12. **Complete the code below to extract each of the coefficients in the Fuel Consumption model `lmod` from the coefficient array above.** -->
+<!-- ```{r} -->
+<!-- b0 <- summary(lmod)$coefficients[1] #beta_0 -->
+<!-- b1 <- summary(lmod)$coefficients[2] #beta_1 -->
+<!-- b2 <- summary(lmod)$coefficients[3] #beta_2 -->
+<!-- b3 <- summary(lmod)$coefficients[4] #beta_3 -->
+<!-- b4 <- summary(lmod)$coefficients[5] #beta_4 -->
+<!-- ``` -->
+<!-- 12. Complete the R code below to compute the sample means for each of the regressors. -->
+<!-- ```{r} -->
+<!-- xbar.Tax <- mean(fuel2001$Tax) -->
+<!-- xbar.Dlic <- mean(fuel2001$Dlic) -->
+<!-- xbar.Income1K <- mean(fuel2001$Income1K) -->
+<!-- xbar.Miles <- mean(fuel2001$Miles) -->
+<!-- ``` -->
+<!-- 13. **What is the effect of `Tax` on expected Fuel consumption when the other regressors are fixed at the sample mean values? Write a formula to express this relation.** -->
+<!-- Thus we have the model -->
+<!-- $$\mbox{E}(\mbox{Fuel} \ | \ \mbox{Tax, Dlic=??, Income1K=??, log(Miles) = ??}) = ?? - ??(\mbox{Tax})$$ -->
+<!-- ```{r} -->
+<!-- library(effects) # for Effect function -->
+<!-- # effect plot for Tax regressor -->
+<!-- plot(Effect("Tax", lmod)) -->
+<!-- ``` -->
+<!-- 14. **If instead of fixing the values of the regressors at their mean, we choose other values such as the minimum value of each of regressors. What effect (if any) would this have on the graph above?** -->
+<!-- ## Regressors on Logarithmic Scale -->
+<!-- Logarithms are commonly used both for the response and for regressors. -->
+<!-- ```{r} -->
+<!-- summary(fuel2001) -->
+<!-- ``` -->
+<!-- 15. **Based on the summary output above, why do you think we used a log scale on `Miles`?** -->
+<!-- In the code block below, we create new variables that are the natural log and log base 10 of Miles and recreate the linear model using each of these new variables. -->
+<!-- ```{r} -->
+<!-- fuel2001$LnMiles <- log(fuel2001$Miles) -->
+<!-- fuel2001$LogMiles <- log10(fuel2001$Miles) -->
+<!-- lmod.ln <- lm(Fuel ~ Tax + Dlic + Income1K + LnMiles, data = fuel2001) -->
+<!-- lmod.log <- lm(Fuel ~ Tax + Dlic + Income1K + LogMiles, data = fuel2001) -->
+<!-- faraway::sumary(lmod.ln) #Check that model is the same -->
+<!-- faraway::sumary(lmod.log) #Check that model is the same -->
+<!-- ``` -->
+<!-- ## Below we create an effects plot on a natural log scale. -->
+<!-- ```{r} -->
+<!-- plot(Effect("LnMiles", lmod.ln),  -->
+<!--      main = "ln(Miles) effect plot") -->
+<!-- ``` -->
+<!-- ## Below we create an effects plot on a log10 scale. -->
+<!-- ```{r} -->
+<!-- plot(Effect("LogMiles", lmod.log),  -->
+<!--      main = "log(Miles) effect plot") -->
+<!-- ``` -->
+<!-- ## Below we create an effects plot on a regular scale. -->
+<!-- ```{r} -->
+<!-- plot(Effect("Miles", lmod,  -->
+<!--             xlevels = list(Miles = seq(1, 3e5, len = 301)))) -->
+<!-- ``` -->
+<!-- The effect of increasing Miles is greater in states with fewer miles of roadway, with relatively little change in states with the most roadway.  -->
+<!-- This is the usual effect of logarithms: the fitted effect changes most rapidly when the regressor is small and less rapidly when the predictor is large. -->
+<!-- ## Interpreting Coefficients with Log Scale on Regressor -->
+<!-- ### Natural Log Scale  -->
+<!-- Regressor $X_j$ increasing by 1% while the other regressors remain constant is associated with a $\beta_j/100$ increase in the response variable, on average. -->
+<!-- 16. **Interpret the meaning of the coefficient associated to the natural log of Miles which you can find below.** -->
+<!-- ```{r} -->
+<!-- summary(lmod.ln)$coefficients[5, 1] #ln coeff -->
+<!-- ``` -->
+<!-- ### Common Log (base 10) Scale  -->
+<!-- Regressor $X_j$ increasing by a factor of 10 (an increase of 900%) while the other regressors remain constant is associated with a $\beta_j$ increase in the response variable, on average. -->
+<!-- 17. **Interpret the meaning of the coefficient associated to the log base 10 of Miles which you can find below.** -->
+<!-- ```{r} -->
+<!-- summary(lmod.log)$coefficients[5, 1] #log coeff -->
+<!-- ``` -->
+<!-- ## Log-Level Interpretation -->
+<!-- It is common for responses to be transformed to a logarithmic scale for theoretical or practical considerations.   -->
+<!-- $$\mbox{E}( \log{Y} \ | \ X)= \beta_0 + \beta_1 X.$$ -->
+<!-- This is sometimes called a **log-level model**.  -->
+<!-- - A unit increase in $X$ is associated with a change in the mean $Y$ by the multiplicative effect $\exp^{\beta_1}$. -->
+<!-- - **Thus $beta_1$ is the continuous exponential growth/decay rate.** -->
+<!-- It is often acceptable to approximate the expected value of a log by the log of the expected value: -->
+<!-- $$\log{( \mbox{E}(Y \ | \ X=x) )} \approx\mbox{E}(\log{Y} \ | \ X=x)$$ -->
+<!-- Thus, we have -->
+<!-- $$\mbox{E}(Y \ | \ X=x) \approx e^{\rm{E}(\log{Y} \ | \ X=x)} = e^{\beta_0 + \beta_1 X}=e^{\beta_0}e^{\beta_1X}.$$ -->
+<!-- ## Log-log Interpretation -->
+<!-- Consider the log-log simple linear regression model -->
+<!-- $$\mbox{E}( \log{Y} \ | \ X) = \beta_0 + \beta_1 \log{X}.$$ -->
+<!-- When we scale $X$ by a factor of $c$, the response is predicted to grow by a factor of $c^{\beta_1}$, on average. -->
+<!-- ## Summary of Interpretations (Simple Linear Regression) -->
+<!-- **Level-level**: $\mathbf{\mbox{E}(Y \ | \ X=x)} = \boldsymbol\beta_0 + \boldsymbol\beta_1 X$: The predicted change in the response is $\beta_1$ when we increase $X$ by 1 unit, on average. -->
+<!-- **Level-log**: $\mathbf{\mbox{E}(Y \ | \ X=x)} = \boldsymbol\beta_0 + \boldsymbol\beta_1 \log{X}$: When we increase $X$ by 1%, the response is predicted to increase by  $\beta_j/100$, on average. -->
+<!-- **Log-level**: $\mathbf{\mbox{E}(\log{Y} \ | \ X=x) = \boldsymbol\beta_0 + \boldsymbol\beta_1 X}$: A unit increase in $X$ is predicted to change the response by a factor of $e^{\beta_1}$, on average. The continuous growth rate is $\beta_1$. -->
+<!-- **Log-log**: $\mathbf{\mbox{E}(\log{Y} \ | \ X=x) = \boldsymbol\beta_0 + \boldsymbol\beta_1 \log{X}}$: When we scale $X$ by a factor of $c$, the response is predicted to grow by a factor of $c^{\beta_1}$, on average. -->
+<!-- ## More Practice -->
+<!-- 1. For a log-level model, interpret the relationship between $X$ and the mean of $Y$ when $X$ increases by 1 unit and $\beta_j=0.3$ and the other predictors do not change. -->
+<!-- 2. For a log-log model, what is the expected change in $Y$ if we multiply $X$ by a factor of $c$. -->
+<!-- <!-- 3. For a log-log model, interpret the relationship between $X$ and the expected value of $Y$ when $X$ increases by $10\%$ and $\beta_1=0.3$. -->
+<p>–&gt;</p>
+<!-- ## Exercises -->
+<!-- 1. If given a set of data with several variables, how would you decide what the response variable and the predictor variables would be? -->
+<!-- 1. Which objects in the linear model formula in Equation \@ref(eq:lmdef) are considered random? Which are considered fixed? -->
+<!-- 1. Which objects in the linear model formula in Equation \@ref(eq:lmdef) are observable? Which are not observable? -->
+<!-- 1. What are the typical goals of a regression analysis? -->
+<!-- 1. List the typical assumptions made for the errors in a linear model. -->
+<!-- 1. Without using a formula, what is the basic difference between a linear model and a non-linear model? -->
+<!-- 1. Assuming that $\boldsymbol{\epsilon} ~ N(\mathbf{0}_{n\times 1}, \sigma^2 I_n)$ and $\mathbf{y}  = \mathbf{X}\boldsymbol{\beta} + \boldsymbol{\epsilon}$, show that: -->
+<!--     a. $E(\mathbf{y}) = \mathbf{X}\boldsymbol{\beta}$. -->
+<!--     a. $\mathrm{var}(\mathbf{y}) = \sigma^2 I_n$. -->
+<!-- 1. In the context of simple linear regression under the standard assumptions, show that: -->
+<!--     a. $\beta_0=E(Y|X=0)$. -->
+<!--     a. $\beta_1=E(Y|X=x_0+1)-E(Y|X=x_0)$. -->
+<!-- 1. In the context of multiple linear regression under the standard assumptions, show that: -->
+<!--     a. $\beta_0=E(Y|X_1=0,\ldots,X_{p-1}=0)$. -->
+<!--     b. For $j=1,2,\ldots,p-1$, $\beta_j=E(Y|\mathbb{X}_{-j} = \mathbf{x}^*, X_{j+1} = x_{0}+1)-E(Y|\mathbb{X}_{-j} = \mathbf{x}^*, X_{j+1} = x_{0})$ where $\mathbf{x}^*$ is a fixed vector of the appropriate size. -->
+
+</div>
+</div>
+</div>
+<h3>References<a href="references.html#references" class="anchor-section" aria-label="Anchor link to header"></a></h3>
+<div id="refs" class="references csl-bib-body hanging-indent">
+<div id="ref-lmwr2" class="csl-entry">
+Faraway, Julian J. 2014. <em>Linear Models with r</em>. Second. Chapman; Hall/CRC.
+</div>
+<div id="ref-fox2020predictor" class="csl-entry">
+Fox, John, and Sanford Weisberg. 2020. <span>“Predictor Effects Graphics Gallery.”</span> <a href="https://cran.r-project.org/web/packages/effects/vignettes/predictor-effects-gallery.pdf">https://cran.r-project.org/web/packages/effects/vignettes/predictor-effects-gallery.pdf</a>.
+</div>
+<div id="ref-R-effects" class="csl-entry">
+Fox, John, Sanford Weisberg, Brad Price, Michael Friendly, and Jangman Hong. 2022. <em>Effects: Effect Displays for Linear, Generalized Linear, and Other Models</em>. <a href="https://CRAN.R-project.org/package=effects">https://CRAN.R-project.org/package=effects</a>.
+</div>
+</div>
+            </section>
+
+          </div>
+        </div>
+      </div>
+<a href="linear-model-estimation.html" class="navigation navigation-prev " aria-label="Previous page"><i class="fa fa-angle-left"></i></a>
+<a href="linear-model-theory.html" class="navigation navigation-next " aria-label="Next page"><i class="fa fa-angle-right"></i></a>
+    </div>
+  </div>
+<script src="libs/gitbook-2.6.7/js/app.min.js"></script>
+<script src="libs/gitbook-2.6.7/js/clipboard.min.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-search.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-sharing.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-fontsettings.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-bookdown.js"></script>
+<script src="libs/gitbook-2.6.7/js/jquery.highlight.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-clipboard.js"></script>
+<script>
+gitbook.require(["gitbook"], function(gitbook) {
+gitbook.start({
+"sharing": {
+"github": false,
+"facebook": true,
+"twitter": true,
+"linkedin": false,
+"weibo": false,
+"instapaper": false,
+"vk": false,
+"whatsapp": false,
+"all": ["facebook", "twitter", "linkedin", "weibo", "instapaper"]
+},
+"fontsettings": {
+"theme": "white",
+"family": "sans",
+"size": 2
+},
+"edit": {
+"link": null,
+"text": null
+},
+"history": {
+"link": null,
+"text": null
+},
+"view": {
+"link": null,
+"text": null
+},
+"download": ["A-Progessive-Introduction-to-Linear-Models.pdf", "A-Progessive-Introduction-to-Linear-Models.epub"],
+"search": {
+"engine": "fuse",
+"options": null
+},
+"toc": {
+"collapse": "subsection"
+}
+});
+});
+</script>
+
+<!-- dynamically load mathjax for compatibility with self-contained -->
+<script>
+  (function () {
+    var script = document.createElement("script");
+    script.type = "text/javascript";
+    var src = "true";
+    if (src === "" || src === "true") src = "https://mathjax.rstudio.com/latest/MathJax.js?config=TeX-MML-AM_CHTML";
+    if (location.protocol !== "file:")
+      if (/^https?:/.test(src))
+        src = src.replace(/^https?:/, '');
+    script.src = src;
+    document.getElementsByTagName("head")[0].appendChild(script);
+  })();
+</script>
+</body>
+
+</html>
