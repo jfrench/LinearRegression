@@ -80,7 +80,15 @@ E(\mathbf{y}\mid \mathbf{X})=\mathbf{X}\boldsymbol{\beta}. (\#eq:mean-y)
 :::
 
 :::{.proof}
-Some text.
+\[
+\begin{align}
+E(\mathbf{y}|\mathbf{X})&=E(\mathbf{X}\boldsymbol{\beta}+\epsilon|\mathbf{X})&\tiny\text{(by definition)}\\
+&=E(\mathbf{X}\boldsymbol{\beta}|\mathbf{X})+E(\epsilon|\mathbf{X})&\tiny\text{(linearity of expectation)}\\
+&=E(\mathbf{X}\boldsymbol{\beta}|\mathbf{X})+\mathbf{0}&\tiny\text{(by assumption about }\epsilon)\\
+&=\mathbf{X}\boldsymbol{\beta}&\tiny\text{(since }\mathbf{X}\text{ and } \boldsymbol{\beta} \text{ are constant})\\
+&\square
+\end{align}
+\]
 :::
 
 ::: {.theorem #var-y}
@@ -93,7 +101,14 @@ For the linear model given in Equation \@ref(eq:linear-model-def-matrix) and und
 :::
 
 :::{.proof}
-Some text.
+\[
+\begin{align}
+\text{var}(\mathbf{y}|\mathbf{X})&=\text{var}(\mathbf{X}\boldsymbol{\beta}+\epsilon|\mathbf{X})&\tiny\text{(bydefinition)}\\
+&=\text{var}(\epsilon|\mathbf{X})&\tiny(\mathbf{X}\boldsymbol{\beta}\text{ is constant)}\\
+&=\sigma^2\mathbf{I}&\tiny\text{(by assumption)}\\
+&\square
+\end{align}
+\]
 :::
 
 ::: {.theorem #dist-properties-y}
