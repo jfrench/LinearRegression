@@ -82,9 +82,9 @@ E(\mathbf{y}\mid \mathbf{X})=\mathbf{X}\boldsymbol{\beta}. (\#eq:mean-y)
 :::{.proof}
 \[
 \begin{align}
-E(\mathbf{y}|\mathbf{X})&=E(\mathbf{X}\boldsymbol{\beta}+\epsilon|\mathbf{X})&\tiny\text{(by definition)}\\
-&=E(\mathbf{X}\boldsymbol{\beta}|\mathbf{X})+E(\epsilon|\mathbf{X})&\tiny\text{(linearity of expectation)}\\
-&=E(\mathbf{X}\boldsymbol{\beta}|\mathbf{X})+\mathbf{0}&\tiny\text{(by assumption about }\epsilon)\\
+E(\mathbf{y}|\mathbf{X})&=E(\mathbf{X}\boldsymbol{\beta}+\boldsymbol\epsilon|\mathbf{X})&\tiny\text{(by definition)}\\
+&=E(\mathbf{X}\boldsymbol{\beta}|\mathbf{X})+E(\boldsymbol\epsilon|\mathbf{X})&\tiny\text{(linearity of expectation)}\\
+&=E(\mathbf{X}\boldsymbol{\beta}|\mathbf{X})+\mathbf{0}_{n\times 1}&\tiny\text{(by assumption about }\epsilon)\\
 &=\mathbf{X}\boldsymbol{\beta}&\tiny\text{(since }\mathbf{X}\text{ and } \boldsymbol{\beta} \text{ are constant})\\
 &\square
 \end{align}
@@ -103,9 +103,9 @@ For the linear model given in Equation \@ref(eq:linear-model-def-matrix) and und
 :::{.proof}
 \[
 \begin{align}
-\text{var}(\mathbf{y}|\mathbf{X})&=\text{var}(\mathbf{X}\boldsymbol{\beta}+\epsilon|\mathbf{X})&\tiny\text{(bydefinition)}\\
-&=\text{var}(\epsilon|\mathbf{X})&\tiny(\mathbf{X}\boldsymbol{\beta}\text{ is constant)}\\
-&=\sigma^2\mathbf{I}&\tiny\text{(by assumption)}\\
+\text{var}(\mathbf{y}|\mathbf{X})&=\text{var}(\mathbf{X}\boldsymbol{\beta}+\boldsymbol\epsilon|\mathbf{X})&\tiny\text{(bydefinition)}\\
+&=\text{var}(\boldsymbol\epsilon|\mathbf{X})&\tiny(\mathbf{X}\boldsymbol{\beta}\text{ is constant)}\\
+&=\sigma^2\mathbf{I}_{n\times n}&\tiny\text{(by assumption)}\\
 &\square
 \end{align}
 \]
@@ -124,7 +124,7 @@ For the linear model given in Equation \@ref(eq:linear-model-def-matrix) and und
 How do we know that Equation \@ref(eq:dist-properties-y) is true? Show that:
 
 * $E(\mathbf{y}) = \mathbf{X}\boldsymbol{\beta}$ and
-* $\mathrm{var}(\mathbf{y}) = \sigma^2 I_n$.
+* $\mathrm{var}(\mathbf{y}) = \sigma^2 \mathbf{I}_{n\times n}$.
 * Note $\mathbf{y}$ is a linear function of the multivariate normal vector $\boldsymbol{\epsilon}$, so $\mathbf{y}$ must also have a multivariate normal distribution.
 :::
 
@@ -141,38 +141,23 @@ is an unbiased estimator for $\boldsymbol{\beta}$, i.e.,
 E(\hat{\boldsymbol{\beta}}\mid \mathbf{X})=\boldsymbol{\beta}.(\#eq:unbiasedness-betahat)
 \end{equation}
 \]
-
-**Lemma: ** $E(y|X)=X\beta$
-
-\[
-\begin{align}
-E(y|\beta)&=E(X\beta+\epsilon|X)&\tiny\text{(definition of }y)\\
-&=E(X\beta|X)+E(\epsilon|X)&\tiny\text{(linearity of expectation)}\\
-&=E(X\beta|X)+0&\tiny\text{(by assumption)}\\
-&=X\beta&\tiny(X \text{ and } \beta\text{ are constant objects)}
-\end{align}
-\]
-
-**Lemma: ** $\text{var}(y|X)=\sigma^2I$
-
-\[
-\begin{align}
-\text{var}(y|X)&=\text{var}(X\beta+\epsilon|X)\\
-&=var(\epsilon|X)&\tiny(X\beta \text{ is a constant object)}\\
-&=\sigma^2I&\tiny\text{(by assumption)}
-\end{align}
-\]
 :::
 
 :::{.proof}
+We previously derived the following results,
+\[E(\mathbf{y}|\mathbf{X})=\mathbf{X}\boldsymbol\beta\]
+
+\[\text{var}(\mathbf{y}|\mathbf{X})=\sigma^2\mathbf{I}_{n\times n}\]
+
+Then,
 
 \[
 \begin{align}
-E(\hat\beta|X)&=E((X^TX)^{-1}X^Ty|X)&\tiny\text{(by OLS formula)}\\
-&=(X^TX)^{-1}X^TE(y|X)&\tiny(X \text{ is a constant matrix)}\\
-&=(X^TX)^{-1}X^TX&\tiny\text{(above result)}\\
-&=I\beta&\tiny\text{(property of inverse matrices)}\\
-&=\beta\\
+E(\hat{\boldsymbol{\beta}}|\mathbf{X})&=E((\mathbf{X}^T\mathbf{X})^{-1}\mathbf{X}^T\mathbf{y}|\mathbf{X})&\tiny\text{(by OLS formula)}\\
+&=(\mathbf{X}^T\mathbf{X})^{-1}X^TE(\mathbf{y}|\mathbf{X})&\tiny(\mathbf{X} \text{ is a constant matrix)}\\
+&=(\mathbf{X}^T\mathbf{X})^{-1}\mathbf{X}^T\mathbf{X}&\tiny\text{(above result)}\\
+&=\mathbf{I}\boldsymbol\beta&\tiny\text{(property of inverse matrices)}\\
+&=\boldsymbol\beta\\
 &\square
 \end{align}
 \]
@@ -192,12 +177,12 @@ For the linear model given in Equation \@ref(eq:linear-model-def-matrix) and und
 
 \[
 \begin{align}
-\text{var}(\hat\beta|X)&=\text{var}((X^TX)^{-1}X^Ty|X)&\tiny\text{(by OLS formula)}\\
-&=(X^TX)^{-1}X^T\text{var}(y|X)((X^TX)^{-1}X^T)^T&\tiny\text{(pull constants out of variance)}\\
-&=(X^TX)^{-1}X^T\text{var}(y|X)X(X^TX)^{-1}&\tiny\text{(simplification)}\\
-&=(X^TX)^{-1}X^T(\sigma^2I)X(X^TX)^{-1}&\tiny\text{(previous result)}\\
-&=\sigma^2(X^TX)^{-1}X^TX(X^TX)^{-1}&\tiny(\sigma^2 \text{ is a scalar)}\\
-&=\sigma^2(X^TX)^{-1}&\tiny\text{(simplpification)}\\
+\text{var}(\hat{\boldsymbol\beta}|\mathbf{X})&=\text{var}((\mathbf{X}^T\mathbf{X})^{-1}\mathbf{X}^T\mathbf{y}|\mathbf{X})&\tiny\text{(by OLS formula)}\\
+&=(\mathbf{X}^T\mathbf{X})^{-1}\mathbf{X}^T\text{var}(\mathbf{y}|\mathbf{X})((\mathbf{X}^T\mathbf{X})^{-1}\mathbf{X}^T)^T&\tiny\text{(pull constants out of variance)}\\
+&=(\mathbf{X}^T\mathbf{X})^{-1}\mathbf{X}^T\text{var}(\mathbf{y}|\mathbf{X})\mathbf{X}(\mathbf{X}^T\mathbf{X})^{-1}&\tiny\text{(simplification)}\\
+&=(\mathbf{X}^T\mathbf{X})^{-1}\mathbf{X}^T(\sigma^2\mathbf{I})\mathbf{X}(\mathbf{X}^T\mathbf{X})^{-1}&\tiny\text{(previous result)}\\
+&=\sigma^2(\mathbf{X}^T\mathbf{X})^{-1}\mathbf{X}^T\mathbf{X}(\mathbf{X}^T\mathbf{X})^{-1}&\tiny(\sigma^2 \text{ is a scalar)}\\
+&=\sigma^2(\mathbf{X}^T\mathbf{X})^{-1}&\tiny\text{(simplpification)}\\
 &\square
 \end{align}
 \]
@@ -214,10 +199,10 @@ For the linear model given in Equation \@ref(eq:linear-model-def-matrix) and und
 :::
 
 :::{.proof}
-Since $\hat\beta=(X^TX)^{-1}X^Ty$ is a linear combination of $y$, and $y$ is a multivariate normal random vector, then $\hat\beta$ is also a multivariate normal random vector. Using the previous two results for the expectation and variance, 
+Since $\hat{\boldsymbol\beta}=(\mathbf{X}^T\mathbf{X})^{-1}\mathbf{X}^T\mathbf{y}$ is a linear combination of $\mathbf{y}$, and $\mathbf{y}$ is a multivariate normal random vector, then $\hat{\boldsymbol\beta}$ is also a multivariate normal random vector. Using the previous two results for the expectation and variance, 
 
 \[
-\hat\beta|X \sim N(\beta,\sigma^2(X^TX)^{-1})
+\hat{\boldsymbol\beta}|\mathbf{X} \sim N(\boldsymbol\beta,\sigma^2(\mathbf{X}^T\mathbf{X})^{-1})
 \]
 
 :::
@@ -260,30 +245,30 @@ The hat matrix $\mathbf{H}$ is symmetric and idempotent.
 Notice that,
 \[
 \begin{align}
-H^T&=(X(X^TX)^{-1}X^T)^T&\tiny\text{(definition of }H)\\
-&=(X^T)^T((X^TX)^{-1})^TX^T&\tiny\text{(apply transpose to matrix product)}\\
-&=X((X^TX)^T)^{-1}X^T&\tiny\text{(simplification, reversibility of inverse and transpose)}\\
-&=X(X^T(X^T)^T)^{-1}X^T&\tiny\text{(apply transpose to matrix product)}\\
-&=X(X^TX)^{-1}X^T&\tiny\text{(simplification)}\\
-&=H\\
+\mathbf{H}^T&=(\mathbf{X}(\mathbf{X}^T\mathbf{X})^{-1}\mathbf{X}^T)^T&\tiny\text{(definition of }H)\\
+&=(\mathbf{X}^T)^T((\mathbf{X}^T\mathbf{X})^{-1})^T\mathbf{X}^T&\tiny\text{(apply transpose to matrix product)}\\
+&=\mathbf{X}((\mathbf{X}^T\mathbf{X})^T)^{-1}\mathbf{X}^T&\tiny\text{(simplification, reversibility of inverse and transpose)}\\
+&=\mathbf{X}(\mathbf{X}^T(\mathbf{X}^T)^T)^{-1}\mathbf{X}^T&\tiny\text{(apply transpose to matrix product)}\\
+&=\mathbf{X}(\mathbf{X}^T\mathbf{X})^{-1}\mathbf{X}^T&\tiny\text{(simplification)}\\
+&=\mathbf{H}\\
 &\square
 \end{align}
 \]
-Thus, $H$ is symmetric.
+Thus, $\mathbf{H}$ is symmetric.
 
 Additionally,
 \[
 \begin{align}
-HH&=(X(X^TX)^{-1}X^T)(X(X^TX)^{-1}X^T)&\tiny\text{(definition)}\\
-&=X(X^TX)^{-1}(X^TX)(X^TX)^{-1}X^t&\tiny\text{(associative property of matrices)}\\
-&=XI(X^TX)^{-1}X^T&\tiny\text{(property of inverse matrices)}\\
-&=X(X^TX)^{-1}X^T&\tiny\text{(simplification)}\\
-&=H\\
+\mathbf{H}\mathbf{H}&=(\mathbf{X}(\mathbf{X}^T\mathbf{X})^{-1}\mathbf{X}^T)(\mathbf{X}(\mathbf{X}^T\mathbf{X})^{-1}\mathbf{X}^T)&\tiny\text{(definition)}\\
+&=\mathbf{X}(\mathbf{X}^T\mathbf{X})^{-1}(\mathbf{X}^T\mathbf{X})(\mathbf{X}^T\mathbf{X})^{-1}\mathbf{X}^t&\tiny\text{(associative property of matrices)}\\
+&=\mathbf{X}\mathbf{I}(\mathbf{X}^T\mathbf{X})^{-1}\mathbf{X}^T&\tiny\text{(property of inverse matrices)}\\
+&=\mathbf{X}(\mathbf{X}^T\mathbf{X})^{-1}\mathbf{X}^T&\tiny\text{(simplification)}\\
+&=\mathbf{H}\\
 &\square
 \end{align}
 \]
 
-Therefore, $H$ is idempotent.
+Therefore, $\mathbf{H}$ is idempotent.
 
 :::
 
@@ -296,23 +281,23 @@ The matrix $\mathbf{I}_{n\times n} - \mathbf{H}$ is symmetric and idempotent.
 First, notice that,
 \[
 \begin{align}
-(I-H)^T &= I^T-H^T&\tiny\text{(transpose to matrix sum)}\\
-&= I-H&\tiny\text{(since I and H are symmetric)}\\
+(\mathbf{I}-\mathbf{H})^T &= \mathbf{I}^T-\mathbf{H}^T&\tiny\text{(transpose to matrix sum)}\\
+&= \mathbf{I}-\mathbf{H}&\tiny\text{(since }\mathbf{I}\text{ and }\mathbf{H}\text{ are symmetric)}\\
 &\square
 \end{align}
 \]
-Thus, $I-H$ is symmetric.
+Thus, $\mathbf{I}_{n\times n}-\mathbf{H}$ is symmetric.
 
 Next,
 \[
 \begin{align}
-(I-H)(I-H)&=I-2H+HH&\tiny\text{(transpose to matrix sum)}\\
-&=I-2H+H&\tiny\text{(since H is idempotent)}\\
-&=I-H&\tiny\text{(simplification)}\\
+(\mathbf{I}-\mathbf{H})(\mathbf{I}-\mathbf{H})&=\mathbf{I}-2\mathbf{H}+\mathbf{H}\mathbf{H}&\tiny\text{(transpose to matrix sum)}\\
+&=\mathbf{I}-2\mathbf{H}+\mathbf{H}&\tiny\text{(since H is idempotent)}\\
+&=\mathbf{I}-\mathbf{H}&\tiny\text{(simplification)}\\
 &\square
 \end{align}
 \]
-Thus, $I-H$ is idempotent.
+Thus, $\mathbf{I}_{n\times n}-\mathbf{H}$ is idempotent.
 
 :::
 
@@ -320,7 +305,7 @@ Thus, $I-H$ is idempotent.
 For the linear model given in Equation \@ref(eq:linear-model-def-matrix) and under the assumptions summarized in Equation \@ref(eq:error-assumptions-matrix),
 \[
 \begin{equation}
-E(\hat{\boldsymbol{\epsilon}}\mid \mathbf{X})=0_{n\times 1}.(\#eq:mean-residuals)
+E(\hat{\boldsymbol{\epsilon}}\mid \mathbf{X})=\mathbf{0}_{n\times 1}.(\#eq:mean-residuals)
 \end{equation}
 \]
 :::
@@ -329,14 +314,14 @@ E(\hat{\boldsymbol{\epsilon}}\mid \mathbf{X})=0_{n\times 1}.(\#eq:mean-residuals
 
 \[
 \begin{align}
-E(\hat\epsilon|X)&=E((I-H)y|H)\\
-&=(I-H)E(y|X)&\tiny(I-H\text{ is non-random)}\\
-&=(I-H)X\beta&\tiny\text{(earlier result)}\\
-&=X\beta-HX\beta&\tiny\text{(distribute the product)}\\
-&=X\beta-X^T(X^TX)^{-1}X^TX\beta&\tiny\text{(definition of H)}\\
-&=X\beta-IX\beta&\tiny\text{(property of inverse matrix)}\\
-&=X\beta-X\beta&\tiny\text{(simplification)}\\
-&=0_{n\times1}&\tiny\text{(simplification)}\\
+E(\hat{\boldsymbol{\epsilon}}|\mathbf{X})&=E((\mathbf{I}-\mathbf{H})\mathbf{y}|\mathbf{X})\\
+&=(\mathbf{I}-\mathbf{H})E(\mathbf{y}|\mathbf{X})&\tiny(\mathbf{I}-\mathbf{H}\text{ is non-random)}\\
+&=(\mathbf{I}-\mathbf{H})\mathbf{X}\boldsymbol\beta&\tiny\text{(earlier result)}\\
+&=\mathbf{X}\boldsymbol\beta-\mathbf{X}\boldsymbol\beta&\tiny\text{(distribute the product)}\\
+&=\mathbf{X}\boldsymbol\beta-\mathbf{X}^T(\mathbf{X}^T\mathbf{X})^{-1}\mathbf{X}^T\mathbf{X}\boldsymbol\beta&\tiny\text{(definition of H)}\\
+&=\mathbf{X}\boldsymbol\beta-\mathbf{I}\mathbf{X}\boldsymbol\beta&\tiny\text{(property of inverse matrix)}\\
+&=\mathbf{X}\boldsymbol\beta-\mathbf{X}\boldsymbol\beta&\tiny\text{(simplification)}\\
+&=\mathbf{0}_{n\times1}&\tiny\text{(simplification)}\\
 &\square
 \end{align}
 \]
@@ -356,11 +341,11 @@ For the linear model given in Equation \@ref(eq:linear-model-def-matrix) and und
 
 \[
 \begin{align}
-\text{var}(\hat\epsilon|X)&=\text{var}((I-H)y|X)\\
-&=(I-H)\text{var}(y|X)(I-H)^T&\tiny(I-H\text{is nonrandom)}\\
-&=(I-H)\sigma^2(I-H)^T&\tiny\text{(earlier result)}\\
-&=\sigma^2(I-H)(I-H)&\tiny(I-H\text{ is symmetric)}\\
-&=\sigma^2(I-H)&\tiny(I-H\text{ is idempotent)}\\
+\text{var}(\hat{\boldsymbol{\epsilon}}|\mathbf{X})&=\text{var}((\mathbf{I}-\mathbf{H})y|\mathbf{X})\\
+&=(\mathbf{I}-\mathbf{H})\text{var}(\mathbf{y}|\mathbf{X})(\mathbf{I}-\mathbf{H})^T&\tiny(\mathbf{I}-\mathbf{H}\text{ is nonrandom)}\\
+&=(\mathbf{I}-\mathbf{H})\sigma^2(\mathbf{I}-\mathbf{H})^T&\tiny\text{(earlier result)}\\
+&=\sigma^2(\mathbf{I}-\mathbf{H})(\mathbf{I}-\mathbf{H})&\tiny(I-H\text{ is symmetric)}\\
+&=\sigma^2(\mathbf{I}-\mathbf{H})&\tiny(I-H\text{ is idempotent)}\\
 &\square
 \end{align}
 \]
@@ -379,24 +364,24 @@ For the linear model given in Equation \@ref(eq:linear-model-def-matrix) and und
 
 :::{.proof}
 
-Since $\hat\epsilon$  is a linear combination of multivariate normal vectors, and using previous results, it has mean $0_{n\times1}$ and variance-covariance matrix $\sigma^2(I-H)$.
+Since $\hat{\boldsymbol{\epsilon}}$  is a linear combination of multivariate normal vectors, and using previous results, it has mean $\mathbf{0}_{n\times1}$ and variance-covariance matrix $\sigma^2(\mathbf{I}-\mathbf{H})$.
 
 The RSS can be represented as,
 \[
-y^T(I-H)y
+\mathbf{y}^T(\mathbf{I}-\mathbf{H})\mathbf{y}
 \]
 
 Thus,
 
-$$
+\[
 \begin{align}
-RSS &= \hat\epsilon^T\hat\epsilon\\
-&=((I-H)y)^T(I-H)y&\tiny\text{(previous result)}\\
-&=y^T(I-H)^T(I-H)y&\tiny\text{(apply transpose)}\\
-&=y^T(I-H)(I-H)y&\tiny(I-H \text{ is symmetric)}\\
-&=y^T(I-H)y&\tiny(I-H \text{ is idempotent)}\\
+RSS &= \hat{\boldsymbol{\epsilon}}^T\hat{\boldsymbol{\epsilon}}\\
+&=((\mathbf{I}-\mathbf{H})\mathbf{y})^T(\mathbf{I}-\mathbf{H})\mathbf{y}&\tiny\text{(previous result)}\\
+&=\mathbf{y}^T(\mathbf{I}-\mathbf{H})^T(\mathbf{I}-\mathbf{H})\mathbf{y}&\tiny\text{(apply transpose)}\\
+&=\mathbf{y}^T(\mathbf{I}-\mathbf{H})(\mathbf{I}-\mathbf{H})\mathbf{y}&\tiny(I-H \text{ is symmetric)}\\
+&=\mathbf{y}^T(\mathbf{I}-\mathbf{H})\mathbf{y}&\tiny(I-H \text{ is idempotent)}\\
 \end{align}
-$$
+\]
 
 :::
 
