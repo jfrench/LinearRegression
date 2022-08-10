@@ -51,13 +51,6 @@
 <link href="libs/anchor-sections-1.1.0/anchor-sections.css" rel="stylesheet" />
 <link href="libs/anchor-sections-1.1.0/anchor-sections-hash.css" rel="stylesheet" />
 <script src="libs/anchor-sections-1.1.0/anchor-sections.js"></script>
-<script src="libs/htmlwidgets-1.5.4/htmlwidgets.js"></script>
-<script src="libs/plotly-binding-4.10.0/plotly.js"></script>
-<script src="libs/typedarray-0.1/typedarray.min.js"></script>
-<link href="libs/crosstalk-1.2.0/css/crosstalk.min.css" rel="stylesheet" />
-<script src="libs/crosstalk-1.2.0/js/crosstalk.min.js"></script>
-<link href="libs/plotly-htmlwidgets-css-2.5.1/plotly-htmlwidgets.css" rel="stylesheet" />
-<script src="libs/plotly-main-2.5.1/plotly-latest.min.js"></script>
 
 
 <style type="text/css">
@@ -402,7 +395,7 @@ div.csl-indent {
 </div>
 <div id="preliminaries" class="section level1 unnumbered hasAnchor">
 <h1>Preliminaries<a href="index.html#preliminaries" class="anchor-section" aria-label="Anchor link to header"></a></h1>
-<p>I recommend you execute the following commands install packages we may use in this course.</p>
+<p>I recommend you execute the following commands to install packages we use in this textbook.</p>
 <div class="sourceCode" id="cb1"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb1-1"><a href="index.html#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="co"># data-related packages</span></span>
 <span id="cb1-2"><a href="index.html#cb1-2" aria-hidden="true" tabindex="-1"></a><span class="fu">install.packages</span>(<span class="st">&quot;palmerpenguins&quot;</span>)</span>
 <span id="cb1-3"><a href="index.html#cb1-3" aria-hidden="true" tabindex="-1"></a><span class="co"># tidyverse</span></span>
@@ -422,19 +415,22 @@ div.csl-indent {
 <span id="cb1-17"><a href="index.html#cb1-17" aria-hidden="true" tabindex="-1"></a><span class="co"># # packages related to model diagnostics</span></span>
 <span id="cb1-18"><a href="index.html#cb1-18" aria-hidden="true" tabindex="-1"></a><span class="co"># diag = c(&quot;leaps&quot;, &quot;lmtest&quot;, &quot;gvlma&quot;, &quot;caret&quot;)</span></span>
 <span id="cb1-19"><a href="index.html#cb1-19" aria-hidden="true" tabindex="-1"></a><span class="co"># install.packages(diag)</span></span>
-<span id="cb1-20"><a href="index.html#cb1-20" aria-hidden="true" tabindex="-1"></a><span class="co"># # packages related to workflow</span></span>
-<span id="cb1-21"><a href="index.html#cb1-21" aria-hidden="true" tabindex="-1"></a><span class="co"># workflow = c(&quot;remotes&quot;)</span></span>
-<span id="cb1-22"><a href="index.html#cb1-22" aria-hidden="true" tabindex="-1"></a><span class="co"># install.packages(workflow)</span></span></code></pre></div>
+<span id="cb1-20"><a href="index.html#cb1-20" aria-hidden="true" tabindex="-1"></a><span class="co"># packages related to workflow</span></span>
+<span id="cb1-21"><a href="index.html#cb1-21" aria-hidden="true" tabindex="-1"></a>workflow <span class="ot">=</span> <span class="fu">c</span>(<span class="st">&quot;remotes&quot;</span>)</span>
+<span id="cb1-22"><a href="index.html#cb1-22" aria-hidden="true" tabindex="-1"></a><span class="fu">install.packages</span>(workflow)</span></code></pre></div>
 <p>Lastly, we need to install the <strong>perturb</strong> package, which is currently not available
 through the <code>install.packages</code> function. To install this from the package developer’s
 GitHub repository, we run the command below in the Console.</p>
 <div class="sourceCode" id="cb2"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb2-1"><a href="index.html#cb2-1" aria-hidden="true" tabindex="-1"></a>remotes<span class="sc">::</span><span class="fu">install_github</span>(<span class="at">repo =</span> <span class="st">&quot;JohnHendrickx/Perturb&quot;</span>)</span></code></pre></div>
 <p><em>Acknowledgments</em></p>
-<p>The <strong>bookdown</strong> package <span class="citation">(<a href="#ref-R-bookdown" role="doc-biblioref">Xie 2022</a>)</span> was used to generate this book.</p>
+<p>The <strong>bookdown</strong> package <span class="citation">(<a href="#ref-R-bookdown" role="doc-biblioref">Xie 2022</a>)</span> was used to generate this book. The <strong>gt</strong> package <span class="citation">(<a href="#ref-R-gt" role="doc-biblioref">Iannone, Cheng, and Schloerke 2022</a>)</span> was to format some of the tables.</p>
 
 </div>
 <h3>References<a href="references.html#references" class="anchor-section" aria-label="Anchor link to header"></a></h3>
 <div id="refs" class="references csl-bib-body hanging-indent">
+<div id="ref-R-gt" class="csl-entry">
+Iannone, Richard, Joe Cheng, and Barret Schloerke. 2022. <em>Gt: Easily Create Presentation-Ready Display Tables</em>. <a href="https://CRAN.R-project.org/package=gt">https://CRAN.R-project.org/package=gt</a>.
+</div>
 <div id="ref-R-bookdown" class="csl-entry">
 Xie, Yihui. 2022. <em>Bookdown: Authoring Books and Technical Documents with r Markdown</em>. <a href="https://CRAN.R-project.org/package=bookdown">https://CRAN.R-project.org/package=bookdown</a>.
 </div>
