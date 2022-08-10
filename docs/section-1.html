@@ -4,18 +4,18 @@
 
   <meta charset="utf-8" />
   <meta http-equiv="X-UA-Compatible" content="IE=edge" />
-  <title>Page not found | A progressive introduction to linear models</title>
+  <title>Chapter 7 ::: | A progressive introduction to linear models</title>
   <meta name="description" content="A collection of R notebooks that progressively introduction how to fit and use linear models." />
   <meta name="generator" content="bookdown 0.27 and GitBook 2.6.7" />
 
-  <meta property="og:title" content="Page not found | A progressive introduction to linear models" />
+  <meta property="og:title" content="Chapter 7 ::: | A progressive introduction to linear models" />
   <meta property="og:type" content="book" />
   
   <meta property="og:description" content="A collection of R notebooks that progressively introduction how to fit and use linear models." />
   
 
   <meta name="twitter:card" content="summary" />
-  <meta name="twitter:title" content="Page not found | A progressive introduction to linear models" />
+  <meta name="twitter:title" content="Chapter 7 ::: | A progressive introduction to linear models" />
   
   <meta name="twitter:description" content="A collection of R notebooks that progressively introduction how to fit and use linear models." />
   
@@ -29,8 +29,8 @@
   <meta name="apple-mobile-web-app-status-bar-style" content="black" />
   
   
-
-
+<link rel="prev" href="section.html"/>
+<link rel="next" href="inference.html"/>
 <script src="libs/jquery-3.6.0/jquery-3.6.0.min.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/fuse.js@6.4.6/dist/fuse.min.js"></script>
 <link href="libs/gitbook-2.6.7/css/style.css" rel="stylesheet" />
@@ -207,11 +207,15 @@
 <li class="chapter" data-level="5.1" data-path="linear-model-theory.html"><a href="linear-model-theory.html#standard-assumptions"><i class="fa fa-check"></i><b>5.1</b> Standard assumptions</a></li>
 <li class="chapter" data-level="5.2" data-path="linear-model-theory.html"><a href="linear-model-theory.html#summary-of-results"><i class="fa fa-check"></i><b>5.2</b> Summary of results</a></li>
 <li class="chapter" data-level="5.3" data-path="linear-model-theory.html"><a href="linear-model-theory.html#results-for-mathbfy"><i class="fa fa-check"></i><b>5.3</b> Results for <span class="math inline">\(\mathbf{y}\)</span></a></li>
-<li class="chapter" data-level="5.4" data-path="linear-model-theory.html"><a href="linear-model-theory.html#results-for-hatboldsymbolbeta"><i class="fa fa-check"></i><b>5.4</b> Results for <span class="math inline">\(\hat{\boldsymbol{\beta}}\)</span></a></li>
-<li class="chapter" data-level="5.5" data-path="linear-model-theory.html"><a href="linear-model-theory.html#results-for-the-residuals"><i class="fa fa-check"></i><b>5.5</b> Results for the residuals</a></li>
-<li class="chapter" data-level="5.6" data-path="linear-model-theory.html"><a href="linear-model-theory.html#the-gauss-markov-theorem"><i class="fa fa-check"></i><b>5.6</b> The Gauss-Markov Theorem</a></li>
 </ul></li>
-<li class="chapter" data-level="6" data-path="inference.html"><a href="inference.html"><i class="fa fa-check"></i><b>6</b> Linear model inference</a></li>
+<li class="chapter" data-level="6" data-path="section.html"><a href="section.html"><i class="fa fa-check"></i><b>6</b> :::</a></li>
+<li class="chapter" data-level="7" data-path="section-1.html"><a href="section-1.html"><i class="fa fa-check"></i><b>7</b> :::</a>
+<ul>
+<li class="chapter" data-level="7.1" data-path="section-1.html"><a href="section-1.html#results-for-hatboldsymbolbeta"><i class="fa fa-check"></i><b>7.1</b> Results for <span class="math inline">\(\hat{\boldsymbol{\beta}}\)</span></a></li>
+<li class="chapter" data-level="7.2" data-path="section-1.html"><a href="section-1.html#results-for-the-residuals"><i class="fa fa-check"></i><b>7.2</b> Results for the residuals</a></li>
+<li class="chapter" data-level="7.3" data-path="section-1.html"><a href="section-1.html#the-gauss-markov-theorem"><i class="fa fa-check"></i><b>7.3</b> The Gauss-Markov Theorem</a></li>
+</ul></li>
+<li class="chapter" data-level="8" data-path="inference.html"><a href="inference.html"><i class="fa fa-check"></i><b>8</b> Linear model inference</a></li>
 <li class="appendix"><span><b>Appendix</b></span></li>
 <li class="chapter" data-level="A" data-path="overview-of-matrix-facts.html"><a href="overview-of-matrix-facts.html"><i class="fa fa-check"></i><b>A</b> Overview of matrix facts</a>
 <ul>
@@ -303,19 +307,267 @@
           <div class="page-inner">
 
             <section class="normal" id="section-">
-<div id="page-not-found" class="section level1">
-<h1>Page not found</h1>
-<p>The page you requested cannot be found (perhaps it was moved or renamed).</p>
-<p>You may want to try searching to find the page's new location, or use
-the table of contents to find the page you are looking for.</p>
+<div id="section-1" class="section level1 hasAnchor" number="7">
+<h1><span class="header-section-number">Chapter 7</span> :::<a href="section-1.html#section-1" class="anchor-section" aria-label="Anchor link to header"></a></h1>
+<div class="theorem">
+<p><span id="thm:dist-properties-y" class="theorem"><strong>Theorem 7.1  </strong></span>For the linear model given in Equation <a href="linear-model-theory.html#eq:linear-model-def-matrix">(5.1)</a> and under the assumptions summarized in Equation <a href="linear-model-theory.html#eq:error-assumptions-matrix">(5.3)</a>,
+<span class="math display" id="eq:dist-properties-y">\[
+\begin{equation}
+\mathbf{y}\mid \mathbf{X}\sim \mathsf{N}(\mathbf{X}\boldsymbol{\beta}, \sigma^2 \mathbf{I}_{n\times n}).\tag{7.1}
+\end{equation}
+\]</span></p>
+</div>
+<div class="proof">
+<p><span id="unlabeled-div-3" class="proof"><em>Proof</em>. </span>How do we know that Equation <a href="section-1.html#eq:dist-properties-y">(7.1)</a> is true? Show that:</p>
+<ul>
+<li><span class="math inline">\(E(\mathbf{y}) = \mathbf{X}\boldsymbol{\beta}\)</span> and</li>
+<li><span class="math inline">\(\mathrm{var}(\mathbf{y}) = \sigma^2 \mathbf{I}_{n\times n}\)</span>.</li>
+<li>Note <span class="math inline">\(\mathbf{y}\)</span> is a linear function of the multivariate normal vector <span class="math inline">\(\boldsymbol{\epsilon}\)</span>, so <span class="math inline">\(\mathbf{y}\)</span> must also have a multivariate normal distribution.</li>
+</ul>
+</div>
+<div id="results-for-hatboldsymbolbeta" class="section level2 hasAnchor" number="7.1">
+<h2><span class="header-section-number">7.1</span> Results for <span class="math inline">\(\hat{\boldsymbol{\beta}}\)</span><a href="section-1.html#results-for-hatboldsymbolbeta" class="anchor-section" aria-label="Anchor link to header"></a></h2>
+<div class="theorem">
+<p><span id="thm:unbiasedness-betahat" class="theorem"><strong>Theorem 7.2  </strong></span>For the linear model given in Equation <a href="linear-model-theory.html#eq:linear-model-def-matrix">(5.1)</a> and under the assumptions summarized in Equation <a href="linear-model-theory.html#eq:error-assumptions-matrix">(5.3)</a>, the OLS estimator for <span class="math inline">\(\boldsymbol{\beta}\)</span>,
+<span class="math display">\[
+\hat{\boldsymbol{\beta}}=(\mathbf{X}^T\mathbf{X})^T\mathbf{X}^T\mathbf{y},
+\]</span>
+is an unbiased estimator for <span class="math inline">\(\boldsymbol{\beta}\)</span>, i.e.,
+<span class="math display" id="eq:unbiasedness-betahat">\[
+\begin{equation}
+E(\hat{\boldsymbol{\beta}}\mid \mathbf{X})=\boldsymbol{\beta}.\tag{7.2}
+\end{equation}
+\]</span></p>
+</div>
+<div class="proof">
+<p><span id="unlabeled-div-4" class="proof"><em>Proof</em>. </span>We previously derived the following results,
+<span class="math display">\[E(\mathbf{y}|\mathbf{X})=\mathbf{X}\boldsymbol\beta\]</span></p>
+<p><span class="math display">\[\text{var}(\mathbf{y}|\mathbf{X})=\sigma^2\mathbf{I}_{n\times n}\]</span></p>
+<p>Then,</p>
+<p><span class="math display">\[
+\begin{align}
+E(\hat{\boldsymbol{\beta}}|\mathbf{X})&amp;=E((\mathbf{X}^T\mathbf{X})^{-1}\mathbf{X}^T\mathbf{y}|\mathbf{X})&amp;\tiny\text{(by OLS formula)}\\
+&amp;=(\mathbf{X}^T\mathbf{X})^{-1}X^TE(\mathbf{y}|\mathbf{X})&amp;\tiny(\mathbf{X} \text{ is a constant matrix)}\\
+&amp;=(\mathbf{X}^T\mathbf{X})^{-1}\mathbf{X}^T\mathbf{X}&amp;\tiny\text{(above result)}\\
+&amp;=\mathbf{I}\boldsymbol\beta&amp;\tiny\text{(property of inverse matrices)}\\
+&amp;=\boldsymbol\beta
+\end{align}
+\]</span></p>
+</div>
+<div class="theorem">
+<p><span id="thm:var-betahat" class="theorem"><strong>Theorem 7.3  </strong></span>For the linear model given in Equation <a href="linear-model-theory.html#eq:linear-model-def-matrix">(5.1)</a> and under the assumptions summarized in Equation <a href="linear-model-theory.html#eq:error-assumptions-matrix">(5.3)</a>,
+<span class="math display" id="eq:var-betahat">\[
+\begin{equation}
+\mathrm{var}(\hat{\boldsymbol{\beta}}\mid \mathbf{X})=\sigma^2(\mathbf{X}^T\mathbf{X})^{-1}.\tag{7.3}
+\end{equation}
+\]</span></p>
+</div>
+<div class="proof">
+<p><span id="unlabeled-div-5" class="proof"><em>Proof</em>. </span><span class="math display">\[
+\begin{align}
+\text{var}(\hat{\boldsymbol\beta}|\mathbf{X})&amp;=\text{var}((\mathbf{X}^T\mathbf{X})^{-1}\mathbf{X}^T\mathbf{y}|\mathbf{X})&amp;\tiny\text{(by OLS formula)}\\
+&amp;=(\mathbf{X}^T\mathbf{X})^{-1}\mathbf{X}^T\text{var}(\mathbf{y}|\mathbf{X})((\mathbf{X}^T\mathbf{X})^{-1}\mathbf{X}^T)^T&amp;\tiny\text{(pull constants out of variance)}\\
+&amp;=(\mathbf{X}^T\mathbf{X})^{-1}\mathbf{X}^T\text{var}(\mathbf{y}|\mathbf{X})\mathbf{X}(\mathbf{X}^T\mathbf{X})^{-1}&amp;\tiny\text{(simplification)}\\
+&amp;=(\mathbf{X}^T\mathbf{X})^{-1}\mathbf{X}^T(\sigma^2\mathbf{I})\mathbf{X}(\mathbf{X}^T\mathbf{X})^{-1}&amp;\tiny\text{(previous result)}\\
+&amp;=\sigma^2(\mathbf{X}^T\mathbf{X})^{-1}\mathbf{X}^T\mathbf{X}(\mathbf{X}^T\mathbf{X})^{-1}&amp;\tiny(\sigma^2 \text{ is a scalar)}\\
+&amp;=\sigma^2(\mathbf{X}^T\mathbf{X})^{-1}&amp;\tiny\text{(simplpification)}
+\end{align}
+\]</span></p>
+</div>
+<div class="theorem">
+<p><span id="thm:dist-properties-betahat" class="theorem"><strong>Theorem 7.4  </strong></span>For the linear model given in Equation <a href="linear-model-theory.html#eq:linear-model-def-matrix">(5.1)</a> and under the assumptions summarized in Equation <a href="linear-model-theory.html#eq:error-assumptions-matrix">(5.3)</a>,
+<span class="math display" id="eq:dist-properties-betahat">\[
+\begin{equation}
+\hat{\boldsymbol{\beta}}\mid \mathbf{X}\sim \mathsf{N}(\boldsymbol{\beta}, \sigma^2(\mathbf{X}^T\mathbf{X})^{-1}).\tag{7.4}
+\end{equation}
+\]</span></p>
+</div>
+<div class="proof">
+<p><span id="unlabeled-div-6" class="proof"><em>Proof</em>. </span>Since <span class="math inline">\(\hat{\boldsymbol\beta}=(\mathbf{X}^T\mathbf{X})^{-1}\mathbf{X}^T\mathbf{y}\)</span> is a linear combination of <span class="math inline">\(\mathbf{y}\)</span>, and <span class="math inline">\(\mathbf{y}\)</span> is a multivariate normal random vector, then <span class="math inline">\(\hat{\boldsymbol\beta}\)</span> is also a multivariate normal random vector. Using the previous two results for the expectation and variance,</p>
+<p><span class="math display">\[
+\hat{\boldsymbol\beta}|\mathbf{X} \sim N(\boldsymbol\beta,\sigma^2(\mathbf{X}^T\mathbf{X})^{-1})
+\]</span></p>
+</div>
+</div>
+<div id="results-for-the-residuals" class="section level2 hasAnchor" number="7.2">
+<h2><span class="header-section-number">7.2</span> Results for the residuals<a href="section-1.html#results-for-the-residuals" class="anchor-section" aria-label="Anchor link to header"></a></h2>
+<p>The residual vector can be expressed in various equivalent ways, such as
+<span class="math display">\[
+\begin{align}
+\hat{\boldsymbol{\epsilon}} &amp;= \mathbf{y}-\hat{\mathbf{y}} \\
+&amp;= \mathbf{y}-\mathbf{X}\hat{\boldsymbol{\beta}}.
+\end{align}
+\]</span></p>
+<p>The <strong>hat</strong> matrix is denoted as
+<span class="math display" id="eq:hat-matrix-def">\[
+\begin{equation}
+\mathbf{H}=\mathbf{X}(\mathbf{X}^T\mathbf{X})^{-1}\mathbf{X}^T.\tag{7.5}
+\end{equation}
+\]</span></p>
+<p>Thus, using the substitution <span class="math inline">\(\hat{\boldsymbol{\beta}}=(\mathbf{X}^T\mathbf{X})^{-1}\mathbf{X}^T\mathbf{y}\)</span> and the definition for <span class="math inline">\(\mathbf{H}\)</span> in Equation <a href="section-1.html#eq:hat-matrix-def">(7.5)</a>, we see that
+<span class="math display" id="eq:residual-hat-def">\[
+\begin{align}
+\hat{\boldsymbol{\epsilon}} &amp;= \mathbf{y}-\mathbf{X}\hat{\boldsymbol{\beta}} \\
+&amp;= \mathbf{y} - \mathbf{X}(\mathbf{X}^T\mathbf{X})^{-1}\mathbf{X}^T\mathbf{y} \\
+&amp;= \mathbf{y} - \mathbf{H}\mathbf{y} \\
+&amp;= (\mathbf{I}-\mathbf{H})\mathbf{y}. \tag{7.6}
+\end{align}
+\]</span></p>
+<p>The hat matrix is an important theoretical matrix, as it projects <span class="math inline">\(\mathbf{y}\)</span> into the space spanned by the vectors in <span class="math inline">\(\mathbf{X}\)</span>. It also has some properties that we will exploit in some of the derivations below.</p>
+<div class="theorem">
+<p><span id="thm:h-properties" class="theorem"><strong>Theorem 7.5  </strong></span>The hat matrix <span class="math inline">\(\mathbf{H}\)</span> is symmetric and idempotent.</p>
+</div>
+<div class="proof">
+<p><span id="unlabeled-div-7" class="proof"><em>Proof</em>. </span>Notice that,
+<span class="math display">\[
+\begin{align}
+\mathbf{H}^T&amp;=(\mathbf{X}(\mathbf{X}^T\mathbf{X})^{-1}\mathbf{X}^T)^T&amp;\tiny\text{(definition of }H)\\
+&amp;=(\mathbf{X}^T)^T((\mathbf{X}^T\mathbf{X})^{-1})^T\mathbf{X}^T&amp;\tiny\text{(apply transpose to matrix product)}\\
+&amp;=\mathbf{X}((\mathbf{X}^T\mathbf{X})^T)^{-1}\mathbf{X}^T&amp;\tiny\text{(simplification, reversibility of inverse and transpose)}\\
+&amp;=\mathbf{X}(\mathbf{X}^T(\mathbf{X}^T)^T)^{-1}\mathbf{X}^T&amp;\tiny\text{(apply transpose to matrix product)}\\
+&amp;=\mathbf{X}(\mathbf{X}^T\mathbf{X})^{-1}\mathbf{X}^T&amp;\tiny\text{(simplification)}\\
+&amp;=\mathbf{H}
+\end{align}
+\]</span>
+Thus, <span class="math inline">\(\mathbf{H}\)</span> is symmetric.</p>
+<p>Additionally,
+<span class="math display">\[
+\begin{align}
+\mathbf{H}\mathbf{H}&amp;=(\mathbf{X}(\mathbf{X}^T\mathbf{X})^{-1}\mathbf{X}^T)(\mathbf{X}(\mathbf{X}^T\mathbf{X})^{-1}\mathbf{X}^T)&amp;\tiny\text{(definition)}\\
+&amp;=\mathbf{X}(\mathbf{X}^T\mathbf{X})^{-1}(\mathbf{X}^T\mathbf{X})(\mathbf{X}^T\mathbf{X})^{-1}\mathbf{X}^t&amp;\tiny\text{(associative property of matrices)}\\
+&amp;=\mathbf{X}\mathbf{I}(\mathbf{X}^T\mathbf{X})^{-1}\mathbf{X}^T&amp;\tiny\text{(property of inverse matrices)}\\
+&amp;=\mathbf{X}(\mathbf{X}^T\mathbf{X})^{-1}\mathbf{X}^T&amp;\tiny\text{(simplification)}\\
+&amp;=\mathbf{H}
+\end{align}
+\]</span></p>
+<p>Therefore, <span class="math inline">\(\mathbf{H}\)</span> is idempotent.</p>
+</div>
+<div class="theorem">
+<p><span id="thm:i-h-properties" class="theorem"><strong>Theorem 7.6  </strong></span>The matrix <span class="math inline">\(\mathbf{I}_{n\times n} - \mathbf{H}\)</span> is symmetric and idempotent.</p>
+</div>
+<div class="proof">
+<p><span id="unlabeled-div-8" class="proof"><em>Proof</em>. </span>First, notice that,
+<span class="math display">\[
+\begin{align}
+(\mathbf{I}-\mathbf{H})^T &amp;= \mathbf{I}^T-\mathbf{H}^T&amp;\tiny\text{(transpose to matrix sum)}\\
+&amp;= \mathbf{I}-\mathbf{H}&amp;\tiny\text{(since }\mathbf{I}\text{ and }\mathbf{H}\text{ are symmetric)}
+\end{align}
+\]</span>
+Thus, <span class="math inline">\(\mathbf{I}_{n\times n}-\mathbf{H}\)</span> is symmetric.</p>
+<p>Next,
+<span class="math display">\[
+\begin{align}
+(\mathbf{I}-\mathbf{H})(\mathbf{I}-\mathbf{H})&amp;=\mathbf{I}-2\mathbf{H}+\mathbf{H}\mathbf{H}&amp;\tiny\text{(transpose to matrix sum)}\\
+&amp;=\mathbf{I}-2\mathbf{H}+\mathbf{H}&amp;\tiny\text{(since H is idempotent)}\\
+&amp;=\mathbf{I}-\mathbf{H}&amp;\tiny\text{(simplification)}
+\end{align}
+\]</span>
+Thus, <span class="math inline">\(\mathbf{I}_{n\times n}-\mathbf{H}\)</span> is idempotent.</p>
+</div>
+<div class="theorem">
+<p><span id="thm:mean-residuals" class="theorem"><strong>Theorem 7.7  </strong></span>For the linear model given in Equation <a href="linear-model-theory.html#eq:linear-model-def-matrix">(5.1)</a> and under the assumptions summarized in Equation <a href="linear-model-theory.html#eq:error-assumptions-matrix">(5.3)</a>,
+<span class="math display" id="eq:mean-residuals">\[
+\begin{equation}
+E(\hat{\boldsymbol{\epsilon}}\mid \mathbf{X})=\mathbf{0}_{n\times 1}.\tag{7.7}
+\end{equation}
+\]</span></p>
+</div>
+<div class="proof">
+<p><span id="unlabeled-div-9" class="proof"><em>Proof</em>. </span><span class="math display">\[
+\begin{align}
+E(\hat{\boldsymbol{\epsilon}}|\mathbf{X})&amp;=E((\mathbf{I}-\mathbf{H})\mathbf{y}|\mathbf{X})\\
+&amp;=(\mathbf{I}-\mathbf{H})E(\mathbf{y}|\mathbf{X})&amp;\tiny(\mathbf{I}-\mathbf{H}\text{ is non-random)}\\
+&amp;=(\mathbf{I}-\mathbf{H})\mathbf{X}\boldsymbol\beta&amp;\tiny\text{(earlier result)}\\
+&amp;=\mathbf{X}\boldsymbol\beta-\mathbf{X}\boldsymbol\beta&amp;\tiny\text{(distribute the product)}\\
+&amp;=\mathbf{X}\boldsymbol\beta-\mathbf{X}^T(\mathbf{X}^T\mathbf{X})^{-1}\mathbf{X}^T\mathbf{X}\boldsymbol\beta&amp;\tiny\text{(definition of H)}\\
+&amp;=\mathbf{X}\boldsymbol\beta-\mathbf{I}\mathbf{X}\boldsymbol\beta&amp;\tiny\text{(property of inverse matrix)}\\
+&amp;=\mathbf{X}\boldsymbol\beta-\mathbf{X}\boldsymbol\beta&amp;\tiny\text{(simplification)}\\
+&amp;=\mathbf{0}_{n\times1}&amp;\tiny\text{(simplification)}
+\end{align}
+\]</span></p>
+</div>
+<div class="theorem">
+<p><span id="thm:var-residuals" class="theorem"><strong>Theorem 7.8  </strong></span>For the linear model given in Equation <a href="linear-model-theory.html#eq:linear-model-def-matrix">(5.1)</a> and under the assumptions summarized in Equation <a href="linear-model-theory.html#eq:error-assumptions-matrix">(5.3)</a>,
+<span class="math display" id="eq:var-residuals">\[
+\begin{equation}
+\mathrm{var}(\hat{\boldsymbol{\epsilon}}\mid \mathbf{X})=\sigma^2 (\mathbf{I}_{n\times n} - \mathbf{H}).\tag{7.8}
+\end{equation}
+\]</span></p>
+</div>
+<div class="proof">
+<p><span id="unlabeled-div-10" class="proof"><em>Proof</em>. </span><span class="math display">\[
+\begin{align}
+\text{var}(\hat{\boldsymbol{\epsilon}}|\mathbf{X})&amp;=\text{var}((\mathbf{I}-\mathbf{H})y|\mathbf{X})\\
+&amp;=(\mathbf{I}-\mathbf{H})\text{var}(\mathbf{y}|\mathbf{X})(\mathbf{I}-\mathbf{H})^T&amp;\tiny(\mathbf{I}-\mathbf{H}\text{ is nonrandom)}\\
+&amp;=(\mathbf{I}-\mathbf{H})\sigma^2(\mathbf{I}-\mathbf{H})^T&amp;\tiny\text{(earlier result)}\\
+&amp;=\sigma^2(\mathbf{I}-\mathbf{H})(\mathbf{I}-\mathbf{H})&amp;\tiny(I-H\text{ is symmetric)}\\
+&amp;=\sigma^2(\mathbf{I}-\mathbf{H})&amp;\tiny(I-H\text{ is idempotent)}
+\end{align}
+\]</span></p>
+</div>
+<div class="theorem">
+<p><span id="thm:dist-properties-residuals" class="theorem"><strong>Theorem 7.9  </strong></span>For the linear model given in Equation <a href="linear-model-theory.html#eq:linear-model-def-matrix">(5.1)</a> and under the assumptions summarized in Equation <a href="linear-model-theory.html#eq:error-assumptions-matrix">(5.3)</a>,
+<span class="math display" id="eq:dist-properties-residuals">\[
+\begin{equation}
+\hat{\boldsymbol{\epsilon}}\mid \mathbf{X}\sim \mathsf{N}(0_{n\times n}, \sigma^2 (\mathbf{I}_{n\times n} - \mathbf{H})).\tag{7.9}
+\end{equation}
+\]</span></p>
+</div>
+<div class="proof">
+<p><span id="unlabeled-div-11" class="proof"><em>Proof</em>. </span>Since <span class="math inline">\(\hat{\boldsymbol{\epsilon}}\)</span> is a linear combination of multivariate normal vectors, and using previous results, it has mean <span class="math inline">\(\mathbf{0}_{n\times1}\)</span> and variance-covariance matrix <span class="math inline">\(\sigma^2(\mathbf{I}-\mathbf{H})\)</span>.</p>
+<p>The RSS can be represented as,
+<span class="math display">\[
+\mathbf{y}^T(\mathbf{I}-\mathbf{H})\mathbf{y}
+\]</span></p>
+<p>Thus,</p>
+<p><span class="math display">\[
+\begin{align}
+RSS &amp;= \hat{\boldsymbol{\epsilon}}^T\hat{\boldsymbol{\epsilon}}\\
+&amp;=((\mathbf{I}-\mathbf{H})\mathbf{y})^T(\mathbf{I}-\mathbf{H})\mathbf{y}&amp;\tiny\text{(previous result)}\\
+&amp;=\mathbf{y}^T(\mathbf{I}-\mathbf{H})^T(\mathbf{I}-\mathbf{H})\mathbf{y}&amp;\tiny\text{(apply transpose)}\\
+&amp;=\mathbf{y}^T(\mathbf{I}-\mathbf{H})(\mathbf{I}-\mathbf{H})\mathbf{y}&amp;\tiny(I-H \text{ is symmetric)}\\
+&amp;=\mathbf{y}^T(\mathbf{I}-\mathbf{H})\mathbf{y}&amp;\tiny(I-H \text{ is idempotent)}\\
+\end{align}
+\]</span></p>
+</div>
+</div>
+<div id="the-gauss-markov-theorem" class="section level2 hasAnchor" number="7.3">
+<h2><span class="header-section-number">7.3</span> The Gauss-Markov Theorem<a href="section-1.html#the-gauss-markov-theorem" class="anchor-section" aria-label="Anchor link to header"></a></h2>
+<p>Suppose we will fit the regression model
+<span class="math display">\[
+\mathbf{y}=\mathbf{X}\boldsymbol{\beta} + \boldsymbol{\epsilon}.
+\]</span></p>
+<p>Assume that</p>
+<ol style="list-style-type: decimal">
+<li><span class="math inline">\(E(\boldsymbol{\epsilon}\mid \mathbf{X}) = 0\)</span>.</li>
+<li><span class="math inline">\(\mathrm{var}(\boldsymbol{\epsilon}\mid \mathbf{X}) = \sigma^2 \mathbf{I}_{n\times n}\)</span>, i.e., the errors have constant variance and are uncorrelated.</li>
+<li><span class="math inline">\(E(\mathbf{y}\mid \mathbf{X})=\mathbf{X}\boldsymbol{\beta}\)</span></li>
+<li><span class="math inline">\(\mathbf{X}\)</span> is a full-rank matrix.</li>
+</ol>
+<p>Then the <strong>Gauss-Markov</strong> states that the OLS estimator of <span class="math inline">\(\boldsymbol{\beta}\)</span>,
+<span class="math display">\[
+\hat{\boldsymbol{\beta}}=(\mathbf{X}^T\mathbf{X})^T\mathbf{X}^T\mathbf{y},
+\]</span>
+has the minimum variance among all unbiased estimators of <span class="math inline">\(\boldsymbol{\beta}\)</span> and this estimator is unique.</p>
+<p>Some comments:</p>
+<ul>
+<li>Assumption 3 guarantees that we have hypothesized the correct model, i.e., that we have included exactly the correct regressors in our model. Not only are we fitting a linear model to the data, but our hypothesized model is actually correct.</li>
+<li>Assumption 4 ensures that the OLS estimator can be computed (otherwise, there is no unique solution).</li>
+<li>The Gauss-Markov theorem only applies to unbiased estimators of <span class="math inline">\(\boldsymbol{\beta}\)</span>. Biased estimators could have a smaller variance.</li>
+<li>The Gauss-Markov theorem states that no unbiased estimator of <span class="math inline">\(\boldsymbol{\beta}\)</span> can have a smaller variance than <span class="math inline">\(\hat{\boldsymbol{\beta}}\)</span>.</li>
+<li>The OLS estimator uniquely has the minimum variance property, meaning that if an <span class="math inline">\(\tilde{\boldsymbol{\beta}}\)</span> is another unbiased estimator of <span class="math inline">\(\boldsymbol{\beta}\)</span> and <span class="math inline">\(\mathrm{var}(\tilde{\boldsymbol{\beta}}) = \mathrm{var}(\hat{\boldsymbol{\beta}})\)</span>, then in fact the two estimators are identical and <span class="math inline">\(\tilde{\boldsymbol{\beta}}=\hat{\boldsymbol{\beta}}\)</span>.</li>
+</ul>
+<p>We do not prove this theorem.</p>
+
+</div>
 </div>
             </section>
 
           </div>
         </div>
       </div>
-
-
+<a href="section.html" class="navigation navigation-prev " aria-label="Previous page"><i class="fa fa-angle-left"></i></a>
+<a href="inference.html" class="navigation navigation-next " aria-label="Next page"><i class="fa fa-angle-right"></i></a>
     </div>
   </div>
 <script src="libs/gitbook-2.6.7/js/app.min.js"></script>
