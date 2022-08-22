@@ -36,7 +36,7 @@ Meaningful data analysis requires the use of computer software.
 
 R statistical software is one of the most popular tools for data analysis in academia, industry, and government. In what follows, I will attempt to lay a foundation of basic knowledge and skills with R that you will need for data analysis. I make no attempt to be exhaustive, and many other important aspects of using R (like plotting) will be discussed later, as needed.
 
-## Setting up R and R Studio Desktop
+## Setting up R and RStudio Desktop
 
 **What is R?**
 
@@ -53,36 +53,36 @@ Some important facts about R are that:
 
 **Installing R**
 
-The install R on your personal computer, you will need to download an installer program from the R Project's website [(https://www.r-project.org/)](https://www.r-project.org/). Links to download the installer program for your operating system *should* be found at [https://cloud.r-project.org/](https://cloud.r-project.org/). Click on the download link appropriate for your computer's operating system and install R on your computer. If you have a Windows computer, a stable link for the most current installer program is available at [https://cloud.r-project.org/bin/windows/base/release.html](https://cloud.r-project.org/bin/windows/base/release.html). (Similar links are not currently available for Mac and Linux computers.)
+To install R on your personal computer, you will need to download an installer program from the R Project's website [(https://www.r-project.org/)](https://www.r-project.org/). Links to download the installer program for your operating system *should* be found at [https://cloud.r-project.org/](https://cloud.r-project.org/). Click on the download link appropriate for your computer's operating system and install R on your computer. If you have a Windows computer, a stable link for the most current installer program is available at [https://cloud.r-project.org/bin/windows/base/release.html](https://cloud.r-project.org/bin/windows/base/release.html). (Similar links are not currently available for Mac and Linux computers.)
 
-**Installing R Studio**
+**Installing RStudio**
 
-R Studio Desktop is a free "front end" for R provided by R Studio [(https://rstudio.com/)](https://rstudio.com/). R Studio Desktop makes doing data analysis with R much easier by adding an Integrated Development Environment (IDE) and providing many other features. Currently, you may download R Studio at [https://rstudio.com/products/rstudio/download/](https://rstudio.com/products/rstudio/download/). You may need to navigate the R Studio website directly if this link no longer functions. Download the Free version of R Studio Desktop appropriate for your computer and install it. 
+RStudio Desktop is a free "front end" for R provided by RStudio [(https://rstudio.com/)](https://rstudio.com/). RStudio Desktop makes doing data analysis with R much easier by adding an Integrated Development Environment (IDE) and providing many other features. Currently, you may download RStudio at [https://rstudio.com/products/rstudio/download/](https://rstudio.com/products/rstudio/download/). You may need to navigate the RStudio website directly if this link no longer functions. Download the Free version of RStudio Desktop appropriate for your computer and install it. 
 
-Having installed both R and R Studio Desktop, you will want to open R Studio Desktop as you continue to learn about R.
+Having installed both R and RStudio Desktop, you will want to open RStudio Desktop as you continue to learn about R.
 
-**R Studio Layout**
+**RStudio Layout**
 
-R Studio Desktop has four panes:
+RStudio Desktop has four panes:
 
 1. Console: the pane where commands are run.
 2. Source: the pane where you prepare commands to be run.
 3. Environment/History: the pane where you can see all the objects in your workspace, your command history, and other information.
 4. The Files/Plot/Packages/Help: the pane where you navigate between directories, where plots can be viewed, where you can see the packages available to be loaded, and where you can get help.
 
-To see all R Studio panes, press the keys `Ctrl + Alt + Shift + 0` on a PC or `Cmd + Option + Shift + 0` on a Mac.
+To see all RStudio panes, press the keys `Ctrl + Alt + Shift + 0` on a PC or `Cmd + Option + Shift + 0` on a Mac.
 
 Figure \@ref(fig:rstudiopanes) displays a labeled graphic of the panes. Your panes are likely in a different order than the graphic shown because I have customized my workspace for my own needs.
 
-```{r rstudiopanes, echo=FALSE, fig.cap="The R Studio panes labeled for convenience.", out.width = '90%'}
+```{r rstudiopanes, echo=FALSE, fig.cap="The RStudio panes labeled for convenience.", out.width = '90%'}
 knitr::include_graphics("pictures/rstudio_panes.png")
 ```
 
-**Customizing the R Studio workspace**
+**Customizing the RStudio workspace**
 
 At this point, I would highly encourage you to make one small workspace customization that will likely save you from experiencing future frustration. R provides a "feature" of that allows you to "save a workspace". This allows you to easily pick up where you left off your last analysis. The issue with this is that over time you accumulate a lot of environmental artifacts that can conflict with each other. This can lead to errors and incorrect results that you will need to deal with. Additionally, this "feature" hinders the ability of others to reproduce your analysis because other users are unlikely to have the same workspace. 
 
-To turn off this feature, in the R Studio menu bar click Tools &rarr; Global Options and then make sure the "General" option is selected. Then make the following changes (if necessary):
+To turn off this feature, in the RStudio menu bar click Tools &rarr; Global Options and then make sure the "General" option is selected. Then make the following changes (if necessary):
 
 1. Uncheck the box for "Restore .RData into workspace at startup".
 2. Change the toggle box for "Save workspace to .RData on exit" to "Never".
@@ -107,24 +107,24 @@ Script files make it easy to:
 
 A new Script file can be obtained by:
 
-- Clicking File &rarr; New File &rarr; R Script in the R Studio menu bar.
+- Clicking File &rarr; New File &rarr; R Script in the RStudio menu bar.
 - Pressing `Ctrl + Shift + n` on a PC or `Cmd + Shift + n` on a Mac.
 
 There are various ways to run code from a Script file. The most common ones are:
 
 1. Highlight the code you want to run and click the Run button `r knitr::include_graphics("pictures/run_button.png")` at the top of the Script pane.
-2. Highlight the code you want to run and press "Ctrl + Enter" on your keyboard. If you don't highlight anything, by default, R Studio runs the command the cursor currently lies on.
+2. Highlight the code you want to run and press "Ctrl + Enter" on your keyboard. If you don't highlight anything, by default, RStudio runs the command the cursor currently lies on.
 
 To save a Script file:
 
-- Click File &rarr; Save in the R Studio menu bar.
+- Click File &rarr; Save in the RStudio menu bar.
 - Press `Ctrl + s` on a PC or `Cmd + s` on a Mac.
 
 A comment is a set of text ignored by R when submitted to the Console.
 
 A comment is indicated by the `#` symbol. Nothing to the right of the `#` is executed by the Console.
 
-To comment (or uncomment) multiple lines of code in the Source pane of R Studio, highlight the code you want to comment and press `Ctrl + Shift + c` on a PC or `Cmd + Shift + c` on a Mac.
+To comment (or uncomment) multiple lines of code in the Source pane of RStudio, highlight the code you want to comment and press `Ctrl + Shift + c` on a PC or `Cmd + Shift + c` on a Mac.
 
 ::: {.yourturn data-latex=""}
 **Your turn**
@@ -132,7 +132,7 @@ To comment (or uncomment) multiple lines of code in the Source pane of R Studio,
 Perform the following tasks:
 
 1. Type `1+1` in the Console and press Enter.
-2. Open a new Script in R Studio.
+2. Open a new Script in RStudio.
 3. Type `mean(1:3)` in your Script file.
 4. Type `# mean(1:3)` in your Script file.
 5. Run the commands from the Script using an approach mentioned above.
