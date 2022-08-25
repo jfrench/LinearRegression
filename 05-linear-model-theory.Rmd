@@ -4,13 +4,11 @@ In this chapter we discuss many basic theoretical results for linear models. The
 
 We assume the responses can be modeled as
 \[
-Y_i=\beta_0+\beta_1 x_{i,1} +\ldots + \beta_{p-1}x_{i,[-1}+\epsilon_i,\quad i=1,2,\ldots,n,
+Y_i=\beta_0+\beta_1 x_{i,1} +\ldots + \beta_{p-1}x_{i,-1}+\epsilon_i,\quad i=1,2,\ldots,n,
 \]
 or using matrix formulation, as
 \[
-\begin{equation}
 \mathbf{y} = \mathbf{X}\boldsymbol{\beta}+\boldsymbol{\epsilon}.(\#eq:linear-model-def-matrix)
-\end{equation}
 \]
 using the notation defined in Chapter \@ref(linear-model-estimation).
 
@@ -35,19 +33,17 @@ In matrix notation, this is stated as
 \]
 
 Additionally, we assume that the errors are identically distributed. Formally, this may be written as
-\begin{equation}
+\[
 \epsilon_i \sim F, i=1,2,\ldots,n,
 (\#eq:errordist)
-\end{equation}
+\]
 where $F$ is some arbitrary distribution. The $\sim$ is read as "distributed as". In other words, Equation \@ref(eq:errordist) means, "$\epsilon_i$ is distributed as $F$ for $i$ equal to $1,2,\ldots,n$". However, it is more common to assume the errors have a normal (Gaussian) distribution. Two uncorrelated normal random variables are also independent (this is true for normal random variables, but is not generally true for other distributions). Thus, we may concisely state the typical error assumptions as
 \[
 \epsilon_1,\epsilon_2,\ldots,\epsilon_n \mid \mathbf{X}\stackrel{i.i.d.}{\sim} \mathsf{N}(0, \sigma^2),
 \]
 or using matrix notation as
 \[
-\begin{equation}
 \mathbf{y}\mid \mathbf{X}\sim \mathsf{N}(\mathbf{0}_{n\times 1},\sigma^2 \mathbf{I}_{n\times n}), (\#eq:error-assumptions-matrix)
-\end{equation}
 \]
 where $\mathbf{0}_{n\times 1}$ is the $n \times 1$ vector of zeros and $\mathbf{I}_{n\times n}$ is the $n\times n$ identity matrix. Equation \@ref(eq:error-assumptions-matrix)
 combines the following assumptions:
@@ -70,63 +66,58 @@ We prove these results in the sections below. To simplify the derivations below,
 
 ## Results for $\mathbf{y}$
 
-```{theorem mean-y}
+:::{.theorem #mean-y}
 For the linear model given in Equation \@ref(eq:linear-model-def-matrix) and under the assumptions summarized in Equation  \@ref(eq:error-assumptions-matrix), 
 \[
-\begin{equation}
 E(\mathbf{y}\mid \mathbf{X})=\mathbf{X}\boldsymbol{\beta}. (\#eq:mean-y)
-\end{equation}
 \]
-```
+:::
 
-```{proof}
-\begin{align}
+:::{.proof}
+\[
+\begin{aligned}
 E(\mathbf{y}|\mathbf{X})&=E(\mathbf{X}\boldsymbol{\beta}+\boldsymbol\epsilon|\mathbf{X})&\tiny\text{(by definition)}\\
 &=E(\mathbf{X}\boldsymbol{\beta}|\mathbf{X})+E(\boldsymbol\epsilon|\mathbf{X})&\tiny\text{(linearity of expectation)}\\
 &=E(\mathbf{X}\boldsymbol{\beta}|\mathbf{X})+\mathbf{0}_{n\times 1}&\tiny\text{(by assumption about }\epsilon)\\
 &=\mathbf{X}\boldsymbol{\beta}&\tiny\text{(since }\mathbf{X}\text{ and } \boldsymbol{\beta} \text{ are constant})
-\end{align}
-
-```
+\end{aligned}
+\]
+:::
 
 $\vphantom{blank}$
 
-```{theorem var-y}
+:::{.theorem #var-y}
 For the linear model given in Equation \@ref(eq:linear-model-def-matrix) and under the assumptions summarized in Equation  \@ref(eq:error-assumptions-matrix), 
 \[
-\begin{equation}
 \mathrm{var}(\mathbf{y}\mid \mathbf{X})=\sigma^2 \mathbf{I}.(\#eq:var-y)
-\end{equation}
 \]
-```
+:::
 
-```{proof}
+:::{.proof}
 \[
-\begin{align}
+\begin{aligned}
 \text{var}(\mathbf{y}|\mathbf{X})&=\text{var}(\mathbf{X}\boldsymbol{\beta}+\boldsymbol\epsilon|\mathbf{X})&\tiny\text{(by definition)}\\
 &=\text{var}(\boldsymbol\epsilon|\mathbf{X})&\tiny(\mathbf{X}\boldsymbol{\beta}\text{ is constant)}\\
 &=\sigma^2\mathbf{I}.&\tiny\text{(by assumption)}
-\end{align}
+\end{aligned}
 \]
-```
+:::
 
 $\vphantom{blank}$
 
-```{theorem dist-properties-y}
+:::{.theorem #dist-properties-y}
 For the linear model given in Equation \@ref(eq:linear-model-def-matrix) and under the assumptions summarized in Equation \@ref(eq:error-assumptions-matrix), 
 \[
-\begin{equation}
 \mathbf{y}\mid \mathbf{X}\sim \mathsf{N}(\mathbf{X}\boldsymbol{\beta}, \sigma^2 \mathbf{I}).(\#eq:dist-properties-y)
-\end{equation}
 \]
-```
+:::
 
-```{proof}
+:::{.proof}
 We know that $E(\mathbf{y}\mid \mathbf{X}) = \mathbf{X}\boldsymbol{\beta}$ from Theorem \@ref(thm:mean-y) and
 $\mathrm{var}(\mathbf{y}\mathbf{X}) = \sigma^2 \mathbf{I}$ from Theorem \@ref(thm:var-y). 
 
 Since $\mathbf{y}$ is a linear function of the multivariate normal vector $\boldsymbol{\epsilon}$, then $\mathbf{y}$ must also have a multivariate normal distribution.
-```
+:::
 
 $\vphantom{blank}$
 
@@ -140,9 +131,7 @@ For the linear model given in Equation \@ref(eq:linear-model-def-matrix) and und
 \]
 is an unbiased estimator for $\boldsymbol{\beta}$, i.e.,
 \[
-\begin{equation}
 E(\hat{\boldsymbol{\beta}}\mid \mathbf{X})=\boldsymbol{\beta}.(\#eq:unbiasedness-betahat)
-\end{equation}
 \]
 :::
 
@@ -155,13 +144,13 @@ We previously derived the following results,
 Then,
 
 \[
-\begin{align}
+\begin{aligned}
 E(\hat{\boldsymbol{\beta}}|\mathbf{X})&=E((\mathbf{X}^T\mathbf{X})^{-1}\mathbf{X}^T\mathbf{y}|\mathbf{X})&\tiny\text{(substitute OLS formula)}\\
 &=(\mathbf{X}^T\mathbf{X})^{-1}\mathbf{X}^TE(\mathbf{y}|\mathbf{X})&\tiny(\text{factor non-random terms)}\\
 &=(\mathbf{X}^T\mathbf{X})^{-1}\mathbf{X}^T\mathbf{X}&\tiny\text{(above result)}\\
 &=\mathbf{I}_{p\times p}\boldsymbol\beta&\tiny\text{(property of inverse matrices)}\\
 &=\boldsymbol\beta.
-\end{align}
+\end{aligned}
 \]
 
 :::
@@ -171,34 +160,30 @@ $\vphantom{blah}$
 ::: {.theorem #var-betahat}
 For the linear model given in Equation \@ref(eq:linear-model-def-matrix) and under the assumptions summarized in Equation \@ref(eq:error-assumptions-matrix), 
 \[
-\begin{equation}
 \mathrm{var}(\hat{\boldsymbol{\beta}}\mid \mathbf{X})=\sigma^2(\mathbf{X}^T\mathbf{X})^{-1}.(\#eq:var-betahat)
-\end{equation}
 \]
 :::
 
 :::{.proof}
 
 \[
-\begin{align}
+\begin{aligned}
 \text{var}(\hat{\boldsymbol\beta}|\mathbf{X})&=\text{var}((\mathbf{X}^T\mathbf{X})^{-1}\mathbf{X}^T\mathbf{y}|\mathbf{X})&\tiny\text{(by OLS formula)}\\
 &=(\mathbf{X}^T\mathbf{X})^{-1}\mathbf{X}^T\text{var}(\mathbf{y}|\mathbf{X})((\mathbf{X}^T\mathbf{X})^{-1}\mathbf{X}^T)^T&\tiny\text{(pull constants out of variance)}\\
 &=(\mathbf{X}^T\mathbf{X})^{-1}\mathbf{X}^T\text{var}(\mathbf{y}|\mathbf{X})\mathbf{X}(\mathbf{X}^T\mathbf{X})^{-1}&\tiny\text{(simplification)}\\
 &=(\mathbf{X}^T\mathbf{X})^{-1}\mathbf{X}^T(\sigma^2\mathbf{I})\mathbf{X}(\mathbf{X}^T\mathbf{X})^{-1}&\tiny\text{(previous result)}\\
 &=\sigma^2(\mathbf{X}^T\mathbf{X})^{-1}\mathbf{X}^T\mathbf{X}(\mathbf{X}^T\mathbf{X})^{-1}&\tiny(\sigma^2 \text{ is a scalar)}\\
 &=\sigma^2(\mathbf{X}^T\mathbf{X})^{-1}.&\tiny\text{(simplpification)}
-\end{align}
+\end{aligned}
 \]
 
 :::
 $\vphantom{blah}$
 
-::: {.theorem #dist-properties-betahat}
+:::{.theorem #dist-properties-betahat}
 For the linear model given in Equation \@ref(eq:linear-model-def-matrix) and under the assumptions summarized in Equation \@ref(eq:error-assumptions-matrix),
 \[
-\begin{equation}
 \hat{\boldsymbol{\beta}}\mid \mathbf{X}\sim \mathsf{N}(\boldsymbol{\beta}, \sigma^2(\mathbf{X}^T\mathbf{X})^{-1}).(\#eq:dist-properties-betahat)
-\end{equation}
 \]
 :::
 
@@ -215,27 +200,25 @@ Since $\hat{\boldsymbol\beta}=(\mathbf{X}^T\mathbf{X})^{-1}\mathbf{X}^T\mathbf{y
 
 The residual vector can be expressed in various equivalent ways, such as
 \[
-\begin{align}
+\begin{aligned}
 \hat{\boldsymbol{\epsilon}} &= \mathbf{y}-\hat{\mathbf{y}} \\
 &= \mathbf{y}-\mathbf{X}\hat{\boldsymbol{\beta}}.
-\end{align}
+\end{aligned}
 \]
 
 The **hat** matrix is denoted as
 \[
-\begin{equation}
 \mathbf{H}=\mathbf{X}(\mathbf{X}^T\mathbf{X})^{-1}\mathbf{X}^T.(\#eq:hat-matrix-def)
-\end{equation}
 \]
 
 Thus, using the substitution $\hat{\boldsymbol{\beta}}=(\mathbf{X}^T\mathbf{X})^{-1}\mathbf{X}^T\mathbf{y}$ and the definition for $\mathbf{H}$ in Equation \@ref(eq:hat-matrix-def), we see that
 \[
-\begin{align}
+\begin{aligned}
 \hat{\boldsymbol{\epsilon}} &= \mathbf{y}-\mathbf{X}\hat{\boldsymbol{\beta}} \\ 
 &= \mathbf{y} - \mathbf{X}(\mathbf{X}^T\mathbf{X})^{-1}\mathbf{X}^T\mathbf{y} \\
 &= \mathbf{y} - \mathbf{H}\mathbf{y} \\
 &= (\mathbf{I}-\mathbf{H})\mathbf{y}. (\#eq:residual-hat-def)
-\end{align}
+\end{aligned}
 \]
 
 The hat matrix is an important theoretical matrix, as it projects $\mathbf{y}$ into the space spanned by the vectors in $\mathbf{X}$. It also has some properties that we will exploit in some of the derivations below.
@@ -248,26 +231,26 @@ The hat matrix $\mathbf{H}$ is symmetric and idempotent.
 
 Notice that,
 \[
-\begin{align}
+\begin{aligned}
 \mathbf{H}^T&=(\mathbf{X}(\mathbf{X}^T\mathbf{X})^{-1}\mathbf{X}^T)^T&\tiny\text{(definition of }\mathbf{H})\\
 &=(\mathbf{X}^T)^T((\mathbf{X}^T\mathbf{X})^{-1})^T\mathbf{X}^T&\tiny\text{(apply transpose to matrix product)}\\
 &=\mathbf{X}((\mathbf{X}^T\mathbf{X})^T)^{-1}\mathbf{X}^T&\tiny\text{(simplification, reversibility of inverse and transpose)}\\
 &=\mathbf{X}(\mathbf{X}^T(\mathbf{X}^T)^T)^{-1}\mathbf{X}^T&\tiny\text{(apply transpose to matrix product)}\\
 &=\mathbf{X}(\mathbf{X}^T\mathbf{X})^{-1}\mathbf{X}^T&\tiny\text{(simplification)}\\
 &=\mathbf{H}.
-\end{align}
+\end{aligned}
 \]
 Thus, $\mathbf{H}$ is symmetric.
 
 Additionally,
 \[
-\begin{align}
+\begin{aligned}
 \mathbf{H}\mathbf{H}&=(\mathbf{X}(\mathbf{X}^T\mathbf{X})^{-1}\mathbf{X}^T)(\mathbf{X}(\mathbf{X}^T\mathbf{X})^{-1}\mathbf{X}^T)&\tiny\text{(definition of }\mathbf{H}\text{)}\\
 &=\mathbf{X}(\mathbf{X}^T\mathbf{X})^{-1}(\mathbf{X}^T\mathbf{X})(\mathbf{X}^T\mathbf{X})^{-1}\mathbf{X}^t&\tiny\text{(associative property of matrices)}\\
 &=\mathbf{X}\mathbf{I}_{p\times p}(\mathbf{X}^T\mathbf{X})^{-1}\mathbf{X}^T&\tiny\text{(property of inverse matrices)}\\
 &=\mathbf{X}(\mathbf{X}^T\mathbf{X})^{-1}\mathbf{X}^T&\tiny\text{(simplification)}\\
 &=\mathbf{H}.
-\end{align}
+\end{aligned}
 \]
 
 Therefore, $\mathbf{H}$ is idempotent.
@@ -278,40 +261,38 @@ Therefore, $\mathbf{H}$ is idempotent.
 The matrix $\mathbf{I} - \mathbf{H}$ is symmetric and idempotent.
 :::
 
-```{proof}
+:::{.proof}
 First, notice that,
 \[
-\begin{align}
+\begin{aligned}
 (\mathbf{I}-\mathbf{H})^T &= \mathbf{I}^T-\mathbf{H}^T&\tiny\text{(transpose to matrix sum)}\\
 &= \mathbf{I}-\mathbf{H}.&\tiny\text{(since }\mathbf{I}\text{ and }\mathbf{H}\text{ are symmetric)}
-\end{align}
+\end{aligned}
 \]
 Thus, $\mathbf{I}-\mathbf{H}$ is symmetric.
 
 Next,
 \[
-\begin{align}
+\begin{aligned}
 (\mathbf{I}-\mathbf{H})(\mathbf{I}-\mathbf{H})&=\mathbf{I}-2\mathbf{H}+\mathbf{H}\mathbf{H}&\tiny\text{(transpose to matrix sum)}\\
 &=\mathbf{I}-2\mathbf{H}+\mathbf{H}&\tiny\text{(since H is idempotent)}\\
 &=\mathbf{I}-\mathbf{H}.&\tiny\text{(simplification)}
-\end{align}
+\end{aligned}
 \]
 Thus, $\mathbf{I}-\mathbf{H}$ is idempotent.
-```
+:::
 
 ::: {.theorem #mean-residuals}
 For the linear model given in Equation \@ref(eq:linear-model-def-matrix) and under the assumptions summarized in Equation \@ref(eq:error-assumptions-matrix),
 \[
-\begin{equation}
 E(\hat{\boldsymbol{\epsilon}}\mid \mathbf{X})=\mathbf{0}_{n\times 1}.(\#eq:mean-residuals)
-\end{equation}
 \]
 :::
 
 :::{.proof}
 
 \[
-\begin{align}
+\begin{aligned}
 E(\hat{\boldsymbol{\epsilon}}|\mathbf{X})&=E((\mathbf{I}-\mathbf{H})\mathbf{y}|\mathbf{X})\\
 &=(\mathbf{I}-\mathbf{H})E(\mathbf{y}|\mathbf{X})&\tiny(\mathbf{I}-\mathbf{H}\text{ is non-random)}\\
 &=(\mathbf{I}-\mathbf{H})\mathbf{X}\boldsymbol\beta&\tiny\text{(earlier result)}\\
@@ -320,7 +301,7 @@ E(\hat{\boldsymbol{\epsilon}}|\mathbf{X})&=E((\mathbf{I}-\mathbf{H})\mathbf{y}|\
 &=\mathbf{X}\boldsymbol\beta-\mathbf{X}\mathbf{I}_{p\times p}\boldsymbol\beta&\tiny\text{(property of inverse matrix)}\\
 &=\mathbf{X}\boldsymbol\beta-\mathbf{X}\boldsymbol\beta&\tiny\text{(simplification)}\\
 &=\mathbf{0}_{n\times1}.&\tiny\text{(simplification)}
-\end{align}
+\end{aligned}
 \]
 
 :::
@@ -330,22 +311,20 @@ $\vphantom{blank}$
 ::: {.theorem #var-residuals}
 For the linear model given in Equation \@ref(eq:linear-model-def-matrix) and under the assumptions summarized in Equation \@ref(eq:error-assumptions-matrix),
 \[
-\begin{equation}
 \mathrm{var}(\hat{\boldsymbol{\epsilon}}\mid \mathbf{X})=\sigma^2 (\mathbf{I} - \mathbf{H}).(\#eq:var-residuals)
-\end{equation}
 \]
 :::
 
 :::{.proof}
 
 \[
-\begin{align}
+\begin{aligned}
 \text{var}(\hat{\boldsymbol{\epsilon}}|\mathbf{X})&=\text{var}((\mathbf{I}-\mathbf{H})\mathbf{y}|\mathbf{X})\\
 &=(\mathbf{I}-\mathbf{H})\text{var}(\mathbf{y}|\mathbf{X})(\mathbf{I}-\mathbf{H})^T&\tiny(\mathbf{I}-\mathbf{H}\text{ is nonrandom)}\\
 &=(\mathbf{I}-\mathbf{H})\sigma^2(\mathbf{I}-\mathbf{H})^T&\tiny\text{(earlier result)}\\
 &=\sigma^2(\mathbf{I}-\mathbf{H})(\mathbf{I}-\mathbf{H})&\tiny(\mathbf{I}-\mathbf{H}\text{ is symmetric)}\\
 &=\sigma^2(\mathbf{I}-\mathbf{H}).&\tiny(\mathbf{I}-\mathbf{H}\text{ is idempotent)}
-\end{align}
+\end{aligned}
 \]
 
 :::
@@ -353,37 +332,35 @@ For the linear model given in Equation \@ref(eq:linear-model-def-matrix) and und
 ::: {.theorem #dist-properties-residuals}
 For the linear model given in Equation \@ref(eq:linear-model-def-matrix) and under the assumptions summarized in Equation \@ref(eq:error-assumptions-matrix),
 \[
-\begin{equation}
 \hat{\boldsymbol{\epsilon}}\mid \mathbf{X}\sim \mathsf{N}(\mathbf{0}_{n\times 1}, \sigma^2 (\mathbf{I} - \mathbf{H})).(\#eq:dist-properties-residuals)
-\end{equation}
 \]
 
 :::
 
-```{proof}
+:::{.proof}
 Since $\hat{\boldsymbol{\epsilon}}$  is a linear combination of multivariate normal vectors, and using previous results, it has mean $\mathbf{0}_{n\times1}$ and variance matrix $\sigma^2(\mathbf{I}-\mathbf{H})$.
-```
+:::
 
 $\vphantom{blank}$
 
-```{theorem}
+:::{.theorem}
 The RSS can be represented as,
 \[
 RSS=\mathbf{y}^T(\mathbf{I}-\mathbf{H})\mathbf{y}.
 \]
-```
+:::
 
-```{proof}
+:::{.proof}
 \[
-\begin{align}
+\begin{aligned}
 RSS &= \hat{\boldsymbol{\epsilon}}^T\hat{\boldsymbol{\epsilon}}&\tiny\text{(matrix representation of RSS)}\\
 &=((\mathbf{I}-\mathbf{H})\mathbf{y})^T(\mathbf{I}-\mathbf{H})\mathbf{y}&\tiny\text{(previous result)}\\
 &=\mathbf{y}^T(\mathbf{I}-\mathbf{H})^T(\mathbf{I}-\mathbf{H})\mathbf{y}&\tiny\text{(apply transpose)}\\
 &=\mathbf{y}^T(\mathbf{I}-\mathbf{H})(\mathbf{I}-\mathbf{H})\mathbf{y}&\tiny(\mathbf{I}-\mathbf{H} \text{ is symmetric)}\\
 &=\mathbf{y}^T(\mathbf{I}-\mathbf{H})\mathbf{y}&\tiny(\mathbf{I}-\mathbf{H} \text{ is idempotent)}\\
-\end{align}
+\end{aligned}
 \]
-```
+:::
 
 ## The Gauss-Markov Theorem
 

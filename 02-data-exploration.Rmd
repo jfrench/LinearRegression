@@ -5,9 +5,19 @@ output:
   pdf_document:
     includes:
       in_header: preamble.tex
+bibliography:
+- book.bib
+- packages.bib
+link-citations: yes
+editor_options: 
+  markdown: 
+    wrap: 72
+monofont: "Lucida Console"
 ---
 
 ```{r, include=FALSE}
+library(kableExtra)
+options(width = 60)
 # change Console output behavior
 # knitr::opts_chunk$set(comment = "#>", collapse = TRUE)
 knitr::opts_chunk$set(collapse = TRUE)
@@ -88,7 +98,7 @@ The `str` function is a great first function to apply on a newly loaded data set
 ```{r str-penguins-raw, out.lines = 17}
 str(penguins_raw, give.attr = FALSE)
 ```
-We see that the `penguins_raw` object is a `tibble`, a special kind of data frame provided by the **tibble** package [@R-tibble] as part of the broader **tidyverse**. It has 344 rows and 17 columns. In general, a `tibble` will function like a standard data frame, though its behavior may change when **tidyverse** packages are loaded. In the code below, we confirm that `penguins_raw` qualifies as a **base** R `data.frame`.
+We see that the `penguins_raw` object is a `tibble`, a special kind of data frame provided by the **`tibble`** package [@R-tibble] as part of the broader **`tidyverse`**. It has 344 rows and 17 columns. In general, a `tibble` will function like a standard data frame, though its behavior may change when **`tidyverse`** packages are loaded. In the code below, we confirm that `penguins_raw` qualifies as a **`base`** R `data.frame`.
 
 ```{r isdataframe-penguins-raw}
 is.data.frame(penguins_raw)
@@ -178,7 +188,12 @@ num_sum_df = data.frame(summary = summary,
                         variable_type = variable_type,
                         summarizes = summarizes,
                         r_function = r_function)
-knitr::kable(num_sum_df, caption = "A summary of the numeric summaries frequently used for different types of data, the types of variable they are used for, the information provided, and the R function used to compute it.", col.names = c("numeric summary", "variable type", "summarizes", "R function"))
+kbl(num_sum_df,
+    caption = "A summary of the numeric summaries frequently used for different types of data, the types of variable they are used for, the information provided, and the R function used to compute it.",
+    col.names = c("numeric summary", "variable type", "summarizes", "R function"),
+    booktabs = TRUE,
+    escape = FALSE) |>
+  kable_styling(full_width = FALSE)
 ```
 
 We provide additional explanation about the numeric summaries in what follows.
@@ -336,9 +351,9 @@ We conveniently get a numeric summary of all of the variables in our data set (y
 
 Visual summaries (i.e., plots) of data are vital to understanding your data prior to modeling. They help us to spot errors in our data, unusual observations, and simple patterns. They are also important after modeling to communicate the results of your analysis.
 
-We will introduce basic visualization approaches using **base** R functions as well as the popular **ggplot2** package [@R-ggplot2]. It is important to know the basic plotting capabilities of **base** R (particularly the `plot` function, which has been extended by many packages to provide standard plots for complex objects produced by those packages). However, **ggplot2** is able to produce complex graphics with automated legends in a consistent, systematic way, which provides it advantages over **base** graphics in many contexts.
+We will introduce basic visualization approaches using **`base`** R functions as well as the popular **`ggplot2`** package [@R-ggplot2]. It is important to know the basic plotting capabilities of **`base`** R (particularly the `plot` function, which has been extended by many packages to provide standard plots for complex objects produced by those packages). However, **`ggplot2`** is able to produce complex graphics with automated legends in a consistent, systematic way, which provides it advantages over **`base`** graphics in many contexts.
 
-Table \@ref(tab:viz-sum) provides an overview of different plots types that can be used to summarize data, the type of data being summarized, whether the plot is for univariate (one variable), bivariate (two variable), or multivariate (3 or more variables) data, the **base** R functions create the plot, and the main **ggplot2** functions need to create the plot. The table is not intended to be an exhaustive list of  useful graphics you should use for data exploration.
+Table \@ref(tab:viz-sum) provides an overview of different plots types that can be used to summarize data, the type of data being summarized, whether the plot is for univariate (one variable), bivariate (two variable), or multivariate (3 or more variables) data, the **`base`** R functions create the plot, and the main **`ggplot2`** functions need to create the plot. The table is not intended to be an exhaustive list of  useful graphics you should use for data exploration.
 
 ```{r viz-sum, echo = FALSE}
 viz_sum = c("box plot", "histogram", "density plot", "bar plot",
@@ -357,12 +372,16 @@ geoms = c("`geom_boxplot`", "`geom_histogram`", "`geom_density`", "`geom_bar`",
 )
 
 viz_sum_df = data.frame(viz_sum, variable_types, summary_type, base_functions, geoms)
-knitr::kable(viz_sum_df, caption = "A summary of common plot types used to explore data, the type of variable(s) they summarize, the number of variables summarized, and the base R and ggplot2 functions used to create the plot.", col.names = c("plot type", "variable types", "number of variables", "base R", "ggplot2"))
+kbl(viz_sum_df,
+    caption = "A summary of common plot types used to explore data, the type of variable(s) they summarize, the number of variables summarized, and the base R and ggplot2 functions used to create the plot.",
+    col.names = c("plot type", "variable types", "number of variables", "base R", "ggplot2"),
+    booktabs = TRUE) |>
+  kable_styling(full_width = FALSE)
 ```
 
 ### The ggplot recipe
 
-There are 4 main components needed to produce a graphic using **ggplot2**.
+There are 4 main components needed to produce a graphic using **`ggplot2`**.
 
 1. A data frame containing your data.
     * Each column should be a variable and each row should be an observation of data.
@@ -412,7 +431,7 @@ barplot(table(penguins_clean$sex, useNA = "ifany") /
         names.arg = c("female", "male", "NA"))
 ```
 
-To create a bar plot with **ggplot2**, we first create a basic `ggplot` object containing our data. Make sure to load the **ggplot2** package prior to creating the plot, otherwise you'll get errors!
+To create a bar plot with **`ggplot2`**, we first create a basic `ggplot` object containing our data. Make sure to load the **`ggplot2`** package prior to creating the plot, otherwise you'll get errors!
 
 ```{r}
 # load ggplot2 package
@@ -443,7 +462,7 @@ boxplot(penguins_clean$body_mass, data = penguins_clean,
 
 The `body_mass` variable doesn't have any outliers. It's has perhaps a slight positive skew since the upper tail and upper part of the box are longer than the lower tail and lower part of the box. The median value is a bit larger than 4000 grams, while 50% of the data being between approximatly 3500 and 4750 grams (i.e., between Q1 and Q3).
 
-The create a box plot using **ggplot2**, we use `geom_boxplot`. We create a box plot for the `bill_length` variable below. We map `bill_length` to the `y` aesthetic so that we get a vertically-oriented box plot (mapping it to `x` will produce a horizontal box plot).
+The create a box plot using **`ggplot2`**, we use `geom_boxplot`. We create a box plot for the `bill_length` variable below. We map `bill_length` to the `y` aesthetic so that we get a vertically-oriented box plot (mapping it to `x` will produce a horizontal box plot).
 
 ```{r}
 gg_penguin + geom_boxplot(aes(y = bill_length))
@@ -474,7 +493,7 @@ hist(penguins_clean$bill_length, main = "",
 
 This distribution of `bill_length` is bimodal (has two prominent peaks or modes). That is why the skewness information on the box plot of `bill_length` was inconsistent. This also demonstrates why should should never draw conclusions like modality or skewness from numeric summaries alonge.
 
-We use `geom_histogram` to create a histogram using **ggplot2**, mapping the variable to the `x` aesthetic. We do so for the `flipper_length` variable below.
+We use `geom_histogram` to create a histogram using **`ggplot2`**, mapping the variable to the `x` aesthetic. We do so for the `flipper_length` variable below.
 
 ```{r}
 gg_penguin + geom_histogram(aes(x = flipper_length))
@@ -486,14 +505,14 @@ Flipper length is also bimodal, with prominent peaks approximately centered arou
 
 A density plot is similar to a smoothed histogram and the area under the smoothed curve must equal 1. In general, density plots are more visually appealing than histograms, but both communicate similar information. However, density plots can sometimes have problems near the edges of a variable with a fixed upper or lower bound because it is difficult to know how to smooth the data in that case.
 
-The `plot` and `density` function can be combined to construct a density plot using **base** R. We do that below for the `bill_depth` variable below. Note the use of `na.rm` to remove `NA` that would otherwise poison the density calculation, and use `main` to have a blank title.
+The `plot` and `density` function can be combined to construct a density plot using **`base`** R. We do that below for the `bill_depth` variable below. Note the use of `na.rm` to remove `NA` that would otherwise poison the density calculation, and use `main` to have a blank title.
 
 ```{r}
 plot(density(penguins_clean$bill_depth, na.rm = TRUE), main = "")
 ```
 The `bill_depth` variable is bimodal with peaks around 14 mm and 18 mm. The graphic also indicates that 342 observations were used to estimate the density and the bandwidth parameter was 0.5533. The bandwidth parameter controls the amount of smoothing and can be changed. Run `?stats::density` in the Console for more details.
 
-We create a density plot with *ggplot2** using `geom_density`. We do so for the `body_mass` variable, mapping it to the `x` aesthetic.
+We create a density plot with **`ggplot2`** using `geom_density`. We do so for the `body_mass` variable, mapping it to the `x` aesthetic.
 
 ```{r}
 gg_penguin + geom_density(aes(x = body_mass))
@@ -509,7 +528,7 @@ A `bivariate` plot is a plot involving two variables. A `bivariate` plot can inv
 
 Scatter plots can be used to identify the relationship between two `numeric` variables.
 
-We use the `plot` function to create a scatter plot of `bill_length` versus `body_mass` (the `y` variable versus the `x` variable) using **base** R below. The `plot` function is very flexible and can be used multiple ways to produce a scatter plot, but we will use the `formula` method that takes a formula describing the variables (`y ~ x`) and the data frame from which the variables come.
+We use the `plot` function to create a scatter plot of `bill_length` versus `body_mass` (the `y` variable versus the `x` variable) using **`base`** R below. The `plot` function is very flexible and can be used multiple ways to produce a scatter plot, but we will use the `formula` method that takes a formula describing the variables (`y ~ x`) and the data frame from which the variables come.
 
 ```{r}
 # xlab and ylab are used to customize the x-axis and y-axis labels
@@ -519,7 +538,7 @@ plot(bill_length ~ body_mass, data = penguins_clean,
 
 There is a positive linear relationship between `body_mass` and `bill_length`. As `body_mass` increases, `bill_length` tends to increase.
 
-The `geom_point` function can be used to create a scatter plot with **ggplot2**. we make the variables to be plotted to the `x` and `y` aesthetics. We create a scatter plot of `bill_length` versus `bill_depth`.
+The `geom_point` function can be used to create a scatter plot with **`ggplot2`**. we make the variables to be plotted to the `x` and `y` aesthetics. We create a scatter plot of `bill_length` versus `bill_depth`.
 
 ```{r}
 gg_penguin + geom_point(aes(x = bill_depth, y = bill_length))
@@ -539,7 +558,7 @@ plot(body_mass ~ sex, data = penguins_clean)
 
 We can see that the `body_mass` values tend to be larger for the male penguins compared to the female penguins.
 
-We can produce something similar with **ggplot2** by specifying both the `y` and `x` aesthetics of for `geom_boxplot`. We do so below to compare `bill_length` for the different penguin `species`.
+We can produce something similar with **`ggplot2`** by specifying both the `y` and `x` aesthetics of for `geom_boxplot`. We do so below to compare `bill_length` for the different penguin `species`.
 
 ```{r}
 gg_penguin + geom_boxplot(aes(x = species, y = bill_length))
@@ -549,11 +568,11 @@ From a quick glance, we are able to see from the graphic above that the chinstra
 
 ### Multivariate plots
 
-A multivariate plot displays relationships between 2 or more variables (so bivariate plots are technically multivariate plots). We focus on multivariate plots using **ggplot2**. While the same graphics can be created with **base** R, it is substantially quicker to create an initial version of multivariate graphics with **ggplot2**.
+A multivariate plot displays relationships between 2 or more variables (so bivariate plots are technically multivariate plots). We focus on multivariate plots using **`ggplot2`**. While the same graphics can be created with **`base`** R, it is substantially quicker to create an initial version of multivariate graphics with **`ggplot2`**.
 
 #### Grouped scatter plot
 
-A grouped scatter plot is a scatter plot that uses colors or symbols (or both) to indicate the `level` of a `factor` variable that each point corresponds to. You can actually use more than one `factor` variable, but interpretation often becomes much more difficult. The most common way to create a grouped scatter plot with **ggplot2** is to map a `factor` variable to the `color` or `shape` aesthetic of `geom_point`. **ggplot2** will automatically map the `factor` variable to unique colors or shapes and then indicates the mapping in a legend (this process is known as "scaling".
+A grouped scatter plot is a scatter plot that uses colors or symbols (or both) to indicate the `level` of a `factor` variable that each point corresponds to. You can actually use more than one `factor` variable, but interpretation often becomes much more difficult. The most common way to create a grouped scatter plot with **`ggplot2`** is to map a `factor` variable to the `color` or `shape` aesthetic of `geom_point`. **`ggplot2`** will automatically map the `factor` variable to unique colors or shapes and then indicates the mapping in a legend (this process is known as "scaling".
 
 In the example below, we create a scatter plot of `flipper_length` versus `body_mass` that distinguishes the different `species` using `color`.
 
@@ -579,7 +598,7 @@ gg_penguin +
 
 ### Facetted plots (and alternatives)
 
-Facetting creates separate panels (facets) of plots based on one or more facetting variables. The key functions to do this with **ggplot2** are the `facet_grid` and `facet_wrap` functions. `facet_grid` is used to create a grid of plots based on one or two `factor` variables, while `facet_wrap` wraps facets of panels around the plot. We
+Facetting creates separate panels (facets) of plots based on one or more facetting variables. The key functions to do this with **`ggplot2`** are the `facet_grid` and `facet_wrap` functions. `facet_grid` is used to create a grid of plots based on one or two `factor` variables, while `facet_wrap` wraps facets of panels around the plot. We
 
 Below, we facet scatter plots of `bill_length` versus `bill_depth` by `species`.
 
@@ -618,15 +637,15 @@ ggplot(data = penguins_temp) +
 
 We see that for all species, the body mass of the males tehnds to be larger than the females.
 
-The examples above provide a small taste of the complicated graphics you can create with **ggplot2** using only a few lines of code.
+The examples above provide a small taste of the complicated graphics you can create with **`ggplot2`** using only a few lines of code.
 
 #### Interactive graphics
 
-There are many tools for creating interactive graphics in R. We have found the **ggiraph** package [@R-ggiraph] useful for creating interactive graphics based on **ggplot2**. However, it is a bit too complex to discuss here.
+There are many tools for creating interactive graphics in R. We have found the **`ggiraph`** package [@R-ggiraph] useful for creating interactive graphics based on **`ggplot2`**. However, it is a bit too complex to discuss here.
 
-The **plotly** package [@R-plotly] is an R package to provide the capabilities of plotly [https://plotly.com/](https://plotly.com/), a well-known tool for creating interactive scientific plots. The `ggplotly` function will instantly make a `ggplot` interactive (though you may need to customize it for your needs). We provide two examples below.
+The **`plotly`** package [@R-plotly] is an R package to provide the capabilities of plotly [https://plotly.com/](https://plotly.com/), a well-known tool for creating interactive scientific plots. The `ggplotly` function will instantly make a `ggplot` interactive (though you may need to customize it for your needs). We provide two examples below.
 
-First, we load the **plotly** package to have access to the `ggplotly` function. We then take our previous grouped scatter plot that plotted `flipp_length` versus `body_mass` distguishing by `species` and assign it the name `ggi`. We then use the `ggplotly` function in make the graphic interactive. When you hover over a point, the plot interactively provides the exact `body_mass` value, `flipper_length` value, and `species` of the observation.
+First, we load the **`plotly`** package to have access to the `ggplotly` function. We then take our previous grouped scatter plot that plotted `flipp_length` versus `body_mass` distguishing by `species` and assign it the name `ggi`. We then use the `ggplotly` function in make the graphic interactive. When you hover over a point, the plot interactively provides the exact `body_mass` value, `flipper_length` value, and `species` of the observation.
 
 ```{r}
 # load plotly package

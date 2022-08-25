@@ -1,3 +1,7 @@
+```{r, include = FALSE}
+library(kableExtra)
+```
+
 # Overview of probability, random variables, and random vectors {#prob-review}
 
 ## Probability Basics
@@ -13,7 +17,10 @@ prob_tab1 <- data.frame(term = c("experiment", "outcome", "sample space", "event
                                        "The simplest kind of result produced by an experiment.",
                                        "The set of all possible outcomes an experiment can produce.", "Any subset of $\\Omega$.", "The event that includes no outcomes.")
                         )
-knitr::kable(prob_tab1, caption = "Basic terminology used in probability.")
+kbl(prob_tab1, caption = "Basic terminology used in probability.",
+    booktabs = TRUE,
+    escape = FALSE) |>
+  kable_styling(full_width = FALSE)
 ```
 
 Some comments about the terms in Table \@ref(tab:prob-tab1):
@@ -314,17 +321,20 @@ Since $X$ must be no more than $Y$, we can answer this question as
 **Q2: Determine the marginal distributions of $X$ and $Y$.**
 
 To find the marginal distribution of $X$, we must integrate the joint pdf with respect to the limits of $Y$. Don't forget to include the support of the pdf of $X$ (which after integrating out $Y$, must be between 0 and 1).
-
-\begin{align*}
+\[
+\begin{aligned}
 f_X(x) &=\int_{x}^1 4y^2\;dy \\
 &=\frac{4}{3}(1-x^3),\quad 0\leq x \leq 1.
-\end{align*}
+\end{aligned}
+\]
 
 Similarly,
-\begin{align*}
+\[
+\begin{aligned}
 f_Y(y) &=\int_{0}^y 4y^2\;dx \\
 &=4y^3,\quad 0\leq y \leq 1.
-\end{align*}
+\end{aligned}
+\]
 
 **Q3: Determine the means of $X$ and $Y$.**
 
@@ -389,11 +399,13 @@ E(\mathbf{y})=\begin{bmatrix}E(Y_1)\\E(Y_2)\\\vdots\\E(Y_n)\end{bmatrix}.
 \]
 
 The variance of a random vector isn't a number. Instead, it is the matrix of all covariances of all pairs of random variables in the random vector. The variance of $\mathbf{y}$ is
+\[
 \begin{aligned}
 \mathrm{var}(\mathbf{y}) &= E(\mathbf{y}\mathbf{y}^T )-E(\mathbf{y})E(\mathbf{y})^T\\
 &= \begin{bmatrix}\mathrm{var}(Y_1) & \mathrm{cov}(Y_1,Y_2) &\dots &\mathrm{cov}(Y_1,Y_n)\\\mathrm{cov}(Y_2,Y_1 )&\mathrm{var}(Y_2)&\dots&\mathrm{cov}(Y_2,Y_n)\\\vdots&\vdots&\vdots&\vdots\\
 \mathrm{cov}(Y_n,Y_1)&\mathrm{cov}(Y_n,Y_2)&\dots&\mathrm{var}(Y_n)\end{bmatrix}.
 \end{aligned}
+\]
 Alternatively, the variance of $\mathbf{y}$ is called the **covariance matrix** of $\mathbf{y}$ or the **variance-covariance matrix** of $\mathbf{y}$.
 
 Let $\mathbf{x} = [X_1, X_2, \ldots, X_n]$ be an $n\times 1$ random vector.
@@ -456,8 +468,9 @@ E(Y-X)=E(\mathbf{Az})=\begin{bmatrix}-1 & 1\end{bmatrix}
 4/5
 \end{bmatrix}=-2/5+4/5=2/5.
 \]
-Additionally, 
-\begin{align}
+Additionally,
+\[
+\begin{aligned}
 & \mathrm{var}(Y-X) \\
 &=\mathrm{var}(\mathbf{Az}) \\
 &=\mathbf{A}\mathbf{var}(\mathbf{z})\mathbf{A}^T \\
@@ -480,7 +493,8 @@ Additionally,
 \end{bmatrix} \\
 &= 142/405 + 16/45 + 2(71/300) \\
 &\approx 1.18.
-\end{align}
+\end{aligned}
+\]
 
 ## Multivariate normal (Gaussian) distribution
 
