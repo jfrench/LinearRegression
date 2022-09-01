@@ -1,6 +1,6 @@
 # Basic theoretical results for linear models {#linear-model-theory}
 
-In this chapter we discuss many basic theoretical results for linear models. The results are not interesting in themselves, but are foundational for the inferential results discussed in Chapter \@ref(inference). Appendices \@ref(overview-of-matrix-facts) and \@ref(prob-review) provide an overview of properties related to matrices and random vectors that are needed for the derivations below.
+In this chapter we discuss many basic theoretical results for linear models. The results are not interesting by themselves, but they are foundational for the inferential results discussed in Chapter \@ref(inference). Appendices \@ref(overview-of-matrix-facts) and \@ref(prob-review) provide an overview of properties related to matrices and random vectors that are needed for the derivations below.
 
 We assume the responses can be modeled as
 \[
@@ -22,7 +22,8 @@ E(\boldsymbol{\epsilon}\mid \mathbf{X}) = 0_{n\times 1},
 \]
 where "$\mid \mathbf{X}$" is notation meaning "conditional on knowing the regressor values for all observations".
 
-We also assume that the errors have constant variances and are uncorrelated, conditional on knowing the regressors, i.e., that \[\mathrm{var}(\epsilon_i\mid \mathbb{X}=\mathbf{x}_i) = \sigma^2, \quad i=1,2,\ldots,n,\]
+We also assume that the errors have constant variances and are uncorrelated, conditional on knowing the regressors, i.e., 
+\[\mathrm{var}(\epsilon_i\mid \mathbb{X}=\mathbf{x}_i) = \sigma^2, \quad i=1,2,\ldots,n,\]
 and 
 \[
 \mathrm{cov}(\epsilon_i, \epsilon_j\mid \mathbf{X}) = 0, \quad i,j=1,2,\ldots,n,\quad i\neq j.
@@ -37,13 +38,13 @@ Additionally, we assume that the errors are identically distributed. Formally, t
 \epsilon_i \sim F, i=1,2,\ldots,n,
 (\#eq:errordist)
 \]
-where $F$ is some arbitrary distribution. The $\sim$ is read as "distributed as". In other words, Equation \@ref(eq:errordist) means, "$\epsilon_i$ is distributed as $F$ for $i$ equal to $1,2,\ldots,n$". However, it is more common to assume the errors have a normal (Gaussian) distribution. Two uncorrelated normal random variables are also independent (this is true for normal random variables, but is not generally true for other distributions). Thus, we may concisely state the typical error assumptions as
+where $F$ is some arbitrary distribution. The $\sim$ is read as "distributed as". In other words, Equation \@ref(eq:errordist) means, "$\epsilon_i$ is distributed as $F$ for $i$ equal to $1,2,\ldots,n$". In practice, it is common to assume the errors have a normal (Gaussian) distribution. Two uncorrelated normal random variables are also independent (this is true for normal random variables, but is not generally true for other distributions). Thus, we may concisely state the typical error assumptions as
 \[
 \epsilon_1,\epsilon_2,\ldots,\epsilon_n \mid \mathbf{X}\stackrel{i.i.d.}{\sim} \mathsf{N}(0, \sigma^2),
 \]
 or using matrix notation as
 \[
-\mathbf{y}\mid \mathbf{X}\sim \mathsf{N}(\mathbf{0}_{n\times 1},\sigma^2 \mathbf{I}_{n\times n}), (\#eq:error-assumptions-matrix)
+\boldsymbol{\epsilon}\mid \mathbf{X}\sim \mathsf{N}(\mathbf{0}_{n\times 1},\sigma^2 \mathbf{I}_{n\times n}), (\#eq:error-assumptions-matrix)
 \]
 where $\mathbf{0}_{n\times 1}$ is the $n \times 1$ vector of zeros and $\mathbf{I}_{n\times n}$ is the $n\times n$ identity matrix. Equation \@ref(eq:error-assumptions-matrix)
 combines the following assumptions:
@@ -212,6 +213,7 @@ The **hat** matrix is denoted as
 \]
 
 Thus, using the substitution $\hat{\boldsymbol{\beta}}=(\mathbf{X}^T\mathbf{X})^{-1}\mathbf{X}^T\mathbf{y}$ and the definition for $\mathbf{H}$ in Equation \@ref(eq:hat-matrix-def), we see that
+
 \[
 \begin{aligned}
 \hat{\boldsymbol{\epsilon}} &= \mathbf{y}-\mathbf{X}\hat{\boldsymbol{\beta}} \\ 
