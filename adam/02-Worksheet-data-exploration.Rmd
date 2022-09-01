@@ -89,7 +89,7 @@ library(faraway) #loads all datasets
 
 ```{r} 
  # How can you get help?
-````
+```
 
 
 ```{r}
@@ -147,7 +147,7 @@ levels(pima$test) <- c("negative", "positive")
 summary(pima$test)
 ```
 
-## Visualizing data with **base** graphics
+## Visualizing data with **`base`** graphics
 
 ### Histograms
 
@@ -237,13 +237,13 @@ par(mfrow = c(1, 1)) # reset to a single plot
 
 ## Visualizing data with **ggplot2**
 
-The previous plots were created using R's **base** graphics system.
+The previous plots were created using R's **`base`** graphics system.
 
-* **base** graphics are fast and simple to produce while looking professional.
+* **`base`** graphics are fast and simple to produce while looking professional.
 
-A fancier alternative is to construct plots using the **ggplot2** package.
+A fancier alternative is to construct plots using the **`ggplot2`** package.
 
-In its simplest form, to construct a (useful) plot in **ggplot2**, you need to provide:
+In its simplest form, to construct a (useful) plot in **`ggplot2`**, you need to provide:
 
 * A `ggplot` object.
   * This is usually the object that holds your data frame.
@@ -284,7 +284,7 @@ ggplot(pima)+geom_point(aes(x=diastolic, y=diabetes))
 
 ### Scaling **ggplot2** plots
 
-In general, *scaling* is the process by which **ggplot2** maps variables to unique values. When this is done for discrete variables, **ggplot2** will often scale the variable to distinct colors, symbols, or sizes, depending on the aesthetic mapped.
+In general, *scaling* is the process by which **`ggplot2`** maps variables to unique values. When this is done for discrete variables, **`ggplot2`** will often scale the variable to distinct colors, symbols, or sizes, depending on the aesthetic mapped.
 
 In the example below, we map the `test` variable to the `shape` aesthetic, which is then scaled to different shapes for the different `test` levels.
 
@@ -321,7 +321,7 @@ ggpima +
 
 ### Summary of **ggplot2**
 
-To create a **ggplot2** plot:
+To create a **`ggplot2`** plot:
 
 * Create a`ggplot` object using the `ggplot` function.
   * Specify the data frame the data is contained in (e.g., the data frame is `pima`).
@@ -330,11 +330,11 @@ To create a **ggplot2** plot:
   * The aesthetic specifies what you see, such as position in the $x$ or $y$ direction or aspects such as shape or color.
   * The aesthetic can be specified in the geometry, or if you have consistent aesthetics across multiple geometries, in the `ggplot` statement.
 
-The advantage of **ggplot2** is more apparent in producing complex plots involving more than two variables.
+The advantage of **`ggplot2`** is more apparent in producing complex plots involving more than two variables.
 
-  * **ggplot2** makes it easy to plot the data for each group with different colors, symbols, line types, etc.
-  * **ggplot2** will automatically provide a legend mapping the attributes to the different groups.
-  * **ggplot2** makes it easy to create separate panels with plots for the observations having a certain characteristic.
+  * **`ggplot2`** makes it easy to plot the data for each group with different colors, symbols, line types, etc.
+  * **`ggplot2`** will automatically provide a legend mapping the attributes to the different groups.
+  * **`ggplot2`** makes it easy to create separate panels with plots for the observations having a certain characteristic.
 
 ## Summary of data exploration
 

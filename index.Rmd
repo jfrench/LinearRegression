@@ -1,26 +1,20 @@
 --- 
-title: "A progressive introduction to linear models"
+title: "A Progressive Introduction to Linear Models"
 author: "Joshua French"
 site: bookdown::bookdown_site
 documentclass: book
 bibliography: [book.bib, packages.bib]
 biblio-style: apalike
 link-citations: yes
-description: "A collection of R notebooks that progressively introduction how to fit and use linear models."
+description: "A collection of material that progressively introduces how to fit and use linear models."
+always_allow_html: yes
 ---
-<!-- date: "`r format(Sys.time(), '%Y-%m-%d')`" -->
 
 # Preliminaries {-}
 
-I recommend you execute the following commands to install packages we use in this textbook.
+I designed this book to progressively introduce you to the analysis of data using linear models. My goal is to provide you with the skills needed to perform a linear regression analysis sooner rather than later. Some material that could be covered together (for example, all the different types of statistical tests and confidence intervals) has been broken into two sections: an early one to give you foundational knowledge about the topic and then later material to advance your understanding. Most of the detailed derivations have been placed in **Going Deeper** sections or in their own chapter, which can be skipped over to more quickly progress through the material if you do not want to focus as much on theory.
 
-```{r, eval = FALSE}
-# data-related packages
-install.packages("palmerpenguins")
-# tidyverse
-install.packages("tidyverse")
-# additional plotting-related packages
-install.packages("effects", "plotly")
+```{r, echo = FALSE, eval = FALSE}
 # manipulation/
 # # packages related to books
 # books = c("faraway", "alr4", "car", "rms")
@@ -37,23 +31,25 @@ install.packages("effects", "plotly")
 # packages related to workflow
 workflow = c("remotes")
 install.packages(workflow)
-```
-
-Lastly, we need to install the **perturb** package, which is currently not available
-through the `install.packages` function. To install this from the package developer's
-GitHub repository, we run the command below in the Console.
-
-```{r, eval = FALSE}
 remotes::install_github(repo = "JohnHendrickx/Perturb")
+
 ```
 
-*Acknowledgments*
+**Acknowledgments**
 
-The **bookdown** package [@R-bookdown] was used to generate this book. The **gt** package [@R-gt] was to format some of the tables.
+The **bookdown** package [@R-bookdown] was used to generate this book. The **kableExtra** package [@R-kableExtra] was to format the tables. The writing of the book was partially supported by the Colorado Department of Higher Education as part of the proposal "OER for the Creation of Interactive Computational Notebooks and a Computational Pathway in Mathematics and Statistics".
 
 ```{r, include=FALSE}
 # automatically create a bib database for R packages
 knitr::write_bib(c(
-  .packages(), 'bookdown', 'knitr', 'rmarkdown', 'HistData', 'ggplot2', 'palmerpenguins', 'broom', 'tidyr', 'dplyr', 'stringr', 'purrr', 'tibble', 'readr', 'forcats', 'tidyverse', 'base', 'readxl', 'magrittr', 'ggiraph', 'plotly', 'datasets', 'effects', 'gt'
+  .packages(), 'bookdown', 'knitr', 'rmarkdown', 'HistData', 'ggplot2', 'palmerpenguins', 'broom', 'tidyr', 'dplyr', 'stringr', 'purrr', 'tibble', 'readr', 'forcats', 'tidyverse', 'base', 'readxl', 'magrittr', 'ggiraph', 'plotly', 'datasets', 'effects', 'kableExtra', 'formatR', 'car'
 ), 'packages.bib')
 ```
+
+**Creative Commons License Information**
+
+```{r license, echo=FALSE}
+knitr::include_graphics("pictures/cc-by-nc.png")
+```
+
+A Progressive Introduction to Linear Models by Joshua French is licensed under a [Creative Commons Attribution-NonCommercial 4.0 International License](https://creativecommons.org/licenses/by-nc/4.0/).
