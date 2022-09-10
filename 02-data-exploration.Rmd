@@ -295,7 +295,7 @@ num_col
 # compute correlation of numeric variables
 cor(penguins_clean[, num_col], use = "pairwise.complete.obs")
 ```
-Commenting on the output, we see that the values of each variable are perfectly correlated with themselves (this is always true since the values in each pairs are identical). The correlation between `bill_length` and `body_mass` is 0.87, so the larger a penguin is, the larger its bill tends to be. Perhaps surprisingly, the correlation between `bill_length` and `bill_depth` is -0.24, so the longer a bill becomes, the shallower (narrower) we expect the depth to be. Similarly, the correlation between `bill_depth` and `body_mass` is -0.47, so larger pengions thend to have narrower bills.
+Commenting on the output, we see that the values of each variable are perfectly correlated with themselves (this is always true since the values in each pairs are identical). The correlation between `bill_length` and `body_mass` is 0.87, so the larger a penguin is, the larger its bill tends to be. Perhaps surprisingly, the correlation between `bill_length` and `bill_depth` is -0.24, so the longer a bill becomes, the shallower (narrower) we expect the depth to be. Similarly, the correlation between `bill_depth` and `body_mass` is -0.47, so larger penguins tend to have narrower bills.
 
 We briefly explain why we didn't simply use the `cor` function on `penguins_clean` directly. If we try to use `cor` on `penguins_clean` naively, then R will return an error because not all variables in `penguins_clean` are `numeric`. To account for this, we create a vector that determines whether a variable in `penguins_clean` is `numeric`. Recall that a `data.frame` object is a specially-structured `list` object, with each variable being an element of the `list`. The `lapply` function applies a function (`is.numeric` in this case) to each element of the supplied `list`. In our case, we use this to determine whether each variable is `numeric`. The result is returned as a `list`, so we use the `unlist` function to simplify the `list` to a `vector`.
 
@@ -462,7 +462,7 @@ boxplot(penguins_clean$body_mass, data = penguins_clean,
 
 The `body_mass` variable doesn't have any outliers. It's has perhaps a slight positive skew since the upper tail and upper part of the box are longer than the lower tail and lower part of the box. The median value is a bit larger than 4000 grams, while 50% of the data being between approximatly 3500 and 4750 grams (i.e., between Q1 and Q3).
 
-The create a box plot using **`ggplot2`**, we use `geom_boxplot`. We create a box plot for the `bill_length` variable below. We map `bill_length` to the `y` aesthetic so that we get a vertically-oriented box plot (mapping it to `x` will produce a horizontal box plot).
+To create a box plot using **`ggplot2`**, we use `geom_boxplot`. We create a box plot for the `bill_length` variable below. We map `bill_length` to the `y` aesthetic so that we get a vertically-oriented box plot (mapping it to `x` will produce a horizontal box plot).
 
 ```{r}
 gg_penguin + geom_boxplot(aes(y = bill_length))
@@ -491,7 +491,7 @@ hist(penguins_clean$bill_length, main = "",
      xlab = "bill length (mm)", breaks = 20)
 ```
 
-This distribution of `bill_length` is bimodal (has two prominent peaks or modes). That is why the skewness information on the box plot of `bill_length` was inconsistent. This also demonstrates why should should never draw conclusions like modality or skewness from numeric summaries alonge.
+This distribution of `bill_length` is bimodal (has two prominent peaks or modes). That is why the skewness information on the box plot of `bill_length` was inconsistent. This also demonstrates why should should never draw conclusions like modality or skewness from numeric summaries alone.
 
 We use `geom_histogram` to create a histogram using **`ggplot2`**, mapping the variable to the `x` aesthetic. We do so for the `flipper_length` variable below.
 
@@ -635,7 +635,7 @@ ggplot(data = penguins_temp) +
   facet_grid(~ species)
 ```
 
-We see that for all species, the body mass of the males tehnds to be larger than the females.
+We see that for all species, the body mass of the males tends to be larger than the females.
 
 The examples above provide a small taste of the complicated graphics you can create with **`ggplot2`** using only a few lines of code.
 
@@ -675,7 +675,7 @@ The interactive parallel box plot provides information about the box plot of eac
 
 ## A plan for data cleaning and exploration
 
-We have provides many examples of data cleaning and exploration using the `penguins_raw` data. The analysis above is NOT exhaustive, and there are many additional numeric and visual summaries we could consider. We summarize a basic plan below for initial data cleaning and exploration that we have found useful. You will likely augment this process based on your own preferences and things you learn from the data. We assum you are working with a data frame, which is the most common data structure used for data analysis in R.
+We have provides many examples of data cleaning and exploration using the `penguins_raw` data. The analysis above is NOT exhaustive, and there are many additional numeric and visual summaries we could consider. We summarize a basic plan below for initial data cleaning and exploration that we have found useful. You will likely augment this process based on your own preferences and things you learn from the data. We assume you are working with a data frame, which is the most common data structure used for data analysis in R.
 
 1. Import or the data set.
 2. Use the `str` function to get an idea of the initial structure. This can help to identify clear issues you may have had in importing the data, problems with variable names and types, etc.
