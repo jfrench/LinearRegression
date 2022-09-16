@@ -231,7 +231,7 @@ mean(penguins_clean$body_mass, na.rm = TRUE)
 median(penguins_clean$body_mass, na.rm = TRUE)
 ```
 
-- The median is less than the mean (i.e., large values are pulling the mean in the positive direction), what *might* this tell us about the distribution?
+- **Question:** The median is less than the mean (i.e., large values are pulling the mean in the positive direction), what *might* this tell us about the distribution?
 
 #### Quantiles
 
@@ -246,7 +246,7 @@ quantile(penguins_clean$body_mass, probs = c(0, 0.25, 0.5, 0.75, 1),
          na.rm = TRUE)
 ```
 
-- Q3 and the maximum are further from the median than Q1 and the minimum. Is this evidence that this variable may be positively skewed?
+- **Question:** Q3 and the maximum are further from the median than Q1 and the minimum. Is this evidence that this variable may be positively skewed?
 
 #### Measures of spread
 
@@ -464,6 +464,8 @@ The `boxplot` function is the easiest approach for producing a box plot using ba
 boxplot(penguins_clean$body_mass, data = penguins_clean,
         main = "distribution of body mass")
 ```
+**Questions:**
+
 - Are there any outliers?
 - Is there evidence the variable is skewed?
 
@@ -474,6 +476,8 @@ To create a box plot using **`ggplot2`**, we use `geom_boxplot`. We create a box
 ```{r}
 gg_penguin + geom_boxplot(aes(y = bill_length))
 ```
+
+**Questions:**
 
 - Are there outliers?
 - Is there evidence the variable is skewed?
@@ -491,6 +495,7 @@ The `hist` function is used create a histogram of a `numeric` variable. We augme
 hist(penguins_clean$bill_length, main = "",
      xlab = "bill length (mm)", breaks = 20)
 ```
+**Questions:**
 
 - Is the variable unimodal?
 - What does this say about the skew?
@@ -504,7 +509,7 @@ We use `geom_histogram` to create a histogram using **`ggplot2`**, mapping the v
 gg_penguin + geom_histogram(aes(x = flipper_length))
 ```
 
-- Is the variable unimodal or bimodal?
+- **Question:** Is the variable unimodal or bimodal?
 
 #### Density plots
 
@@ -516,7 +521,7 @@ The `plot` and `density` function can be combined to construct a density plot us
 plot(density(penguins_clean$bill_depth, na.rm = TRUE), main = "")
 ```
 
-- Is the variable unimodal or bimodal?
+- **Question:** Is the variable unimodal or bimodal?
 
 
 ---
@@ -527,7 +532,9 @@ We create a density plot with **`ggplot2`** using `geom_density`. We do so for t
 gg_penguin + geom_density(aes(x = body_mass))
 ```
 
-- Is the `body_mass` variable is unimodal
+**Questions:**
+
+- Is the `body_mass` variable is unimodal?
 - Is there evidence the variable is skewed?
 
 ### Bivariate plots
@@ -546,6 +553,8 @@ plot(bill_length ~ body_mass, data = penguins_clean,
      xlab = "body mass (g)", ylab = "bill length (mm)")
 ```
 
+**Questions:**
+
 - Is there a linear relationship between `body_mass` and `bill length`?
 - Is it positive or negative?
 
@@ -557,7 +566,7 @@ The `geom_point` function can be used to create a scatter plot with **`ggplot2`*
 gg_penguin + geom_point(aes(x = bill_depth, y = bill_length))
 ```
 
-- What can we conclude from this plot?
+- **Question:** What can we conclude from this plot?
 
 #### Parallel box plots
 

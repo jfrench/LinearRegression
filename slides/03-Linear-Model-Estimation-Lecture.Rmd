@@ -282,6 +282,8 @@ plot(bill_length_mm ~ body_mass_g, data = penguins,
      main = "Penguin size measurements")
 ```
 
+**Questions:**
+
 - Is there a positive/negative association between body mass and bill length?
 - Is the relationship approximately linear?
 
@@ -345,7 +347,7 @@ In the context of a simple linear regression model, the intercept term is the ex
 -   $\hat{\beta}_1$: If a penguin has a body mass 1 gram larger than another penguin, we expect the larger penguin's bill length to be 0.004 millimeters longer.
 -   $\hat{\beta}_0$: A penguin with a body mass of 0 grams is expected to have a bill length of 26.9 millimeters.
 
-Does the intercept term make sense physically?
+- **Question:** Does the intercept term make sense physically?
 
 ---
 
@@ -375,7 +377,7 @@ head(yhat2) # first few fitted values
 (sigmasqhat <- sigma(lmod)^2) # estimated error variance
 ```
 
-- What is the RSS of the fitted model?
+- **Question:** What is the RSS of the fitted model?
 
 
 ## Defining a linear model
@@ -502,7 +504,7 @@ The vector of regressor values for the $i$th observation is denoted
 \mathbf{x}_i=[1,x_{i,1},\ldots,x_{i,p-1}], (\#eq:def-ith-regressor-matrix)
 \]
 
-* Why do we include a vector of $1$'s?
+* **Question:** Why do we include a vector of $1$'s?
 
 ---
 
@@ -606,7 +608,7 @@ The fitted model is
 \widehat{\mathtt{bill\_length\_mm}}=-3.44+0.0007 \,\mathtt{body\_mass\_g}+0.22\,\mathtt{flipper\_length\_mm}.
 \]
 
-- What is the RSS? How does it compare to the simple linear model we used before?
+- **Question:** What is the RSS? How does it compare to the simple linear model we used before?
 
 
 ## Types of linear models
@@ -673,7 +675,7 @@ E(Y\mid X, C) =
 \end{cases}.
 \]
 
-- What will the vertical distance between the lines be?
+- **Question:** What will the vertical distance between the lines be?
 
 ---
 
@@ -716,7 +718,7 @@ ggplot(data = penguins) +
   xlab("body mass (g)") + ylab("bill length (mm)")
 ```
 
-- Does the relationship between bill length and body mass change depending on the species of penguin?
+- **Question:** Does the relationship between bill length and body mass change depending on the species of penguin?
 
 ---
 
@@ -783,7 +785,7 @@ penguins <-
   transform(pl_fitted = predict(lmodp))
 ```
 
-- Why are we getting this error?
+- **Question:** Why are we getting this error?
 
 ---
 
@@ -891,7 +893,7 @@ ggplot(data = penguins) +
   geom_line(aes(x = body_mass_g, y = sl_fitted, col = species))
 ```
 
-- Do the fitted lines match the observed data behavior reasonably well?
+- **Question:** Do the fitted lines match the observed data behavior reasonably well?
 
 
 ## Evaluating model fit
