@@ -64,11 +64,11 @@ A regression analysis assumes that we have observed variables $X_1, X_2, \ldots,
 with $(x_i, Y_i)$ denoting the data for observation $i$. $x_i$ denotes the mother's height for observation $i$ and $Y_i$ denotes the daughter's height for
 observation $i$. Referring to Table \@ref(tab:mdheights), we see that, e.g., $x_3 = 63.5$ and $Y_5= 66.5$.
 
-Suppose we want to find the straight line that best fits the plot of mother and daughter heights in Figure \@ref(fig:mdheights-plot). How do we determine the "best fitting" model? Consider Figure \@ref(fig:three-fitted-lines), in which 2 potential "best fitting" lines are drawn on the scatter plot of the height data. Which one is best?
+Suppose we want to find the straight line that best fits the plot of mother and daughter heights in Figure \@ref(fig:mdheights-plot). How do we determine the "best fitting" model? Consider Figure \@ref(fig:two-fitted-lines), in which 2 potential "best fitting" lines are drawn on the scatter plot of the height data. Which one is best?
 
 The rest of this chapter focuses on defining and estimating the parameters of a *linear* regression model. We will start with the simplest type of linear regression, called simple linear regression, which only uses a single regressor variable to model the response. We will then start looking at more complicated linear regression models. After that, we discuss how to evaluate how well an estimated regression model fits the data. We conclude with a summary of some important concepts from the chapter.
 
-```{r three-fitted-lines, fig.cap = "Comparison of two potential fitted models to some observed data. The fitted models are shown in grey.", echo=FALSE}
+```{r two-fitted-lines, fig.cap = "Comparison of two potential fitted models to some observed data. The fitted models are shown in grey.", echo=FALSE}
 lmod <- lm(y ~ x)
 coef_ls <- coef(lmod) # OLS estimates
 lad <- function(b) {
@@ -179,7 +179,7 @@ RSS(\hat{\beta}_0, \hat{\beta}_1) &= \sum_{i=1}^n \hat{\epsilon}_i^2 \\
 (\#eq:equiv-def-rss-slr)
 \]
 
-The **fitted model** is the estimated model that minimizes the RSS, i.e., and is written as
+The **fitted model** is the estimated model that minimizes the RSS, and is written as
 \[
 \hat{Y}=\hat{E}(Y|X) = \hat{\beta}_0 + \hat{\beta}_1 X. (\#eq:def-fitted-model-slr)
 \]
@@ -365,7 +365,7 @@ methods(class = "lm")
 
 ### Necessary components and notation {#ss-necessary-components}
 
-We now wish to discuss linear models in a broader context. Wbegin by defining notation for the components of a linear model and provide some of their important properties. We repeat some of the previous discussion for clarity.
+We now wish to discuss linear models in a broader context. We begin by defining notation for the components of a linear model and provide some of their important properties. We repeat some of the previous discussion for clarity.
 
 - $Y$ denotes the response variable.
     - The response variable is treated as a random variable.
@@ -605,6 +605,7 @@ Categorical  predictors can greatly improve the explanatory power or predictive 
 <!-- Chapter \@ref(more-on-categorical-predictors) provides more information about using categorical predictors in a regression model. -->
 
 ### Indicator variables
+
 In order to compute $\hat{\boldsymbol{\beta}}$ using Equation \@ref(eq:betahat), both $\mathbf{X}$ and $\mathbf{y}$ must contain numeric values. How can we use a categorical predictor in our regression model when its values are not numeric? To do so, we must transform the categorical predictor into one or more **indicator** or **dummy variables**, which we explain in more detail below.
 
 An **indicator function** is a function that takes the value 1 if a certain property is true and 0 otherwise. An **indicator variable** is the variable that results from applying an indicator function to each observation of a variable. Many notations exist for indicator functions. We use the notation,
@@ -740,7 +741,7 @@ penguins <-
 ```
 We just received a nasty error. What is going on? The original `penguins` data frame has 344 rows. However, two rows had `NA` observations such that when we used the `lm` function to fit our parallel lines model, those observations were removed prior to fitting. The `predict` function produces fitted values for the observations used in the fitting process, so there are only 342 predicted values. There is a mismatch between the number of rows in `penguins` and the number of values we attempt to add in the new column `pl_fitted`, so we get an error.
 
-To handle this error, we refit our model while setting the `na.action` argument to `na.exclude`. As stated Details section of the documention for the `lm` function (run `?lm` in the Console):
+To handle this error, we refit our model while setting the `na.action` argument to `na.exclude`. As stated Details section of the documentation for the `lm` function (run `?lm` in the Console):
 
 > $\ldots$ when `na.exclude` is used the residuals and predictions are padded to the correct length by inserting `NA`s for cases omitted by `na.exclude`.
 
