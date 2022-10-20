@@ -4,18 +4,18 @@
 
   <meta charset="utf-8" />
   <meta http-equiv="X-UA-Compatible" content="IE=edge" />
-  <title>Page not found | A Progressive Introduction to Linear Models</title>
+  <title>C Hypothesis Testing and Confidence Intervals | A Progressive Introduction to Linear Models</title>
   <meta name="description" content="A collection of material that progressively introduces how to fit and use linear models." />
-  <meta name="generator" content="bookdown 0.29 and GitBook 2.6.7" />
+  <meta name="generator" content="bookdown 0.27 and GitBook 2.6.7" />
 
-  <meta property="og:title" content="Page not found | A Progressive Introduction to Linear Models" />
+  <meta property="og:title" content="C Hypothesis Testing and Confidence Intervals | A Progressive Introduction to Linear Models" />
   <meta property="og:type" content="book" />
   
   <meta property="og:description" content="A collection of material that progressively introduces how to fit and use linear models." />
   
 
   <meta name="twitter:card" content="summary" />
-  <meta name="twitter:title" content="Page not found | A Progressive Introduction to Linear Models" />
+  <meta name="twitter:title" content="C Hypothesis Testing and Confidence Intervals | A Progressive Introduction to Linear Models" />
   
   <meta name="twitter:description" content="A collection of material that progressively introduces how to fit and use linear models." />
   
@@ -29,8 +29,8 @@
   <meta name="apple-mobile-web-app-status-bar-style" content="black" />
   
   
-
-
+<link rel="prev" href="prob-review.html"/>
+<link rel="next" href="references.html"/>
 <script src="libs/jquery-3.6.0/jquery-3.6.0.min.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/fuse.js@6.4.6/dist/fuse.min.js"></script>
 <link href="libs/gitbook-2.6.7/css/style.css" rel="stylesheet" />
@@ -51,6 +51,8 @@
 <link href="libs/anchor-sections-1.1.0/anchor-sections.css" rel="stylesheet" />
 <link href="libs/anchor-sections-1.1.0/anchor-sections-hash.css" rel="stylesheet" />
 <script src="libs/anchor-sections-1.1.0/anchor-sections.js"></script>
+<script src="libs/kePrint-0.0.1/kePrint.js"></script>
+<link href="libs/lightable-0.0.1/lightable.css" rel="stylesheet" />
 
 
 <style type="text/css">
@@ -91,7 +93,7 @@ code span.al { color: #ff0000; font-weight: bold; } /* Alert */
 code span.an { color: #60a0b0; font-weight: bold; font-style: italic; } /* Annotation */
 code span.at { color: #7d9029; } /* Attribute */
 code span.bn { color: #40a070; } /* BaseN */
-code span.bu { color: #008000; } /* BuiltIn */
+code span.bu { } /* BuiltIn */
 code span.cf { color: #007020; font-weight: bold; } /* ControlFlow */
 code span.ch { color: #4070a0; } /* Char */
 code span.cn { color: #880000; } /* Constant */
@@ -104,7 +106,7 @@ code span.er { color: #ff0000; font-weight: bold; } /* Error */
 code span.ex { } /* Extension */
 code span.fl { color: #40a070; } /* Float */
 code span.fu { color: #06287e; } /* Function */
-code span.im { color: #008000; font-weight: bold; } /* Import */
+code span.im { } /* Import */
 code span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Information */
 code span.kw { color: #007020; font-weight: bold; } /* Keyword */
 code span.op { color: #666666; } /* Operator */
@@ -295,27 +297,9 @@ div.csl-indent {
 <li class="chapter" data-level="5.5" data-path="linear-model-theory.html"><a href="linear-model-theory.html#results-for-the-residuals"><i class="fa fa-check"></i><b>5.5</b> Results for the residuals</a></li>
 <li class="chapter" data-level="5.6" data-path="linear-model-theory.html"><a href="linear-model-theory.html#the-gauss-markov-theorem"><i class="fa fa-check"></i><b>5.6</b> The Gauss-Markov Theorem</a></li>
 </ul></li>
-<li class="chapter" data-level="6" data-path="inference.html"><a href="inference.html"><i class="fa fa-check"></i><b>6</b> Linear model inference and prediction</a>
+<li class="chapter" data-level="6" data-path="inference.html"><a href="inference.html"><i class="fa fa-check"></i><b>6</b> Linear model inference</a>
 <ul>
-<li class="chapter" data-level="6.1" data-path="inference.html"><a href="inference.html#overview-of-inference-and-prediction"><i class="fa fa-check"></i><b>6.1</b> Overview of inference and prediction</a></li>
-<li class="chapter" data-level="6.2" data-path="inference.html"><a href="inference.html#necessary-notation"><i class="fa fa-check"></i><b>6.2</b> Necessary notation</a></li>
-<li class="chapter" data-level="6.3" data-path="inference.html"><a href="inference.html#properties-betahat"><i class="fa fa-check"></i><b>6.3</b> Properties of the OLS estimator</a></li>
-<li class="chapter" data-level="6.4" data-path="inference.html"><a href="inference.html#parametric-confidence-intervals-for-regression-coefficients"><i class="fa fa-check"></i><b>6.4</b> Parametric confidence intervals for regression coefficients</a>
-<ul>
-<li class="chapter" data-level="6.4.1" data-path="inference.html"><a href="inference.html#tci"><i class="fa fa-check"></i><b>6.4.1</b> Standard <span class="math inline">\(t\)</span>-based confidence intervals</a></li>
-<li class="chapter" data-level="6.4.2" data-path="inference.html"><a href="inference.html#mcp"><i class="fa fa-check"></i><b>6.4.2</b> The multiple comparisons problem</a></li>
-<li class="chapter" data-level="6.4.3" data-path="inference.html"><a href="inference.html#adjusted-cis-betas"><i class="fa fa-check"></i><b>6.4.3</b> Adjusted confidence intervals for regression coefficients</a></li>
-</ul></li>
-<li class="chapter" data-level="6.5" data-path="inference.html"><a href="inference.html#prediction-mean-response-versus-new-response"><i class="fa fa-check"></i><b>6.5</b> Prediction: mean response versus new response</a></li>
-<li class="chapter" data-level="6.6" data-path="inference.html"><a href="inference.html#parametric-ci-mean-response"><i class="fa fa-check"></i><b>6.6</b> Parametric confidence interval for the mean response</a></li>
-<li class="chapter" data-level="6.7" data-path="inference.html"><a href="inference.html#pi-new-response"><i class="fa fa-check"></i><b>6.7</b> Parametric prediction interval for a new response</a></li>
-<li class="chapter" data-level="6.8" data-path="inference.html"><a href="inference.html#going-deeper-2"><i class="fa fa-check"></i><b>6.8</b> Going deeper</a>
-<ul>
-<li class="chapter" data-level="6.8.1" data-path="inference.html"><a href="inference.html#manual-t-cis"><i class="fa fa-check"></i><b>6.8.1</b> Manual calculation of the standard <span class="math inline">\(t\)</span>-based confidence interval for a regression coefficient</a></li>
-<li class="chapter" data-level="6.8.2" data-path="inference.html"><a href="inference.html#mean-response-calculations"><i class="fa fa-check"></i><b>6.8.2</b> Details about estimation of the mean response</a></li>
-<li class="chapter" data-level="6.8.3" data-path="inference.html"><a href="inference.html#manual-calc-ci-mean-response"><i class="fa fa-check"></i><b>6.8.3</b> Manual calculation of confidence intervals for the mean response</a></li>
-<li class="chapter" data-level="6.8.4" data-path="inference.html"><a href="inference.html#new-response-pi-calculations"><i class="fa fa-check"></i><b>6.8.4</b> Details about prediction interval for a new response</a></li>
-</ul></li>
+<li class="chapter" data-level="6.1" data-path="inference.html"><a href="inference.html#still-to-come"><i class="fa fa-check"></i><b>6.1</b> Still to come</a></li>
 </ul></li>
 <li class="appendix"><span><b>Appendix</b></span></li>
 <li class="chapter" data-level="A" data-path="overview-of-matrix-facts.html"><a href="overview-of-matrix-facts.html"><i class="fa fa-check"></i><b>A</b> Overview of matrix facts</a>
@@ -387,12 +371,10 @@ div.csl-indent {
 <li class="chapter" data-level="B.5.3" data-path="prob-review.html"><a href="prob-review.html#ols-example"><i class="fa fa-check"></i><b>B.5.3</b> OLS example</a></li>
 </ul></li>
 </ul></li>
-<li class="chapter" data-level="C" data-path="est-infer-review.html"><a href="est-infer-review.html"><i class="fa fa-check"></i><b>C</b> Review of Estimation and Inference</a>
+<li class="chapter" data-level="C" data-path="hypothesis-testing-and-confidence-intervals.html"><a href="hypothesis-testing-and-confidence-intervals.html"><i class="fa fa-check"></i><b>C</b> Hypothesis Testing and Confidence Intervals</a>
 <ul>
-<li class="chapter" data-level="C.1" data-path="est-infer-review.html"><a href="est-infer-review.html#estimation"><i class="fa fa-check"></i><b>C.1</b> Estimation</a></li>
-<li class="chapter" data-level="C.2" data-path="est-infer-review.html"><a href="est-infer-review.html#hypothesis-testing"><i class="fa fa-check"></i><b>C.2</b> Hypothesis Testing</a></li>
-<li class="chapter" data-level="C.3" data-path="est-infer-review.html"><a href="est-infer-review.html#confidence-intervals"><i class="fa fa-check"></i><b>C.3</b> Confidence Intervals</a></li>
-<li class="chapter" data-level="C.4" data-path="est-infer-review.html"><a href="est-infer-review.html#linking-hypothesis-tests-and-confidence-intervals"><i class="fa fa-check"></i><b>C.4</b> Linking Hypothesis Tests and Confidence Intervals</a></li>
+<li class="chapter" data-level="C.1" data-path="hypothesis-testing-and-confidence-intervals.html"><a href="hypothesis-testing-and-confidence-intervals.html#a-review-of-hypothesis-testing"><i class="fa fa-check"></i><b>C.1</b> A Review of Hypothesis Testing</a></li>
+<li class="chapter" data-level="C.2" data-path="hypothesis-testing-and-confidence-intervals.html"><a href="hypothesis-testing-and-confidence-intervals.html#a-review-of-confidence-intervals"><i class="fa fa-check"></i><b>C.2</b> A Review of Confidence Intervals</a></li>
 </ul></li>
 <li class="chapter" data-level="" data-path="references.html"><a href="references.html"><i class="fa fa-check"></i>References</a></li>
 <li class="divider"></li>
@@ -415,19 +397,293 @@ div.csl-indent {
           <div class="page-inner">
 
             <section class="normal" id="section-">
-<div id="page-not-found" class="section level1">
-<h1>Page not found</h1>
-<p>The page you requested cannot be found (perhaps it was moved or renamed).</p>
-<p>You may want to try searching to find the page's new location, or use
-the table of contents to find the page you are looking for.</p>
+<div id="hypothesis-testing-and-confidence-intervals" class="section level1 hasAnchor" number="9">
+<h1><span class="header-section-number">C</span> Hypothesis Testing and Confidence Intervals<a href="hypothesis-testing-and-confidence-intervals.html#hypothesis-testing-and-confidence-intervals" class="anchor-section" aria-label="Anchor link to header"></a></h1>
+<div id="a-review-of-hypothesis-testing" class="section level2 hasAnchor" number="9.1">
+<h2><span class="header-section-number">C.1</span> A Review of Hypothesis Testing<a href="hypothesis-testing-and-confidence-intervals.html#a-review-of-hypothesis-testing" class="anchor-section" aria-label="Anchor link to header"></a></h2>
+<p>A <strong>statistical test of hypotheses</strong> or <strong>hypothesis test</strong> is a
+statistical procedure used to decide between a null hypothesis, <span class="math inline">\(H_0\)</span>,
+and an alternative hypothesis, <span class="math inline">\(H_a\)</span> or <span class="math inline">\(H_1\)</span>. The null hypothesis is
+usually a hypothesis that “nothing interesting is going on”. The
+alternative hypothesis is (generally) the complement of the null
+hypothesis and is usually what we want to show is true.</p>
+<p>A <strong>test statistic</strong> is a number used to decide between <span class="math inline">\(H_0\)</span> and <span class="math inline">\(H_a\)</span>.
+A test statistic is a function of the data, and generally, parameters in
+the hypotheses. A test statistic measures the compatibility of the
+observed data with <span class="math inline">\(H_0\)</span>: a “small” test statistic suggests the observed
+data are consistent with <span class="math inline">\(H_0\)</span>, while an extreme test statistic
+indicates that the observed data are inconsistent with <span class="math inline">\(H_0\)</span>, which we
+take as evidence that <span class="math inline">\(H_a\)</span> is true.</p>
+<p>The <strong>null distribution</strong> allows us to determine what typical and
+unusual test statistics are when <span class="math inline">\(H_0\)</span> is true. Formally, the null
+distribution is the distribution of our test statistic under the
+assumption that <span class="math inline">\(H_0\)</span> is true.</p>
+<p>There are two types of errors we can make when doing hypothesis testing:</p>
+<ul>
+<li><p>A Type I error is rejecting <span class="math inline">\(H_0\)</span> when <span class="math inline">\(H_0\)</span> is true.</p></li>
+<li><p>A Type II error is failing to reject <span class="math inline">\(H_0\)</span> when <span class="math inline">\(H_a\)</span> is true.</p></li>
+</ul>
+<p>We can control the Type I error rate at a specified level, <span class="math inline">\(\alpha\)</span>,
+called the <strong>significance level</strong>, since we know the distribution of our
+test statistic under the assumption that <span class="math inline">\(H_0\)</span> is true. We reject <span class="math inline">\(H_0\)</span>
+and conclude that <span class="math inline">\(H_a\)</span> is true if the test statistic falls in the
+<strong>rejection region</strong> of the null distribution, which is the set of test
+statistics that are the <span class="math inline">\(100\alpha\%\)</span> most unlikely test statistics if
+<span class="math inline">\(H_0\)</span> is true.</p>
+<p>Instead of using the test statistic directly to decide between <span class="math inline">\(H_0\)</span> and
+<span class="math inline">\(H_a\)</span>, we generally use the test statistic to compute a p-value. The
+<strong>p-value</strong> of a test statistic is the probability of seeing a test
+statistic at least as supportive of <span class="math inline">\(H_a\)</span> when <span class="math inline">\(H_0\)</span> is true. If we
+specify the significance level, <span class="math inline">\(\alpha\)</span>, prior to performing our
+hypothesis test (which is the ethical thing to do), then we reject <span class="math inline">\(H_0\)</span>
+and conclude <span class="math inline">\(H_a\)</span> is true when the p-value <span class="math inline">\(&lt;\alpha\)</span>. Otherwise, we
+fail to reject <span class="math inline">\(H_0\)</span>.</p>
+<p>Researchers sometimes say that the smaller the p-value, the stronger the
+evidence that <span class="math inline">\(H_a\)</span> is true and <span class="math inline">\(H_0\)</span> is false. This isn’t definitively
+true because the p-value doesn’t have the ability to tell us whether
+<span class="math inline">\(H_0\)</span> is true but our observed data were very unlikely or <span class="math inline">\(H_0\)</span> is
+false. When <span class="math inline">\(H_0\)</span> is true, then the test statistic has a
+<span class="math inline">\(\mathsf{U}(0,1)\)</span> (for simple hypotheses and continuous test
+statistics). However, if the <span class="math inline">\(H_a\)</span> is true, then the p-value is more
+likely to be small, which makes us think <span class="math inline">\(H_a\)</span> is true for small
+p-values. However, unless we know the <strong>power</strong> of our test, which is
+the probability that we reject <span class="math inline">\(H_0\)</span> when <span class="math inline">\(H_a\)</span> is true, then it is very
+difficult to assess how much evidence for <span class="math inline">\(H_a\)</span> a small p-value
+provides. However, <span class="citation">Gibson (<a href="#ref-gibson_pvalue" role="doc-biblioref">2021</a>)</span> point out the p-values can be
+interpreted naturally on a <span class="math inline">\(\log_{10}\)</span> scale. <span class="citation">Gibson (<a href="#ref-gibson_pvalue" role="doc-biblioref">2021</a>)</span> states:</p>
+<blockquote>
+<p>The p-value can be expressed as <span class="math inline">\(p=c\times 10^{-k}\)</span> so that
+<span class="math inline">\(\log_{10}(p)=-\log_{10}(c)+k\)</span>, where <span class="math inline">\(c\)</span> is a constant and <span class="math inline">\(k\)</span> is an
+integer, which implies that only the magnitude <em>k</em> measures the actual
+strength of evidence <span class="citation">(<a href="#ref-boos_stefanski_2011_pvalues" role="doc-biblioref">Boos and Stefanski 2011</a>)</span>. <span class="math inline">\(\ldots\)</span> This
+would suggest that <span class="math inline">\(p=0.01\)</span> (<span class="math inline">\(k=2\)</span>) could be interpreted as twice the
+evidence [for <span class="math inline">\(H_a\)</span> as] <span class="math inline">\(p=0.10\)</span> (<span class="math inline">\(k=1\)</span>).</p>
+</blockquote>
+<p><span class="citation">Gibson (<a href="#ref-gibson_pvalue" role="doc-biblioref">2021</a>)</span> provides a thorough review of p-value interpretation.
+Table <a href="hypothesis-testing-and-confidence-intervals.html#tab:pvalue-interp">C.1</a> summarizes common strength of evidence
+interpretations for p-values.</p>
+<table class="table" style="width: auto !important; margin-left: auto; margin-right: auto;">
+<caption>
+<span id="tab:pvalue-interp">Table C.1: </span>An summary of common strength-of-evidence interpretations for p-values.
+</caption>
+<thead>
+<tr>
+<th style="text-align:left;">
+p-value
+</th>
+<th style="text-align:left;">
+Interpretation
+</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align:left;">
+more than <span class="math inline">\(0.10\)</span>
+</td>
+<td style="text-align:left;width: 3in; ">
+no evidence for <span class="math inline">\(H_a\)</span>
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+<span class="math inline">\(\leq 0.10\)</span>
+</td>
+<td style="text-align:left;width: 3in; ">
+weak evidence for <span class="math inline">\(H_a\)</span>
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+<span class="math inline">\(\leq 0.05\)</span>
+</td>
+<td style="text-align:left;width: 3in; ">
+moderate evidence for <span class="math inline">\(H_a\)</span>
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+<span class="math inline">\(\leq 0.01\)</span>
+</td>
+<td style="text-align:left;width: 3in; ">
+strong evidence for <span class="math inline">\(H_a\)</span>
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+<span class="math inline">\(\leq 0.001\)</span>
+</td>
+<td style="text-align:left;width: 3in; ">
+very strong evidence for <span class="math inline">\(H_a\)</span>
+</td>
+</tr>
+</tbody>
+</table>
+<p><strong>Example</strong></p>
+<p>Suppose that <span class="math inline">\(Y_1,\ldots,Y_n\)</span> is a random sample (in other words,
+independent and identically distributed sample) from a population having
+a normal distribution with unknown mean <span class="math inline">\(\mu\)</span> and variance <span class="math inline">\(\sigma^2=1\)</span>.</p>
+<p>We would like to decide between the following two hypotheses:
+<span class="math inline">\(H_0:\mu=0\)</span> and <span class="math inline">\(H_a:\mu\neq 0\)</span>.</p>
+<p>If <span class="math inline">\(H_0\)</span> is true, then the statistic <span class="math inline">\(\bar{Y}\sim \mathsf{N}(0,1/n)\)</span> and
+the test statistic</p>
+<p><span class="math display">\[
+Z^*=\bar{Y}/(1/\sqrt{n})=\sqrt{n}\bar{Y}\sim \mathsf{N}(0, 1),
+\]</span></p>
+<p>i.e., the null distribution of our test statistic is <span class="math inline">\(\mathsf{N}(0,1)\)</span>.</p>
+<p>If
+<span class="math inline">\(\alpha=0.10\)</span>, then the 10% of test statistics that are most unlikely if <span class="math inline">\(H_0\)</span>
+is true (i.e., most supportive of $H_a$) are more extreme than
+<span class="math inline">\(z^{0.95}\)</span> and <span class="math inline">\(z^{0.05}\)</span>, the 0.05 and 0.95 quantiles of a standard
+normal distribution, respectively. (The superscript in the quantile
+notation indicates the area to the right of the quantile in the CDF).
+The 0.05 quantile of the standard normal distribution is -1.65 and the
+0.95 quantile is 1.65. In R, we can find these quantile using the
+<code>qnorm</code> function, where the first argument of <code>qnorm</code> is <code>p</code>, which is
+the vector of probabilities to the LEFT of the quantile. We verify these
+quantiles using the code below.</p>
+<div class="sourceCode" id="cb1"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb1-1"><a href="hypothesis-testing-and-confidence-intervals.html#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="fu">qnorm</span>(<span class="fu">c</span>(<span class="fl">0.05</span>,<span class="fl">0.95</span>))</span>
+<span id="cb1-2"><a href="hypothesis-testing-and-confidence-intervals.html#cb1-2" aria-hidden="true" tabindex="-1"></a><span class="do">## [1] -1.644854  1.644854</span></span></code></pre></div>
+<p><span class="math inline">\(H_0\)</span> should be rejected when <span class="math inline">\(Z^*\)</span> is less than -1.65 or more than
+1.65, i.e., the rejection region is <span class="math inline">\((-\infty, -1.65)\cup(1.65,\infty)\)</span>.</p>
+<p>Alternatively, we could compute the p-value using the formula
+<span class="math inline">\(2P(Z\geq |Z^*|)\)</span> in order to make our choice between the hypotheses.</p>
+<p>Suppose <span class="math inline">\(z^*=1.74\)</span> and <span class="math inline">\(\alpha=0.10\)</span>. The test statistic is in the rejection region, so we would conclude that <span class="math inline">\(H_a\)</span>
+is true. The p-value is <span class="math inline">\(2P(Z\geq 1.74)=0.082\)</span>. Using the p-value approach we would conclude that <span class="math inline">\(H_a\)</span> is true. (Note that the rejection region and p-value approaches to deciding between hypotheses must agree). In R, we can compute the p-value using the code below.</p>
+<div class="sourceCode" id="cb2"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb2-1"><a href="hypothesis-testing-and-confidence-intervals.html#cb2-1" aria-hidden="true" tabindex="-1"></a><span class="dv">2</span><span class="sc">*</span>(<span class="dv">1</span> <span class="sc">-</span> <span class="fu">pnorm</span>(<span class="fl">1.74</span>))</span>
+<span id="cb2-2"><a href="hypothesis-testing-and-confidence-intervals.html#cb2-2" aria-hidden="true" tabindex="-1"></a><span class="do">## [1] 0.08185902</span></span></code></pre></div>
+<p>In straightforward language, our interpretation could be: there is weak evidence that the population mean differs from 0.</p>
+</div>
+<div id="a-review-of-confidence-intervals" class="section level2 hasAnchor" number="9.2">
+<h2><span class="header-section-number">C.2</span> A Review of Confidence Intervals<a href="hypothesis-testing-and-confidence-intervals.html#a-review-of-confidence-intervals" class="anchor-section" aria-label="Anchor link to header"></a></h2>
+<p>A confidence interval provides us with plausible values of a target
+parameter.</p>
+<p>A confidence interval has an associated confidence level. Under repeated
+independent trials, a confidence interval procedure will produce
+intervals containing the target parameter with probability equal to the
+confidence level.</p>
+<p>The formulas for confidence intervals are usually derived from a pivotal
+quantity. A pivotal quantity is a function of the data and the target
+parameter whose distribution does not depend on the value of the target
+parameter.   Example: Suppose Y_1,Y_2,…,Y_n ∼┴(i.i.d.) N(μ,1).</p>
+<p>The random variable Z=(Y ̅-μ)/(1/√n)∼N(0,1) is a pivotal quantity.</p>
+<p>Since P(-1.96≤Z≤1.96)=0.95, we can derive that P(Y ̅-1.96×1/√n≤μ≤Y
+̅+1.96×1/√n)=0.95.</p>
+<p>Our 95% confidence interval for μ (in this context) is [Y ̅-1.96×1/√n,Y
+̅+1.96×1/√n].</p>
+<p>If y ̅=0.551, then the associated 95% confidence interval for μ when
+n=10 is [-0.070,1.171].</p>
+<p>Note: the confidence level is associated with the procedure, not a
+specific interval.<br />
+A 95% confidence interval procedure will produce intervals that contain
+the target parameter 95% of the time.</p>
+<p>If we used the CI formula given above to produce 100 intervals from
+independent data sets, then about 95% of them would contain the true
+mean, but about 5% would not.  </p>
+<p>Linking Hypothesis Tests and Confidence Intervals</p>
+<p>CIs are directly linked to hypothesis tests.</p>
+<p>A 100(1-α)% two-sided confidence interval for target parameter θ is
+linked with a hypothesis test of H_0:θ=c versus H_a:θ≠c tested at level
+α. Any point that lies within the 100(1-α)% confidence interval for θ
+represents a value of c for which the associated null hypothesis would
+not be rejected at significance level α. Any point outside of the
+confidence interval is a value of c for which the associated null
+hypothesis would be rejected.</p>
+<p>Similar relationships hold for one-sided CIs and hypothesis tests.
+Example: Consider the 95% confidence interval for μ we previously
+constructed [-0.070,1.171].</p>
+<p>Consider a statistical test of H_0:μ=c versus H_a:μ≠c using α=0.05.</p>
+<p>For what values of c would we fail to reject H_0?</p>
+<p>For what values of c would we reject H_0?</p>
+<p>A CI provides us with much of the same information as a hypothesis test,
+but it doesn’t provide the p-value or allow us to do hypothesis tests at
+different significance levels.</p>
+<p>Confidence regions are often preferred over hypothesis tests because
+they provide additional information in the form of plausible parameters
+values.</p>
+<p>Bootstrap Confidence Intervals</p>
+<p>The conventional parametric confidence interval assumes we know the
+distribution of the population in order to find a pivotal quantity. The
+population distribution is needed to determine the sampling distribution
+of our statistic.</p>
+<p>A bootstrap confidence interval can be constructed if the population
+distribution is unknown.</p>
+<p>How would we estimate the sampling distribution of a statistic without
+statistical theory?</p>
+<p>Estimating the Sampling Distribution of a statistic for a Known
+Population</p>
+<pre><code>Obtain a random sample of size n from the population.
+Compute the statistic for the random sample.
+Perform steps 1 and 2 many times.
+Determine the empirical distribution of the statistics from the independent samples.</code></pre>
+<p>Consider a comparison of the estimated sampling distribution (the
+empirical distribution) and the true sampling distribution of Y ̅ when
+sampling n=10 observations from a N(0,1) population.</p>
+<p>The bootstrap method allows us to approximate the sampling distribution
+of a statistic by using the observed data to produce simulated data
+sets.</p>
+<p>The bootstrap method uses the observed data to approximate the shape,
+spread, and bias of the sampling distribution of a statistic.</p>
+<p>A bootstrap sample is a sample with replacement of size n from the
+observed data.</p>
+<p>Estimating the Sampling Distribution Using the Bootstrap Method Obtain a
+bootstrap sample of the observed data by selecting with replacement a
+sample of size n from the observed data. Compute the statistic for the
+random sample. Perform steps 1 and 2 many times. Determine the empirical
+distribution of the statistics from the independent bootstrap samples
+(a.k.a., the bootstrap distribution).</p>
+<p>Consider a comparison of the bootstrap, empirical, and true sampling
+distributions of Y ̅ when the data are obtained from a N(0,1)
+population.</p>
+<p>A 100(1-α)% confidence interval for a target parameter θ can be obtained
+by determining the α/2 and 1-α/2 quantiles of the bootstrap distribution
+for θ ̂. E.g., a 95% CI for a population mean μ could be obtained by
+taking the 0.025 and 0.975 quantiles of the bootstrap distribution for y
+̅.</p>
+<p>Example (continued): Continuing our previous example, the 95% bootstrap
+confidence interval for μ is [-0.162, 1.109].</p>
+<blockquote>
+<p>quantile(boot_ybar, prob = c(0.025, 0.975)) 2.5% 97.5% -0.1610048
+1.1085468</p>
+</blockquote>
+<p>The parametric 95% confidence interval is [-0.070,1.171].</p>
+<p>The parametric and bootstrap methods of constructing confidence
+intervals will NOT produce identical intervals, though the intervals
+should be similar if the distributional assumptions are satisfied.</p>
+<p>If you are unsure whether the distributional assumptions are satisfied,
+you should use the bootstrap method to construct your confidence
+interval.</p>
+<p>Example: Grogan and Wirth (1981) provide data on the wing length in
+millimeters of nine members of a species of midge (small, two-winged
+flies). From these nine measurements, we wish to make inference about
+the population mean μ. Assume that the data are an i.i.d. sample from a
+N(μ,σ^2) population with μ and σ^2 unknown. The data are: 1.64, 1.70,
+1.72, 1.74, 1.82, 1.82, 1.82, 1.90, 2.08</p>
+<pre><code>Construct a 98% parametric confidence interval for μ.  
+Construct a 98% bootstrap confidence interval for μ.
+Perform a hypothesis test of whether μ&gt;2 at α=0.02.</code></pre>
+
+<!--  -->
+<!-- # References {-} -->
+<!--  -->
+</div>
+</div>
+<h3>References<a href="references.html#references" class="anchor-section" aria-label="Anchor link to header"></a></h3>
+<div id="refs" class="references csl-bib-body hanging-indent">
+<div id="ref-boos_stefanski_2011_pvalues" class="csl-entry">
+Boos, Dennis D., and Leonard A. Stefanski. 2011. <span>“P-Value Precision and Reproducibility.”</span> <em>The American Statistician</em> 65 (4): 213–21. <a href="https://doi.org/10.1198/tas.2011.10129">https://doi.org/10.1198/tas.2011.10129</a>.
+</div>
+<div id="ref-gibson_pvalue" class="csl-entry">
+Gibson, Eric W. 2021. <span>“The Role of p-Values in Judging the Strength of Evidence and Realistic Replication Expectations.”</span> <em>Statistics in Biopharmaceutical Research</em> 13 (1): 6–18. <a href="https://doi.org/10.1080/19466315.2020.1724560">https://doi.org/10.1080/19466315.2020.1724560</a>.
+</div>
 </div>
             </section>
 
           </div>
         </div>
       </div>
-
-
+<a href="prob-review.html" class="navigation navigation-prev " aria-label="Previous page"><i class="fa fa-angle-left"></i></a>
+<a href="references.html" class="navigation navigation-next " aria-label="Next page"><i class="fa fa-angle-right"></i></a>
     </div>
   </div>
 <script src="libs/gitbook-2.6.7/js/app.min.js"></script>
@@ -487,7 +743,7 @@ gitbook.start({
     var script = document.createElement("script");
     script.type = "text/javascript";
     var src = "true";
-    if (src === "" || src === "true") src = "https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.9/latest.js?config=TeX-MML-AM_CHTML";
+    if (src === "" || src === "true") src = "https://mathjax.rstudio.com/latest/MathJax.js?config=TeX-MML-AM_CHTML";
     if (location.protocol !== "file:")
       if (/^https?:/.test(src))
         src = src.replace(/^https?:/, '');
