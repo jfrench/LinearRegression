@@ -3,28 +3,14 @@ output:
   html_document:
     css: style.css
   pdf_document:
-    pandoc_args: --listings
     includes:
       in_header: preamble.tex
-bibliography:
-- book.bib
-- packages.bib
-link-citations: yes
-editor_options: 
-  markdown: 
-    wrap: 72
-monofont: "Lucida Console"
 ---
 
-```{r, include = FALSE}
+```{r, include=FALSE}
 # change Console output behavior
 # knitr::opts_chunk$set(comment = "#>", collapse = TRUE)
 knitr::opts_chunk$set(collapse = TRUE)
-library(formatR)
-# knitr::opts_chunk$set(tidy.opts = list(width.cutoff = 55), tidy = TRUE)
-options(width = 55,
-        str = strOptions(strict.width = "cut"))
-library(kableExtra)
 
 # https://bookdown.org/yihui/rmarkdown-cookbook/hook-truncate.html
 # save the built-in output hook
@@ -46,114 +32,63 @@ knitr::knit_hooks$set(output = function(x, options) {
 
 # R Foundations
 
-Meaningful data analysis requires the use of computer software.
+Meaningful data analysis requires the use of computer software. 
 
-R statistical software is one of the most popular tools for data
-analysis in academia, industry, and government. In what follows, I will
-attempt to lay a foundation of basic knowledge and skills with R that
-you will need for data analysis. I make no attempt to be exhaustive, and
-many other important aspects of using R (like plotting) will be
-discussed later, as needed.
+R statistical software is one of the most popular tools for data analysis in academia, industry, and government. In what follows, I will attempt to lay a foundation of basic knowledge and skills with R that you will need for data analysis. I make no attempt to be exhaustive, and many other important aspects of using R (like plotting) will be discussed later, as needed.
 
-## Setting up R and R Studio Desktop
+## Setting up R and RStudio Desktop
 
 **What is R?**
 
-R is a programming language and environment designed for statistical
-computing. It was introduced by Robert Gentleman and Robert Ihaka in
-1993 as a free implementation of the *S* programming language developed
-at Bell Laboratories
-[(https://www.r-project.org/about.html)](https://www.r-project.org/about.html)
+R is a programming language and environment designed for statistical computing. It was introduced by Robert Gentleman and Robert Ihaka in 1993 as a free implementation of the _S_ programming language developed at Bell Laboratories [(https://www.r-project.org/about.html)](https://www.r-project.org/about.html)
 
 Some important facts about R are that:
 
--   R is free, open source, and runs on many different types of
-    computers (Windows, Mac, Linux, and others).
--   R is an interactive programming language.
-    -   You type and run a command in the Console for immediate
-        feedback, in contrast to a compiled programming language, which
-        compiles a program that is then executed.
--   R is highly extendable.
-    -   Many user-created packages are available to extend the
-        functionality beyond what is installed by default.
-    -   Users can write their own functions and easily add software
-        libraries to R.
+* R is free, open source, and runs on many different types of computers (Windows, Mac, Linux, and others).
+* R is an interactive programming language.
+    * You type and run a command in the Console for immediate feedback, in contrast to a compiled programming language, which compiles a program that is then executed.
+* R is highly extendable.
+    * Many user-created packages are available to extend the functionality beyond what is installed by default.
+    * Users can write their own functions and easily add software libraries to R.
 
 **Installing R**
 
-The install R on your personal computer, you will need to download an
-installer program from the R Project's website
-[(https://www.r-project.org/)](https://www.r-project.org/). Links to
-download the installer program for your operating system *should* be
-found at <https://cloud.r-project.org/>. Click on the download link
-appropriate for your computer's operating system and install R on your
-computer. If you have a Windows computer, a stable link for the most
-current installer program is available at
-<https://cloud.r-project.org/bin/windows/base/release.html>. (Similar
-links are not currently available for Mac and Linux computers.)
+To install R on your personal computer, you will need to download an installer program from the R Project's website [(https://www.r-project.org/)](https://www.r-project.org/). Links to download the installer program for your operating system *should* be found at [https://cloud.r-project.org/](https://cloud.r-project.org/). Click on the download link appropriate for your computer's operating system and install R on your computer. If you have a Windows computer, a stable link for the most current installer program is available at [https://cloud.r-project.org/bin/windows/base/release.html](https://cloud.r-project.org/bin/windows/base/release.html). (Similar links are not currently available for Mac and Linux computers.)
 
-**Installing R Studio**
+**Installing RStudio**
 
-R Studio Desktop is a free "front end" for R provided by R Studio
-[(https://rstudio.com/)](https://rstudio.com/). R Studio Desktop makes
-doing data analysis with R much easier by adding an Integrated
-Development Environment (IDE) and providing many other features.
-Currently, you may download R Studio at
-<https://rstudio.com/products/rstudio/download/>. You may need to
-navigate the R Studio website directly if this link no longer functions.
-Download the Free version of R Studio Desktop appropriate for your
-computer and install it.
+RStudio Desktop is a free "front end" for R provided by RStudio [(https://rstudio.com/)](https://rstudio.com/). RStudio Desktop makes doing data analysis with R much easier by adding an Integrated Development Environment (IDE) and providing many other features. Currently, you may download RStudio at [https://rstudio.com/products/rstudio/download/](https://rstudio.com/products/rstudio/download/). You may need to navigate the RStudio website directly if this link no longer functions. Download the Free version of RStudio Desktop appropriate for your computer and install it. 
 
-Having installed both R and R Studio Desktop, you will want to open R
-Studio Desktop as you continue to learn about R.
+Having installed both R and RStudio Desktop, you will want to open RStudio Desktop as you continue to learn about R.
 
-**R Studio Layout**
+**RStudio Layout**
 
-R Studio Desktop has four panes:
+RStudio Desktop has four panes:
 
-1.  Console: the pane where commands are run.
-2.  Source: the pane where you prepare commands to be run.
-3.  Environment/History: the pane where you can see all the objects in
-    your workspace, your command history, and other information.
-4.  The Files/Plot/Packages/Help: the pane where you navigate between
-    directories, where plots can be viewed, where you can see the
-    packages available to be loaded, and where you can get help.
+1. Console: the pane where commands are run.
+2. Source: the pane where you prepare commands to be run.
+3. Environment/History: the pane where you can see all the objects in your workspace, your command history, and other information.
+4. The Files/Plot/Packages/Help: the pane where you navigate between directories, where plots can be viewed, where you can see the packages available to be loaded, and where you can get help.
 
-To see all R Studio panes, press the keys `Ctrl + Alt + Shift + 0` on a
-PC or `Cmd + Option + Shift + 0` on a Mac.
+To see all RStudio panes, press the keys `Ctrl + Alt + Shift + 0` on a PC or `Cmd + Option + Shift + 0` on a Mac.
 
-Figure \@ref(fig:rstudiopanes) displays a labeled graphic of the panes.
-Your panes are likely in a different order than the graphic shown
-because I have customized my workspace for my own needs.
+Figure \@ref(fig:rstudiopanes) displays a labeled graphic of the panes. Your panes are likely in a different order than the graphic shown because I have customized my workspace for my own needs.
 
-```{r rstudiopanes, echo=FALSE, fig.cap="The R Studio panes labeled for convenience.", out.width = '90%'}
+```{r rstudiopanes, echo=FALSE, fig.cap="The RStudio panes labeled for convenience.", out.width = '90%'}
 knitr::include_graphics("pictures/rstudio_panes.png")
 ```
 
-**Customizing the R Studio workspace**
+**Customizing the RStudio workspace**
 
-At this point, I would highly encourage you to make one small workspace
-customization that will likely save you from experiencing future
-frustration. R provides a "feature" of that allows you to "save a
-workspace". This allows you to easily pick up where you left off your
-last analysis. The issue with this is that over time you accumulate a
-lot of environmental artifacts that can conflict with each other. This
-can lead to errors and incorrect results that you will need to deal
-with. Additionally, this "feature" hinders the ability of others to
-reproduce your analysis because other users are unlikely to have the
-same workspace.
+At this point, I would highly encourage you to make one small workspace customization that will likely save you from experiencing future frustration. R provides a "feature" of that allows you to "save a workspace". This allows you to easily pick up where you left off your last analysis. The issue with this is that over time you accumulate a lot of environmental artifacts that can conflict with each other. This can lead to errors and incorrect results that you will need to deal with. Additionally, this "feature" hinders the ability of others to reproduce your analysis because other users are unlikely to have the same workspace. 
 
-To turn off this feature, in the R Studio menu bar click Tools → Global
-Options and then make sure the "General" option is selected. Then make
-the following changes (if necessary):
+To turn off this feature, in the RStudio menu bar click Tools &rarr; Global Options and then make sure the "General" option is selected. Then make the following changes (if necessary):
 
-1.  Uncheck the box for "Restore .RData into workspace at startup".
-2.  Change the toggle box for "Save workspace to .RData on exit" to
-    "Never".
-3.  Click Apply then OK to save the changes.
+1. Uncheck the box for "Restore .RData into workspace at startup".
+2. Change the toggle box for "Save workspace to .RData on exit" to "Never".
+3. Click Apply then OK to save the changes.
 
-Figure \@ref(fig:generaloptions) displays what these options should look
-like.
+Figure \@ref(fig:generaloptions) displays what these options should look like.
 
 ```{r generaloptions, echo=FALSE, fig.cap="The General options window.", out.width = '90%'}
 knitr::include_graphics("pictures/general_options.png")
@@ -161,85 +96,66 @@ knitr::include_graphics("pictures/general_options.png")
 
 ## Running code, scripts, and comments
 
-You can run code in R by typing it in the Console next to the `>` symbol
-and pressing the Enter key.
+You can run code in R by typing it in the Console next to the `>` symbol and pressing the Enter key.
 
-If you need to successively run multiple commands, it's better to write
-your commands in a "script" file and then save the file. The commands in
-a Script file are often generically referred to as "code".
+If you need to successively run multiple commands, it's better to write your commands in a "script" file and then save the file. The commands in a Script file are often generically referred to as "code".
 
 Script files make it easy to:
 
--   Reproduce your data analysis without retyping all your commands.
--   Share your code with others.
+- Reproduce your data analysis without retyping all your commands.
+- Share your code with others.
 
 A new Script file can be obtained by:
 
--   Clicking File → New File → R Script in the R Studio menu bar.
--   Pressing `Ctrl + Shift + n` on a PC or `Cmd + Shift + n` on a Mac.
+- Clicking File &rarr; New File &rarr; R Script in the RStudio menu bar.
+- Pressing `Ctrl + Shift + n` on a PC or `Cmd + Shift + n` on a Mac.
 
-There are various ways to run code from a Script file. The most common
-ones are:
+There are various ways to run code from a Script file. The most common ones are:
 
-1.  Highlight the code you want to run and click the Run button
-    `r knitr::include_graphics("pictures/run_button.png")` at the top of
-    the Script pane.
-2.  Highlight the code you want to run and press "Ctrl + Enter" on your
-    keyboard. If you don't highlight anything, by default, R Studio runs
-    the command the cursor currently lies on.
+1. Highlight the code you want to run and click the Run button `r knitr::include_graphics("pictures/run_button.png")` at the top of the Script pane.
+2. Highlight the code you want to run and press "Ctrl + Enter" on your keyboard. If you don't highlight anything, by default, RStudio runs the command the cursor currently lies on.
 
 To save a Script file:
 
--   Click File → Save in the R Studio menu bar.
--   Press `Ctrl + s` on a PC or `Cmd + s` on a Mac.
+- Click File &rarr; Save in the RStudio menu bar.
+- Press `Ctrl + s` on a PC or `Cmd + s` on a Mac.
 
 A comment is a set of text ignored by R when submitted to the Console.
 
-A comment is indicated by the `#` symbol. Nothing to the right of the
-`#` is executed by the Console.
+A comment is indicated by the `#` symbol. Nothing to the right of the `#` is executed by the Console.
 
-To comment (or uncomment) multiple lines of code in the Source pane of R
-Studio, highlight the code you want to comment and press
-`Ctrl + Shift + c` on a PC or `Cmd + Shift + c` on a Mac.
+To comment (or uncomment) multiple lines of code in the Source pane of RStudio, highlight the code you want to comment and press `Ctrl + Shift + c` on a PC or `Cmd + Shift + c` on a Mac.
 
 ::: {.yourturn data-latex=""}
 **Your turn**
 
 Perform the following tasks:
 
-1.  Type `1+1` in the Console and press Enter.
-2.  Open a new Script in R Studio.
-3.  Type `mean(1:3)` in your Script file.
-4.  Type `# mean(1:3)` in your Script file.
-5.  Run the commands from the Script using an approach mentioned above.
-6.  Save your Script file.
-7.  Use the keyboard shortcut to "comment out" some of the lines of your
-    Script file.
+1. Type `1+1` in the Console and press Enter.
+2. Open a new Script in RStudio.
+3. Type `mean(1:3)` in your Script file.
+4. Type `# mean(1:3)` in your Script file.
+5. Run the commands from the Script using an approach mentioned above.
+6. Save your Script file.
+7. Use the keyboard shortcut to "comment out" some of the lines of your Script file.
 :::
 
 ## Assignment
 
 R works on various types of objects that we'll learn more about later.
 
-To store an object in the computer's memory we must assign it a name
-using the assignment operator `<-` or the equal sign `=`.
+To store an object in the computer's memory we must assign it a name using the assignment operator `<-` or the equal sign `=`.
 
 Some comments:
+  
+* In general, both `<-` and `=` can be used for assignment.
+* Pressing `Alt + -` on a PC or `Option + -` on a Mac will insert `<-` into the R Console and Script files.
+    * If you are creating an R Markdown file, then this shortcut will only insert `<-` if you are in an R code block.
+* `<-` and `=` are NOT synonyms, but can be used identically most of the time. 
 
--   In general, both `<-` and `=` can be used for assignment.
--   Pressing `Alt + -` on a PC or `Option + -` on a Mac will insert `<-`
-    into the R Console and Script files.
-    -   If you are creating an R Markdown file, then this shortcut will
-        only insert `<-` if you are in an R code block.
--   `<-` and `=` are NOT synonyms, but can be used identically most of
-    the time.
+**It is best to use `<-` for assigning a name to an object and reserving `=` for specifying function arguments.** See Section \@ref(comparing-assignment-operators) for an explanation.
 
-**It is best to use `<-` for assigning a name to an object and reserving
-`=` for specifying function arguments.** See Section
-\@ref(comparing-assignment-operators) for an explanation.
-
-Once an object has been assigned a name, it can be printed by running
-the name of the object in the Console or using the `print` function.
+Once an object has been assigned a name, it can be printed by running the name of the object in the Console or using the `print` function.
 
 ::: {.yourturn data-latex=""}
 **Your turn**
@@ -253,101 +169,67 @@ m # print m
 print(m) # print m a different way
 ```
 
-After the comment, we compute the sample mean of the values
-$1, 2, \ldots, 10$, then assign it the name `m`. The next two lines are
-different mechanisms for printing the information contained in the
-object `m` (which is just the number 5.5).
+After the comment, we compute the sample mean of the values $1, 2, \ldots, 10$, then assign it the name `m`. The next two lines are different mechanisms for printing the information contained in the object `m` (which is just the number 5.5).
 :::
 
 ## Functions
 
-A function is an object that performs a certain action or set of actions
-based on objects it receives from its arguments. We use a sequence of
-function calls to perform data analysis.
+A function is an object that performs a certain action or set of actions based on objects it receives from its arguments. We use a sequence of function calls to perform data analysis.
 
-To use a function, you type the function's name in the Console (or
-Script) and then supply the function's "arguments" between parentheses,
-`()`.
+To use a function, you type the function's name in the Console (or Script) and then supply the function's "arguments" between parentheses, `()`. 
 
-The arguments of a function are pieces of data or information the
-function needs to perform the requested task (i.e., the function
-"inputs"). Each argument you supply is separated by a comma, `,`. Some
-functions have default values for certain arguments and do not need to
-specified unless something beside the default behavior is desired.
+The arguments of a function are pieces of data or information the function needs to perform the requested task (i.e., the function "inputs"). Each argument you supply is separated by a comma, `,`. Some functions have default values for certain arguments and do not need to specified unless something beside the default behavior is desired.
 
-e.g., the `mean` function computes the sample mean of an R object `x`.
-(How do I know? Because I looked at the documentation for the function
-by running `?mean` in the Console. We'll talk more about getting help
-with R shortly.) The `mean` function also has a `trim` argument that
-indicates the, "... fraction ... of observations to be trimmed from each
-end of `x` before the mean is computed" (@R-base, `?mean`).
+e.g., the `mean` function computes the sample mean of an R object `x`. (How do I know? Because I looked at the documentation for the function by running `?mean` in the Console. We'll talk more about getting help with R shortly.) The `mean` function also has a `trim` argument that indicates the, "... fraction ... of observations to be trimmed from each end of `x` before the mean is computed" (@R-base, `?mean`).
 
-Consider the examples below, in which we compute the mean of the set of
-values `1, 5, 3, 2, 10`.
+Consider the examples below, in which we compute the mean of the set of values `1, 5, 3, 2, 10`. 
 
 ```{r}
 mean(c(1, 5, 3, 4, 10))
 mean(c(1, 5, 3, 4, 10), trim = 0.2)
 ```
 
-The output differs for the two function calls because in the first we
-compute `(1 + 5 + 3 + 4 + 10)/5 = 23/5 = 4.6` while in the second we
-remove the first 20% and last 20% of the values (i.e., dropping `1` and
-`10`) and compute `(5 + 3 + 4)/3 = 12/3 = 4`.
+The output differs for the two function calls because in the first we compute `(1 + 5 + 3 + 4 + 10)/5 = 23/5 = 4.6` while in the second we remove the first 20% and last 20% of the values (i.e., dropping `1` and `10`) and compute `(5 + 3 + 4)/3 = 12/3 = 4`.
 
 ## Packages
 
-Packages are collections of functions, data, and other objects that extend the functionality available in R by default.
+Packages are collections of functions, data, and other objects that extend the functionality available in R by default. 
 
 R packages can be installed using the `install.packages` function and loaded using the `library` function.
 
 ::: {.yourturn data-latex=""}
 **Your turn**
 
-The **`tidyverse`** (<https://www.tidyverse.org>, @R-tidyverse) is a
-popular ecosystem of R packages used for manipulating, tidying, and
-plotting data. Currently, the **`tidyverse`** is comprised of the
-following packages:
+The **tidyverse** ([https://www.tidyverse.org](https://www.tidyverse.org), @R-tidyverse) is a popular ecosystem of R packages used for manipulating, tidying, and plotting data. Currently, the **tidyverse** is comprised of the following packages:
 
--   **`ggplot2`**: A package for plotting based on the "Grammar of
-    Graphics" [@R-ggplot2].
--   **`purrr`**: A package for functional programming [@R-purrr].
--   **`tibble`**: A package providing a more advanced data frame
-    [@R-tibble].
--   **`dplyr`**: A package for manipulating data. More specifically, it
-    provides " a grammar of data manipulation" [@R-dplyr].
--   **`tidyr`**: A package to help create "tidy" data [@R-tidyr]. Tidy
-    data is an data organization style often convenient for data
-    analysis.
--   **`stringr`**: A package for working with character/string data
-    [@R-stringr].
--   **`readr`**: A package for importing data [@R-readr].
--   **`forcats`**: A package for working with categorical data
-    [@R-forcats].
+* **ggplot2**:  A package for plotting based on the "Grammar of Graphics" [@R-ggplot2].
+* **purrr**: A package for functional programming [@R-purrr].
+* **tibble**: A package providing a more advanced data frame [@R-tibble].
+* **dplyr**: A package for manipulating data. More specifically, it provides " a grammar of data manipulation" [@R-dplyr].
+* **tidyr**: A package to help create "tidy" data [@R-tidyr]. Tidy data is an data organization style often convenient for data analysis.
+* **stringr**: A package for working with character/string data [@R-stringr].
+* **readr**: A package for importing data [@R-readr].
+* **forcats**: A package for working with categorical data [@R-forcats].
 
-Install the set of **`tidyverse`** R packages by running the command
-below in the Console.
+Install the set of **tidyverse** R packages by running the command below in the Console.
 
 ```{r, eval=FALSE}
 install.packages("tidyverse")
 ```
 
-After you install **`tidyverse`**, load the package(s) by running the
-command below.
+After you install **tidyverse**, load the package(s) by running the command below.
 
 ```{r, eval=FALSE}
 library(tidyverse)
 ```
-
 You should see something like the following output:
 
 ```{r, echo=FALSE, results='markup'}
 library(tidyverse)
 ```
-
 :::
 
-Different packages may use the same function name to provide certain functionality. The functions will likely be used for different tasks or require different arguments. E.g., You may have noticed when you loaded the **`tidyverse`** above that `dplyr::lag()` masks `stats::lag()`. What this means is that both the **`dplyr`** and **`stats`** packages have a function called `lag`.
+Different packages may use the same function name to provide certain functionality. The functions will likely be used for different tasks or require different arguments. E.g., You may have noticed when you loaded the **tidyverse** above that `dplyr::lag()` masks `stats::lag()`. What this means is that both the **dplyr** and **stats** packages have a function called `lag`. 
 
 To refer to a function in a specific package, we should add `package::` prior to the function name. In the code below, we run `stats::lag` and `dplyr::lag` on two different objects using the `::` syntax.
 
@@ -355,94 +237,53 @@ To refer to a function in a specific package, we should add `package::` prior to
 stats::lag(1:10, 2)
 dplyr::lag(1:10, 2)
 ```
-
-The output returned by the two functions is different because the functions are intended to do different things. The `stats::lag` function call shifts the time base of the provided time series object back 2 units, while the call to `dplyr::lag` provides the values 2 positions earlier in the object. Note: you don't need to understand the `lag`
-function in the example above. The example is provided to demonstrate how to use the `::` syntax to call to a function in a specific package when the function name has conflicts in multiple packages.
-
-We will use a number of R packages throughout this book. To aid you in performing the examples yourselves, I encourage you to run the code below to install additional packages needed to reproduce them. 
-
-```{r, eval = FALSE}
-# data-related packages
-install.packages("palmerpenguins")
-# additional plotting-related packages
-install.packages("effects", "plotly")
-```
+The output returned by the two functions is different because the functions are intended to do different things. The `stats::lag` function call shifts the time base of the provided time series object back 2 units, while the call to `dplyr::lag` provides the values 2 positions earlier in the object. Note: you don't need to understand the `lag` function in the example above. The example is provided to demonstrate how to use the `::` syntax to call to a function in a specific package when the function name has conflicts in multiple packages.
 
 ## Getting help
 
 There are many ways to get help in R.
 
-If you know the command for which you want help, then run `?command`
-(where command is replaced the name of the relevant command) in the
-Console, to access the documentation for the object. This approach will
-also work with data sets, package names, object classes, etc. If you
-need to refer to a function in a specific package, you can use
-`?package::function` to get help on a specific function, e.g.,
-`?dplyr::filter`.
+If you know the command for which you want help, then run `?command` (where command is replaced the name of the relevant command) in the Console, to access the documentation for the object. This approach will also work with data sets, package names, object classes, etc. If you need to refer to a function in a specific package, you can use `?package::function` to get help on a specific function, e.g., `?dplyr::filter`.
+
 
 The documentation will provide:
 
--   A **Description** section with general information about the
-    function or object.
--   A \*\*Usage\* section with a generic template for using the function
-    or object.
--   An **Arguments** section summarizing the function inputs the
-    function needs.
--   A **Details** section may be provided with additional information
-    about how the function or object.
--   A **Value** section that describes what is returned by the function.
--   A **Examples** section providing examples of how to use the
-    function. Usually, these can be copied and pasted into the Console
-    to better understand the function arguments and what it produced.
+- A **Description** section with general information about the function or object.
+- A **Usage* section with a generic template for using the function or object.
+- An **Arguments** section summarizing the function inputs the function needs.
+- A **Details** section may be provided with additional information about how the function or object.
+- A **Value** section that describes what is returned by the function.
+- A **Examples** section providing examples of how to use the function. Usually, these can be copied and pasted into the Console to better understand the function arguments and what it produced.
 
-If you need to find a command to help you with a certain *topic*, then
-`??topic` will search for the topic through all installed documentation
-and bring up any vignettes, code demonstrations, or help pages that
-include the topic for which you searched.
+If you need to find a command to help you with a certain *topic*, then `??topic` will search for the topic through all installed documentation and bring up any vignettes, code demonstrations, or help pages that include the topic for which you searched.
 
-If you are trying to figure out why an error is being produced, what
-packages can be used to perform a certain analysis, how to perform a
-complex task that you can't seem to figure out, etc., then simply do a
-web search for what you're trying to figure out! Because R is such a
-popular programming language, it is likely you will find a
-[stackoverflow](https://www.stackoverflow.com) response, a helpful blog
-post, an R users forum response, etc., that at least partially addresses
-your question.
+
+If you are trying to figure out why an error is being produced, what packages can be used to perform a certain analysis, how to perform a complex task that you can't seem to figure out, etc., then simply do a web search for what you're trying to figure out! Because R is such a popular programming language, it is likely you will find a [stackoverflow](https://www.stackoverflow.com) response, a helpful blog post, an R users forum response, etc., that at least partially addresses your question.
 
 ::: {.yourturn data-latex=""}
+
 Do the following:
 
-1.  Run`?lm` in the Console to get help on the `lm` function, which is
-    one of the main functions used for fitting linear models.
-2.  Run `??logarithms` in the Console to search the R documentation for
-    information about logarithms. It is likely that you will see
-    multiple Help pages that mention "logarithm", so you may end up
-    needing to find the desired entry via trial and error.
-3.  Run a web search for something along the lines of "How do I change
-    the size of the axis labels in an R plot?".
+1. Run`?lm` in the Console to get help on the `lm` function, which is one of the main functions used for fitting linear models.
+2. Run `??logarithms` in the Console to search the R documentation for information about logarithms. It is likely that you will see multiple Help pages that mention "logarithm", so you may end up needing to find the desired entry via trial and error.
+3. Run a web search for something along the lines of "How do I change the size of the axis labels in an R plot?".
 :::
 
 ## Data types and structures
 
 ### Basic data types
+R has 6 basic ("atomic") vector types [(https://cran.r-project.org/doc/manuals/r-release/R-lang.html#Basic-types)](https://cran.r-project.org/doc/manuals/r-release/R-lang.html#Basic-types) [@R-base]:
 
-R has 6 basic ("atomic") vector types
-[(https://cran.r-project.org/doc/manuals/r-release/R-lang.html#Basic-types)](https://cran.r-project.org/doc/manuals/r-release/R-lang.html#Basic-types)
-[@R-base]:
-
-1.  character: collections of characters. E.g., `"a"`, `"hello world!"`.
-2.  double: decimal numbers. e.g., `1.2`, `1.0`.
-3.  integer: whole numbers. In R, you must add `L` to the end of a
-    number to specify it as an integer. E.g., `1L` is an integer but `1`
-    is a double.
-4.  logical: boolean values, `TRUE` and `FALSE`.
-5.  complex: complex numbers. E.g., `1+3i`.
-6.  raw: a type to hold raw bytes.
+1. character: collections of characters. E.g., `"a"`, `"hello world!"`.
+2. double: decimal numbers. e.g., `1.2`, `1.0`.
+3. integer: whole numbers. In R, you must add `L` to the end of a number to specify it as an integer. E.g., `1L` is an integer but `1` is a double.
+4. logical: boolean values, `TRUE` and `FALSE`.
+5. complex: complex numbers. E.g., `1+3i`.
+6. raw: a type to hold raw bytes.
 
 Both double and integer values are specific types of numeric values.
 
-The `typeof` function returns the R internal type or storage mode of any
-object.
+The `typeof` function returns the R internal type or storage mode of any object.
 
 Consider the following commands and output:
 
@@ -455,19 +296,12 @@ typeof("hello world!")
 
 ### Other important object types
 
-There are other important types of objects in R that are not basic. We
-will discuss a few. The R Project manual provides additional information
-about available types
-[(https://cran.r-project.org/doc/manuals/r-release/R-lang.html#Basic-types)](https://cran.r-project.org/doc/manuals/r-release/R-lang.html#Basic-types).
+There are other important types of objects in R that are not basic. We will discuss a few. The R Project manual provides additional information about available types [(https://cran.r-project.org/doc/manuals/r-release/R-lang.html#Basic-types)](https://cran.r-project.org/doc/manuals/r-release/R-lang.html#Basic-types).
 
 #### Numeric
+An object is `numeric` if it is of type `integer` or `double`. In that case, it's `mode` is said to be `numeric`.
 
-An object is `numeric` if it is of type `integer` or `double`. In that
-case, it's `mode` is said to be `numeric`.
-
-The `is.numeric` function tests whether an object can be interpreted as
-numbers. We can use it to determine whether an object is `numeric`, as
-in the code run below.
+The `is.numeric` function tests whether an object can be interpreted as numbers. We can use it to determine whether an object is `numeric`, as in the code run below.
 
 ```{r}
 # is the object numeric?
@@ -477,157 +311,105 @@ is.numeric(1L)
 ```
 
 #### NULL
-
-`NULL` is a special object to indicate an object is absent. An object
-having a length of zero is not the same thing as an object being absent.
+`NULL` is a special object to indicate an object is absent. An object having a length of zero is not the same thing as an object being absent.
 
 #### NA
+A "missing value" occurs when the value of something isn't known. R uses the special object `NA` to represent a missing value.
 
-A "missing value" occurs when the value of something isn't known. R uses
-the special object `NA` to represent a missing value.
-
-If you have a missing value, you should represent that value as `NA`.
-Note: `"NA"` is not the same thing as `NA`.
+If you have a missing value, you should represent that value as `NA`. Note: `"NA"` is not the same thing as `NA`.
 
 #### Functions
 
-From R's perspective, a function is simply another data type.
+From R's perspective, a function is simply another data type. 
 
 #### A comment about classes
 
-Every R object has a `class` that may be distinct from its type. Many
-functions will operate differently depending on an object's `class`.
+Every R object has a `class` that may be distinct from its type. Many functions will operate differently depending on an object's `class`. 
 
 ### Data structures
 
-R operates on data structures. A data structure is a "container" that
-holds certain kinds of information.
+R operates on data structures.  A data structure is a "container" that holds certain kinds of information.
 
 R has 5 basic data structures:
 
-1.  vector.
-2.  matrix.
-3.  array.
-4.  data frame.
-5.  list.
+1. vector.
+2. matrix.
+3. array.
+4. data frame.
+5. list.
 
-Vectors, matrices, and arrays are homogeneous objects that can only
-store a single data type at a time. Data frames and lists can store
-multiple data types.
+Vectors, matrices, and arrays are homogeneous objects that can only store a single data type at a time. Data frames and lists can store multiple data types.
 
-Vectors and lists are considered one-dimensional objects. A list is
-technically a vector. Vectors of a single type are atomic vectors
-[(https://cran.r-project.org/doc/manuals/r-release/R-lang.html#List-objects)](https://cran.r-project.org/doc/manuals/r-release/R-lang.html#List-objects).
-Matrices and data frames are considered two-dimensional objects. Arrays
-can have 1 or more dimensions.
+Vectors and lists are considered one-dimensional objects. A list is technically a vector. Vectors of a single type are atomic vectors [(https://cran.r-project.org/doc/manuals/r-release/R-lang.html#List-objects)](https://cran.r-project.org/doc/manuals/r-release/R-lang.html#List-objects). 
+Matrices and data frames are considered two-dimensional objects. Arrays can have 1 or more dimensions.
 
-The relationship between dimensionality and data type for the basic data
-structures is summarized in Table \@ref(tab:datastructures3), which is
-based on a
-[table](https://adv-r.had.co.nz/Data-structures.html#data-structure) in
-the first edition of Hadley Wickham's *Advanced R*
-[(https://adv-r.had.co.nz/Data-structures.html#data-structure)](https://adv-r.had.co.nz/Data-structures.html#data-structure).
+The relationship between dimensionality and data type for the basic data structures is summarized in Table \@ref(tab:datastructures2), which is based on a [table](https://adv-r.had.co.nz/Data-structures.html#data-structure) in the first edition of Hadley Wickham's *Advanced R* [(https://adv-r.had.co.nz/Data-structures.html#data-structure)](https://adv-r.had.co.nz/Data-structures.html#data-structure).
 
 <!-- # ```{r datastructures, echo=FALSE} -->
-
 <!-- # knitr::kable(data.frame(dimensionality = c("1", "2", "1 or more"), -->
-
 <!-- #                         homogeneous = c("atomic vector", "matrix", "array"), -->
-
 <!-- #                         heterogeneous = c("list", "data frame", ""), -->
-
 <!-- #                         caption = c("A table summarizing the relationship between dimensionality and homogeneity for the 5 basic data structures."), -->
-
 <!-- #                         col.names = c("number of dimensions", "single data type", "multiple data types"))) -->
-
 <!-- # ``` -->
 
-```{r datastructures4, echo=FALSE, eval = FALSE}
-# library(gt)
-# object_df <- tibble(dimensions = c("1", "2", "1 or more"),
-#                         homogeneous = c("atomic vector", "matrix", "array"),
-#                         heterogeneous = c("list", "data frame", ""))
-# obj_gt_tbl <- gt::gt(object_df, rowname_col = "dimensions",
-#                      caption = "Classifying main object types by dimensionality and data type.") |>
-#   tab_stubhead(label = "# of dimensions") |>
-#    tab_spanner(
-#     label = "data type",
-#     columns = c(homogeneous, heterogeneous)
-#   ) |>
-#   tab_style(
-#     style = cell_borders(sides = "right", col = "lightgray", weight = px(2)),
-#     locations = cells_stubhead()
-#   )
-# obj_gt_tbl
-```
-
-```{r datastructures3, echo=FALSE}
-object_df <- data.frame(dimensions = c("1", "2", "1 or more"),
+```{r datastructures2, echo=FALSE}
+library(gt)
+object_df <- tibble(dimensions = c("1", "2", "1 or more"),
                         homogeneous = c("atomic vector", "matrix", "array"),
                         heterogeneous = c("list", "data frame", ""))
-object_df |>
-  kbl(col.names = c("# of dimensions", "homogeneous", "heterogeneous"),
-      caption = c("A summary of the relationship between dimensionality and homogeneity for the 5 basic data structures."),
-      booktabs = TRUE) |>
-  add_header_above(c(" " = 1, "data type" = 2)) |>
-  kable_styling()
+obj_gt_tbl <- gt::gt(object_df, rowname_col = "dimensions",
+                     caption = "Classifying main object types by dimensionality and data type.") |>
+  tab_stubhead(label = "# of dimensions") |>
+   tab_spanner(
+    label = "data type",
+    columns = c(homogeneous, heterogeneous)
+  ) |>
+  tab_style(
+    style = cell_borders(sides = "right", col = "lightgray", weight = px(2)),
+    locations = cells_stubhead()
+  )
+obj_gt_tbl
 ```
 
 ## Vectors
-
 A *vector* is a one-dimensional set of data of the same type.
 
 ### Creation
+The most basic way to create a vector is the `c` (combine) function. The `c` function combines values into an atomic vector or list.
 
-The most basic way to create a vector is the `c` (combine) function. The
-`c` function combines values into an atomic vector or list.
+The following commands create vectors of type `numeric`, `character`, and `logical`, respectively.
 
-The following commands create vectors of type `numeric`, `character`,
-and `logical`, respectively.
+* `c(1, 2, 5.3, 6, -2, 4)`
+* `c("one", "two", "three")`
+* `c(TRUE, TRUE, FALSE, TRUE)`
 
--   `c(1, 2, 5.3, 6, -2, 4)`
--   `c("one", "two", "three")`
--   `c(TRUE, TRUE, FALSE, TRUE)`
+R provides two main functions for creating vectors with specific patterns: `seq` and `rep`.
 
-R provides two main functions for creating vectors with specific
-patterns: `seq` and `rep`.
+The `seq` (sequence) function is used to create an equidistant series of numeric values. Some examples:
+  
+* `seq(1, 10)` creates a sequence of numbers from 1 to 10 in increments of 1.
+* `1:10` creates a sequence of numbers from 1 to 10 in increments of 1.
+* `seq(1, 20, by = 2)` creates a sequence of numbers from 1 to 20 in increments of 2.
+* `seq(10, 20, len = 100)` creates a sequence of numbers from 10 to 20 of length 100.
 
-The `seq` (sequence) function is used to create an equidistant series of
-numeric values. Some examples:
+The `rep` (replicate) function can be used to create a vector by replicating values. Some examples:
+  
+* `rep(1:3, times = 3)` replicates the sequence `1, 2, 3` three times in a row.
+* `rep(c("trt1", "trt2", "trt3"), times = 1:3)` replicates `"trt1"` once, `"trt2"` twice, and `"trt3"` three times.
+* `rep(1:3, each = 3)` replicates each element of the sequence 1, 2, 3 three times.
 
--   `seq(1, 10)` creates a sequence of numbers from 1 to 10 in
-    increments of 1.
--   `1:10` creates a sequence of numbers from 1 to 10 in increments of
-    1.
--   `seq(1, 20, by = 2)` creates a sequence of numbers from 1 to 20 in
-    increments of 2.
--   `seq(10, 20, len = 100)` creates a sequence of numbers from 10 to 20
-    of length 100.
+Multiple vectors can be combined into a new vector object using the `c` function. E.g., `c(v1, v2, v3)` would combine vectors `v1`, `v2`, and `v3`.
 
-The `rep` (replicate) function can be used to create a vector by
-replicating values. Some examples:
-
--   `rep(1:3, times = 3)` replicates the sequence `1, 2, 3` three times
-    in a row.
--   `rep(c("trt1", "trt2", "trt3"), times = 1:3)` replicates `"trt1"`
-    once, `"trt2"` twice, and `"trt3"` three times.
--   `rep(1:3, each = 3)` replicates each element of the sequence 1, 2, 3
-    three times.
-
-Multiple vectors can be combined into a new vector object using the `c`
-function. E.g., `c(v1, v2, v3)` would combine vectors `v1`, `v2`, and
-`v3`.
-
-::: {.yourturn data-latex=""}
+:::{.yourturn data-latex=""}
 **Your turn**
 
-Run the commands below in the Console to see what is printed. After you
-do that, try to answer the following questions:
+Run the commands below in the Console to see what is printed. After you do that, try to answer the following questions:
 
--   What does the `by` argument of the `seq` function control?
--   What does the `len` argument of the `seq` function control?
--   What does the `times` argument of the `rep` function control?
--   What does the `each` argument of the `rep` function control?
+- What does the `by` argument of the `seq` function control?
+- What does the `len` argument of the `seq` function control?
+- What does the `times` argument of the `rep` function control?
+- What does the `each` argument of the `rep` function control?
 
 ```{r, eval=FALSE}
 # vector creation
@@ -645,8 +427,8 @@ rep(c("trt1", "trt2", "trt3"), times = 1:3)
 rep(1:3, each = 3)
 ```
 
-Next, we can practice combining multiple vectors using `c`. Run the
-commands below in the Console.
+Next, we can practice combining multiple vectors using `c`.
+Run the commands below in the Console.
 
 ```{r, eval = FALSE}
 v1 <- 1:5 # create a vector, v1
@@ -659,15 +441,9 @@ new # print the combined vector
 
 ### Categorical vectors
 
-Categorical data should be stored as a `factor` in R. Even though your
-code related to categorical data may work when stored as `character` or
-`numeric` data because a cautious developer planned for that
-possibility, it is best to use good coding practices that minimize
-potential issues.
+Categorical data should be stored as a `factor` in R. Even though your code related to categorical data may work when stored as `character` or `numeric` data because a cautious developer planned for that possibility, it is best to use good coding practices that minimize potential issues.
 
-The `factor` function takes a vector of values that can be coerced to
-type `character` and converts them to an object of class `factor`. In
-the code chunk below, we create two `factor` objects from vectors.
+The `factor` function takes a vector of values that can be coerced to type `character` and converts them to an object of class `factor`. In the code chunk below, we create two `factor` objects from vectors.  
 
 ```{r}
 # create some factor variables
@@ -677,100 +453,69 @@ f2 <- factor(c("a", 7, "blue", "blue", FALSE))
 f2
 ```
 
-Note that when a `factor` object is printed that it lists the `Levels`
-(i.e., unique categories) of the object.
+Note that when a `factor` object is printed that it lists the `Levels` (i.e., unique categories) of the object.
 
 Some additional comments:
 
--   `factor` objects aren't technically vectors (e.g., running
-    `is.factor(f2)` based on the above code will return `FALSE`) though
-    they essentially behave like vectors, which is why they are included
-    here.
--   The `is.factor` function can be used to determine whether an object
-    is a `factor`.
--   You can create `factor` objects with specific orderings of
-    categories using the `level` and `ordered` arguments of the `factor`
-    function (see `?factor` for more details).
+ - `factor` objects aren't technically vectors (e.g., running `is.factor(f2)` based on the above code will return `FALSE`) though they essentially behave like vectors, which is why they are included here.
+ - The `is.factor` function can be used to determine whether an object is a `factor`.
+ - You can create `factor` objects with specific orderings of categories using the `level` and `ordered` arguments of the `factor` function (see `?factor` for more details).
 
-::: {.yourturn data-latex=""}
+:::{.yourturn data-latex=""}
 **Your turn**
 
 Attempt to complete the following tasks:
 
-1.  Create a vector named `grp` that has two levels: `a` and `b`, where
-    the first 7 values are `a` and the second 4 values are `b`.
-2.  Run `is.factor(grp)` in the Console.
-3.  Run `is.vector(grp)` in the Console.
-4.  Run `typeof(grp)` in the Console.
+1. Create a vector named `grp` that has two levels: `a` and `b`, where the first 7 values are `a` and the second 4 values are `b`.
+2. Run `is.factor(grp)` in the Console.
+3. Run `is.vector(grp)` in the Console.
+4. Run `typeof(grp)` in the Console.
 
-Related to the last task, a `factor` object is *technically* a
-collection of integers that have labels associated with each unique
-integer value.
+Related to the last task, a `factor` object is *technically* a collection of integers that have labels associated with each unique integer value. 
 
-Let's look at creating ordered `factor` objects. Suppose we have
-categorical data with the categories `small`, `medium`, and `large`. We
-create a `size` vector with hypothetical data below.
+Let's look at creating ordered `factor` objects. Suppose we have categorical data with the categories `small`, `medium`, and `large`. We create a `size` vector with hypothetical data below.
 
 ```{r}
-size <- c("small", "medium", "small", "large",
-          "medium", "medium", "large")
+size <- c("small", "medium", "small", "large", "medium", "medium", "large")
 ```
 
-If we convert `size` to a factor, R will automatically order the levels
-of size alphabetically.
+If we convert `size` to a factor, R will automatically order the levels of size alphabetically.
 
 ```{r}
 factor(size)
 ```
+This is not technically a problem, but can result in undesirable side effects such as plots with levels in an undesirable order.
 
-This is not technically a problem, but can result in undesirable side
-effects such as plots with levels in an undesirable order.
-
-To create an ordered vector, we specify the desired order of the levels
-and set the `ordered` argument to `TRUE`, as in the code below.
+To create an ordered vector, we specify the desired order of the levels and set the `ordered` argument to `TRUE`, as in the code below.
 
 ```{r}
-factor(size, levels = c("small", "medium", "large"),
-       ordered = TRUE)
+factor(size, levels = c("small", "medium", "large"), ordered = TRUE)
 ```
+
 :::
 
 ### Extracting parts of a vector
-
-Parts a vector can be extracted by appending an index vector in square
-brackets `[]` to the name of the vector, where the index vector
-indicates which parts of the vector to retain or exclude. We can include
-either numbers or logical values in our index vector. We discuss both
-approaches below.
+Parts a vector can be extracted by appending an index vector in square brackets `[]` to the name of the vector, where the index vector indicates which parts of the vector to retain or exclude. We can include either numbers or logical values in our index vector. We discuss both approaches below.
 
 #### Selection use a numeric index vector
 
-Let's create a `numeric` vector `a` with the values 2, 4, 6, 8, 10, 12,
-14, 16.
+Let's create a `numeric` vector `a` with the values 2, 4, 6, 8, 10, 12, 14, 16.
 
 ```{r}
 # define a sequence 2, 4, ..., 16
 a <- seq(2, 16, by = 2)
 a
-```
+``` 
 
-To extract the 2nd, 4th, and 6th elements of `a`, we can use the code
-below. The code indicates that the 2nd, 4th, and 6th elements of `a`
-should be extracted.
-
+To extract the 2nd, 4th, and 6th elements of `a`, we can use the code below. The code indicates that the 2nd, 4th, and 6th elements of `a` should be extracted.
 ```{r}
 # extract subset of vector
 a[c(2, 4, 6)]
 ```
 
-You can also use "negative" indexing to indicate the elements of the
-vector you want to exclude. Specifically, supplying a negative index
-vector indicates the values you want to exclude from your selection.
+You can also use "negative" indexing to indicate the elements of the vector you want to exclude. Specifically, supplying a negative index vector indicates the values you want to exclude from your selection. 
 
-In the example below, we use the minus (`-`) sign in front of the index
-vector `c(2, 4, 6)` to indicate we want all elements of `a` EXCEPT the
-2nd, 4th, and 6th. The last line of code excludes the 3rd through 6th
-elements of `a`.
+In the example below, we use the minus (`-`) sign in front of the index vector  `c(2, 4, 6)` to indicate we want all elements of `a` EXCEPT the 2nd, 4th, and 6th. The last line of code excludes the 3rd through 6th elements of `a`.
 
 ```{r}
 # extract part of vector using negative indexing
@@ -780,23 +525,19 @@ a[-(3:6)] # select all but elements 3-6
 
 #### Logical expressions
 
-A logical expression uses one or more logical operators to determine
-which elements of an object satisfy the specified statement. The basic
-logical operators are:
+A logical expression uses one or more logical operators to determine which elements of an object satisfy the specified statement.  The basic logical operators are:
 
--   `<`, `<=`: less than, less than or equal to.
--   `>`, `>=`: greater than, greater than or equal to.
--   `==`: equal to.
--   `!=`: not equal to.
+* `<`, `<=`: less than, less than or equal to.
+* `>`, `>=`: greater than, greater than or equal to.
+* `==`: equal to.
+* `!=`: not equal to.
 
-Creating a logical expression with a vector will result in a logical
-vector indicating whether each element satisfies the logical expression.
+Creating a logical expression with a vector will result in a logical vector indicating whether each element satisfies the logical expression.
 
-::: {.yourturn data-latex=""}
+:::{.yourturn data-latex=""}
 **Your turn**
 
-Run the following commands in R and see what is printed. What task is
-each statement performing?
+Run the following commands in R and see what is printed. What task is each statement performing?
 
 ```{r, eval = FALSE}
 a > 10  # which elements of a are > 10?
@@ -806,20 +547,15 @@ a != 10 # which elements of a are not equal to 10?
 ```
 :::
 
-We can create more complicated logical expressions using the "and",
-"or", and "not" operators.
+We can create more complicated logical expressions using the "and", "or", and "not" operators. 
 
--   `&`: and.
--   `|`: or.
--   `!`: not, i.e., not true.
+* `&`: and.
+* `|`: or.
+* `!`: not, i.e., not true.
 
-The `&` operator returns `TRUE` if all logical values connected by the
-`&` are `TRUE`, otherwise it returns `FALSE`. On the other hand, the `|`
-operator returns `TRUE` if any logical values connected by the `|` are
-`TRUE`, otherwise it returns `FALSE`. The `!` operator returns the
-complement of a logical value or expression.
+The `&` operator returns `TRUE` if all logical values connected by the `&` are `TRUE`, otherwise it returns `FALSE`. On the other hand, the `|` operator returns `TRUE` if any logical values connected by the `|` are `TRUE`, otherwise it returns `FALSE`. The `!` operator returns the complement of a logical value or expression.
 
-::: {.yourturn data-latex=""}
+:::{.yourturn data-latex=""}
 **Your turn**
 
 Run the following commands below in the Console.
@@ -832,23 +568,15 @@ FALSE | FALSE | FALSE
 !TRUE
 !FALSE
 ```
-
-What role does `&` serve in a sequence of logical values? Similarly,
-what roles do `|` and `!` serve in a sequence of logical values?
+What role does `&` serve in a sequence of logical values? Similarly, what roles do `|` and `!` serve in a sequence of logical values?
 :::
 
-Logical expressions can be connected via `&` and `|` (and impacted via
-`!`), in which case the operators are applied elementwise (i.e., to all
-of the first elements in the expressions, then all the second eleemnts
-in the expressions, etc).
+Logical expressions can be connected via `&` and `|` (and impacted via `!`), in which case the operators are applied elementwise (i.e., to all of the first elements in the expressions, then all the second eleemnts in the expressions, etc).
 
-::: {.yourturn data-latex=""}
+:::{.yourturn data-latex=""}
 **Your turn**
 
-Run the following commands in R and see what is printed. What task is
-each statement performing? Note that the parentheses `()` are used to
-group logical expressions to more easily understand what is being done.
-This is a good coding style to follow.
+Run the following commands in R and see what is printed. What task is each statement performing? Note that the parentheses `()` are used to group logical expressions to more easily understand what is being done. This is a good coding style to follow.
 
 ```{r, eval = FALSE}
 # which elements of a are > 6 and <= 10
@@ -862,17 +590,12 @@ This is a good coding style to follow.
 
 #### Selection using logical expressions
 
-Logical expressions can be used to return parts of an object satisfying
-the appropriate criteria. Specifically, we pass logical expressions
-within the square brackets to access part of a data structure. This
-syntax will return each element of the object for which the expression
-is `TRUE`.
+Logical expressions can be used to return parts of an object satisfying the appropriate criteria. Specifically, we pass logical expressions within the square brackets to access part of a data structure. This syntax will return each element of the object for which the expression is `TRUE`.
 
-::: {.yourturn data-latex=""}
+:::{.yourturn data-latex=""}
 **Your turn**
 
-Run the following commands in R and see what is printed. What task is
-each statement performing?
+Run the following commands in R and see what is printed. What task is each statement performing?
 
 ```{r, eval = FALSE}
 # extract the parts of a with values < 6
@@ -886,27 +609,24 @@ a[(a < 6)|(a == 10)]
 
 ## Helpful functions
 
-We provide a brief overview of R functions we often use in our data
-analysis.
+We provide a brief overview of R functions we often use in our data analysis.
 
 ### General functions
 
-For brevity, Table \@ref(tab:generalfunctions) provides a table of
-functions commonly useful for basic data analysis along with a
-description of their purpose.
+For brevity, Table \@ref(tab:generalfunctions) provides a table of functions commonly useful for basic data analysis along with a description of their purpose.
 
 ```{r generalfunctions, echo = FALSE}
 gf_df <- data.frame(
   function_name = c(
-    "$\\mathtt{length}$",
-    "$\\mathtt{sum}$",
-    "$\\mathtt{mean}$",
-    "$\\mathtt{var}$",
-    "$\\mathtt{sd}$",
-    "$\\mathtt{range}$",
-    "$\\mathtt{log}$",
-    "$\\mathtt{summary}$",
-    "$\\mathtt{str}$"
+    "`length`",
+    "`sum`",
+    "`mean`",
+    "`var`",
+    "`sd`",
+    "`range`",
+    "`log`",
+    "`summary`",
+    "`str`"
   ),
   purpose = c(
     "Determines the length/number of elements in an object.",
@@ -920,25 +640,18 @@ gf_df <- data.frame(
     "Provides information about the structure of an object. Usually, the class of the object and some information about its size."
   )
 )
-kbl(gf_df,
-    caption = "Functions frequently useful for data analysis.",
-    col.names = c("function", "purpose"),
-    booktabs = TRUE,
-    escape = FALSE) |>
-  column_spec(column = 2, width = "3in")  |>
-  kable_styling(full_width = FALSE)
+knitr::kable(gf_df, caption = "Functions frequently useful for data analysis.",
+             col.names = c("function", "purpose"))
 ```
 
-::: {.yourturn data-latex=""}
+:::{.yourturn data-latex=""}
 **Your turn**
 
-Run the following commands in the Console. Determine for yourself what
-task each command is performing.
+Run the following commands in the Console. Determine for yourself what task each command is performing.
 
 ```{r, eval=FALSE}
 # common functions
-x <- rexp(100) # sample 100 iid values from an
-               # Exponential(1) distribution
+x <- rexp(100) # sample 100 iid values from an Exponential(1) distribution
 length(x) # length of x
 sum(x) # sum of x
 mean(x) # sample mean of x
@@ -953,44 +666,24 @@ str(x) # structure of x
 
 ### Functions related to statistical distributions
 
-If you are doing a lot of data analysis, you are likely to be familiar
-with statistical concepts such as distributions. R is designed
-specifically for statistical analysis, so it natively includes
-functionality for determining properties of statistical distributions. R
-makes it easy to evaluate the cumulative distribution function (CDF) of
-a distribution, the quantiles of a distribution, the density or mass of
-a distribution, and to sample random values from a distribution.
+If you are doing a lot of data analysis, you are likely to be familiar with statistical concepts such as distributions. R is designed specifically for statistical analysis, so it natively includes functionality for determining properties of statistical distributions. R makes it easy to evaluate the cumulative distribution function (CDF) of a distribution, the quantiles of a distribution, the density or mass of a distribution, and to sample random values from a distribution. 
 
-Suppose that a random variable $X$ has the `dist` distribution. The
-function templates in the list below describe how to obtain certain
-properties of $X$.
+Suppose that a random variable $X$ has the `dist` distribution. The function templates in the list below describe how to obtain certain properties of $X$.
+  
+*	`p[dist](q, ...)`: returns the cdf of $X$ evaluated at `q`, i.e., $p=P(X\leq q)$.
+*	`q[dist](p, ...)`: returns the inverse cdf (or quantile function) of $X$ evaluated at $p$, i.e., $q = \inf\{x: P(X\leq x) \geq p\}$.
+* `d[dist](x, ...)`: returns the mass or density of $X$  evaluated at $x$ (depending on whether it's discrete or continuous).
+* `r[dist](n, ...)`: returns an independent and identically distributed random sample of size `n` having the same distribution as $X$.
+* The `...` indicates that additional arguments describing the parameters of the distribution may be required.
 
--   `p[dist](q, ...)`: returns the cdf of $X$ evaluated at `q`, i.e.,
-    $p=P(X\leq q)$.
--   `q[dist](p, ...)`: returns the inverse cdf (or quantile function) of
-    $X$ evaluated at $p$, i.e., $q = \inf\{x: P(X\leq x) \geq p\}$.
--   `d[dist](x, ...)`: returns the mass or density of $X$ evaluated at
-    $x$ (depending on whether it's discrete or continuous).
--   `r[dist](n, ...)`: returns an independent and identically
-    distributed random sample of size `n` having the same distribution
-    as $X$.
--   The `...` indicates that additional arguments describing the
-    parameters of the distribution may be required.
+To determine the distributions available by default in R, run `?Distributions` in the R Console. We demonstrate some of this functionality in the practice below.
 
-To determine the distributions available by default in R, run
-`?Distributions` in the R Console. We demonstrate some of this
-functionality in the practice below.
+Note: If you are using the statistical distribution-related functions in R, it is imperative that you look at the associated documentation to determine the parameterization of the distribution, as this dramatically impacts the results.
 
-Note: If you are using the statistical distribution-related functions in
-R, it is imperative that you look at the associated documentation to
-determine the parameterization of the distribution, as this dramatically
-impacts the results.
-
-::: {.yourturn data-latex=""}
+:::{.yourturn data-latex=""}
 **Your turn**
 
-Run the following commands in R to see the output. What task is each
-command performing?
+Run the following commands in R to see the output. What task is each command performing?
 
 ```{r, eval=FALSE}
 pnorm(1.96, mean = 0, sd = 1)
@@ -1002,41 +695,23 @@ rchisq(100, df = 5)
 
 Here are descriptions of what each command performs:
 
--   `pnorm(1.96, mean = 0, sd = 1)` returns the probability that a
-    standard normal random variable is less than or equal to 1.96, i.e.,
-    $P(X \leq 1.96)$.
--   `qunif(0.6, min = 0, max = 1)` returns the value $x$ such that
-    $P(X\leq x) = 0.6$ for a uniform random variable on the interval
-    $[0, 1]$.
--   `dbinom(2, size = 20, prob = .2)` returns the probability that $X$
-    equals 2 when $X$ has a Binomial distribution with $n=20$ trials and
-    the probability of a successful trial is $0.2$.
--   `dexp(1, rate = 2)` evaluates the density of an exponential random
-    variable with mean = 1/2 (i.e., the reciprocal of the `rate`) at
-    $x=1$.
--   `rchisq(100, df = 5)` draws a sample of 100 observations from a
-    chi-squared random variable with 5 degrees of freedom.
+* `pnorm(1.96, mean = 0, sd = 1)` returns the probability that a standard normal random variable is less than or equal to 1.96, i.e., $P(X \leq 1.96)$.
+* `qunif(0.6, min = 0, max = 1)` returns the value $x$ such that $P(X\leq x) = 0.6$ for a uniform random variable on the interval $[0, 1]$.
+* `dbinom(2, size = 20, prob = .2)` returns the probability that $X$ equals 2 when $X$ has  a Binomial distribution with $n=20$ trials and the probability of a successful trial is $0.2$.
+* `dexp(1, rate = 2)` evaluates the density of an exponential random variable with mean = 1/2 (i.e., the reciprocal of the `rate`) at $x=1$.
+* `rchisq(100, df = 5)` draws a sample of 100 observations from a chi-squared random variable with 5 degrees of freedom.
 :::
 
 ## Data Frames
 
-Data frames are two-dimensional data objects. Each column of a data
-frame is a vector (or variable) of possibly different data types. This
-is a *fundamental* data structure used by most of R's modeling software.
-The class of a **`base`** R data frame is `data.frame`, which is
-technically a specially structured `list`.
+Data frames are two-dimensional data objects. Each column of a data frame is a vector (or variable) of possibly different data types. This is a *fundamental* data structure used by most of R's modeling software. The class of a **base** R data frame is `data.frame`, which is technically a specially structured `list`.
 
-In general, I recommend *tidy data*, which means that each variable
-forms a column of the data frame, and each observation forms a row.
+In general, I recommend *tidy data*, which means that each variable forms a column of the data frame, and each observation forms a row.
 
 ### Direct creation
+Data frames are directly created by passing vectors into the `data.frame` function.
 
-Data frames are directly created by passing vectors into the
-`data.frame` function.
-
-The names of the columns in the data frame are the names of the vectors
-you give the `data.frame` function. Consider the following simple
-example.
+The names of the columns in the data frame are the names of the vectors you give the `data.frame` function. Consider the following simple example.
 
 ```{r}
 # create basic data frame
@@ -1047,8 +722,7 @@ df <- data.frame(d,e,f)
 df
 ```
 
-The columns of a data frame can be renamed using the `names` function on
-the data frame and assigning a vector of names to the data frame.
+The columns of a data frame can be renamed using the `names` function on the data frame and assigning a vector of names to the data frame.
 
 ```{r}
 # name columns of data frame
@@ -1056,9 +730,7 @@ names(df) <- c("ID", "Color", "Passed")
 df
 ```
 
-The columns of a data frame can be named when you are first creating the
-data frame by using `name =` for each vector of data.
-
+The columns of a data frame can be named when you are first creating the data frame by using `name =` for each vector of data.
 ```{r}
 # create data frame with better column names
 df2 <- data.frame(ID = d, Color = e, Passed = f)
@@ -1067,47 +739,27 @@ df2
 
 ### Importing Data
 
-Direct creation of data frames is only appropriate for very small data
-sets. In practice, you are likely to have a file that contains the data
-you want to analyze and you want to import the data into R.
+Direct creation of data frames is only appropriate for very small data sets. In practice, you are likely to have a file that contains the data you want to analyze and you want to import the data into R. 
 
-The `read.table` function imports data in table format from file into R
-as a data frame.
+The `read.table` function imports data in table format from file into R as a data frame.
 
-The basic usage of this function is:
-`read.table(file, header = TRUE, sep = ",")`
+The basic usage of this function is: `read.table(file, header = TRUE, sep = ",")`
 
--   `file` is the file path and name of the file you want to import into
-    R.
-    -   If you don't know the file path, setting `file = file.choose()`
-        will bring up a dialog box asking you to locate the file you
-        want to import.
--   `header` specifies whether the data file has a header (variable
-    labels for each column of data in the first row of the data file).
-    -   If you don't specify this option in R or use `header = FALSE`,
-        then R will assume the file doesn't have any headings.
-    -   `header = TRUE` tells R to read in the data as a data frame with
-        column names taken from the first row of the data file.
--   `sep` specifies the delimiter separating elements in the file.
-    -   If each column of data in the file is separated by a space, then
-        use `sep = " "`.
-    -   If each column of data in the file is separated by a comma, then
-        use `sep = ","`.
-    -   If each column of data in the file is separated by a tab, then
-        use `sep = "\t"`.
+* `file` is the file path and name of the file you want to import into R.
+    * If you don't know the file path, setting `file = file.choose()` will bring up a dialog box asking you to locate the file you want to import.
+* `header` specifies whether the data file has a header (variable labels for each column of data in the first row of the data file).
+    * If you don't specify this option in R or use `header = FALSE`, then R will assume the file doesn't have any headings.
+    * `header = TRUE` tells R to read in the data as a data frame with column names taken from the first row of the data file.
+* `sep` specifies the delimiter separating elements in the file.
+    * If each column of data in the file is separated by a space, then use `sep = " "`.
+    * If each column of data in the file is separated by a comma, then use `sep = ","`.
+    * If each column of data in the file is separated by a tab, then use `sep = "\t"`.
 
-::: {.yourturn data-latex=""}
+:::{.yourturn data-latex=""}
 **Your turn**
 
-Consider reading in a csv (comma separated file) with a header. The file
-in question contains information related to COVID-19 cases and deaths as
-of February 4, 2021. The file is available on the internet in the
-author's GitHub repository. Notice that we specify the path of the file
-(the `https` path) prior to specifying the file name (`covid_dec4.csv`).
-Since the file has a header, we specify `header = TRUE`. Since the data
-values are separated by commas, we specify `sep = ","`. Run the code
-below in your R Console.
-
+Consider reading in a csv (comma separated file) with a header. The file in question contains information related to COVID-19 cases and deaths as of February 4, 2021. The file is available on the internet in the author's GitHub repository. Notice that we specify the path of the file (`https://raw.githubusercontent.com/jfrench/DataWrangleViz/master/data/`) prior to specifying the file name (`covid_dec4.csv`). Since the file has a header, we specify `header = TRUE`. Since the data values are separated by commas, we specify `sep = ","`. Run the code below in your R Console.
+  
 ```{r}
 # import data as data frame
 dtf <- read.table(file = "https://raw.githubusercontent.com/jfrench/DataWrangleViz/master/data/covid_dec4.csv",
@@ -1116,130 +768,92 @@ dtf <- read.table(file = "https://raw.githubusercontent.com/jfrench/DataWrangleV
 str(dtf)
 ```
 
-Running `str` on the data frame gives us a general picture of the values
-stored in the data frame.
+Running `str` on the data frame gives us a general picture of the values stored in the data frame.
 :::
 
-Note that the `read_table` function in the **`readr`** package
-[@R-readr] is perhaps a better way of reading in tabular data and uses
-similar syntax. To import data contained in Microsoft Excel files, you
-can use functions available in the **`readxl`** package [@R-readxl].
+Note that the `read_table` function in the **readr** package [@R-readr] is perhaps a better way of reading in tabular data and uses similar syntax. To import data contained in Microsoft Excel files, you can use functions available in the **readxl** package [@R-readxl].
 
 ### Extracting parts of a data frame
 
-R provides many ways to extract parts of a data frame. We will provide
-several examples using the `mtcars` data frame in the **datasets**
-package.
+R provides many ways to extract parts of a data frame. We will provide several examples using the `mtcars` data frame in the **datasets** package.  
 
-The `mtcars` data frame `r nrow(datasets::mtcars)` observations of
-`r ncol(datasets::mtcars)` variables. The variables are:
+The `mtcars` data frame `r nrow(datasets::mtcars)` observations of `r ncol(datasets::mtcars)` variables. The variables are:
 
--   `mpg`: miles per gallon.
--   `cyl`: number of cylinders.
--   `disp`: engine displacement (cubic inches).
--   `hp`: horsepower.
--   `drat`: rear axle ratio.
--   `wt`: weight in 1000s of pounds.
--   `qsec`: time in seconds to travel 0.25 of a mile.
--   `vs`: engine shape (0 = V-shaped, 1 = straight).
--   `am`: transmission type (0 = automatic, 1 = manual).
--   `gear`: number of forward gears.
--   `carb`: number of carburetors.
+* `mpg`: miles per gallon.
+* `cyl`: number of cylinders.
+* `disp`:	engine displacement (cubic inches).
+* `hp`: horsepower.
+* `drat`: rear axle ratio.
+* `wt`: weight in 1000s of pounds.
+* `qsec`: time in seconds to travel 0.25 of a mile.
+* `vs`: engine shape (0 = V-shaped, 1 = straight).
+* `am`: transmission type (0 = automatic, 1 = manual).
+* `gear`: number of forward gears.
+* `carb`: number of carburetors.
 
-We load the data set and examine the basic structure by running the
-commands below.
+We load the data set and examine the basic structure by running the commands below.
 
 ```{r}
 data(mtcars) # load data set
 str(mtcars)  # examine data structure
 ```
 
-We should do some data cleaning on this data set (see Chapter
-\@ref(data-cleaning-and-exploration)), but we will refrain from this for
-simplicity.
+We should do some data cleaning on this data set (see Chapter \@ref(data-cleaning-and-exploration)), but we will refrain from this for simplicity.
 
 #### Direct extraction
 
-The column variables of a data frame may be extracted from a data frame
-by specifying the data frame's name, then `$`, and then specifying the
-name of the desired variable. This pulls the actual variable vector out
-of the data frame, so the thing extracted is a vector, not a data frame.
+The column variables of a data frame may be extracted from a data frame by specifying the data frame's name, then `$`, and then specifying the name of the desired variable. This pulls the actual variable vector out of the data frame, so the thing extracted is a vector, not a data frame.
 
 Below, we extract the `mpg` variable from the `mtcars` data frame.
 
 ```{r}
 mtcars$mpg
 ```
-
-Another way to extract a variable from a data frame as a vector is
-`df[, "var"]`, where `df` is the name of our data frame and `var` is the
-desired variable name. This syntax uses a `df[rows, columns]` style
-syntax, where `rows` and `columns` indicate the desired rows or columns.
-If either the `rows` or `columns` are left blank, then all `rows` or
-`columns`, respectively, are extracted.
+Another way to extract a variable from a data frame as a vector is `df[, "var"]`, where `df` is the name of our data frame and `var` is the desired variable name. This syntax uses a `df[rows, columns]` style syntax, where `rows` and `columns` indicate the desired rows or columns. If either the `rows` or `columns` are left blank, then all `rows` or `columns`, respectively, are extracted.
 
 ```{r}
 mtcars[,"mpg"]
 ```
+Once again, this action returns a vector, not a data frame. The is because the `[` operator has an argument `drop` that is set to `TRUE` by default by when using `[rows, columns]` style extraction. The `drop` argument controls whether the result is coerced to the lowest possible dimension.
 
-Once again, this action returns a vector, not a data frame. The is
-because the `[` operator has an argument `drop` that is set to `TRUE` by
-default by when using `[rows, columns]` style extraction. The `drop`
-argument controls whether the result is coerced to the lowest possible
-dimension.
-
-To get around this behavior we can change the `drop` argument to
-`FALSE`, as shown below (some output suppressed).
+To get around this behavior we can change the `drop` argument to `FALSE`, as shown below (some output suppressed).
 
 ```{r, out.lines = 4}
 # extract mpg variable, keep as data frame
 mtcars[,"mpg", drop = FALSE]
 ```
 
-An easier approach to avoid the default `drop` behavior is the slightly
-different syntax `df["var"]` (notice we no longer have the comma to
-separate rows and columns). We use this syntax below, suppressing part
-of the output, for the `mpg` variable in `mtcars`.
+An easier approach to avoid the default `drop` behavior is the slightly different syntax `df["var"]` (notice we no longer have the comma to separate rows and columns). We use this syntax below, suppressing part of the output, for the `mpg` variable in `mtcars`.
 
 ```{r, out.lines = 4}
 # extract mpg variable, keep as data frame
 mtcars["mpg"]
 ```
 
-To select multiple variables in a data frame, we can provide a character
-vector with multiple variable names between `[]`. In the example below,
-we extract both the `mpg` and `cyl` variables from `mtcars`.
+To select multiple variables in a data frame, we can provide a character vector with multiple variable names between `[]`. In the example below, we extract both the `mpg` and `cyl` variables from `mtcars`.
 
 ```{r, out.lines = 4}
 mtcars[c("mpg", "cyl")]
 ```
 
-You can also use numeric indices to directly indicate the rows or
-columns of the data frame that you would like to extract. Alternatively,
-you can use variable names for the columns.
+You can also use numeric indices to directly indicate the rows or columns of the data frame that you would like to extract. Alternatively, you can use variable names for the columns.
 
--   `df[1,]` would access the first row of `df`.
--   `df[1:2,]` would access the first two rows of `df`.
--   `df[,2]` would access the second column of `df`.
--   `df[1:2, 2:3]` would access the information in rows 1 and 2 of
-    columns 2 and 3 of `df`.
--   `df[c(1, 3, 5), c("var1", "var2")]` would access the information in
-    rows 1, 3, and 5 of the `var1` and `var2` variables.
+* `df[1,]` would access the first row of `df`.
+* `df[1:2,]` would access the first two rows of `df`.
+* `df[,2]` would access the second column of `df`.
+* `df[1:2, 2:3]` would access the information in rows 1 and 2 of columns 2 and 3 of `df`.
+* `df[c(1, 3, 5), c("var1", "var2")]` would access the information in rows 1, 3, and 5 of the `var1` and `var2` variables.
 
 We practice these techniques below.
 
-::: {.yourturn data-latex=""}
-Run the following commands in the Console. Determine what task each
-command is performing.
+:::{.yourturn data-latex=""}
 
-```{r, eval = FALSE}
-# create data frame
-df3 <-
-  data.frame(
-    numbers = 1:5,
-    characters = letters[1:5],
-    logicals = c(TRUE, TRUE, FALSE, TRUE, FALSE)
-  )
+Run the following commands in the Console. Determine what task each command is performing. 
+```{r, eval=FALSE, paged.print=FALSE}
+# Extract parts of a data frame
+df3 <- data.frame(numbers = 1:5,
+                  characters = letters[1:5],
+                  logicals = c(TRUE, TRUE, FALSE, TRUE, FALSE))
 df3 # print df3
 df3$logicals # extract the logicals vector of df3
 df3[1, ] # extract the first column of df3
@@ -1255,23 +869,14 @@ df3[c("numbers", "logicals")]
 
 Logical expressions can be used to subset a data frame.
 
-To select specific rows of a data frame, we use the syntax
-`df[logical vector,]`, where `logical vector` is a valid logical vector
-whose length matches the number of rows in the data frame. Usually, the
-logical vector is created using a logical expression involving one or
-more data frame variables. In the code below, we extract the rows of the
-`mtcars` data frame for which the `hp` variable is more than 250.
+To select specific rows of a data frame, we use the syntax `df[logical vector, ]`, where `logical vector` is a valid logical vector whose length matches the number of rows in the data frame. Usually, the logical vector is created using a logical expression involving one or more data frame variables. In the code below, we extract the rows of the `mtcars` data frame for which the `hp` variable is more than 250.
 
 ```{r}
 # extract rows with hp > 250
 mtcars[mtcars$hp > 250,]
 ```
 
-We can make the logical expression more complicated and also select
-specific variables using the syntax discussed in Section
-\@ref(direct-extraction). Below, we extract the rows of `mtcars` with 8
-cylinders and `mpg > 17`, while extracting only the `mpg`, `cyl`,
-`disp`, and `hp` variables.
+We can make the logical expression more complicated and also select specific variables using the syntax discussed in Section \@ref(direct-extraction). Below, we extract the rows of `mtcars` with 8 cylinders and `mpg > 17`, while extracting only the `mpg`, `cyl`, `disp`, and `hp` variables.
 
 ```{r}
 # return rows with `cyl == 8` and `mpg > 17`
@@ -1282,77 +887,39 @@ mtcars[mtcars$cyl == 8 & mtcars$mpg > 17,
 
 #### Extraction using the `subset` function
 
-The techniques for extracting parts of a data frame discussed in
-Sections \@ref(direct-extraction) and
-\@ref(extraction-using-logical-expressions) are the fundamental
-approaches for selecting desired parts of a data frame. However, these
-techniques can seem complex and difficult to interpret, particularly
-when looking back at code you have written in the past. A sleeker
-approach to extracting part of a data frame is to use the `subset`
-function.
+The techniques for extracting parts of a data frame discussed in Sections \@ref(direct-extraction) and \@ref(extraction-using-logical-expressions) are the fundamental approaches for selecting desired parts of a data frame. However, these techniques can seem complex and difficult to interpret, particularly when looking back at code you have written in the past. A sleeker approach to extracting part of a data frame is to use the `subset` function.
 
-The `subset` function returns the part of a data frame that meets the
-specified conditions. The basic usage of this function is:
-`subset(x, subset, select, drop = FALSE)`
+The `subset` function returns the part of a data frame that meets the specified conditions. The basic usage of this function is: `subset(x, subset, select, drop = FALSE)`
 
--   `x` is the object you want to subset.
-    -   `x` can be a vector, matrix, or data frame.
--   `subset` is a logical expression that indicates the elements or rows
-    of `x` to keep (`TRUE` means keep).
--   `select` is a vector that indicates the columns to keep.
--   `drop` is a logical value indicating whether the data frame should
-    "drop" into a vector if only a single row or column is kept. The
-    default is `FALSE`, meaning that a data frame will always be
-    returned by the `subset` function by default.
+* `x` is the object you want to subset.
+    * `x` can be a vector, matrix, or data frame.
+* `subset` is a logical expression that indicates the elements or rows of `x` to keep (`TRUE` means keep).
+* `select` is a vector that indicates the columns to keep.
+* `drop` is a logical value indicating whether the data frame should "drop" into a vector if only a single row or column is kept. The default is `FALSE`, meaning that a data frame will always be returned by the `subset` function by default.
 
-There are many clever ways of using `subset` to select specific parts of
-a data frame. We encourage the reader to run `?base::subset` in the
-Console for more details.
+There are many clever ways of using `subset` to select specific parts of a data frame. We encourage the reader to run `?base::subset` in the Console for more details. 
 
-::: {.yourturn data-latex=""}
+:::{.yourturn data-latex=""}
 **Your turn**
 
-Run the following commands in the Console to use the `subset` function
-to extract parts of the `mtcars` data framea.
+Run the following commands in the Console to use the `subset` function to extract parts of the `mtcars` data framea. 
 
--   `subset(mtcars, subset = gear > 4)`. This command will subset the
-    rows of `mtcars` that have more than 4 gears. Note any variables
-    referred to in the `subset` function are assumed to be part of the
-    supplied data frame or are available in memory.
--   `subset(mtcars, select = c(disp, hp, gear))`. This command will
-    select the `disp`, `hp`, and `gear` variables of `mtcars` but will
-    exclude the other columns.
--   `subset(mtcars, subset = gear > 4, select = c(disp, hp, gear))`
-    combines the previous two subsets into a single command.
+- `subset(mtcars, subset = gear > 4)`. This command will subset the rows of `mtcars` that have more than 4 gears. Note any variables referred to in the `subset` function are assumed to be part of the supplied data frame or are available in memory.
+- `subset(mtcars, select = c(disp, hp, gear))`. This command will select the `disp`, `hp`, and `gear` variables of `mtcars` but will exclude the other columns.
+- `subset(mtcars, subset = gear > 4, select = c(disp, hp, gear))` combines the previous two subsets into a single command.
 :::
 
-An advantage of the `subset` function is that it makes code easily
-readable. This is important for collaborating with others, including
-your future self! Using base R, the final code example above would be:
-`mtcars[mtcars$gear>4, c("disp", "hp", "gear")]`
+An advantage of the `subset` function is that it makes code easily readable. This is important for collaborating with others, including your future self! Using base R, the final code example above would be: `mtcars[mtcars$gear>4, c("disp", "hp", "gear")]`
 
-It is difficult to look at base R code and immediately tell what it
-happening, so the `subset` function adds clarity.
+It is difficult to look at base R code and immediately tell what it happening, so the `subset` function adds clarity.
 
 ## Using the pipe operator
 
-R's native pipe operator (`|>`) allows you to "pipe" the object on the
-left side of the operator into the first argument of the function on the
-right side of the operator. There are ways to modify this default
-behavior, but we will not discuss them.
+R's native pipe operator (`|>`) allows you to "pipe" the object on the left side of the operator into the first argument of the function on the right side of the operator. There are ways to modify this default behavior, but we will not discuss them.
 
-The pipe operator is a convenient way to string together numerous steps
-in a string of commands. This coding style is generally considered more
-readable than other approaches because you can incrementally modify the
-object through each pipe and each step of the pipe is easy to
-understand. Ultimately, it's a stylistic choice that can decide to adopt
-or ignore.
+The pipe operator is a convenient way to string together numerous steps in a string of commands. This coding style is generally considered more readable than other approaches because you can incrementally modify the object through each pipe and each step of the pipe is easy to understand. Ultimately, it's a stylistic choice that can decide to adopt or ignore. 
 
-Consider the following approaches to extracting part of `mtcars`. We
-choose the rows for which engine displacement is more than 400 and only
-keep the `mpg`, `disp`, and `hp` columns. We can do this in a single
-function call, but the piping approach breaks the action into smaller
-parts.
+Consider the following approaches to extracting part of `mtcars`. We choose the rows for which engine displacement is more than 400 and only keep the `mpg`, `disp`, and `hp` columns. We can do this in a single function call, but the piping approach breaks the action into smaller parts. 
 
 ```{r}
 # two styles for select certain rows and columns of mtcars 
@@ -1364,31 +931,15 @@ mtcars |>
   subset(select = c(mpg, disp, hp))
 ```
 
-When reading code with pipes, the pipe can be thought of as the word
-"then". In the code above, we take `mtcars` *then* subset it based on
-`disp` and *then* select some columns.
+When reading code with pipes, the pipe can be thought of as the word "then". In the code above, we take `mtcars` *then* subset it based on `disp` and *then* select some columns.
 
-Most parts of the world do not use miles per gallon to measure fuel
-economy because they don't measure distance in miles nor volume in
-gallons. A common measure of fuel economy is the liters of fuel required
-to travel 100 kilometers. Noting that 3.8 liters is (approximately)
-equivalent to 1 (U.S.) gallon and 1.6 kilometers is (approxiomately)
-equivalent to 1 mile, we can convert fuel economy of $x$ miles per
-gallon to liters per 100 kilometers by noting:
+Most parts of the world do not use miles per gallon to measure fuel economy because they don't measure distance in miles nor volume in gallons. A common measure of fuel economy is the liters of fuel required to travel 100 kilometers. Noting that 3.8 liters is (approximately) equivalent to 1 (U.S.) gallon and 1.6 kilometers is (approxiomately) equivalent to 1 mile, we can convert fuel economy of $x$ miles per gallon to liters per 100 kilometers by noting: 
 
 $$\frac{1}{x}\frac{\mathrm{gal}}{\mathrm{mi}}\times\frac{3.8}{1}\frac{\mathrm{L}}{\mathrm{gal}}\times\frac{1}{1.6}\frac{\mathrm{mi}}{\mathrm{km}}\times\frac{100\;\mathrm{km}}{100\;\mathrm{km}} = \frac{237.5}{x}\frac{\mathrm{L}}{100\;\mathrm{km}}.$$
 
-Thus, to convert from miles per gallon to liters per 100 kilometers, we
-take 237.5 and divide by the number of miles per gallon.
+Thus, to convert from miles per gallon to liters per 100 kilometers, we take 237.5 and divide by the number of miles per gallon.
 
-In the next set of code, we create a new variable, `lp100km`, in the
-`mtcars` data frame that describes the liters of fuel each car requires
-to travel 100 kilometers. Then we select only the columns `mpg` and
-`lp100km`. We then look at only the first 5 observations. To create the
-new variable, `lp100km`, we use the `base::transform` function, which
-allows you to create a new variable from the existing columns of a data
-frame. Run `?base::transform` in the Console for more details and
-examples.
+In the next set of code, we create a new variable, `lp100km`, in the `mtcars` data frame that describes the liters of fuel each car requires to travel 100 kilometers. Then we select only the columns `mpg` and `lp100km`. We then look at only the first 5 observations. To create the new variable, `lp100km`, we use the `base::transform` function, which allows you to create a new variable from the existing columns of a data frame. Run `?base::transform` in the Console for more details and examples.
 
 ```{r}
 # create new variable
@@ -1409,8 +960,7 @@ mtcars |>
   head(n = 5)
 ```
 
-If we allow ourselves to use parts of the **`tidyverse`**, we can
-simplify the code even further, as shown below.
+If we allow ourselves to use parts of the **tidyverse**, we can simplify the code even further, as shown below.
 
 ```{r}
 mtcars |>
@@ -1420,92 +970,47 @@ mtcars |>
   head(n = 5)
 ```
 
-The function `dplyr::arrange` orders the rows of a data frame based on a
-column variable, while the `dplyr::desc` causes this to be done in
-descending order.
+The function `dplyr::arrange` orders the rows of a data frame based on a column variable, while the `dplyr::desc` causes this to be done in descending order.
 
 ## Dealing with common problems
 
-You are going to have to deal with many errors and problems as you use R
-because of inexperience, simple mistakes, misunderstanding. It happens
-even to the best programmers.
+You are going to have to deal with many errors and problems as you use R because of inexperience, simple mistakes, misunderstanding. It happens even to the best programmers.
 
-Every problem is unique, but there are common mistakes that we try to
-provide insight for below.
+Every problem is unique, but there are common mistakes that we try to provide insight for below.
 
-**`Error in ...: could not find function "..."`**. You probably forgot
-to load the package needed to use the function. You also may have
-misspelled the function name.
+**`Error in ...: could not find function "..."`**. You probably forgot to load the package needed to use the function. You also may have misspelled the function name.
 
-**`Error: object '...' not found`**. The object doesn't exist in loaded
-memory. Perhaps you forget to assign that name to an object or
-misspelled the name of the object you are trying to access.
+**`Error: object '...' not found`**. The object doesn't exist in loaded memory. Perhaps you forget to assign that name to an object or misspelled the name of the object you are trying to access.
 
-**`Error in plot.new() : figure margins too large`**. This typically
-happens because your Plots pane is too small. Increase its size and try
-again.
+**`Error in plot.new() : figure margins too large`**. This typically happens because your Plots pane is too small. Increase its size and try again.
 
-**Code was working, but isn't anymore**. You may have run code out of
-order. It may work if you run it in order. Or you may have run something
-in the Console that you don't have in your Script file. It is good
-practice to clear your environment (the objects R has loaded in memory)
-using the broom icon
-`r knitr::include_graphics("pictures/broom_button.png")` in the
-Environment pane and rerun your entire Script file to ensure it behaves
-as expected.
+**Code was working, but isn't anymore**. You may have run code out of order. It may work if you run it in order. Or you may have run something in the Console that you don't have in your Script file. It is good practice to  clear your environment (the objects R has loaded in memory) using the broom icon `r knitr::include_graphics("pictures/broom_button.png")` in the Environment pane and rerun your entire Script file to ensure it behaves as expected.
 
 ## Ecosystem debate
 
-We typically prefer performing analysis using the functionality of
-**`base`** R, which means we try to perform our analysis with features R
-offers by default. This will be impossible as we move to more
-complicated aspects of regression analysis, so we will introduce new
-packages and functions as we progress.
+We typically prefer performing analysis using the functionality of **base** R, which means we try to perform our analysis with features R offers by default. This will be impossible as we move to more complicated aspects of regression analysis, so we will introduce new packages and functions as we progress.
 
-Many readers may have previous experience working with the
-**`tidyverse`** (<https://www.tidyverse.org>) and wonder how frequently
-we use **`tidyverse`** functionality. The **`tidyverse`** offers a
-unified framework for data manipulation and visualization that tends to
-be more consistent than **`base`** R. However, there are many situations
-where a **`base`** R solution is more straightforward than a
-**`tidyverse`** solution, not to mention the fact that there are many
-aspects of R programming (e.g., S3 and S4 objects, method dispatch) that
-require knowledge of **`base`** R features. Because the R universe is
-vast and there are many competing coding styles, we will prioritize
-analysis approaches using **`base`** R, which gives users a stronger
-programming foundation. However, we use analysis approaches from the
-**`tidyverse`** when it greatly simplifies analysis, data manipulation,
-or visualization because it provides an extremely useful feature set.
+Many readers may have previous experience working with the **tidyverse** ([https://www.tidyverse.org](https://www.tidyverse.org)) and wonder how frequently we use **tidyverse** functionality. The **tidyverse** offers a unified framework for data manipulation and visualization that tends to be more consistent than **base** R. However, there are many situations where a **base** R solution is more straightforward than a **tidyverse** solution, not to mention the fact that there are many aspects of R programming (e.g., S3 and S4 objects, method dispatch) that require knowledge of **base** R features. Because the R universe is vast and there are many competing coding styles, we will prioritize analysis approaches using **base** R, which gives users a stronger programming foundation. However, we use analysis approaches from the **tidyverse** when it greatly simplifies analysis, data manipulation, or visualization because it provides an extremely useful feature set.
 
 ## Additional information
 
 ### Comparing assignment operators
 
-As previously mentioned in Section \@ref(assignment), both `<-` and `=`
-can mostly be used interchangeably for assignment. But there are times
-when using `=` for assignment can be problematic. Consider the examples
-below where we want to use `system.time` to time how long it takes to
-draw 100 values from a standard normal distribution and assign it the
-name `result`.
+As previously mentioned in Section \@ref(assignment), both `<-` and `=` can mostly be used interchangeably for assignment. But there are times when using `=` for assignment can be problematic. Consider the examples below where we want to use `system.time` to time how long it takes to draw 100 values from a standard normal distribution and assign it the name `result`.
 
 This code works:
-
 ```{r}
 system.time(result <- rnorm(100))
 ```
 
 This code doesn't work:
-
 ```{r, error = TRUE}
 system.time(result = rnorm(100))
 ```
 
-What's the difference? In the second case, R thinks you are setting the
-`result` argument of the `system.time` function (which doesn't exist) to
-the value produced by `rnorm(100)`.
+What's the difference? In the second case, R thinks you are setting the `result` argument of the `system.time` function (which doesn't exist) to the value produced by `rnorm(100)`.
 
-Thus, it is best to use `<-` for assigning a name to an object and
-reserving `=` for specifying function arguments.
+Thus, it is best to use `<-` for assigning a name to an object and reserving `=` for specifying function arguments.
 
 ```{r, include = FALSE}
 knitr::knit_hooks$set(output = hook_output)
