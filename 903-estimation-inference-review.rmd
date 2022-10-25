@@ -56,19 +56,19 @@ The **target** parameter or **parameter of interest** is the population paramete
 
 There are different kinds of estimates:
 
-- A **point estimate** is a single number that we *hope* is close to the true value of the the target parameter.
+- A **point estimate** is a single number that we *hope* is close to the true value of the target parameter.
 - An **interval estimate** is an interval of numbers that we *hope* will contain the target parameter.
 
-an estimate and an estimator are different, but related concepts.
+An estimate and an estimator are different  but related concepts.
 
 - An estimate is a specific number (for a point estimate) or a specific range of numbers (for an interval estimate).
 - An **estimator** is a formula we use to calculate an estimate (once we get a sample of data).
 
 Once the data are observed, an estimate is fixed. An estimator is a random variable. An estimator produces different estimates based on the sample of data we obtain from the population.
 
-The **sampling distribution** of an estimator is the distribution of the estimates you get when you use the estimator to compute estimates from all possible samples of a fixed size $n$ from the population of interest.
+The **sampling distribution** of an estimator is the distribution of the estimates we get when we use the estimator to compute estimates from all possible samples of a fixed size $n$ from the population of interest.
 
-A point estimator, $\hat{\theta}$, is an **unbiased estimator** of a target parameter, $\hat{\theta}$, if $E(\hat{\theta})=\theta$. An estimator is biased if it is not biased.
+A point estimator, $\hat{\theta}$, is an **unbiased estimator** of a target parameter, $\theta$, if $E(\hat{\theta})=\theta$. An estimator is biased if it is not biased.
 
 The **bias** of an estimator is defined as
 \[
@@ -81,7 +81,7 @@ The **variance of an estimator** is defined as
 \]
 The **standard error of an estimator** is the standard deviation of the estimator, i.e.,
 \[
-\mathrm{sd}(\hat{\theta})=\sqrt{\mathrm{var}(\hat{\theta})}.
+\mathrm{se}(\hat{\theta})\equiv\mathrm{sd}(\hat{\theta})=\sqrt{\mathrm{var}(\hat{\theta})}.
 \]
 Typically, we cannot compute the standard error of an estimator because it is a function of parameters that we do not know. Instead, we use the sample data to estimate the standard error. When we hear or read the term "standard error", we must carefully evaluate whether the "standard error" presented is the theoretical standard error or the estimated standard error (and it's nearly always the latter).
 
@@ -99,45 +99,30 @@ The MSE formula makes it clear that there is a "bias-variance trade off" when ch
 ## Hypothesis Testing
 
 A **statistical test of hypotheses** or **hypothesis test** is a
-statistical procedure used to decide between a null hypothesis, $H_0$, and an alternative hypothesis, $H_a$ or $H_1$. The null hypothesis is usually a hypothesis that "nothing interesting is going on". The alternative hypothesis is (generally) the complement of the null hypothesis and is usually what we want to show is true.
+statistical procedure used to decide between a null hypothesis, $H_0$, and an alternative hypothesis, $H_a$ or $H_1$. The null hypothesis is usually a hypothesis that "nothing interesting is going on". The alternative hypothesis is generally the complement of the null hypothesis and is usually what we want to show is true.
 
-A **test statistic** is a number used to decide between $H_0$ and $H_a$. A test statistic is a function of the data, and generally, parameters in the hypotheses. A test statistic measures the compatibility of the observed data with $H_0$: a "small" test statistic suggests the observed data are consistent with $H_0$, while an "extreme" test statistic indicates that the observed data are inconsistent with $H_0$, which we take as evidence that $H_a$ is true.
+A **test statistic** is a number used to decide between $H_0$ and $H_a$. A test statistic is a function of the data, and generally, parameters in the hypotheses. A test statistic measures the compatibility of the observed data with $H_0$. A "small" test statistic suggests the observed data are consistent with $H_0$, while an "extreme" test statistic indicates that the observed data are inconsistent with $H_0$, which we take as evidence that $H_a$ is true.
 
-The **null distribution** allows us to determine values of the test statistic are typical or unusual when $H_0$ is true. Formally, the null distribution is the distribution of our test statistic under the assumption that $H_0$ is true.
+The **null distribution** allows us to identify the values of the test statistic that are typical or unusual when $H_0$ is true. Formally, the null distribution is the distribution of the test statistic under the assumption that $H_0$ is true.
 
 There are two types of errors we can make when doing hypothesis testing:
 
--   A Type I error is rejecting $H_0$ when $H_0$ is true.
--   A Type II error is failing to reject $H_0$ when $H_a$ is true.
+-   Type I error: rejecting $H_0$ when $H_0$ is true.
+-   Type II error: failing to reject $H_0$ when $H_a$ is true.
 
-We can control the Type I error rate at a specified level, $\alpha$, called the **significance level**, since we know the distribution of our
-test statistic under the assumption that $H_0$ is true. We reject $H_0$
-and conclude that $H_a$ is true if the test statistic falls in the
-**rejection region** of the null distribution, which is the set of test
-statistics that are the $100\alpha\%$ most unlikely test statistics if
-$H_0$ is true.
+We can control the Type I error rate at a specified level, $\alpha$, called the **significance level**, since we know the distribution of our test statistic under the assumption that $H_0$ is true. We reject $H_0$ and conclude that $H_a$ is true if the test statistic falls in the **rejection region** of the null distribution, which is the set of test statistics that are the $100\alpha\%$ most unlikely test statistics if $H_0$ is true.
 
-Instead of using the test statistic directly to decide between $H_0$ and
-$H_a$, we generally use the test statistic to compute a p-value. The
-**p-value** of a test statistic is the probability of seeing a test
-statistic at least as supportive of $H_a$ when $H_0$ is true. If we
-specify the significance level, $\alpha$, prior to performing our
-hypothesis test (which is the ethical thing to do), then we reject $H_0$
-and conclude $H_a$ is true when the p-value $<\alpha$. Otherwise, we
-fail to reject $H_0$.
+Instead of using the test statistic directly to decide between $H_0$ and $H_a$, we generally use the test statistic to compute a p-value. The **p-value** of a test statistic is the probability of seeing a test statistic at least as supportive of $H_a$ when $H_0$ is true. If we specify the significance level, $\alpha$, prior to performing our hypothesis test (which is the ethical thing to do), then we reject $H_0$ and conclude $H_a$ is true when the p-value $<\alpha$. Otherwise, we fail to reject $H_0$.
 
 Researchers sometimes say that the smaller the p-value, the stronger the
 evidence that $H_a$ is true and $H_0$ is false. This isn't definitively
-true because the p-value doesn't have the ability to tell us whether
-$H_0$ is true but our observed data were very unlikely or $H_0$ is
-false. When $H_0$ is true, then the test statistic has a
-$\mathsf{U}(0,1)$ (for simple hypotheses and continuous test
-statistics). However, if the $H_a$ is true, then the p-value is more
+true because the p-value doesn't have the ability to distinguish between the following options: (1) $H_0$ is true but our observed data were very unlikely, (2) $H_0$ is
+false. When $H_0$ is true, then the test statistic (for simple hypotheses and continuous test statistics) has a uniform distribution over the interval [0, 1]. However, if the $H_a$ is true, then the p-value is more
 likely to be small, which makes us think $H_a$ is true for small
 p-values. However, unless we know the **power** of our test, which is
 the probability that we reject $H_0$ when $H_a$ is true, then it is very
 difficult to assess how much evidence for $H_a$ a small p-value
-provides. However, @gibson_pvalue point out the p-values can be
+provides. @gibson_pvalue point out the p-values can be
 interpreted naturally on a $\log_{10}$ scale. @gibson_pvalue states:
 
 > The p-value can be expressed as $p=c\times 10^{-k}$ so that
@@ -176,32 +161,22 @@ kbl(interp_df,
 **Example**
 
 Suppose that $Y_1,\ldots,Y_n$ is a random sample (in other words,
-independent and identically distributed sample) from a population having
+an independent and identically distributed sample) from a population having
 a normal distribution with unknown mean $\mu$ and variance $\sigma^2=1$.
 
 We would like to decide between the following two hypotheses:
 $H_0:\mu=0$ and $H_a:\mu\neq 0$.
 
-If $H_0$ is true, then the statistic $\bar{Y}\sim \mathcal{N}(0,1/n)$ and
-the test statistic
-
+Consider the statistic $\bar{Y} = \frac{1}{n} \sum_{i=1}^n Y_i$. If $H_0$ is true, then $\bar{Y} \sim \mathcal{N}(0,1/n)$ and the test statistic
 $$
 Z^*=\bar{Y}/(1/\sqrt{n})=\sqrt{n}\bar{Y}\sim \mathcal{N}(0, 1),
 $$
 
-i.e., the null distribution of our test statistic is $\mathcal{N}(0,1)$.
+i.e., the null distribution of $Z^*$ is $\mathcal{N}(0,1)$.
 
-If
-$\alpha=0.10$, then the 10% of test statistics that are most unlikely if $H_0$
-is true (i.e., most supportive of \$H_a\$) are more extreme than
-$z^{0.95}$ and $z^{0.05}$, the 0.05 and 0.95 quantiles of a standard
-normal distribution, respectively. (The superscript in the quantile
-notation indicates the area to the right of the quantile in the CDF).
-The 0.05 quantile of the standard normal distribution is -1.65 and the
-0.95 quantile is 1.65. In R, we can find these quantile using the
-`qnorm` function, where the first argument of `qnorm` is `p`, which is
-the vector of probabilities to the LEFT of the quantile. We verify these
-quantiles using the code below.
+If $\alpha=0.10$, then the 10% of test statistics that are most unlikely if $H_0$
+is true (i.e., most supportive of $H_a$) are more extreme than $Z^{0.95}$ and $Z^{0.05}$, the 0.05 and 0.95 quantiles of a standard
+normal distribution, respectively. (The superscript in the quantile notation indicates the area to the right of the quantile in the CDF). The 0.05 quantile of the standard normal distribution is -1.65 and the 0.95 quantile is 1.65. In R, we can find these quantile using the `qnorm` function, where the first argument of `qnorm` is `p`, which is the vector of probabilities to the LEFT of the quantile. We verify these quantiles using the code below.
 
 ```{r}
 qnorm(c(0.05,0.95))
@@ -222,6 +197,58 @@ is true. The p-value is $2P(Z\geq 1.74)=0.082$. Using the p-value approach we wo
 
 In straightforward language, our interpretation could be: there is weak evidence that the population mean differs from 0.
 
+**Simulation study** 
+
+We provide a brief simulation study to better understand the null distribution and also how rejection regions are chosen to control the type I error rate. 
+
+Assume that we sample $n=10$ values from a $\mathcal{N}(\mu, \sigma^2)$ population but that we don't know the mean or the standard deviation. Assume the hypotheses we want to test are $H_0: \mu = 2$ versus $H_a: \mu > 2$ (implicitly, the null hypothesis is $H_0: \mu \leq 2$).
+
+In this context, it is common to use the test statistic
+$$
+T^* = \frac{\bar{Y} - \mu}{s/\sqrt{n}},
+$$
+where $s$ is the sample standard deviation of the measurements. Under the null hypothesis, $\mu=2$, and statistical theory tells us that $T^* \sim t_{n-1}$, i.e., the test statistic has a $t$ distribution with $n-1$ degrees of freedom. Since $n=10$, our test statistic has a $t$ distribution with 9 degrees of freedom if the null hypothesis is true.
+
+Recall that the null distribution of a test statistic is its sampling distribution under the assumption that the null hypothesis is true. In the code below, we:
+
+1. Draw $B=1,000$ samples of size $n=10$ from our $\mathcal{N}(\mu,\sigma^2)$ population assuming the null hypothesis is true, i.e., with $\mu = 2$.
+2. Compute the test statistic for each sample. 
+3. Compute the empirical density of the computed test statistics.
+4. Overlay a density for a $t$ random variable with 9 degrees of freedom. 
+
+To draw our sample, we must choose a value of $\sigma^2$. We will use $\sigma^2 = 16$. The exact value isn't important, but choosing a fixed number for $\sigma^2$ is critical for the example below. Figure \@ref(fig:tnullfigure) displays the results. We see that the two distributions match up very well.
+
+```{r tnullfigure, fig.cap = "Comparison of empirical null distribution to theoretical null distribution. The empirical null distribution is shown by the solid black line and the theoretical null distribution by a dashed blue line."}
+# set number seed for reproducible results
+set.seed(12)
+# create matrix to store samples
+samples <- matrix(nrow = 10000, ncol = 10)
+# draw 10000 samples of size 10 from a N(4, 4^2)
+for (i in 1:10000) {
+  samples[i,] <- rnorm(n = 10, mean = 2, sd = 4)
+}
+# compute sample mean and sd for each sample
+means <-  rowMeans(samples)
+sds <- apply(samples, 1, sd)
+# compute test statistic for each sample
+tstats <- (means - 2)/(sds/sqrt(10))
+# plot empirical null distribution
+plot(density(tstats),
+     xlab = "test statistic",
+     ylab = "density",
+     main = "empirical versus true null distribution")
+# sequence to plot null density over
+s <- seq(-5, 5, len = 1000)
+lines(s, dt(s, df = 9), lty = 2, col = "blue")
+```
+What should we takeaway from this example? The null distribution of a hypothesis test is the sampling distribution of the test statistic under the assumption that $H_0$ is true. We approximated the null distribution of our test statistic by drawing 10,000 samples from the population distribution under the assumption that $H_0$ was true.
+
+How does the null distribution relate to choosing the rejection region? First, the type I error rate is the probability of rejecting $H_0$ when $H_0$ is true. Since we know the null distribution, we know what behavior to expect from our test statistic if $H_0$ is true. Thus, we know what test statistics are most unlikely if $H_0$ is true. Let's say we want to control the type I error at $\alpha = 0.05$. For this upper-tailed test, we should reject $H_0$ when the test statistic is greater than $t^{0.05}_9$, i.e., the 0.95 quantile of a $t$ distribution with 9 degrees of freedom. Why do we use this threshold? Because if $H_0$ is true, this will only lead to erroneous rejections of $H_0$ (i.e., a type I error) 5% of the time. In the code below, we compute the sample proportion of test statistics from our null distribution that are more than $t^{0.05}_9$. Our sample proportion is very close to 0.05, and this number will converge to 0.05 as we increase the number samples used in our simulation.
+
+```{r}
+mean(tstats > qt(0.95, df = 9))
+```
+
 ## Confidence Intervals
 
 A **confidence interval** provides us with plausible values of a target parameter. It is the most common type of interval estimator.
@@ -237,14 +264,62 @@ Suppose $Y_1,Y_2,\ldots,Y_n \stackrel{i.i.d.}{\sim} \mathcal{N}(\mu, 1)$.
 
 The random variable $Z=(\bar{Y}-\mu)/(1/\sqrt{n})\sim \mathcal{N}(0,1)$ is a pivotal quantity.
 
-Since $P(-1.96\leq Z\leq 1.96)=0.95$, we can derive that $P(\bar{Y}-1.96\times 1/\sqrt{n}\leq \mu \leq \bar{Y}+1.96\times 1/\sqrt{n})=0.95$.
+Since $P(-1.96\leq Z\leq 1.96)=0.95$, we can derive that
+$$
+P(\bar{Y}-1.96\times 1/\sqrt{n}\leq \mu \leq \bar{Y}+1.96\times 1/\sqrt{n})=0.95.
+$$
 
-Our 95% confidence interval for $\mu$ (in this context) is [P(\bar{Y}-1.96\times 1/\sqrt{n} ,P(\bar{Y}+1.96\times 1/\sqrt{n}].
+Our 95% confidence interval for $\mu$ in this context is
+$$
+[\bar{Y}-1.96\times 1/\sqrt{n}, \bar{Y}+1.96\times 1/\sqrt{n}].
+$$
+If $\bar{Y}=0.551$ and $n=10$, then the associated 95% confidence interval for $\mu$ is [-0.070,1.171].
 
-If \bar{Y}=0.551, then the associated 95% confidence interval for \mu when $n=10$ is [-0.070,1.171].
+**More discussion of confidence level**
 
-If we used the CI formula given above to produce 100 intervals from
-independent data sets, then about 95% of them would contain the true mean, but about 5% would not.
+The CI formula given above is supposed to produce 95% confidence intervals (i.e., the confidence level of the procedure is 0.95). If produce 100 intervals from independent data sets, then about 95% of them would contain the true mean, but about 5% would not. To illustrate this further, we use a small simulation example below to produce 100 95% confidence intervals using a sample of size n = 10 for a $\mathcal{N(0,1)}$ population.
+
+First, we obtain 100 samples of size 10 from the population and then compute the sample mean of each sample. We do this in the code below.
+```{r}
+# create matrix to store samples
+samples <- matrix(0, nrow = 100, ncol = 10)
+# obtain 100 samples from the population
+for (i in 1:100) {
+  samples[i,] <- rnorm(n = 10, mean = 0, sd = 1)
+}
+# calculate the sample mean for each sample
+means = rowMeans(samples) #calculates the mean of each row
+```
+
+Next, we use the formula above to determine the lower and upper bound of the confidence interval associated with each interval. Since we want 95% confidence intervals, we use the 0.975 quantile of the standard normal distribution to construct our interval.
+
+```{r}
+#calculate the lower and upper bounds for the 95% CIs
+lb = means - qnorm(.975) * 1/sqrt(10)
+ub = means + qnorm(.975) * 1/sqrt(10)
+```
+
+Next, we plot each interval. The intervals are orange if the 
+interval doesn't contain the true population mean, which is 0. Figure \@ref(fig:ci-interp-plot) displays our results.
+
+```{r ci-interp-plot, fig.cap = "A plot of 100 95% confidence intervals for a population mean produced from independent samples from a $\\mathcal{N}(0,1)$ population."}
+#create blank plot
+plot(range(c(lb, ub)), c(1,100),
+     xlab = "", ylab = "interval", type = "n")
+# title plot
+title("Interpretation of a Confidence Interval")
+# plot true mean
+abline(v = 0, col = "blue")
+#plot interval each sample
+for (i in 1:100) lines(c(lb[i], ub[i]), c(i, i))
+#highlight intervals missing 0 in orange
+for (i in 1:100) {
+  if (lb[i] > 0 | ub[i] < 0 )   {
+    lines(c(lb[i],ub[i]), c(i,i), col = "orange")
+  }
+}
+```
+In this example, 96 out of 100 intervals for the population mean contained the true population mean of 0. Notice how the intervals move around. This is because each sample provides us with slightly different values, so the intervals move around because of the samples obtained. Each interval either contains the true mean of 0 or it does not. But as a whole, the procedure we are using will produce confidence intervals that contain the true mean 95% of the time.
 
 ## Linking Hypothesis Tests and Confidence Intervals
 
@@ -265,11 +340,11 @@ constructed: [-0.070,1.171].
 
 That interval is conceptually linked to the statistical test of $H_0:\mu = c$ versus $H_a:\mu \neq c$ using $\alpha =0.05$.
 
-We would reject $H_0$ for any hypothesized values of $c$ less than -0.070 or more than 1.171. We would fail to reject $H_0$ for any values of $c$ between -0.70 and 1.171. 
+We would reject $H_0$ for any hypothesized values of $c$ less than -0.070 or more than 1.171. We would fail to reject $H_0$ for any values of $c$ between -0.070 and 1.171. 
 
-A CI provides us with much of the same information as a hypothesis test, but it doesn't provide the p-value or allow us to do hypothesis tests at different significance levels.
+A confidence interval provides us with much of the same information as a hypothesis test, but it doesn't provide the p-value or allow us to do hypothesis tests at different significance levels.
 
-Confidence regions are often preferred over hypothesis tests because they provide additional information in the form of plausible parameters values while giving us enough information to perform a hypothesis test.
+Confidence intervals are often preferred over hypothesis tests because they provide additional information in the form of plausible parameters values while giving us enough information to perform a hypothesis test.
 
 <!-- ## Bootstrap Confidence Intervals -->
 

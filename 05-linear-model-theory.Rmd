@@ -44,11 +44,7 @@ where $F$ is some arbitrary distribution. The $\sim$ is read as "distributed as"
 \]
 or using matrix notation as
 \[
-<<<<<<< HEAD
-\mathbf{y}\mid \mathbf{X}\sim \mathcal{N}(\mathbf{0}_{n\times 1},\sigma^2 \mathbf{I}_{n\times n}), (\#eq:error-assumptions-matrix)
-=======
 \boldsymbol{\epsilon}\mid \mathbf{X}\sim \mathsf{N}(\mathbf{0}_{n\times 1},\sigma^2 \mathbf{I}_{n\times n}), (\#eq:error-assumptions-matrix)
->>>>>>> 442c49ae87ca7953986f31f0f7bcf0fbdcb0bb96
 \]
 where $\mathbf{0}_{n\times 1}$ is the $n \times 1$ vector of zeros and $\mathbf{I}_{n\times n}$ is the $n\times n$ identity matrix. Equation \@ref(eq:error-assumptions-matrix)
 combines the following assumptions:
@@ -178,7 +174,7 @@ For the linear model given in Equation \@ref(eq:linear-model-def-matrix) and und
 &=(\mathbf{X}^T\mathbf{X})^{-1}\mathbf{X}^T\text{var}(\mathbf{y}|\mathbf{X})\mathbf{X}(\mathbf{X}^T\mathbf{X})^{-1}&\tiny\text{(simplification)}\\
 &=(\mathbf{X}^T\mathbf{X})^{-1}\mathbf{X}^T(\sigma^2\mathbf{I})\mathbf{X}(\mathbf{X}^T\mathbf{X})^{-1}&\tiny\text{(previous result)}\\
 &=\sigma^2(\mathbf{X}^T\mathbf{X})^{-1}\mathbf{X}^T\mathbf{X}(\mathbf{X}^T\mathbf{X})^{-1}&\tiny(\sigma^2 \text{ is a scalar)}\\
-&=\sigma^2(\mathbf{X}^T\mathbf{X})^{-1}.&\tiny\text{(simplpification)}
+&=\sigma^2(\mathbf{X}^T\mathbf{X})^{-1}.&\tiny\text{(simplification)}
 \end{aligned}
 \]
 
@@ -217,15 +213,14 @@ The **hat** matrix is denoted as
 \]
 
 Thus, using the substitution $\hat{\boldsymbol{\beta}}=(\mathbf{X}^T\mathbf{X})^{-1}\mathbf{X}^T\mathbf{y}$ and the definition for $\mathbf{H}$ in Equation \@ref(eq:hat-matrix-def), we see that
-
-\[
+$$
 \begin{aligned}
 \hat{\boldsymbol{\epsilon}} &= \mathbf{y}-\mathbf{X}\hat{\boldsymbol{\beta}} \\ 
 &= \mathbf{y} - \mathbf{X}(\mathbf{X}^T\mathbf{X})^{-1}\mathbf{X}^T\mathbf{y} \\
 &= \mathbf{y} - \mathbf{H}\mathbf{y} \\
-&= (\mathbf{I}-\mathbf{H})\mathbf{y}. (\#eq:residual-hat-def)
+&= (\mathbf{I}-\mathbf{H})\mathbf{y}.
 \end{aligned}
-\]
+$$
 
 The hat matrix is an important theoretical matrix, as it projects $\mathbf{y}$ into the space spanned by the vectors in $\mathbf{X}$. It also has some properties that we will exploit in some of the derivations below.
 
