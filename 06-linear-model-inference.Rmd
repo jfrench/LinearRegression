@@ -508,6 +508,41 @@ predict_adjust(lmodp, newdata = newpenguins, level = 0.99,
                interval = "prediction",
                method = "scheffe")
 ```
+
+
+## Parametric hypothesis test for a single regression coefficient
+
+If we assume we are fitting the multiple linear regression model in Equation \@ref(eq:model-def-inference) then our model has $p$ regression coefficient $\beta_0, \beta_1, \ldots, \beta_{p-1}$. How would we perform a hypothesis test for exactly one of these regression coefficients? 
+
+Recall that if we make the additional assumptions in Equation
+\@ref(eq:error-assumption-inference), then
+\begin{equation}
+\frac{\hat{\beta}_j-\beta_j}{\hat{\mathrm{se}}(\hat{\beta}_j)}\sim t_{n-p}, \quad j=0,1,\ldots,p-1. (\#eq:pivot-t-betaj)
+\end{equation}
+Let's say we wish to test whether, for this model, $\beta_j$ differs from some constant number $c$ (typically, $c=0$). Let $\boldsymbol{\beta}_{-j}=\boldsymbol{\beta}\\{\beta_j}$, i.e., $\boldsymbol{\beta}_{-j}$ is the vector of all regression coefficients except $\beta_j$. $\boldsymbol{\beta}_{-j}$ has $p-1$ elements. We can state the hypotheses we wish to test as 
+\[
+\begin{aligned}
+H_0: \beta_j &= c \mid \boldsymbol{\beta}_{-j}\in\mathbb{R}^{p-1} \\
+H_a: \beta_j &\neq c \mid \boldsymbol{\beta}_{-j}\in\mathbb{R}^{p-1}.
+\end{aligned}
+(\#eq:betaj-H0Ha)
+\]
+The first part of the null hypothesis in Equation \@ref(eq:betaj-H0Ha) states that $\beta_j = c$ while the first part of the alternative hypothesis assumes that $\beta_j \neq c$. But what does the second half of the hypotheses mean? The vertical bar means "assuming or conditional on", similar to the notation you would see in conditional probabilities or distributions. What this means is that we are performing the hypothesis test while assuming that the other coefficients are some real number (possibly even zero). Why state this at all? Isn't it implicitly assumed? No. We could perform a hypothesis test for $\beta_0$ for many different models that have differing regressors. By writing out hypotheses in the style of Equation \@ref(eq:betaj-H0Ha), we are being very clear that we are performing a test for $\beta_0$ in the context of the model that has the regressors associated with $\boldsymbol{\beta}_{-j}$.
+
+How do the hypotheses in Equation \@ref(eq:betaj-H0Ha) affect the pivotal quantity in Equation \@ref(eq:pivot-t-betaj)? Under the null hypothesis, the statistic
+\[
+T_j = \frac{\hat{\beta}_j-c}{\hat{\mathrm{se}}(\hat{\beta}_j)} \sim t_{n-p}.
+\]
+Thus, the null distribution of $T_j$ is a t distribution with $n-p$ degrees of freedom. We emphasize that this is only true if the assumptions in Equation
+\@ref(eq:error-assumption-inference) are true.
+
+The p-value associated with this test is computed via the equation
+$$
+p = 2P(t_{n-p}\geq |T_j|).
+$$
+What if we wished to test a one-sided hypothesis? The p-value for a lower-tailed test is $p=P(t_{n-p}\leq T_j)$ while the p-value for an upper-tailed test is $p=P(t_{n-p}\geq T_j)$.
+
+
 ## Going deeper
 
 ### Manual calculation of the standard $t$-based confidence interval for a regression coefficient {#manual-t-cis}

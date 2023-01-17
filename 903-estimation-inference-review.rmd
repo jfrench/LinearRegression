@@ -213,12 +213,8 @@ Recall that the null distribution of a test statistic is its sampling distributi
 
 1. Draw $B=1,000$ samples of size $n=10$ from our $\mathcal{N}(\mu,\sigma^2)$ population assuming the null hypothesis is true, i.e., with $\mu = 2$.
 2. Compute the test statistic for each sample. 
-3. Compute the empirical density of the computed test statistics.
-4. Overlay a density for a $t$ random variable with 9 degrees of freedom. 
 
-To draw our sample, we must choose a value of $\sigma^2$. We will use $\sigma^2 = 16$. The exact value isn't important, but choosing a fixed number for $\sigma^2$ is critical for the example below. Figure \@ref(fig:tnullfigure) displays the results. We see that the two distributions match up very well.
-
-```{r tnullfigure, fig.cap = "Comparison of empirical null distribution to theoretical null distribution. The empirical null distribution is shown by the solid black line and the theoretical null distribution by a dashed blue line."}
+```{r}
 # set number seed for reproducible results
 set.seed(12)
 # create matrix to store samples
@@ -232,6 +228,13 @@ means <-  rowMeans(samples)
 sds <- apply(samples, 1, sd)
 # compute test statistic for each sample
 tstats <- (means - 2)/(sds/sqrt(10))
+```
+
+We now use the code below to compute the empirical density of the computed test statistics and overlay a density for a $t$ random variable with 9 degrees of freedom. 
+
+To draw our sample, we must choose a value of $\sigma^2$. We will use $\sigma^2 = 16$. The exact value isn't important, but choosing a fixed number for $\sigma^2$ is critical for the example below. Figure \@ref(fig:tnullfigure) displays the results. We see that the two distributions match up very well.
+
+```{r, eval = FALSE}
 # plot empirical null distribution
 plot(density(tstats),
      xlab = "test statistic",
@@ -241,6 +244,17 @@ plot(density(tstats),
 s <- seq(-5, 5, len = 1000)
 lines(s, dt(s, df = 9), lty = 2, col = "blue")
 ```
+
+```{r tnullfigure, fig.cap = "Comparison of empirical null distribution to theoretical null distribution. The empirical null distribution is shown by the solid black line and the theoretical null distribution by a dashed blue line.", echo = FALSE}
+plot(density(tstats),
+     xlab = "test statistic",
+     ylab = "density",
+     main = "empirical versus true null distribution")
+# sequence to plot null density over
+s <- seq(-5, 5, len = 1000)
+lines(s, dt(s, df = 9), lty = 2, col = "blue")
+```
+
 What should we takeaway from this example? The null distribution of a hypothesis test is the sampling distribution of the test statistic under the assumption that $H_0$ is true. We approximated the null distribution of our test statistic by drawing 10,000 samples from the population distribution under the assumption that $H_0$ was true.
 
 How does the null distribution relate to choosing the rejection region? First, the type I error rate is the probability of rejecting $H_0$ when $H_0$ is true. Since we know the null distribution, we know what behavior to expect from our test statistic if $H_0$ is true. Thus, we know what test statistics are most unlikely if $H_0$ is true. Let's say we want to control the type I error at $\alpha = 0.05$. For this upper-tailed test, we should reject $H_0$ when the test statistic is greater than $t^{0.05}_9$, i.e., the 0.95 quantile of a $t$ distribution with 9 degrees of freedom. Why do we use this threshold? Because if $H_0$ is true, this will only lead to erroneous rejections of $H_0$ (i.e., a type I error) 5% of the time. In the code below, we compute the sample proportion of test statistics from our null distribution that are more than $t^{0.05}_9$. Our sample proportion is very close to 0.05, and this number will converge to 0.05 as we increase the number samples used in our simulation.
@@ -280,6 +294,7 @@ If $\bar{Y}=0.551$ and $n=10$, then the associated 95% confidence interval for $
 The CI formula given above is supposed to produce 95% confidence intervals (i.e., the confidence level of the procedure is 0.95). If produce 100 intervals from independent data sets, then about 95% of them would contain the true mean, but about 5% would not. To illustrate this further, we use a small simulation example below to produce 100 95% confidence intervals using a sample of size n = 10 for a $\mathcal{N(0,1)}$ population.
 
 First, we obtain 100 samples of size 10 from the population and then compute the sample mean of each sample. We do this in the code below.
+
 ```{r}
 # create matrix to store samples
 samples <- matrix(0, nrow = 100, ncol = 10)
@@ -319,6 +334,7 @@ for (i in 1:100) {
   }
 }
 ```
+
 In this example, 96 out of 100 intervals for the population mean contained the true population mean of 0. Notice how the intervals move around. This is because each sample provides us with slightly different values, so the intervals move around because of the samples obtained. Each interval either contains the true mean of 0 or it does not. But as a whole, the procedure we are using will produce confidence intervals that contain the true mean 95% of the time.
 
 ## Linking Hypothesis Tests and Confidence Intervals
