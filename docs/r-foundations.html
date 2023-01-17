@@ -6,7 +6,7 @@
   <meta http-equiv="X-UA-Compatible" content="IE=edge" />
   <title>Chapter 1 R Foundations | A Progressive Introduction to Linear Models</title>
   <meta name="description" content="A collection of material that progressively introduces how to fit and use linear models." />
-  <meta name="generator" content="bookdown 0.29 and GitBook 2.6.7" />
+  <meta name="generator" content="bookdown 0.30 and GitBook 2.6.7" />
 
   <meta property="og:title" content="Chapter 1 R Foundations | A Progressive Introduction to Linear Models" />
   <meta property="og:type" content="book" />
@@ -54,12 +54,12 @@
 <script src="libs/kePrint-0.0.1/kePrint.js"></script>
 <link href="libs/lightable-0.0.1/lightable.css" rel="stylesheet" />
 <script src="libs/htmlwidgets-1.5.4/htmlwidgets.js"></script>
-<script src="libs/plotly-binding-4.10.0/plotly.js"></script>
+<script src="libs/plotly-binding-4.10.1/plotly.js"></script>
 <script src="libs/typedarray-0.1/typedarray.min.js"></script>
 <link href="libs/crosstalk-1.2.0/css/crosstalk.min.css" rel="stylesheet" />
 <script src="libs/crosstalk-1.2.0/js/crosstalk.min.js"></script>
-<link href="libs/plotly-htmlwidgets-css-2.5.1/plotly-htmlwidgets.css" rel="stylesheet" />
-<script src="libs/plotly-main-2.5.1/plotly-latest.min.js"></script>
+<link href="libs/plotly-htmlwidgets-css-2.11.1/plotly-htmlwidgets.css" rel="stylesheet" />
+<script src="libs/plotly-main-2.11.1/plotly-latest.min.js"></script>
 
 
 <style type="text/css">
@@ -318,12 +318,13 @@ div.csl-indent {
 <li class="chapter" data-level="6.5" data-path="inference.html"><a href="inference.html#prediction-mean-response-versus-new-response"><i class="fa fa-check"></i><b>6.5</b> Prediction: mean response versus new response</a></li>
 <li class="chapter" data-level="6.6" data-path="inference.html"><a href="inference.html#parametric-ci-mean-response"><i class="fa fa-check"></i><b>6.6</b> Parametric confidence interval for the mean response</a></li>
 <li class="chapter" data-level="6.7" data-path="inference.html"><a href="inference.html#pi-new-response"><i class="fa fa-check"></i><b>6.7</b> Parametric prediction interval for a new response</a></li>
-<li class="chapter" data-level="6.8" data-path="inference.html"><a href="inference.html#going-deeper-2"><i class="fa fa-check"></i><b>6.8</b> Going deeper</a>
+<li class="chapter" data-level="6.8" data-path="inference.html"><a href="inference.html#parametric-hypothesis-test-for-a-single-regression-coefficient"><i class="fa fa-check"></i><b>6.8</b> Parametric hypothesis test for a single regression coefficient</a></li>
+<li class="chapter" data-level="6.9" data-path="inference.html"><a href="inference.html#going-deeper-2"><i class="fa fa-check"></i><b>6.9</b> Going deeper</a>
 <ul>
-<li class="chapter" data-level="6.8.1" data-path="inference.html"><a href="inference.html#manual-t-cis"><i class="fa fa-check"></i><b>6.8.1</b> Manual calculation of the standard <span class="math inline">\(t\)</span>-based confidence interval for a regression coefficient</a></li>
-<li class="chapter" data-level="6.8.2" data-path="inference.html"><a href="inference.html#mean-response-calculations"><i class="fa fa-check"></i><b>6.8.2</b> Details about estimation of the mean response</a></li>
-<li class="chapter" data-level="6.8.3" data-path="inference.html"><a href="inference.html#manual-calc-ci-mean-response"><i class="fa fa-check"></i><b>6.8.3</b> Manual calculation of confidence intervals for the mean response</a></li>
-<li class="chapter" data-level="6.8.4" data-path="inference.html"><a href="inference.html#new-response-pi-calculations"><i class="fa fa-check"></i><b>6.8.4</b> Details about prediction interval for a new response</a></li>
+<li class="chapter" data-level="6.9.1" data-path="inference.html"><a href="inference.html#manual-t-cis"><i class="fa fa-check"></i><b>6.9.1</b> Manual calculation of the standard <span class="math inline">\(t\)</span>-based confidence interval for a regression coefficient</a></li>
+<li class="chapter" data-level="6.9.2" data-path="inference.html"><a href="inference.html#mean-response-calculations"><i class="fa fa-check"></i><b>6.9.2</b> Details about estimation of the mean response</a></li>
+<li class="chapter" data-level="6.9.3" data-path="inference.html"><a href="inference.html#manual-calc-ci-mean-response"><i class="fa fa-check"></i><b>6.9.3</b> Manual calculation of confidence intervals for the mean response</a></li>
+<li class="chapter" data-level="6.9.4" data-path="inference.html"><a href="inference.html#new-response-pi-calculations"><i class="fa fa-check"></i><b>6.9.4</b> Details about prediction interval for a new response</a></li>
 </ul></li>
 </ul></li>
 <li class="appendix"><span><b>Appendix</b></span></li>
@@ -584,9 +585,9 @@ Figure 1.2: The General options window.
 <div class="sourceCode" id="cb4"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb4-1"><a href="r-foundations.html#cb4-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(tidyverse)</span></code></pre></div>
 <p>You should see something like the following output:</p>
 <pre><code>## ── Attaching packages ─────────────────────────────────────── tidyverse 1.3.2 ──
-## ✔ ggplot2 3.3.6      ✔ purrr   0.3.5 
+## ✔ ggplot2 3.4.0      ✔ purrr   0.3.5 
 ## ✔ tibble  3.1.8      ✔ dplyr   1.0.10
-## ✔ tidyr   1.2.1      ✔ stringr 1.4.1 
+## ✔ tidyr   1.2.1      ✔ stringr 1.5.0 
 ## ✔ readr   2.1.3      ✔ forcats 0.5.2 
 ## ── Conflicts ────────────────────────────────────────── tidyverse_conflicts() ──
 ## ✖ dplyr::filter() masks stats::filter()
@@ -705,12 +706,12 @@ Matrices and data frames are considered two-dimensional objects. Arrays can have
 <!-- #                         caption = c("A table summarizing the relationship between dimensionality and homogeneity for the 5 basic data structures."), -->
 <!-- #                         col.names = c("number of dimensions", "single data type", "multiple data types"))) -->
 <!-- # ``` -->
-<div id="qwyywsjyca" style="overflow-x:auto;overflow-y:auto;width:auto;height:auto;">
+<div id="qlpvqzhggu" style="padding-left:0px;padding-right:0px;padding-top:10px;padding-bottom:10px;overflow-x:auto;overflow-y:auto;width:auto;height:auto;">
 <style>html {
   font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Helvetica Neue', 'Fira Sans', 'Droid Sans', Arial, sans-serif;
 }
 
-#qwyywsjyca .gt_table {
+#qlpvqzhggu .gt_table {
   display: table;
   border-collapse: collapse;
   margin-left: auto;
@@ -735,7 +736,7 @@ Matrices and data frames are considered two-dimensional objects. Arrays can have
   border-left-color: #D3D3D3;
 }
 
-#qwyywsjyca .gt_heading {
+#qlpvqzhggu .gt_heading {
   background-color: #FFFFFF;
   text-align: center;
   border-bottom-color: #FFFFFF;
@@ -747,7 +748,12 @@ Matrices and data frames are considered two-dimensional objects. Arrays can have
   border-right-color: #D3D3D3;
 }
 
-#qwyywsjyca .gt_title {
+#qlpvqzhggu .gt_caption {
+  padding-top: 4px;
+  padding-bottom: 4px;
+}
+
+#qlpvqzhggu .gt_title {
   color: #333333;
   font-size: 125%;
   font-weight: initial;
@@ -759,7 +765,7 @@ Matrices and data frames are considered two-dimensional objects. Arrays can have
   border-bottom-width: 0;
 }
 
-#qwyywsjyca .gt_subtitle {
+#qlpvqzhggu .gt_subtitle {
   color: #333333;
   font-size: 85%;
   font-weight: initial;
@@ -771,13 +777,13 @@ Matrices and data frames are considered two-dimensional objects. Arrays can have
   border-top-width: 0;
 }
 
-#qwyywsjyca .gt_bottom_border {
+#qlpvqzhggu .gt_bottom_border {
   border-bottom-style: solid;
   border-bottom-width: 2px;
   border-bottom-color: #D3D3D3;
 }
 
-#qwyywsjyca .gt_col_headings {
+#qlpvqzhggu .gt_col_headings {
   border-top-style: solid;
   border-top-width: 2px;
   border-top-color: #D3D3D3;
@@ -792,7 +798,7 @@ Matrices and data frames are considered two-dimensional objects. Arrays can have
   border-right-color: #D3D3D3;
 }
 
-#qwyywsjyca .gt_col_heading {
+#qlpvqzhggu .gt_col_heading {
   color: #333333;
   background-color: #FFFFFF;
   font-size: 100%;
@@ -812,7 +818,7 @@ Matrices and data frames are considered two-dimensional objects. Arrays can have
   overflow-x: hidden;
 }
 
-#qwyywsjyca .gt_column_spanner_outer {
+#qlpvqzhggu .gt_column_spanner_outer {
   color: #333333;
   background-color: #FFFFFF;
   font-size: 100%;
@@ -824,15 +830,15 @@ Matrices and data frames are considered two-dimensional objects. Arrays can have
   padding-right: 4px;
 }
 
-#qwyywsjyca .gt_column_spanner_outer:first-child {
+#qlpvqzhggu .gt_column_spanner_outer:first-child {
   padding-left: 0;
 }
 
-#qwyywsjyca .gt_column_spanner_outer:last-child {
+#qlpvqzhggu .gt_column_spanner_outer:last-child {
   padding-right: 0;
 }
 
-#qwyywsjyca .gt_column_spanner {
+#qlpvqzhggu .gt_column_spanner {
   border-bottom-style: solid;
   border-bottom-width: 2px;
   border-bottom-color: #D3D3D3;
@@ -844,7 +850,7 @@ Matrices and data frames are considered two-dimensional objects. Arrays can have
   width: 100%;
 }
 
-#qwyywsjyca .gt_group_heading {
+#qlpvqzhggu .gt_group_heading {
   padding-top: 8px;
   padding-bottom: 8px;
   padding-left: 5px;
@@ -867,9 +873,10 @@ Matrices and data frames are considered two-dimensional objects. Arrays can have
   border-right-width: 1px;
   border-right-color: #D3D3D3;
   vertical-align: middle;
+  text-align: left;
 }
 
-#qwyywsjyca .gt_empty_group_heading {
+#qlpvqzhggu .gt_empty_group_heading {
   padding: 0.5px;
   color: #333333;
   background-color: #FFFFFF;
@@ -884,15 +891,15 @@ Matrices and data frames are considered two-dimensional objects. Arrays can have
   vertical-align: middle;
 }
 
-#qwyywsjyca .gt_from_md > :first-child {
+#qlpvqzhggu .gt_from_md > :first-child {
   margin-top: 0;
 }
 
-#qwyywsjyca .gt_from_md > :last-child {
+#qlpvqzhggu .gt_from_md > :last-child {
   margin-bottom: 0;
 }
 
-#qwyywsjyca .gt_row {
+#qlpvqzhggu .gt_row {
   padding-top: 8px;
   padding-bottom: 8px;
   padding-left: 5px;
@@ -911,7 +918,7 @@ Matrices and data frames are considered two-dimensional objects. Arrays can have
   overflow-x: hidden;
 }
 
-#qwyywsjyca .gt_stub {
+#qlpvqzhggu .gt_stub {
   color: #333333;
   background-color: #FFFFFF;
   font-size: 100%;
@@ -924,7 +931,7 @@ Matrices and data frames are considered two-dimensional objects. Arrays can have
   padding-right: 5px;
 }
 
-#qwyywsjyca .gt_stub_row_group {
+#qlpvqzhggu .gt_stub_row_group {
   color: #333333;
   background-color: #FFFFFF;
   font-size: 100%;
@@ -938,11 +945,11 @@ Matrices and data frames are considered two-dimensional objects. Arrays can have
   vertical-align: top;
 }
 
-#qwyywsjyca .gt_row_group_first td {
+#qlpvqzhggu .gt_row_group_first td {
   border-top-width: 2px;
 }
 
-#qwyywsjyca .gt_summary_row {
+#qlpvqzhggu .gt_summary_row {
   color: #333333;
   background-color: #FFFFFF;
   text-transform: inherit;
@@ -952,16 +959,16 @@ Matrices and data frames are considered two-dimensional objects. Arrays can have
   padding-right: 5px;
 }
 
-#qwyywsjyca .gt_first_summary_row {
+#qlpvqzhggu .gt_first_summary_row {
   border-top-style: solid;
   border-top-color: #D3D3D3;
 }
 
-#qwyywsjyca .gt_first_summary_row.thick {
+#qlpvqzhggu .gt_first_summary_row.thick {
   border-top-width: 2px;
 }
 
-#qwyywsjyca .gt_last_summary_row {
+#qlpvqzhggu .gt_last_summary_row {
   padding-top: 8px;
   padding-bottom: 8px;
   padding-left: 5px;
@@ -971,7 +978,7 @@ Matrices and data frames are considered two-dimensional objects. Arrays can have
   border-bottom-color: #D3D3D3;
 }
 
-#qwyywsjyca .gt_grand_summary_row {
+#qlpvqzhggu .gt_grand_summary_row {
   color: #333333;
   background-color: #FFFFFF;
   text-transform: inherit;
@@ -981,7 +988,7 @@ Matrices and data frames are considered two-dimensional objects. Arrays can have
   padding-right: 5px;
 }
 
-#qwyywsjyca .gt_first_grand_summary_row {
+#qlpvqzhggu .gt_first_grand_summary_row {
   padding-top: 8px;
   padding-bottom: 8px;
   padding-left: 5px;
@@ -991,11 +998,11 @@ Matrices and data frames are considered two-dimensional objects. Arrays can have
   border-top-color: #D3D3D3;
 }
 
-#qwyywsjyca .gt_striped {
+#qlpvqzhggu .gt_striped {
   background-color: rgba(128, 128, 128, 0.05);
 }
 
-#qwyywsjyca .gt_table_body {
+#qlpvqzhggu .gt_table_body {
   border-top-style: solid;
   border-top-width: 2px;
   border-top-color: #D3D3D3;
@@ -1004,7 +1011,7 @@ Matrices and data frames are considered two-dimensional objects. Arrays can have
   border-bottom-color: #D3D3D3;
 }
 
-#qwyywsjyca .gt_footnotes {
+#qlpvqzhggu .gt_footnotes {
   color: #333333;
   background-color: #FFFFFF;
   border-bottom-style: none;
@@ -1018,7 +1025,7 @@ Matrices and data frames are considered two-dimensional objects. Arrays can have
   border-right-color: #D3D3D3;
 }
 
-#qwyywsjyca .gt_footnote {
+#qlpvqzhggu .gt_footnote {
   margin: 0px;
   font-size: 90%;
   padding-left: 4px;
@@ -1027,7 +1034,7 @@ Matrices and data frames are considered two-dimensional objects. Arrays can have
   padding-right: 5px;
 }
 
-#qwyywsjyca .gt_sourcenotes {
+#qlpvqzhggu .gt_sourcenotes {
   color: #333333;
   background-color: #FFFFFF;
   border-bottom-style: none;
@@ -1041,7 +1048,7 @@ Matrices and data frames are considered two-dimensional objects. Arrays can have
   border-right-color: #D3D3D3;
 }
 
-#qwyywsjyca .gt_sourcenote {
+#qlpvqzhggu .gt_sourcenote {
   font-size: 90%;
   padding-top: 4px;
   padding-bottom: 4px;
@@ -1049,64 +1056,64 @@ Matrices and data frames are considered two-dimensional objects. Arrays can have
   padding-right: 5px;
 }
 
-#qwyywsjyca .gt_left {
+#qlpvqzhggu .gt_left {
   text-align: left;
 }
 
-#qwyywsjyca .gt_center {
+#qlpvqzhggu .gt_center {
   text-align: center;
 }
 
-#qwyywsjyca .gt_right {
+#qlpvqzhggu .gt_right {
   text-align: right;
   font-variant-numeric: tabular-nums;
 }
 
-#qwyywsjyca .gt_font_normal {
+#qlpvqzhggu .gt_font_normal {
   font-weight: normal;
 }
 
-#qwyywsjyca .gt_font_bold {
+#qlpvqzhggu .gt_font_bold {
   font-weight: bold;
 }
 
-#qwyywsjyca .gt_font_italic {
+#qlpvqzhggu .gt_font_italic {
   font-style: italic;
 }
 
-#qwyywsjyca .gt_super {
+#qlpvqzhggu .gt_super {
   font-size: 65%;
 }
 
-#qwyywsjyca .gt_footnote_marks {
+#qlpvqzhggu .gt_footnote_marks {
   font-style: italic;
   font-weight: normal;
   font-size: 75%;
   vertical-align: 0.4em;
 }
 
-#qwyywsjyca .gt_asterisk {
+#qlpvqzhggu .gt_asterisk {
   font-size: 100%;
   vertical-align: 0;
 }
 
-#qwyywsjyca .gt_indent_1 {
+#qlpvqzhggu .gt_indent_1 {
   text-indent: 5px;
 }
 
-#qwyywsjyca .gt_indent_2 {
+#qlpvqzhggu .gt_indent_2 {
   text-indent: 10px;
 }
 
-#qwyywsjyca .gt_indent_3 {
+#qlpvqzhggu .gt_indent_3 {
   text-indent: 15px;
 }
 
-#qwyywsjyca .gt_indent_4 {
+#qlpvqzhggu .gt_indent_4 {
   text-indent: 20px;
 }
 
-#qwyywsjyca .gt_indent_5 {
+#qlpvqzhggu .gt_indent_5 {
   text-indent: 25px;
 }
 </style>
@@ -1115,26 +1122,26 @@ Matrices and data frames are considered two-dimensional objects. Arrays can have
   
   <thead class="gt_col_headings">
     <tr>
-      <th class="gt_col_heading gt_columns_bottom_border gt_left" rowspan="2" colspan="1" style="border-right-width: 2px; border-right-style: solid; border-right-color: lightgray;" scope="col"># of dimensions</th>
-      <th class="gt_center gt_columns_top_border gt_column_spanner_outer" rowspan="1" colspan="2" scope="colgroup">
+      <th class="gt_col_heading gt_columns_bottom_border gt_left" rowspan="2" colspan="1" style="border-right-width: 2px; border-right-style: solid; border-right-color: lightgray;" scope="col" id="# of dimensions"># of dimensions</th>
+      <th class="gt_center gt_columns_top_border gt_column_spanner_outer" rowspan="1" colspan="2" scope="colgroup" id="data type">
         <span class="gt_column_spanner">data type</span>
       </th>
     </tr>
     <tr>
-      <th class="gt_col_heading gt_columns_bottom_border gt_left" rowspan="1" colspan="1" scope="col">homogeneous</th>
-      <th class="gt_col_heading gt_columns_bottom_border gt_left" rowspan="1" colspan="1" scope="col">heterogeneous</th>
+      <th class="gt_col_heading gt_columns_bottom_border gt_left" rowspan="1" colspan="1" scope="col" id="homogeneous">homogeneous</th>
+      <th class="gt_col_heading gt_columns_bottom_border gt_left" rowspan="1" colspan="1" scope="col" id="heterogeneous">heterogeneous</th>
     </tr>
   </thead>
   <tbody class="gt_table_body">
-    <tr><th scope="row" class="gt_row gt_left gt_stub">1</th>
-<td class="gt_row gt_left">atomic vector</td>
-<td class="gt_row gt_left">list</td></tr>
-    <tr><th scope="row" class="gt_row gt_left gt_stub">2</th>
-<td class="gt_row gt_left">matrix</td>
-<td class="gt_row gt_left">data frame</td></tr>
-    <tr><th scope="row" class="gt_row gt_left gt_stub">1 or more</th>
-<td class="gt_row gt_left">array</td>
-<td class="gt_row gt_left"></td></tr>
+    <tr><th id="stub_1_1" scope="row" class="gt_row gt_left gt_stub">1</th>
+<td headers="stub_1_1 homogeneous" class="gt_row gt_left">atomic vector</td>
+<td headers="stub_1_1 heterogeneous" class="gt_row gt_left">list</td></tr>
+    <tr><th id="stub_1_2" scope="row" class="gt_row gt_left gt_stub">2</th>
+<td headers="stub_1_2 homogeneous" class="gt_row gt_left">matrix</td>
+<td headers="stub_1_2 heterogeneous" class="gt_row gt_left">data frame</td></tr>
+    <tr><th id="stub_1_3" scope="row" class="gt_row gt_left gt_stub">1 or more</th>
+<td headers="stub_1_3 homogeneous" class="gt_row gt_left">array</td>
+<td headers="stub_1_3 heterogeneous" class="gt_row gt_left"></td></tr>
   </tbody>
   
   
@@ -1301,7 +1308,7 @@ Run the commands below in the Console.</p>
 <span id="cb19-6"><a href="r-foundations.html#cb19-6" aria-hidden="true" tabindex="-1"></a><span class="sc">!</span><span class="cn">FALSE</span></span></code></pre></div>
 <p>What role does <code>&amp;</code> serve in a sequence of logical values? Similarly, what roles do <code>|</code> and <code>!</code> serve in a sequence of logical values?</p>
 </div>
-<p>Logical expressions can be connected via <code>&amp;</code> and <code>|</code> (and impacted via <code>!</code>), in which case the operators are applied elementwise (i.e., to all of the first elements in the expressions, then all the second eleemnts in the expressions, etc).</p>
+<p>Logical expressions can be connected via <code>&amp;</code> and <code>|</code> (and impacted via <code>!</code>), in which case the operators are applied elementwise (i.e., to all of the first elements in the expressions, then all the second elements in the expressions, etc).</p>
 <div class="yourturn">
 <p><strong>Your turn</strong></p>
 <p>Run the following commands in R and see what is printed. What task is each statement performing? Note that the parentheses <code>()</code> are used to group logical expressions to more easily understand what is being done. This is a good coding style to follow.</p>
@@ -1644,7 +1651,7 @@ Run the commands below in the Console.</p>
 <p>There are many clever ways of using <code>subset</code> to select specific parts of a data frame. We encourage the reader to run <code>?base::subset</code> in the Console for more details.</p>
 <div class="yourturn">
 <p><strong>Your turn</strong></p>
-<p>Run the following commands in the Console to use the <code>subset</code> function to extract parts of the <code>mtcars</code> data framea.</p>
+<p>Run the following commands in the Console to use the <code>subset</code> function to extract parts of the <code>mtcars</code> data frame.</p>
 <ul>
 <li><code>subset(mtcars, subset = gear &gt; 4)</code>. This command will subset the rows of <code>mtcars</code> that have more than 4 gears. Note any variables referred to in the <code>subset</code> function are assumed to be part of the supplied data frame or are available in memory.</li>
 <li><code>subset(mtcars, select = c(disp, hp, gear))</code>. This command will select the <code>disp</code>, <code>hp</code>, and <code>gear</code> variables of <code>mtcars</code> but will exclude the other columns.</li>

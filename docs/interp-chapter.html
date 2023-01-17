@@ -6,7 +6,7 @@
   <meta http-equiv="X-UA-Compatible" content="IE=edge" />
   <title>Chapter 4 Interpreting a fitted linear model | A Progressive Introduction to Linear Models</title>
   <meta name="description" content="A collection of material that progressively introduces how to fit and use linear models." />
-  <meta name="generator" content="bookdown 0.29 and GitBook 2.6.7" />
+  <meta name="generator" content="bookdown 0.30 and GitBook 2.6.7" />
 
   <meta property="og:title" content="Chapter 4 Interpreting a fitted linear model | A Progressive Introduction to Linear Models" />
   <meta property="og:type" content="book" />
@@ -54,12 +54,12 @@
 <script src="libs/kePrint-0.0.1/kePrint.js"></script>
 <link href="libs/lightable-0.0.1/lightable.css" rel="stylesheet" />
 <script src="libs/htmlwidgets-1.5.4/htmlwidgets.js"></script>
-<script src="libs/plotly-binding-4.10.0/plotly.js"></script>
+<script src="libs/plotly-binding-4.10.1/plotly.js"></script>
 <script src="libs/typedarray-0.1/typedarray.min.js"></script>
 <link href="libs/crosstalk-1.2.0/css/crosstalk.min.css" rel="stylesheet" />
 <script src="libs/crosstalk-1.2.0/js/crosstalk.min.js"></script>
-<link href="libs/plotly-htmlwidgets-css-2.5.1/plotly-htmlwidgets.css" rel="stylesheet" />
-<script src="libs/plotly-main-2.5.1/plotly-latest.min.js"></script>
+<link href="libs/plotly-htmlwidgets-css-2.11.1/plotly-htmlwidgets.css" rel="stylesheet" />
+<script src="libs/plotly-main-2.11.1/plotly-latest.min.js"></script>
 
 
 <style type="text/css">
@@ -318,12 +318,13 @@ div.csl-indent {
 <li class="chapter" data-level="6.5" data-path="inference.html"><a href="inference.html#prediction-mean-response-versus-new-response"><i class="fa fa-check"></i><b>6.5</b> Prediction: mean response versus new response</a></li>
 <li class="chapter" data-level="6.6" data-path="inference.html"><a href="inference.html#parametric-ci-mean-response"><i class="fa fa-check"></i><b>6.6</b> Parametric confidence interval for the mean response</a></li>
 <li class="chapter" data-level="6.7" data-path="inference.html"><a href="inference.html#pi-new-response"><i class="fa fa-check"></i><b>6.7</b> Parametric prediction interval for a new response</a></li>
-<li class="chapter" data-level="6.8" data-path="inference.html"><a href="inference.html#going-deeper-2"><i class="fa fa-check"></i><b>6.8</b> Going deeper</a>
+<li class="chapter" data-level="6.8" data-path="inference.html"><a href="inference.html#parametric-hypothesis-test-for-a-single-regression-coefficient"><i class="fa fa-check"></i><b>6.8</b> Parametric hypothesis test for a single regression coefficient</a></li>
+<li class="chapter" data-level="6.9" data-path="inference.html"><a href="inference.html#going-deeper-2"><i class="fa fa-check"></i><b>6.9</b> Going deeper</a>
 <ul>
-<li class="chapter" data-level="6.8.1" data-path="inference.html"><a href="inference.html#manual-t-cis"><i class="fa fa-check"></i><b>6.8.1</b> Manual calculation of the standard <span class="math inline">\(t\)</span>-based confidence interval for a regression coefficient</a></li>
-<li class="chapter" data-level="6.8.2" data-path="inference.html"><a href="inference.html#mean-response-calculations"><i class="fa fa-check"></i><b>6.8.2</b> Details about estimation of the mean response</a></li>
-<li class="chapter" data-level="6.8.3" data-path="inference.html"><a href="inference.html#manual-calc-ci-mean-response"><i class="fa fa-check"></i><b>6.8.3</b> Manual calculation of confidence intervals for the mean response</a></li>
-<li class="chapter" data-level="6.8.4" data-path="inference.html"><a href="inference.html#new-response-pi-calculations"><i class="fa fa-check"></i><b>6.8.4</b> Details about prediction interval for a new response</a></li>
+<li class="chapter" data-level="6.9.1" data-path="inference.html"><a href="inference.html#manual-t-cis"><i class="fa fa-check"></i><b>6.9.1</b> Manual calculation of the standard <span class="math inline">\(t\)</span>-based confidence interval for a regression coefficient</a></li>
+<li class="chapter" data-level="6.9.2" data-path="inference.html"><a href="inference.html#mean-response-calculations"><i class="fa fa-check"></i><b>6.9.2</b> Details about estimation of the mean response</a></li>
+<li class="chapter" data-level="6.9.3" data-path="inference.html"><a href="inference.html#manual-calc-ci-mean-response"><i class="fa fa-check"></i><b>6.9.3</b> Manual calculation of confidence intervals for the mean response</a></li>
+<li class="chapter" data-level="6.9.4" data-path="inference.html"><a href="inference.html#new-response-pi-calculations"><i class="fa fa-check"></i><b>6.9.4</b> Details about prediction interval for a new response</a></li>
 </ul></li>
 </ul></li>
 <li class="appendix"><span><b>Appendix</b></span></li>
@@ -1635,18 +1636,12 @@ matrix for the largest set of regressors you are considering. Consider
 the matrix of crossproducts for the columns of 1s, <code>x1</code>, <code>x2</code>, <code>x3</code>, and
 <code>x4</code>.</p>
 <div class="sourceCode" id="cb142"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb142-1"><a href="interp-chapter.html#cb142-1" aria-hidden="true" tabindex="-1"></a><span class="fu">crossprod</span>(<span class="fu">model.matrix</span>(<span class="sc">~</span> X1 <span class="sc">+</span> X2 <span class="sc">+</span> X3 <span class="sc">+</span> X4))</span>
-<span id="cb142-2"><a href="interp-chapter.html#cb142-2" aria-hidden="true" tabindex="-1"></a><span class="do">##             (Intercept)           X1            X2 X3</span></span>
-<span id="cb142-3"><a href="interp-chapter.html#cb142-3" aria-hidden="true" tabindex="-1"></a><span class="do">## (Intercept)   5.0000000 3.100000e+01 -2.857143e-01  0</span></span>
-<span id="cb142-4"><a href="interp-chapter.html#cb142-4" aria-hidden="true" tabindex="-1"></a><span class="do">## X1           31.0000000 1.970000e+02  1.110223e-16  0</span></span>
-<span id="cb142-5"><a href="interp-chapter.html#cb142-5" aria-hidden="true" tabindex="-1"></a><span class="do">## X2           -0.2857143 1.110223e-16  1.551020e+01 -5</span></span>
-<span id="cb142-6"><a href="interp-chapter.html#cb142-6" aria-hidden="true" tabindex="-1"></a><span class="do">## X3            0.0000000 0.000000e+00 -5.000000e+00  2</span></span>
-<span id="cb142-7"><a href="interp-chapter.html#cb142-7" aria-hidden="true" tabindex="-1"></a><span class="do">## X4            0.0000000 0.000000e+00  2.857143e-01  0</span></span>
-<span id="cb142-8"><a href="interp-chapter.html#cb142-8" aria-hidden="true" tabindex="-1"></a><span class="do">##                    X4</span></span>
-<span id="cb142-9"><a href="interp-chapter.html#cb142-9" aria-hidden="true" tabindex="-1"></a><span class="do">## (Intercept) 0.0000000</span></span>
-<span id="cb142-10"><a href="interp-chapter.html#cb142-10" aria-hidden="true" tabindex="-1"></a><span class="do">## X1          0.0000000</span></span>
-<span id="cb142-11"><a href="interp-chapter.html#cb142-11" aria-hidden="true" tabindex="-1"></a><span class="do">## X2          0.2857143</span></span>
-<span id="cb142-12"><a href="interp-chapter.html#cb142-12" aria-hidden="true" tabindex="-1"></a><span class="do">## X3          0.0000000</span></span>
-<span id="cb142-13"><a href="interp-chapter.html#cb142-13" aria-hidden="true" tabindex="-1"></a><span class="do">## X4          2.0000000</span></span></code></pre></div>
+<span id="cb142-2"><a href="interp-chapter.html#cb142-2" aria-hidden="true" tabindex="-1"></a><span class="do">##             (Intercept)  X1         X2 X3        X4</span></span>
+<span id="cb142-3"><a href="interp-chapter.html#cb142-3" aria-hidden="true" tabindex="-1"></a><span class="do">## (Intercept)   5.0000000  31 -0.2857143  0 0.0000000</span></span>
+<span id="cb142-4"><a href="interp-chapter.html#cb142-4" aria-hidden="true" tabindex="-1"></a><span class="do">## X1           31.0000000 197  0.0000000  0 0.0000000</span></span>
+<span id="cb142-5"><a href="interp-chapter.html#cb142-5" aria-hidden="true" tabindex="-1"></a><span class="do">## X2           -0.2857143   0 15.5102041 -5 0.2857143</span></span>
+<span id="cb142-6"><a href="interp-chapter.html#cb142-6" aria-hidden="true" tabindex="-1"></a><span class="do">## X3            0.0000000   0 -5.0000000  2 0.0000000</span></span>
+<span id="cb142-7"><a href="interp-chapter.html#cb142-7" aria-hidden="true" tabindex="-1"></a><span class="do">## X4            0.0000000   0  0.2857143  0 2.0000000</span></span></code></pre></div>
 <p>Consider the sequence of models below.</p>
 <div class="sourceCode" id="cb143"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb143-1"><a href="interp-chapter.html#cb143-1" aria-hidden="true" tabindex="-1"></a><span class="fu">coef</span>(<span class="fu">lm</span>(y <span class="sc">~</span> <span class="dv">1</span>))</span>
 <span id="cb143-2"><a href="interp-chapter.html#cb143-2" aria-hidden="true" tabindex="-1"></a><span class="do">## (Intercept) </span></span>
