@@ -918,13 +918,13 @@ The standard deviation of the prediction error is sometimes known as the <strong
 </div>
 <div id="parametric-hypothesis-test-for-a-single-regression-coefficient" class="section level2 hasAnchor" number="6.8">
 <h2><span class="header-section-number">6.8</span> Parametric hypothesis test for a single regression coefficient<a href="inference.html#parametric-hypothesis-test-for-a-single-regression-coefficient" class="anchor-section" aria-label="Anchor link to header"></a></h2>
-<p>If we assume we are fitting the multiple linear regression model in Equation <a href="inference.html#eq:model-def-inference">(6.1)</a> then our model has <span class="math inline">\(p\)</span> regression coefficient <span class="math inline">\(\beta_0, \beta_1, \ldots, \beta_{p-1}\)</span>. How would we perform a hypothesis test for exactly one of these regression coefficients?</p>
-<p>Recall that if we make the additional assumptions in Equation
-<a href="inference.html#eq:error-assumption-inference">(6.2)</a>, then
-<span class="math display" id="eq:pivot-t-betaj">\[\begin{equation}
+<p>If we assume we are fitting the multiple linear regression model in Equation <a href="inference.html#eq:model-def-inference">(6.1)</a>, then our model has <span class="math inline">\(p\)</span> regression coefficient <span class="math inline">\(\beta_0, \beta_1, \ldots, \beta_{p-1}\)</span>. How would we perform a hypothesis test for exactly one of these regression coefficients?</p>
+<p>Recall that if we make the assumptions in Equation
+<a href="inference.html#eq:error-assumption-inference">(6.2)</a>, then</p>
+<p><span class="math display" id="eq:pivot-t-betaj">\[\begin{equation}
 \frac{\hat{\beta}_j-\beta_j}{\hat{\mathrm{se}}(\hat{\beta}_j)}\sim t_{n-p}, \quad j=0,1,\ldots,p-1. \tag{6.10}
-\end{equation}\]</span>
-Let’s say we wish to test whether, for this model, <span class="math inline">\(\beta_j\)</span> differs from some constant number <span class="math inline">\(c\)</span> (typically, <span class="math inline">\(c=0\)</span>). Let <span class="math inline">\(\boldsymbol{\beta}_{-j}=\boldsymbol{\beta}\\{\beta_j}\)</span>, i.e., <span class="math inline">\(\boldsymbol{\beta}_{-j}\)</span> is the vector of all regression coefficients except <span class="math inline">\(\beta_j\)</span>. <span class="math inline">\(\boldsymbol{\beta}_{-j}\)</span> has <span class="math inline">\(p-1\)</span> elements. We can state the hypotheses we wish to test as
+\end{equation}\]</span></p>
+<p>Let’s say we wish to test whether, for this model, <span class="math inline">\(\beta_j\)</span> differs from some constant number <span class="math inline">\(c\)</span> (typically, <span class="math inline">\(c=0\)</span>). Let <span class="math inline">\(\boldsymbol{\beta}_{-j}=\boldsymbol{\beta}\setminus{\beta_j}\)</span>, i.e., <span class="math inline">\(\boldsymbol{\beta}_{-j}\)</span> is the vector of all regression coefficients except <span class="math inline">\(\beta_j\)</span>. <span class="math inline">\(\boldsymbol{\beta}_{-j}\)</span> has <span class="math inline">\(p-1\)</span> elements. We can state the hypotheses we wish to test as
 <span class="math display" id="eq:betaj-H0Ha">\[
 \begin{aligned}
 H_0: \beta_j &amp;= c \mid \boldsymbol{\beta}_{-j}\in\mathbb{R}^{p-1} \\
@@ -932,7 +932,7 @@ H_a: \beta_j &amp;\neq c \mid \boldsymbol{\beta}_{-j}\in\mathbb{R}^{p-1}.
 \end{aligned}
 \tag{6.11}
 \]</span>
-The first part of the null hypothesis in Equation <a href="inference.html#eq:betaj-H0Ha">(6.11)</a> states that <span class="math inline">\(\beta_j = c\)</span> while the first part of the alternative hypothesis assumes that <span class="math inline">\(\beta_j \neq c\)</span>. But what does the second half of the hypotheses mean? The vertical bar means “assuming or conditional on”, similar to the notation you would see in conditional probabilities or distributions. What this means is that we are performing the hypothesis test while assuming that the other coefficients are some real number (possibly even zero). Why state this at all? Isn’t it implicitly assumed? No. We could perform a hypothesis test for <span class="math inline">\(\beta_0\)</span> for many different models that have differing regressors. By writing out hypotheses in the style of Equation <a href="inference.html#eq:betaj-H0Ha">(6.11)</a>, we are being very clear that we are performing a test for <span class="math inline">\(\beta_0\)</span> in the context of the model that has the regressors associated with <span class="math inline">\(\boldsymbol{\beta}_{-j}\)</span>.</p>
+The first part of the null hypothesis in Equation <a href="inference.html#eq:betaj-H0Ha">(6.11)</a> states that <span class="math inline">\(\beta_j = c\)</span> while the first part of the alternative hypothesis assumes that <span class="math inline">\(\beta_j \neq c\)</span>. But what does the second half of the hypotheses mean? The vertical bar means “assuming or conditional on”, similar to the notation you would see in conditional probabilities or distributions. What this means is that we are performing the hypothesis test while assuming that the other coefficients are some real number (possibly even zero). Why state this at all? Isn’t it implicitly assumed? No. We could perform a hypothesis test for <span class="math inline">\(\beta_j\)</span> for many different models that have differing regressors. By writing out hypotheses in the style of Equation <a href="inference.html#eq:betaj-H0Ha">(6.11)</a>, we are being very clear that we are performing a test for <span class="math inline">\(\beta_j\)</span> in the context of the model that has the regressors associated with <span class="math inline">\(\boldsymbol{\beta}_{-j}\)</span>.</p>
 <p>How do the hypotheses in Equation <a href="inference.html#eq:betaj-H0Ha">(6.11)</a> affect the pivotal quantity in Equation <a href="inference.html#eq:pivot-t-betaj">(6.10)</a>? Under the null hypothesis, the statistic
 <span class="math display">\[
 T_j = \frac{\hat{\beta}_j-c}{\hat{\mathrm{se}}(\hat{\beta}_j)} \sim t_{n-p}.
@@ -944,39 +944,65 @@ Thus, the null distribution of <span class="math inline">\(T_j\)</span> is a t d
 p = 2P(t_{n-p}\geq |T_j|).
 \]</span>
 What if we wished to test a one-sided hypothesis? The p-value for a lower-tailed test is <span class="math inline">\(p=P(t_{n-p}\leq T_j)\)</span> while the p-value for an upper-tailed test is <span class="math inline">\(p=P(t_{n-p}\geq T_j)\)</span>.</p>
+<p>The fitted model
+<span class="math display">\[
+\begin{aligned}
+&amp;E(\mathtt{bill\_length\_mm}\mid \mathtt{body\_mass\_g}, \mathtt{flipper\_length\_mm}) \\
+&amp;=\beta_0+\beta_1 \mathtt{body\_mass\_g} + \beta_2 \mathtt{flipper\_length\_mm}.
+\end{aligned}
+\]</span></p>
+<p>is assigned the name <code>mlmod</code>. Suppose we want to test</p>
+<p><span class="math display">\[
+\begin{aligned}
+H_0: &amp;\beta_1 = 0 \mid \beta_0\in \mathbb{R}, \beta_2 \in \mathbb{R} \\
+H_a: &amp;\beta_1 \neq 0 \mid \beta_0\in \mathbb{R}, \beta_2 \in \mathbb{R}.
+\end{aligned}
+\]</span>
+R conveniently provides this information in the output of the <code>summary</code> function (specifically, the <code>coefficients</code> element if we don’t want extra information). We extract this information from the <code>mlmod</code> object in the code below.</p>
+<div class="sourceCode" id="cb164"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb164-1"><a href="inference.html#cb164-1" aria-hidden="true" tabindex="-1"></a><span class="fu">summary</span>(mlmod)<span class="sc">$</span>coefficients</span>
+<span id="cb164-2"><a href="inference.html#cb164-2" aria-hidden="true" tabindex="-1"></a><span class="do">##                        Estimate   Std. Error    t value</span></span>
+<span id="cb164-3"><a href="inference.html#cb164-3" aria-hidden="true" tabindex="-1"></a><span class="do">## (Intercept)       -3.4366939266 4.5805531903 -0.7502792</span></span>
+<span id="cb164-4"><a href="inference.html#cb164-4" aria-hidden="true" tabindex="-1"></a><span class="do">## body_mass_g        0.0006622186 0.0005672075  1.1675067</span></span>
+<span id="cb164-5"><a href="inference.html#cb164-5" aria-hidden="true" tabindex="-1"></a><span class="do">## flipper_length_mm  0.2218654584 0.0323484492  6.8586119</span></span>
+<span id="cb164-6"><a href="inference.html#cb164-6" aria-hidden="true" tabindex="-1"></a><span class="do">##                       Pr(&gt;|t|)</span></span>
+<span id="cb164-7"><a href="inference.html#cb164-7" aria-hidden="true" tabindex="-1"></a><span class="do">## (Intercept)       4.536070e-01</span></span>
+<span id="cb164-8"><a href="inference.html#cb164-8" aria-hidden="true" tabindex="-1"></a><span class="do">## body_mass_g       2.438263e-01</span></span>
+<span id="cb164-9"><a href="inference.html#cb164-9" aria-hidden="true" tabindex="-1"></a><span class="do">## flipper_length_mm 3.306943e-11</span></span></code></pre></div>
+<p>Moving from left to right, the first column (no name) indicates the coefficient term under consideration, the second column (<code>Estimate</code>) provides the estimated coefficients, the third column (<code>Std. Error</code>) provides the estimated standard error (<span class="math inline">\(\hat{\mathrm{se}}(\hat{\beta}_j)\)</span>) for each coefficient, the fourth column (<code>t value</code>) provides the test statistic associated with testing <span class="math inline">\(H_0: \beta_j = 0 \mid \boldsymbol{\beta}_{-j} \in \mathbb{R}^{p-1}\)</span> versus a suitable alternative for each coefficient, while the final column (<code>Pr(&gt;|t|)</code>) provides the two-tailed p-value associated with this test.</p>
+<p>Thus, for our test of the <code>body_mass_g</code> coefficient, the test statistic is <span class="math inline">\(T_2 = 1.17\)</span> and the associated p-value is 0.024. There is moderate evidence that the coefficient for <code>body_mass_g</code> different from zero, assuming the model also allows for the inclusion of the intercept and <code>flipper_length_mm</code> coefficients.</p>
 </div>
 <div id="going-deeper-2" class="section level2 hasAnchor" number="6.9">
 <h2><span class="header-section-number">6.9</span> Going deeper<a href="inference.html#going-deeper-2" class="anchor-section" aria-label="Anchor link to header"></a></h2>
 <div id="manual-t-cis" class="section level3 hasAnchor" number="6.9.1">
 <h3><span class="header-section-number">6.9.1</span> Manual calculation of the standard <span class="math inline">\(t\)</span>-based confidence interval for a regression coefficient<a href="inference.html#manual-t-cis" class="anchor-section" aria-label="Anchor link to header"></a></h3>
 <p>Consider the summary of the fitted linear model below, which summarizes a first-order linear model fit to the <code>penguins</code> data earlier in this chapter.</p>
-<div class="sourceCode" id="cb164"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb164-1"><a href="inference.html#cb164-1" aria-hidden="true" tabindex="-1"></a><span class="fu">summary</span>(mlmod)</span>
-<span id="cb164-2"><a href="inference.html#cb164-2" aria-hidden="true" tabindex="-1"></a><span class="do">## </span></span>
-<span id="cb164-3"><a href="inference.html#cb164-3" aria-hidden="true" tabindex="-1"></a><span class="do">## Call:</span></span>
-<span id="cb164-4"><a href="inference.html#cb164-4" aria-hidden="true" tabindex="-1"></a><span class="do">## lm(formula = bill_length_mm ~ body_mass_g + flipper_length_mm, </span></span>
-<span id="cb164-5"><a href="inference.html#cb164-5" aria-hidden="true" tabindex="-1"></a><span class="do">##     data = penguins)</span></span>
-<span id="cb164-6"><a href="inference.html#cb164-6" aria-hidden="true" tabindex="-1"></a><span class="do">## </span></span>
-<span id="cb164-7"><a href="inference.html#cb164-7" aria-hidden="true" tabindex="-1"></a><span class="do">## Residuals:</span></span>
-<span id="cb164-8"><a href="inference.html#cb164-8" aria-hidden="true" tabindex="-1"></a><span class="do">##     Min      1Q  Median      3Q     Max </span></span>
-<span id="cb164-9"><a href="inference.html#cb164-9" aria-hidden="true" tabindex="-1"></a><span class="do">## -8.8064 -2.5898 -0.7053  1.9911 18.8288 </span></span>
-<span id="cb164-10"><a href="inference.html#cb164-10" aria-hidden="true" tabindex="-1"></a><span class="do">## </span></span>
-<span id="cb164-11"><a href="inference.html#cb164-11" aria-hidden="true" tabindex="-1"></a><span class="do">## Coefficients:</span></span>
-<span id="cb164-12"><a href="inference.html#cb164-12" aria-hidden="true" tabindex="-1"></a><span class="do">##                     Estimate Std. Error t value Pr(&gt;|t|)</span></span>
-<span id="cb164-13"><a href="inference.html#cb164-13" aria-hidden="true" tabindex="-1"></a><span class="do">## (Intercept)       -3.4366939  4.5805532  -0.750    0.454</span></span>
-<span id="cb164-14"><a href="inference.html#cb164-14" aria-hidden="true" tabindex="-1"></a><span class="do">## body_mass_g        0.0006622  0.0005672   1.168    0.244</span></span>
-<span id="cb164-15"><a href="inference.html#cb164-15" aria-hidden="true" tabindex="-1"></a><span class="do">## flipper_length_mm  0.2218655  0.0323484   6.859 3.31e-11</span></span>
-<span id="cb164-16"><a href="inference.html#cb164-16" aria-hidden="true" tabindex="-1"></a><span class="do">##                      </span></span>
-<span id="cb164-17"><a href="inference.html#cb164-17" aria-hidden="true" tabindex="-1"></a><span class="do">## (Intercept)          </span></span>
-<span id="cb164-18"><a href="inference.html#cb164-18" aria-hidden="true" tabindex="-1"></a><span class="do">## body_mass_g          </span></span>
-<span id="cb164-19"><a href="inference.html#cb164-19" aria-hidden="true" tabindex="-1"></a><span class="do">## flipper_length_mm ***</span></span>
-<span id="cb164-20"><a href="inference.html#cb164-20" aria-hidden="true" tabindex="-1"></a><span class="do">## ---</span></span>
-<span id="cb164-21"><a href="inference.html#cb164-21" aria-hidden="true" tabindex="-1"></a><span class="do">## Signif. codes:  </span></span>
-<span id="cb164-22"><a href="inference.html#cb164-22" aria-hidden="true" tabindex="-1"></a><span class="do">## 0 &#39;***&#39; 0.001 &#39;**&#39; 0.01 &#39;*&#39; 0.05 &#39;.&#39; 0.1 &#39; &#39; 1</span></span>
-<span id="cb164-23"><a href="inference.html#cb164-23" aria-hidden="true" tabindex="-1"></a><span class="do">## </span></span>
-<span id="cb164-24"><a href="inference.html#cb164-24" aria-hidden="true" tabindex="-1"></a><span class="do">## Residual standard error: 4.124 on 339 degrees of freedom</span></span>
-<span id="cb164-25"><a href="inference.html#cb164-25" aria-hidden="true" tabindex="-1"></a><span class="do">##   (2 observations deleted due to missingness)</span></span>
-<span id="cb164-26"><a href="inference.html#cb164-26" aria-hidden="true" tabindex="-1"></a><span class="do">## Multiple R-squared:  0.4329, Adjusted R-squared:  0.4295 </span></span>
-<span id="cb164-27"><a href="inference.html#cb164-27" aria-hidden="true" tabindex="-1"></a><span class="do">## F-statistic: 129.4 on 2 and 339 DF,  p-value: &lt; 2.2e-16</span></span></code></pre></div>
+<div class="sourceCode" id="cb165"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb165-1"><a href="inference.html#cb165-1" aria-hidden="true" tabindex="-1"></a><span class="fu">summary</span>(mlmod)</span>
+<span id="cb165-2"><a href="inference.html#cb165-2" aria-hidden="true" tabindex="-1"></a><span class="do">## </span></span>
+<span id="cb165-3"><a href="inference.html#cb165-3" aria-hidden="true" tabindex="-1"></a><span class="do">## Call:</span></span>
+<span id="cb165-4"><a href="inference.html#cb165-4" aria-hidden="true" tabindex="-1"></a><span class="do">## lm(formula = bill_length_mm ~ body_mass_g + flipper_length_mm, </span></span>
+<span id="cb165-5"><a href="inference.html#cb165-5" aria-hidden="true" tabindex="-1"></a><span class="do">##     data = penguins)</span></span>
+<span id="cb165-6"><a href="inference.html#cb165-6" aria-hidden="true" tabindex="-1"></a><span class="do">## </span></span>
+<span id="cb165-7"><a href="inference.html#cb165-7" aria-hidden="true" tabindex="-1"></a><span class="do">## Residuals:</span></span>
+<span id="cb165-8"><a href="inference.html#cb165-8" aria-hidden="true" tabindex="-1"></a><span class="do">##     Min      1Q  Median      3Q     Max </span></span>
+<span id="cb165-9"><a href="inference.html#cb165-9" aria-hidden="true" tabindex="-1"></a><span class="do">## -8.8064 -2.5898 -0.7053  1.9911 18.8288 </span></span>
+<span id="cb165-10"><a href="inference.html#cb165-10" aria-hidden="true" tabindex="-1"></a><span class="do">## </span></span>
+<span id="cb165-11"><a href="inference.html#cb165-11" aria-hidden="true" tabindex="-1"></a><span class="do">## Coefficients:</span></span>
+<span id="cb165-12"><a href="inference.html#cb165-12" aria-hidden="true" tabindex="-1"></a><span class="do">##                     Estimate Std. Error t value Pr(&gt;|t|)</span></span>
+<span id="cb165-13"><a href="inference.html#cb165-13" aria-hidden="true" tabindex="-1"></a><span class="do">## (Intercept)       -3.4366939  4.5805532  -0.750    0.454</span></span>
+<span id="cb165-14"><a href="inference.html#cb165-14" aria-hidden="true" tabindex="-1"></a><span class="do">## body_mass_g        0.0006622  0.0005672   1.168    0.244</span></span>
+<span id="cb165-15"><a href="inference.html#cb165-15" aria-hidden="true" tabindex="-1"></a><span class="do">## flipper_length_mm  0.2218655  0.0323484   6.859 3.31e-11</span></span>
+<span id="cb165-16"><a href="inference.html#cb165-16" aria-hidden="true" tabindex="-1"></a><span class="do">##                      </span></span>
+<span id="cb165-17"><a href="inference.html#cb165-17" aria-hidden="true" tabindex="-1"></a><span class="do">## (Intercept)          </span></span>
+<span id="cb165-18"><a href="inference.html#cb165-18" aria-hidden="true" tabindex="-1"></a><span class="do">## body_mass_g          </span></span>
+<span id="cb165-19"><a href="inference.html#cb165-19" aria-hidden="true" tabindex="-1"></a><span class="do">## flipper_length_mm ***</span></span>
+<span id="cb165-20"><a href="inference.html#cb165-20" aria-hidden="true" tabindex="-1"></a><span class="do">## ---</span></span>
+<span id="cb165-21"><a href="inference.html#cb165-21" aria-hidden="true" tabindex="-1"></a><span class="do">## Signif. codes:  </span></span>
+<span id="cb165-22"><a href="inference.html#cb165-22" aria-hidden="true" tabindex="-1"></a><span class="do">## 0 &#39;***&#39; 0.001 &#39;**&#39; 0.01 &#39;*&#39; 0.05 &#39;.&#39; 0.1 &#39; &#39; 1</span></span>
+<span id="cb165-23"><a href="inference.html#cb165-23" aria-hidden="true" tabindex="-1"></a><span class="do">## </span></span>
+<span id="cb165-24"><a href="inference.html#cb165-24" aria-hidden="true" tabindex="-1"></a><span class="do">## Residual standard error: 4.124 on 339 degrees of freedom</span></span>
+<span id="cb165-25"><a href="inference.html#cb165-25" aria-hidden="true" tabindex="-1"></a><span class="do">##   (2 observations deleted due to missingness)</span></span>
+<span id="cb165-26"><a href="inference.html#cb165-26" aria-hidden="true" tabindex="-1"></a><span class="do">## Multiple R-squared:  0.4329, Adjusted R-squared:  0.4295 </span></span>
+<span id="cb165-27"><a href="inference.html#cb165-27" aria-hidden="true" tabindex="-1"></a><span class="do">## F-statistic: 129.4 on 2 and 339 DF,  p-value: &lt; 2.2e-16</span></span></code></pre></div>
 <p>If we want to manually produce 95% confidence intervals for the true regression coefficients for this model using Equation <a href="inference.html#eq:t-ci-betas">(6.4)</a>, then we need to acquire some basic information. We need:</p>
 <ul>
 <li>the estimated regression coefficients</li>
@@ -985,20 +1011,20 @@ What if we wished to test a one-sided hypothesis? The p-value for a lower-tailed
 <li>the estimated standard error of the estimated regression coefficients.</li>
 </ul>
 <p>The estimated regression coefficients can be extracted from our fitted model, <code>mlmod</code>, using the <code>coef</code> function. We extract and print the estimated coefficients using the code below while simultaneously assigning the vector the name <code>betahats</code>.</p>
-<div class="sourceCode" id="cb165"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb165-1"><a href="inference.html#cb165-1" aria-hidden="true" tabindex="-1"></a><span class="co"># extract estimated coefficients from mlmod</span></span>
-<span id="cb165-2"><a href="inference.html#cb165-2" aria-hidden="true" tabindex="-1"></a>(betahats <span class="ot">&lt;-</span> <span class="fu">coef</span>(mlmod))</span>
-<span id="cb165-3"><a href="inference.html#cb165-3" aria-hidden="true" tabindex="-1"></a><span class="do">##       (Intercept)       body_mass_g flipper_length_mm </span></span>
-<span id="cb165-4"><a href="inference.html#cb165-4" aria-hidden="true" tabindex="-1"></a><span class="do">##     -3.4366939266      0.0006622186      0.2218654584</span></span></code></pre></div>
+<div class="sourceCode" id="cb166"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb166-1"><a href="inference.html#cb166-1" aria-hidden="true" tabindex="-1"></a><span class="co"># extract estimated coefficients from mlmod</span></span>
+<span id="cb166-2"><a href="inference.html#cb166-2" aria-hidden="true" tabindex="-1"></a>(betahats <span class="ot">&lt;-</span> <span class="fu">coef</span>(mlmod))</span>
+<span id="cb166-3"><a href="inference.html#cb166-3" aria-hidden="true" tabindex="-1"></a><span class="do">##       (Intercept)       body_mass_g flipper_length_mm </span></span>
+<span id="cb166-4"><a href="inference.html#cb166-4" aria-hidden="true" tabindex="-1"></a><span class="do">##     -3.4366939266      0.0006622186      0.2218654584</span></span></code></pre></div>
 <p>The degrees of freedom <span class="math inline">\(n-p\)</span> is referred to as the residual degrees of freedom and can be obtained by using the <code>df.residual</code> function on the fitted model. Using the code below, we see that the residual degrees of freedom is 339 (this information was also in the summary of the fitted model).</p>
-<div class="sourceCode" id="cb166"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb166-1"><a href="inference.html#cb166-1" aria-hidden="true" tabindex="-1"></a><span class="fu">df.residual</span>(mlmod)</span>
-<span id="cb166-2"><a href="inference.html#cb166-2" aria-hidden="true" tabindex="-1"></a><span class="do">## [1] 339</span></span></code></pre></div>
+<div class="sourceCode" id="cb167"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb167-1"><a href="inference.html#cb167-1" aria-hidden="true" tabindex="-1"></a><span class="fu">df.residual</span>(mlmod)</span>
+<span id="cb167-2"><a href="inference.html#cb167-2" aria-hidden="true" tabindex="-1"></a><span class="do">## [1] 339</span></span></code></pre></div>
 <p>To construct a 95% confidence interval for our coefficients, we need to determine the <span class="math inline">\(0.975\)</span> quantile of a <span class="math inline">\(t\)</span> random variable with 339 degrees of freedom. This can be found using the <code>qt</code> function, as is done in the code below. We assign this value the name <code>mult</code>. Notice that value is a bit above 1.96, which is the value often seen in introductory statistics courses for confidence intervals based on the standard normal distribution (<span class="math inline">\(\mathcal{N}(0,1)\)</span> distribution).</p>
-<div class="sourceCode" id="cb167"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb167-1"><a href="inference.html#cb167-1" aria-hidden="true" tabindex="-1"></a>(mult <span class="ot">&lt;-</span> <span class="fu">qt</span>(<span class="fl">0.975</span>, <span class="at">df =</span> <span class="dv">339</span>))</span>
-<span id="cb167-2"><a href="inference.html#cb167-2" aria-hidden="true" tabindex="-1"></a><span class="do">## [1] 1.966986</span></span></code></pre></div>
+<div class="sourceCode" id="cb168"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb168-1"><a href="inference.html#cb168-1" aria-hidden="true" tabindex="-1"></a>(mult <span class="ot">&lt;-</span> <span class="fu">qt</span>(<span class="fl">0.975</span>, <span class="at">df =</span> <span class="dv">339</span>))</span>
+<span id="cb168-2"><a href="inference.html#cb168-2" aria-hidden="true" tabindex="-1"></a><span class="do">## [1] 1.966986</span></span></code></pre></div>
 <p>The estimated standard errors of each coefficient are shown in the summary of the fitted model. They are (approximately) 4.58, 0.00057, and 0.032 and can be obtained by extracting the 2nd column of the <code>coefficients</code> element produced by the <code>summary</code> function.</p>
-<div class="sourceCode" id="cb168"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb168-1"><a href="inference.html#cb168-1" aria-hidden="true" tabindex="-1"></a>(sehats <span class="ot">&lt;-</span> <span class="fu">summary</span>(mlmod)<span class="sc">$</span>coefficients[,<span class="dv">2</span>])</span>
-<span id="cb168-2"><a href="inference.html#cb168-2" aria-hidden="true" tabindex="-1"></a><span class="do">##       (Intercept)       body_mass_g flipper_length_mm </span></span>
-<span id="cb168-3"><a href="inference.html#cb168-3" aria-hidden="true" tabindex="-1"></a><span class="do">##      4.5805531903      0.0005672075      0.0323484492</span></span></code></pre></div>
+<div class="sourceCode" id="cb169"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb169-1"><a href="inference.html#cb169-1" aria-hidden="true" tabindex="-1"></a>(sehats <span class="ot">&lt;-</span> <span class="fu">summary</span>(mlmod)<span class="sc">$</span>coefficients[,<span class="dv">2</span>])</span>
+<span id="cb169-2"><a href="inference.html#cb169-2" aria-hidden="true" tabindex="-1"></a><span class="do">##       (Intercept)       body_mass_g flipper_length_mm </span></span>
+<span id="cb169-3"><a href="inference.html#cb169-3" aria-hidden="true" tabindex="-1"></a><span class="do">##      4.5805531903      0.0005672075      0.0323484492</span></span></code></pre></div>
 <p>A alternative approach is to use 3 step process below:</p>
 <ol style="list-style-type: decimal">
 <li>Use the <code>vcov</code> function to obtain the estimated variance matrix of
@@ -1012,17 +1038,17 @@ from the estimated variances of the estimated coefficients.</li>
 </ol>
 <p>We use this process in the code below, which returns the same estimated
 standard errors we previously obtained.</p>
-<div class="sourceCode" id="cb169"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb169-1"><a href="inference.html#cb169-1" aria-hidden="true" tabindex="-1"></a><span class="co"># 2nd approach to obtaining estimated standard errors</span></span>
-<span id="cb169-2"><a href="inference.html#cb169-2" aria-hidden="true" tabindex="-1"></a><span class="fu">sqrt</span>(<span class="fu">diag</span>(<span class="fu">vcov</span>(mlmod)))</span>
-<span id="cb169-3"><a href="inference.html#cb169-3" aria-hidden="true" tabindex="-1"></a><span class="do">##       (Intercept)       body_mass_g flipper_length_mm </span></span>
-<span id="cb169-4"><a href="inference.html#cb169-4" aria-hidden="true" tabindex="-1"></a><span class="do">##      4.5805531903      0.0005672075      0.0323484492</span></span></code></pre></div>
+<div class="sourceCode" id="cb170"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb170-1"><a href="inference.html#cb170-1" aria-hidden="true" tabindex="-1"></a><span class="co"># 2nd approach to obtaining estimated standard errors</span></span>
+<span id="cb170-2"><a href="inference.html#cb170-2" aria-hidden="true" tabindex="-1"></a><span class="fu">sqrt</span>(<span class="fu">diag</span>(<span class="fu">vcov</span>(mlmod)))</span>
+<span id="cb170-3"><a href="inference.html#cb170-3" aria-hidden="true" tabindex="-1"></a><span class="do">##       (Intercept)       body_mass_g flipper_length_mm </span></span>
+<span id="cb170-4"><a href="inference.html#cb170-4" aria-hidden="true" tabindex="-1"></a><span class="do">##      4.5805531903      0.0005672075      0.0323484492</span></span></code></pre></div>
 <p>Using the estimated coefficients (<code>betahats</code>), the appropriate quantile of the <span class="math inline">\(t\)</span> distribution (<code>mult</code>), and the estimated standard errors (<code>sehats</code>), we can manually produce the standard t-based confidence intervals using the code below.</p>
-<div class="sourceCode" id="cb170"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb170-1"><a href="inference.html#cb170-1" aria-hidden="true" tabindex="-1"></a><span class="fu">data.frame</span>(<span class="at">lb =</span> betahats <span class="sc">-</span> mult <span class="sc">*</span> sehats,</span>
-<span id="cb170-2"><a href="inference.html#cb170-2" aria-hidden="true" tabindex="-1"></a>           <span class="at">ub =</span> betahats <span class="sc">-</span> mult <span class="sc">*</span> sehats)</span>
-<span id="cb170-3"><a href="inference.html#cb170-3" aria-hidden="true" tabindex="-1"></a><span class="do">##                              lb            ub</span></span>
-<span id="cb170-4"><a href="inference.html#cb170-4" aria-hidden="true" tabindex="-1"></a><span class="do">## (Intercept)       -1.244658e+01 -1.244658e+01</span></span>
-<span id="cb170-5"><a href="inference.html#cb170-5" aria-hidden="true" tabindex="-1"></a><span class="do">## body_mass_g       -4.534709e-04 -4.534709e-04</span></span>
-<span id="cb170-6"><a href="inference.html#cb170-6" aria-hidden="true" tabindex="-1"></a><span class="do">## flipper_length_mm  1.582365e-01  1.582365e-01</span></span></code></pre></div>
+<div class="sourceCode" id="cb171"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb171-1"><a href="inference.html#cb171-1" aria-hidden="true" tabindex="-1"></a><span class="fu">data.frame</span>(<span class="at">lb =</span> betahats <span class="sc">-</span> mult <span class="sc">*</span> sehats,</span>
+<span id="cb171-2"><a href="inference.html#cb171-2" aria-hidden="true" tabindex="-1"></a>           <span class="at">ub =</span> betahats <span class="sc">-</span> mult <span class="sc">*</span> sehats)</span>
+<span id="cb171-3"><a href="inference.html#cb171-3" aria-hidden="true" tabindex="-1"></a><span class="do">##                              lb            ub</span></span>
+<span id="cb171-4"><a href="inference.html#cb171-4" aria-hidden="true" tabindex="-1"></a><span class="do">## (Intercept)       -1.244658e+01 -1.244658e+01</span></span>
+<span id="cb171-5"><a href="inference.html#cb171-5" aria-hidden="true" tabindex="-1"></a><span class="do">## body_mass_g       -4.534709e-04 -4.534709e-04</span></span>
+<span id="cb171-6"><a href="inference.html#cb171-6" aria-hidden="true" tabindex="-1"></a><span class="do">## flipper_length_mm  1.582365e-01  1.582365e-01</span></span></code></pre></div>
 </div>
 <div id="mean-response-calculations" class="section level3 hasAnchor" number="6.9.2">
 <h3><span class="header-section-number">6.9.2</span> Details about estimation of the mean response<a href="inference.html#mean-response-calculations" class="anchor-section" aria-label="Anchor link to header"></a></h3>
@@ -1031,37 +1057,42 @@ regressor values, denoted by <span class="math inline">\(\mathbf{x}_0\)</span>, 
 <span class="math display">\[\hat{E}(Y\mid \mathbf{x}_0)=\mathbf{x}_0^T\hat{\boldsymbol{\beta}}.\]</span></p>
 <p>Using some of the matrix-related results from Appendix
 <a href="prob-review.html#prob-review">B</a> and the result in Equation <a href="inference.html#eq:prop-betahat">(6.3)</a>, we
-can determine that <span class="math display">\[
+can determine that
+<span class="math display" id="eq:var-est-mean-response">\[
 \begin{aligned}
 \mathrm{var}\left(\hat{E}(Y \mid \mathbf{x}_0)\right) &amp;= \mathrm{var}(\mathbf{x}_0^T \hat{\boldsymbol{\beta}}) \\
 &amp;= \mathbf{x}_0^T \mathrm{var}(\hat{\boldsymbol{\beta}})\mathbf{x}_0\\
 &amp;= \sigma^2 \mathbf{x}_0^T (\mathbf{X}^T \mathbf{X})^{-1}\mathbf{x}_0.
 \end{aligned}
-(\#eq:var-est-mean-response)
-\]</span> To get the simplest expression for the confidence interval for
-<span class="math inline">\(E(Y\mid\mathbf{x}_0)\)</span>, we have to make a number of connections that are
-often glossed over. We discuss them explicitly. Since the error
-variance, <span class="math inline">\(\sigma^2\)</span>, in Equation <a href="#eq:var-est-mean-response">(<strong>??</strong>)</a> isn’t
+\tag{6.12}
+\]</span>
+To get the simplest expression for the confidence interval for
+<span class="math inline">\(E(Y\mid\mathbf{x}_0)\)</span>, we have to make a number of connections that are often glossed over. We discuss them explicitly. Since the error
+variance, <span class="math inline">\(\sigma^2\)</span>, in Equation <a href="inference.html#eq:var-est-mean-response">(6.12)</a> isn’t
 known, we replace it with the typical estimator
 <span class="math inline">\(\hat{\sigma}^2=RSS/(n-p)\)</span> to get
-<span class="math display" id="eq:est-var-mean">\[\hat{\mathrm{var}}\left(\hat{E}(Y\mid \mathbf{x}_0)\right)=\hat{\sigma}^2 \mathbf{x}_0^T (\mathbf{X}^T \mathbf{\tag{6.12}_0.(#eq:est-var-mean)\]</span>
-The standard error of an estimator is the standard deviation of the
+<span class="math display" id="eq:est-var-mean">\[
+\hat{\mathrm{var}}\left(\hat{E}(Y\mid\mathbf{x}_0)\right)=\hat{\sigma}^2 \mathbf{x}_0^T (\mathbf{X}^T \mathbf{X})^{-1}\mathbf{x}_0. \tag{6.13}
+\]</span></p>
+<p>The standard error of an estimator is the standard deviation of the
 estimator’s variance, so we have
 <span class="math inline">\(\mathrm{se}\left(\hat{E}(Y\mid\mathbf{x}_0)\right)=\sqrt{\mathrm{var}\left(\hat{E}(Y\mid \mathbf{x}_0)\right)}\)</span>.
 Similarly, we have that the estimated standard error for
 <span class="math inline">\(\hat{E}(Y\mid \mathbf{x}_0)\)</span> is
 <span class="math inline">\(\hat{\mathrm{se}}\left(\hat{E}(Y\mid\mathbf{x}_0)\right)=\sqrt{\hat{\mathrm{var}}\left(\hat{E}(Y\mid \mathbf{x}_0)\right)}\)</span>.
-Taking the square root of Equation <a href="inference.html#eq:est-var-mean">(6.12)</a>, we see that
+Taking the square root of Equation <a href="inference.html#eq:est-var-mean">(6.13)</a>, we see that
 <span class="math display">\[
 \hat{\mathrm{se}}\left(\hat{E}(Y\mid \mathbf{x}_0)\right)=\hat{\sigma} \sqrt{\mathbf{x}_0^T (\mathbf{X}^T \mathbf{X})^{-1}\mathbf{x}_0}.
 \]</span></p>
 <p>Additionally, since <span class="math inline">\(E(Y\mid \mathbf{x}_0)\)</span> is an (unknown) constant, we
 also have that
 <span class="math display">\[\mathrm{var}\left(E(Y\mid \mathbf{x}_0)-\hat{E}(Y\mid \mathbf{x}_0)\right)=\mathrm{var}\left(\hat{E}(Y\mid \mathbf{x}_0)\right).
-\]</span>If we divide the estimation error of the mean response, i.e.,
+\]</span>
+If we divide the estimation error of the mean response, i.e.,
 <span class="math inline">\(E(Y\mid \mathbf{x}_0)-\hat{E}(Y\mid \mathbf{x}_0)\)</span>, by its estimated
 standard deviation, then we obtain a pivotal quantity. More
-specifically, we have <span class="math display">\[
+specifically, we have
+<span class="math display">\[
 \frac{E(Y\mid \mathbf{x}_0)-\hat{E}(Y\mid \mathbf{x}_0)}{\sqrt{\hat{\mathrm{var}}\left(E(Y\mid \mathbf{x}_0)-\hat{E}(Y\mid \mathbf{x}_0)\right)}} = \frac{E(Y\mid \mathbf{x}_0)- \mathbf{x}_0 \hat{\boldsymbol{\beta}}}{ \hat{\mathrm{se}}(\mathbf{x}_0\hat{\boldsymbol{\beta}})}\sim t_{n-p}.
 \]</span></p>
 </div>
@@ -1077,79 +1108,79 @@ lines model given by<span class="math display">\[
 \end{aligned}
 \]</span>
 where <span class="math inline">\(D_C\)</span> and <span class="math inline">\(D_G\)</span> denote the indicator variables for the <code>Chinstrap</code> and <code>Gentoo</code> levels of the <code>species</code> variable. This fitted model is stored in <code>lmodp</code>. The estimated coefficients are shown in the code below.</p>
-<div class="sourceCode" id="cb171"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb171-1"><a href="inference.html#cb171-1" aria-hidden="true" tabindex="-1"></a><span class="fu">coef</span>(lmodp)</span>
-<span id="cb171-2"><a href="inference.html#cb171-2" aria-hidden="true" tabindex="-1"></a><span class="do">##      (Intercept)      body_mass_g speciesChinstrap </span></span>
-<span id="cb171-3"><a href="inference.html#cb171-3" aria-hidden="true" tabindex="-1"></a><span class="do">##     24.919470977      0.003748497      9.920884113 </span></span>
-<span id="cb171-4"><a href="inference.html#cb171-4" aria-hidden="true" tabindex="-1"></a><span class="do">##    speciesGentoo </span></span>
-<span id="cb171-5"><a href="inference.html#cb171-5" aria-hidden="true" tabindex="-1"></a><span class="do">##      3.557977539</span></span></code></pre></div>
+<div class="sourceCode" id="cb172"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb172-1"><a href="inference.html#cb172-1" aria-hidden="true" tabindex="-1"></a><span class="fu">coef</span>(lmodp)</span>
+<span id="cb172-2"><a href="inference.html#cb172-2" aria-hidden="true" tabindex="-1"></a><span class="do">##      (Intercept)      body_mass_g speciesChinstrap </span></span>
+<span id="cb172-3"><a href="inference.html#cb172-3" aria-hidden="true" tabindex="-1"></a><span class="do">##     24.919470977      0.003748497      9.920884113 </span></span>
+<span id="cb172-4"><a href="inference.html#cb172-4" aria-hidden="true" tabindex="-1"></a><span class="do">##    speciesGentoo </span></span>
+<span id="cb172-5"><a href="inference.html#cb172-5" aria-hidden="true" tabindex="-1"></a><span class="do">##      3.557977539</span></span></code></pre></div>
 <p>We want to estimate the mean response for the following combination of predictors stored in the <code>newpenguins</code> data frame, which is printed in the code below.</p>
-<div class="sourceCode" id="cb172"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb172-1"><a href="inference.html#cb172-1" aria-hidden="true" tabindex="-1"></a><span class="co"># mean body_mass_g of each species</span></span>
-<span id="cb172-2"><a href="inference.html#cb172-2" aria-hidden="true" tabindex="-1"></a>newpenguins</span>
-<span id="cb172-3"><a href="inference.html#cb172-3" aria-hidden="true" tabindex="-1"></a><span class="do">## # A tibble: 3 × 2</span></span>
-<span id="cb172-4"><a href="inference.html#cb172-4" aria-hidden="true" tabindex="-1"></a><span class="do">##   species   body_mass_g</span></span>
-<span id="cb172-5"><a href="inference.html#cb172-5" aria-hidden="true" tabindex="-1"></a><span class="do">##   &lt;fct&gt;           &lt;dbl&gt;</span></span>
-<span id="cb172-6"><a href="inference.html#cb172-6" aria-hidden="true" tabindex="-1"></a><span class="do">## 1 Adelie          3701.</span></span>
-<span id="cb172-7"><a href="inference.html#cb172-7" aria-hidden="true" tabindex="-1"></a><span class="do">## 2 Chinstrap       3733.</span></span>
-<span id="cb172-8"><a href="inference.html#cb172-8" aria-hidden="true" tabindex="-1"></a><span class="do">## 3 Gentoo          5076.</span></span></code></pre></div>
+<div class="sourceCode" id="cb173"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb173-1"><a href="inference.html#cb173-1" aria-hidden="true" tabindex="-1"></a><span class="co"># mean body_mass_g of each species</span></span>
+<span id="cb173-2"><a href="inference.html#cb173-2" aria-hidden="true" tabindex="-1"></a>newpenguins</span>
+<span id="cb173-3"><a href="inference.html#cb173-3" aria-hidden="true" tabindex="-1"></a><span class="do">## # A tibble: 3 × 2</span></span>
+<span id="cb173-4"><a href="inference.html#cb173-4" aria-hidden="true" tabindex="-1"></a><span class="do">##   species   body_mass_g</span></span>
+<span id="cb173-5"><a href="inference.html#cb173-5" aria-hidden="true" tabindex="-1"></a><span class="do">##   &lt;fct&gt;           &lt;dbl&gt;</span></span>
+<span id="cb173-6"><a href="inference.html#cb173-6" aria-hidden="true" tabindex="-1"></a><span class="do">## 1 Adelie          3701.</span></span>
+<span id="cb173-7"><a href="inference.html#cb173-7" aria-hidden="true" tabindex="-1"></a><span class="do">## 2 Chinstrap       3733.</span></span>
+<span id="cb173-8"><a href="inference.html#cb173-8" aria-hidden="true" tabindex="-1"></a><span class="do">## 3 Gentoo          5076.</span></span></code></pre></div>
 <p>We want to use the <code>newpenguins</code> data frame to generate the matrix of regressors used to estimate the associated mean responses. We can create the matrix of regressors using the <code>model.matrix</code> function. The main arguments of <code>model.matrix</code> are:</p>
 <ul>
 <li><code>object</code>: an object of the appropriate class. In our case, it is a formula or fitted model.</li>
 <li><code>data</code>: a data frame with the predictors needed to construct the matrix.</li>
 </ul>
 <p>We need only the right side of the formula used to fit the model in <code>lmodp</code> to create our matrix of regressor values. We can use the <code>formula</code> function to extract the formula used to fit <code>lmodp</code>. We then use <code>model.matrix</code> to create the matrix of regressor by values needed for estimating the mean. The matrix produced by <code>model.matrix</code>, <code>X0</code>, includes a column for the intercept term and the indicator variables in <code>lmodp</code>.</p>
-<div class="sourceCode" id="cb173"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb173-1"><a href="inference.html#cb173-1" aria-hidden="true" tabindex="-1"></a><span class="co"># determine formula used to fit lmodp</span></span>
-<span id="cb173-2"><a href="inference.html#cb173-2" aria-hidden="true" tabindex="-1"></a><span class="fu">formula</span>(lmodp)</span>
-<span id="cb173-3"><a href="inference.html#cb173-3" aria-hidden="true" tabindex="-1"></a><span class="do">## bill_length_mm ~ body_mass_g + species</span></span>
-<span id="cb173-4"><a href="inference.html#cb173-4" aria-hidden="true" tabindex="-1"></a><span class="co"># create matrix of regressor values from newpenguins</span></span>
-<span id="cb173-5"><a href="inference.html#cb173-5" aria-hidden="true" tabindex="-1"></a>(X0 <span class="ot">&lt;-</span> <span class="fu">model.matrix</span>(<span class="sc">~</span> body_mass_g <span class="sc">+</span> species, <span class="at">data =</span> newpenguins))</span>
-<span id="cb173-6"><a href="inference.html#cb173-6" aria-hidden="true" tabindex="-1"></a><span class="do">##   (Intercept) body_mass_g speciesChinstrap speciesGentoo</span></span>
-<span id="cb173-7"><a href="inference.html#cb173-7" aria-hidden="true" tabindex="-1"></a><span class="do">## 1           1    3700.662                0             0</span></span>
-<span id="cb173-8"><a href="inference.html#cb173-8" aria-hidden="true" tabindex="-1"></a><span class="do">## 2           1    3733.088                1             0</span></span>
-<span id="cb173-9"><a href="inference.html#cb173-9" aria-hidden="true" tabindex="-1"></a><span class="do">## 3           1    5076.016                0             1</span></span>
-<span id="cb173-10"><a href="inference.html#cb173-10" aria-hidden="true" tabindex="-1"></a><span class="do">## attr(,&quot;assign&quot;)</span></span>
-<span id="cb173-11"><a href="inference.html#cb173-11" aria-hidden="true" tabindex="-1"></a><span class="do">## [1] 0 1 2 2</span></span>
-<span id="cb173-12"><a href="inference.html#cb173-12" aria-hidden="true" tabindex="-1"></a><span class="do">## attr(,&quot;contrasts&quot;)</span></span>
-<span id="cb173-13"><a href="inference.html#cb173-13" aria-hidden="true" tabindex="-1"></a><span class="do">## attr(,&quot;contrasts&quot;)$species</span></span>
-<span id="cb173-14"><a href="inference.html#cb173-14" aria-hidden="true" tabindex="-1"></a><span class="do">## [1] &quot;contr.treatment&quot;</span></span></code></pre></div>
+<div class="sourceCode" id="cb174"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb174-1"><a href="inference.html#cb174-1" aria-hidden="true" tabindex="-1"></a><span class="co"># determine formula used to fit lmodp</span></span>
+<span id="cb174-2"><a href="inference.html#cb174-2" aria-hidden="true" tabindex="-1"></a><span class="fu">formula</span>(lmodp)</span>
+<span id="cb174-3"><a href="inference.html#cb174-3" aria-hidden="true" tabindex="-1"></a><span class="do">## bill_length_mm ~ body_mass_g + species</span></span>
+<span id="cb174-4"><a href="inference.html#cb174-4" aria-hidden="true" tabindex="-1"></a><span class="co"># create matrix of regressor values from newpenguins</span></span>
+<span id="cb174-5"><a href="inference.html#cb174-5" aria-hidden="true" tabindex="-1"></a>(X0 <span class="ot">&lt;-</span> <span class="fu">model.matrix</span>(<span class="sc">~</span> body_mass_g <span class="sc">+</span> species, <span class="at">data =</span> newpenguins))</span>
+<span id="cb174-6"><a href="inference.html#cb174-6" aria-hidden="true" tabindex="-1"></a><span class="do">##   (Intercept) body_mass_g speciesChinstrap speciesGentoo</span></span>
+<span id="cb174-7"><a href="inference.html#cb174-7" aria-hidden="true" tabindex="-1"></a><span class="do">## 1           1    3700.662                0             0</span></span>
+<span id="cb174-8"><a href="inference.html#cb174-8" aria-hidden="true" tabindex="-1"></a><span class="do">## 2           1    3733.088                1             0</span></span>
+<span id="cb174-9"><a href="inference.html#cb174-9" aria-hidden="true" tabindex="-1"></a><span class="do">## 3           1    5076.016                0             1</span></span>
+<span id="cb174-10"><a href="inference.html#cb174-10" aria-hidden="true" tabindex="-1"></a><span class="do">## attr(,&quot;assign&quot;)</span></span>
+<span id="cb174-11"><a href="inference.html#cb174-11" aria-hidden="true" tabindex="-1"></a><span class="do">## [1] 0 1 2 2</span></span>
+<span id="cb174-12"><a href="inference.html#cb174-12" aria-hidden="true" tabindex="-1"></a><span class="do">## attr(,&quot;contrasts&quot;)</span></span>
+<span id="cb174-13"><a href="inference.html#cb174-13" aria-hidden="true" tabindex="-1"></a><span class="do">## attr(,&quot;contrasts&quot;)$species</span></span>
+<span id="cb174-14"><a href="inference.html#cb174-14" aria-hidden="true" tabindex="-1"></a><span class="do">## [1] &quot;contr.treatment&quot;</span></span></code></pre></div>
 <p>We can obtain the estimated mean by taking the product of <code>X0</code> and the estimated coefficients for <code>lmodp</code>. We assign the estimated mean responses the name <code>est_means</code>.</p>
-<div class="sourceCode" id="cb174"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb174-1"><a href="inference.html#cb174-1" aria-hidden="true" tabindex="-1"></a>(est_means <span class="ot">&lt;-</span> X0 <span class="sc">%*%</span> <span class="fu">coef</span>(lmodp))</span>
-<span id="cb174-2"><a href="inference.html#cb174-2" aria-hidden="true" tabindex="-1"></a><span class="do">##       [,1]</span></span>
-<span id="cb174-3"><a href="inference.html#cb174-3" aria-hidden="true" tabindex="-1"></a><span class="do">## 1 38.79139</span></span>
-<span id="cb174-4"><a href="inference.html#cb174-4" aria-hidden="true" tabindex="-1"></a><span class="do">## 2 48.83382</span></span>
-<span id="cb174-5"><a href="inference.html#cb174-5" aria-hidden="true" tabindex="-1"></a><span class="do">## 3 47.50488</span></span></code></pre></div>
+<div class="sourceCode" id="cb175"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb175-1"><a href="inference.html#cb175-1" aria-hidden="true" tabindex="-1"></a>(est_means <span class="ot">&lt;-</span> X0 <span class="sc">%*%</span> <span class="fu">coef</span>(lmodp))</span>
+<span id="cb175-2"><a href="inference.html#cb175-2" aria-hidden="true" tabindex="-1"></a><span class="do">##       [,1]</span></span>
+<span id="cb175-3"><a href="inference.html#cb175-3" aria-hidden="true" tabindex="-1"></a><span class="do">## 1 38.79139</span></span>
+<span id="cb175-4"><a href="inference.html#cb175-4" aria-hidden="true" tabindex="-1"></a><span class="do">## 2 48.83382</span></span>
+<span id="cb175-5"><a href="inference.html#cb175-5" aria-hidden="true" tabindex="-1"></a><span class="do">## 3 47.50488</span></span></code></pre></div>
 <p>We now use Equation <a href="inference.html#eq:sehat-est-mean">(6.6)</a> to get the estimated standard error of each estimated mean response. First, we use <code>model.matrix</code> to extract the original matrix of regressors, <span class="math inline">\(\mathbf{X}\)</span>, from the fitted model <code>lmodp</code>. The <code>sigma</code> function is used to extract <span class="math inline">\(\hat{\sigma}\)</span> from <code>lmodp</code>. Each <em>row</em> of <code>X0</code> contains a particular instance regressor values. In the code below, we extract each row of <code>X0</code>, and then use Equation <a href="inference.html#eq:sehat-est-mean">(6.6)</a> to compute the estimated standard error associated with each estimated mean response; these are assigned the names <code>se1</code>, <code>se2</code>, and <code>se3</code>. That approach isn’t scalable, so we provide a scalable version of these computations that is assigned the name <code>sehat</code>.</p>
-<div class="sourceCode" id="cb175"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb175-1"><a href="inference.html#cb175-1" aria-hidden="true" tabindex="-1"></a><span class="co"># original matrix of regressors</span></span>
-<span id="cb175-2"><a href="inference.html#cb175-2" aria-hidden="true" tabindex="-1"></a>X <span class="ot">&lt;-</span> <span class="fu">model.matrix</span>(lmodp)</span>
-<span id="cb175-3"><a href="inference.html#cb175-3" aria-hidden="true" tabindex="-1"></a>sigmahat <span class="ot">&lt;-</span> <span class="fu">sigma</span>(lmodp)</span>
-<span id="cb175-4"><a href="inference.html#cb175-4" aria-hidden="true" tabindex="-1"></a><span class="co"># compute estimated standard error for each estimated mean response</span></span>
-<span id="cb175-5"><a href="inference.html#cb175-5" aria-hidden="true" tabindex="-1"></a><span class="co"># crossprod(X) = t(X) %*% X</span></span>
-<span id="cb175-6"><a href="inference.html#cb175-6" aria-hidden="true" tabindex="-1"></a>(sehat1 <span class="ot">&lt;-</span> sigmahat <span class="sc">*</span> <span class="fu">sqrt</span>(<span class="fu">t</span>(X0[<span class="dv">1</span>,]) <span class="sc">%*%</span> <span class="fu">solve</span>(<span class="fu">crossprod</span>(X), X0[<span class="dv">1</span>,])))</span>
-<span id="cb175-7"><a href="inference.html#cb175-7" aria-hidden="true" tabindex="-1"></a><span class="do">##           [,1]</span></span>
-<span id="cb175-8"><a href="inference.html#cb175-8" aria-hidden="true" tabindex="-1"></a><span class="do">## [1,] 0.1955643</span></span>
-<span id="cb175-9"><a href="inference.html#cb175-9" aria-hidden="true" tabindex="-1"></a>(sehat2 <span class="ot">&lt;-</span> sigmahat <span class="sc">*</span> <span class="fu">sqrt</span>(<span class="fu">t</span>(X0[<span class="dv">2</span>,]) <span class="sc">%*%</span> <span class="fu">solve</span>(<span class="fu">crossprod</span>(X), X0[<span class="dv">2</span>,])))</span>
-<span id="cb175-10"><a href="inference.html#cb175-10" aria-hidden="true" tabindex="-1"></a><span class="do">##           [,1]</span></span>
-<span id="cb175-11"><a href="inference.html#cb175-11" aria-hidden="true" tabindex="-1"></a><span class="do">## [1,] 0.2914228</span></span>
-<span id="cb175-12"><a href="inference.html#cb175-12" aria-hidden="true" tabindex="-1"></a>(sehat3 <span class="ot">&lt;-</span> sigmahat <span class="sc">*</span> <span class="fu">sqrt</span>(<span class="fu">t</span>(X0[<span class="dv">3</span>,]) <span class="sc">%*%</span> <span class="fu">solve</span>(<span class="fu">crossprod</span>(X), X0[<span class="dv">3</span>,])))</span>
-<span id="cb175-13"><a href="inference.html#cb175-13" aria-hidden="true" tabindex="-1"></a><span class="do">##           [,1]</span></span>
-<span id="cb175-14"><a href="inference.html#cb175-14" aria-hidden="true" tabindex="-1"></a><span class="do">## [1,] 0.2166833</span></span>
-<span id="cb175-15"><a href="inference.html#cb175-15" aria-hidden="true" tabindex="-1"></a><span class="co"># scalable computation of estimated standard errors</span></span>
-<span id="cb175-16"><a href="inference.html#cb175-16" aria-hidden="true" tabindex="-1"></a>(sehat <span class="ot">&lt;-</span> sigmahat <span class="sc">*</span> <span class="fu">sqrt</span>(<span class="fu">diag</span>(X0 <span class="sc">%*%</span> <span class="fu">solve</span>(<span class="fu">crossprod</span>(X), <span class="fu">t</span>(X0)))))</span>
-<span id="cb175-17"><a href="inference.html#cb175-17" aria-hidden="true" tabindex="-1"></a><span class="do">##         1         2         3 </span></span>
-<span id="cb175-18"><a href="inference.html#cb175-18" aria-hidden="true" tabindex="-1"></a><span class="do">## 0.1955643 0.2914228 0.2166833</span></span></code></pre></div>
+<div class="sourceCode" id="cb176"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb176-1"><a href="inference.html#cb176-1" aria-hidden="true" tabindex="-1"></a><span class="co"># original matrix of regressors</span></span>
+<span id="cb176-2"><a href="inference.html#cb176-2" aria-hidden="true" tabindex="-1"></a>X <span class="ot">&lt;-</span> <span class="fu">model.matrix</span>(lmodp)</span>
+<span id="cb176-3"><a href="inference.html#cb176-3" aria-hidden="true" tabindex="-1"></a>sigmahat <span class="ot">&lt;-</span> <span class="fu">sigma</span>(lmodp)</span>
+<span id="cb176-4"><a href="inference.html#cb176-4" aria-hidden="true" tabindex="-1"></a><span class="co"># compute estimated standard error for each estimated mean response</span></span>
+<span id="cb176-5"><a href="inference.html#cb176-5" aria-hidden="true" tabindex="-1"></a><span class="co"># crossprod(X) = t(X) %*% X</span></span>
+<span id="cb176-6"><a href="inference.html#cb176-6" aria-hidden="true" tabindex="-1"></a>(sehat1 <span class="ot">&lt;-</span> sigmahat <span class="sc">*</span> <span class="fu">sqrt</span>(<span class="fu">t</span>(X0[<span class="dv">1</span>,]) <span class="sc">%*%</span> <span class="fu">solve</span>(<span class="fu">crossprod</span>(X), X0[<span class="dv">1</span>,])))</span>
+<span id="cb176-7"><a href="inference.html#cb176-7" aria-hidden="true" tabindex="-1"></a><span class="do">##           [,1]</span></span>
+<span id="cb176-8"><a href="inference.html#cb176-8" aria-hidden="true" tabindex="-1"></a><span class="do">## [1,] 0.1955643</span></span>
+<span id="cb176-9"><a href="inference.html#cb176-9" aria-hidden="true" tabindex="-1"></a>(sehat2 <span class="ot">&lt;-</span> sigmahat <span class="sc">*</span> <span class="fu">sqrt</span>(<span class="fu">t</span>(X0[<span class="dv">2</span>,]) <span class="sc">%*%</span> <span class="fu">solve</span>(<span class="fu">crossprod</span>(X), X0[<span class="dv">2</span>,])))</span>
+<span id="cb176-10"><a href="inference.html#cb176-10" aria-hidden="true" tabindex="-1"></a><span class="do">##           [,1]</span></span>
+<span id="cb176-11"><a href="inference.html#cb176-11" aria-hidden="true" tabindex="-1"></a><span class="do">## [1,] 0.2914228</span></span>
+<span id="cb176-12"><a href="inference.html#cb176-12" aria-hidden="true" tabindex="-1"></a>(sehat3 <span class="ot">&lt;-</span> sigmahat <span class="sc">*</span> <span class="fu">sqrt</span>(<span class="fu">t</span>(X0[<span class="dv">3</span>,]) <span class="sc">%*%</span> <span class="fu">solve</span>(<span class="fu">crossprod</span>(X), X0[<span class="dv">3</span>,])))</span>
+<span id="cb176-13"><a href="inference.html#cb176-13" aria-hidden="true" tabindex="-1"></a><span class="do">##           [,1]</span></span>
+<span id="cb176-14"><a href="inference.html#cb176-14" aria-hidden="true" tabindex="-1"></a><span class="do">## [1,] 0.2166833</span></span>
+<span id="cb176-15"><a href="inference.html#cb176-15" aria-hidden="true" tabindex="-1"></a><span class="co"># scalable computation of estimated standard errors</span></span>
+<span id="cb176-16"><a href="inference.html#cb176-16" aria-hidden="true" tabindex="-1"></a>(sehat <span class="ot">&lt;-</span> sigmahat <span class="sc">*</span> <span class="fu">sqrt</span>(<span class="fu">diag</span>(X0 <span class="sc">%*%</span> <span class="fu">solve</span>(<span class="fu">crossprod</span>(X), <span class="fu">t</span>(X0)))))</span>
+<span id="cb176-17"><a href="inference.html#cb176-17" aria-hidden="true" tabindex="-1"></a><span class="do">##         1         2         3 </span></span>
+<span id="cb176-18"><a href="inference.html#cb176-18" aria-hidden="true" tabindex="-1"></a><span class="do">## 0.1955643 0.2914228 0.2166833</span></span></code></pre></div>
 <p>To finish the computation of our confidence intervals, we determine the correct multiplier, <span class="math inline">\(t_{n-p}^{\alpha/2}\)</span>. For a 98% confidence interval, <span class="math inline">\(\alpha = 0.02\)</span> and <span class="math inline">\(\alpha/2 = 0.01\)</span>. The degrees of freedom, <span class="math inline">\(n-p\)</span>, is 338 (as shown in the code below). So the multiplier can be represented as <span class="math inline">\(t_{338}^{0.01}\)</span>, which is the <span class="math inline">\(0.99\)</span> quantile of a <span class="math inline">\(t\)</span> distribution with 338 degrees of freedom. We provide this information to the <code>qt</code> function, which provides the quantiles of a <span class="math inline">\(t\)</span> distribution, using the code below to get the correct multiplier.</p>
-<div class="sourceCode" id="cb176"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb176-1"><a href="inference.html#cb176-1" aria-hidden="true" tabindex="-1"></a><span class="co"># degrees of freedom, n-p</span></span>
-<span id="cb176-2"><a href="inference.html#cb176-2" aria-hidden="true" tabindex="-1"></a><span class="fu">df.residual</span>(lmodp)</span>
-<span id="cb176-3"><a href="inference.html#cb176-3" aria-hidden="true" tabindex="-1"></a><span class="do">## [1] 338</span></span>
-<span id="cb176-4"><a href="inference.html#cb176-4" aria-hidden="true" tabindex="-1"></a><span class="co"># multiplier for confidence interval</span></span>
-<span id="cb176-5"><a href="inference.html#cb176-5" aria-hidden="true" tabindex="-1"></a>(mult <span class="ot">&lt;-</span> <span class="fu">qt</span>(<span class="fl">0.99</span>, <span class="at">df =</span> <span class="fu">df.residual</span>(lmodp)))</span>
-<span id="cb176-6"><a href="inference.html#cb176-6" aria-hidden="true" tabindex="-1"></a><span class="do">## [1] 2.337431</span></span></code></pre></div>
+<div class="sourceCode" id="cb177"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb177-1"><a href="inference.html#cb177-1" aria-hidden="true" tabindex="-1"></a><span class="co"># degrees of freedom, n-p</span></span>
+<span id="cb177-2"><a href="inference.html#cb177-2" aria-hidden="true" tabindex="-1"></a><span class="fu">df.residual</span>(lmodp)</span>
+<span id="cb177-3"><a href="inference.html#cb177-3" aria-hidden="true" tabindex="-1"></a><span class="do">## [1] 338</span></span>
+<span id="cb177-4"><a href="inference.html#cb177-4" aria-hidden="true" tabindex="-1"></a><span class="co"># multiplier for confidence interval</span></span>
+<span id="cb177-5"><a href="inference.html#cb177-5" aria-hidden="true" tabindex="-1"></a>(mult <span class="ot">&lt;-</span> <span class="fu">qt</span>(<span class="fl">0.99</span>, <span class="at">df =</span> <span class="fu">df.residual</span>(lmodp)))</span>
+<span id="cb177-6"><a href="inference.html#cb177-6" aria-hidden="true" tabindex="-1"></a><span class="do">## [1] 2.337431</span></span></code></pre></div>
 <p>Thus, our 98% confidence intervals for each mean response can be computed using the code below, which matches the results we obtained in Section <a href="inference.html#parametric-ci-mean-response">6.6</a>.</p>
-<div class="sourceCode" id="cb177"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb177-1"><a href="inference.html#cb177-1" aria-hidden="true" tabindex="-1"></a><span class="fu">data.frame</span>(<span class="at">lb =</span> est_means <span class="sc">-</span> mult <span class="sc">*</span> sehat,</span>
-<span id="cb177-2"><a href="inference.html#cb177-2" aria-hidden="true" tabindex="-1"></a>           <span class="at">ub =</span> est_means <span class="sc">+</span> mult <span class="sc">*</span> sehat)</span>
-<span id="cb177-3"><a href="inference.html#cb177-3" aria-hidden="true" tabindex="-1"></a><span class="do">##         lb       ub</span></span>
-<span id="cb177-4"><a href="inference.html#cb177-4" aria-hidden="true" tabindex="-1"></a><span class="do">## 1 38.33427 39.24851</span></span>
-<span id="cb177-5"><a href="inference.html#cb177-5" aria-hidden="true" tabindex="-1"></a><span class="do">## 2 48.15264 49.51500</span></span>
-<span id="cb177-6"><a href="inference.html#cb177-6" aria-hidden="true" tabindex="-1"></a><span class="do">## 3 46.99840 48.01136</span></span></code></pre></div>
+<div class="sourceCode" id="cb178"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb178-1"><a href="inference.html#cb178-1" aria-hidden="true" tabindex="-1"></a><span class="fu">data.frame</span>(<span class="at">lb =</span> est_means <span class="sc">-</span> mult <span class="sc">*</span> sehat,</span>
+<span id="cb178-2"><a href="inference.html#cb178-2" aria-hidden="true" tabindex="-1"></a>           <span class="at">ub =</span> est_means <span class="sc">+</span> mult <span class="sc">*</span> sehat)</span>
+<span id="cb178-3"><a href="inference.html#cb178-3" aria-hidden="true" tabindex="-1"></a><span class="do">##         lb       ub</span></span>
+<span id="cb178-4"><a href="inference.html#cb178-4" aria-hidden="true" tabindex="-1"></a><span class="do">## 1 38.33427 39.24851</span></span>
+<span id="cb178-5"><a href="inference.html#cb178-5" aria-hidden="true" tabindex="-1"></a><span class="do">## 2 48.15264 49.51500</span></span>
+<span id="cb178-6"><a href="inference.html#cb178-6" aria-hidden="true" tabindex="-1"></a><span class="do">## 3 46.99840 48.01136</span></span></code></pre></div>
 </div>
 <div id="new-response-pi-calculations" class="section level3 hasAnchor" number="6.9.4">
 <h3><span class="header-section-number">6.9.4</span> Details about prediction interval for a new response<a href="inference.html#new-response-pi-calculations" class="anchor-section" aria-label="Anchor link to header"></a></h3>
@@ -1168,11 +1199,11 @@ and that the predicted new response, under our standard assumptions, is given by
 \mathrm{var}\left(Y(\mathbf{x}_0)-\hat{Y}(\mathbf{x}_0)\right) &amp;= \mathrm{var}(Y(\mathbf{x}_0)-\mathbf{x}_0^T \hat{\boldsymbol{\beta}}) \\
 &amp;= \mathrm{var}(\mathbf{x}_0^T\boldsymbol{\beta} + \epsilon(\mathbf{x}_0)-\mathbf{x}_0^T \hat{\boldsymbol{\beta}}) \\
 \end{aligned}
-\tag{6.13}
+\tag{6.14}
 \]</span></p>
-<p>Recall from Appendix <a href="prob-review.html#prob-review">B</a> that the variance of a constant plus a random variable is equal to the variance of the random variable (since a constant doesn’t vary!). Thus, Equation <a href="inference.html#eq:var-pred-error1">(6.13)</a> simplifies to
+<p>Recall from Appendix <a href="prob-review.html#prob-review">B</a> that the variance of a constant plus a random variable is equal to the variance of the random variable (since a constant doesn’t vary!). Thus, Equation <a href="inference.html#eq:var-pred-error1">(6.14)</a> simplifies to
 <span class="math display" id="eq:var-pred-error2">\[
-\mathrm{var}\left(Y(\mathbf{x}_0)-\hat{Y}(\mathbf{x}_0)\right) = \mathrm{var}(\epsilon(\mathbf{x}_0)-\mathbf{x}_0^T \hat{\boldsymbol{\beta}}). \tag{6.14}
+\mathrm{var}\left(Y(\mathbf{x}_0)-\hat{Y}(\mathbf{x}_0)\right) = \mathrm{var}(\epsilon(\mathbf{x}_0)-\mathbf{x}_0^T \hat{\boldsymbol{\beta}}). \tag{6.15}
 \]</span>
 Using results from Appendix <a href="prob-review.html#prob-review">B</a> related to the variance of a sum of random variables, we have that
 <span class="math display" id="eq:var-pred-error3">\[
@@ -1183,15 +1214,15 @@ Using results from Appendix <a href="prob-review.html#prob-review">B</a> related
 &amp;= \mathrm{var}\left(\epsilon(\mathbf{x}_0)\right)+(-1)^2\mathrm{var}(\mathbf{x}_0^T \hat{\boldsymbol{\beta}}) - 2\mathrm{cov}\left(\epsilon(\mathbf{x}_0), \mathbf{x}_0^T \hat{\boldsymbol{\beta}}\right) \\
 &amp;= \mathrm{var}\left(\epsilon(\mathbf{x}_0)\right)+\mathrm{var}(\mathbf{x}_0^T \hat{\boldsymbol{\beta}}) - 2\mathrm{cov}\left(\epsilon(\mathbf{x}_0), \mathbf{x}_0^T \hat{\boldsymbol{\beta}}\right).
 \end{aligned}
-\tag{6.15}
+\tag{6.16}
 \]</span></p>
-<p>The covariance term in the final line of Equation <a href="inference.html#eq:var-pred-error3">(6.15)</a> is 0 because <span class="math inline">\(\epsilon(\mathbf{x}_0)\)</span> and <span class="math inline">\(\mathbf{x}_0^T\hat{\boldsymbol{\beta}}\)</span> are uncorrelated. Why are they uncorrelated? Recall that <span class="math inline">\(\epsilon(\mathbf{x}_0), \epsilon_1, \ldots, \epsilon_n\)</span> are uncorrelated. Also, recall that <span class="math inline">\(\hat{\boldsymbol{\beta}}=(\mathbf{X}^T\mathbf{X})^{-1}\mathbf{X}^T\mathbf{y}\)</span>. Since <span class="math inline">\(\mathbf{y}=[Y_1,Y_2,\ldots,Y_n]\)</span> and <span class="math inline">\(Y_i=\mathbf{x}_i^T\boldsymbol{\beta} + \epsilon_i\)</span> for <span class="math inline">\(i=1,2,\ldots,n\)</span>, the “randomness” of <span class="math inline">\(\mathbf{x}_0^T\hat{\boldsymbol{\beta}}\)</span> comes from <span class="math inline">\(\epsilon_1, \epsilon_2, \ldots, \epsilon_n\)</span>. Since <span class="math inline">\(\epsilon(\mathbf{x}_0)\)</span> is uncorrelated with <span class="math inline">\(\epsilon_1, \epsilon_2, \ldots, \epsilon_n\)</span>, we conclude that <span class="math inline">\(\epsilon(\mathbf{x}_0)\)</span> and <span class="math inline">\(\mathbf{x}_0^T\hat{\boldsymbol{\beta}}\)</span> are uncorrelated, so their covariance is zero. Thus, we have</p>
+<p>The covariance term in the final line of Equation <a href="inference.html#eq:var-pred-error3">(6.16)</a> is 0 because <span class="math inline">\(\epsilon(\mathbf{x}_0)\)</span> and <span class="math inline">\(\mathbf{x}_0^T\hat{\boldsymbol{\beta}}\)</span> are uncorrelated. Why are they uncorrelated? Recall that <span class="math inline">\(\epsilon(\mathbf{x}_0), \epsilon_1, \ldots, \epsilon_n\)</span> are uncorrelated. Also, recall that <span class="math inline">\(\hat{\boldsymbol{\beta}}=(\mathbf{X}^T\mathbf{X})^{-1}\mathbf{X}^T\mathbf{y}\)</span>. Since <span class="math inline">\(\mathbf{y}=[Y_1,Y_2,\ldots,Y_n]\)</span> and <span class="math inline">\(Y_i=\mathbf{x}_i^T\boldsymbol{\beta} + \epsilon_i\)</span> for <span class="math inline">\(i=1,2,\ldots,n\)</span>, the “randomness” of <span class="math inline">\(\mathbf{x}_0^T\hat{\boldsymbol{\beta}}\)</span> comes from <span class="math inline">\(\epsilon_1, \epsilon_2, \ldots, \epsilon_n\)</span>. Since <span class="math inline">\(\epsilon(\mathbf{x}_0)\)</span> is uncorrelated with <span class="math inline">\(\epsilon_1, \epsilon_2, \ldots, \epsilon_n\)</span>, we conclude that <span class="math inline">\(\epsilon(\mathbf{x}_0)\)</span> and <span class="math inline">\(\mathbf{x}_0^T\hat{\boldsymbol{\beta}}\)</span> are uncorrelated, so their covariance is zero. Thus, we have</p>
 <p><span class="math display" id="eq:var-pred-error4">\[
 \begin{aligned}
 \mathrm{var}\left(Y(\mathbf{x}_0)-\hat{Y}(\mathbf{x}_0)\right)
 =\mathrm{var}\left(\epsilon(\mathbf{x}_0)\right)+\mathrm{var}(\mathbf{x}_0^T \hat{\boldsymbol{\beta}}) .
 \end{aligned}
-\tag{6.16}
+\tag{6.17}
 \]</span>
 From our assumptions in Section <a href="inference.html#properties-betahat">6.3</a>, we have that <span class="math inline">\(\mathrm{var}(\epsilon(\mathbf{x}_0))=\sigma^2\)</span>. We determined in Section <a href="inference.html#mean-response-calculations">6.9.2</a> that
 <span class="math display">\[
@@ -1204,7 +1235,7 @@ Using these two facts, we can conclude that
 &amp;=\sigma^2 + \sigma^2 \mathbf{x}_0^T (\mathbf{X}^T \mathbf{X})^{-1}\mathbf{x}_0\\
 &amp;=\sigma^2\left(1 + \mathbf{x}_0^T (\mathbf{X}^T \mathbf{X})^{-1}\mathbf{x}_0\right).\\
 \end{aligned}
-\tag{6.17}
+\tag{6.18}
 \]</span>
 Replacing <span class="math inline">\(\sigma^2\)</span> by the typical estimator <span class="math inline">\(\hat{\sigma}^2=RSS/(n-p)\)</span> to get the estimated variance of the prediction error and taking the square root of the estimated variance to get the estimated standard deviation of the prediction error, we have that
 <span class="math display">\[

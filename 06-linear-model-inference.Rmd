@@ -509,17 +509,18 @@ predict_adjust(lmodp, newdata = newpenguins, level = 0.99,
                method = "scheffe")
 ```
 
-
 ## Parametric hypothesis test for a single regression coefficient
 
-If we assume we are fitting the multiple linear regression model in Equation \@ref(eq:model-def-inference) then our model has $p$ regression coefficient $\beta_0, \beta_1, \ldots, \beta_{p-1}$. How would we perform a hypothesis test for exactly one of these regression coefficients? 
+If we assume we are fitting the multiple linear regression model in Equation \@ref(eq:model-def-inference), then our model has $p$ regression coefficient $\beta_0, \beta_1, \ldots, \beta_{p-1}$. How would we perform a hypothesis test for exactly one of these regression coefficients? 
 
-Recall that if we make the additional assumptions in Equation
+Recall that if we make the assumptions in Equation
 \@ref(eq:error-assumption-inference), then
+
 \begin{equation}
 \frac{\hat{\beta}_j-\beta_j}{\hat{\mathrm{se}}(\hat{\beta}_j)}\sim t_{n-p}, \quad j=0,1,\ldots,p-1. (\#eq:pivot-t-betaj)
 \end{equation}
-Let's say we wish to test whether, for this model, $\beta_j$ differs from some constant number $c$ (typically, $c=0$). Let $\boldsymbol{\beta}_{-j}=\boldsymbol{\beta}\\{\beta_j}$, i.e., $\boldsymbol{\beta}_{-j}$ is the vector of all regression coefficients except $\beta_j$. $\boldsymbol{\beta}_{-j}$ has $p-1$ elements. We can state the hypotheses we wish to test as 
+
+Let's say we wish to test whether, for this model, $\beta_j$ differs from some constant number $c$ (typically, $c=0$). Let $\boldsymbol{\beta}_{-j}=\boldsymbol{\beta}\setminus{\beta_j}$, i.e., $\boldsymbol{\beta}_{-j}$ is the vector of all regression coefficients except $\beta_j$. $\boldsymbol{\beta}_{-j}$ has $p-1$ elements. We can state the hypotheses we wish to test as 
 \[
 \begin{aligned}
 H_0: \beta_j &= c \mid \boldsymbol{\beta}_{-j}\in\mathbb{R}^{p-1} \\
@@ -527,8 +528,8 @@ H_a: \beta_j &\neq c \mid \boldsymbol{\beta}_{-j}\in\mathbb{R}^{p-1}.
 \end{aligned}
 (\#eq:betaj-H0Ha)
 \]
-The first part of the null hypothesis in Equation \@ref(eq:betaj-H0Ha) states that $\beta_j = c$ while the first part of the alternative hypothesis assumes that $\beta_j \neq c$. But what does the second half of the hypotheses mean? The vertical bar means "assuming or conditional on", similar to the notation you would see in conditional probabilities or distributions. What this means is that we are performing the hypothesis test while assuming that the other coefficients are some real number (possibly even zero). Why state this at all? Isn't it implicitly assumed? No. We could perform a hypothesis test for $\beta_0$ for many different models that have differing regressors. By writing out hypotheses in the style of Equation \@ref(eq:betaj-H0Ha), we are being very clear that we are performing a test for $\beta_0$ in the context of the model that has the regressors associated with $\boldsymbol{\beta}_{-j}$.
-
+The first part of the null hypothesis in Equation \@ref(eq:betaj-H0Ha) states that $\beta_j = c$ while the first part of the alternative hypothesis assumes that $\beta_j \neq c$. But what does the second half of the hypotheses mean? The vertical bar means "assuming or conditional on", similar to the notation you would see in conditional probabilities or distributions. What this means is that we are performing the hypothesis test while assuming that the other coefficients are some real number (possibly even zero). Why state this at all? Isn't it implicitly assumed? No. We could perform a hypothesis test for $\beta_j$ for many different models that have differing regressors. By writing out hypotheses in the style of Equation \@ref(eq:betaj-H0Ha), we are being very clear that we are performing a test for $\beta_j$ in the context of the model that has the regressors associated with $\boldsymbol{\beta}_{-j}$.
+ 
 How do the hypotheses in Equation \@ref(eq:betaj-H0Ha) affect the pivotal quantity in Equation \@ref(eq:pivot-t-betaj)? Under the null hypothesis, the statistic
 \[
 T_j = \frac{\hat{\beta}_j-c}{\hat{\mathrm{se}}(\hat{\beta}_j)} \sim t_{n-p}.
@@ -542,6 +543,30 @@ p = 2P(t_{n-p}\geq |T_j|).
 $$
 What if we wished to test a one-sided hypothesis? The p-value for a lower-tailed test is $p=P(t_{n-p}\leq T_j)$ while the p-value for an upper-tailed test is $p=P(t_{n-p}\geq T_j)$.
 
+The fitted model
+$$
+\begin{aligned}
+&E(\mathtt{bill\_length\_mm}\mid \mathtt{body\_mass\_g}, \mathtt{flipper\_length\_mm}) \\
+&=\beta_0+\beta_1 \mathtt{body\_mass\_g} + \beta_2 \mathtt{flipper\_length\_mm}.
+\end{aligned}
+$$
+
+is assigned the name `mlmod`. Suppose we want to test
+
+$$
+\begin{aligned}
+H_0: &\beta_1 = 0 \mid \beta_0\in \mathbb{R}, \beta_2 \in \mathbb{R} \\
+H_a: &\beta_1 \neq 0 \mid \beta_0\in \mathbb{R}, \beta_2 \in \mathbb{R}.
+\end{aligned}
+$$
+R conveniently provides this information in the output of the `summary` function (specifically, the `coefficients` element if we don't want extra information). We extract this information from the `mlmod` object in the code below.
+
+```{r}
+summary(mlmod)$coefficients
+```
+Moving from left to right, the first column (no name) indicates the coefficient term under consideration, the second column (`Estimate`) provides the estimated coefficients, the third column (`Std. Error`) provides the estimated standard error ($\hat{\mathrm{se}}(\hat{\beta}_j)$) for each coefficient, the fourth column (`t value`) provides the test statistic associated with testing $H_0: \beta_j = 0 \mid \boldsymbol{\beta}_{-j} \in \mathbb{R}^{p-1}$ versus a suitable alternative for each coefficient, while the final column (`Pr(>|t|)`) provides the two-tailed p-value associated with this test.
+
+Thus, for our test of the `body_mass_g` coefficient, the test statistic is $T_2 = 1.17$ and the associated p-value is 0.024. There is moderate evidence that the coefficient for `body_mass_g` different from zero, assuming the model also allows for the inclusion of the intercept and `flipper_length_mm` coefficients.
 
 ## Going deeper
 
@@ -619,20 +644,25 @@ $$\hat{E}(Y\mid \mathbf{x}_0)=\mathbf{x}_0^T\hat{\boldsymbol{\beta}}.$$
 
 Using some of the matrix-related results from Appendix
 \@ref(prob-review) and the result in Equation \@ref(eq:prop-betahat), we
-can determine that $$
+can determine that
+$$
 \begin{aligned}
 \mathrm{var}\left(\hat{E}(Y \mid \mathbf{x}_0)\right) &= \mathrm{var}(\mathbf{x}_0^T \hat{\boldsymbol{\beta}}) \\
 &= \mathbf{x}_0^T \mathrm{var}(\hat{\boldsymbol{\beta}})\mathbf{x}_0\\
 &= \sigma^2 \mathbf{x}_0^T (\mathbf{X}^T \mathbf{X})^{-1}\mathbf{x}_0.
 \end{aligned}
 (\#eq:var-est-mean-response)
-$$ To get the simplest expression for the confidence interval for
-$E(Y\mid\mathbf{x}_0)$, we have to make a number of connections that are
-often glossed over. We discuss them explicitly. Since the error
+$$
+To get the simplest expression for the confidence interval for
+$E(Y\mid\mathbf{x}_0)$, we have to make a number of connections that are often glossed over. We discuss them explicitly. Since the error
 variance, $\sigma^2$, in Equation \@ref(eq:var-est-mean-response) isn't
 known, we replace it with the typical estimator
 $\hat{\sigma}^2=RSS/(n-p)$ to get
-$$\hat{\mathrm{var}}\left(\hat{E}(Y\mid \mathbf{x}_0)\right)=\hat{\sigma}^2 \mathbf{x}_0^T (\mathbf{X}^T \mathbf{X})^{-1}\mathbf{x}_0.(\#eq:est-var-mean)$$
+$$
+\hat{\mathrm{var}}\left(\hat{E}(Y\mid\mathbf{x}_0)\right)=\hat{\sigma}^2 \mathbf{x}_0^T (\mathbf{X}^T \mathbf{X})^{-1}\mathbf{x}_0. (\#eq:est-var-mean)
+$$
+
+
 The standard error of an estimator is the standard deviation of the
 estimator's variance, so we have
 $\mathrm{se}\left(\hat{E}(Y\mid\mathbf{x}_0)\right)=\sqrt{\mathrm{var}\left(\hat{E}(Y\mid \mathbf{x}_0)\right)}$.
@@ -647,10 +677,12 @@ $$
 Additionally, since $E(Y\mid \mathbf{x}_0)$ is an (unknown) constant, we
 also have that
 $$\mathrm{var}\left(E(Y\mid \mathbf{x}_0)-\hat{E}(Y\mid \mathbf{x}_0)\right)=\mathrm{var}\left(\hat{E}(Y\mid \mathbf{x}_0)\right).
-$$If we divide the estimation error of the mean response, i.e.,
+$$
+If we divide the estimation error of the mean response, i.e.,
 $E(Y\mid \mathbf{x}_0)-\hat{E}(Y\mid \mathbf{x}_0)$, by its estimated
 standard deviation, then we obtain a pivotal quantity. More
-specifically, we have $$
+specifically, we have 
+$$
 \frac{E(Y\mid \mathbf{x}_0)-\hat{E}(Y\mid \mathbf{x}_0)}{\sqrt{\hat{\mathrm{var}}\left(E(Y\mid \mathbf{x}_0)-\hat{E}(Y\mid \mathbf{x}_0)\right)}} = \frac{E(Y\mid \mathbf{x}_0)- \mathbf{x}_0 \hat{\boldsymbol{\beta}}}{ \hat{\mathrm{se}}(\mathbf{x}_0\hat{\boldsymbol{\beta}})}\sim t_{n-p}.
 $$
 
