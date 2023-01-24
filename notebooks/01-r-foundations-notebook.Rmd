@@ -18,9 +18,9 @@ Some important facts about R are that:
 
 ## Installing R and RStudio
 
-To install R on your personal computer, you will need to download an installer program from the R Project's website [(https://www.r-project.org/)](https://www.r-project.org/).
+Install R by downloading an installer program from the R Project's website [(https://www.r-project.org/)](https://www.r-project.org/).
 
-RStudio Desktop is a free "front end" for R provided by Posit Software [(https://posit.co/)](https://rstudio.com/). RStudio Desktop makes doing data analysis with R much easier by adding an Integrated Development Environment (IDE) and providing many other features. Currently, you may download RStudio at <https://posit.co/download/rstudio-desktop/>.
+RStudio Desktop is a free "front end" for R that makes doing data analysis with R much easier by adding an Integrated Development Environment (IDE) and providing many other features. Currently, you may download RStudio at <https://posit.co/download/rstudio-desktop/>.
 
 **RStudio Layout**
 
@@ -37,7 +37,7 @@ Tip: Change your R Studio environment so that it doesn't save your workspace.
 
 You can run code in R by typing it in the Console next to the `>` symbol and pressing the Enter key.
 
-If you need to successively run multiple commands, it's better to write your commands in a "script" file and then save the file. The commands in a Script file are often generically referred to as "code".
+It's better to write your commands in a "Script" file, save the Script, and then run your commands from the Script. The commands in a Script file are generically referred to as "code".
 
 Script files make it easy to:
 
@@ -49,7 +49,7 @@ A new Script file can be obtained by:
 -   Clicking File → New File → R Script in the RStudio menu bar.
 -   Pressing `Ctrl + Shift + n` on a PC or `Cmd + Shift + n` on a Mac.
 
-There are various ways to run code from a Script file. The most common ones are:
+To run code from a Script file:
 
 -   Highlight the code you want to run and click the Run button at the top of the Script pane.
 -   Highlight the code you want to run and press "Ctrl + Enter" on your keyboard. If you don't highlight anything, by default, RStudio runs the command the cursor currently lies on.
@@ -98,27 +98,18 @@ The arguments of a function are pieces of data or information the function needs
 
 **Your turn**
 
-Run the following commands in the Console:
+Run the following commands in the Console.
+
+What is each command doing?
 
 ```{r}
 # compute the mean of 1, 2, ..., 10 and assign the name m
 m <- mean(1:10) 
 m # print m
 print(m) # print m a different way
+mean(c(1, 5, 3, 4, 10)) # mean of a new vector
+mean(c(1, 5, 3, 4, 10), trim = 0.2) # compute trimmed mean
 ```
-
-**Example with `mean()`**
-
-The `mean` function computes the sample mean of an R object `x`. The `mean` function also has a `trim` argument that indicates the, "... fraction ... of observations to be trimmed from each end of `x` before the mean is computed".
-
-Consider the examples below, in which we compute the mean of the set of values `1, 5, 3, 2, 10`.
-
-```{r}
-mean(c(1, 5, 3, 4, 10))
-mean(c(1, 5, 3, 4, 10), trim = 0.2)
-```
-
-The output differs for the two function calls because in the first we compute `(1 + 5 + 3 + 4 + 10)/5 = 23/5 = 4.6` while in the second we remove the first 20% and last 20% of the values (i.e., dropping `1` and `10`) and compute `(5 + 3 + 4)/3 = 12/3 = 4`.
 
 ## Packages
 
@@ -189,7 +180,9 @@ R has 5 basic data structures:
 
 ### Creation
 
-A *vector* is a one-dimensional set of data of the same type. The most basic way to create a vector is the `c` (combine) function.
+A *vector* is a one-dimensional set of data of the same type.
+
+The most basic way to create a vector is the `c` (combine) function.
 
 The following commands create vectors of type `numeric`, `character`, and `logical`, respectively.
 
@@ -197,21 +190,30 @@ The following commands create vectors of type `numeric`, `character`, and `logic
 -   `c("one", "two", "three")`
 -   `c(TRUE, TRUE, FALSE, TRUE)`
 
-The `seq` (sequence) function is used to create an equidistant series of numeric values. Some examples:
+The `seq` (sequence) function is used to create an equidistant series of numeric values.
 
--   `seq(1, 10)` creates a sequence of numbers from 1 to 10 in increments of 1.
--   `1:10` creates a sequence of numbers from 1 to 10 in increments of 1.
+-   `seq(1, 10)` or `1:10` creates a sequence of numbers from 1 to 10 in increments of 1.
 -   `seq(1, 20, by = 2)` creates a sequence of numbers from 1 to 20 in increments of 2.
 -   `seq(10, 20, len = 100)` creates a sequence of numbers from 10 to 20 of length 100.
 
+The `rep` (replicate) function can be used to create a vector by replicating values.
+
+-   `rep(1:3, times = 3)` replicates the sequence `1, 2, 3` three times.
+-   `rep(c("trt1", "trt2", "trt3"), times = 1:3)` replicates `"trt1"` once, `"trt2"` twice, and `"trt3"` three times.
+-   `rep(1:3, each = 3)` replicates each element three times.
+
+Multiple vectors can be combined into a new vector object using the `c` function.
+
+-   E.g., `c(v1, v2, v3)` would combine vectors `v1`, `v2`, and `v3`.
+
 **Your turn**
 
-Run the commands below in the Console to see what is printed. After you do that, try to answer the following questions:
+Run the commands below in the Console.
 
-1.  What does the `by` argument of the seq function control?
-2.  What does the `len` argument of the seq function control?
-3.  What does the `times` argument of the rep function control?
-4.  What does the `each` argument of the rep function control?
+- What does the `by` argument of the `seq` function control?
+- What does the `len` argument of the `seq` function control?
+- What does the `times` argument of the `rep` function control?
+- What does the `each` argument of the `rep` function control?
 
 ```{r}
 # vector creation
@@ -227,15 +229,11 @@ seq(10, 20, len = 100)
 rep(1:3, times = 3)
 rep(c("trt1", "trt2", "trt3"), times = 1:3)
 rep(1:3, each = 3)
-```
-
-Next, we can practice combining multiple vectors using `c`. Run the commands below in the Console.
-
-```{r}
+# combining vectors
 v1 <- 1:5 # create a vector, v1
 v2 <- c(1, 10, 11) # create another vector, v2
 v3 <- rep(1:2, each = 3) # crate a third vector, v3
-new <- c(v1, v2, v3) # combine v1, v2, and v3 into a new vector
+new <- c(v1, v2, v3) # combine vectors
 new # print the combined vector
 ```
 
@@ -251,13 +249,19 @@ f2 <- factor(c("a", 7, "blue", "blue", FALSE))
 f2
 ```
 
-Note that when a `factor` object is printed that it lists the `Levels` (i.e., unique categories) of the object.
+A printed `factor` object lists the `Levels` (i.e., unique categories) of the object.
 
 Some additional comments:
 
--   `factor` objects aren't technically vectors (e.g., running `is.factor(f2)` based on the above code will return `FALSE`) though they essentially behave like vectors, which is why they are included here.
+-   `factor` objects aren't technically vectors but behave like vectors, which is why they are included here.
 -   The `is.factor` function can be used to determine whether an object is a `factor`.
 -   You can create `factor` objects with specific orderings of categories using the `level` and `ordered` arguments of the `factor` function (see `?factor` for more details).
+
+```{r}
+size <- c("small", "medium", "small", "large", "medium", "medium", "large")
+factor(size)
+factor(size, levels = c("small", "medium", "large"), ordered = TRUE)
+```
 
 **Your Turn**
 
@@ -268,19 +272,9 @@ Attempt to complete the following tasks:
 3.  Run `is.vector(grp)` in the Console.
 4.  Run `typeof(grp)` in the Console.
 
-To create an ordered factor you must specify the level orders when creating the factor.
-
-```{r}
-size <- c("small", "medium", "small", "large", "medium", "medium", "large")
-factor(size)
-factor(size, levels = c("small", "medium", "large"), ordered = TRUE)
-```
-
 ### Extracting parts of a vector
 
 Parts of a vector can be extracted by appending an index vector in square brackets `[]`.
-
-Let's create a `numeric` vector `a` with the values 2, 4, 6, 8, 10, 12, 14, 16. To extract the 2nd, 4th, and 6th elements of `a`, we can use the code below. The code indicates that the 2nd, 4th, and 6th elements of `a` should be extracted.
 
 ```{r}
 # define a sequence 2, 4, ..., 16
@@ -289,9 +283,7 @@ a <- seq(2, 16, by = 2)
 a[c(2, 4, 6)]
 ```
 
-You can also use "negative" indexing to indicate the elements of the vector you want to exclude. Specifically, supplying a negative index vector indicates the values you want to exclude from your selection.
-
-In the example below, we use the minus (`-`) sign in front of the index vector `c(2, 4, 6)` to indicate we want all elements of `a` EXCEPT the 2nd, 4th, and 6th. The last line of code excludes the 3rd through 6th elements of `a`.
+Supplying a negative index vector indicates the values you want to exclude from your selection.
 
 ```{r}
 # extract part of vector using negative indexing
@@ -301,7 +293,9 @@ a[-(3:6)] # select all but elements 3-6
 
 ### Logical Expressions
 
-A logical expression uses one or more logical operators to determine which elements of an object satisfy the specified statement. The basic logical operators are:
+A logical expression uses one or more logical operators to determine which elements of an object satisfy the specified statement.
+
+The basic logical operators are:
 
 -   `<`, `<=`: less than, less than or equal to.
 -   `>`, `>=`: greater than, greater than or equal to.
@@ -309,17 +303,6 @@ A logical expression uses one or more logical operators to determine which eleme
 -   `!=`: not equal to.
 
 Creating a logical expression with a vector will result in a logical vector indicating whether each element satisfies the logical expression.
-
-**Your turn**
-
-Run the following commands in R and see what is printed. What task is each statement performing?
-
-```{r}
-a > 10  # which elements of a are > 10?
-a <= 4  # which elements of a are <= 10?
-a == 10 # which elements of a are equal to 10?
-a != 10 # which elements of a are not equal to 10?
-```
 
 We can create more complicated logical expressions using the "and", "or", and "not" operators.
 
@@ -329,22 +312,23 @@ We can create more complicated logical expressions using the "and", "or", and "n
 
 **Your turn**
 
-Run the following commands below in the Console.
+Run the following commands in R.
+
+What task is each command performing?
 
 ```{r}
+a > 10  # which elements of a are > 10?
+a <= 4  # which elements of a are <= 10?
+a == 10 # which elements of a are equal to 10?
+a != 10 # which elements of a are not equal to 10?
+# combining logical values
 TRUE & TRUE & TRUE
 TRUE & TRUE & FALSE
 FALSE | TRUE | FALSE
 FALSE | FALSE | FALSE
 !TRUE
 !FALSE
-```
-
-What role does `&` serve in a sequence of logical values? Similarly, what roles do `|` and `!` serve in a sequence of logical values?
-
-These operators are applied elementwise for vectors.
-
-```{r}
+# combining logical expressions
 # which elements of a are > 6 and <= 10
 (a > 6) & (a <= 10)
 # which elements of a are <= 4 or >= 12
@@ -353,9 +337,13 @@ These operators are applied elementwise for vectors.
 !((a <= 4) | (a >= 12))
 ```
 
-Logical expressions can be used to return parts of an object satisfying the appropriate criteria. Specifically, we pass logical expressions within the square brackets to access part of a data structure. This syntax will return each element of the object for which the expression is `TRUE`.
+We can pass logical expressions within the square brackets to access part of a data structure. This syntax will return each element of the object for which the expression is `TRUE`.
 
-Run the following commands in R and see what is printed. What task is each statement performing?
+**Your turn**
+
+Run the following commands in R and see what is printed. 
+
+What task is each command performing?
 
 ```{r}
 # extract the parts of a with values < 6
@@ -396,7 +384,9 @@ Suppose that a random variable $X$ has the `dist` distribution. The function tem
 
 **Your turn**
 
-Run the following commands in R to see the output. What task is each command performing?
+Run the following commands in R to see the output. 
+
+What task is each command performing?
 
 ```{r}
 pnorm(1.96, mean = 0, sd = 1)
@@ -408,9 +398,15 @@ rchisq(100, df = 5)
 
 ## Data Frames
 
-Data frames are two-dimensional data objects. Each column of a data frame is a vector (or variable) of possibly different data types. This is a *fundamental* data structure used by most of R's modeling software.
+Data frames are a *fundamental* data structure used by most of R's modeling software.
 
-Data frames are directly created by passing vectors into the `data.frame` function. The names of the columns in the data frame are the names of the vectors you give the `data.frame` function. Consider the following simple example.
+Data frames are:
+
+- two-dimensional data objects.
+- each column of a data frame is a vector.
+
+
+Data frames are directly created by passing vectors into the `data.frame` function.
 
 ```{r}
 # create basic data frame
@@ -421,7 +417,7 @@ df <- data.frame(d,e,f)
 df
 ```
 
-The columns of a data frame can be renamed using the `names` function on the data frame and assigning a vector of names to the data frame.
+The columns of a data frame can be renamed using the `names` function on the data frame.
 
 ```{r}
 # name columns of data frame
@@ -453,7 +449,7 @@ The `read.table` function imports data in table format from file into R as a dat
     -   If each column of data in the file is separated by a comma, then use `sep = ","`.
     -   If each column of data in the file is separated by a tab, then use `sep = "\t"`.
 
-Consider reading in a csv (comma separated file) with a header. The file in question contains information related to COVID-19 cases and deaths as of February 4, 2021.
+Consider reading in a csv (comma separated file) with a header. The file in question contains information related to COVID-19 cases and deaths as of December 4, 2020.
 
 ```{r}
 # import data as data frame
@@ -465,40 +461,43 @@ str(dtf)
 
 ### Extracting parts of a data frame
 
-R provides many ways to extract parts of a data frame. We will provide several examples using the `mtcars` data frame in the **datasets** package.
+R provides many ways to extract parts of a data frame.
 
-The `mtcars` data frame `r nrow(datasets::mtcars)` observations of `r ncol(datasets::mtcars)` variables. The variables are:
+The `mtcars` data frame 32observations of 11 variables.
 
 ```{r}
 data(mtcars) # load data set
 str(mtcars)  # examine data structure
 ```
 
-Below, we extract the `mpg` variable from the `mtcars` data frame using the `$` operator.
+We can extract the `mpg` variable from the `mtcars` data frame using the `$` operator.
 
 ```{r}
 mtcars$mpg
 ```
 
-Another way to extract a variable from a data frame as a vector is `df[, "var"]`, where `df` is the name of our data frame and `var` is the desired variable name. This syntax uses a `df[rows, columns]` style syntax, where `rows` and `columns` indicate the desired rows or columns. If either the `rows` or `columns` are left blank, then all `rows` or `columns`, respectively, are extracted.
+Another way to extract a variable from a data frame uses a `df[rows, columns]` style syntax.
+
+- `rows` and `columns` indicate the desired rows or columns.
+- if either the `rows` or `columns` are left blank, then all `rows` or `columns`, respectively, are extracted.
 
 ```{r}
 mtcars[,"mpg"]
 ```
 
-To select multiple variables in a data frame, we can provide a character vector with multiple variable names between `[]`. In the example below, we extract both the `mpg` and `cyl` variables from `mtcars`.
+To select multiple variables in a data frame, we can provide a character vector with multiple variable names between `[]`.
 
-```{r, out.lines = 4}
+```{r}
 mtcars[c("mpg", "cyl")]
 ```
 
-You can also use numeric indices to directly indicate the rows or columns of the data frame that you would like to extract. Alternatively, you can use variable names for the columns.
+You can also use numeric indices to directly indicate the rows or columns of the data frame that you would like to extract.
 
-```{r, out.lines = 4}
-mtcars[c(1,2)]
+```{r}
+mtcars[c(1, 2)]
 ```
 
-### Conditional Extraction of Dataframes
+### Conditional Extraction of Data Frames
 
 Logical expressions can be used to subset a data frame.
 
@@ -508,14 +507,14 @@ The following command creates of vector of logical values.
 mtcars$hp > 250
 ```
 
-This vector can be used to extract all of the `TRUE` values.
+This vector can be used to extract rows for all of the `TRUE` values.
 
-```{r, out.lines=4}
+```{r}
 # extract rows with hp > 250
 mtcars[mtcars$hp > 250,]
 ```
 
-We can make the logical expression more complicated. Below, we extract the rows of `mtcars` with 8 cylinders and `mpg > 17`, while extracting only the `mpg`, `cyl`, `disp`, and `hp` variables.
+We can make the logical expression more complicated.
 
 ```{r}
 # return rows with `cyl == 8` and `mpg > 17`
@@ -526,31 +525,35 @@ mtcars[mtcars$cyl == 8 & mtcars$mpg > 17,
 
 ### Modifying Data Frames
 
-Columns can be added to a data frame using the assignment operator. Below, we add a column for kilometers per gallon using the existing column for mpg. Existing columns can be modified in the same manner.
+Columns can be added to a data frame using the `$` and assignment operator.
 
 ```{r}
-mtcars$kpg <- mtcars$mpg*.0425
+mtcars$kpg <- mtcars$mpg*1.6
 ```
-
-There are many functions, such as `subset` and `mutate` that make extend this behavior.
 
 ### Extraction using the `subset` function
 
-The `subset` function returns the part of a data frame that meets the specified conditions. The basic usage of this function is: `subset(x, subset, select, drop = FALSE)`
+The `subset` function returns the part of a data frame that meets the specified conditions.
+
+The basic usage of this function is: `subset(x, subset, select, drop = FALSE)`
 
 -   `x` is the object you want to subset.
     -   `x` can be a vector, matrix, or data frame.
 -   `subset` is a logical expression that indicates the elements or rows of `x` to keep (`TRUE` means keep).
 -   `select` is a vector that indicates the columns to keep.
--   `drop` is a logical value indicating whether the data frame should "drop" into a vector if only a single row or column is kept. The default is `FALSE`, meaning that a data frame will always be returned by the `subset` function by default.
+-   `drop` is a logical value indicating whether the data frame should "drop" into a vector if only a single row or column is kept. The default is `FALSE.`.
 
 **Your turn**
 
 Run the following commands in the Console to use the `subset` function to extract parts of the `mtcars` data frame.
 
--   `subset(mtcars, subset = gear > 4)`. This command will subset the rows of `mtcars` that have more than 4 gears. Note any variables referred to in the `subset` function are assumed to be part of the supplied data frame or are available in memory.
--   `subset(mtcars, select = c(disp, hp, gear))`. This command will select the `disp`, `hp`, and `gear` variables of `mtcars` but will exclude the other columns.
--   `subset(mtcars, subset = gear > 4, select = c(disp, hp, gear))` combines the previous two subsets into a single command.
+What is each command performing?
+
+```{r}
+subset(mtcars, subset = gear > 4)
+subset(mtcars, select = c(disp, hp, gear))
+subset(mtcars, subset = gear > 4, select = c(disp, hp, gear))
+```
 
 ## Using the pipe operator
 
@@ -567,8 +570,6 @@ mtcars |>
   subset(subset = disp > 400) |>
   subset(select = c(mpg, disp, hp))
 ```
-
-When reading code with pipes, the pipe can be thought of as the word "then". In the code above, we take `mtcars` *then* subset it based on `disp` and *then* select some columns.
 
 Here is a complicated sequence of piped commands. What do you think is happening?
 
