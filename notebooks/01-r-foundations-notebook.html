@@ -378,12 +378,12 @@ libraries to R.</li>
 </div>
 <div id="installing-r-and-rstudio" class="section level2">
 <h2>Installing R and RStudio</h2>
-<p>To install R on your personal computer, you will need to download an
-installer program from the R Project’s website <a href="https://www.r-project.org/">(https://www.r-project.org/)</a>.</p>
-<p>RStudio Desktop is a free “front end” for R provided by RStudio <a href="https://rstudio.com/">(https://rstudio.com/)</a>. RStudio Desktop
-makes doing data analysis with R much easier by adding an Integrated
-Development Environment (IDE) and providing many other features.
-Currently, you may download RStudio at <a href="https://rstudio.com/products/rstudio/download/" class="uri">https://rstudio.com/products/rstudio/download/</a>.</p>
+<p>Install R by downloading an installer program from the R Project’s
+website <a href="https://www.r-project.org/">(https://www.r-project.org/)</a>.</p>
+<p>RStudio Desktop is a free “front end” for R that makes doing data
+analysis with R much easier by adding an Integrated Development
+Environment (IDE) and providing many other features. Currently, you may
+download RStudio at <a href="https://posit.co/download/rstudio-desktop/" class="uri">https://posit.co/download/rstudio-desktop/</a>.</p>
 <p><strong>RStudio Layout</strong></p>
 <p>RStudio Desktop has four panes:</p>
 <ol style="list-style-type: decimal">
@@ -402,10 +402,9 @@ workspace.</p>
 <h2>Running code, scripts, and comments</h2>
 <p>You can run code in R by typing it in the Console next to the
 <code>&gt;</code> symbol and pressing the Enter key.</p>
-<p>If you need to successively run multiple commands, it’s better to
-write your commands in a “script” file and then save the file. The
-commands in a Script file are often generically referred to as
-“code”.</p>
+<p>It’s better to write your commands in a “Script” file, save the
+Script, and then run your commands from the Script. The commands in a
+Script file are generically referred to as “code”.</p>
 <p>Script files make it easy to:</p>
 <ul>
 <li>Reproduce your data analysis without retyping all your
@@ -418,8 +417,7 @@ commands.</li>
 <li>Pressing <code>Ctrl + Shift + n</code> on a PC or
 <code>Cmd + Shift + n</code> on a Mac.</li>
 </ul>
-<p>There are various ways to run code from a Script file. The most
-common ones are:</p>
+<p>To run code from a Script file:</p>
 <ul>
 <li>Highlight the code you want to run and click the Run button at the
 top of the Script pane.</li>
@@ -487,30 +485,18 @@ function needs to perform the requested task (i.e., the function
 “inputs”). Each argument you supply is separated by a comma,
 <code>,</code>.</p>
 <p><strong>Your turn</strong></p>
-<p>Run the following commands in the Console:</p>
+<p>Run the following commands in the Console.</p>
+<p>What is each command doing?</p>
 <pre class="r"><code># compute the mean of 1, 2, ..., 10 and assign the name m
 m &lt;- mean(1:10) 
 m # print m</code></pre>
 <pre><code>## [1] 5.5</code></pre>
 <pre class="r"><code>print(m) # print m a different way</code></pre>
 <pre><code>## [1] 5.5</code></pre>
-<p><strong>Example with <code>mean()</code></strong></p>
-<p>The <code>mean</code> function computes the sample mean of an R
-object <code>x</code>. The <code>mean</code> function also has a
-<code>trim</code> argument that indicates the, “… fraction … of
-observations to be trimmed from each end of <code>x</code> before the
-mean is computed”.</p>
-<p>Consider the examples below, in which we compute the mean of the set
-of values <code>1, 5, 3, 2, 10</code>.</p>
-<pre class="r"><code>mean(c(1, 5, 3, 4, 10))</code></pre>
+<pre class="r"><code>mean(c(1, 5, 3, 4, 10)) # mean of a new vector</code></pre>
 <pre><code>## [1] 4.6</code></pre>
-<pre class="r"><code>mean(c(1, 5, 3, 4, 10), trim = 0.2)</code></pre>
+<pre class="r"><code>mean(c(1, 5, 3, 4, 10), trim = 0.2) # compute trimmed mean</code></pre>
 <pre><code>## [1] 4</code></pre>
-<p>The output differs for the two function calls because in the first we
-compute <code>(1 + 5 + 3 + 4 + 10)/5 = 23/5 = 4.6</code> while in the
-second we remove the first 20% and last 20% of the values (i.e.,
-dropping <code>1</code> and <code>10</code>) and compute
-<code>(5 + 3 + 4)/3 = 12/3 = 4</code>.</p>
 </div>
 <div id="packages" class="section level2">
 <h2>Packages</h2>
@@ -540,9 +526,14 @@ running the command below.</p>
 <p>There are many ways to get help in R.</p>
 <ul>
 <li><p>To get help for a function named <code>command</code>, run
-<code>?command</code> to access the documentation</p></li>
-<li><p>The Documentation will provide information on the function use,
-arguments, usage examples, and more.</p></li>
+<code>?command</code> to access the documentation</p>
+<ul>
+<li>The Documentation will provide information on the function use,
+arguments, usage examples, and more.</li>
+</ul></li>
+<li><p>Running <code>??topic</code> will search the documentation for
+any occurrence of the word “topic” and provide a list of relevant
+documentation to consider.</p></li>
 <li><p>Stack Overflow (<a href="https://www.stackoverflow.com" class="uri">https://www.stackoverflow.com</a>) is a great resource to
 find solutions.</p></li>
 </ul>
@@ -606,8 +597,9 @@ holds certain kinds of information.</p>
 <h2>Vectors</h2>
 <div id="creation" class="section level3">
 <h3>Creation</h3>
-<p>A <em>vector</em> is a one-dimensional set of data of the same type.
-The most basic way to create a vector is the <code>c</code> (combine)
+<p>A <em>vector</em> is a one-dimensional set of data of the same
+type.</p>
+<p>The most basic way to create a vector is the <code>c</code> (combine)
 function.</p>
 <p>The following commands create vectors of type <code>numeric</code>,
 <code>character</code>, and <code>logical</code>, respectively.</p>
@@ -617,30 +609,44 @@ function.</p>
 <li><code>c(TRUE, TRUE, FALSE, TRUE)</code></li>
 </ul>
 <p>The <code>seq</code> (sequence) function is used to create an
-equidistant series of numeric values. Some examples:</p>
+equidistant series of numeric values.</p>
 <ul>
-<li><code>seq(1, 10)</code> creates a sequence of numbers from 1 to 10
-in increments of 1.</li>
-<li><code>1:10</code> creates a sequence of numbers from 1 to 10 in
-increments of 1.</li>
+<li><code>seq(1, 10)</code> or <code>1:10</code> creates a sequence of
+numbers from 1 to 10 in increments of 1.</li>
 <li><code>seq(1, 20, by = 2)</code> creates a sequence of numbers from 1
 to 20 in increments of 2.</li>
 <li><code>seq(10, 20, len = 100)</code> creates a sequence of numbers
 from 10 to 20 of length 100.</li>
 </ul>
+<p>The <code>rep</code> (replicate) function can be used to create a
+vector by replicating values.</p>
+<ul>
+<li><code>rep(1:3, times = 3)</code> replicates the sequence
+<code>1, 2, 3</code> three times.</li>
+<li><code>rep(c(&quot;trt1&quot;, &quot;trt2&quot;, &quot;trt3&quot;), times = 1:3)</code> replicates
+<code>&quot;trt1&quot;</code> once, <code>&quot;trt2&quot;</code> twice, and
+<code>&quot;trt3&quot;</code> three times.</li>
+<li><code>rep(1:3, each = 3)</code> replicates each element three
+times.</li>
+</ul>
+<p>Multiple vectors can be combined into a new vector object using the
+<code>c</code> function.</p>
+<ul>
+<li>E.g., <code>c(v1, v2, v3)</code> would combine vectors
+<code>v1</code>, <code>v2</code>, and <code>v3</code>.</li>
+</ul>
 <p><strong>Your turn</strong></p>
-<p>Run the commands below in the Console to see what is printed. After
-you do that, try to answer the following questions:</p>
-<ol style="list-style-type: decimal">
-<li>What does the <code>by</code> argument of the seq function
-control?</li>
-<li>What does the <code>len</code> argument of the seq function
-control?</li>
-<li>What does the <code>times</code> argument of the rep function
-control?</li>
-<li>What does the <code>each</code> argument of the rep function
-control?</li>
-</ol>
+<p>Run the commands below in the Console.</p>
+<ul>
+<li>What does the <code>by</code> argument of the <code>seq</code>
+function control?</li>
+<li>What does the <code>len</code> argument of the <code>seq</code>
+function control?</li>
+<li>What does the <code>times</code> argument of the <code>rep</code>
+function control?</li>
+<li>What does the <code>each</code> argument of the <code>rep</code>
+function control?</li>
+</ul>
 <pre class="r"><code># vector creation
 c(1, 2, 5.3, 6, -2, 4)</code></pre>
 <pre><code>## [1]  1.0  2.0  5.3  6.0 -2.0  4.0</code></pre>
@@ -676,12 +682,11 @@ rep(1:3, times = 3)</code></pre>
 <pre><code>## [1] &quot;trt1&quot; &quot;trt2&quot; &quot;trt2&quot; &quot;trt3&quot; &quot;trt3&quot; &quot;trt3&quot;</code></pre>
 <pre class="r"><code>rep(1:3, each = 3)</code></pre>
 <pre><code>## [1] 1 1 1 2 2 2 3 3 3</code></pre>
-<p>Next, we can practice combining multiple vectors using
-<code>c</code>. Run the commands below in the Console.</p>
-<pre class="r"><code>v1 &lt;- 1:5 # create a vector, v1
+<pre class="r"><code># combining vectors
+v1 &lt;- 1:5 # create a vector, v1
 v2 &lt;- c(1, 10, 11) # create another vector, v2
 v3 &lt;- rep(1:2, each = 3) # crate a third vector, v3
-new &lt;- c(v1, v2, v3) # combine v1, v2, and v3 into a new vector
+new &lt;- c(v1, v2, v3) # combine vectors
 new # print the combined vector</code></pre>
 <pre><code>##  [1]  1  2  3  4  5  1 10 11  1  1  1  2  2  2</code></pre>
 </div>
@@ -697,14 +702,12 @@ f1</code></pre>
 f2</code></pre>
 <pre><code>## [1] a     7     blue  blue  FALSE
 ## Levels: 7 a blue FALSE</code></pre>
-<p>Note that when a <code>factor</code> object is printed that it lists
-the <code>Levels</code> (i.e., unique categories) of the object.</p>
+<p>A printed <code>factor</code> object lists the <code>Levels</code>
+(i.e., unique categories) of the object.</p>
 <p>Some additional comments:</p>
 <ul>
-<li><code>factor</code> objects aren’t technically vectors (e.g.,
-running <code>is.factor(f2)</code> based on the above code will return
-<code>FALSE</code>) though they essentially behave like vectors, which
-is why they are included here.</li>
+<li><code>factor</code> objects aren’t technically vectors but behave
+like vectors, which is why they are included here.</li>
 <li>The <code>is.factor</code> function can be used to determine whether
 an object is a <code>factor</code>.</li>
 <li>You can create <code>factor</code> objects with specific orderings
@@ -712,6 +715,13 @@ of categories using the <code>level</code> and <code>ordered</code>
 arguments of the <code>factor</code> function (see <code>?factor</code>
 for more details).</li>
 </ul>
+<pre class="r"><code>size &lt;- c(&quot;small&quot;, &quot;medium&quot;, &quot;small&quot;, &quot;large&quot;, &quot;medium&quot;, &quot;medium&quot;, &quot;large&quot;)
+factor(size)</code></pre>
+<pre><code>## [1] small  medium small  large  medium medium large 
+## Levels: large medium small</code></pre>
+<pre class="r"><code>factor(size, levels = c(&quot;small&quot;, &quot;medium&quot;, &quot;large&quot;), ordered = TRUE)</code></pre>
+<pre><code>## [1] small  medium small  large  medium medium large 
+## Levels: small &lt; medium &lt; large</code></pre>
 <p><strong>Your Turn</strong></p>
 <p>Attempt to complete the following tasks:</p>
 <ol style="list-style-type: decimal">
@@ -722,37 +732,18 @@ for more details).</li>
 <li>Run <code>is.vector(grp)</code> in the Console.</li>
 <li>Run <code>typeof(grp)</code> in the Console.</li>
 </ol>
-<p>To create an ordered factor you must specify the level orders when
-creating the factor.</p>
-<pre class="r"><code>size &lt;- c(&quot;small&quot;, &quot;medium&quot;, &quot;small&quot;, &quot;large&quot;, &quot;medium&quot;, &quot;medium&quot;, &quot;large&quot;)
-factor(size)</code></pre>
-<pre><code>## [1] small  medium small  large  medium medium large 
-## Levels: large medium small</code></pre>
-<pre class="r"><code>factor(size, levels = c(&quot;small&quot;, &quot;medium&quot;, &quot;large&quot;), ordered = TRUE)</code></pre>
-<pre><code>## [1] small  medium small  large  medium medium large 
-## Levels: small &lt; medium &lt; large</code></pre>
 </div>
 <div id="extracting-parts-of-a-vector" class="section level3">
 <h3>Extracting parts of a vector</h3>
-<p>Parts a vector can be extracted by appending an index vector in
+<p>Parts of a vector can be extracted by appending an index vector in
 square brackets <code>[]</code>.</p>
-<p>Let’s create a <code>numeric</code> vector <code>a</code> with the
-values 2, 4, 6, 8, 10, 12, 14, 16. To extract the 2nd, 4th, and 6th
-elements of <code>a</code>, we can use the code below. The code
-indicates that the 2nd, 4th, and 6th elements of <code>a</code> should
-be extracted.</p>
 <pre class="r"><code># define a sequence 2, 4, ..., 16
 a &lt;- seq(2, 16, by = 2)
 # extract subset of vector
 a[c(2, 4, 6)]</code></pre>
 <pre><code>## [1]  4  8 12</code></pre>
-<p>You can also use “negative” indexing to indicate the elements of the
-vector you want to exclude. Specifically, supplying a negative index
-vector indicates the values you want to exclude from your selection.</p>
-<p>In the example below, we use the minus (<code>-</code>) sign in front
-of the index vector <code>c(2, 4, 6)</code> to indicate we want all
-elements of <code>a</code> EXCEPT the 2nd, 4th, and 6th. The last line
-of code excludes the 3rd through 6th elements of <code>a</code>.</p>
+<p>Supplying a negative index vector indicates the values you want to
+exclude from your selection.</p>
 <pre class="r"><code># extract part of vector using negative indexing
 a[-c(2, 4, 6)] # select all but element 2, 4, 6</code></pre>
 <pre><code>## [1]  2  6 10 14 16</code></pre>
@@ -762,8 +753,8 @@ a[-c(2, 4, 6)] # select all but element 2, 4, 6</code></pre>
 <div id="logical-expressions" class="section level3">
 <h3>Logical Expressions</h3>
 <p>A logical expression uses one or more logical operators to determine
-which elements of an object satisfy the specified statement. The basic
-logical operators are:</p>
+which elements of an object satisfy the specified statement.</p>
+<p>The basic logical operators are:</p>
 <ul>
 <li><code>&lt;</code>, <code>&lt;=</code>: less than, less than or equal
 to.</li>
@@ -775,17 +766,6 @@ equal to.</li>
 <p>Creating a logical expression with a vector will result in a logical
 vector indicating whether each element satisfies the logical
 expression.</p>
-<p><strong>Your turn</strong></p>
-<p>Run the following commands in R and see what is printed. What task is
-each statement performing?</p>
-<pre class="r"><code>a &gt; 10  # which elements of a are &gt; 10?</code></pre>
-<pre><code>## [1] FALSE FALSE FALSE FALSE FALSE  TRUE  TRUE  TRUE</code></pre>
-<pre class="r"><code>a &lt;= 4  # which elements of a are &lt;= 10?</code></pre>
-<pre><code>## [1]  TRUE  TRUE FALSE FALSE FALSE FALSE FALSE FALSE</code></pre>
-<pre class="r"><code>a == 10 # which elements of a are equal to 10?</code></pre>
-<pre><code>## [1] FALSE FALSE FALSE FALSE  TRUE FALSE FALSE FALSE</code></pre>
-<pre class="r"><code>a != 10 # which elements of a are not equal to 10?</code></pre>
-<pre><code>## [1]  TRUE  TRUE  TRUE  TRUE FALSE  TRUE  TRUE  TRUE</code></pre>
 <p>We can create more complicated logical expressions using the “and”,
 “or”, and “not” operators.</p>
 <ul>
@@ -794,8 +774,18 @@ each statement performing?</p>
 <li><code>!</code>: not, i.e., not true</li>
 </ul>
 <p><strong>Your turn</strong></p>
-<p>Run the following commands below in the Console.</p>
-<pre class="r"><code>TRUE &amp; TRUE &amp; TRUE</code></pre>
+<p>Run the following commands in R.</p>
+<p>What task is each command performing?</p>
+<pre class="r"><code>a &gt; 10  # which elements of a are &gt; 10?</code></pre>
+<pre><code>## [1] FALSE FALSE FALSE FALSE FALSE  TRUE  TRUE  TRUE</code></pre>
+<pre class="r"><code>a &lt;= 4  # which elements of a are &lt;= 10?</code></pre>
+<pre><code>## [1]  TRUE  TRUE FALSE FALSE FALSE FALSE FALSE FALSE</code></pre>
+<pre class="r"><code>a == 10 # which elements of a are equal to 10?</code></pre>
+<pre><code>## [1] FALSE FALSE FALSE FALSE  TRUE FALSE FALSE FALSE</code></pre>
+<pre class="r"><code>a != 10 # which elements of a are not equal to 10?</code></pre>
+<pre><code>## [1]  TRUE  TRUE  TRUE  TRUE FALSE  TRUE  TRUE  TRUE</code></pre>
+<pre class="r"><code># combining logical values
+TRUE &amp; TRUE &amp; TRUE</code></pre>
 <pre><code>## [1] TRUE</code></pre>
 <pre class="r"><code>TRUE &amp; TRUE &amp; FALSE</code></pre>
 <pre><code>## [1] FALSE</code></pre>
@@ -807,11 +797,8 @@ each statement performing?</p>
 <pre><code>## [1] FALSE</code></pre>
 <pre class="r"><code>!FALSE</code></pre>
 <pre><code>## [1] TRUE</code></pre>
-<p>What role does <code>&amp;</code> serve in a sequence of logical
-values? Similarly, what roles do <code>|</code> and <code>!</code> serve
-in a sequence of logical values?</p>
-<p>These operators are applied elementwise for vectors.</p>
-<pre class="r"><code># which elements of a are &gt; 6 and &lt;= 10
+<pre class="r"><code># combining logical expressions
+# which elements of a are &gt; 6 and &lt;= 10
 (a &gt; 6) &amp; (a &lt;= 10)</code></pre>
 <pre><code>## [1] FALSE FALSE FALSE  TRUE  TRUE FALSE FALSE FALSE</code></pre>
 <pre class="r"><code># which elements of a are &lt;= 4 or &gt;= 12
@@ -820,13 +807,12 @@ in a sequence of logical values?</p>
 <pre class="r"><code># which elements of a are NOT &lt;= 4 or &gt;= 12
 !((a &lt;= 4) | (a &gt;= 12))</code></pre>
 <pre><code>## [1] FALSE FALSE  TRUE  TRUE  TRUE FALSE FALSE FALSE</code></pre>
-<p>Logical expressions can be used to return parts of an object
-satisfying the appropriate criteria. Specifically, we pass logical
-expressions within the square brackets to access part of a data
-structure. This syntax will return each element of the object for which
-the expression is <code>TRUE</code>.</p>
-<p>Run the following commands in R and see what is printed. What task is
-each statement performing?</p>
+<p>We can pass logical expressions within the square brackets to access
+part of a data structure. This syntax will return each element of the
+object for which the expression is <code>TRUE</code>.</p>
+<p><strong>Your turn</strong></p>
+<p>Run the following commands in R and see what is printed.</p>
+<p>What task is each command performing?</p>
 <pre class="r"><code># extract the parts of a with values &lt; 6
 a[a &lt; 6]</code></pre>
 <pre><code>## [1] 2 4</code></pre>
@@ -874,8 +860,8 @@ distribution as <span class="math inline">\(X\)</span>.</li>
 the parameters of the distribution may be required.</li>
 </ul>
 <p><strong>Your turn</strong></p>
-<p>Run the following commands in R to see the output. What task is each
-command performing?</p>
+<p>Run the following commands in R to see the output.</p>
+<p>What task is each command performing?</p>
 <pre class="r"><code>pnorm(1.96, mean = 0, sd = 1)</code></pre>
 <pre><code>## [1] 0.9750021</code></pre>
 <pre class="r"><code>qunif(0.6, min = 0, max = 1)</code></pre>
@@ -885,35 +871,36 @@ command performing?</p>
 <pre class="r"><code>dexp(1, rate = 2)</code></pre>
 <pre><code>## [1] 0.2706706</code></pre>
 <pre class="r"><code>rchisq(100, df = 5)</code></pre>
-<pre><code>##   [1]  1.6671134  4.9241623  4.2586414  3.8938826  7.6248351  9.9078249
-##   [7]  9.2922159 12.2688397  0.8439818  6.5670434  1.0626153 11.2429836
-##  [13]  1.4536554  6.2406107  8.1542668  2.5825507  0.2697845  3.1430462
-##  [19]  8.2018310  2.8393845  8.0881799  4.4255169  3.0398661  3.1433707
-##  [25]  7.1135241  7.7608879  6.5608653  3.5403687  5.7825356 10.2848108
-##  [31]  5.6842378  3.7513742  4.8200646  3.9996777  5.7129573  2.0368389
-##  [37]  7.5398667  6.3428067  1.7312746  6.9089671  4.4767124  3.2475648
-##  [43]  6.8352994  2.5034012  2.4941922  3.7385005  2.4154566  0.7310140
-##  [49]  5.6948604  5.2127277  2.2335882  6.5085938  9.4845415  3.6065622
-##  [55]  3.1360000  1.9792468  4.7920256  6.7317637  7.5887829 13.6168041
-##  [61]  3.3033534 12.1001067  8.9879211  1.8862302  3.2909063 10.1473314
-##  [67]  1.6534401  5.5171380  5.3019157  0.9998550  3.4999816  2.6879387
-##  [73]  6.4511774  7.7973040  5.5453175  2.7356993  3.2416278  5.5313803
-##  [79]  5.8549464  2.1288046 10.4457621  9.3284675  4.0971588  4.6416536
-##  [85]  1.9677211  0.7682435  7.7263759  1.1989682  0.4084154  2.1951090
-##  [91]  4.7372433  6.6444472  4.8125954  5.1346870  2.0069966  1.3635124
-##  [97]  2.6647526 10.0601297  2.9739198  0.5096477</code></pre>
+<pre><code>##   [1]  1.0854240  5.2429763  4.0264896  9.4164041  7.3129257  6.4765195
+##   [7]  0.3035909  3.1345840  3.3932955  4.3283097  4.9562353 10.1028441
+##  [13]  5.9918260  3.3866989 10.3677338  2.2463942  3.5607853  6.4892322
+##  [19]  3.7703152  4.4497527  2.9062658  9.2324863  3.2683659  4.9316518
+##  [25]  1.1398396  8.2346794  1.5909390  2.4345529 13.2029103  3.2545351
+##  [31]  6.6339267  8.7085760  4.0367618  4.9607428  1.3117769 10.7972715
+##  [37]  4.1693568 10.4445838  4.4756175  3.1407006  7.8864453 11.0171910
+##  [43]  6.7587308  7.2771927  2.3570530  5.0381234  0.7078238  6.9628555
+##  [49]  9.0180078  6.2219508  2.9580621  1.7413200  0.6688415  6.4434169
+##  [55]  4.1083085  9.1081757 14.0948746  5.6637669  5.3012894  1.4983317
+##  [61] 19.8974038  6.9885071  2.0562816  4.5115372  1.8231967  3.4465802
+##  [67]  1.1982526  5.9994231  0.7499226 12.9184017  5.2972414  8.2476624
+##  [73]  9.1834035  4.0846788  6.3687576  8.7762278  3.7890384  5.8791150
+##  [79]  1.8675409  1.8946559  1.9655378  1.0018970  1.2508044  4.4924570
+##  [85]  6.6778244  2.3966496  5.3616081  2.8559990  7.0429820  1.8407965
+##  [91]  1.4686424  8.3922458  1.0430540  7.6662205  6.5370529 13.8327701
+##  [97]  9.3051181  4.7788334  3.6779129  5.6134986</code></pre>
 </div>
 </div>
 <div id="data-frames" class="section level2">
 <h2>Data Frames</h2>
-<p>Data frames are two-dimensional data objects. Each column of a data
-frame is a vector (or variable) of possibly different data types. This
-is a <em>fundamental</em> data structure used by most of R’s modeling
-software.</p>
+<p>Data frames are a <em>fundamental</em> data structure used by most of
+R’s modeling software.</p>
+<p>Data frames are:</p>
+<ul>
+<li>two-dimensional data objects.</li>
+<li>each column of a data frame is a vector.</li>
+</ul>
 <p>Data frames are directly created by passing vectors into the
-<code>data.frame</code> function. The names of the columns in the data
-frame are the names of the vectors you give the <code>data.frame</code>
-function. Consider the following simple example.</p>
+<code>data.frame</code> function.</p>
 <pre class="r"><code># create basic data frame
 d &lt;- c(1, 2, 3, 4)
 e &lt;- c(&quot;red&quot;, &quot;white&quot;, &quot;blue&quot;, NA)
@@ -926,8 +913,7 @@ df</code></pre>
 ## 3 3  blue  TRUE
 ## 4 4  &lt;NA&gt; FALSE</code></pre>
 <p>The columns of a data frame can be renamed using the
-<code>names</code> function on the data frame and assigning a vector of
-names to the data frame.</p>
+<code>names</code> function on the data frame.</p>
 <pre class="r"><code># name columns of data frame
 names(df) &lt;- c(&quot;ID&quot;, &quot;Color&quot;, &quot;Passed&quot;)
 df</code></pre>
@@ -983,7 +969,7 @@ file.
 </ul>
 <p>Consider reading in a csv (comma separated file) with a header. The
 file in question contains information related to COVID-19 cases and
-deaths as of February 4, 2021.</p>
+deaths as of December 4, 2020.</p>
 <pre class="r"><code># import data as data frame
 dtf &lt;- read.table(file = &quot;https://raw.githubusercontent.com/jfrench/DataWrangleViz/master/data/covid_dec4.csv&quot;,
                   header = TRUE,
@@ -1000,11 +986,9 @@ str(dtf)</code></pre>
 </div>
 <div id="extracting-parts-of-a-data-frame" class="section level3">
 <h3>Extracting parts of a data frame</h3>
-<p>R provides many ways to extract parts of a data frame. We will
-provide several examples using the <code>mtcars</code> data frame in the
-<strong>datasets</strong> package.</p>
-<p>The <code>mtcars</code> data frame 32 observations of 11 variables.
-The variables are:</p>
+<p>R provides many ways to extract parts of a data frame.</p>
+<p>The <code>mtcars</code> data frame 32observations of 11
+variables.</p>
 <pre class="r"><code>data(mtcars) # load data set
 str(mtcars)  # examine data structure</code></pre>
 <pre><code>## &#39;data.frame&#39;:    32 obs. of  11 variables:
@@ -1019,28 +1003,28 @@ str(mtcars)  # examine data structure</code></pre>
 ##  $ am  : num  1 1 1 0 0 0 0 0 0 0 ...
 ##  $ gear: num  4 4 4 3 3 3 3 4 4 4 ...
 ##  $ carb: num  4 4 1 1 2 1 4 2 2 4 ...</code></pre>
-<p>Below, we extract the <code>mpg</code> variable from the
+<p>We can extract the <code>mpg</code> variable from the
 <code>mtcars</code> data frame using the <code>$</code> operator.</p>
 <pre class="r"><code>mtcars$mpg</code></pre>
 <pre><code>##  [1] 21.0 21.0 22.8 21.4 18.7 18.1 14.3 24.4 22.8 19.2 17.8 16.4 17.3 15.2 10.4
 ## [16] 10.4 14.7 32.4 30.4 33.9 21.5 15.5 15.2 13.3 19.2 27.3 26.0 30.4 15.8 19.7
 ## [31] 15.0 21.4</code></pre>
-<p>Another way to extract a variable from a data frame as a vector is
-<code>df[, &quot;var&quot;]</code>, where <code>df</code> is the name of our data
-frame and <code>var</code> is the desired variable name. This syntax
-uses a <code>df[rows, columns]</code> style syntax, where
-<code>rows</code> and <code>columns</code> indicate the desired rows or
-columns. If either the <code>rows</code> or <code>columns</code> are
-left blank, then all <code>rows</code> or <code>columns</code>,
-respectively, are extracted.</p>
+<p>Another way to extract a variable from a data frame uses a
+<code>df[rows, columns]</code> style syntax.</p>
+<ul>
+<li><code>rows</code> and <code>columns</code> indicate the desired rows
+or columns.</li>
+<li>if either the <code>rows</code> or <code>columns</code> are left
+blank, then all <code>rows</code> or <code>columns</code>, respectively,
+are extracted.</li>
+</ul>
 <pre class="r"><code>mtcars[,&quot;mpg&quot;]</code></pre>
 <pre><code>##  [1] 21.0 21.0 22.8 21.4 18.7 18.1 14.3 24.4 22.8 19.2 17.8 16.4 17.3 15.2 10.4
 ## [16] 10.4 14.7 32.4 30.4 33.9 21.5 15.5 15.2 13.3 19.2 27.3 26.0 30.4 15.8 19.7
 ## [31] 15.0 21.4</code></pre>
 <p>To select multiple variables in a data frame, we can provide a
-character vector with multiple variable names between <code>[]</code>.
-In the example below, we extract both the <code>mpg</code> and
-<code>cyl</code> variables from <code>mtcars</code>.</p>
+character vector with multiple variable names between
+<code>[]</code>.</p>
 <pre class="r"><code>mtcars[c(&quot;mpg&quot;, &quot;cyl&quot;)]</code></pre>
 <pre><code>##                      mpg cyl
 ## Mazda RX4           21.0   6
@@ -1076,9 +1060,8 @@ In the example below, we extract both the <code>mpg</code> and
 ## Maserati Bora       15.0   8
 ## Volvo 142E          21.4   4</code></pre>
 <p>You can also use numeric indices to directly indicate the rows or
-columns of the data frame that you would like to extract. Alternatively,
-you can use variable names for the columns.</p>
-<pre class="r"><code>mtcars[c(1,2)]</code></pre>
+columns of the data frame that you would like to extract.</p>
+<pre class="r"><code>mtcars[c(1, 2)]</code></pre>
 <pre><code>##                      mpg cyl
 ## Mazda RX4           21.0   6
 ## Mazda RX4 Wag       21.0   6
@@ -1113,25 +1096,22 @@ you can use variable names for the columns.</p>
 ## Maserati Bora       15.0   8
 ## Volvo 142E          21.4   4</code></pre>
 </div>
-<div id="conditional-extraction-of-dataframes" class="section level3">
-<h3>Conditional Extraction of Dataframes</h3>
+<div id="conditional-extraction-of-data-frames" class="section level3">
+<h3>Conditional Extraction of Data Frames</h3>
 <p>Logical expressions can be used to subset a data frame.</p>
 <p>The following command creates of vector of logical values.</p>
 <pre class="r"><code>mtcars$hp &gt; 250</code></pre>
 <pre><code>##  [1] FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE
 ## [13] FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE
 ## [25] FALSE FALSE FALSE FALSE  TRUE FALSE  TRUE FALSE</code></pre>
-<p>This vector can be used to extract all of the <code>TRUE</code>
-values.</p>
+<p>This vector can be used to extract rows for all of the
+<code>TRUE</code> values.</p>
 <pre class="r"><code># extract rows with hp &gt; 250
 mtcars[mtcars$hp &gt; 250,]</code></pre>
 <pre><code>##                 mpg cyl disp  hp drat   wt qsec vs am gear carb
 ## Ford Pantera L 15.8   8  351 264 4.22 3.17 14.5  0  1    5    4
 ## Maserati Bora  15.0   8  301 335 3.54 3.57 14.6  0  1    5    8</code></pre>
-<p>We can make the logical expression more complicated. Below, we
-extract the rows of <code>mtcars</code> with 8 cylinders and
-<code>mpg &gt; 17</code>, while extracting only the <code>mpg</code>,
-<code>cyl</code>, <code>disp</code>, and <code>hp</code> variables.</p>
+<p>We can make the logical expression more complicated.</p>
 <pre class="r"><code># return rows with `cyl == 8` and `mpg &gt; 17`
 # return columns mpg, cyl, disp, hp
 mtcars[mtcars$cyl == 8 &amp; mtcars$mpg &gt; 17,
@@ -1143,18 +1123,16 @@ mtcars[mtcars$cyl == 8 &amp; mtcars$mpg &gt; 17,
 </div>
 <div id="modifying-data-frames" class="section level3">
 <h3>Modifying Data Frames</h3>
-<p>Columns can be added to a data frame using the assignment operator.
-Below, we add a column for kilometers per gallon using the existing
-column for mpg. Existing columns can be modified in the same manner.</p>
-<pre class="r"><code>mtcars$kpg &lt;- mtcars$mpg*.0425</code></pre>
-<p>There are many functions, such as <code>subset</code> and
-<code>mutate</code> that make extend this behavior.</p>
+<p>Columns can be added to a data frame using the <code>$</code> and
+assignment operator.</p>
+<pre class="r"><code>mtcars$kpg &lt;- mtcars$mpg*1.6</code></pre>
 </div>
 <div id="extraction-using-the-subset-function" class="section level3">
 <h3>Extraction using the <code>subset</code> function</h3>
 <p>The <code>subset</code> function returns the part of a data frame
-that meets the specified conditions. The basic usage of this function
-is: <code>subset(x, subset, select, drop = FALSE)</code></p>
+that meets the specified conditions.</p>
+<p>The basic usage of this function is:
+<code>subset(x, subset, select, drop = FALSE)</code></p>
 <ul>
 <li><code>x</code> is the object you want to subset.
 <ul>
@@ -1167,26 +1145,61 @@ keep).</li>
 keep.</li>
 <li><code>drop</code> is a logical value indicating whether the data
 frame should “drop” into a vector if only a single row or column is
-kept. The default is <code>FALSE</code>, meaning that a data frame will
-always be returned by the <code>subset</code> function by default.</li>
+kept. The default is <code>FALSE.</code>.</li>
 </ul>
 <p><strong>Your turn</strong></p>
 <p>Run the following commands in the Console to use the
 <code>subset</code> function to extract parts of the <code>mtcars</code>
 data frame.</p>
-<ul>
-<li><code>subset(mtcars, subset = gear &gt; 4)</code>. This command will
-subset the rows of <code>mtcars</code> that have more than 4 gears. Note
-any variables referred to in the <code>subset</code> function are
-assumed to be part of the supplied data frame or are available in
-memory.</li>
-<li><code>subset(mtcars, select = c(disp, hp, gear))</code>. This
-command will select the <code>disp</code>, <code>hp</code>, and
-<code>gear</code> variables of <code>mtcars</code> but will exclude the
-other columns.</li>
-<li><code>subset(mtcars, subset = gear &gt; 4, select = c(disp, hp, gear))</code>
-combines the previous two subsets into a single command.</li>
-</ul>
+<p>What is each command performing?</p>
+<pre class="r"><code>subset(mtcars, subset = gear &gt; 4)</code></pre>
+<pre><code>##                 mpg cyl  disp  hp drat    wt qsec vs am gear carb   kpg
+## Porsche 914-2  26.0   4 120.3  91 4.43 2.140 16.7  0  1    5    2 41.60
+## Lotus Europa   30.4   4  95.1 113 3.77 1.513 16.9  1  1    5    2 48.64
+## Ford Pantera L 15.8   8 351.0 264 4.22 3.170 14.5  0  1    5    4 25.28
+## Ferrari Dino   19.7   6 145.0 175 3.62 2.770 15.5  0  1    5    6 31.52
+## Maserati Bora  15.0   8 301.0 335 3.54 3.570 14.6  0  1    5    8 24.00</code></pre>
+<pre class="r"><code>subset(mtcars, select = c(disp, hp, gear))</code></pre>
+<pre><code>##                      disp  hp gear
+## Mazda RX4           160.0 110    4
+## Mazda RX4 Wag       160.0 110    4
+## Datsun 710          108.0  93    4
+## Hornet 4 Drive      258.0 110    3
+## Hornet Sportabout   360.0 175    3
+## Valiant             225.0 105    3
+## Duster 360          360.0 245    3
+## Merc 240D           146.7  62    4
+## Merc 230            140.8  95    4
+## Merc 280            167.6 123    4
+## Merc 280C           167.6 123    4
+## Merc 450SE          275.8 180    3
+## Merc 450SL          275.8 180    3
+## Merc 450SLC         275.8 180    3
+## Cadillac Fleetwood  472.0 205    3
+## Lincoln Continental 460.0 215    3
+## Chrysler Imperial   440.0 230    3
+## Fiat 128             78.7  66    4
+## Honda Civic          75.7  52    4
+## Toyota Corolla       71.1  65    4
+## Toyota Corona       120.1  97    3
+## Dodge Challenger    318.0 150    3
+## AMC Javelin         304.0 150    3
+## Camaro Z28          350.0 245    3
+## Pontiac Firebird    400.0 175    3
+## Fiat X1-9            79.0  66    4
+## Porsche 914-2       120.3  91    5
+## Lotus Europa         95.1 113    5
+## Ford Pantera L      351.0 264    5
+## Ferrari Dino        145.0 175    5
+## Maserati Bora       301.0 335    5
+## Volvo 142E          121.0 109    4</code></pre>
+<pre class="r"><code>subset(mtcars, subset = gear &gt; 4, select = c(disp, hp, gear))</code></pre>
+<pre><code>##                 disp  hp gear
+## Porsche 914-2  120.3  91    5
+## Lotus Europa    95.1 113    5
+## Ford Pantera L 351.0 264    5
+## Ferrari Dino   145.0 175    5
+## Maserati Bora  301.0 335    5</code></pre>
 </div>
 </div>
 <div id="using-the-pipe-operator" class="section level2">
@@ -1215,10 +1228,6 @@ subset(mtcars,
 ## Cadillac Fleetwood  10.4  472 205
 ## Lincoln Continental 10.4  460 215
 ## Chrysler Imperial   14.7  440 230</code></pre>
-<p>When reading code with pipes, the pipe can be thought of as the word
-“then”. In the code above, we take <code>mtcars</code> <em>then</em>
-subset it based on <code>disp</code> and <em>then</em> select some
-columns.</p>
 <p>Here is a complicated sequence of piped commands. What do you think
 is happening?</p>
 <pre class="r"><code># create new variable, select columns, extract first 5 rows
