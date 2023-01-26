@@ -158,7 +158,7 @@ dplyr::glimpse(penguins_clean)
 Numerical exploration of a data set generally consists of computing various relevant statistics for each of the variables in a data set in order to summarize the data.
 
 | numeric summary                 | variable type | summarizes        | R function            |
-|---------------------------------|---------------|-------------------|-----------------------|
+|------------------------|----------------|----------------|-----------------|
 | mean                            | `numeric`     | center            | `mean`                |
 | median                          | `numeric`     | center            | `median`              |
 | variance                        | `numeric`     | spread            | `var`                 |
@@ -366,7 +366,7 @@ The two most popular packages for producing graphics in R are:
 -   **ggplot2**: a "grammar of graphics" that is able to produce complex graphics with automated legends in a consistent, systematic way.
 
 | Visual summary       | Variable types          | Summary type | Base functions               | geoms                        |
-|:---------------------|:------------------------|:-------------|:-----------------------------|:-----------------------------|
+|:--------------|:--------------|:--------------|:--------------|:--------------|
 | box plot             | `numeric`               | univariate   | `boxplot`                    | `geom_boxplot`               |
 | histogram            | `numeric`               | univariate   | `hist`                       | `geom_histogram`             |
 | density plot         | `numeric`               | univariate   | `plot`, `density`            | `geom_density`               |
@@ -488,7 +488,10 @@ gg_penguin + geom_boxplot(aes(y = bill_length))
 
 ### Histograms
 
-A histogram: - displays the distribution of a `numeric` variable. - counts the number of values falling into (usually) equal-sized "bins". - are used to assess skewness, modality (the number of clear "peaks" in the plot), and to some extent, outliers.
+A histogram:
+
+-   Displays the distribution of a `numeric` variable.
+-   Counts the number of values falling into (usually) equal-sized "bins". - are used to assess skewness, modality (the number of clear "peaks" in the plot), and to some extent, outliers.
 
 The `hist` function is used create a histogram of a `numeric` variable.
 
@@ -575,7 +578,10 @@ gg_penguin +
 
 #### Parallel box plots
 
-A parallel box plot is used to display the distribution of a `numeric` variable whose values are grouped based on each `level` of a `factor` variable. Parallel box plot are useful for determining if the distribution of a `numeric` variable substantially changes based on whether an observation has a certain `level` of a `factor`.
+A parallel box plot:
+
+-   Is used to display the distribution of a `numeric` variable whose values are grouped based on each `level` of a `factor` variable.
+-   Are useful for determining if the distribution of a `numeric` variable substantially changes based on whether an observation has a certain `level` of a `factor`.
 
 ```{r}
 plot(body_mass ~ sex, data = penguins_clean)
