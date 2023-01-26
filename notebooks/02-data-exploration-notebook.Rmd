@@ -24,10 +24,10 @@ You should explore every data set numerically and visually prior to modeling it.
 
 When we receive a data set for the first time, we often need to:
 
-- Restructure the data set so that each row is an observation and each column is a variable.
-- Convert the variables to an appropriate type.
-- Improve the name of the variables.
-- Etc.
+-   Restructure the data set so that each row is an observation and each column is a variable.
+-   Convert the variables to an appropriate type.
+-   Improve the name of the variables.
+-   Etc.
 
 The process of preparing the data into a friendly format is known as "cleaning".
 
@@ -35,8 +35,8 @@ The process of preparing the data into a friendly format is known as "cleaning".
 
 We will systematically explore the `penguins_raw` data set from the **palmerpenguins** package. To use the data:
 
--   Load the data into memory using the `data` function,
--   Specify the `name` of the data set to be loaded
+-   Load the data into memory using the `data` function.ins
+-   Specify the `name` of the data set to be loaded.
 -   Specify the package that contains the data.
 
 ```{r data_penguins}
@@ -48,7 +48,7 @@ This command actually loads two data sets:
 -   `penguins_raw`: the data set we will be looking at.
 -   `penguins`: a simplified version.
 
-The `penguins_raw` data set provides data related to various penguin species measured in the Palmer Archipelago (Antarctica), originally provided by @GormanEtAl2014.
+The `penguins_raw` data set provides data related to various penguin species measured in the Palmer Archipelago (Antarctica).
 
 The data set includes 344 observations of 17 variables. The variables are:
 
@@ -124,7 +124,8 @@ Notable remaining issues with `penguins_clean`:
 -   We use the `transform` function to convert the each variable to a `factor`.
 
 ```{r}
-# convert sex variable to factor, replace original object
+# convert species, island, and sex variables
+# to factor, replace original object
 penguins_clean <-
   penguins_clean |>
   transform(species = factor(species),
@@ -157,7 +158,7 @@ dplyr::glimpse(penguins_clean)
 Numerical exploration of a data set generally consists of computing various relevant statistics for each of the variables in a data set in order to summarize the data.
 
 | numeric summary                 | variable type | summarizes        | R function            |
-|------------------|------------------|------------------|------------------|
+|------------------------|----------------|----------------|------------------|
 | mean                            | `numeric`     | center            | `mean`                |
 | median                          | `numeric`     | center            | `median`              |
 | variance                        | `numeric`     | spread            | `var`                 |
@@ -222,7 +223,7 @@ The `quantile` function is used to compute sample quantiles.
 Quantiles are useful quantifying:
 
 -   Center (median).
--   Spread (minimum and maximum or interquartile range).
+-   Spread (minimum and maximum or interquartile range = Q3 - Q1).
 
 ```{r}
 quantile(penguins_clean$body_mass,
@@ -258,7 +259,7 @@ The interquartile range is the difference between the 0.75 and 0.25 quantiles of
 
 The minimum and maximum (in relation to the sample mean or median) can also be used to ascertain the spread of a data set.
 
--   Computed using the `min` and `max` functions/.
+-   Computed using the `min` and `max` functions.
 
 We compute these measures of spread for the `body_mass` variable below.
 
@@ -292,7 +293,7 @@ The most common correlation statistic is Pearson's correlation statistic. If $x_
 **Interpretation**
 
 -   The closer $r$ is to -1 or 1, the closer the data values fall to a straight line.
--   $r$ Values close to 0 indicate that there is no linear relationship between the two variables.
+-   $r$ values close to 0 indicate that there is no linear relationship between the two variables.
 -   Negative $r$ values indicate a negative relationship between the two variables (as values for one variable increase, the values for the other variable tend to decrease).
 -   Positive $r$ values indicate a positive linear relationship between the two variables (as values for one variable increase, the values of the other variable also tend to increase).
 
@@ -361,8 +362,8 @@ Visual summaries (i.e., plots) of data help us:
 
 The two most popular packages for producing graphics in R are:
 
-- **base**: the default graphics system
-- **ggplot2**: a "grammar of graphics" that is able to produce complex graphics with automated legends in a consistent, systematic way.
+-   **base**: the default graphics system
+-   **ggplot2**: a "grammar of graphics" that is able to produce complex graphics with automated legends in a consistent, systematic way.
 
 | Visual summary       | Variable types          | Summary type | Base functions               | geoms                        |
 |:--------------|:--------------|:--------------|:--------------|:--------------|
@@ -397,7 +398,7 @@ We add "layers" of information to a `ggplot`, such as geoms, scales, or other cu
 
 A univariate plot is a plot that only involves a single variable.
 
-- e.g., bar plots, box plots, histograms, density plots, dot plots (bad), pie charts (bad), etc.
+-   e.g., bar plots, box plots, histograms, density plots, dot plots (bad), pie charts (bad), etc.
 
 ### Bar plots
 
@@ -409,7 +410,7 @@ The simplest way to create a bar plot in base R is using the `plot` function on 
 plot(penguins$island, main = "distribution of island")
 ```
 
-Alternatively, we can combine `barplot` with the `table` function. 
+Alternatively, we can combine `barplot` with the `table` function.
 
 ```{r}
 barplot(table(penguins_clean$sex, useNA = "ifany"),
@@ -446,20 +447,20 @@ gg_penguin + geom_bar(aes(x = species))
 
 A box plot indicates:
 
-- median
-- 0.25 quantile (Q1)
-- 0.75 quantile (Q3)
-- extend bars to the largest and smallest observations that are not outliers.
+-   median
+-   0.25 quantile (Q1)
+-   0.75 quantile (Q3)
+-   extend bars to the largest and smallest observations that are not outliers.
 
 Outliers are usually marked with starts or dots.
 
-- The standard definition of an outlier in the context of box plots is an value that is more than Q3 + 1.5 (Q3 - Q1) and less than Q1 - 1.5 (Q3 - Q1).
+-   The standard definition of an outlier in the context of box plots is an value that is more than Q3 + 1.5 (Q3 - Q1) and less than Q1 - 1.5 (Q3 - Q1).
 
 Box plots:
 
-- are useful for identifying outliers and skewness.
-- throw away a lot of information.
-    - be cautious in making conclusions about skewness and modality.
+-   are useful for identifying outliers and skewness.
+-   throw away a lot of information.
+    -   be cautious in making conclusions about skewness and modality.
 
 The `boxplot` function is the easiest approach for producing a box plot using base R.
 
@@ -487,9 +488,7 @@ gg_penguin + geom_boxplot(aes(y = bill_length))
 
 ### Histograms
 
-A histogram:
-- displays the distribution of a `numeric` variable. - counts the number of values falling into (usually) equal-sized "bins".
-- are used to assess skewness, modality (the number of clear "peaks" in the plot), and to some extent, outliers.
+A histogram: - displays the distribution of a `numeric` variable. - counts the number of values falling into (usually) equal-sized "bins". - are used to assess skewness, modality (the number of clear "peaks" in the plot), and to some extent, outliers.
 
 The `hist` function is used create a histogram of a `numeric` variable.
 
@@ -518,8 +517,8 @@ gg_penguin + geom_histogram(aes(x = flipper_length))
 
 A density plot is similar to a smoothed histogram.
 
-- The area under the smoothed curve must equal 1. 
-- Density plots sometimes have problems near the edges of a variable with a fixed upper or lower bound because it is difficult to know how to smooth the data in that case.
+-   The area under the smoothed curve must equal 1.
+-   Density plots sometimes have problems near the edges of a variable with a fixed upper or lower bound because it is difficult to know how to smooth the data in that case.
 
 The `plot` and `density` function can be combined to construct a density plot using **base** R.
 
@@ -544,7 +543,7 @@ gg_penguin + geom_density(aes(x = body_mass))
 
 ## Bivariate plots
 
-A `bivariate` plot is a plot involving two variables. 
+A `bivariate` plot is a plot involving two variables.
 
 ### Scatter plots
 
@@ -576,8 +575,7 @@ gg_penguin +
 
 #### Parallel box plots
 
-A parallel box plot is used to display the distribution of a `numeric` variable whose values are grouped based on each `level` of a `factor` variable. 
-Parallel box plot are useful for determining if the distribution of a `numeric` variable substantially changes based on whether an observation has a certain `level` of a `factor`.
+A parallel box plot is used to display the distribution of a `numeric` variable whose values are grouped based on each `level` of a `factor` variable. Parallel box plot are useful for determining if the distribution of a `numeric` variable substantially changes based on whether an observation has a certain `level` of a `factor`.
 
 ```{r}
 plot(body_mass ~ sex, data = penguins_clean)
@@ -591,7 +589,7 @@ gg_penguin + geom_boxplot(aes(x = species, y = bill_length))
 
 ## Multivariate plots
 
-A multivariate plot displays relationships between 2 or more variables. 
+A multivariate plot displays relationships between 2 or more variables.
 
 Multivariate plots are more easily created using **ggplot2** than **base**.
 
@@ -627,8 +625,8 @@ Facetting creates separate panels (facets) of plots based on one or more facetti
 
 The key functions to do this with **ggplot2** are:
 
-- `facet_grid` is used to create a grid of plots based on one or two `factor` variables.
-- `facet_wrap` wraps facets of panels around the plot based on one `factor` variable..
+-   `facet_grid` is used to create a grid of plots based on one or two `factor` variables.
+-   `facet_wrap` wraps facets of panels around the plot based on one `factor` variable..
 
 ```{r}
 # simple facetting example
@@ -668,10 +666,10 @@ ggplot(data = penguins_temp) +
 
 ### Interactive graphics
 
-The **`plotly`** package is an R package to provide the capabilities of plotly [https://plotly.com/]. 
+The **`plotly`** package is an R package to provide the capabilities of plotly [<https://plotly.com/>].
 
-- plotly is a well-known tool for creating interactive graphics.
-- The `ggplotly` function will instantly make a `ggplot` interactive.
+-   plotly is a well-known tool for creating interactive graphics.
+-   The `ggplotly` function will instantly make a `ggplot` interactive.
 
 ```{r}
 # load plotly package
@@ -703,23 +701,27 @@ ggplotly(ggi2)
 4.  Convert the variables to the appropriate type (e.g., categorical variables to `factor`).
 5.  Run the `summary` function on your data frame. Take note of `NAs`, impossible values that are data entry errors, etc. Perhaps perform some additional cleaning based on this information.
 6.  Compute any additional numeric summaries of the different variables, as desired.
-7.  Create univariate plots of all variables you are considering. 
-  - Use histograms for discrete `numeric` variables
-  - Use density plots for continuous `numeric` variables.
-  - Use bar plots for `factor` variables.
-  - Take note of any interesting patterns such as modality, skewness, overall shape, outliers, etc.
+7.  Create univariate plots of all variables you are considering.
+
+-   Use histograms for discrete `numeric` variables
+-   Use density plots for continuous `numeric` variables.
+-   Use bar plots for `factor` variables.
+-   Take note of any interesting patterns such as modality, skewness, overall shape, outliers, etc.
+
 8.  Create bivariate plots of any pairs of variables.
-  - Use scatter plots for two `numeric` variables.
-  - Or use parallel box plots for `numeric` and `factor` variables.
-  - Or use histograms of the `numeric` variable facetted by the `factor` variable. 
-  - Or use density plots of the `numeric` variables filled with different colors by the `factor` variable.
+
+-   Use scatter plots for two `numeric` variables.
+-   Or use parallel box plots for `numeric` and `factor` variables.
+-   Or use histograms of the `numeric` variable facetted by the `factor` variable.
+-   Or use density plots of the `numeric` variables filled with different colors by the `factor` variable.
+
 9.  Create multivariate and interactive graphics based on what you learned in the previous steps.
 
 ## Final notes on missing or erroneous data
 
-Correct erroneous data entries, when possible. If that's not possible, replace them with `NA` values. 
+Correct erroneous data entries, when possible. If that's not possible, replace them with `NA` values.
 
-What should you do about `NA`s? 
+What should you do about `NA`s?
 
-- If there is no systematic reason why the data are missing, then ignoring the observations with missing data isn't a terrible approach.
-- If there is a systematic reason why the data are missing (such as individuals not wanting to answer a sensitive question, subjects dying for a specific reason) then ignoring that data can lead to erroneous conclusions.
+-   If there is no systematic reason why the data are missing, then ignoring the observations with missing data isn't a terrible approach.
+-   If there is a systematic reason why the data are missing (such as individuals not wanting to answer a sensitive question, subjects dying for a specific reason) then ignoring that data can lead to erroneous conclusions.
