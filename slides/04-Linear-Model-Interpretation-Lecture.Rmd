@@ -6,6 +6,7 @@ output:
   beamer_presentation: default
 ---
 
+
 ```{r, include=FALSE}
 # change Console output behavior
 # knitr::opts_chunk$set(comment = "#>", collapse = TRUE)
@@ -92,46 +93,33 @@ E(Y\mid X=x^*+1)-E(Y\mid X=x^*) &= [\beta_0 + \beta_1 (x^* + 1)] - [\beta_0 + \b
 $$ Thus, $\beta_1$ literally equals the change in the expected response
 when the regressor increases by 1 unit.
 
-The regressors we use in our regression analysis are often observational
-in nature, meaning that we do not control them. And even if we could
-control them, they may be difficult to change. E.g., if one of our
-regressors was the size of an island, how would we realistically go
-about increasing the size of the island? thus, in the context of
-observational data, it may not make sense to say "we increase $X$ by 1
-unit" or "when $X$ increases by 1 unit". An alternative approach,
-alluded to by @lmwr2, is to consider the expected response difference
-between observations that are identical with respect to all regressors
-we include in our model except the regressor under consideration, which
-varies by only a single unit. While mathematically, the result is the
-same, the interpretation is more philosophically palatable. Regardless,
-interpretation is a bit of an art. There can be many correct ways to
-interpret a coefficient or the impact of a variable. Always double-check
-that the mathematics of your model supports your conclusions.
+---
+
+It may not make sense to say "we increase $X$ by 1
+unit" or "when $X$ increases by 1 unit". For example??
 
 To illustrate the interpretations given above, we interpret the simple
-linear regression model fit to the `penguins` data in Section
-\@ref(s:penguins-slr). From Section \@ref(s:penguins-slr), the fitted
-simple linear regression model of `body_mass_g` regressed on
-`body_mass_g` is $$
-\hat{E}(\mathtt{bill\_length\_mm}\mid \mathtt{body\_mass\_g})=26.9+0.004 (\#eq:slr-penguin-orig) \,\mathtt{body\_mass\_g}.
-$$ Some basic interpretations of the coefficients are:
+linear regression model fit to the `penguins` data. The fitted simple linear regression model of `body_mass_g` regressed on
+`body_mass_g` is 
+$$
+\hat{E}(\mathtt{bill\_length\_mm}\mid \mathtt{body\_mass\_g})=26.9+0.004 \,\mathtt{body\_mass\_g}.
+$$ 
+
+Some basic interpretations of the coefficients are:
 
 -   Intercept: The expected bill length of a penguin with a body mass of
-    0 grams is 26.9 mm. We discussed the absurdity of this
-    interpretation in Section \@ref(s:penguins-slr).
+    0 grams is 26.9 mm. 
 -   `body_mass_g`: A penguin 1 gram heavier than another penguin is
     expected to have a bill length 0.004 mm longer than the smaller
     penguin.
 
-The scale of the latter interpretation is difficult to comprehend. A
-weight difference of 1 gram is negligible in the context of penguin
-weights, and a bill length change of 0.004 mm is unlikely to be noticed
-by the naked eye. This suggests that rescaling our `body_mass_g`
-predictor could result in a more natural interpretation of the
-associated coefficient. In the code below, we divide the `body_mass_g`
-variable by 1000 to convert the variable from grams to kilograms, and
-consequently, save the rescaled variable as `body_mass_kg`. We then fit
-the model regressing `bill_length_mm` on `body_mass_kg` and extract the
+### Rescaling Predictors to aid Interpretation
+
+* A weight difference of 1 gram is negligible in the context of penguin
+weights
+* A bill length change of 0.004 mm is unlikely to be noticed
+
+In the code below, we divide the `body_mass_g` variable by 1000 to convert the variable from grams to kilograms. We then fit the model regressing `bill_length_mm` on `body_mass_kg` and extract the
 estimated coefficients.
 
 ```{r}
@@ -145,32 +133,33 @@ slmod_scaled <- lm(bill_length_mm ~ body_mass_kg, data = penguins)
 coefficients(slmod_scaled)
 ```
 
-The fitted model from above is $$
-\hat{E}(\mathtt{bill\_length\_mm}\mid \mathtt{body\_mass\_kg})=26.9+4.05 \,\mathtt{body\_mass\_kg}.(\#eq:slr-penguin-rescaled)
-$$ Thus, we can interpret the estimated coefficient for `body_mass_kg`
-as something like, "A penguin that is 1 kg larger than another penguin
-is expected to have a bill length 4 mm longer than the smaller penguin".
+* How do we reinterpret the model in the context of kilograms?
 
-Comparing the estimated coefficients from Equations
-\@ref(eq:slr-penguin-orig) and \@ref(eq:slr-penguin-rescaled), we see
-that dividing `body_mass_g` by 1000 resulted in the estimated
-coefficient changing by a factor of 1000. More generally, if
+---
+
+
+Dividing `body_mass_g` by 1000 resulted in the estimated
+coefficient changing by a factor of 1000. 
+
+More generally, if
 $\hat{\beta}_j$ is the estimated coefficient for $X_j$, then the
 regressor $(X_j + a)/c$ will have an estimated coefficient of
 $c\hat{\beta}_j$, where $a$ and $c$ are fixed, real numbers and assuming
 nothing else in the fitted model changes.
 
-### Interpretation for first-order multiple linear regression models {#interp-1st-order-ml}
+### Interpretation for first-order multiple linear regression models
 
 Suppose we have a multiple linear regression model with $p-1$ *numeric*
-regressors, so that $$
+regressors, so that 
+$$
 E(Y\mid X_1,\ldots,X_{p-1})=\beta_0 + \beta_1 X_1 + \cdots + \beta_{p-1} X_{p-1}.(\#eq:mlr-equation)
-$$ Relying on the definition of $\mathbb{X}$, we denote the set of
+$$ 
+
+Relying on the definition of $\mathbb{X}$, we denote the set of
 regressors without $X_j$ as
 $\mathbb{X}_{-j} = \mathbb{X}\setminus\{X_j\}$.
 
-The interpretations of the coefficients from the model in Equation
-\@ref(eq:mlr-equation) are:
+The interpretations of the coefficients from the model in Equation are:
 
 -   $\beta_0$ is the expected response when all regressors are 0, i.e.,
     $\beta_0=E(Y\mid X_1=0,\ldots,X_{p-1}=0)$.
@@ -185,84 +174,77 @@ The interpretations of the coefficients from the model in Equation
     non-intercept coefficients of a multiple linear regression model are
     known as **partial slopes**.
 
-Regarding the interpretation of $\beta_0$, from the regression model in
-Equation \@ref(eq:mlr-equation), notice that $$
+---
+
+Regarding the interpretation of $\beta_0$, from the regression model: 
+
+$$
 \begin{aligned}
 E(Y\mid X_1=0,\ldots,X_{p-1}=0) &= \beta_0 + \beta_1 \cdot 0 + \cdots + \beta_{p-1} \cdot 0\\
 &= \beta_0.
 \end{aligned}
 $$
 
-It is quite common for the mathematical interpretation of the intercept
-to be nonsensical because we are extrapolating outside the range of the
-observed data.
+The interpretation of the intercept is often nonsensical! What if $X_1$ was heart rate?
 
-For $\beta_j$, $j = 1,\ldots, p-1$, we notice that $$
-\begin{aligned}
-& E(Y\mid \mathbb{X}_{-j} = \mathbf{x}^*_{-j}, X_j = x_{j}^*+1)-E(Y\mid \mathbb{X}_{-j} = \mathbf{x}^*_{-j}, X_j = x_{j}^*)\\
-&=  \biggl[\beta_0 + \sum_{k=1}^{j-1}\beta_kx^*_k + \beta_j(x^*_j+1) + \sum_{k=j+1}^{p-1}\beta_kx^*_k\biggl] \\
-&\quad -\biggl[\beta_0 + \sum_{k=1}^{j-1}\beta_kx^*_k + \beta_jx^*_j + \sum_{k=j+1}^{p-1}\beta_kx^*_k\biggl]\\
-&= \beta_j.
-\end{aligned}
+### Issues Interpreting Polynomial Models
+
+In multiple regression models, a single predictor can be used more than once in the model. 
+
+E.g., in the 2nd-degree polynomial regression model:
+
+$$E(Y\mid X) = \beta_0 + \beta_1 X + \beta_2 X^2,$$ 
+
+$X$ is used in both the second and third terms. 
+
+* How does this affect the interpretation of $\beta_1$
+
+It is not possible to increase $X$ while keeping $X^2$ fixed. 
+
+The standard interpretation we discussed is applicable to first-order linear regression models.
+
+**First-order linear regression model:** no regressor is a function of any other regressor.
+
+### Penguins Example Revisited
+
+We interpret the first-order multiple linear regression model fit to the `penguins` data. The fitted multiple linear regression
+model is:
 $$
-
-A notable problem with the standard mathematical interpretation of
-multiple regression models is that a single predictor can be used more
-than once in the model. E.g., in the 2nd-degree polynomial regression
-model $$E(Y\mid X) = \beta_0 + \beta_1 X + \beta_2 X^2,$$ $X$ is used in
-both the second and third terms. So it is not possible to increase $X$
-while keeping $X^2$ fixed. The mathematical interpretation given in this
-section is applicable to first-order linear regression models (cf.
-Section \@ref(model-types)), where a *first-order linear regression
-model* is a multiple linear regression model in which no regressor is a
-function of any other regressor.
-
-Additionally, the interpretation given above for the partial slope
-coefficients applies to the coefficients of numeric predictors that can
-increase by 1 unit; that interpretation doesn't apply to the
-coefficients for categorical predictors, which are discussed in Section
-\@ref(interp-cat-predictor).
-
-To illustrate the interpretations given above, we interpret the
-first-order multiple linear regression model fit to the `penguins` data
-in Section \@ref(s:penguins-mlr). The fitted multiple linear regression
-model is $$
 \begin{aligned}
 &\hat{E}(\mathtt{bill\_length\_mm}\mid \mathtt{body\_mass\_g}, \mathtt{flipper\_length\_mm})\\
 &=-3.44+0.0007 \,\mathtt{body\_mass\_g}+0.22\,\mathtt{flipper\_length\_mm}.
 \end{aligned}
-(\#eq:mlr-penguins-interp)
 $$
 
 Some basic interpretations of the coefficients are:
 
--   Intercept: We expect a penguin with a body mass of 0 grams and a
+-   **Intercept:** We expect a penguin with a body mass of 0 grams and a
     flipper length of 0 mm to to have a bill length of -3.44 mm.
--   `body_mass_g`: For two penguins that have the same flipper length
-    but one penguin has a body mass 1 gram larger, we expect the heavier
-    penguin to have a bill length 0.0007 mm longer than the other
-    penguin.
--   `flipper_length_mm`: For two penguins with the same body mass but
-    whose flipper lengths differ by 1 mm, we expect the penguin with
-    longer flippers to have a bill length 0.22 mm longer than the other
-    penguin.
+-   **`body_mass_g`:** If we increase body mass by 1 gram, we expect bill length to increase 0.0007 mm *holding all else constant*.
+-   **`flipper_length_mm`:** If we increase flipper length by 1 mm, we expect the bill length to increase 0.22 mm *holding all else constant*.
 
-### Roles of regressor variables {#regressor-roles}
+### Roles of regressor variables
 
 Did you notice that the estimated coefficients for the intercept and the
-`body_mass_g` regressor changed between the fitted simple linear model
-and the fitted multiple linear regression model for the `penguins`
-example in the sections above (cf. Equations \@ref(eq:slr-penguin-orig)
-and \@ref(eq:mlr-penguins-interp))? Why does this happen? What is going
-on?
+`body_mass_g` regressor changed between the simple model and the multiple regression model?
+
+```{r, echo=FALSE}
+knitr::kable(
+  data.frame(
+    "Regression Model"=c("Simple Linear", "Multiple"),
+    "Intercept Coef."=c(26.9, -3.44),
+    "Body Mass Coef."=c(0.004,0.0007),
+    check.names = F
+  )
+)
+```
+
+* Why?
 
 The role a regressor plays in a regression model depends on what other
-regressors are in the model. Recall a team setting you've been in where
-you had to work with others to accomplish something; it could be related
-to school, work, sports, etc. Depending on the skills and knowledge your
-team members have, you will try to find a role in which you can
-effectively help the team. Something similar happens in regression
-models. Generally, we can't provide a definitive interpretation of a
+regressors are in the model. 
+
+Generally, we can't provide a definitive interpretation of a
 regressor's role in a fitted model without knowing what other regressors
 are in thee model. Thus, when interpreting a regressor, it is common to
 include the something like *after accounting for the other variables in
