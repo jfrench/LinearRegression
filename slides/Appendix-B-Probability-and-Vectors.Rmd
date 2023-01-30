@@ -2,13 +2,15 @@
 library(kableExtra)
 ```
 
-# Overview of probability, random variables, and random vectors {#prob-review}
+# Overview of probability, random variables, and random vectors 
 
 ## Probability Basics
 
-The mathematical field of probability attempts to quantify how likely certain outcomes are, where the outcomes are produced by a random experiment (defined below). In what follows, we assume you have a basic understanding of set theory and notation.
+Probability attempts to quantify how likely certain outcomes are, where the outcomes are produced by a random experiment (defined below). 
 
-We review some basic probability-related terminology in Table \@ref(tab:prob-tab1).
+*Required Background:* basic set theory.
+
+We review some basic probability-related terminology,
 
 ```{r prob-tab1, echo = FALSE}
 prob_tab1 <- data.frame(term = c("experiment", "outcome", "sample space", "event", "empty set"),
@@ -23,24 +25,40 @@ kbl(prob_tab1, caption = "Basic terminology used in probability.",
   kable_styling(full_width = FALSE)
 ```
 
-Some comments about the terms in Table \@ref(tab:prob-tab1):
+---
 
-- **Outcomes** may also be referred to as **points**, **realizations**, or **elements**.
-- The set of outcomes of $\Omega$ are referred to as the **elements** of $\Omega$.
-- An **event** is a subset of outcomes.
+Some comments about the terms,
+
+- **Outcomes**, aka **points**, **realizations**, or **elements**.
+- $\Omega$: set of outcomes, composed of **elements**.
+- **Event:** a subset of outcomes.
 - The **empty set** is a subset of $\Omega$, but not an outcome of $\Omega$.
 - The **empty set** is a subset of every event $A\subseteq \Omega$.
 
-We now review some basic set operations and related facts. Let $A$ and $B$ be two events contained in $\Omega$.
+---
 
-- The **intersection** of $A$ and $B$, denoted $A \cap B$ is the set of outcomes that are common to both $A$ and $B$, i.e., $A \cap B = \{\omega \in \Omega: \omega \in A\;\mathrm{and}\;\omega \in B\}$.
-    - Events $A$ and $B$ are **disjoint** if $A\cap B = \emptyset$, i.e., if there are no outcomes common to events $A$ and $B$.
-- The **union** of $A$ and $B$, denoted $A \cup B$ is the set of outcomes that are in $A$ or $B$ or both, i.e., $A \cup B = \{\omega \in \Omega: \omega \in A\;\mathrm{or}\;\omega \in B\}$.
-- The **complement** of $A$, denoted $A^c$ is the set of outcomes that are in $\Omega$ but are not in $A$, i.e., $A^c = \{\omega \in \Omega: \omega \not\in A\}$.
-    - The complement of $A$ may also be denoted as $\overline{A}$ or $A'$.
-- The set **difference** between $A$ and $B$, denoted $A \setminus B$, is the elements of $A$ that are not in $B$, i.e., $A\setminus B = \{\omega \in A: \omega \not\in B\}$.
+### Basic Set Operations
+
+Let $A$ and $B$ be two events contained in $\Omega$.
+
+- The **intersection** of $A$ and $B$ is the set of outcomes that are common to both $A$ and $B$, 
+    - Denoted $A \cap B$
+    - Set definition: $A \cap B = \{\omega \in \Omega: \omega \in A\;\mathrm{and}\;\omega \in B\}$.
+
+- Events $A$ and $B$ are **disjoint** if $A\cap B = \emptyset$, or $A$ and $B$ have no common outcomes.
+- The **union** of $A$ and $B$ is the set of outcomes that are in $A$ or $B$ or both.
+    - Denoted $A \cup B$
+    - Set definition: $A \cup B = \{\omega \in \Omega: \omega \in A\;\mathrm{or}\;\omega \in B\}$.
+- The **complement** of $A$ is the set of outcomes that are in $\Omega$ but are not in $A$.
+    - Denoted $A^c$, $\overline{A}$, or $A'$.
+    - Set definition: $A^c = \{\omega \in \Omega: \omega \not\in A\}$.
+- The set **difference** between $A$ and $B$ is the elements of $A$ that are not in $B$.
+    - Denoted $A \setminus B$
+    - Set definition: $A\setminus B = \{\omega \in A: \omega \not\in B\}$.
     - The set difference between $A$ and $B$ may also be denoted by $A-B$.
     - The set difference is order specific, i.e., $(A\setminus B) \not= (B\setminus A)$ in general.
+
+### Probability Function
 
 A function $P$ that assigns a real number $P(A)$ to every event $A$ is a probability distribution if it satisfies three properties:
 
@@ -53,6 +71,8 @@ A set of events $\{A_i:i\in I\}$ are **independent** if
 P\left(\cap_{i\in J} A_i \right)=\prod_{i\in J} P(A_i )
 \]
 for every finite subset $J\subseteq I$.
+
+---
 
 The **conditional probability** of $A$ given $B$, denoted as $P(A\mid B)$, is the probability that $A$ occurs given that $B$ has occurred, and is defined as 
 \[
@@ -74,7 +94,7 @@ A **random variable** $Y$ is a mapping/function
 \[
 Y:\Omega\to\mathbb{R}
 \]
-that assigns a real number $Y(\omega)$ to each outcome $\omega$. We typically drop the $(\omega)$ notation for simplicity.
+that assigns a real number $Y(\omega)$ to each outcome $\omega$. (We typically drop the $(\omega)$ notation for simplicity.)
 
 The **cumulative distribution function (CDF)** of $Y$, $F_Y$, is a function $F_Y:\mathbb{R}\to [0,1]$ defined by 
 \[
