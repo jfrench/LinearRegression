@@ -179,7 +179,7 @@ RSS(\hat{\beta}_0, \hat{\beta}_1) &= \sum_{i=1}^n \hat{\epsilon}_i^2 \\
 (\#eq:equiv-def-rss-slr)
 \]
 
-The **fitted model** is the estimated model that minimizes the RSS, and is written as
+The **fitted model** is the estimated model that minimizes the RSS and is written as
 \[
 \hat{Y}=\hat{E}(Y|X) = \hat{\beta}_0 + \hat{\beta}_1 X. (\#eq:def-fitted-model-slr)
 \]
@@ -941,7 +941,7 @@ It may seem sensible to choose between models based on the value of $R^2$. This 
 1. $R^2$ never decreases as regressors are added to an existing model. Basically, you can increase $R^2$ by simply adding regressors to your existing model, even if they are non-sensical.
 2. $R^2$ doesn't tell you whether a model adequately describes the pattern of the observed data. $R^2$ is a useful statistic for measuring model fit when there is approximately a linear relationship between the response values and fitted values.
 
-Regarding point 1, consider what happens when we add a regressor of random values to the parallel lines model fit to the `penguins` data. The code below sets a random number seed so that we can get the same results each time we run the code, creates the regressor `noisyx` by sampling 344 values randomly drawn from a $\mathsf{N}(0,1)$ distribution, adds `noisyx` as a regressor to the parallel lines regression model stored in `lmodp`, and then extracts the $R^2$ value. We use the `update` method to update our existing model. The `update` function takes an existing model as its first argument and then the `formula` for the updated model. The syntax `. ~ .` means "keep the same response (on the left) and the same regressors (on the right)". We can then add or subtract regressors using the typical `formula` syntax. We use this approach to add the `noisyx` regressor to the regressors already in `lmodp`.
+Regarding point 1, consider what happens when we add a regressor of random values to the parallel lines model fit to the `penguins` data. The code below sets a random number seed so that we can get the same results each time we run the code, creates the regressor `noisyx` by sampling 344 values randomly drawn from a $\mathcal{N}(0,1)$ distribution, adds `noisyx` as a regressor to the parallel lines regression model stored in `lmodp`, and then extracts the $R^2$ value. We use the `update` method to update our existing model. The `update` function takes an existing model as its first argument and then the `formula` for the updated model. The syntax `. ~ .` means "keep the same response (on the left) and the same regressors (on the right)". We can then add or subtract regressors using the typical `formula` syntax. We use this approach to add the `noisyx` regressor to the regressors already in `lmodp`.
 
 ```{r}
 set.seed(28) # for reproducibility

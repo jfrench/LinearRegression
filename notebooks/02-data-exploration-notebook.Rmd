@@ -1,0 +1,735 @@
+---
+title: "Chapter 2 - Data Cleaning and Exploration"
+output:
+  html_document:
+    self_contained: true
+---
+
+```{r, include=FALSE}
+options(width = 60)
+# change Console output behavior
+knitr::opts_chunk$set(collapse = TRUE)
+```
+
+# Introduction
+
+You should explore every data set numerically and visually prior to modeling it. The data exploration process will help you:
+
+-   Find errors in your data
+-   Locate missing values
+-   Identify outliers and unusual observations
+-   Find patterns in your data
+-   Decide on a modeling approach
+-   Etc.
+
+When we receive a data set for the first time, we often need to:
+
+-   Restructure the data set so that each row is an observation and each column is a variable.
+-   Convert the variables to an appropriate type.
+-   Improve the name of the variables.
+-   Etc.
+
+The process of preparing the data into a friendly format is known as "cleaning".
+
+# Raw Palmer penguins data
+
+We will systematically explore the `penguins_raw` data set from the **palmerpenguins** package. To use the data:
+
+-   Load the data into memory using the `data` function.ins
+-   Specify the `name` of the data set to be loaded.
+-   Specify the package that contains the data.
+
+```{r data_penguins}
+data(penguins, package = "palmerpenguins")
+```
+
+This command actually loads two data sets:
+
+-   `penguins_raw`: the data set we will be looking at.
+-   `penguins`: a simplified version.
+
+The `penguins_raw` data set provides data related to various penguin species measured in the Palmer Archipelago (Antarctica).
+
+The data set includes 344 observations of 17 variables. The variables are:
+
+-   `studyName`: a `character` variable indicating the expedition from which the data were collected.
+-   `Sample Number`: a `numeric` variable denoting the continuous number sequence for each sample.
+-   `Species`: a `character` variable indicating the penguin species.
+-   `Region`: a `character` variable denoting the region of the Palmer LTER sampling grid the sample was obtained.
+-   `Island`: a `character` variable indicating the island on which the penguin was observed.
+-   `Stage`: a `character` variable indicating the reproductive stage of the observation.
+-   `Individual ID`: a `character` variable indicating the unique identification number for each individual in the data set.
+-   `Clutch Completion`: a `character` variable indicating whether the study nest was observed with a "full clutch" of 2 eggs.
+-   `Date Egg`: a `Date` variable indicating the date that the study nest was observed with 1 egg.
+-   `Culman Length (mm)`: a `numeric` variable indicating the length of the dorsal ridge of the penguin's bill in millimeters.
+-   `Culmen Depth (mm)`: a `numeric` variable indicating the indicating the depth of the dorsal ridge of the penguin's bill in millimeters.
+-   `Flipper Length (mm)`: a `numeric` variable indicating the penguin's flipper length in millimeters.
+-   `Body Mass (g)`: a `numeric` variable indicating the penguin's body mass in grams.
+-   `Sex`: a `character` variable indicating the penguin's sex (`FEMALE`, `MALE`)
+-   `Delta 15 N (o/oo)`: a `numeric` variable indicating the ratio of stable isotopes 15N:14N.
+-   `Delta 13 C (o/oo)`: a `numeric` variable indicating the ratio of stable isotopes 15C:12C.
+-   `Comments`: a `character` variable providing additional information about the observation.
+
+# Initial data cleaning
+
+The `str` function provides a general overview of the data's structure.
+
+```{r str-penguins-raw}
+str(penguins_raw, give.attr = FALSE)
+```
+
+An alternative to `str` is the `glimpse` function from the `dplyr` package.
+
+```{r}
+dplyr::glimpse(penguins_raw)
+```
+
+The `penguins_raw` data has terrible variable names.
+
+-   The variable names have a mixture of lowercase and uppercase letters, parentheses, and even spaces!
+-   This makes it complicated to access variables in the data frame.
+
+```{r penguins_raw_flipper_length}
+print(penguins_raw$`Flipper Length (mm)`, max = 10)
+```
+
+We will select only the variables that we will use in the future.
+
+```{r}
+# select certain columns of penguins_raw, assign new name
+penguins_clean <-
+  penguins_raw |>
+  subset(select = c("Species", "Island", "Culmen Length (mm)", "Culmen Depth (mm)", "Flipper Length (mm)", "Body Mass (g)", "Sex"))
+```
+
+To rename the columns of `penguins_clean`, we use the `names` function.
+
+```{r}
+# access column names and replace with new names
+names(penguins_clean) <- c("species",
+                           "island",
+                           "bill_length",
+                           "bill_depth",
+                           "flipper_length",
+                           "body_mass",
+                           "sex")
+# look at new column names
+names(penguins_clean)
+```
+
+Notable remaining issues with `penguins_clean`:
+
+-   `species`, `island`, and `sex` variables are categorical, but are represented as `character` vectors.
+-   These variables should each be converted to a `factor`.
+-   We use the `transform` function to convert the each variable to a `factor`.
+
+```{r}
+# convert species, island, and sex variables
+# to factor, replace original object
+penguins_clean <-
+  penguins_clean |>
+  transform(species = factor(species),
+            island = factor(island),
+            sex = factor(sex))
+# view structure
+dplyr::glimpse(penguins_clean)
+```
+
+The levels of of `species`, `island`, and `sex` are not formatted well.
+
+```{r}
+# determine levels of species and sex
+levels(penguins_clean$species)
+levels(penguins_clean$sex)
+```
+
+We now change the levels of each variable in the same order they are printed above and confirm that the changes were successful.
+
+```{r}
+# update factor levels of species and sex
+levels(penguins_clean$species) <- c("adelie", "chinstrap", "gentoo")
+levels(penguins_clean$sex) <- c("female", "male")
+# confirm that changes took effect
+dplyr::glimpse(penguins_clean)
+```
+
+# Numerical summarization of data
+
+Numerical exploration of a data set generally consists of computing various relevant statistics for each of the variables in a data set in order to summarize the data.
+
+| numeric summary                 | variable type | summarizes        | R function            |
+|----------------------|-----------------|-----------------|-----------------|
+| mean                            | `numeric`     | center            | `mean`                |
+| median                          | `numeric`     | center            | `median`              |
+| variance                        | `numeric`     | spread            | `var`                 |
+| standard deviation              | `numeric`     | spread            | `sd`                  |
+| interquartile range             | `numeric`     | spread            | `quantile` (modified) |
+| quantiles                       | `numeric`     | center and spread | `quantile`            |
+| correlation                     | `numeric`     | similarity        | `cor`                 |
+| frequency distribution          | `factor`      | counts            | `table`               |
+| relative frequency distribution | `factor`      | proportions       | `table` (modified)    |
+
+## Numeric data
+
+Numerical exploration of a set of `numeric` values usually focuses on determining the:
+
+1.  center
+2.  spread
+3.  quantiles (less common).
+
+It can also be useful to compute the correlation between two `numeric` variables.
+
+### Measures of center
+
+The sample mean and median are the most common statistics used to represent the "center" of a set of numeric values.
+
+The sample mean or average is:
+
+-   Obtained by adding all values in the sample and dividing by the number of observations.
+-   Computed in R using `mean`.
+-   Easily affected by outliers.
+
+The sample median is:
+
+-   The middle value of an ordered set of values (the actual middle value for when the number of values is odd and the average of the two middle values if there are an even number of values).
+-   Identical to the 0.5 quantile of the data.
+-   More "resistant" than the mean because it is not so greatly affected by outliers.
+-   Computed in R using `median`.
+
+We compute the mean of the `body_mass` variable of the `penguins_clean` data in the code below.
+
+```{r}
+mean(penguins_clean$body_mass)
+```
+
+Why is the result `NA` instead of a number?
+
+```{r}
+# compute sample mean and median body_mass, ignoring NAs
+mean(penguins_clean$body_mass, na.rm = TRUE)
+median(penguins_clean$body_mass, na.rm = TRUE)
+```
+
+**Question:** The median is less than the mean (i.e., large values are pulling the mean in the positive direction), what *might* this tell us about the distribution?
+
+### Quantiles
+
+The *p*th quantile (where $0\leq p \leq 1$) of a set of values is the value that separates the smallest $100 p$% of the values from the upper $100(1-p)$% of the values.
+
+-   The 0.25 sample quantile (often called Q1) of a set of values is the value that separates the smallest 25% of the values from the largest 75% of the values.
+
+The `quantile` function is used to compute sample quantiles.
+
+Quantiles are useful quantifying:
+
+-   Center (median).
+-   Spread (minimum and maximum or interquartile range = Q3 - Q1).
+
+```{r}
+quantile(penguins_clean$body_mass,
+         probs = c(0, 0.25, 0.5, 0.75, 1),
+         na.rm = TRUE)
+```
+
+**Question:** Q3 and the maximum are further from the median than Q1 and the minimum. Is this evidence that this variable may be positively skewed?
+
+### Measures of spread
+
+Spread is related to how far values are from each other.
+
+The sample variance of a set of values is:
+
+-   The (approximate) average of the squared deviation of each observation from the sample mean.
+-   $s^2 = \frac{1}{n-1}\sum_{i=1}^n (x_i - \bar{x})^2$.
+-   Computed using the `var` function.
+
+The sample standard deviation is:
+
+-   The square root of the sample variance.
+-   A more useful measure of spread because it is has the same units as the original data.
+-   Computed using the `sd` function.
+
+The larger the standard deviation or variance of a set of values, the more they vary from their sample mean.
+
+The sample standard deviation and variance can be greatly affected by outliers.
+
+The interquartile range is the difference between the 0.75 and 0.25 quantiles of a data set.
+
+-   It is more resistant to outliers than the sample variance or standard deviation.
+
+The minimum and maximum (in relation to the sample mean or median) can also be used to ascertain the spread of a data set.
+
+-   Computed using the `min` and `max` functions.
+
+We compute these measures of spread for the `body_mass` variable below.
+
+```{r}
+# sample variance
+var(penguins_clean$body_mass, na.rm = TRUE)
+# sample standard deviation
+sd(penguins_clean$body_mass, na.rm = TRUE)
+# interquartile range (names = FALSE removes text above the results)
+quantile(penguins_clean$body_mass, probs = 0.75,
+         na.rm = TRUE, names = FALSE) -
+  quantile(penguins_clean$body_mass, probs = 0.25,
+           na.rm = TRUE, names = FALSE)
+# minimum
+min(penguins_clean$body_mass, na.rm = TRUE)
+# maximum
+max(penguins_clean$body_mass, na.rm = TRUE)
+```
+
+### Correlation
+
+The correlation between two `numeric` variables quantifies the strength and direction of their linear relationship.
+
+The most common correlation statistic is Pearson's correlation statistic. If $x_1, x_2, x_n$ and $y_1, y_2, \ldots, y_n$ are two sets of `numeric` values, then the sample correlation statistic is computed as $$r = \frac{1}{n-1}\sum_{i=1}^n\left(\frac{x_i - \bar{x}}{s_x}\right)\left(\frac{y_i - \bar{y}}{s_y}\right),$$ where:
+
+-   $\bar{x}$ and $s_x$ denote the sample mean and standard deviation of the $x$'s.
+-   $\bar{y}$ and $s_y$ denoting the same thing for the $y$'s.
+-   $r$ must be between -1 and 1.
+-   The `cor` function can be used to compute the sample correlation between two `numeric` variables.
+
+**Interpretation**
+
+-   The closer $r$ is to -1 or 1, the closer the data values fall to a straight line.
+-   $r$ values close to 0 indicate that there is no linear relationship between the two variables.
+-   Negative $r$ values indicate a negative relationship between the two variables (as values for one variable increase, the values for the other variable tend to decrease).
+-   Positive $r$ values indicate a positive linear relationship between the two variables (as values for one variable increase, the values of the other variable also tend to increase).
+
+In the code below, we compute the sample correlation between all `numeric` variables in `penguins_clean`. We set `use = "pairwise.complete.obs"` so that all non-`NA` pairs of values are used in the calculation.
+
+```{r}
+# determine whether each variable is numeric
+num_col <- unlist(lapply(penguins_clean, is.numeric))
+# observe results
+num_col
+# compute correlation of numeric variables
+cor(penguins_clean[, num_col],
+    use = "pairwise.complete.obs")
+```
+
+-   The values of each variable are perfectly correlated with themselves.
+-   The correlation between `bill_length` and `body_mass` is 0.87, so the larger a penguin is, the larger its bill tends to be.
+-   Perhaps surprisingly, the correlation between `bill_length` and `bill_depth` is -0.24, so the longer a bill becomes, the shallower (narrower) we expect the depth to be.
+-   The correlation between `bill_depth` and `body_mass` is -0.47, so larger penguins tend to have narrower bills.
+
+## Categorical data
+
+A frequency distribution or relative frequency distribution are useful numeric summaries of categorical data.
+
+The `table` function returns a contingency table summarizing the number of observations having each level. Note that by default, the table ignores `NA` values.
+
+```{r}
+table(penguins_clean$sex)
+```
+
+To count the `NA` values (if present), we can set the `useNA` argument of `table` to `"ifany"`.
+
+```{r}
+table(penguins_clean$sex, useNA = "ifany")
+```
+
+A relative frequency distribution summarizes the proportion or percentage of observation with each level of a categorical variable. To compute the relative frequency distribution of a variable, we must divide the frequency distribution by the number of observations.
+
+```{r}
+# divide the frequence distribution of sex by the number of non-NA values
+table(penguins_clean$sex)/sum(!is.na(penguins_clean$sex))
+```
+
+If we want to include the `NA` values in our table, we can use the code below.
+
+```{r}
+table(penguins_clean$sex, useNA = "ifany")/length(penguins_clean$sex)
+```
+
+We do not know the `sex` of approximately 3% of the penguins observations.
+
+## The `summary` function
+
+The `summary` function provides a simple approach for quickly quantifying the center and spread of each `numeric` variable in a data frame or determining the frequency distribution of a `factor` variable.
+
+```{r}
+summary(penguins_clean)
+```
+
+# Visual summaries of data
+
+Visual summaries (i.e., plots) of data help us:
+
+-   Spot errors in our data, unusual observations, and simple patterns.
+-   Communicate the results of your analysis.
+
+The two most popular packages for producing graphics in R are:
+
+-   **base**: the default graphics system
+-   **ggplot2**: a "grammar of graphics" that is able to produce complex graphics with automated legends in a consistent, systematic way.
+
+| Visual summary       | Variable types          | Summary type | Base functions               | geoms                        |
+|:--------------|:--------------|:--------------|:--------------|:--------------|
+| box plot             | `numeric`               | univariate   | `boxplot`                    | `geom_boxplot`               |
+| histogram            | `numeric`               | univariate   | `hist`                       | `geom_histogram`             |
+| density plot         | `numeric`               | univariate   | `plot`, `density`            | `geom_density`               |
+| bar plot             | `factor`                | univariate   | `plot` or `barplot`, `table` | `geom_bar`                   |
+| scatter plot         | 2 `numeric`             | bivariate    | `plot`                       | `geom_point`                 |
+| parallel box plot    | 1 `numeric`, 1 `factor` | bivariate    | `plot` or `boxplot`          | `geom_boxplot`               |
+| grouped scatter plot | 2 `numeric`, 1 `factor` | multivariate | `plot`                       | `geom_point`                 |
+| facetted plots       | mixed                   | multivariate | none                         | `facet_wrap` or `facet_grid` |
+| interactive plots    | mixed                   | multivariate | none                         | `plotly::ggplotly`           |
+
+## The ggplot recipe
+
+There are 4 main components needed to produce a graphic using **ggplot2**.
+
+1.  A data frame containing your data.
+    -   Each column should be a variable and each row should be an observation of data.
+2.  A `ggplot` object.
+    -   This is initialized using the `ggplot` function.
+3.  A geometric object.
+    -   These are called "geoms" for short.
+    -   geoms indicate the geometric object used to visualize the data. E.g., points, lines, polygons etc. More generally, geoms indicate the type of plot that is desired, e.g., histogram, density, or box plot, which aren't exactly a simple geometric argument.
+4.  An aesthetic.
+    -   An aesthetic mapping indicates what role a variable plays in the plot.
+    -   e.g., which variable will play the "x" variable in the plot, the "y" variable in the plot, control the "color" of the observations, etc.
+
+We add "layers" of information to a `ggplot`, such as geoms, scales, or other customizations, using `+`.
+
+## Univariate plots
+
+A univariate plot is a plot that only involves a single variable.
+
+-   e.g., bar plots, box plots, histograms, density plots, dot plots (bad), pie charts (bad), etc.
+
+### Bar plots
+
+A bar plot (or bar chart) displays the number or proportion of observations in each category of a categorical variable (or using R terminology, each `level` of a `factor` variable).
+
+The simplest way to create a bar plot in base R is using the `plot` function on a `factor`.
+
+```{r}
+plot(penguins_clean$island, main = "distribution of island")
+```
+
+Alternatively, we can combine `barplot` with the `table` function.
+
+```{r}
+barplot(table(penguins_clean$sex, useNA = "ifany"),
+        names.arg = c("female", "male", "NA"))
+```
+
+To create a relatively frequency bar plot, we should divide the results of `table` by the number of relevant observations.
+
+```{r}
+barplot(table(penguins_clean$sex, useNA = "ifany") /
+          length(penguins_clean$sex),
+        names.arg = c("female", "male", "NA"))
+```
+
+To create a bar plot with **ggplot2**, we first create a basic `ggplot` object containing our data. Make sure to load the **ggplot2** package prior to creating the plot, otherwise you'll get errors!
+
+```{r}
+# load ggplot2 package
+library(ggplot2)
+# create generic ggplot object with our data
+gg_penguin <- ggplot(data = penguins_clean)
+```
+
+`gg_penguin` is a minimal `ggplot` object with the raw information needed to produce future graphics.
+
+To create a bar plot, we add the geom `geom_bar` and map the `species` variable (in this example) to the `x` aesthetic using the `aes` function.
+
+```{r}
+# create bar plot for species variable
+gg_penguin + geom_bar(aes(x = species))
+```
+
+### Box plots
+
+A box plot indicates:
+
+-   median
+-   0.25 quantile (Q1)
+-   0.75 quantile (Q3)
+-   extend bars to the largest and smallest observations that are not outliers.
+
+Outliers are usually marked with starts or dots.
+
+-   The standard definition of an outlier in the context of box plots is an value that is more than Q3 + 1.5 (Q3 - Q1) and less than Q1 - 1.5 (Q3 - Q1).
+
+Box plots:
+
+-   are useful for identifying outliers and skewness.
+-   throw away a lot of information.
+    -   be cautious in making conclusions about skewness and modality.
+
+The `boxplot` function is the easiest approach for producing a box plot using base R.
+
+```{r}
+boxplot(penguins_clean$body_mass,
+        main = "distribution of body mass")
+```
+
+**Questions:**
+
+-   Are there any outliers?
+-   Is there evidence the variable is skewed?
+
+To create a box plot using **ggplot2**, we use `geom_boxplot`.
+
+```{r}
+gg_penguin + geom_boxplot(aes(y = bill_length))
+```
+
+**Questions:**
+
+-   Are there outliers?
+-   Is there evidence the variable is skewed?
+
+### Histograms
+
+A histogram:
+
+-   Displays the distribution of a `numeric` variable.
+-   Counts the number of values falling into (usually) equal-sized "bins". - are used to assess skewness, modality (the number of clear "peaks" in the plot), and to some extent, outliers.
+
+The `hist` function is used create a histogram of a `numeric` variable.
+
+```{r}
+hist(penguins_clean$bill_length,
+     main = "",
+     xlab = "bill length (mm)",
+     breaks = 20)
+```
+
+**Questions:**
+
+-   Is the variable unimodal?
+-   What does this say about the skew?
+-   What does this tell us that numeric summaries did not?
+
+We use `geom_histogram` to create a histogram using **ggplot2**.
+
+```{r}
+gg_penguin + geom_histogram(aes(x = flipper_length))
+```
+
+**Question:** Is the variable unimodal or bimodal?
+
+### Density plots
+
+A density plot is similar to a smoothed histogram.
+
+-   The area under the smoothed curve must equal 1.
+-   Density plots sometimes have problems near the edges of a variable with a fixed upper or lower bound because it is difficult to know how to smooth the data in that case.
+
+The `plot` and `density` function can be combined to construct a density plot using **base** R.
+
+```{r}
+plot(density(penguins_clean$bill_depth,
+             na.rm = TRUE),
+     main = "")
+```
+
+**Question:** Is the variable unimodal or bimodal?
+
+We create a density plot with **ggplot2** using `geom_density`.
+
+```{r}
+gg_penguin + geom_density(aes(x = body_mass))
+```
+
+**Questions:**
+
+-   Is the `body_mass` variable is unimodal?
+-   Is there evidence the variable is skewed?
+
+## Bivariate plots
+
+A `bivariate` plot is a plot involving two variables.
+
+### Scatter plots
+
+Scatter plots can be used to identify the relationship between two `numeric` variables.
+
+We use the `plot` function to create a scatter plot.
+
+```{r}
+# xlab and ylab are used to customize the x-axis and y-axis labels
+plot(bill_length ~ body_mass,
+     data = penguins_clean,
+     xlab = "body mass (g)",
+     ylab = "bill length (mm)")
+```
+
+**Questions:**
+
+-   Is there a linear relationship between `body_mass` and `bill length`?
+-   Is it positive or negative?
+
+The `geom_point` function can be used to create a scatter plot with **ggplot2**.
+
+```{r}
+gg_penguin +
+  geom_point(aes(x = bill_depth, y = bill_length))
+```
+
+**Question:** What can we conclude from this plot?
+
+### Parallel box plots
+
+A parallel box plot:
+
+-   Is used to display the distribution of a `numeric` variable whose values are grouped based on each `level` of a `factor` variable.
+-   Are useful for determining if the distribution of a `numeric` variable substantially changes based on whether an observation has a certain `level` of a `factor`.
+
+```{r}
+plot(body_mass ~ sex, data = penguins_clean)
+```
+
+We can produce something similar with **ggplot2** by specifying both the `y` and `x` aesthetics of for `geom_boxplot`.
+
+```{r}
+gg_penguin + 
+  geom_boxplot(aes(x = species, y = bill_length))
+```
+
+## Multivariate plots
+
+A multivariate plot displays relationships between 2 or more variables.
+
+Multivariate plots are more easily created using **ggplot2** than **base**.
+
+### Grouped scatter plot
+
+A grouped scatter plot is a scatter plot that uses colors or symbols (or both) to indicate the `level` of a `factor` variable that each point corresponds to.
+
+```{r}
+gg_penguin +
+  geom_point(aes(x = body_mass,
+                 y = flipper_length,
+                 color = species))
+```
+
+We use a colorblind-friendly palette and some additional customizations below. An excellent resource for choosing a color palette is [https://colorbrewer2.org](https://colorbrewer2.org](https://colorbrewer2.org)).
+
+```{r}
+gg_penguin +
+  geom_point(aes(x = body_mass,
+                 y = flipper_length,
+                 color = species,
+                 shape = species)) +
+  scale_color_brewer(type = "qual",
+                     palette = "Dark2") +
+  xlab("body mass (g)") +
+  ylab("flipper length (mm)") +
+  ggtitle("body mass versus flipper length by species")
+```
+
+### Facetted plots (and alternatives)
+
+Facetting creates separate panels (facets) of plots based on one or more facetting variables.
+
+The key functions to do this with **ggplot2** are:
+
+-   `facet_grid` is used to create a grid of plots based on one or two `factor` variables.
+-   `facet_wrap` wraps facets of panels around the plot based on one `factor` variable..
+
+```{r}
+# simple facetting example
+gg_penguin +
+  geom_point(aes(x = bill_depth, y = bill_length)) +
+  facet_grid(~ species)
+```
+
+How do we deal with NAs in facetting?
+
+```{r}
+# facetting with NA facet!
+gg_penguin +
+  geom_density(aes(x = body_mass)) +
+  facet_grid(~ sex)
+# to remove NA facet, you must remove NAs
+# only do this for relevant columns to retain
+# as much data as possible
+penguins_temp <-
+  penguins_clean |>
+  subset(select = c(body_mass, sex, species)) |>
+  na.omit()
+# new plot from "clean" data
+ggplot(penguins_temp) +
+  geom_density(aes(x = body_mass)) +
+  facet_grid(~ sex)
+```
+
+Here's another facetting example that uses transparency.
+
+```{r}
+ggplot(data = penguins_temp) +
+  geom_density(aes(x = body_mass, fill = sex),
+               alpha = 0.5) +
+  facet_grid(~ species)
+```
+
+### Interactive graphics
+
+The **`plotly`** package is an R package to provide the capabilities of plotly [<https://plotly.com/>].
+
+-   plotly is a well-known tool for creating interactive graphics.
+-   The `ggplotly` function will instantly make a `ggplot` interactive.
+
+```{r}
+# load plotly package
+library(plotly)
+# create grouped scatter plot
+ggi <-
+  gg_penguin +
+  geom_point(aes(x = body_mass, y = flipper_length,
+                 color = species, shape = species)) +
+  scale_color_brewer(type = "qual", palette = "Dark2") +
+  xlab("body mass (g)") + ylab("flipper length (mm)") +
+  ggtitle("body mass versus flipper length by species")
+# make plot interactive
+ggplotly(ggi)
+```
+
+```{r}
+# create parallel box plots
+ggi2 <-
+  gg_penguin +
+  geom_boxplot(aes(x = species, y = bill_length))
+# make plot interactive
+ggplotly(ggi2)
+```
+
+## A plan for data cleaning and exploration
+
+1.  Import or create the data set.
+2.  Use the `str` or `dplyr::glimpse` function to get an idea of the initial structure. Look for problems with variable names and types, etc.
+3.  Clean the variable names based on your preferences.
+4.  Convert the variables to the appropriate type (e.g., categorical variables to `factor`).
+5.  Run the `summary` function on your data frame. Take note of `NAs`, impossible values that are data entry errors, etc. Perhaps perform some additional cleaning based on this information.
+6.  Compute any additional numeric summaries of the different variables, as desired.
+7.  Create univariate plots of all variables you are considering.
+
+-   Use histograms for discrete `numeric` variables
+-   Use density plots for continuous `numeric` variables.
+-   Use bar plots for `factor` variables.
+-   Take note of any interesting patterns such as modality, skewness, overall shape, outliers, etc.
+
+8.  Create bivariate plots of any pairs of variables.
+
+-   Use scatter plots for two `numeric` variables.
+-   Or use parallel box plots for `numeric` and `factor` variables.
+-   Or use histograms of the `numeric` variable facetted by the `factor` variable.
+-   Or use density plots of the `numeric` variables filled with different colors by the `factor` variable.
+
+9.  Create multivariate and interactive graphics based on what you learned in the previous steps.
+
+## Final notes on missing or erroneous data
+
+Correct erroneous data entries, when possible. If that's not possible, replace them with `NA` values.
+
+What should you do about `NA`s?
+
+-   If there is no systematic reason why the data are missing, then ignoring the observations with missing data isn't a terrible approach.
+-   If there is a systematic reason why the data are missing (such as individuals not wanting to answer a sensitive question, subjects dying for a specific reason) then ignoring that data can lead to erroneous conclusions.

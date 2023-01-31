@@ -30,7 +30,7 @@ and
 \]
 In matrix notation, this is stated as
 \[
-\mathrm{var}(\mathbf{y})=\sigma^2\mathbf{I}_{n\times n}.
+\mathrm{var}(\mathbf{y} \mid {\mathbf{X}})=\sigma^2\mathbf{I}_{n\times n}.
 \]
 
 Additionally, we assume that the errors are identically distributed. Formally, this may be written as
@@ -40,7 +40,7 @@ Additionally, we assume that the errors are identically distributed. Formally, t
 \]
 where $F$ is some arbitrary distribution. The $\sim$ is read as "distributed as". In other words, Equation \@ref(eq:errordist) means, "$\epsilon_i$ is distributed as $F$ for $i$ equal to $1,2,\ldots,n$". In practice, it is common to assume the errors have a normal (Gaussian) distribution. Two uncorrelated normal random variables are also independent (this is true for normal random variables, but is not generally true for other distributions). Thus, we may concisely state the typical error assumptions as
 \[
-\epsilon_1,\epsilon_2,\ldots,\epsilon_n \mid \mathbf{X}\stackrel{i.i.d.}{\sim} \mathsf{N}(0, \sigma^2),
+\epsilon_1,\epsilon_2,\ldots,\epsilon_n \mid \mathbf{X}\stackrel{i.i.d.}{\sim} \mathcal{N}(0, \sigma^2),
 \]
 or using matrix notation as
 \[
@@ -58,9 +58,9 @@ combines the following assumptions:
 
 For the linear model given in Equation \@ref(eq:linear-model-def-matrix) and under the assumptions summarized in Equation  \@ref(eq:error-assumptions-matrix), we have the following results:
 
-1. $\mathbf{y}\mid \mathbf{X}\sim \mathsf{N}(\mathbf{X}\boldsymbol{\beta}, \sigma^2 \mathbf{I}_{n\times n})$.
-1. $\hat{\boldsymbol{\beta}}\mid \mathbf{X}\sim \mathsf{N}(\boldsymbol{\beta}, \sigma^2(\mathbf{X}^T\mathbf{X})^{-1})$.
-1. $\hat{\boldsymbol{\epsilon}}\mid \mathbf{X}\sim \mathsf{N}(\mathbf{0}_{n\times 1}, \sigma^2 (\mathbf{I}_{n\times n} - \mathbf{H}))$.
+1. $\mathbf{y}\mid \mathbf{X}\sim \mathcal{N}(\mathbf{X}\boldsymbol{\beta}, \sigma^2 \mathbf{I}_{n\times n})$.
+1. $\hat{\boldsymbol{\beta}}\mid \mathbf{X}\sim \mathcal{N}(\boldsymbol{\beta}, \sigma^2(\mathbf{X}^T\mathbf{X})^{-1})$.
+1. $\hat{\boldsymbol{\epsilon}}\mid \mathbf{X}\sim \mathcal{N}(\mathbf{0}_{n\times 1}, \sigma^2 (\mathbf{I}_{n\times n} - \mathbf{H}))$.
 1. $\hat{\boldsymbol{\beta}}$ has the minimum variance among all unbiased estimators of $\boldsymbol{\beta}$ with the additional assumptions that the model is correct and $\mathbf{X}$ is full-rank.
 
 We prove these results in the sections below. To simplify the derivations below, we let $\mathbf{I}=\mathbf{I}_{n\times n}$ for the duration of this chapter.
@@ -109,7 +109,7 @@ $\vphantom{blank}$
 :::{.theorem #dist-properties-y}
 For the linear model given in Equation \@ref(eq:linear-model-def-matrix) and under the assumptions summarized in Equation \@ref(eq:error-assumptions-matrix), 
 \[
-\mathbf{y}\mid \mathbf{X}\sim \mathsf{N}(\mathbf{X}\boldsymbol{\beta}, \sigma^2 \mathbf{I}).(\#eq:dist-properties-y)
+\mathbf{y}\mid \mathbf{X}\sim \mathcal{N}(\mathbf{X}\boldsymbol{\beta}, \sigma^2 \mathbf{I}).(\#eq:dist-properties-y)
 \]
 :::
 
@@ -174,7 +174,7 @@ For the linear model given in Equation \@ref(eq:linear-model-def-matrix) and und
 &=(\mathbf{X}^T\mathbf{X})^{-1}\mathbf{X}^T\text{var}(\mathbf{y}|\mathbf{X})\mathbf{X}(\mathbf{X}^T\mathbf{X})^{-1}&\tiny\text{(simplification)}\\
 &=(\mathbf{X}^T\mathbf{X})^{-1}\mathbf{X}^T(\sigma^2\mathbf{I})\mathbf{X}(\mathbf{X}^T\mathbf{X})^{-1}&\tiny\text{(previous result)}\\
 &=\sigma^2(\mathbf{X}^T\mathbf{X})^{-1}\mathbf{X}^T\mathbf{X}(\mathbf{X}^T\mathbf{X})^{-1}&\tiny(\sigma^2 \text{ is a scalar)}\\
-&=\sigma^2(\mathbf{X}^T\mathbf{X})^{-1}.&\tiny\text{(simplpification)}
+&=\sigma^2(\mathbf{X}^T\mathbf{X})^{-1}.&\tiny\text{(simplification)}
 \end{aligned}
 \]
 
@@ -184,7 +184,7 @@ $\vphantom{blah}$
 :::{.theorem #dist-properties-betahat}
 For the linear model given in Equation \@ref(eq:linear-model-def-matrix) and under the assumptions summarized in Equation \@ref(eq:error-assumptions-matrix),
 \[
-\hat{\boldsymbol{\beta}}\mid \mathbf{X}\sim \mathsf{N}(\boldsymbol{\beta}, \sigma^2(\mathbf{X}^T\mathbf{X})^{-1}).(\#eq:dist-properties-betahat)
+\hat{\boldsymbol{\beta}}\mid \mathbf{X}\sim \mathcal{N}(\boldsymbol{\beta}, \sigma^2(\mathbf{X}^T\mathbf{X})^{-1}).(\#eq:dist-properties-betahat)
 \]
 :::
 
@@ -213,15 +213,14 @@ The **hat** matrix is denoted as
 \]
 
 Thus, using the substitution $\hat{\boldsymbol{\beta}}=(\mathbf{X}^T\mathbf{X})^{-1}\mathbf{X}^T\mathbf{y}$ and the definition for $\mathbf{H}$ in Equation \@ref(eq:hat-matrix-def), we see that
-
-\[
+$$
 \begin{aligned}
 \hat{\boldsymbol{\epsilon}} &= \mathbf{y}-\mathbf{X}\hat{\boldsymbol{\beta}} \\ 
 &= \mathbf{y} - \mathbf{X}(\mathbf{X}^T\mathbf{X})^{-1}\mathbf{X}^T\mathbf{y} \\
 &= \mathbf{y} - \mathbf{H}\mathbf{y} \\
-&= (\mathbf{I}-\mathbf{H})\mathbf{y}. (\#eq:residual-hat-def)
+&= (\mathbf{I}-\mathbf{H})\mathbf{y}.
 \end{aligned}
-\]
+$$
 
 The hat matrix is an important theoretical matrix, as it projects $\mathbf{y}$ into the space spanned by the vectors in $\mathbf{X}$. It also has some properties that we will exploit in some of the derivations below.
 
@@ -334,7 +333,7 @@ For the linear model given in Equation \@ref(eq:linear-model-def-matrix) and und
 ::: {.theorem #dist-properties-residuals}
 For the linear model given in Equation \@ref(eq:linear-model-def-matrix) and under the assumptions summarized in Equation \@ref(eq:error-assumptions-matrix),
 \[
-\hat{\boldsymbol{\epsilon}}\mid \mathbf{X}\sim \mathsf{N}(\mathbf{0}_{n\times 1}, \sigma^2 (\mathbf{I} - \mathbf{H})).(\#eq:dist-properties-residuals)
+\hat{\boldsymbol{\epsilon}}\mid \mathbf{X}\sim \mathcal{N}(\mathbf{0}_{n\times 1}, \sigma^2 (\mathbf{I} - \mathbf{H})).(\#eq:dist-properties-residuals)
 \]
 
 :::
