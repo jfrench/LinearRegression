@@ -409,7 +409,7 @@ What are you looking for? Generally, categories that have substantially more or 
 The simplest way to create a bar plot in base R is using the `plot` function on a `factor`. In the code below, we create a bar plot for the `island` variable of `penguins_clean`. We use the `main` argument to add a title to the plot.
 
 ```{r}
-plot(penguins$island, main = "distribution of island")
+plot(penguins_clean$island, main = "distribution of island")
 ```
 
 We see that the largest number of penguins were obserevd on Biscoe allowed, followed by Dream and Torgersen islands, respectively.
@@ -456,7 +456,7 @@ Box plots are useful for identifying outliers and skewness in the variable. Howe
 The `boxplot` function is the easiest approach for producing a box plot using base R. We do so for the `body_mass` variable below.
 
 ```{r}
-boxplot(penguins_clean$body_mass, data = penguins_clean,
+boxplot(penguins_clean$body_mass,
         main = "distribution of body mass")
 ```
 

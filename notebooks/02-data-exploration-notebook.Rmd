@@ -158,7 +158,7 @@ dplyr::glimpse(penguins_clean)
 Numerical exploration of a data set generally consists of computing various relevant statistics for each of the variables in a data set in order to summarize the data.
 
 | numeric summary                 | variable type | summarizes        | R function            |
-|------------------------|----------------|----------------|-----------------|
+|----------------------|-----------------|-----------------|-----------------|
 | mean                            | `numeric`     | center            | `mean`                |
 | median                          | `numeric`     | center            | `median`              |
 | variance                        | `numeric`     | spread            | `var`                 |
@@ -407,7 +407,7 @@ A bar plot (or bar chart) displays the number or proportion of observations in e
 The simplest way to create a bar plot in base R is using the `plot` function on a `factor`.
 
 ```{r}
-plot(penguins$island, main = "distribution of island")
+plot(penguins_clean$island, main = "distribution of island")
 ```
 
 Alternatively, we can combine `barplot` with the `table` function.
@@ -466,7 +466,6 @@ The `boxplot` function is the easiest approach for producing a box plot using ba
 
 ```{r}
 boxplot(penguins_clean$body_mass,
-        data = penguins_clean,
         main = "distribution of body mass")
 ```
 
@@ -576,7 +575,7 @@ gg_penguin +
 
 **Question:** What can we conclude from this plot?
 
-#### Parallel box plots
+### Parallel box plots
 
 A parallel box plot:
 
@@ -590,7 +589,8 @@ plot(body_mass ~ sex, data = penguins_clean)
 We can produce something similar with **ggplot2** by specifying both the `y` and `x` aesthetics of for `geom_boxplot`.
 
 ```{r}
-gg_penguin + geom_boxplot(aes(x = species, y = bill_length))
+gg_penguin + 
+  geom_boxplot(aes(x = species, y = bill_length))
 ```
 
 ## Multivariate plots
@@ -610,7 +610,7 @@ gg_penguin +
                  color = species))
 ```
 
-We use a colorblind-friendly palette and some additional customizations below.
+We use a colorblind-friendly palette and some additional customizations below. An excellent resource for choosing a color palette is [https://colorbrewer2.org](https://colorbrewer2.org](https://colorbrewer2.org)).
 
 ```{r}
 gg_penguin +
@@ -690,7 +690,9 @@ ggi <-
   ggtitle("body mass versus flipper length by species")
 # make plot interactive
 ggplotly(ggi)
+```
 
+```{r}
 # create parallel box plots
 ggi2 <-
   gg_penguin +
