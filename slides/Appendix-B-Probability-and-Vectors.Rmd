@@ -2,13 +2,15 @@
 library(kableExtra)
 ```
 
-# Overview of probability, random variables, and random vectors {#prob-review}
+# Overview of probability, random variables, and random vectors 
 
 ## Probability Basics
 
-The mathematical field of probability attempts to quantify how likely certain outcomes are, where the outcomes are produced by a random experiment (defined below). In what follows, we assume you have a basic understanding of set theory and notation.
+Probability attempts to quantify how likely certain outcomes are, where the outcomes are produced by a random experiment (defined below). 
 
-We review some basic probability-related terminology in Table \@ref(tab:prob-tab1).
+*Required Background:* basic set theory.
+
+We review some basic probability-related terminology,
 
 ```{r prob-tab1, echo = FALSE}
 prob_tab1 <- data.frame(term = c("experiment", "outcome", "sample space", "event", "empty set"),
@@ -23,24 +25,40 @@ kbl(prob_tab1, caption = "Basic terminology used in probability.",
   kable_styling(full_width = FALSE)
 ```
 
-Some comments about the terms in Table \@ref(tab:prob-tab1):
+---
 
-- **Outcomes** may also be referred to as **points**, **realizations**, or **elements**.
-- The set of outcomes of $\Omega$ are referred to as the **elements** of $\Omega$.
-- An **event** is a subset of outcomes.
+Some comments about the terms,
+
+- **Outcomes**, aka **points**, **realizations**, or **elements**.
+- $\Omega$: set of outcomes, composed of **elements**.
+- **Event:** a subset of outcomes.
 - The **empty set** is a subset of $\Omega$, but not an outcome of $\Omega$.
 - The **empty set** is a subset of every event $A\subseteq \Omega$.
 
-We now review some basic set operations and related facts. Let $A$ and $B$ be two events contained in $\Omega$.
+---
 
-- The **intersection** of $A$ and $B$, denoted $A \cap B$ is the set of outcomes that are common to both $A$ and $B$, i.e., $A \cap B = \{\omega \in \Omega: \omega \in A\;\mathrm{and}\;\omega \in B\}$.
-    - Events $A$ and $B$ are **disjoint** if $A\cap B = \emptyset$, i.e., if there are no outcomes common to events $A$ and $B$.
-- The **union** of $A$ and $B$, denoted $A \cup B$ is the set of outcomes that are in $A$ or $B$ or both, i.e., $A \cup B = \{\omega \in \Omega: \omega \in A\;\mathrm{or}\;\omega \in B\}$.
-- The **complement** of $A$, denoted $A^c$ is the set of outcomes that are in $\Omega$ but are not in $A$, i.e., $A^c = \{\omega \in \Omega: \omega \not\in A\}$.
-    - The complement of $A$ may also be denoted as $\overline{A}$ or $A'$.
-- The set **difference** between $A$ and $B$, denoted $A \setminus B$, is the elements of $A$ that are not in $B$, i.e., $A\setminus B = \{\omega \in A: \omega \not\in B\}$.
+### Basic Set Operations
+
+Let $A$ and $B$ be two events contained in $\Omega$.
+
+- The **intersection** of $A$ and $B$ is the set of outcomes that are common to both $A$ and $B$, 
+    - Denoted $A \cap B$
+    - Set definition: $A \cap B = \{\omega \in \Omega: \omega \in A\;\mathrm{and}\;\omega \in B\}$.
+
+- Events $A$ and $B$ are **disjoint** if $A\cap B = \emptyset$, or $A$ and $B$ have no common outcomes.
+- The **union** of $A$ and $B$ is the set of outcomes that are in $A$ or $B$ or both.
+    - Denoted $A \cup B$
+    - Set definition: $A \cup B = \{\omega \in \Omega: \omega \in A\;\mathrm{or}\;\omega \in B\}$.
+- The **complement** of $A$ is the set of outcomes that are in $\Omega$ but are not in $A$.
+    - Denoted $A^c$, $\overline{A}$, or $A'$.
+    - Set definition: $A^c = \{\omega \in \Omega: \omega \not\in A\}$.
+- The set **difference** between $A$ and $B$ is the elements of $A$ that are not in $B$.
+    - Denoted $A \setminus B$
+    - Set definition: $A\setminus B = \{\omega \in A: \omega \not\in B\}$.
     - The set difference between $A$ and $B$ may also be denoted by $A-B$.
     - The set difference is order specific, i.e., $(A\setminus B) \not= (B\setminus A)$ in general.
+
+### Probability Function
 
 A function $P$ that assigns a real number $P(A)$ to every event $A$ is a probability distribution if it satisfies three properties:
 
@@ -54,6 +72,8 @@ P\left(\cap_{i\in J} A_i \right)=\prod_{i\in J} P(A_i )
 \]
 for every finite subset $J\subseteq I$.
 
+---
+
 The **conditional probability** of $A$ given $B$, denoted as $P(A\mid B)$, is the probability that $A$ occurs given that $B$ has occurred, and is defined as 
 \[
 P(A\mid B) = \frac{P(A\cap B)}{P(B)}, \quad P(B) > 0.
@@ -63,7 +83,7 @@ Some additional facts about probabilities:
 
 - **Complement rule**: $P(A^c) = 1 - P(A)$.
 - **Addition rule**: $P(A\cap B) = P(A) + P(B) - P(A \cap B)$.
-- **Bayes' rule**: Assuming $P(A) > 0$ and $P(B) > 0$, then 
+- **Bayes' rule**: Assuming $P(A) > 0 $ and $P(B) > 0$, then 
 \[P(A\mid B) = \frac{P(B\mid A)P(A)}{P(B)}.\]
 - **Law of Total Probability**: Let $B_1, B_2, \ldots$ be a countably infinite partition of $\Omega$. Then 
 \[P(A) = \sum_{i=1}^{\infty} P(A \cap B_i) = \sum_{i=1}^{\infty} P(A \mid B_i) P(B_i).\]
@@ -74,7 +94,7 @@ A **random variable** $Y$ is a mapping/function
 \[
 Y:\Omega\to\mathbb{R}
 \]
-that assigns a real number $Y(\omega)$ to each outcome $\omega$. We typically drop the $(\omega)$ notation for simplicity.
+that assigns a real number $Y(\omega)$ to each outcome $\omega$. (We typically drop the $(\omega)$ notation for simplicity.)
 
 The **cumulative distribution function (CDF)** of $Y$, $F_Y$, is a function $F_Y:\mathbb{R}\to [0,1]$ defined by 
 \[
@@ -160,14 +180,14 @@ A random variable $Y$ is said to have an exponential distribution rate parameter
 The mean of an exponential random variable is 
 \[E(Y)=
 \int_{0}^{\infty} y\lambda \exp(-\lambda y)\;dy=
--\exp(-\lambda y)(\lambda^{-1}+y)\biggr]^{\infty}_{0}\\
-=\lambda^{-1}=\frac{1}{\lambda}.\]
+-\exp(-\lambda y)(\lambda^{-1}+y)\biggr]^{\infty}_{0}=
+\lambda^{-1}.\]
 Note that this process involves integration by parts, which is not shown. Similarly, $E(Y^2)=2\lambda^{-2}$. Thus,
 \[
 \mathrm{var}(Y)=
-E(Y^2)-[E(Y)]^2\\
-=2\lambda^{-2}-[\lambda^{-1}]^2\\
-=\lambda^{-2}\\=\frac{1}{\lambda^{2}}.
+E(Y^2)-[E(Y)]^2=
+2\lambda^{-2}-[\lambda^{-1}]^2=
+\lambda^{-2}.
 \]
 
 ### Useful facts for transformations of random variables
@@ -227,11 +247,11 @@ where $g$ is a function of the random variables.
 
 ### Marginal distributions
 
-If the random variables are jointly discrete, then the marginal pmf of $Y_1$ is obtained by summing over the other variables $Y_2, ..., Y_n$:
+If the random variables are jointly discrete, then the marginal pmf of $Y_1$ is
 \[f_{Y_1}(y_1)=\sum_{y_2\in\mathcal{S}_2}\cdots \sum_{y_n\in\mathcal{S}_n} f(y_1,\ldots,y_n).\]
 
-Similarly, if the  random variables are jointly continuous, then the marginal pdf of $Y_1$ is obtained by integrating over the other variables $Y_2, ..., Y_n$
-\[f_{Y_1}(y_1)=\int_{y_2\in\mathcal{S}_2}\cdots \int_{y_n\in\mathcal{S}_n} f(y_1,\ldots,y_n) dy_n \cdots dy_2.
+Similarly, if the  random variables are jointly continuous, then the marginal pdf of $Y_1$ is \[
+f_{Y_1}(y_1)=\int_{y_2\in\mathcal{S}_2}\cdots \int_{y_n\in\mathcal{S}_n} f(y_1,\ldots,y_n) dy_n \cdots dy_2.
 \]
 
 ### Independence of random variables
@@ -242,7 +262,7 @@ Alternatively, $X$ and $Y$ are independent if
 \[f(x, y) = f_X(x)f_Y(y).\]
 
 ### Conditional distributions
-Let $X$ and $Y$ be random variables. Then assuming $f_Y(y)>0$, the conditional distribution of $X$ given $Y = y$, denoted $X|Y=y$ comes from Bayes' formula:
+Let $X$ and $Y$ be random variables. Then assuming $f_Y(y)>0$, the conditional distribution of $X$ given $Y = y$, denoted $X|Y=y$ is
 \[f(x|y) = \frac{f(x, y)}{f_{Y}(y)}, \quad f_Y(y)>0.\]
 
 ### Covariance 
@@ -282,8 +302,6 @@ A random variable $Y$ is said to have a Binomial distribution with $n$ trials an
 \[f(y\mid\theta) = \binom{n}{y} \theta^y (1-\theta)^{(n-y)}.\]
 
 An alternative explanation of a Binomial random variable is that it is the sum of $n$ independent and identically-distributed Bernoulli random variables. Alternatively, let $Y_1,Y_2,\ldots,Y_n\stackrel{i.i.d.}{\sim} \mathsf{Bernoulli}(\theta)$, where i.i.d. stands for independent and identically distributed, i.e., $Y_1, Y_2, \ldots, Y_n$ are independent random variables with identical distributions. Then $Y=\sum_{i=1}^n Y_i \sim \mathsf{Bin}(n,\theta)$.
-
-A Binomial random variable with $\theta = 0.5$ models the question: what is the probability of flipping $y$ heads in $n$ flips?
 
 Using this information and the facts above, we can easily determine the mean and variance of $Y$.
 
@@ -342,41 +360,36 @@ f_Y(y) &=\int_{0}^y 4y^2\;dx \\
 
 The mean of $X$ is the integral of $x f_X(x)$ over the support of $X$, i.e.,
 \[
-E(X) =\int_{0}^1 x\biggl(\frac{4}{3}(1-x^3)\biggr)\;dx = \frac{2}{5}
+E(X) =\int_{0}^1 x\biggl(\frac{4}{3}(1-x^3)\biggr)\;dx = 2/5.
 \]
 
 Similarly,
 \[
-E(Y) =\int_{0}^1 y(4y^3)\;dy = \frac{4}{5}
+E(Y) =\int_{0}^1 y(4y^3)\;dy = 4/5.
 \]
 
 **Q4: Determine the variances of $X$ and $Y$.**
-
 We use the formula $\mathrm{var}(X)=E(X^2)-[E(X)^2]$ to compute the variances. First, 
 \[
-E(X^2) =\int_{0}^1 x^2\biggl(\frac{4}{3}(1-x^3)\biggr)\;dx = \frac{2}{9}
+E(X^2) =\int_{0}^1 x^2\biggl(\frac{4}{3}(1-x^3)\biggr)\;dx = 2/9.
 \]
 Second, 
 \[
-E(Y^2) =\int_{0}^1 y^2(4y^3)\;dy = \frac{2}{3}
+E(Y^2) =\int_{0}^1 y^2(4y^3)\;dy = 2/3.
 \]
-Thus, 
-
-\[\mathrm{var}(X)=2/5-(2/9)^2=\frac{142}{405}\]
-\[\mathrm{var}(Y)=4/5-(2/3)^2=\frac{16}{45}\]
+Thus, $\mathrm{var}(X)=2/5-(2/9)^2=142/405$ and $\mathrm{var}(Y)=4/5-(2/3)^2=16/45$.
 
 **Q5: Determine the mean of $XY$.**
 
 The mean of $XY$ requires us to integrate the product of $xy$ and the joint pdf over the joint support of $X$ and $Y$. Specifically,
 \[
-E(XY)=\int_{0}^{1}\int_{0}^{y} xy(4y^2)\;dx\;dy= \frac{1}{12}
+E(XY)=\int_{0}^{1}\int_{0}^{y} xy(4y^2)\;dx\;dy= 1/12.
 \]
 
 **Q6: Determine the covariance of $X$ and $Y$.**
-
 Using our previous work, we see that
 \[
-\mathrm{cov}(X,Y)=E(XY) - E(X)E(Y)=1/12-(2/5)(4/5)=-\frac{71}{300}
+\mathrm{cov}(X,Y)=E(XY) - E(X)E(Y)=1/12-(2/5)(4/5)=-71/300.
 \]
 
 **Q7: Determine the mean and variance of $Y-X$, i.e., the average amount of water remaining after a 3-hour window and the variability of that amount.**
@@ -405,7 +418,7 @@ The mean of a random vector is the vector containing the means of the random var
 E(\mathbf{y})=\begin{bmatrix}E(Y_1)\\E(Y_2)\\\vdots\\E(Y_n)\end{bmatrix}.
 \]
 
-The variance of a random vector isn't a number. Instead, it is the matrix of covariances of all pairs of random variables in the random vector. The variance of $\mathbf{y}$ is
+The variance of a random vector isn't a number. Instead, it is the matrix of all covariances of all pairs of random variables in the random vector. The variance of $\mathbf{y}$ is
 \[
 \begin{aligned}
 \mathrm{var}(\mathbf{y}) &= E(\mathbf{y}\mathbf{y}^T )-E(\mathbf{y})E(\mathbf{y})^T\\
@@ -413,7 +426,7 @@ The variance of a random vector isn't a number. Instead, it is the matrix of cov
 \mathrm{cov}(Y_n,Y_1)&\mathrm{cov}(Y_n,Y_2)&\dots&\mathrm{var}(Y_n)\end{bmatrix}.
 \end{aligned}
 \]
-Alternatively, the variance of $\mathbf{y}$ is called the **covariance matrix** of $\mathbf{y}$ or the **variance-covariance matrix** of $\mathbf{y}$. Note that $\mathrm{var}(\mathbf{y})=\mathrm{cov}(\mathbf{y}, \mathbf{y})$.
+Alternatively, the variance of $\mathbf{y}$ is called the **covariance matrix** of $\mathbf{y}$ or the **variance-covariance matrix** of $\mathbf{y}$.
 
 Let $\mathbf{x} = [X_1, X_2, \ldots, X_n]$ be an $n\times 1$ random vector.
 
@@ -421,12 +434,13 @@ The covariance matrix between $\mathbf{x}$ and $\mathbf{y}$ is defined as
 \[
 \mathrm{cov}(\mathbf{x}, \mathbf{y}) = E(\mathbf{x}\mathbf{y}^T) - E(\mathbf{x}) E(\mathbf{y})^T.
 \]
+Note that $\mathrm{var}(\mathbf{y})=\mathrm{cov}(\mathbf{y}, \mathbf{y})$.
 
 ### Properties of transformations of random vectors
 
 Define:
 
-* $\mathbf{a}$ to be  an $n\times 1$ vector of constants (not necessarily the same constant).
+* $\mathbf{a}$ to be  an $n\times 1$ vector of constants (not necessarilly the same constant).
 * $\mathbf{A}$ to be an $m\times n$ matrix of constants (not necessarily the same constant).
 * $\mathbf{x}=[X_1,X_2,\ldots,X_n]$ to be an $n\times 1$ random vector.
 * $\mathbf{y}=[Y_1,Y_2,\ldots,Y_n]$ to be an $n\times 1$ random vector.
@@ -458,26 +472,21 @@ Using the definitions and results in \@ref(random-vectors), we want to answer **
 \end{bmatrix}.
 \] We want to determine $E(Y-X)$ and $\mathrm{var}(Y-X)$.
 
-Define $\mathbf{A}=[-1, 1]^T$ (the ROW vector with 1 and -1). Then, 
+Define $\mathbf{A}=[-1, 1]^T$ (the ROW vector with 1 and -1). Then 
 \[
 \mathbf{Az}=\begin{bmatrix}-1 & 1\end{bmatrix}
 \begin{bmatrix}
 X\\
 Y
 \end{bmatrix}
-=Y-X
-\]
-and,
+=Y-X,\]
+and
 \[
-\begin{aligned}
-E(Y-X)&=E(\mathbf{Az})\\
-&=\begin{bmatrix}-1 & 1\end{bmatrix}
+E(Y-X)=E(\mathbf{Az})=\begin{bmatrix}-1 & 1\end{bmatrix}
 \begin{bmatrix}
 2/5\\
 4/5
-\end{bmatrix}\\
-&=-2/5+4/5\\&=2/5.
-\end{aligned}
+\end{bmatrix}=-2/5+4/5=2/5.
 \]
 Additionally,
 \[
@@ -516,17 +525,17 @@ f(\mathbf{y})=\frac{1}{(2\pi)^{n/2} |\boldsymbol{\Sigma}|^{1/2} }  \exp\left(-\f
 \]
 where $|\boldsymbol{\Sigma}|$ is the determinant of $\boldsymbol{\Sigma}$. Note that $\boldsymbol{\Sigma}$ must be symmetric and positive definite.
 
-In this case, we would denote the distribution of $\mathbf{y}$ as \[\mathbf{y}\sim \mathcal{N}(\boldsymbol{\mu},\boldsymbol{\Sigma}).\]
+In this case, we would denote the distribution of $\mathbf{y}$ as \[\mathbf{y}\sim \mathsf{N}(\boldsymbol{\mu},\boldsymbol{\Sigma}).\]
 
 ### Linear functions of a multivariate normal random vector
 
 A linear function of a multivariate normal random vector (i.e., $\mathbf{a}+\mathbf{A}\mathbf{y}$, where $\mathbf{a}$ is an $m\times 1$ vector of constant values and $\mathbf{A}$ is an $m\times n$ matrix of constant values) is also multivariate normal (though it could collapse to a single random variable if $\mathbf{A}$ is a $1\times n$ vector).  
 
-**Application**:  Suppose that $\mathbf{y}\sim \mathcal{N}(\boldsymbol{\mu},\boldsymbol{\Sigma})$. For an $m\times n$ matrix of constants $\mathbf{A}$, $\mathbf{A}\mathbf{y}\sim \mathcal{N}(\mathbf{A}\boldsymbol{\mu},\mathbf{A}\boldsymbol{\Sigma} \mathbf{A}^T)$.
+**Application**:  Suppose that $\mathbf{y}\sim \mathsf{N}(\boldsymbol{\mu},\boldsymbol{\Sigma})$. For an $m\times n$ matrix of constants $\mathbf{A}$, $\mathbf{A}\mathbf{y}\sim \mathsf{N}(\mathbf{A}\boldsymbol{\mu},\mathbf{A}\boldsymbol{\Sigma} \mathbf{A}^T)$.
 
 More generally, the most common estimators used in linear regression are linear combinations of a (typically) multivariate normal random vector, meaning that many of the estimators also have a (multivariate) normal distribution.
 
-### OLS matrix-form example
+### OLS example
 
 Ordinary least squares regression is a method for fitting a linear regression model to data. Suppose that we have observed variables $X_1, X_2, X_3, \ldots, X_{p-1}, Y$ for each of $n$ subjects from some population, with $X_{i,j}$ denoting the value of $X_j$ for observation $i$ and $Y_i$ denoting the value of $Y$ for observation $i$. In general, we want to use $X_1, \ldots, X_{p-1}$ to predict the value of $Y$. Let
 \[
@@ -543,11 +552,11 @@ be a full-rank matrix of size $n\times p$ and
 \mathbf{y}=(Y_1, Y_2, \ldots,Y_n)^T,
 \]
 be an $n\times 1$ vector of responses. It is common to assume that 
-\[ \mathbf{y}\sim \mathcal{N}(0_{n\times 1}, \sigma^2 \mathbf{I}_{n\times n}).
+\[ \mathbf{y}\sim \mathsf{N}(0_{n\times 1}, \sigma^2 \mathbf{I}_{n\times n}).
 \]
 
 The matrix $\mathbf{H}=\mathbf{X}(\mathbf{X}^T\mathbf{X})^{-1}\mathbf{X}^T$ projects $\mathbf{y}$ into the space spanned by the vectors in $\mathbf{X}$. Because of what we know about linear functions of a multivariate normal random vector (\@ref(linear-functions-of-a-multivariate-normal-random-vector)), we can determine that
 \[
-\mathbf{Hy}\sim \mathcal{N}(0_{n\times n},\sigma^2 \mathbf{H}).
+\mathbf{Hy}\sim \mathsf{N}(0_{n\times n},\sigma^2 \mathbf{H}).
 \]
 
