@@ -1,18 +1,25 @@
 ---
-title: "Chapter 3 - Linear Model Estimation"
-output:
-  html_document:
-    self_contained: true
+title: Chapter 3 - Linear Model Estimation
+author: Joshua French
+date: ''
+format: html
+self-contained: true
+title-block-banner: true
 ---
 
+<a href="https://colab.research.google.com/github/jfrench/LinearRegression/blob/master/notebooks/03-linear-model-estimation-notebook.ipynb">
+   <img src="https://colab.research.google.com/assets/colab-badge.svg">
+</a>
 
-
-```{r, include=FALSE}
-# change Console output behavior
-options(width = 60)
-# change Console output behavior
-knitr::opts_chunk$set(collapse = TRUE)
-library(kableExtra)
+```{r}
+if(!require(palmerpenguins, quietly = TRUE)) {
+  install.packages("palmerpenguins", repos = "https://cran.rstudio.com/")
+  library(palmerpenguins)
+}
+if(!require(ggplot2, quietly = TRUE)) {
+  install.packages("ggplot2", repos = "https://cran.rstudio.com/")
+  library(ggplot2)
+}
 ```
 
 # A simple motivating example
