@@ -571,21 +571,21 @@ Thus, for our test of the `body_mass_g` coefficient, the test statistic is $T_2 
 ## Hypothesis tests for multiple regression coefficients 
 
 Suppose we have have a standard linear regression model with 
-$p$ regression coefficients such as the one defined in Equation \@ref(eq:model-def-inference). We refer to this model as the "Full Model" and use the abbreviation $FM$.
+$p$ regression coefficients such as the one defined in Equation \@ref(eq:model-def-inference). We refer to this model as the "Complete Model".
 
-We want to compare $FM$ to a "Reduced Model" ($RM$) that is a special case of $FM$. The most common examples of $RM$ are:
+We want to compare the Complete Model to a "Reduced Model" that is a special case of the Complete Model. The most common examples of Reduced Model are:
 
 1. All of the coefficients except the intercept are set to zero.
 2. Some of the coefficients are set to zero.
 
-Less commonly considered examples of RM set certain coefficients equal to each other or place other restrictions on the coefficients. We emphasized that $RM$ is a special case of $FM$. Alternatively, this relationship is sometimes described by saying $RM$ is *nested* in $FM$.
+Less commonly considered examples of a Reduced Model set certain coefficients equal to each other or place other restrictions on the coefficients. We emphasize that the Reduced Model is a special case of the Complete Model. Alternatively, this relationship is sometimes described by saying the Reduced Model is *nested* in the Complete Model.
 
-Let $RSS_{RM}$ denote the RSS of the $RM$ and $RSS_{FM}$ denote the RSS of the $FM$. Similarly, $df_{RM}$ and $df_FM$ denote the degrees of freedom associated with the RSS for $RM$ and $FM$, respectively (recall that this is simply $n$, the number of observations, minus the number of estimated regression coefficients in the model being considered.)
+Let $RSS(RM)$ denote the RSS of the Reduced Model and $RSS(CM)$ denote the RSS of the Complete Model. Similarly, $df(RM)$ and $df(CM)$ denote the degrees of freedom associated with the RSS for the Reduced and Complete Models, respectively. Recall that the degrees of freedom associated with a RSS is simply $n$, the number of observations used to fit the model, minus the number of estimated regression coefficients in the model being considered.
 
-Without be specific or developing complex notation, we cannot be precise in stating the hypotheses we wish to test. A general statement of our hypotheses is:
+We want to perform a hypothesis test involving multiple regression coefficients in our model. Without be specific or developing complex notation, we cannot be precise in stating the hypotheses we wish to test. In the discussion below, we use RM as an abbreviation for the Reduced Model and CM as an abbreviation for the Complete Model. A general statement of the hypotheses we will test are:
 
-$H_0: RM\text{ is an adequate model for describing the population}$
-$H_a: FM\text{ is a more appropriate model for describing the population.}$
+$H_0: \text{RM is an adequate model for describing the population}$
+$H_a: \text{FM is a more appropriate model for describing the population.}$
 
 We wish to statistically assess whether we can simplify our model to $RM$. If $RM$ doesn't adequately explain the patterns of the data, then we will conclude that $FM$ is a more appropriate model.
 
@@ -593,7 +593,7 @@ If we assume that the assumptions in Equation
 \@ref(eq:error-assumption-inference) are true for $RM$ and that $RM$ is the true model, then 
 
 $$
-F=\frac{\frac{RSS_{RM}-RSS_{FM}}{df_{RM}-df_{FM}}}{\frac{RSS_{FM}}{df_{FM}}}=\frac{\frac{RSS_{RM}-RSS_{FM}}{df_{RM}-df_{FM}}}{\hat{\sigma}^2_{FM}}\sim F_{df_{RM}-df_{FM},df_{FM}},
+F=\frac{\frac{RSS_{RM}-RSS_{FM}}{df_{RM}-df_{FM}}}{\frac{RSS_{FM}}{df_{FM}}}=\frac{\frac{RSS_{RM}-RSS_{FM}}{df_{RM}-df_{FM}}}{\hat{\sigma}^2_{FM}}\sim F_{df_{RM}-df_{FM},df_{FM}}, (\#eq:f-stat-lh)
 $$
 where $F_{df_{RM}-df_{FM},df_{FM}}$ is an $F$ random variable with $df_{RM}-df_{FM}$ numerator degrees of freedom and $df_{FM}$ denominator degrees of freedom and $\hat{\sigma}^2_{FM}$ is the estimated error variance of $FM$.
 
@@ -606,155 +606,176 @@ We consider two common uses for this test below.`
 
 ### Test for a regression relationship
 
+The most common test involving multiple parameters is to test whether *any* of the non-intercept regression coefficients different from zero.
 
+The is known as the "test for a regression relationship".
 
-3.2 Testing Examples
+In this situation, the hypotheses to be tested may be stated as
 
-Test of all the regressors (test for a regression relationship)
+$H_0: E(Y \mid \mathbb{X}) = \beta_0$
+$H_a: E(Y\mid \mathbb{X})) = \beta_0 + X_1\beta_1 + \cdots + X_{p-1}\beta_{p-1}.$
 
-Are any of the regressors useful in predicting the response?
-	Full model (Ω) is y=Xβ+ϵ
-	X is a full-rank n×p matrix.
-	Reduced model (ω) is y=μ+ϵ=β_0+ϵ
+Alternatively, we can state these hypotheses as 
 
-We can write the hypotheses as
+$H_0: \beta_1 = \cdots = \beta_{p-1} = 0 \mid \beta_0 \in \mathbb{R}$
+$H_a: \beta_0 \in \mathbb{R}, \beta_1 \in \mathbb{R}, \ldots, \beta_{p-1}\in \mathbb{R}$.
 
-H_0:β_1=⋯=β_(p-1)=0 
-H_a: At least one of the regression coefficients is different from zero.
-For the simple model (ω), we estimate μ by y ̅.  Thus, 
-〖RSS〗_ω=(y- Y ̅ )^T (y-Y ̅ )=TSS,
-where TSS stands for the total sum of squares (corrected for the mean).
+Notice that the Reduced Model in $H_0$ is clearly a special case of the Complete Model with most of the regression coefficients set equal to zero. Notice that we specifically conditioned are hypotheses on the intercept coefficient, $\beta_0$ being included in both models we are comparing. 
+We want to choose between the models specified in $H_0$ and $H_a$. 
 
-For the full model (Ω), we get our typical residuals sum of squares
-〖RSS〗_Ω=(y-Xβ ̂ )^T (y-Xβ ̂ )=ϵ ̂^T ϵ ̂=RSS.
+The $F$ statistic in Equation \@ref(eq:f-stat-lh) used for this test simplifies dramatically when performing a test for a regression relationship.Using a bit of calculus or by carefully using the OLS estimator of the regression coefficients, it is possible to show that for the Reduced Model that $\hat{\beta}_0=\bar{Y}$. Thus, for the $RSS_R = \sum_{i=1}^n (Y_i - \bar{Y})^2$, which is the definition of the TSS defined in Chapter \@ref(linear-model-estimation)! Then the numerator of our F statistic becomes $TSS - RSS_C$, which is mathematically equivalent to the regression sum of squares for the Complete Model. The degrees of freedom of $RSS_R = n - 1$. Similarly, the degrees of freedom of $RSS_C = n - p$. Thus $df_R - df_C = (n - 1) - (n - p) = p-1$. Thus, our F statistic for this test simplifies to 
 
-Since the simple model has only 1 parameter and the full model was p parameters, the test statistic is
-
-F=((TSS-RSS)/(p-1))/(RSS/(n-p))=(SS_reg/(p-1))/σ ̂^2 .
- 
-The information in the above test is often presented in an analysis of variance (ANOVA) table.  
-
-The ANOVA table looks something like:
-
-Source	Degrees of Freedom	Sums of Squares	Mean Square	F
-Regression	p-1	SS_reg	(SS_reg)/(p-1)	F
-Residual	n-p	RSS	RSS/(n-p)	
-Total	n-1	TSS		
-
-
- 
-Notes:
-	Even if we fail to reject H_0 (we’re not confident we should include any regressors), there may be a nonlinear relationship between the regressors and the response.
-	There may simply be too little data to confidently conclude a regressor helps describe the mean response.
-	Even if we conclude H_a, we’re not sure that model Ω is the best model—it is simply preferable to model ω.
-	Not all regressors may be necessary.
-	Additional regressors may improve the model further.
-	The F test for a regression relationship is just the beginning of analysis.
- 
-Galapagos Example
-
-There are 30 cases (Islands) and seven variables in the data set.  The relevant variables are:
-
-	Species – the number of plant species found on the island
-	Area – the area of the island (km2)
-	Elevation – the highest elevation of the island (m)
-	Nearest (the distance from the nearest island (km)
-	Scruz – the distance from Santa Cruz Island (km)
-	Adjacent – the area of the adjacent island (km2)
-
-
- 
-Test whether there is a regression relationship between the response and all the predictors.
-
-H_0: 
-H_a: 
-
-Test statistic:
+$$
+F = \frac{SS_{reg}(CM)/(p-1)}{RSS(CM)/(n-p)}= \frac{SS_{reg}(CM)/(p-1)}{\hat{\sigma}^2_{CM}}.
+$$
 
 
 
-p-value:
+<!-- linear-model-estimation -->
 
 
-Conclusion in context:
- 
-Testing just one regressor
+<!-- Are any of the regressors useful in predicting the response? -->
+<!-- 	Full model (Ω) is y=Xβ+ϵ -->
+<!-- 	X is a full-rank n×p matrix. -->
+<!-- 	Reduced model (ω) is y=μ+ϵ=β_0+ϵ -->
 
-To test whether a single regressor (regressor j) can be dropped from the model, we choose between H_0:β_j=0 and H_a:β_j≠0.
+<!-- We can write the hypotheses as -->
 
-We have two options in this case:
+<!-- H_0:β_1=⋯=β_(p-1)=0  -->
+<!-- H_a: At least one of the regression coefficients is different from zero. -->
+<!-- For the simple model (ω), we estimate μ by y ̅.  Thus,  -->
+<!-- 〖RSS〗_ω=(y- Y ̅ )^T (y-Y ̅ )=TSS, -->
+<!-- where TSS stands for the total sum of squares (corrected for the mean). -->
 
-	Use the previous approach, letting the reduced model be the one without that regressor.
-	Use a t-statistic approach.
+<!-- For the full model (Ω), we get our typical residuals sum of squares -->
+<!-- 〖RSS〗_Ω=(y-Xβ ̂ )^T (y-Xβ ̂ )=ϵ ̂^T ϵ ̂=RSS. -->
 
-The statistic t_j=β ̂_j/(se) ̂(β ̂_j) has a t distribution with n-p degrees of freedom under H_0 and can be used to decide between the claims using a t distribution with n-p degrees of freedom.
+<!-- Since the simple model has only 1 parameter and the full model was p parameters, the test statistic is -->
 
-Notes:
-	t_i^2=F and the results will be numerically identical.
-	The t distribution approach requires less work, and is typically preferred in this simpler context.
-	The test of a regression coefficient is relative to the other regressors in the model.  We cannot look at the effect of one regressor without considering the effect of the other regressors. 
-	The result of a test may be different when different regressor variables are considered.
+<!-- F=((TSS-RSS)/(p-1))/(RSS/(n-p))=(SS_reg/(p-1))/σ ̂^2 . -->
+<!--   -->
+<!-- The information in the above test is often presented in an analysis of variance (ANOVA) table.   -->
 
- 
-Galapagos example continued:  Test whether the regression coefficient for Area is significant (assuming the other predictors are in the model).
+<!-- The ANOVA table looks something like: -->
 
-H_0: 
-H_a: 
-
-Test statistic:
-
-
-
-p-value:
+<!-- Source	Degrees of Freedom	Sums of Squares	Mean Square	F -->
+<!-- Regression	p-1	SS_reg	(SS_reg)/(p-1)	F -->
+<!-- Residual	n-p	RSS	RSS/(n-p)	 -->
+<!-- Total	n-1	TSS		 -->
 
 
-Conclusion in context:
+<!--   -->
+<!-- Notes: -->
+<!-- 	Even if we fail to reject H_0 (we’re not confident we should include any regressors), there may be a nonlinear relationship between the regressors and the response. -->
+<!-- 	There may simply be too little data to confidently conclude a regressor helps describe the mean response. -->
+<!-- 	Even if we conclude H_a, we’re not sure that model Ω is the best model—it is simply preferable to model ω. -->
+<!-- 	Not all regressors may be necessary. -->
+<!-- 	Additional regressors may improve the model further. -->
+<!-- 	The F test for a regression relationship is just the beginning of analysis. -->
+<!--   -->
+<!-- Galapagos Example -->
 
-It is not sufficient to say you are testing whether the coefficient for a single regressor is significant when other regressors are in the model.  
+<!-- There are 30 cases (Islands) and seven variables in the data set.  The relevant variables are: -->
 
-You should specify which regressor variables are in the model.
-
-
- 
-How do the results change if the larger model only had the Area regressor?
-
-H_0: 
-
-H_a: 
-
-Test statistic:
-
-
-p-value:
-
-
-Conclusion:
+<!-- 	Species – the number of plant species found on the island -->
+<!-- 	Area – the area of the island (km2) -->
+<!-- 	Elevation – the highest elevation of the island (m) -->
+<!-- 	Nearest (the distance from the nearest island (km) -->
+<!-- 	Scruz – the distance from Santa Cruz Island (km) -->
+<!-- 	Adjacent – the area of the adjacent island (km2) -->
 
 
-Testing a pair of regressors
+<!--   -->
+<!-- Test whether there is a regression relationship between the response and all the predictors. -->
 
-To test whether two (or more) regressors should simultaneously be dropped from the model, we should fit a reduced model without them and a full model including them using the general F test procedure previously described.
+<!-- H_0:  -->
+<!-- H_a:  -->
 
-Galapagos example continued:
-Test whether the Area and Adjacent regressor variables should be simultaneously dropped from the model that already includes Elevation, Nearest, and Scruz in the model.  Make sure to specify the regressors that are the model when stating H_0 and H_a.
-
- 
-H_0: 
-H_a: 
-
-Test statistic:
+<!-- Test statistic: -->
 
 
 
-p-value:
+<!-- p-value: -->
 
 
-Conclusion in context:
- 
-Would we get the same results if we tested the coefficients individually?
+<!-- Conclusion in context: -->
+<!--   -->
+<!-- Testing just one regressor -->
 
-Why?
+<!-- To test whether a single regressor (regressor j) can be dropped from the model, we choose between H_0:β_j=0 and H_a:β_j≠0. -->
 
+<!-- We have two options in this case: -->
+
+<!-- 	Use the previous approach, letting the reduced model be the one without that regressor. -->
+<!-- 	Use a t-statistic approach. -->
+
+<!-- The statistic t_j=β ̂_j/(se) ̂(β ̂_j) has a t distribution with n-p degrees of freedom under H_0 and can be used to decide between the claims using a t distribution with n-p degrees of freedom. -->
+
+<!-- Notes: -->
+<!-- 	t_i^2=F and the results will be numerically identical. -->
+<!-- 	The t distribution approach requires less work, and is typically preferred in this simpler context. -->
+<!-- 	The test of a regression coefficient is relative to the other regressors in the model.  We cannot look at the effect of one regressor without considering the effect of the other regressors.  -->
+<!-- 	The result of a test may be different when different regressor variables are considered. -->
+
+<!--   -->
+<!-- Galapagos example continued:  Test whether the regression coefficient for Area is significant (assuming the other predictors are in the model). -->
+
+<!-- H_0:  -->
+<!-- H_a:  -->
+
+<!-- Test statistic: -->
+
+
+
+<!-- p-value: -->
+
+
+<!-- Conclusion in context: -->
+
+<!-- It is not sufficient to say you are testing whether the coefficient for a single regressor is significant when other regressors are in the model.   -->
+
+<!-- You should specify which regressor variables are in the model. -->
+
+
+<!--   -->
+<!-- How do the results change if the larger model only had the Area regressor? -->
+
+<!-- H_0:  -->
+
+<!-- H_a:  -->
+
+<!-- Test statistic: -->
+
+
+<!-- p-value: -->
+
+
+<!-- Conclusion: -->
+
+
+<!-- Testing a pair of regressors -->
+
+<!-- To test whether two (or more) regressors should simultaneously be dropped from the model, we should fit a reduced model without them and a full model including them using the general F test procedure previously described. -->
+
+<!-- Galapagos example continued: -->
+<!-- Test whether the Area and Adjacent regressor variables should be simultaneously dropped from the model that already includes Elevation, Nearest, and Scruz in the model.  Make sure to specify the regressors that are the model when stating H_0 and H_a. -->
+
+<!--   -->
+<!-- H_0:  -->
+<!-- H_a:  -->
+
+<!-- Test statistic: -->
+
+
+
+<!-- p-value: -->
+
+
+<!-- Conclusion in context: -->
+<!--   -->
+<!-- Would we get the same results if we tested the coefficients individually? -->
+
+<!-- Why? -->
 
 ## Going deeper
 

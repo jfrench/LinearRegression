@@ -144,19 +144,20 @@ $$ Second, $$
 E(Y^2) =\int_{0}^1 y^2(4y^3)\;dy = \frac{2}{3}
 $$ Thus,
 
-$$\mathrm{var}(X)=2/5-(2/9)^2=\frac{142}{405}$$ $$\mathrm{var}(Y)=4/5-(2/3)^2=\frac{16}{45}$$
+$$\mathrm{var}(X)=2/9-(2/5)^2=\frac{14}{225}$$
+$$\mathrm{var}(Y)=2/3-(4/5)^2=\frac{2}{75}$$
 
 **Q5: Determine the mean of** $XY$.
 
 The mean of $XY$ requires us to integrate the product of $xy$ and the joint pdf over the joint support of $X$ and $Y$. Specifically, $$
-E(XY)=\int_{0}^{1}\int_{0}^{y} xy(4y^2)\;dx\;dy= \frac{1}{12}
+E(XY)=\int_{0}^{1}\int_{0}^{y} xy(4y^2)\;dx\;dy= \frac{1}{3}
 $$
 
 **Q6: Determine the covariance of** $X$ and $Y$.
 
 Using our previous work, we see that, $$
 \begin{aligned}
-\mathrm{cov}(X,Y)&=E(XY) - E(X)E(Y)\\&=1/12-(2/5)(4/5)\\&=-\frac{71}{300}
+\mathrm{cov}(X,Y)&=E(XY) - E(X)E(Y)\\&=1/3-(2/5)(4/5)\\&=1/75
 \end{aligned}
 $$
 
@@ -178,8 +179,8 @@ $$
 Using the definitions we introduced, we want to answer **Q7** of the hydration example. Summarizing only the essential details, we have a random vector $\mathbf{z}=[X, Y]$ with mean $E(\mathbf{z})=[2/5, 4/5]$ and covariance matrix $$
 \mathrm{var}(\mathbf{z})=
 \begin{bmatrix}
-142/405 & -71/300 \\
--71/300 & 16/45
+14/225 & 1/75 \\
+1/75 & 2/75
 \end{bmatrix}.
 $$ We want to determine $E(Y-X)$ and $\mathrm{var}(Y-X)$.
 
@@ -210,20 +211,20 @@ $$ Additionally, $$
 -1 & 1
 \end{bmatrix}
 \begin{bmatrix}
-142/405 & -71/300 \\
--71/300 & 16/45
+14/225 & 1/75 \\
+1/75 & 2/75
 \end{bmatrix}
 \begin{bmatrix}
 -1 \\ 1
 \end{bmatrix} \\
 &= \begin{bmatrix}
--142/405-71/300 & 71/300+16/45
+-14/225+1/75 & -1/75+2/75
 \end{bmatrix}
 \begin{bmatrix}
 -1 \\ 1
 \end{bmatrix} \\
-&= 142/405 + 16/45 + 2(71/300) \\
-&\approx 1.18.
+&= 14/225 + 2/75 - 2(1/75) \\
+&=14/225.
 \end{aligned}
 $$
 

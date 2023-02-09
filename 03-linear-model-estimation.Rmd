@@ -25,7 +25,7 @@ library(kableExtra)
 
 ## A simple motivating example {#a-simple-motivating-example}
 
-Suppose you observe data related to the heights of 5 mothers and their adult daughters. The observed heights (measured in inches) are provided in Table \@ref(tab:mdheights). Figure \@ref(fig:mdheights-plot) displays a scatter plot of the height data provided in Table \@ref(tab:mdheights). Would it be reasonable to use a mother's height to predict the height of her adult daughter?
+Suppose we observe data related to the heights of 5 mothers and their adult daughters. The observed heights (measured in inches) are provided in Table \@ref(tab:mdheights). Figure \@ref(fig:mdheights-plot) displays a scatter plot of the height data provided in Table \@ref(tab:mdheights). Would it be reasonable to use a mother's height to predict the height of her adult daughter?
 
 ```{r mdheights, echo = FALSE, message=FALSE}
 data(PearsonLee, package = "HistData") # load data
@@ -51,15 +51,15 @@ y <- mdh$daughter # daughters' heights
 plot(y ~ x, pch = 19, xlab = "mother's height (in)", ylab = "daughter's height (in)")
 ```
 
-A **regression analysis** is the process of building a model describing the typical relationship between a set of observed variables. In the present context, we want to model the height of adult daughters using their height of their mothers. The model we build is known as a **regression model**.
+A **regression analysis** is the process of building a model describing the typical relationship between a set of observed variables. A regression analysis builds the model using observed values of the variables for $n$ subjects sampled from a population. In the present context, we want to model the height of adult daughters using their height of their mothers. The model we build is known as a **regression model**.
 
 The variables in a regression analysis may be divided into two types: the response variable and the predictor variables.
 
-The outcome variable we are trying to predict is known as the **response variable**. Response variables are also known as **outcome**, **output**, or **dependent** variables. The response variable is denoted by $Y$.
+The outcome variable we are trying to predict is known as the **response variable**. Response variables are also known as **outcome**, **output**, or **dependent** variables. The response variable is denoted by $Y$. The observed value of $Y$ for observation $i$ is denoted $Y_i$. 
 
-The variables available to model the response variable are known as **predictors variables**.  Predictor variables are also known as **explanatory**, **regressor**, **input**, **dependent** variables, or simply as **features**. Following the convention of @alr4, we use the term **regressor** to refer to the variables used in our regression model, whether that is the original predictor variable, some transformation of a predictor, some combination of predictors, etc. Thus, every predictor can be a regressor but not all regressors are a predictor. The regressor variables are denoted as $X_1, X_2, \ldots, X_{p-1}$.
+The variables available to model the response variable are known as **predictors variables**.  Predictor variables are also known as **explanatory**, **regressor**, **input**, **dependent** variables, or simply as **features**. Following the convention of @alr4, we use the term **regressor** to refer to the variables used in our regression model, whether that is the original predictor variable, some transformation of a predictor, some combination of predictors, etc. Thus, every predictor can be a regressor but not all regressors are a predictor. The regressor variables are denoted as $X_1, X_2, \ldots, X_{p-1}$. The value of $X_j$ for observation $i$ is denoted by $x_{i,j}$. If there is only a single regressor in the model, we can denote the single regressor as $X$ and the observed values of $X$ as $x_1, x_2, \ldots, x_n$. 
 
-A regression analysis assumes that we have observed variables $X_1, X_2, \ldots, X_{p-1}$, and $Y$ for each of $n$ subjects from some population, with $x_{i,j}$ denoting the value of $X_j$ for observation $i$ and $Y_i$ denoting the value of $Y$ for observation $i$. If there is only a single regressor, we can denote the single regressor as $X$ and the observed values of $X$ as $x_1, x_2, \ldots, x_n$. For the height data, the 5 pairs of observed data are denoted
+For the height data, the 5 pairs of observed data are denoted
 \[(x_1, Y_1), (x_2, Y_2), \ldots, (x_5, Y_5),\]
 with $(x_i, Y_i)$ denoting the data for observation $i$. $x_i$ denotes the mother's height for observation $i$ and $Y_i$ denotes the daughter's height for
 observation $i$. Referring to Table \@ref(tab:mdheights), we see that, e.g., $x_3 = 63.5$ and $Y_5= 66.5$.
@@ -234,7 +234,7 @@ The various expressions given in Equation \@ref(eq:slr-beta1hat) are equivalent.
 
 In addition to the regression coefficients, the other parameter we mentioned in Section \@ref(ss:fv-resid-rss) is the error variance, $\sigma^2$. The most common estimator of the error variance is
 \[
-\hat{\sigma}^2 = \frac{RSS}{\mathrm{df}_RSS}. (\#eq:sigmasq-hat)
+\hat{\sigma}^2 = \frac{RSS}{\mathrm{df}_{RSS}}. (\#eq:sigmasq-hat)
 \]
 where $\mathrm{df}_{RSS}$ is the **degrees of freedom** of the RSS. In a simple linear regression context, the denominator of Equation \@ref(eq:sigmasq-hat) is $n-2$.   See Section \@ref(degrees-of-freedom) for more comments about degrees of freedom.
 
@@ -314,7 +314,7 @@ Using the output above, we see that the estimated parameters are $\hat{\beta}_0=
 \widehat{\mathtt{bill\_length\_mm}}=26.9+0.004 \,\mathtt{body\_mass\_g}.
 \]
 
-In the context of a simple linear regression model, the intercept term is the expected response when the value of the regressor is zero, while the slope is the expected change in the response when the regressor increases by 1 unit. Thus, based on the model we fit to the `penguin` data, we can make the following interpretations:
+In the context of a simple linear regression model, the intercept term is the expected response when the value of the regressor is zero, while the slope is the expected change in the response when the regressor increases by 1 unit. Thus, based on the model we fit to the `penguins` data, we can make the following interpretations:
 
 -   $\hat{\beta}_1$: If a penguin has a body mass 1 gram larger than another penguin, we expect the larger penguin's bill length to be 0.004 millimeters longer.
 -   $\hat{\beta}_0$: A penguin with a body mass of 0 grams is expected to have a bill length of 26.9 millimeters.
@@ -553,13 +553,14 @@ which is consistent with the previous definition given in Equation \@ref(eq:sigm
 We continue our analysis of the `penguins` data introduced in Section \@ref(s:penguins-slr). We will fit a multiple linear regression model regressing `bill_length_mm` on `body_mass_g` and `flipper_length_mm`, and will once again do so using the `lm` function.
 
 Before we do that, we provide some additional discussion of the of the `formula` argument of the `lm` function. This will be very important as we discuss more complicated models. Assume `y` is the response variable and `x`, `x1`, `x2`, `x3` are available numeric predictors. Then:
-  -   `y ~ x` describes the simple linear regression model $E(Y|X)=\beta_0+\beta_1 X$.
-  -   `y ~ x1 + x2` describes the multiple linear regression model $E(Y|X_1, X_2)=\beta_0+\beta_1 X_1 + \beta_2 X_2$.
-  -   `y ~ x1 + x2 + x1:x2` and `y ~ x1 * x2` describe the multiple linear regression model
+
+-   `y ~ x` describes the simple linear regression model $E(Y|X)=\beta_0+\beta_1 X$.
+-   `y ~ x1 + x2` describes the multiple linear regression model $E(Y|X_1, X_2)=\beta_0+\beta_1 X_1 + \beta_2 X_2$.
+-   `y ~ x1 + x2 + x1:x2` and `y ~ x1 * x2` describe the multiple linear regression model
   $E(Y|X_1, X_2)=\beta_0+\beta_1 X_1 + \beta_2 X_2 + \beta_3 X_1 X_2$.
-  -   `y ~ -1 + x1 + x2` describe a multiple linear regression model without an intercept, in this case,
+-   `y ~ -1 + x1 + x2` describe a multiple linear regression model without an intercept, in this case,
   $E(Y|X_1, X_2)=\beta_1 X_1 + \beta_2 X_2$. The `-1` tells R not to include an intercept in the fitted model.
-  -   `y ~ x + I(x^2)` describe the multiple linear regression model $E(Y|X)=\beta_0+\beta_1 X + \beta_2 X^2$. The `I()` function is a special function that tells R to create a regressor based on the syntax inside the `()` and include that regressor in the model.
+-   `y ~ x + I(x^2)` describe the multiple linear regression model $E(Y|X)=\beta_0+\beta_1 X + \beta_2 X^2$. The `I()` function is a special function that tells R to create a regressor based on the syntax inside the `()` and include that regressor in the model.
 
 In the code below, we fit the linear model regressing `bill_length_mm` on `body_mass_g` and `flipper_length_mm` and then use the `coef` and `deviance` functions to extract the estimated coefficients and RSS of the fitted model, respectively.
 
@@ -662,17 +663,17 @@ E(Y\mid X, C) =
 
 ### Extensions
 
-We have presented the most basic regression models that include a categorical predictor. If you had a categorical predictor $C$ with $K$ levels $L_1, L_2, \ldots, L_K$, then you could add indicator variables $D_2, D_3, \ldots, L_K$ to a simple linear regression model to create a parallel lines model for each level of $C$. Similarly, you could add regressors $D_2, D_3, \ldots, D_K, X D_2, X D_3, \ldots, X D_K$ to a simple linear regression model to create a separate lines model for each level of $C$.
+We have presented the most basic regression models that include a categorical predictor. If we have a categorical predictor $C$ with $K$ levels $L_1, L_2, \ldots, L_K$, then we can add indicator variables $D_2, D_3, \ldots, L_K$ to a simple linear regression model to create a parallel lines model for each level of $C$. Similarly, we can add regressors $D_2, D_3, \ldots, D_K, X D_2, X D_3, \ldots, X D_K$ to a simple linear regression model to create a separate lines model for each level of $C$.
 
 It is easy to imagine using multiple categorical predictors in a model, interacting one or more categorical predictors with one or more numeric regressors in model, etc. These models can be fit easily using R (as we'll see below), though interpretation becomes more challenging.
 
 ### Avoiding an easy mistake
 
-Why didn't we add $D_1$ to the parallel lines model? Or $D_1$ and $D_1 X$ to the separate lines model? First, we notice that we don't *need* to add them. E.g., if an observation doesn't havel level $L_2$ ($D_2=0$), then it must have level $L_1$. More importantly, we didn't do this because it will create linear dependencies in the columns of the regressor matrix $\mathbf{X}$.
+Why didn't we add $D_1$ to the parallel lines model? Or $D_1$ and $D_1 X$ to the separate lines model? First, we notice that we don't *need* to add them. E.g., if an observation doesn't have level $L_2$ ($D_2=0$), then it must have level $L_1$. More importantly, we didn't do this because it will create linear dependencies in the columns of the regressor matrix $\mathbf{X}$.
 
 Let $\mathbf{d}_1=[d_{1,1}, d_{2,1}, \ldots, d_{n,1}]$ be the column vector of observed values for indicator variable $D_1$ and $\mathbf{d}_2$ be the column vector for $D_2$. Then for a two-level categorical variable, $\mathbf{d}_1 + \mathbf{d}_2$ is an $n\times 1$ vector of 1s, meaning that $D_1$ and $D_2$ will be linearly dependent with the intercept column of our $\mathbf{X}$ matrix. Thus, adding $D_1$ to the parallel lines model would result in $\mathbf{X}$ having linearly dependent columns, which creates estimation problems.
 
-For a categorical predictor with $K$ levels, we only need indicator variables for $K-1$ levels of the categorical predictor. The level without an indicator variable in the regression model is known as the **reference level**, which is explained in Chapter  \@ref(interp-chapter). Technically, you can choose any level to be your reference level, but R automatically chooses the first level of a categorical (`factor`) variable to be the reference level, so we adopt that convention.
+For a categorical predictor with $K$ levels, we only need indicator variables for $K-1$ levels of the categorical predictor. The level without an indicator variable in the regression model is known as the **reference level**, which is explained in Chapter  \@ref(interp-chapter). Technically, we can choose any level to be our reference level, but R automatically chooses the first level of a categorical (`factor`) variable to be the reference level, so we adopt that convention.
 
 ## Penguins example with categorical predictor {#s:penguins-mlr2}
 
@@ -686,7 +687,7 @@ ggplot(data = penguins) +
   xlab("body mass (g)") + ylab("bill length (mm)")
 ```
 
-How do you use a categorical variable in R's `lm` function? Recall that we should represent our categorical variables as a `factor` in R. The `lm` function will automatically convert a `factor` variable to the correct number of indicator variables when you include the `factor` variable in your `formula` argument. R will automatically choose the reference level to be the first level of the `factor` variable. To add a main effect term for a categorical predictor, we simply add the term to our `lm` formula. To create an interaction term, we use `:` between the interacting variables. E.g., if `c` is a `factor` variable and `x` is a `numeric` variable, you can use the notation `c:x` in your `formula` to get all the interactions between `c` and `x`.
+How do we use a categorical variable in R's `lm` function? Recall that we should represent our categorical variables as a `factor` in R. The `lm` function will automatically convert a `factor` variable to the correct number of indicator variables when we include the `factor` variable in our `formula` argument. R will automatically choose the reference level to be the first level of the `factor` variable. To add a main effect term for a categorical predictor, we simply add the term to our `lm` formula. To create an interaction term, we use `:` between the interacting variables. E.g., if `c` is a `factor` variable and `x` is a `numeric` variable, we can use the notation `c:x` in our `formula` to get all the interactions between `c` and `x`.
 
 In our present context, the categorical predictor of interest is `species`, which has the levels `Adelie`, `Chinstrap`, and `Gentoo`. The `species` variable is already a `factor`. Since the variable has 3 levels, it will be transformed into 2 indicator variables by R. The first level of species is `Adelie`, so R will treat that level as the reference level, and automatically create indicator variables for the levels `Chinstrap` and `Gentoo`. (Reminder: to determine the level order of a `factor` variable `c`, run the commend `levels(c)`, or in this case `levels(penguins$species)`.)
 
@@ -857,7 +858,7 @@ The TSS is the sum of the squared deviations of the response values from the sam
 \[
 E(Y)=\beta_0. (\#eq:constant-mean-model)
 \]
-Using basic calculus, you can show that the OLS estimator of $\beta_0$ for the model in Equation \@ref(eq:constant-mean-model) is $\hat{\beta}_0=\bar{Y}$. For the constant mean model, the fitted value of every observation is $\hat{\beta}_0$, i.e., $\hat{Y}_i=\hat{\beta}_0$ for $i=1,2,\ldots,n$. Thus, the RSS of the constant mean model is $\sum_{i=1}^n(Y_i-\hat{Y}_i)^2=\sum_{i=1}^n(Y_i-\bar{Y})^2$. Thus, *the TSS is the RSS for the constant mean model*.
+Using basic calculus, we can show that the OLS estimator of $\beta_0$ for the model in Equation \@ref(eq:constant-mean-model) is $\hat{\beta}_0=\bar{Y}$. For the constant mean model, the fitted value of every observation is $\hat{\beta}_0$, i.e., $\hat{Y}_i=\hat{\beta}_0$ for $i=1,2,\ldots,n$. Thus, the RSS of the constant mean model is $\sum_{i=1}^n(Y_i-\hat{Y}_i)^2=\sum_{i=1}^n(Y_i-\bar{Y})^2$. Thus, *the TSS is the RSS for the constant mean model*.
 
 The **regression sum-of-squares** or **model sum-of-squares** is defined as
 \[
@@ -891,7 +892,7 @@ Some comments about the coefficient of determination:
 - $R^2=1$ for a fitted model that perfectly fits the data (the fitted values match the observed response values).
 - Generally, larger values of $R^2$ suggest that the model explains a lot of the variation in the response variable. Smaller $R^2$ values suggest the fitted model does not explain a lot of the response variation.
 - The `Multiple R-squared` value printed by the `summary` of an `lm` object is $R^2$.
-- To extract $R^2$ from a fitted model, you can use the syntax `summary(lmod)$r.squared`, where `lmod` is your fitted model.
+- To extract $R^2$ from a fitted model, we can use the syntax `summary(lmod)$r.squared`, where `lmod` is our fitted model.
 
 Figure \@ref(fig:rsquared-examples) provides examples of the $R^2$ value for various fitted simple linear regression models. The closer the points fall to a straight line, the larger $R^2$ tends to be. However, as shown in the bottom right panel of Figure \@ref(fig:rsquared-examples), a poorly fit model can result in a lower $R^2$ model even if there is a clear relationship between the points (the points have a perfect quadratic relationship).
 
@@ -938,8 +939,8 @@ summary(lmodp)$r.squared
 
 It may seem sensible to choose between models based on the value of $R^2$. This is unwise for two reasons:
 
-1. $R^2$ never decreases as regressors are added to an existing model. Basically, you can increase $R^2$ by simply adding regressors to your existing model, even if they are non-sensical.
-2. $R^2$ doesn't tell you whether a model adequately describes the pattern of the observed data. $R^2$ is a useful statistic for measuring model fit when there is approximately a linear relationship between the response values and fitted values.
+1. $R^2$ never decreases as regressors are added to an existing model. Basically, we can increase $R^2$ by simply adding regressors to our existing model, even if they are non-sensical.
+2. $R^2$ doesn't tell us whether a model adequately describes the pattern of the observed data. $R^2$ is a useful statistic for measuring model fit when there is approximately a linear relationship between the response values and fitted values.
 
 Regarding point 1, consider what happens when we add a regressor of random values to the parallel lines model fit to the `penguins` data. The code below sets a random number seed so that we can get the same results each time we run the code, creates the regressor `noisyx` by sampling 344 values randomly drawn from a $\mathcal{N}(0,1)$ distribution, adds `noisyx` as a regressor to the parallel lines regression model stored in `lmodp`, and then extracts the $R^2$ value. We use the `update` method to update our existing model. The `update` function takes an existing model as its first argument and then the `formula` for the updated model. The syntax `. ~ .` means "keep the same response (on the left) and the same regressors (on the right)". We can then add or subtract regressors using the typical `formula` syntax. We use this approach to add the `noisyx` regressor to the regressors already in `lmodp`.
 
@@ -954,7 +955,7 @@ summary(lmod_silly)$r.squared
 ```
 The $R^2$ value increased from 0.8080 to 0.8088! So clearly, choosing the model with the largest $R^2$ can be a mistake, as it will tend to favor models with more regressors.
 
-Regarding point 2, $R^2$ can mislead you into thinking an inappropriate model fits better than it actually does. @anscombe1973graphs provided a canonical data set known as "Anscombe's quartet" that illustrates this point. The data set is comprised of 4 different data sets. When a simple linear regression model is fit to each data set, we find that $\hat{\beta}_0=3$, $\hat{\beta}_1=0.5$, and that $R^2=0.67$. However, as we will see, not all models describe the data particularly well!
+Regarding point 2, $R^2$ can mislead us into thinking an inappropriate model fits better than it actually does. @anscombe1973graphs provided a canonical data set known as "Anscombe's quartet" that illustrates this point. The data set is comprised of 4 different data sets. When a simple linear regression model is fit to each data set, we find that $\hat{\beta}_0=3$, $\hat{\beta}_1=0.5$, and that $R^2=0.67$. However, as we will see, not all models describe the data particularly well!
 
 Anscombe's quartet is available as the `anscombe` data set in the **datasets** package. The data set includes `r nrow(anscombe)` observations of
 `r ncol(anscombe)` variables. The variables are:
@@ -1099,7 +1100,7 @@ The degrees of freedom of a statistics refers to the number of independent piece
 Consider the sample mean
 \[\bar{x}=\sum_{i=1}^n x_i.\]
 
-The calculation uses $n$ pieces of information to compute, but the statistic only has $n-1$ degrees of freedom. Once you know the sample mean, only $n-1$ values are  independent, while the last is constrained to be a certain value.
+The calculation uses $n$ pieces of information to compute, but the statistic only has $n-1$ degrees of freedom. Once we know the sample mean, only $n-1$ values are  independent, while the last is constrained to be a certain value.
 
 Let's say $n=3$ and $\bar{x} = 10$. Then $x_1$ and $x_2$ can be any numbers, but the last value MUST equal $30 - x_1 - x_2$ so that $x_1 + x_2 + x_3 = 30$ (otherwise the sample mean won't equal 10). To be more specific, if $x_1 = 5$ and $x_2 = 25$, then $x_3$ must be 0, otherwise the sample mean won't be 10.
 
@@ -1142,7 +1143,7 @@ Finally, we divide both sides by $n$ to get the OLS estimator for $\hat\beta_0$ 
 
 Similar to the previous derivation, we differentiate the RSS with respect to the parameter estimate of interest, set the derivative equal to zero, and solve for the parameter.
 
-We start by taking the partial derivative of the RSS with respect ot $\hat{\beta}_1$ and simplify.
+We start by taking the partial derivative of the RSS with respect to $\hat{\beta}_1$ and simplify.
 \[
 \begin{aligned}
 \frac{\partial RSS(\hat\beta_0, \hat\beta_1)}{\partial \hat\beta_1} &= \frac{\partial}{\partial \hat\beta_1}\sum_{i=1}^n (Y_i - \hat\beta_0 - \hat\beta_1x_i)^2 & \tiny\text{ (substitute formula for RSS)} \\
