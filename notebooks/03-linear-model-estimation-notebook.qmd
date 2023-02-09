@@ -32,7 +32,7 @@ if(!require(ggplot2, quietly = TRUE)) {
 
 # A simple motivating example
 
-Suppose you observe data related to the heights of 5 mothers and their adult daughters. The data are in the table below. 
+Suppose you observe data related to the heights (in) of 5 mothers and their adult daughters. The data are in the table below. 
 
 | observation| mother| daughter|
 |-----------:|------:|--------:|
@@ -74,7 +74,7 @@ The outcome variable we are trying to predict is known as the **response variabl
 
 The variables available to model the response variable are known as **predictors variables**:
 
-- They are also called **explanatory**, **regressor**, **input**, **dependent** variables or simply as **features**. 
+- They are also called **explanatory**, **regressor**, **input**, **independent** variables or simply as **features**. 
 - Following the convention of Weisberg (2014), we use the term **regressor** to refer to the variables used in our regression model, whether that is the original predictor variable, some transformation of a predictor, some combination of predictors, etc.
 - Every predictor can be a regressor but not all regressors are a predictor.
 - The regressor variables are denoted as $X_1, X_2, \ldots, X_{p-1}$.
@@ -104,6 +104,7 @@ Consider these potential "best fitting" lines that are drawn on the scatter plot
 
 ```{r}
 #| echo: false
+#| eval: true
 lmod <- lm(y ~ x)
 coef_ls <- coef(lmod) # OLS estimates
 lad <- function(b) {
@@ -118,7 +119,7 @@ abline(a = coef_lad[1], b = coef_lad[2], col = "grey")
 
 # Estimation of the simple linear regression model
 
-**Parameter estimation** is the process of using observed data to estimate values for the regression coefficients.
+**Parameter estimation** is the process of using observed data to estimate model parameters.
 
 There are many different methods of parameter estimation in statistics: 
 

@@ -1,11 +1,26 @@
 ---
 title: "Chapter 1 - R Foundations"
-output:
-  html_document:
-    self_contained: true
+author: Joshua French
+date: ''
+# format: html
+format: ipynb
+jupyter: ir
+execute:
+  enabled: false
+  output: false
+self-contained: true
+title-block-banner: true
 ---
 
-## What is R?
+To open this information in an interactive Colab notebook, click the Open in Colab graphic below.
+
+<a href="https://colab.research.google.com/github/jfrench/LinearRegression/blob/master/notebooks/01-r-foundations-notebook.ipynb">
+   <img src="https://colab.research.google.com/assets/colab-badge.svg">
+</a>
+
+---
+
+# What is R?
 
 R is a programming language and environment designed for statistical computing. [(https://www.r-project.org/about.html)](https://www.r-project.org/about.html)
 
@@ -18,7 +33,7 @@ Some important facts about R are that:
     -   Many user-created packages are available to extend the functionality beyond what is installed by default.
     -   Users can write their own functions and easily add software libraries to R.
 
-## Installing R and RStudio
+# Installing R and RStudio
 
 Install R by downloading an installer program from the R Project's website [(https://www.r-project.org/)](https://www.r-project.org/).
 
@@ -35,7 +50,7 @@ RStudio Desktop has four panes:
 
 Tip: Change your R Studio environment so that it doesn't save your workspace.
 
-## Running code, scripts, and comments
+# Running code, scripts, and comments
 
 You can run code in R by typing it in the Console next to the `>` symbol and pressing the Enter key.
 
@@ -79,7 +94,11 @@ Perform the following tasks:
 6.  Save your Script file.
 7.  Use the keyboard shortcut to "comment out" some of the lines of your Script file.
 
-## Assignment in R
+```{r}
+# type your commands here
+```
+
+# Assignment in R
 
 R works on various types of objects that we'll learn more about later.
 
@@ -92,7 +111,7 @@ Some comments:
     -   If you are creating an R Markdown file, then this shortcut will only insert `<-` if you are in an R code block.
 -   `<-` and `=` are NOT synonyms, but can be used identically most of the time.
 
-## Functions
+# Functions
 
 To use a function, you type the function's name in the Console (or Script) and then supply the function's "arguments" between parentheses, `()`.
 
@@ -108,12 +127,21 @@ What is each command doing?
 # compute the mean of 1, 2, ..., 10 and assign the name m
 m <- mean(1:10) 
 m # print m
+```
+
+```{r}
 print(m) # print m a different way
+```
+
+```{r}
 mean(c(1, 5, 3, 4, 10)) # mean of a new vector
+```
+
+```{r}
 mean(c(1, 5, 3, 4, 10), trim = 0.2) # compute trimmed mean
 ```
 
-## Packages
+# Packages
 
 Packages are collections of functions, data, and other objects that extend the functionality available in R by default.
 
@@ -124,7 +152,10 @@ The **tidyverse** package (actually, a collection of packages) contains data and
 **Your turn**
 
 ```{r}
-# install.packages("tidyverse")
+# install tidyverse if it's not already installed
+if (!require("tidyverse")){
+    install.packages("tidyverse")
+}
 ```
 
 After you install **tidyverse**, load the package by running the command below.
@@ -133,7 +164,7 @@ After you install **tidyverse**, load the package by running the command below.
 library(tidyverse)
 ```
 
-## Getting Help
+# Getting Help
 
 There are many ways to get help in R.
 
@@ -145,9 +176,18 @@ There are many ways to get help in R.
 
 -   Stack Overflow (<https://www.stackoverflow.com>) is a great resource to find solutions.
 
-## Data Types and Structures
+**Your turn**
 
-### Basic Data Types
+Let's get help on the `lm` function.
+
+```{r}
+?lm
+```
+
+# Data Types and Structures
+
+**Basic Data Types**
+---
 
 R has 6 basic vector types:
 
@@ -158,7 +198,8 @@ R has 6 basic vector types:
 5.  complex: complex numbers. E.g., `1+3i`.
 6.  raw: a type to hold raw bytes.
 
-### Other important object types
+**Other important object types**
+--
 
 -   **Numeric**: An object is `numeric` if it is of type `integer` or `double`. In that case, it's `mode` is said to be `numeric`.
 -   **NULL**: `NULL` is a special object to indicate an object is absent.
@@ -166,7 +207,7 @@ R has 6 basic vector types:
 -   **NA**: A "missing value" occurs when the value of something isn't known. R uses the special object `NA` to represent a missing value.
     -   If you have a missing value, you should represent that value as `NA`. Note: `"NA"` is not the same thing as `NA`.
 
-## Data structures
+# Data structures
 
 R operates on data structures. A data structure is a "container" that holds certain kinds of information.
 
@@ -178,9 +219,10 @@ R has 5 basic data structures:
 4.  data frame.
 5.  list.
 
-## Vectors
+# Vectors
 
-### Creation
+**Creating vectors**
+---
 
 A *vector* is a one-dimensional set of data of the same type.
 
@@ -212,25 +254,55 @@ Multiple vectors can be combined into a new vector object using the `c` function
 
 Run the commands below in the Console.
 
-- What does the `by` argument of the `seq` function control?
-- What does the `len` argument of the `seq` function control?
-- What does the `times` argument of the `rep` function control?
-- What does the `each` argument of the `rep` function control?
+```{r}
+c(1, 2, 5.3, 6, -2, 4)
+```
 
 ```{r}
-# vector creation
-c(1, 2, 5.3, 6, -2, 4)
 c("one", "two", "three")
+```
+
+```{r}
 c(TRUE, TRUE, FALSE, TRUE)
+```
+
+```{r}
 # sequences of values
 seq(1, 10)
+```
+
+```{r}
 1:10
+```
+
+```{r}
 seq(1, 20, by = 2)
+```
+
+```{r}
 seq(10, 20, len = 100)
+```
+
+-   What does the `by` argument of the `seq` function control?
+-   What does the `len` argument of the `seq` function control?
+
+```{r}
 # replicated values
 rep(1:3, times = 3)
+```
+
+```{r}
 rep(c("trt1", "trt2", "trt3"), times = 1:3)
+```
+
+```{r}
 rep(1:3, each = 3)
+```
+
+-   What does the `times` argument of the `rep` function control?
+-   What does the `each` argument of the `rep` function control?
+
+```{r}
 # combining vectors
 v1 <- 1:5 # create a vector, v1
 v2 <- c(1, 10, 11) # create another vector, v2
@@ -239,14 +311,19 @@ new <- c(v1, v2, v3) # combine vectors
 new # print the combined vector
 ```
 
-### Categorical vectors
+**Categorical vectors**
+---
 
 Categorical data should be stored as a `factor` in R.
 
+We create same `factor` variables below.
+
 ```{r}
-# create some factor variables
 f1 <- factor(rep(1:6, times = 3))
 f1
+```
+
+```{r}
 f2 <- factor(c("a", 7, "blue", "blue", FALSE))
 f2
 ```
@@ -262,6 +339,10 @@ Some additional comments:
 ```{r}
 size <- c("small", "medium", "small", "large", "medium", "medium", "large")
 factor(size)
+```
+
+```{r}
+# create ordered factor
 factor(size, levels = c("small", "medium", "large"), ordered = TRUE)
 ```
 
@@ -274,7 +355,12 @@ Attempt to complete the following tasks:
 3.  Run `is.vector(grp)` in the Console.
 4.  Run `typeof(grp)` in the Console.
 
-### Extracting parts of a vector
+```{r}
+# type your code here
+```
+
+**Extracting parts of a vector**
+---
 
 Parts of a vector can be extracted by appending an index vector in square brackets `[]`.
 
@@ -288,12 +374,15 @@ a[c(2, 4, 6)]
 Supplying a negative index vector indicates the values you want to exclude from your selection.
 
 ```{r}
-# extract part of vector using negative indexing
 a[-c(2, 4, 6)] # select all but element 2, 4, 6
+```
+
+```{r}
 a[-(3:6)] # select all but elements 3-6
 ```
 
-### Logical Expressions
+**Logical Expressions**
+---
 
 A logical expression uses one or more logical operators to determine which elements of an object satisfy the specified statement.
 
@@ -320,21 +409,55 @@ What task is each command performing?
 
 ```{r}
 a > 10  # which elements of a are > 10?
+```
+
+```{r}
 a <= 4  # which elements of a are <= 10?
+```
+
+```{r}
 a == 10 # which elements of a are equal to 10?
+```
+
+```{r}
 a != 10 # which elements of a are not equal to 10?
-# combining logical values
+```
+
+```{r}
 TRUE & TRUE & TRUE
+```
+
+```{r}
 TRUE & TRUE & FALSE
+```
+
+```{r}
 FALSE | TRUE | FALSE
+```
+
+```{r}
 FALSE | FALSE | FALSE
+```
+
+```{r}
 !TRUE
+```
+
+```{r}
 !FALSE
-# combining logical expressions
+```
+
+```{r}
 # which elements of a are > 6 and <= 10
 (a > 6) & (a <= 10)
+```
+
+```{r}
 # which elements of a are <= 4 or >= 12
 (a <= 4) | (a >= 12)
+```
+
+```{r}
 # which elements of a are NOT <= 4 or >= 12
 !((a <= 4) | (a >= 12))
 ```
@@ -343,24 +466,32 @@ We can pass logical expressions within the square brackets to access part of a d
 
 **Your turn**
 
-Run the following commands in R and see what is printed. 
+Run the following commands in R and see what is printed.
 
 What task is each command performing?
 
 ```{r}
 # extract the parts of a with values < 6
 a[a < 6]
+```
+
+```{r}
 # extract the parts of a with values equal to 10
 a[a == 10]
+```
+
+```{r}
 # extract the parts of a with values < 6 or equal to 10
 a[(a < 6)|(a == 10)]
 ```
 
-## Helpful Functions
+# Helpful Functions
 
-### Common Useful Functions
+**Common Useful Functions**
+---
 
-```{r, eval=FALSE}
+```{r}
+#| eval: false
 # common functions
 x <- rexp(100) # sample 100 iid values from an Exponential(1) distribution
 length(x) # length of x
@@ -374,7 +505,8 @@ summary(x) # summary of x
 str(x) # structure of x
 ```
 
-### Functions for Statistical Distributions
+**Functions for Statistical Distributions**
+---
 
 Suppose that a random variable $X$ has the `dist` distribution. The function templates in the list below describe how to obtain certain properties of $X$.
 
@@ -386,27 +518,43 @@ Suppose that a random variable $X$ has the `dist` distribution. The function tem
 
 **Your turn**
 
-Run the following commands in R to see the output. 
+Run the following commands in R to see the output.
 
 What task is each command performing?
 
 ```{r}
+#| eval: false
 pnorm(1.96, mean = 0, sd = 1)
+```
+
+```{r}
+#| eval: false
 qunif(0.6, min = 0, max = 1)
+```
+
+```{r}
+#| eval: false
 dbinom(2, size = 20, prob = .2)
+```
+
+```{r}
+#| eval: false
 dexp(1, rate = 2)
+```
+
+```{r}
+#| eval: false
 rchisq(100, df = 5)
 ```
 
-## Data Frames
+# Data Frames
 
 Data frames are a *fundamental* data structure used by most of R's modeling software.
 
 Data frames are:
 
-- two-dimensional data objects.
-- each column of a data frame is a vector.
-
+-   two-dimensional data objects.
+-   each column of a data frame is a vector.
 
 Data frames are directly created by passing vectors into the `data.frame` function.
 
@@ -435,7 +583,8 @@ df2 <- data.frame(ID = d, Color = e, Passed = f)
 df2
 ```
 
-### Importing Data
+**Importing Data**
+---
 
 In practice, you are likely to have a file that contains the data you want to analyze and you want to import the data into R.
 
@@ -461,7 +610,8 @@ dtf <- read.table(file = "https://raw.githubusercontent.com/jfrench/DataWrangleV
 str(dtf)
 ```
 
-### Extracting parts of a data frame
+**Extracting parts of a data frame**
+---
 
 R provides many ways to extract parts of a data frame.
 
@@ -480,8 +630,8 @@ mtcars$mpg
 
 Another way to extract a variable from a data frame uses a `df[rows, columns]` style syntax.
 
-- `rows` and `columns` indicate the desired rows or columns.
-- if either the `rows` or `columns` are left blank, then all `rows` or `columns`, respectively, are extracted.
+-   `rows` and `columns` indicate the desired rows or columns.
+-   if either the `rows` or `columns` are left blank, then all `rows` or `columns`, respectively, are extracted.
 
 ```{r}
 mtcars[,"mpg"]
@@ -499,7 +649,8 @@ You can also use numeric indices to directly indicate the rows or columns of the
 mtcars[c(1, 2)]
 ```
 
-### Conditional Extraction of Data Frames
+**Conditional Extraction of Data Frames**
+---
 
 Logical expressions can be used to subset a data frame.
 
@@ -525,7 +676,8 @@ mtcars[mtcars$cyl == 8 & mtcars$mpg > 17,
        c("mpg", "cyl", "disp", "hp")]
 ```
 
-### Modifying Data Frames
+***Modifying Data Frames***
+---
 
 Columns can be added to a data frame using the `$` and assignment operator.
 
@@ -533,7 +685,8 @@ Columns can be added to a data frame using the `$` and assignment operator.
 mtcars$kpg <- mtcars$mpg*1.6
 ```
 
-### Extraction using the `subset` function
+***Extraction using the `subset` function***
+---
 
 The `subset` function returns the part of a data frame that meets the specified conditions.
 
@@ -553,21 +706,32 @@ What is each command performing?
 
 ```{r}
 subset(mtcars, subset = gear > 4)
+```
+
+```{r}
 subset(mtcars, select = c(disp, hp, gear))
+```
+
+```{r}
 subset(mtcars, subset = gear > 4, select = c(disp, hp, gear))
 ```
 
-## Using the pipe operator
+# Using the pipe operator
 
 R's native pipe operator (`|>`) allows you to "pipe" the object on the left side of the operator into the first argument of the function on the right side of the operator. The pipe operator is a convenient way to string together numerous steps in a string of commands.
 
-When reading code with pipes, the pipe can be thought of as the word "then". In the code below, we take `mtcars` *then* subset it based on `disp` and *then* select some columns.
+When reading code with pipes, the pipe can be thought of as the word "then".
+
+
+In the code below, we take `mtcars` *then* subset it based on `disp` and *then* select some columns.
 
 ```{r}
-# two styles for select certain rows and columns of mtcars 
 subset(mtcars,
        subset = disp > 400,
        select = c(mpg, disp, hp))
+```
+
+```{r}
 mtcars |>
   subset(subset = disp > 400) |>
   subset(select = c(mpg, disp, hp))

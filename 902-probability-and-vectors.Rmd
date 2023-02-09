@@ -114,15 +114,15 @@ The **standard deviation** of Y is
 \[SD(Y)=\sqrt{\mathrm{var}(Y)  }.\]
 
 #### Example (Bernoulli distribution)
-A random variable $Y$ is said to have a Bernoulli distribution with probability $\pi$, denoted $Y\sim \mathsf{Bernoulli}(\pi)$, if $\mathcal{S} = \{0, 1\}$ and $P(Y = 1) = \pi$, where $\pi\in (0,1)$.
+A random variable $Y$ is said to have a Bernoulli distribution with probability $\theta$, denoted $Y\sim \mathsf{Bernoulli}(\theta)$, if $\mathcal{S} = \{0, 1\}$ and $P(Y = 1) = \theta$, where $\theta\in (0,1)$.
 
 The pmf of a Bernoulli random variable is 
-\[f_Y(y) = \pi^y (1-\pi)^{(1-y)}.\]
+\[f_Y(y) = \theta^y (1-\theta)^{(1-y)}.\]
 
 The mean of a Bernoulli random variable is 
-\[E(Y)=0(1-\pi )+1(\pi)=\pi.\]
+\[E(Y)=0(1-\theta )+1(\theta)=\theta.\]
 
-The variance of a Bernoulli random variable is \[\mathrm{var}(Y)=(0-\pi)^2(1-\pi)+(1-\pi)^2\pi = \pi(1-\pi).\]
+The variance of a Bernoulli random variable is \[\mathrm{var}(Y)=(0-\theta)^2(1-\theta)+(1-\theta)^2\theta = \theta(1-\theta).\]
 
 ### Continuous random variables
 
@@ -157,17 +157,26 @@ A random variable $Y$ is said to have an exponential distribution rate parameter
 \[f_Y(y)=\lambda\exp(-\lambda y).\]
 
 The mean of an exponential random variable is 
-\[E(Y)=
-\int_{0}^{\infty} y\lambda \exp(-\lambda y)\;dy=
--\exp(-\lambda y)(\lambda^{-1}+y)\biggr]^{\infty}_{0}\\
-=\lambda^{-1}=\frac{1}{\lambda}.\]
+
+$$
+\begin{aligned}
+E(Y) &= \int_{0}^{\infty} y\lambda \exp(-\lambda y)\;dy \\
+&= -\exp(-\lambda y)(\lambda^{-1}+y)\biggr]^{\infty}_{0}\\
+&=\lambda^{-1} \\
+&=\frac{1}{\lambda}.
+\end{aligned}
+$$
+
 Note that this process involves integration by parts, which is not shown. Similarly, $E(Y^2)=2\lambda^{-2}$. Thus,
-\[
-\mathrm{var}(Y)=
-E(Y^2)-[E(Y)]^2\\
-=2\lambda^{-2}-[\lambda^{-1}]^2\\
-=\lambda^{-2}\\=\frac{1}{\lambda^{2}}.
-\]
+
+$$
+\begin{aligned}
+\mathrm{var}(Y)&= E(Y^2)-[E(Y)]^2\\
+&=2\lambda^{-2}-[\lambda^{-1}]^2\\
+&=\lambda^{-2}\\
+&=\frac{1}{\lambda^{2}}.
+\end{aligned}
+$$
 
 ### Useful facts for transformations of random variables
 
@@ -539,12 +548,13 @@ Ordinary least squares regression is a method for fitting a linear regression mo
 \]
 be a full-rank matrix of size $n\times p$ and 
 \[
-\mathbf{y}=(Y_1, Y_2, \ldots,Y_n)^T,
+\mathbf{y}=[Y_1, Y_2, \ldots,Y_n],
 \]
-be an $n\times 1$ vector of responses. It is common to assume that 
-\[ \mathbf{y}\sim \mathsf{N}(\mathbf{X}\boldsymbol{\beta}, \sigma^2 \mathbf{I}_{n\times n}),
+be an $n$-dimensional vector of responses. It is common to assume that 
+\[
+\mathbf{y}\sim \mathsf{N}(\mathbf{X}\boldsymbol{\beta}, \sigma^2 \mathbf{I}_{n\times n}),
 \]
-where $\beta=(\beta_0,\beta_1,\ldots,\beta_{p-1})$ is a $p$-dimensional vector of constants.
+where $\beta=[\beta_0,\beta_1,\ldots,\beta_{p-1}]$ is a $p$-dimensional vector of constants.
 
 The matrix $\mathbf{H}=\mathbf{X}(\mathbf{X}^T\mathbf{X})^{-1}\mathbf{X}^T$ projects $\mathbf{y}$ into the space spanned by the vectors in $\mathbf{X}$. Because of what we know about linear functions of a multivariate normal random vector (\@ref(linear-functions-of-a-multivariate-normal-random-vector)), we can determine that
 \[

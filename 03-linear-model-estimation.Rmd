@@ -57,7 +57,7 @@ The variables in a regression analysis may be divided into two types: the respon
 
 The outcome variable we are trying to predict is known as the **response variable**. Response variables are also known as **outcome**, **output**, or **dependent** variables. The response variable is denoted by $Y$. The observed value of $Y$ for observation $i$ is denoted $Y_i$. 
 
-The variables available to model the response variable are known as **predictors variables**.  Predictor variables are also known as **explanatory**, **regressor**, **input**, **dependent** variables, or simply as **features**. Following the convention of @alr4, we use the term **regressor** to refer to the variables used in our regression model, whether that is the original predictor variable, some transformation of a predictor, some combination of predictors, etc. Thus, every predictor can be a regressor but not all regressors are a predictor. The regressor variables are denoted as $X_1, X_2, \ldots, X_{p-1}$. The value of $X_j$ for observation $i$ is denoted by $x_{i,j}$. If there is only a single regressor in the model, we can denote the single regressor as $X$ and the observed values of $X$ as $x_1, x_2, \ldots, x_n$. 
+The variables available to model the response variable are known as **predictors variables**.  Predictor variables are also known as **explanatory**, **regressor**, **input**, **independent** variables, or simply as **features**. Following the convention of @alr4, we use the term **regressor** to refer to the variables used in our regression model, whether that is the original predictor variable, some transformation of a predictor, some combination of predictors, etc. Thus, every predictor can be a regressor but not all regressors are a predictor. The regressor variables are denoted as $X_1, X_2, \ldots, X_{p-1}$. The value of $X_j$ for observation $i$ is denoted by $x_{i,j}$. If there is only a single regressor in the model, we can denote the single regressor as $X$ and the observed values of $X$ as $x_1, x_2, \ldots, x_n$. 
 
 For the height data, the 5 pairs of observed data are denoted
 \[(x_1, Y_1), (x_2, Y_2), \ldots, (x_5, Y_5),\]
@@ -85,7 +85,7 @@ par(mfrow = c(1, 1))
 
 ## Estimation of the simple linear regression model {#s-slr-estimation}
 
-**Parameter estimation** is the process of using observed data to estimate values for the regression coefficients. There are many different methods of parameter estimation in statistics: method-of-moments, maximum likelihood, Bayesian, etc. The most common parameter estimation method for linear models is the **least squares method**, which is commonly called **Ordinary Least Squares (OLS)** estimation. OLS estimation estimates the regression coefficients with the values that minimize the residual sum of squares (RSS), which we will define shortly.
+**Parameter estimation** is the process of using observed data to estimate parameters of a model. There are many different methods of parameter estimation in statistics: method-of-moments, maximum likelihood, Bayesian, etc. The most common parameter estimation method for linear models is the **least squares method**, which is commonly called **Ordinary Least Squares (OLS)** estimation. OLS estimation estimates the regression coefficients with the values that minimize the residual sum of squares (RSS), which we will define shortly.
 
 ### Model definition, fitted values, residuals, and RSS {#ss:fv-resid-rss}
 
