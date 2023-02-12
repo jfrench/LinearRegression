@@ -26,7 +26,6 @@ kbl(prob_tab1, caption = "Basic terminology used in probability.",
 Some comments about the terms in Table \@ref(tab:prob-tab1):
 
 - **Outcomes** may also be referred to as **points**, **realizations**, or **elements**.
-- The set of outcomes of $\Omega$ are referred to as the **elements** of $\Omega$.
 - An **event** is a subset of outcomes.
 - The **empty set** is a subset of $\Omega$, but not an outcome of $\Omega$.
 - The **empty set** is a subset of every event $A\subseteq \Omega$.
@@ -38,14 +37,14 @@ We now review some basic set operations and related facts. Let $A$ and $B$ be tw
 - The **union** of $A$ and $B$, denoted $A \cup B$ is the set of outcomes that are in $A$ or $B$ or both, i.e., $A \cup B = \{\omega \in \Omega: \omega \in A\;\mathrm{or}\;\omega \in B\}$.
 - The **complement** of $A$, denoted $A^c$ is the set of outcomes that are in $\Omega$ but are not in $A$, i.e., $A^c = \{\omega \in \Omega: \omega \not\in A\}$.
     - The complement of $A$ may also be denoted as $\overline{A}$ or $A'$.
-- The set **difference** between $A$ and $B$, denoted $A \setminus B$, is the elements of $A$ that are not in $B$, i.e., $A\setminus B = \{\omega \in A: \omega \not\in B\}$.
+- The set **difference** between $A$ and $B$, denoted $A \setminus B$, is the outecomes of $A$ that are not in $B$, i.e., $A\setminus B = \{\omega \in A: \omega \not\in B\}$.
     - The set difference between $A$ and $B$ may also be denoted by $A-B$.
     - The set difference is order specific, i.e., $(A\setminus B) \not= (B\setminus A)$ in general.
 
 A function $P$ that assigns a real number $P(A)$ to every event $A$ is a probability distribution if it satisfies three properties:
 
-1. $P(A)\geq 0$ for all $A\in \Omega$
-2. $P(\Omega)=P(\omega \in \Omega) = 1$
+1. $P(A)\geq 0$ for all $A\in \Omega$.
+2. $P(\Omega)=P(\omega \in \Omega) = 1$. Alternatively, $P(A \subseteq \Omega) = 1$.
 3. If $A_1, A_2, \ldots$ are disjoint, then $P\left(\bigcup_{i=1}^\infty A_i \right)=\sum_{i=1}^\infty P(A_i)$.
 
 A set of events $\{A_i:i\in I\}$ are **independent** if 
@@ -62,7 +61,7 @@ P(A\mid B) = \frac{P(A\cap B)}{P(B)}, \quad P(B) > 0.
 Some additional facts about probabilities:
 
 - **Complement rule**: $P(A^c) = 1 - P(A)$.
-- **Addition rule**: $P(A\cap B) = P(A) + P(B) - P(A \cap B)$.
+- **Addition rule**: $P(A\cup B) = P(A) + P(B) - P(A \cap B)$.
 - **Bayes' rule**: Assuming $P(A) > 0$ and $P(B) > 0$, then 
 \[P(A\mid B) = \frac{P(B\mid A)P(A)}{P(B)}.\]
 - **Law of Total Probability**: Let $B_1, B_2, \ldots$ be a countably infinite partition of $\Omega$. Then 
@@ -114,16 +113,16 @@ Note that $\mathrm{var}(Y)=E(Y-E(Y))^2=E(Y^2)-[E(Y)]^2$. The last expression is 
 The **standard deviation** of Y is
 \[SD(Y)=\sqrt{\mathrm{var}(Y)  }.\]
 
-#### Bernoulli distribution example
-A random variable $Y$ is said to have a Bernoulli distribution with probability $\pi$, denoted $Y\sim \mathsf{Bernoulli}(\pi)$, if $\mathcal{S} = \{0, 1\}$ and $P(Y = 1) = \pi$, where $\pi\in (0,1)$.
+#### Example (Bernoulli distribution)
+A random variable $Y$ is said to have a Bernoulli distribution with probability $\theta$, denoted $Y\sim \mathsf{Bernoulli}(\theta)$, if $\mathcal{S} = \{0, 1\}$ and $P(Y = 1) = \theta$, where $\theta\in (0,1)$.
 
 The pmf of a Bernoulli random variable is 
-\[f_Y(y) = \pi^y (1-\pi)^{(1-y)}.\]
+\[f_Y(y) = \theta^y (1-\theta)^{(1-y)}.\]
 
 The mean of a Bernoulli random variable is 
-\[E(Y)=0(1-\pi )+1(\pi)=\pi.\]
+\[E(Y)=0(1-\theta )+1(\theta)=\theta.\]
 
-The variance of a Bernoulli random variable is \[\mathrm{var}(Y)=(0-\pi)^2(1-\pi)+(1-\pi)^2\pi = \pi(1-\pi).\]
+The variance of a Bernoulli random variable is \[\mathrm{var}(Y)=(0-\theta)^2(1-\theta)+(1-\theta)^2\theta = \theta(1-\theta).\]
 
 ### Continuous random variables
 
@@ -154,35 +153,44 @@ E(Y-E(Y))^2=\int_{-\infty}^{\infty} (y - E(Y))^2 f_Y(y)  dy =
 
 #### Example (Exponential distribution)
 
-A random variable $Y$ is said to have an exponential distribution rate parameter $\lambda$, denoted with $Y \sim \mathsf{Exp}(\lambda)$ if $\mathcal{S} = {y\in \mathbb{R}:y\geq 0}$ and
+A random variable $Y$ is said to have an exponential distribution rate parameter $\lambda$, denoted with $Y \sim \mathsf{Exp}(\lambda)$ if $\mathcal{S} = \{y\in \mathbb{R}:y\geq 0\}$ and
 \[f_Y(y)=\lambda\exp(-\lambda y).\]
 
 The mean of an exponential random variable is 
-\[E(Y)=
-\int_{0}^{\infty} y\lambda \exp(-\lambda y)\;dy=
--\exp(-\lambda y)(\lambda^{-1}+y)\biggr]^{\infty}_{0}\\
-=\lambda^{-1}=\frac{1}{\lambda}.\]
+
+$$
+\begin{aligned}
+E(Y) &= \int_{0}^{\infty} y\lambda \exp(-\lambda y)\;dy \\
+&= -\exp(-\lambda y)(\lambda^{-1}+y)\biggr]^{\infty}_{0}\\
+&=\lambda^{-1} \\
+&=\frac{1}{\lambda}.
+\end{aligned}
+$$
+
 Note that this process involves integration by parts, which is not shown. Similarly, $E(Y^2)=2\lambda^{-2}$. Thus,
-\[
-\mathrm{var}(Y)=
-E(Y^2)-[E(Y)]^2\\
-=2\lambda^{-2}-[\lambda^{-1}]^2\\
-=\lambda^{-2}\\=\frac{1}{\lambda^{2}}.
-\]
+
+$$
+\begin{aligned}
+\mathrm{var}(Y)&= E(Y^2)-[E(Y)]^2\\
+&=2\lambda^{-2}-[\lambda^{-1}]^2\\
+&=\lambda^{-2}\\
+&=\frac{1}{\lambda^{2}}.
+\end{aligned}
+$$
 
 ### Useful facts for transformations of random variables
 
 Let $Y$ be a random variable and $a\in\mathbb{R}$ be a constant. Then:
 
 - $E(a) = a$. 
-- $E(Y) = a E(Y)$.
+- $E(aY) = a E(Y)$.
 - $E(a + Y) = a + E(Y)$.
 - $\mathrm{var}(a) = 0$.
 - $\mathrm{var}(aY) = a^2 \mathrm{var}(Y)$.
 - $\mathrm{var}(a + Y) = \mathrm{var}(Y)$.
-- For a discrete random variable and a function $g$, \[E(g(Y))=\sum_{y\in\mathcal{S}}g(Y)f_Y(y),\]
+- For a discrete random variable and a function $g$, \[E(g(Y))=\sum_{y\in\mathcal{S}}g(y)f_Y(y),\]
 assuming the sum is well-defined.
-- For a continuous random variable and a function $g$, \[E(g(Y))=\int_{y\in\mathcal{S}}g(Y)f_Y(y)\;dy,\]
+- For a continuous random variable and a function $g$, \[E(g(Y))=\int_{y\in\mathcal{S}}g(y)f_Y(y)\;dy,\]
 assuming the integral is well-defined.
 
 ## Multivariate distributions
@@ -208,7 +216,7 @@ E(g(Y_1,\ldots,Y_n))=\sum_{y_1\in\mathcal{S}_1} \cdots \sum_{y_n\in\mathcal{S}_n
 \]
 where $g$ is a function of the random variables.
 
-If the random variables are **jointly continuous**, then $f(y_1,\ldots,y_n)=P(Y_1=y_1,\ldots,Y_n=y_n)$  is the joint pdf if it satisfies the following properties:
+If the random variables are **jointly continuous**, then $f(y_1,\ldots,y_n)$  is the joint pdf if it satisfies the following properties:
 
 1. $f(y_1,\ldots,y_n ) \geq 0$,
 2. $\int_{y_1\in\mathcal{S}_1}\cdots \int_{y_n\in\mathcal{S}_n} f(y_1,\ldots,y_n ) dy_n \cdots dy_1 = 1$,
@@ -254,12 +262,12 @@ The covariance between random variables $X$ and $Y$ is
 
 Let $a$ and $b$ be scalar constants. Let $Y$ and $Z$ be random variables.  Then:
 
--	$E(aY+bZ)=aE(Y)+bE(Z)$
--	$\mathrm{var}(Y+Z)=\mathrm{var}(Y)+\mathrm{var}(Z)+2\mathrm{cov}(Y, Z)$
-- $\mathrm{cov}(a,Y)=0$
-- $\mathrm{cov}(Y,Y)=\mathrm{var}(Y)$
--	$\mathrm{cov}(aY, bZ)=ab\mathrm{cov}(Y, Z)$
--	$\mathrm{cov}(a + Y,b + Z)=\mathrm{cov}(Y, Z)$
+-	$E(aY+bZ)=aE(Y)+bE(Z)$.
+-	$\mathrm{var}(Y+Z)=\mathrm{var}(Y)+\mathrm{var}(Z)+2\mathrm{cov}(Y, Z)$.
+- $\mathrm{cov}(a,Y)=0$.
+- $\mathrm{cov}(Y,Y)=\mathrm{var}(Y)$.
+-	$\mathrm{cov}(aY, bZ)=ab\mathrm{cov}(Y, Z)$.
+-	$\mathrm{cov}(a + Y,b + Z)=\mathrm{cov}(Y, Z)$.
 
 If $Y$ and $Z$ are also independent, then:
 
@@ -276,7 +284,7 @@ If in addition, $Y_1, Y_2, \ldots, Y_n$ are all independent of each other, then:
 - $\mathrm{var}(\sum_{i=1}^n Y_i) = \sum_{i=1}^n \mathrm{var}(Y_i)$ since all pairwise covariances are 0.
 
 
-### Binomial distribution example
+### Example (Binomial)
 
 A random variable $Y$ is said to have a Binomial distribution with $n$ trials and probability of success $\theta$, denoted $Y\sim \mathsf{Bin}(n,\theta)$ when $\mathcal{S}=\{0,1,2,\ldots,n\}$ and the pmf is
 \[f(y\mid\theta) = \binom{n}{y} \theta^y (1-\theta)^{(n-y)}.\]
@@ -299,9 +307,9 @@ Similarly, since $Y_1, Y_2, \ldots, Y_n$ are i.i.d. and using the fact in Sectio
 \mathrm{var}(Y) = \mathrm{var}(\sum_{i=1}^n Y_i) = \sum_{i=1}^n\mathrm{var}(Y_i)=\sum_{i=1}^n \theta(1-\theta) = n\theta(1-\theta).
 \]
 
-### Continuous bivariate distribution example
+### Example (Continuous bivariate distribution)
 
-Hydration is important for health. Like many people, the author has a water bottle he uses to say hydrated through the day and drinks several liters of water per day. Let's say the author refills his water bottle every 3 hours. Let $Y$ denote the proportion of the water bottle filled with water at the beginning of the 3-hour window. Let $X$ denote the amount of water the author consumes in the 3-hour window (measured in the the proportion of total water bottle capacity.  We know that $0\leq X \leq Y \leq 1$. The joint density of the random variables is
+Hydration is important for health. Like many people, the author has a water bottle he uses to say hydrated through the day and drinks several liters of water per day. Let's say the author refills his water bottle every 3 hours. Let $Y$ denote the proportion of the water bottle filled with water at the beginning of the 3-hour window. Let $X$ denote the amount of water the author consumes in the 3-hour window (measured in the the proportion of total water bottle capacity).  We know that $0\leq X \leq Y \leq 1$. The joint density of the random variables is
 
 \[
 f(x,y)=4y^2,\quad 0 \leq x\leq y\leq 1,
@@ -362,21 +370,21 @@ E(Y^2) =\int_{0}^1 y^2(4y^3)\;dy = \frac{2}{3}
 \]
 Thus, 
 
-\[\mathrm{var}(X)=2/5-(2/9)^2=\frac{142}{405}\]
-\[\mathrm{var}(Y)=4/5-(2/3)^2=\frac{16}{45}\]
+\[\mathrm{var}(X)=2/9-(2/5)^2=\frac{14}{225}\]
+\[\mathrm{var}(Y)=2/3-(4/5)^2=\frac{2}{75}\]
 
 **Q5: Determine the mean of $XY$.**
 
 The mean of $XY$ requires us to integrate the product of $xy$ and the joint pdf over the joint support of $X$ and $Y$. Specifically,
 \[
-E(XY)=\int_{0}^{1}\int_{0}^{y} xy(4y^2)\;dx\;dy= \frac{1}{12}
+E(XY)=\int_{0}^{1}\int_{0}^{y} xy(4y^2)\;dx\;dy= \frac{1}{3}
 \]
 
 **Q6: Determine the covariance of $X$ and $Y$.**
 
 Using our previous work, we see that
 \[
-\mathrm{cov}(X,Y)=E(XY) - E(X)E(Y)=1/12-(2/5)(4/5)=-\frac{71}{300}
+\mathrm{cov}(X,Y)=E(XY) - E(X)E(Y)=1/3-(2/5)(4/5)=-\frac{1}{75}
 \]
 
 **Q7: Determine the mean and variance of $Y-X$, i.e., the average amount of water remaining after a 3-hour window and the variability of that amount.**
@@ -386,7 +394,7 @@ Using the results in Section \@ref(useful-facts-for-transformations-of-multiple-
 and
 \[
 \mathrm{var}(Y-X)=\mathrm{var}(Y)+\mathrm{var}(X)-2\mathrm{cov}(Y,X)=
-16/45+142/405-2(-71/300)\approx 1.18.
+2/75+14/225-2(1/75)=14/225.
 \]
 
 ## Random vectors
@@ -447,14 +455,14 @@ Then:
 * $\mathrm{cov}(\mathbf{a},\mathbf{y})=0_{n\times n}$.
 * $\mathrm{var}(\mathbf{a}+\mathbf{y})=\mathrm{var}(\mathbf{y})$.
 
-### Continuous bivariate distribution example continued
+### Example (Continuous bivariate distribution continued)
 
 Using the definitions and results in \@ref(random-vectors), we want to answer **Q7** of the example in \@ref(continuous-bivariate-distribution-example). Summarizing only the essential details, we have a random vector $\mathbf{z}=[X, Y]$ with mean $E(\mathbf{z})=[2/5, 4/5]$ and covariance matrix
 \[
 \mathrm{var}(\mathbf{z})=
 \begin{bmatrix}
-142/405 & -71/300 \\
--71/300 & 16/45
+14/225 & 1/75 \\
+1/75 & 2/75
 \end{bmatrix}.
 \] We want to determine $E(Y-X)$ and $\mathrm{var}(Y-X)$.
 
@@ -490,20 +498,20 @@ Additionally,
 -1 & 1
 \end{bmatrix}
 \begin{bmatrix}
-142/405 & -71/300 \\
--71/300 & 16/45
+14/225 & 1/75 \\
+1/75 & 2/75
 \end{bmatrix}
 \begin{bmatrix}
 -1 \\ 1
 \end{bmatrix} \\
 &= \begin{bmatrix}
--142/405-71/300 & 71/300+16/45
+-14/225+1/75 & -1/75+2/75
 \end{bmatrix}
 \begin{bmatrix}
 -1 \\ 1
 \end{bmatrix} \\
-&= 142/405 + 16/45 + 2(71/300) \\
-&\approx 1.18.
+&= 14/225 + 2/75 - 2(1/75) \\
+&=14/225.
 \end{aligned}
 \]
 
@@ -522,11 +530,11 @@ In this case, we would denote the distribution of $\mathbf{y}$ as \[\mathbf{y}\s
 
 A linear function of a multivariate normal random vector (i.e., $\mathbf{a}+\mathbf{A}\mathbf{y}$, where $\mathbf{a}$ is an $m\times 1$ vector of constant values and $\mathbf{A}$ is an $m\times n$ matrix of constant values) is also multivariate normal (though it could collapse to a single random variable if $\mathbf{A}$ is a $1\times n$ vector).  
 
-**Application**:  Suppose that $\mathbf{y}\sim \mathcal{N}(\boldsymbol{\mu},\boldsymbol{\Sigma})$. For an $m\times n$ matrix of constants $\mathbf{A}$, $\mathbf{A}\mathbf{y}\sim \mathcal{N}(\mathbf{A}\boldsymbol{\mu},\mathbf{A}\boldsymbol{\Sigma} \mathbf{A}^T)$.
+**Application**:  Suppose that $\mathbf{y}\sim \mathsf{N}(\boldsymbol{\mu},\boldsymbol{\Sigma})$. For an $m\times n$ matrix of constants $\mathbf{A}$, $\mathbf{A}\mathbf{y}\sim \mathsf{N}(\mathbf{A}\boldsymbol{\mu},\mathbf{A}\boldsymbol{\Sigma} \mathbf{A}^T)$.
 
 More generally, the most common estimators used in linear regression are linear combinations of a (typically) multivariate normal random vector, meaning that many of the estimators also have a (multivariate) normal distribution.
 
-### OLS matrix-form example
+### Example (OLS matrix form)
 
 Ordinary least squares regression is a method for fitting a linear regression model to data. Suppose that we have observed variables $X_1, X_2, X_3, \ldots, X_{p-1}, Y$ for each of $n$ subjects from some population, with $X_{i,j}$ denoting the value of $X_j$ for observation $i$ and $Y_i$ denoting the value of $Y$ for observation $i$. In general, we want to use $X_1, \ldots, X_{p-1}$ to predict the value of $Y$. Let
 \[
@@ -540,14 +548,16 @@ Ordinary least squares regression is a method for fitting a linear regression mo
 \]
 be a full-rank matrix of size $n\times p$ and 
 \[
-\mathbf{y}=(Y_1, Y_2, \ldots,Y_n)^T,
+\mathbf{y}=[Y_1, Y_2, \ldots,Y_n],
 \]
-be an $n\times 1$ vector of responses. It is common to assume that 
-\[ \mathbf{y}\sim \mathcal{N}(0_{n\times 1}, \sigma^2 \mathbf{I}_{n\times n}).
+be an $n$-dimensional vector of responses. It is common to assume that 
+\[
+\mathbf{y}\sim \mathsf{N}(\mathbf{X}\boldsymbol{\beta}, \sigma^2 \mathbf{I}_{n\times n}),
 \]
+where $\beta=[\beta_0,\beta_1,\ldots,\beta_{p-1}]$ is a $p$-dimensional vector of constants.
 
 The matrix $\mathbf{H}=\mathbf{X}(\mathbf{X}^T\mathbf{X})^{-1}\mathbf{X}^T$ projects $\mathbf{y}$ into the space spanned by the vectors in $\mathbf{X}$. Because of what we know about linear functions of a multivariate normal random vector (\@ref(linear-functions-of-a-multivariate-normal-random-vector)), we can determine that
 \[
-\mathbf{Hy}\sim \mathcal{N}(0_{n\times n},\sigma^2 \mathbf{H}).
+\mathbf{Hy}\sim \mathsf{N}(\mathbf{X}\boldsymbol{\beta},\sigma^2 \mathbf{H}).
 \]
 
