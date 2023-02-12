@@ -277,7 +277,7 @@ team members have, you will try to find a role in which you can
 effectively help the team. Something similar happens in regression
 models. Generally, we can't provide a definitive interpretation of a
 regressor's role in a fitted model without knowing what other regressors
-are in thee model. Thus, when interpreting a regressor, it is common to
+are in the model. Thus, when interpreting a regressor, it is common to
 include the something like *after accounting for the other variables in
 the model*. We do this because we are giving the interpretation of that
 regressor's role when the other variables are also in the model. If our
@@ -724,7 +724,7 @@ predictor $C$ has $K$ levels instead of 3:
     observations having level $L_j$ compared to the reference level.
 
 We illustrate these interpretation using the separate lines model to the
-`penguins` data in Section in Section \@ref(s:penguins-mlr2). The fitted
+`penguins` data in Section \@ref(s:penguins-mlr2). The fitted
 separate lines model was $$
 \begin{aligned}
 &\hat{E}(\mathtt{bill\_length\_mm} \mid \mathtt{body\_mass\_g}, \mathtt{species}) \\
@@ -811,7 +811,7 @@ plot of each equation given in Equation
 \@ref(fig:effect-plot-body-mass-lmods) displays this effect plot, which
 was created using the code below. We use the `axes` argument to rotate
 the x-axis labels (otherwise the text overlaps) and the `lines`
-arguments to display all three lines in one graphic instead of a
+argument to display all three lines in one graphic instead of a
 separate panel for each level of `species`. We notice Chinstrap penguins
 tend to have the largest bill lengths for a given value of body mass and
 the bill lengths increase more quickly as a function of body mass then
@@ -1182,7 +1182,7 @@ y <- c(1, 4, 6, 8, 9) # response vector
 ones <- rep(0, 5) # column of 1s
 x1 <- c(7, 5, 5, 7, 7) # regressor 1
 x2 <- c(-1, 2, -3, 1, 5/7) # create regressor 2 to be orthogonal to x1
-crossprod(x1, x2) # crossproduct is zero
+crossprod(x1, x2) # cross product is zero
 x3 <- c(0, -1, 1, 0, 0) # orthogonal to ones, x1
 x4 <- c(0, 0, 0, 1, -1) # orthogonal to ones, x1, x3
 x5 <- c(1, 0, 0, -1, 0) # orthogonal to ones, x1, not x4
@@ -1202,17 +1202,17 @@ X1 <- c(7, 5, 5, 7, 7)      # create regressor 1
 X2 <- c(-1, 2, -3, 1, 5/7)  # create regressor 2 to be orthogonal to x1
 ```
 
-Note that the `crossprod` function computes the crossproduct of two
+Note that the `crossprod` function computes the cross product of two
 vectors or matrices, so that `crossprod(A, B)` computes
 $\mathbf{A}^T B$, where the vectors or matrices must have the correct
 dimension for the multiplication to be performed.
 
 The regressor vectors `X1` and `X2` are orthogonal since their
-crossproduct $\mathbf{X}_{[1]}^T \mathbf{X}_{[2]}$ (in R,
+cross product $\mathbf{X}_{[1]}^T \mathbf{X}_{[2]}$ (in R,
 `crossprod(X1, X2)`) equals zero, as shown in the code below.
 
 ```{r}
-# crossproduct is zero, so X1 and X2 are orthogonal
+# cross product is zero, so X1 and X2 are orthogonal
 crossprod(X1, X2)
 ```
 
@@ -1244,8 +1244,8 @@ model because they are not orthogonal to the column of 1s.
 
 However, neither `X1` nor `X2` is orthogonal with the column of ones. We
 define the vector `ones` below, which is a column of 1s, and compute the
-crossproduct between `ones` and the two regressors. Since the
-crossproducts are not zero, `X1` and `X2` are not orthogonal to the
+cross product between `ones` and the two regressors. Since the
+cross products are not zero, `X1` and `X2` are not orthogonal to the
 column of ones.
 
 ```{r}
@@ -1305,9 +1305,9 @@ $\hat{\beta}_{0}=5.6$, $\hat{\beta}_{3}=1.0$, $\hat{\beta}_{4}=-0.5$
 when the relevant regressor was included in the model.
 
 The easiest way to determine which vectors are orthogonal to each other
-and the intercept is to compute the crossproduct of the $\mathbf{X}$
+and the intercept is to compute the cross product of the $\mathbf{X}$
 matrix for the largest set of regressors you are considering. Consider
-the matrix of crossproducts for the columns of 1s, `x1`, `x2`, `x3`, and
+the matrix of cross products for the columns of 1s, `x1`, `x2`, `x3`, and
 `x4`.
 
 ```{r}
@@ -1376,7 +1376,7 @@ crossprod(cbind(ones, X1, X4, X5))
 ```
 
 Note the block of zeros in the lower left and upper right corners of the
-crossproduct matrix above. The block containing `ones` and `X1` is
+cross product matrix above. The block containing `ones` and `X1` is
 orthogonal to the block containing `X4` and `X5`. This means that if we
 fit the model with only the column of 1s and `X1`, the model only with
 `X4` and `X5`, and then fit the model with the column of 1s, `x1`, `x4`,
