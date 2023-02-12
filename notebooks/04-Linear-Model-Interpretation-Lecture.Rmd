@@ -2,8 +2,8 @@
 title: "Lecture 04 - Linear Model Interpretation"
 author: "CU Denver"
 output:
-  slidy_presentation: default
-  beamer_presentation: default
+  html_document:
+    self_contained: true
 ---
 
 
@@ -133,7 +133,9 @@ slmod_scaled <- lm(bill_length_mm ~ body_mass_kg, data = penguins)
 coefficients(slmod_scaled)
 ```
 
-* How do we reinterpret the model in the context of kilograms?
+**Question:**
+
+- How do we reinterpret the model in the context of kilograms?
 
 ---
 
@@ -185,7 +187,10 @@ E(Y\mid X_1=0,\ldots,X_{p-1}=0) &= \beta_0 + \beta_1 \cdot 0 + \cdots + \beta_{p
 \end{aligned}
 $$
 
-The interpretation of the intercept is often nonsensical! What if $X_1$ was heart rate?
+**Question:** 
+
+- Does the interpretation of the intercept always make sense?
+- What if $X_1$ was heart rate?
 
 ### Issues Interpreting Polynomial Models
 
@@ -197,9 +202,10 @@ $$E(Y\mid X) = \beta_0 + \beta_1 X + \beta_2 X^2,$$
 
 $X$ is used in both the second and third terms. 
 
-* How does this affect the interpretation of $\beta_1$
+**Question:**
 
-It is not possible to increase $X$ while keeping $X^2$ fixed. 
+* How does this affect the interpretation of $\beta_1$?
+* Is is possible to increase $X$ while keeping $X^2$ fixed?
 
 The standard interpretation we discussed is applicable to first-order linear regression models.
 
@@ -244,32 +250,31 @@ knitr::kable(
 The role a regressor plays in a regression model depends on what other
 regressors are in the model. 
 
-Generally, we can't provide a definitive interpretation of a
+- Generally, we can't provide a definitive interpretation of a
 regressor's role in a fitted model without knowing what other regressors
-are in thee model. Thus, when interpreting a regressor, it is common to
+are in the model.
+- When interpreting a regressor, it is common to
 include the something like *after accounting for the other variables in
-the model*. We do this because we are giving the interpretation of that
-regressor's role when the other variables are also in the model. If our
-model had different variables, then our interpretation would be
-different.
+the model*.
 
-There is also a technical reason why the estimated coefficients change
-as you add or remove regressors from a model. If a regressor is
-correlated with other regressors in a model, then adding or removing
-that regressor will impact the estimated coefficients in the new model.
-The more correlated the regressors are, the more they tend to affect
-each others' estimated coefficients. More formally, a regressor will
-impact the estimated coefficients of the other regressors in a model
-unless it is **orthogonal** to the other regressors. Orthogonality is
-related to correlation, but there are important differences. See Section
-\@ref(orthogonality)), which provides an extensive discussion of
-orthogonality and how it affects estimation.
+If our model had different variables, then our interpretation would be
+different!
+
+Mathematically, why do the estimated coefficients change
+as you add or remove regressors from a model?
+
+- If a regressor is correlated with other regressors in a model, then adding or removing that regressor will impact the estimated coefficients in the new model.
+- The more correlated the regressors are, the more they tend to affect
+each others' estimated coefficients. 
+- A regressor will impact the estimated coefficients of the other regressors in a model unless it is **orthogonal** to the other regressors.
+
+*Note:* Orthogonality is related to correlation, but there are important differences.
 
 ## Effect plots
 
 An effect plot is a visual display that aids in helping us intuitively
 interpret the impact of a *predictor* in a model. As stated by
-@fox2020predictor:
+Fox et al. (2020):
 
 > Summarization of the effects of predictors using tables of coefficient
 > estimates is often incomplete. Effects, and particularly plots of
@@ -279,42 +284,27 @@ interpret the impact of a *predictor* in a model. As stated by
 > multiple-coefficient terms such as regression splines and polynomials
 > ....
 
-More formally, an **effect plot** is a plot of the estimated mean
-response as a function of a *focal predictor* with the other
-*predictors* being held at "typical values". The distinction between
-predictor and regressor is important when discussing effect plots,
-because we can create effect plots for each predictor but not
-necessarily each regressor. Recall from Section
-\@ref(a-simple-motivating-example) that a predictor variable is a
-variable available to model the response variable, while a regressor
-variable is a variable used in our regression model, whether that is an
-unmodified predictor variable, some transformation of a predictor, some
-combination of predictors, etc.
-<!-- Recalling the regression models fit in Chapter @ref(linear-model-estimation), `body_mass_g`, `flipper_length_mm`, and `species` were predictor variables. Additionally, based on how we used them, `body_mass_g` and `flipper_length_mm` were also regressors in certain models. Additional regressors were `speciesChinstrap` and `speciesGentoo` (the indicator variables for Chinstrap and Gentoo penguins based on the variable `species`, respectively) and `body_mass_g:speciesChinstrap` and `body_mass_g:speciesGentoo`, the regressors created by multiplying the indicator variables with the `body_mass_g` predictor. -->
+An **effect plot** is a plot of the estimated mean response as a function of a *focal predictor* with the other *predictors* being held at "typical values". 
 
-We first discuss how to create an effect plot for a first-order linear
-regression models with numeric regressors since these are the simplest
-to construct. In a first-order linear model, none of the regressors
-interact, i.e., none of the regressors are functions of each other.
-@fox2020predictor use the terminology **fixed group** to refer to the
-group of predictors that do not interact with the focal predictor. For a
-first-order regression model, all of the non-focal predictors are part
-of the fixed group. To create our effect plot, we must first find the
-equation for the estimated mean response as a function of a focal
-predictor while holding the other predictors at their "typical" values.
-We set numeric fixed group predictors equal to their sample means when
-finding this function.
+*Recall:* the difference between predictors and regressors.
+
+- A **predictor** variable is a variable available to model the response variable. 
+- A **regressor** variable is a variable used in our regression model, whether that is an unmodified predictor variable, some transformation of a predictor, some combination of predictors, etc.
+
+### First-Order Model Effects Plot
+
+In a first-order linear model, none of the regressors interact, i.e., none of the regressors are functions of each other. Fox et al. (2020) use the terminology **fixed group** to refer to the group of predictors that do not interact with the focal predictor. 
+
+To create our effect plot, we must first find the equation for the estimated mean response as a function of a focal predictor while holding the other predictors at their "typical" values. We set numeric fixed group predictors equal to their sample means when finding this function.
 
 We now construct effect plots for the estimated regression model of the
-`penguins` data that regressed `bill_length_mm` on `body_mass_g` and
-`flipper_length_mm` (previously considered in Section
-\@ref(s:penguins-mlr)). We refit that model using the code below and
-assign it the name `mlmod`. The fitted model is $$
+`penguins` data that regressed `bill_length_mm` on `body_mass_g` and `flipper_length_mm`. The fitted model is 
+
+$$
 \begin{aligned}
 &\hat{E}(\mathtt{bill\_length\_mm}\mid \mathtt{body\_mass\_g}, \mathtt{flipper\_length\_mm})\\
 &=-3.44+0.0007 \,\mathtt{body\_mass\_g}+0.22\,\mathtt{flipper\_length\_mm}.
 \end{aligned}
-(\#eq:mlr-effect-equation)
 $$
 
 ```{r}
@@ -326,37 +316,25 @@ mlmod <- lm(bill_length_mm ~ body_mass_g + flipper_length_mm, data = penguins)
 coef(mlmod)
 ```
 
-There are two predictors in the model in Equation
-\@ref(eq:mlr-effect-equation), `body_mass_g` and `flipper_length_mm`, so
-we can create effect plots for both variables. Since each predictor is
-numeric and doesn't interact with other predictors, the "typical" value
-used to determine the estimated mean response will be the sample mean of
-the observed predictor values. When fitting a linear model in R, R will
-automatically drop any observations that have `NA` values for any
-variables used in our model. Thus, the sample means used in our effect
-plot should correspond to the sample mean of the values actually used to
-fit the model. If our fitted model was assigned the name `lmod`, the
-response and predictor values used to fit the model may be extracted
-using `lmod$model`. Since the response variable and predictor variables
-used to fit `mlmod` are all numeric, we can use the `colMeans` function
-to get the sample mean of each variable. The sample means of the
-`body_mass_g` and `flipper_length_mm` values used to fit `mlmod` are
-$\overline{\mathtt{body\_mass\_g}}=4201.75$ and
-$\overline{\mathtt{flipper\_length\_mm}}=200.92$, respectively, as shown
-in the code below.
+There are two predictors in the model, so we can create effect plots for both variables using the sample mean as a reference value. 
 
 ```{r}
 colMeans(mlmod$model)
 ```
 
 The effect plot for $\mathtt{body\_mass\_g}$ (on the response
-$\mathtt{bill\_length\_mm}$) is a plot of $$
+$\mathtt{bill\_length\_mm}$) is a plot of 
+$$
 \begin{aligned}
 &\hat{E}(\mathtt{bill\_length\_mm}\mid \mathtt{body\_mass\_g}, \mathtt{flipper\_length\_mm} = 200.92)\\
 &=-3.44+0.0007 \,\mathtt{body\_mass\_g}+0.22\cdot 200.92 \\
 &=41.14+0.0007 \,\mathtt{body\_mass\_g}
 \end{aligned}
-$$ as a function of $\mathtt{body\_mass\_g}$. Note: we used exact values
+$$ 
+
+as a function of $\mathtt{body\_mass\_g}$. 
+
+Note: we used exact values
 in the calculation above. The intercept will be 40.76 instead of 41.14
 if you use the rounded values. Similarly, the effect plot for
 $\mathtt{flipper\_length\_mm}$ is a plot of $$
@@ -367,10 +345,11 @@ $\mathtt{flipper\_length\_mm}$ is a plot of $$
 \end{aligned}
 $$ as a function of $\mathtt{flipper\_length\_mm}$.
 
-The **`effects`** package [@R-effects] can be used to generate effect
-plots for the predictors of a fitted linear model. We start by using the
-`effects::predictorEffect` function to compute the information needed to
-draw the plot, then the `plot` function to display the information.
+The **`effects`** R package can be used to generate effect
+plots for the predictors of a fitted linear model. 
+
+- First, the `effects::predictorEffect` function to compute the information needed to draw the plot. 
+- Then, the `plot` function to display the information.
 
 The `predictorEffect` function computes the estimated mean response for
 different values of the focal predictor while holding the other
@@ -382,34 +361,18 @@ predictors at their typical values. The main arguments of
 -   `mod`: the fitted model. The function works with `lm` objects, but
     also many other types of fitted models.
 
-The `plot` function will take the output of the `predictorEffect`
-function and produce the desired effect plot.
-
-In the code below, we load the **`effects`** package (so that we can use
-the `predictorEffect` function) and then combine calls to the `plot` and
-`predictorEffect` functions to create an effect plot for `body_mass_g`,
-which is shown in Figure \@ref(fig:effect-plot-body-mass).
-
 ```{r effect-plot-body-mass, fig.cap = "Effect plot for body mass based on the fitted model in Equation \\@ref(eq:mlr-effect-equation)."}
 # load effects package
 library(effects)
 # draw effect plot for body_mass_g
 plot(predictorEffect("body_mass_g", mlmod))
 ```
-
-We see from Figure \@ref(fig:effect-plot-body-mass) that there is a
-clear positive association between `body_mass_g` and `bill_length_mm`
+There is a clear positive association between `body_mass_g` and `bill_length_mm`
 after accounting for the `flipper_length_mm` variable. The shaded area
 indicates the 95% confidence interval bands for the estimated mean
-response. We do not discuss confidence interval bands here, except to
-say that they provide a visual picture of the uncertainty of our
-estimated mean (wider bands indicate greater uncertainty). Chapter
-\@ref(inference) discusses confidence intervals for linear models in
-some detail. The many tick marks along the the x-axis of the effect plot
-indicate observed values of the x-axis variable.
+response. 
 
-We next create an effect plot for `flipper_length_mm`, which is shown in
-Figure \@ref(fig:effect-plot-flipper-length), using the code below.
+We next create an effect plot for `flipper_length_mm` using the code below.
 There is a clear positive association between `flipper_length_mm` and
 `bill_length_mm` after accounting for `body_mass_g`.
 
@@ -419,76 +382,77 @@ plot(predictorEffect("flipper_length_mm", mlmod))
 ```
 
 Alternatively, we could use `effects::allEffects` to compute the
-necessary effect plot information for all predictors simultaneously,
-then use `plot` to create a display of the effect plots for all
-predictors in one graphic. This approach is quicker, but the individual
-effect plots can sometimes be too small for practical use. We
-demonstrate this faster approach in the code below, which produces
-Figure \@ref(fig:mlmod-effect-plots-all).
+necessary effect plot information for all predictors simultaneously, but it is harder to control figure sizing.
 
 ```{r mlmod-effect-plots-all, fig.cap = "All effect plots for predictors of the fitted model in Equation \\@ref(eq:mlr-effect-equation)."}
 plot(allEffects(mlmod))
 ```
 
-## Interpretation for categorical predictors {#interp-cat-predictor}
+## Interpretation for categorical predictors
 
-We now discuss the interpretation of regression coefficients in the
-context of a parallel lines and separate lines models.
-
-### Coefficient interpretation for parallel lines models {#pl-interp}
+### Coefficient interpretation for parallel lines models
 
 Consider a parallel lines model with numeric regressor $X$ and
-categorical predictor $C$ with levels $L_1$, $L_2$, and $L_3$. Following
-the discussion in Section \@ref(categorical-predictors), predictor $C$
+categorical predictor $C$ with levels $L_1$, $L_2$, and $L_3$. Predictor $C$
 must be transformed into two indicator variables, $D_2$ and $D_3$, for
 category levels $L_2$ and $L_3$, to be included in our linear model.
 $L_1$ is the reference level. The parallel lines model is formulated as
 $$
-E(Y \mid X, C) = \beta_{int} + \beta_{X} X + \beta_{L_2} D_2 +  \beta_{L_3} D_3, (\#eq:pl-def-interp)
-$$ where we replace the usual $\beta_0$, $\beta_1$, $\beta_2$, and
+E(Y \mid X, C) = \beta_{int} + \beta_{X} X + \beta_{L_2} D_2 +  \beta_{L_3} D_3
+$$ 
+
+We replaced the usual $\beta_0$, $\beta_1$, $\beta_2$, and
 $\beta_3$ with notation the indicates the regressor each coefficient is
 associated with.
 
 When an observation has level $L_1$ and $X=0$, then the expected
-response is $$
+response is 
+
+$$
 \begin{aligned}
 E(Y|X = 0, C=L_1) &= \beta_{int} + \beta_X \cdot 0 + \beta_{L_2} \cdot 0 + \beta_{L_3} \cdot 0 \\
 &= \beta_{int}.
 \end{aligned}
-$$ Thus, $\beta_{int}$ is the expected response for an observation with
+$$ 
+
+Thus, $\beta_{int}$ is the expected response for an observation with
 level $L_1$ when $X=0$.
 
-When an observation has a fixed level $L_j$ (it doesn't matter which
-level) and $X$ increases from $x^*$ to $x^*+1$, then the change in the
-expected response is $$
+When an observation has a fixed level $L_j$ and $X$ increases from $x^*$ to $x^*+1$, then the change in the expected response is 
+
+$$
 E(Y|X = x^* + 1, C=L_j) - E(Y|X = x^*, C=L_j)= \beta_X.
-$$ Thus, $\beta_X$ is the expected change in the response for an
+$$ 
+
+Thus, $\beta_X$ is the expected change in the response for an
 observation with fixed level $L_j$ when $X$ increases by 1 unit.
 
-When an observation has level $L_2$, the expected response is $$
+When an observation has level $L_2$, the expected response is 
+
+$$
 \begin{aligned}
 E(Y\mid X = x^*, C=L_2) &= \beta_{int} + \beta_X x^* + \beta_{L_2} \cdot 1 + \beta_{L_3} \cdot 0 \\
 &= \beta_{int} + \beta_X x^* + \beta_{L_2}.
 \end{aligned}
-$$ Thus, $$
+$$ 
+
+Thus, 
+
+$$
 \begin{aligned}
 & E(Y\mid X=x^*, C=L_2) - E(Y\mid X=x^*, C=L_1) \\
 &= (\beta_{int} + \beta_X x^* + \beta_{L_2}) - (\beta_{int} + \beta_X x^*) \\
 &=  \beta_{L_2}.
 \end{aligned}
-$$ Thus, $\beta_{L_2}$ is the expected change in the response for a
+$$ 
+
+Thus, $\beta_{L_2}$ is the expected change in the response for a
 fixed value of $X$ when comparing on observation having level $L_1$ to
 level $L_2$ of predictor $C$. More specifically, $\beta_{L_2}$ indicates
 the distance between the estimated regression lines for observations
-having levels $L_1$ and $L_2$. A similar interpretation holds for
-$\beta_{L_3}$ when comparing observations having level $L_3$ to
-observations having level $L_1$. $L_1$ is known as as the reference
-level of $C$ because we must refer to it to interpret our model with
-respect to other levels of $C$.
+having levels $L_1$ and $L_2$. 
 
-To summarize the interpretation of the coefficients in parallel lines
-models like Equation \@ref(eq:pl-def-interp), assuming categorical
-predictor $C$ has $K$ levels instead of 3:
+To summarize, assuming categorical predictor $C$ has $K$ levels instead of 3:
 
 -   $\beta_{int}$ represents the expected response for observations
     having the reference level when the numeric regressor $X = 0$.
@@ -498,16 +462,16 @@ predictor $C$ has $K$ levels instead of 3:
     the response when comparing observations having level $L_1$ and
     $L_j$ with $X$ fixed at the same value.
 
-In Section \@ref(s:penguins-mlr2), we fit a parallel lines model to the
-`penguins` data that used both `body_mass_g` and `species` to explain
-the behavior of `bill_length_mm`. Letting $D_C$ denote the indicator
-variable for the `Chinstrap` level and $D_G$ denote the indicator
-variable for the `Gentoo` level, the fitted parallel lines model was $$
+We previously fit a parallel lines model to the `penguins` data that used both `body_mass_g` and `species` to explain the behavior of `bill_length_mm`. Letting $D_C$ denote the indicator variable for the `Chinstrap` level and $D_G$ denote the indicator variable for the `Gentoo` level, the fitted parallel lines model was 
+
+$$
 \begin{aligned}
 &\hat{E}(\mathtt{bill\_length\_mm} \mid \mathtt{body\_mass\_g}, \mathtt{species})\\
 &= 24.92 + 0.004 \mathtt{body\_mass\_g} + 9.92 D_C + 3.56 D_G.
 \end{aligned}
-$$ In the context of this model:
+$$ 
+
+In the context of this model:
 
 -   The expected bill length for an Adelie penguin with a body mass of 0
     grams is 24.92 mm.
@@ -523,17 +487,16 @@ $$ In the context of this model:
 
 How do we create an effect plot for a numeric focal predictor when a
 non-interacting categorical predictor is in the model (such as for the
-parallel lines model we have been discussing)? In short, we determine
-the fitted model as a function of the focal predictor for each level of
-the categorical predictor, and then compute the weighted average of the
-equation with the weights being proportional to the number of
-observations in each group.
+parallel lines model we have been discussing)? 
+
+- First, determine the fitted model as a function of the focal predictor for each level of the categorical predictor. 
+- Then, we compute the weighted average of the equation with the weights being proportional to the number of observations in each group.
 
 Let's construct an effect plot for the `body_mass_g` predictor in the
 context of the `penguins` parallel lines model discussed in the previous
-section. In Section \@ref(s:penguins-mlr2), we determined that the
-fitted parallel lines model simplified to the following equations
-depending on the level of `species`: $$
+section. We previously determined that the fitted parallel lines model simplified to:
+
+$$
 \begin{aligned}
 &\hat{E}(\mathtt{bill\_length\_mm} \mid \mathtt{body\_mass\_g}, \mathtt{species}=\mathtt{Adelie}) \\
 &= 24.92 + 0.004 \mathtt{body\_mass\_g} \\
@@ -542,8 +505,9 @@ depending on the level of `species`: $$
 &\hat{E}(\mathtt{bill\_length\_mm} \mid \mathtt{body\_mass\_g}, \mathtt{species}=\mathtt{Gentoo}) \\
 &= 28.48 + 0.004 \mathtt{body\_mass\_g}.
 \end{aligned}
-(\#eq:pl-equations)
-$$ We recreate the fitted model producing these equations in R using the
+$$ 
+
+We recreate the fitted model producing these equations in R using the
 code below.
 
 ```{r}
@@ -554,18 +518,17 @@ coef(lmodp)
 ```
 
 The code below determines the number of observations with each level of
-`species` for the data used in the fitted model `lmodp`. We see that 151
-Adelie, 68 Chinstrap, and 123 Gentoo penguins (342 total penguins) were
-used to fit the model stored in `lmodp`.
+`species` for the data used in the fitted model `lmodp`. 
 
 ```{r}
 table(lmodp$model$species)
+print(paste('Total:', length(lmodp$model$species)))
 ```
 
 The equation used to create the effect plot of `body_mass_g` is the
-weighted average of the equations in Equation \@ref(eq:pl-equations),
-with weights proportional to the number of observational having each
-level of the categorical predictor. Specifically, $$
+weighted average of the response, with weights proportional to the number of observational having each level of the categorical predictor. Specifically, 
+
+$$
 \begin{aligned}
 & \hat{E}(\mathtt{bill\_length\_mm} \mid \mathtt{body\_mass\_g}, \mathtt{species}=\mathtt{typical}) \\
 &= \frac{151}{342}(24.92 + 0.004 \mathtt{body\_mass\_g})\\
@@ -573,101 +536,102 @@ level of the categorical predictor. Specifically, $$
 &\quad + \frac{123}{342}(28.48 + 0.004 \mathtt{body\_mass\_g}) \\
 &=28.17 + 0.004 \mathtt{body\_mass\_g}.
 \end{aligned}
-$$ The effect plot for `body_mass_g` for the fitted parallel lines model
-is shown in Figure \@ref(fig:effect-plot-plmod-body-mass). The
-association between `bill_length_mm` and `body_mass_g` is positive after
-accounting for `species`.
+$$ 
+
+The following code produces the effect plot for `body_mass_g` for the fitted parallel lines model. The association between `bill_length_mm` and `body_mass_g` is positive after accounting for `species`.
 
 ```{r effect-plot-plmod-body-mass, fig.cap="The effect plot of `body_mass_g` for the fitted parallel lines model."}
 # draw effect plot for body_mass_g
 plot(predictorEffect("body_mass_g", lmodp))
 ```
 
-<!-- Alternatively, if we want to see the effect plot for `body_mass_g` for each level of the categorical predictors, then we can use the `multiline` argument of the `plot` function to get the desired result. We use the code below to produce Figure @ref(fig:eff-plot-pl-multiline).  -->
-
-<!-- ```{r eff-plot-pl-multiline, fig.cap="An effect plot of `body_mass_g` that distinguishes the effect for each level of `species`."} -->
-
-<!-- plot(predictorEffect("body_mass_g", lmodp),  lines=TRUE) -->
-
-<!-- ``` -->
 
 An effect plot for a categorical predictor, assuming all other
 predictors in the model are non-interacting numerical predictors (i.e.,
 fixed group predictors), is a plot of the estimated mean response for
 each level of the categorical variable when the fixed group group
-predictors are held at their sample mean. The sample mean of the
-`body_mass_g` values used to fit `lmodp` is 4201.75, as shown in the
-code below.
+predictors are held at their sample mean. The sample mean is:
 
 ```{r}
 # sample mean of body_mass_g variable used to fit lmodp
 mean(lmodp$model$body_mass_g)
 ```
 
-Using the first equation in Equation \@ref(eq:pl-equations), the
-estimated mean for the Adelie species when `body_mass_g` is fixed at
-4201.75 is $$
+The estimated mean for the Adelie species when `body_mass_g` is fixed at 4201.75 is
+
+$$
 \begin{aligned}
 &\hat{E}(\mathtt{bill\_length\_mm} \mid \mathtt{body\_mass\_g} = 4201.75, \mathtt{species}=\mathtt{Adelie}) \\
 &= 24.92 + 0.004 \cdot 4201.75 \\
 &= 40.67.
 \end{aligned}
-$$ Similarly,
-$\hat{E}(\mathtt{bill\_length\_mm} \mid \mathtt{body\_mass\_g} = 4201.75, \mathtt{species}=\mathtt{Chinstrap}) = 50.59$
-and
-$\hat{E}(\mathtt{bill\_length\_mm} \mid \mathtt{body\_mass\_g} = 4201.75, \mathtt{species}=\mathtt{Gentoo}) = 44.23$.
+$$ 
 
-The code below produces the effect plot for `species`, which is shown in
-Figure \@ref(fig:eff-plot-species-plmod). We see that after accounting
-for `body_mass_g`, the `bill_length_mm` tends to be largest for
-Chinstrap penguins, second largest for Gentoo penguins, and smallest for
-Adelie penguins. The confidence bands for the estimated mean response
-are shown by the vertical bars.
+Similarly,
+
+$$
+\hat{E}(\mathtt{bill\_length\_mm} \mid \mathtt{body\_mass\_g} = 4201.75, \mathtt{species}=\mathtt{Chinstrap}) = 50.59
+$$
+
+And,
+
+$$\hat{E}(\mathtt{bill\_length\_mm} \mid \mathtt{body\_mass\_g} = 4201.75, \mathtt{species}=\mathtt{Gentoo}) = 44.23$$
+
+The code below produces the effect plot for `species`. The confidence bands for the estimated mean response are shown by the vertical bars.
 
 ```{r eff-plot-species-plmod, fig.cap = "An effect plot for `species` after accounting for `body_mass_g`."}
 plot(predictorEffect("species", lmodp))
 ```
 
-### Coefficient interpretation for separate lines models {#sl-interp}
+### Coefficient interpretation for separate lines models
 
 Consider a separate lines model with numeric regressor $X$ and
 categorical predictor $C$ with levels $L_1$, $L_2$, and $L_3$. The
 predictor $C$ will be transformed into two indicator variables, $D_2$
 and $D_3$, for category levels $L_2$ and $L_3$, with $L_1$ being the
-reference level. The separate lines model is formulated as $$
-E(Y \mid X, C) = \beta_{int} + \beta_{X} X + \beta_{L_2} D_2 +  \beta_{L_3} D_3 + \beta_{XL_2} XD_2+\beta_{XL_3}XD_3. (\#eq:sl-def-interp)
+reference level. The separate lines model is formulated as:
+$$
+E(Y \mid X, C) = \beta_{int} + \beta_{X} X + \beta_{L_2} D_2 +  \beta_{L_3} D_3 + \beta_{XL_2} XD_2+\beta_{XL_3}XD_3
 $$
 
 When an observation has level $L_1$ and $X=x^*$, then the expected
-response is $$
+response is 
+$$
 \begin{aligned}
 &E(Y\mid X = x^*, C=L_1) \\
 &= \beta_{int} + \beta_X \cdot x^* + \beta_{L_2} \cdot 0 + \beta_{L_3} \cdot 0  + \beta_{X L_2} \cdot x^* \cdot 0 + \beta_{X L_3}\cdot x^* \cdot 0 \\
 &= \beta_{int} + \beta_X x^*.
 \end{aligned}
-(\#eq:slr-mean-L1)
 $$
 
-Using Equation \@ref(eq:slr-mean-L1), we can verify that:
+We can verify that:
 
 -   $\beta_{int} = E(Y\mid X = 0, C=L_1)$.
 -   $\beta_{X} = E(Y\mid X = x^* + 1, C=L_1) - E(Y\mid X = x^*, C=L_1)$.
 
-Similarly, when $C=L_2$, $$
+Similarly, when $C=L_2$, 
+
+$$
 \begin{aligned}
 & E(Y|X = x^*, C=L_2) \\
 &= \beta_{int} + \beta_X \cdot x^* + \beta_{L_2} \cdot 1 + \beta_{L_3} \cdot 0  + \beta_{X L_2} \cdot x^* \cdot 1 + \beta_{X L_3}\cdot x^* \cdot 0 \\
 &= \beta_{int} + \beta_X x^* + \beta_{L_2} + \beta_{XL_2}x^*\\
-&= (\beta_{int} + \beta_{L_2}) + (\beta_X + \beta_{XL_2})x^*.
+&= (\beta_{int} + \beta_{L_2}) + (\beta_X + \beta_{XL_2})x^*
 \end{aligned}
-(\#eq:slr-mean-L2)
-$$ Following this same pattern, when $C=L_3$ we have $$
-E(Y|X = x^*, C=L_3) = (\beta_{int} + \beta_{L_3}) + (\beta_X + \beta_{XL_3})x^*. (\#eq:slr-mean-L3)
+$$ 
+
+Following this same pattern, when $C=L_3$ we have 
+
+$$
+E(Y|X = x^*, C=L_3) = (\beta_{int} + \beta_{L_3}) + (\beta_X + \beta_{XL_3})x^*
 $$
 
-Using Equations \@ref(eq:slr-mean-L1), \@ref(eq:slr-mean-L2), and
-\@ref(eq:slr-mean-L3), we can verify that for $j=2,3$,
-$$\beta_{L_j}= E(Y\mid X = 0, C=L_j) - E(Y\mid X = 0, C=L_1),$$ and $$
+We can verify that for $j=2,3$,
+
+$$\beta_{L_j}= E(Y\mid X = 0, C=L_j) - E(Y\mid X = 0, C=L_1)$$ 
+
+And, 
+$$
 \begin{aligned}
 & \beta_{XL_j} \\
 &= [E(Y\mid X = x^*+1, C=L_j) - E(Y\mid X = x^*, C=L_j)]\\
@@ -676,8 +640,7 @@ $$\beta_{L_j}= E(Y\mid X = 0, C=L_j) - E(Y\mid X = 0, C=L_1),$$ and $$
 $$
 
 To summarize the interpretation of the coefficients in separate lines
-models like Equation \@ref(eq:sl-def-interp), assuming categorical
-predictor $C$ has $K$ levels instead of 3:
+models, assuming categorical predictor $C$ has $K$ levels instead of 3:
 
 -   $\beta_{int}$ represents the expected response for observations
     having the reference level when the numeric regressor $X = 0$.
@@ -693,15 +656,17 @@ predictor $C$ has $K$ levels instead of 3:
     observations having level $L_j$ compared to the reference level.
 
 We illustrate these interpretation using the separate lines model to the
-`penguins` data in Section in Section \@ref(s:penguins-mlr2). The fitted
-separate lines model was $$
+`penguins` data. The fitted separate lines model was, 
+
+$$
 \begin{aligned}
 &\hat{E}(\mathtt{bill\_length\_mm} \mid \mathtt{body\_mass\_g}, \mathtt{species}) \\
 &= 26.99 + 0.003 \mathtt{body\_mass\_g} + 5.18 D_C - 0.25 D_G \\
 &\quad + 0.001 D_C \mathtt{body\_mass\_g} + 0.0009 D_G \mathtt{body\_mass\_g}.
 \end{aligned}
-(\#eq:sl-refit-interp)
-$$ In the context of this model:
+$$ 
+
+In the context of this model:
 
 -   The expected bill length for an Adelie penguin with a body mass of 0
     grams is 26.99 mm.
@@ -722,19 +687,13 @@ $$ In the context of this model:
 ### Effect plots for interacting categorical predictors
 
 We now discuss construction of effect plots for a separate lines model,
-which has an interaction between a categorical and numeric predictor. In
-additional to the focal and fixed group predictors we have previously
-discussed, @fox2020predictor also discuss predictors in the
-**conditioning group**, which is the set of predictors that interact
-with the focal predictor.
+which has an interaction between a categorical and numeric predictor. Fox et al. (2020) also discuss predictors in the **conditioning group**, which is the set of predictors that interact with the focal predictor.
 
 When some predictors interact with the focal predictor, the effect plot
 of the focal predictor is a plot of the estimated mean response when the
 fixed group predictors are held at their typical values and the
 conditioning group predictors vary over different combinations of
-discrete values. The process of determining the estimated mean response
-as function of the focal predictor is similar to before, but there are
-more predictor values on which to condition. By default, to compute the
+discrete values. By default, to compute the
 estimated mean response as a function of the focal predictor, we:
 
 -   Hold the numeric fixed group predictors at their sample means.
@@ -748,9 +707,7 @@ estimated mean response as a function of the focal predictor, we:
 
 We provide examples of the effect plots for the `body_mass_g` and
 `species` predictors for the separate lines model fit to the `penguins`
-data and given in Equation \@ref(eq:sl-refit-interp). We first run the
-code below to fit the separate lines model previously fit in Section
-\@ref(s:penguins-mlr2).
+data. We first run the code below to fit the separate lines model we previously fit:
 
 ```{r}
 # fit separate lines model
@@ -760,9 +717,9 @@ lmods <- lm(bill_length_mm ~ body_mass_g + species + body_mass_g:species,
 coef(lmods)
 ```
 
-We previously determined in Section \@ref(s:penguins-mlr2) that the
-model simplifies depending on the level of species. Specifically, we
-have that $$
+We previously determined that the model simplifies depending on the level of species:
+
+$$
 \begin{aligned}
 &\hat{E}(\mathtt{bill\_length\_mm} \mid \mathtt{body\_mass\_g}, \mathtt{species}=\mathtt{Adelie}) \\
 &= 26.99 + 0.003 \mathtt{body\_mass\_g},\\
@@ -771,19 +728,15 @@ have that $$
 &\hat{E}(\mathtt{bill\_length\_mm} \mid \mathtt{body\_mass\_g}, \mathtt{species}=\mathtt{Chinstrap}) \\
 &= 26.74 + 0.004 \mathtt{body\_mass\_g}.
 \end{aligned}
-(\#eq:separate-lines-equations-effects-plot)
 $$
 
-The effect plot of `body_mass_g` for the separate lines model will be a
-plot of each equation given in Equation
-\@ref(eq:separate-lines-equations-effects-plot). Figure
-\@ref(fig:effect-plot-body-mass-lmods) displays this effect plot, which
-was created using the code below. We use the `axes` argument to rotate
-the x-axis labels (otherwise the text overlaps) and the `lines`
-arguments to display all three lines in one graphic instead of a
-separate panel for each level of `species`. We notice Chinstrap penguins
-tend to have the largest bill lengths for a given value of body mass and
-the bill lengths increase more quickly as a function of body mass then
+The effect plot of `body_mass_g` for the separate lines model is displayed using the code below. 
+
+- The `axes` argument to rotates the x-axis labels (otherwise the text overlaps)
+- The `lines` argument displays all three lines in one graphic instead of a
+separate panel for each level of `species`. 
+
+Chinstrap penguins tend to have the largest bill lengths for a given value of body mass and the bill lengths increase more quickly as a function of body mass then
 for the Adelie and Gentoo penguins. Similarly, the Adelie penguins tend
 to have the smallest bill length for a fixed value of body mass and the
 bill length tends to increase more slowly as body mass increases
@@ -799,16 +752,12 @@ plot(predictorEffect("body_mass_g", lmods),
 ```
 
 The effect plot of `species` for the separate lines model will be a plot
-of the estimated mean response in Equation
-\@ref(eq:separate-lines-equations-effects-plot) for each level of
-`species` when varying `body_mass_g` over 5 discrete values. Figure
-\@ref(fig:effect-plot-species-lmods) displays this effect plot, which
-was created using the code below. By specifying
-`lines = list(multiline = TRUE)`, the estimated mean responses for each
-level of `species` are connected for each discrete value of
-`body_mass_g`. Figure \@ref(fig:effect-plot-species-lmods) allows use to
-determine the effect of `species` on `bill_length_mm` when we vary
-`body_mass_g` over 5 discrete values. When varying `body_mass_g` across
+of the estimated mean response for each level of `species` when varying `body_mass_g` over 5 discrete values. 
+
+By specifying `lines = list(multiline = TRUE)`, the estimated mean responses for each level of `species` are connected for each discrete value of
+`body_mass_g`. 
+
+This plot allows use to determine the effect of `species` on `bill_length_mm` when we vary `body_mass_g` over 5 discrete values. When varying `body_mass_g` across
 the values 2700, 3600, 4500, 5300, and 6300 g, we see greater changes in
 the estimated mean of `bill_lengh_mm` for Chinstrap penguins in
 comparison to Adelie and Gentoo penguins.
@@ -822,21 +771,22 @@ plot(predictorEffect("species", lmods),
      lines=list(multiline = FALSE))
 ```
 
-We refer the reader to the "Predictor effects gallery" vignette in the
-**`effects`** package (run
-`vignette("predictor-effects-gallery", package = "effects")` in the
-Console) for more details about how to construct effect plots in
-different settings.
+For more details about how to construct effect plots, run the following code to access the "vignette".
+
+```{r, eval=FALSE}
+vignette("predictor-effects-gallery", package = "effects")
+```
+
 
 ## Added-variable and leverage plots
 
+As we saw before, an **effect plot** is a plot
+of the estimated mean relationship between the response and a focal
+predictor while holding the model's predictors at typical values,
+
 An **added-variable plot** or **partial regression plot** displays the
 marginal effect of a regressor on the response after accounting for the
-other regressors in the model [@mt1977]. While an effect plot is a plot
-of the estimated mean relationship between the response and a focal
-predictor while holding the model's predictors at typical values, the
-added-variable plot is a plot of two sets of residuals against one
-other.
+other regressors in the model. An added-variable plot is a plot of two sets of residuals against one other.
 
 We create an added-variable plot for regressor $X_j$ in the following
 way:
@@ -861,7 +811,7 @@ way:
 Added-variable plots allow us to visualize the impact a regressor has
 when added to an existing regression model. We can use the
 added-variable plot for $X_j$ to visually estimate the partial slope
-$\hat{\beta}_{j}$ [@sheather2009modern]. In fact, the simple linear
+$\hat{\beta}_{j}$. The simple linear
 regression line that minimizes the RSS for the added-variable plot of
 $X_j$ will have slope $\hat{\beta}_j$.
 
@@ -874,32 +824,20 @@ We can use an added-variable plot in several ways:
 4.  To identify outliers and observations influential in determining the
     estimated partial slope.
 
-We focus on points 1 and 2 above, as they are directly related to
-interpreting our fitted model. We discuss points 3 and 4 in the context
-of diagnostics for assessing the appropriateness of our model.
-
 In regards to point 1 and 2:
 
 -   If the added-variable plot for $X_j$ is essentially a scatter of
     points with slope zero, then $X_j$ can do little to explain $Y$
-    after accounting for the other regressors. There is little to gain
-    in adding $X_j$ as an additional regressor to the model regressing
-    $Y$ on $\mathbb{X}_{-j}$. Figure \@ref(fig:avplot-examples) (a)
-    provides an example of this situation.
+    after accounting for the other regressors.
 -   If the points in an added-variable plot for $X_j$ have a linear
     relationship, then adding $X_j$ to the model regressing $Y$ on
     $\mathbb{X}_{-j}$ is expected to improve our model's ability to
-    predict the behavior of $Y$. The stronger the linear relationship of
-    the points in the added-variable plot, the more important this
-    variable tends to be in our model. Figure \@ref(fig:avplot-examples)
-    (b) provides an example of this situation.
+    predict the behavior of $Y$. 
 -   If the points in an added-variable plot for $X_j$ are curved, it
     indicates that that there is a deficiency in the fitted model
     (likely because we need to include one or more additional regressors
-    to the model). This is related to point 3 above, but we do not
-    expand on this here. Figure \@ref(fig:avplot-examples) (c) provides
-    an example of this situation.
-
+    to the model).
+    
 ```{r avplot-examples, echo = FALSE, fig.cap = "Examples of added-variable plots"}
 par(mfrow = c(1, 3), pty = "s")
 set.seed(71)
@@ -919,8 +857,7 @@ title("(c)")
 par(mfrow = c(1, 1))
 ```
 
-The **`car`** package [@R-car] provides the `avPlot` and `avPlots`
-functions for creating added-variable plots. The `avPlot` function will
+From the **`car`** package, the `avPlot` function will
 produce an added-variable plot for a single regressor while the
 `avPlots` function will produce added-variable plots for one or more
 regressors.
@@ -940,27 +877,10 @@ The main arguments to the `avPlot` function are:
 The `avPlots` function replaces the `variable` argument with the `terms`
 argument. The `terms` argument should be a one-sided formula to indicate
 the regressors for which you want to construct added-variable plots (one
-plot for each term). By default, an added-variable plot is created for
-each regressor. Run `car::avPlot` in the Console for information about
-about the arguments and details of the `avPlot` and `avPlots` functions.
+plot for each term).
 
 We now create and interpret added-variable plots for the model
-regressing `bill_length_mm` on `body_mass_g` and `flipper_length_mm`,
-which was previously assigned the name `mlmod`. We first load the
-**`car`** package and then use the `avPlots` function to construct
-added-variable plots for `body_mass_g` and `flipper_length_mm`. Figure
-\@ref(fig:avplots-mlmod) displays the added-variable plots for
-`body_mass_g` and `flipper_length_mm`. The blue line is the simple
-linear regression model that minimizes the RSS of the points. The
-added-variable plot for `body_mass_g` exhibits a weak positive linear
-relationship between the points. After using the `flipper_length_mm`
-variable to explain the behavior of `bill_length_mm`, `body_mass_g`
-likely has some additional explanatory power, but it doesn't explain a
-lot of additional response variation. The added-variable plot for
-`flipper_length_mm` exhibits a slightly stronger positive linear
-relationship. The `flipper_length_mm` variable seems to have some
-additional explanatory power when added to the model regressing
-`bill_length_mm` on `body_mass_g`.
+regressing `bill_length_mm` on `body_mass_g` and `flipper_length_mm`.
 
 ```{r avplots-mlmod, fig.cap = "The added-variable plots of all regressors for the model regressing `bill_length_mm` on `body_mass_g` and `flipper_length_mm`."}
 library(car)
@@ -968,60 +888,59 @@ library(car)
 avPlots(mlmod)
 ```
 
-The added-variable plots of fitted models with categorical predictors
-often show "clusters" of points related to the categorical predictors.
-These clusters aren't anything to worry about unless the overall pattern
-of the points is non-linear. We use the code below to create the
-added-variable plots for all regressors in the parallel lines model
-previously fit to the `penguins` data. The fitted model was $$
+The blue line is the simple linear regression model that minimizes the RSS of the points. 
+
+**Question:**
+
+- Which variable seems to have more explanatory power?
+
+
+To create the added-variable plots for all regressors in the parallel lines model from `penguins` data, we use the fitted model: 
+
+$$
 \begin{aligned}
 &\hat{E}(\mathtt{bill\_length\_mm} \mid \mathtt{body\_mass\_g}, \mathtt{species})\\
 &= 24.92 + 0.004 \mathtt{body\_mass\_g} + 9.92 D_C + 3.56 D_G,
 \end{aligned}
-$$ where $D_C$ and $D_G$ are indicator variables for the Chinstrap and
+$$ 
+
+where $D_C$ and $D_G$ are indicator variables for the Chinstrap and
 Gentoo penguin species (Adelie penguins are the reference species).
-Figure \@ref(fig:avplots-lmodp) displays the added-variable plots for
-the `body_mass_g` regressor and the indicator variables for Chinstrap
-and Gentoo penguins. The added-variable plot for `body_mass_g` has a
-moderately strong linear relationship, so adding `body_mass_g` to the
-model regressing `bill_length_mm` on `species` seems to be beneficial.
-The other two variable plots are show a linear relationship. Clustering
-patterns are apparent in the added-variable plot for the Chinstrap
-penguins indicator variable (`speciesChinstrap`) but not for the Gentoo
-penguins indicator variable.
 
 ```{r avplots-lmodp, fig.cap = "The added-variable plots for all regressors in the parallel lines model fit to the `penguins` data."}
 avPlots(lmodp)
 ```
 
-A challenge in interpreting the added-variable plots of indicator
-variable regressors is that it often doesn't make sense to talk about
-the effect of adding a single indicator regressor when all of the other
-regressors are in the model. Specifically, we either add the categorical
-*predictor* to our regression model or we do not. When we add a
-categorical predictor to our model, we simultaneously add $K-1$
+
+**Question:** 
+
+- How should we interpret the relative strength of the linear relationships?
+- Is there any clustering apparent?
+
+### Leverage Plots
+
+It sometimes doesn't make sense to talk about the effect of adding a single indicator regressor when all of the other regressors are in the model. When we add a categorical predictor to our model, we simultaneously add $K-1$
 indicator variables as regressors; we do not add the indicator variables
-one-at-a-time. In general, we refer to regressors with this behavior as
+one-at-a-time. 
+
+In general, we refer to regressors with this behavior as
 "multiple degrees-of-freedom terms". A categorical variable with 3 or
 more levels is the most basic of multiple degrees-of-freedom term, but
 you could also consider regressors related to the interaction between
 two or more predictors, polynomial regressors, etc.
 
-A **leverage plot** is an extension of the added-variable plot that
-allows us to visualize the impact of multiple degrees-of-freedom terms.
-@sall1990leverage originally proposed leverage plots to visualize
-hypothesis tests of linear hypotheses. The interpretation of leverage
+A **leverage plot**  allows us to visualize the impact of multiple degrees-of-freedom terms. The interpretation of leverage
 plots is similar to the interpretation of added-variable plots, though
 we refer to "predictors" or "terms" instead regressors (which may be
-combined into one plot). The `leveragePlot` and `leveragePlots`
-functions in the **`car`** package produce single or multiple leverage
-plots, respectively, with arguments similar to the `avPlot` and
-`avPlots` functions.
+combined into one plot). 
 
-We use the code below to create Figure \@ref(fig:leverageplot-lmodp),
-which displays leverage plots for the `body_mass_g` and `species`
-predictors of the parallel lines model previously fit to the `penguins`
-data. The leverage plot for `body_mass_g` has a moderate linear
+The `leveragePlot` and `leveragePlots` functions in the **`car`** package produce single or multiple leverage plots, respectively, with arguments similar to the `avPlot` and `avPlots` functions.
+
+```{r leverageplot-lmodp, fig.cap = "Leverage plots for the predictors in the parallel lines model fit to the `penguins` data."}
+leveragePlots(lmodp)
+```
+
+The leverage plot for `body_mass_g` has a moderate linear
 relationship, so we expect `body_mass_g` to have moderate value in
 explaining the behavior of `bill_length_mm` after accounting for
 `species`. Similarly, the points in the leverage plot for `species` have
@@ -1029,18 +948,19 @@ a moderately strong linear relationship, so we expect `species` to have
 moderate value in explaining the behavior of `bill_length_mm` after
 accounting for `body_mass_g`.
 
-```{r leverageplot-lmodp, fig.cap = "Leverage plots for the predictors in the parallel lines model fit to the `penguins` data."}
-leveragePlots(lmodp)
-```
 
 We next examine the leverage plot for the separate lines model fit to
-the `penguins` data. The fitted separate lines model is$$
+the `penguins` data. The fitted separate lines model is:
+
+$$
 \begin{aligned}
 &\hat{E}(\mathtt{bill\_length\_mm} \mid \mathtt{body\_mass\_g}, \mathtt{species}) \\
 &= 26.99 + 0.003 \mathtt{body\_mass\_g} + 5.18 D_C - 0.25 D_G \\
 &\quad + 0.001 D_C \mathtt{body\_mass\_g} + 0.0009 D_G \mathtt{body\_mass\_g},
 \end{aligned}
-$$which has 6 estimated coefficients. However, the fitted model has only
+$$
+
+There are 6 estimated coefficients, but the fitted model has only
 3 non-intercept terms. Recall the formula we fit for the separate lines
 model:
 
@@ -1053,8 +973,13 @@ lm(formula = bill_length_mm ~ body_mass_g + species + body_mass_g:species,
 Thus, we have terms for `body_mass_g`, `species`, and the interaction
 term `body_mass_g:species`.
 
-We use the code below to create the leverage plots shown in Figure
-\@ref(fig:leverageplot-lmods). The leverage plot for `body_mass_g` has a
+We use the code below to create the leverage plots:
+
+```{r leverageplot-lmods, fig.cap = "Leverage plots for the terms in the separate lines model fit to the `penguins` data."}
+leveragePlots(lmods)
+```
+
+The leverage plot for `body_mass_g` has a
 moderate linear relationship, so we expect `body_mass_g` to have
 moderate additional value in explaining the behavior of `bill_length_mm`
 after accounting for `species` and the interaction term
@@ -1067,20 +992,15 @@ interaction term `body_mass_g:species`. We are unlikely to fit a model
 that includes the interaction term without also including the `species`
 term directly. Instead it makes more sense to judge the utility of
 adding `species` to the model regressing `bill_length_mm` on
-`body_mass_g` alone, which we already considered in Figure
-\@ref(fig:leverageplot-lmodp). Examining the leverage plot for the
-interaction term `body_mass_g:species` , we see the points have only a
+`body_mass_g` alone, which we already considered. Examining the leverage plot for the interaction term `body_mass_g:species` , we see the points have only a
 weak linear relationship. Thus, we expect limited utility in adding the
 interaction term `body_mass_g:species` to the parallel lines regression
 model that regresses `bill_length_mm` on `body_mass_g` and `species`.
 
-```{r leverageplot-lmods, fig.cap = "Leverage plots for the terms in the separate lines model fit to the `penguins` data."}
-leveragePlots(lmods)
-```
 
 ## Going deeper
 
-### Orthogonality {#orthogonality}
+### Orthogonality
 
 Let $$\mathbf{X}_{[j]}=[x_{1,j},\ldots,x_{n,j}]$$ denote the $n\times 1$
 column vector of observed values for regressor $X_j$. (We can't use the
@@ -1151,7 +1071,7 @@ y <- c(1, 4, 6, 8, 9) # response vector
 ones <- rep(0, 5) # column of 1s
 x1 <- c(7, 5, 5, 7, 7) # regressor 1
 x2 <- c(-1, 2, -3, 1, 5/7) # create regressor 2 to be orthogonal to x1
-crossprod(x1, x2) # crossproduct is zero
+crossprod(x1, x2) # cross product is zero
 x3 <- c(0, -1, 1, 0, 0) # orthogonal to ones, x1
 x4 <- c(0, 0, 0, 1, -1) # orthogonal to ones, x1, x3
 x5 <- c(1, 0, 0, -1, 0) # orthogonal to ones, x1, not x4
@@ -1171,17 +1091,17 @@ X1 <- c(7, 5, 5, 7, 7)      # create regressor 1
 X2 <- c(-1, 2, -3, 1, 5/7)  # create regressor 2 to be orthogonal to x1
 ```
 
-Note that the `crossprod` function computes the crossproduct of two
+Note that the `crossprod` function computes the cross product of two
 vectors or matrices, so that `crossprod(A, B)` computes
 $\mathbf{A}^T B$, where the vectors or matrices must have the correct
 dimension for the multiplication to be performed.
 
 The regressor vectors `X1` and `X2` are orthogonal since their
-crossproduct $\mathbf{X}_{[1]}^T \mathbf{X}_{[2]}$ (in R,
+cross product $\mathbf{X}_{[1]}^T \mathbf{X}_{[2]}$ (in R,
 `crossprod(X1, X2)`) equals zero, as shown in the code below.
 
 ```{r}
-# crossproduct is zero, so X1 and X2 are orthogonal
+# cross product is zero, so X1 and X2 are orthogonal
 crossprod(X1, X2)
 ```
 
@@ -1213,8 +1133,8 @@ model because they are not orthogonal to the column of 1s.
 
 However, neither `X1` nor `X2` is orthogonal with the column of ones. We
 define the vector `ones` below, which is a column of 1s, and compute the
-crossproduct between `ones` and the two regressors. Since the
-crossproducts are not zero, `X1` and `X2` are not orthogonal to the
+cross product between `ones` and the two regressors. Since the
+cross products are not zero, `X1` and `X2` are not orthogonal to the
 column of ones.
 
 ```{r}
@@ -1274,9 +1194,9 @@ $\hat{\beta}_{0}=5.6$, $\hat{\beta}_{3}=1.0$, $\hat{\beta}_{4}=-0.5$
 when the relevant regressor was included in the model.
 
 The easiest way to determine which vectors are orthogonal to each other
-and the intercept is to compute the crossproduct of the $\mathbf{X}$
+and the intercept is to compute the cross product of the $\mathbf{X}$
 matrix for the largest set of regressors you are considering. Consider
-the matrix of crossproducts for the columns of 1s, `x1`, `x2`, `x3`, and
+the matrix of cross products for the columns of 1s, `x1`, `x2`, `x3`, and
 `x4`.
 
 ```{r}
@@ -1345,7 +1265,7 @@ crossprod(cbind(ones, X1, X4, X5))
 ```
 
 Note the block of zeros in the lower left and upper right corners of the
-crossproduct matrix above. The block containing `ones` and `X1` is
+cross product matrix above. The block containing `ones` and `X1` is
 orthogonal to the block containing `X4` and `X5`. This means that if we
 fit the model with only the column of 1s and `X1`, the model only with
 `X4` and `X5`, and then fit the model with the column of 1s, `x1`, `x4`,
