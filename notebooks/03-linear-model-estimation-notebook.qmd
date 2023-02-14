@@ -2,11 +2,11 @@
 title: Chapter 3 - Linear Model Estimation
 author: Joshua French
 date: ''
-format: html
-# format: ipynb
-# jupyter: ir
-# execute: 
-#   enabled: false
+# format: html
+format: ipynb
+jupyter: ir
+execute:
+  output: false
 self-contained: true
 title-block-banner: true
 ---
@@ -105,6 +105,7 @@ Consider these potential "best fitting" lines that are drawn on the scatter plot
 ```{r}
 #| echo: false
 #| eval: true
+#| output: true
 lmod <- lm(y ~ x)
 coef_ls <- coef(lmod) # OLS estimates
 lad <- function(b) {
@@ -171,7 +172,8 @@ where $\epsilon$ is known as the model error.
 The error term $\epsilon$ is literally the deviation of the response variable from its mean.
 
 - We typically assume that conditional on the regressor variable, the error term has mean 0 and variance $\sigma^2$.
-- This is written as $E(\epsilon \mid X) = 0$ and $\mathrm{var}(\epsilon \mid X) = \sigma^2$.
+- This is written as $E(\epsilon \mid X) = 0$
+and $\mathrm{var}(\epsilon \mid X) = \sigma^2$.
 
 The observed data are modeled as
 
@@ -194,7 +196,7 @@ for $i=1$, $2$,$\ldots$,$n$, where $\epsilon_i$ denotes the error for observatio
 **Important terminology**
 ---
 
-The **estimated regression model** is defined as
+The **estimated regression model** or **fitted model** is defined as
 
 ::: {.content-visible unless-format="pdf"}
 </br>  
@@ -207,7 +209,7 @@ $$
 $$
 :::
 
-where $\hat{\beta}_j$ denotes the estimated value of $\beta_j$ for $j=0,1$.
+where $\hat{\beta}_0$ and $\hat{\beta}_1$ are the estimated value of our regression parameters.
 
 The $i\text{th}$ **fitted value** is defined as
 
@@ -296,7 +298,11 @@ In a simple linear regression context, the fitted model is known as the **line o
 
 **Visualizing terms**
 ---
-```{r echo=FALSE}
+
+```{r}
+#| echo: false
+#| eval: true
+#| output: true
 set.seed(2)
 x <- c(3, 5, 7, 8, 9)
 y <- 2 + 2 * x + rnorm(5, sd = 4)
