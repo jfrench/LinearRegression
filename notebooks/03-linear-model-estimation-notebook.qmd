@@ -9,6 +9,7 @@ execute:
   output: false
 self-contained: true
 title-block-banner: true
+wrap: 'none'
 ---
 
 To open this information in an interactive Colab notebook, click the Open in Colab graphic below.
@@ -172,8 +173,7 @@ where $\epsilon$ is known as the model error.
 The error term $\epsilon$ is literally the deviation of the response variable from its mean.
 
 - We typically assume that conditional on the regressor variable, the error term has mean 0 and variance $\sigma^2$.
-- This is written as $E(\epsilon \mid X) = 0$
-and $\mathrm{var}(\epsilon \mid X) = \sigma^2$.
+- This is written as $E(\epsilon \mid X) = 0$ and $\mathrm{var}(\epsilon \mid X) = \sigma^2$.
 
 The observed data are modeled as
 
@@ -432,7 +432,7 @@ $$
 The `lm` function uses OLS estimation to fit a linear model to data. The function has two main arguments:
 
 -   `data`: the data frame in which the model variables are stored. This can be omitted if the variables are already stored in memory.
--   `formula`: a Wilkinson and Rogers (1973) style formula describing the linear regression model. For complete details, run `?stats:formula` in the Console. If `y` is the response variable and `x` is an available numeric predictor, then `formula = y ~ x` tells `lm` to fit the simple linear regression model $E(Y|X)=\beta_0+\beta_1 X$.
+-   `formula`: a Wilkinson and Rogers (1973) style formula describing the linear regression model. For complete details, run `?stats::formula` in the Console. If `y` is the response variable and `x` is an available numeric predictor, then `formula = y ~ x` tells `lm` to fit the simple linear regression model $E(Y|X)=\beta_0+\beta_1 X$.
 
 ```{r}
 lmod <- lm(bill_length_mm ~ body_mass_g, data = penguins) # fit model

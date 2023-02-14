@@ -278,7 +278,7 @@ E(\mathtt{bill\_length\_mm}\mid \mathtt{body\_mass\_g})=\beta_0+\beta_1\,\mathtt
 The `lm` function uses OLS estimation to fit a linear model to data. The function has two main arguments:
 
 -   `data`: the data frame in which the model variables are stored. This can be omitted if the variables are already stored in memory.
--   `formula`: a @wilkinsonrogers1973 style formula describing the linear regression model. For complete details, run `?stats:formula` in the Console. If `y` is the response variable and `x` is an available numeric predictor, then `formula = y ~ x` tells `lm` to fit the simple linear regression model $E(Y|X)=\beta_0+\beta_1 X$.
+-   `formula`: a @wilkinsonrogers1973 style formula describing the linear regression model. For complete details, run `?stats::formula` in the Console. If `y` is the response variable and `x` is an available numeric predictor, then `formula = y ~ x` tells `lm` to fit the simple linear regression model $E(Y|X)=\beta_0+\beta_1 X$.
 
 We use the code below to fit a linear model regressing `bill_length_mm` on `body_mass_g` using the `penguins` data frame and assign the result the name `lmod`. `lmod` is an object of class `lm`.
 ```{r}
