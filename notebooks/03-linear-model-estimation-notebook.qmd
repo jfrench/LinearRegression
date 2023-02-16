@@ -515,21 +515,56 @@ abline(lmod)
 
 R provides many additional methods (generic functions that do something specific when applied to a certain type of object) for `lm` objects. Commonly used ones include:
 
+We now use some of the methods to extract important characteristics of our fitted model.
+
+We extract the estimated regression coefficients, $\hat{\beta}_0$ and $\hat{\beta}_1$, using the `coef` function.
+
 ```{r}
 (coeffs <- coef(lmod)) # extract, assign, and print coefficients
+```
+
+We extract the vector of residuals, $\hat{\epsilon}_1,\ldots, \hat{\epsilon}_n$, using the `residuals` function.
+
+```{r}
 ehat <- residuals(lmod) # extract and assign residuals
 head(ehat) # first few residuals
+```
+
+We extract the vector of fitted values, $\hat{Y}_1,\ldots, \hat{Y}_n$, using the `fitted` function.
+
+```{r}
 yhat <- fitted(lmod) # extract and assign fitted values
 head(yhat) # first few fitted values
+```
+
+We can also extract the vector of fitted values using the `predict` function.
+
+```{r}
 yhat2 <- predict(lmod) # compute and assign fitted values
 head(yhat2) # first few fitted values
+```
+
+We extract the RSS of the model using the `deviance` function.
+
+```{r}
 (rss <- deviance(lmod)) # extract, assign, and print rss
-(dfr <- df.residual(lmod)) # extract residual df
+```
+
+We extract the residual degrees of freedom using the `df.residual` function.
+
+```{r}
+(dfr <- df.residual(lmod)) # extract n - p
+```
+
+We extract the estimated error standard deviation, $\sqrt{\hat{\sigma}^2}$, using the `sigma` function.
+
+```{r}
 (sigmasqhat <- sigma(lmod)^2) # estimated error variance
 ```
 
 **Question:**
 
+- What are the first three fitted values?
 - What is the RSS of the fitted model?
 
 # Defining a linear model
