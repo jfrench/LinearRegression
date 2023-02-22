@@ -185,7 +185,7 @@ The observed data are modeled as
 ::: {.content-hidden unless-format="pdf"}
 $$
 \begin{aligned}
-Y_i &= \beta_0 + \beta_1 x_i + \epsilon \\
+Y_i &= \beta_0 + \beta_1 x_i + \epsilon_i \\
 &= E(Y\mid X = x_i) + \epsilon_i,
 \end{aligned}
 $$
@@ -556,7 +556,7 @@ We extract the residual degrees of freedom using the `df.residual` function.
 (dfr <- df.residual(lmod)) # extract n - p
 ```
 
-We extract the estimated error standard deviation, $\sqrt{\hat{\sigma}^2}$, using the `sigma` function.
+We extract the estimated error standard deviation, $\hat{\sigma}=\sqrt{\hat{\sigma}^2}$, using the `sigma` function. In the code below, we square $\hat{\sigma}$ to estimate the error variance, $\hat{\sigma}^2$.
 
 ```{r}
 (sigmasqhat <- sigma(lmod)^2) # estimated error variance
@@ -645,7 +645,7 @@ A model is linear because of its *form* not the shape it produces.
 Some examples of linear regression models are:
 
 -   $E(Y|X) = \beta_0$.
--   $E(Y|X) = \beta_0 + +\beta_1 X + \beta_2 X^2$.
+-   $E(Y|X) = \beta_0 + \beta_1 X + \beta_2 X^2$.
 -   $E(Y|X_1, X_2) = \beta_0 + \beta_1 X_1 + \beta_2 X_2$.
 -   $E(Y|X_1, X_2) = \beta_0 + \beta_1 X_1 + \beta_2 X_2 + \beta_3 X_1 X_2$.
 -   $E(Y|X_1, X_2) = \beta_0 + \beta_1 \ln(X_1) + \beta_2 X_2^{-1}$.
@@ -934,7 +934,9 @@ We must transform the categorical predictor into one or more **indicator** or **
 
 An **indicator function** is a function that takes the value 1 if a certain property is true and 0 otherwise. 
 
-An **indicator variable** is the variable that results from applying an indicator function to each observation of a variable. Many notations exist for indicator functions. We use the notation,
+An **indicator variable** is the variable that results from applying an indicator function to each observation of a variable. 
+
+We denote indicator functions using the notation,
 
 $$
 I_S(x) =
@@ -945,6 +947,13 @@ I_S(x) =
 $$
 
 - This function returns 1 if $x$ is in the set $S$ and 0 otherwise.
+
+Some examples of indicator functions:
+
+- $I_{\{2,3\}}(2) = 1$.
+- $I_{\{2,3\}}(2.5) = 1$.
+- $I_{[2,3]}(2.5) = 1$, where $[2,3]$ is the interval from 2 to 3 and not the set containing only the numbers 2 and 3.
+- $I_{\{\text{red},\text{green}\}}(\text{green}) = 1$.
 
 Let $C$ denote a categorical predictor with levels $L_1$ and $L_2$. 
 
@@ -1012,7 +1021,7 @@ $$
 
 If you had a categorical predictor $C$ with $K$ levels $L_1, L_2, \ldots, L_K$:
 
-- We can add indicator variables $D_2, D_3, \ldots, L_K$ to a simple linear regression model to create a parallel lines model for each level of $C$.
+- We can add indicator variables $D_2, D_3, \ldots, D_K$ to a simple linear regression model to create a parallel lines model for each level of $C$.
 - We can add regressors $D_2, D_3, \ldots, D_K, X D_2, X D_3, \ldots, X D_K$ to a simple linear regression model to create a separate lines model for each level of $C$.
 
 It is easy to imagine using multiple categorical predictors in a model, interacting one or more categorical predictors with one or more numeric regressors in model, etc. 
@@ -1022,7 +1031,9 @@ These models can be fit easily using R but are more difficult to interpret.
 **Avoiding collinearity**
 ---
 
-Why didn't we add $D_1$ to the parallel lines model? Or $D_1$ and $D_1 X$ to the separate lines model?
+Consider the setting where $C$ has only 2 levels. 
+
+Why don't we add $D_1$ to the parallel lines model that already has $D_2$? Or $D_1$ and $D_1 X$ to the separate lines model that already has $D_2$ and $D_2 X$? 
 
 - We don't *need* to add them.
     - If an observation doesn't have level $L_2$ ($D_2=0$), then it must have level $L_1$.
@@ -1056,6 +1067,9 @@ ggplot(data = penguins) +
 **Question:** 
 
 - Does the relationship between bill length and body mass change depending on the species of penguin?
+
+**Using a categorical variable in the `lm` function**
+---
 
 How do you use a categorical variable in R's `lm` function?
 

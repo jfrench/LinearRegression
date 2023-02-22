@@ -556,17 +556,17 @@ the regression model
 \end{aligned}
 \]</span></p>
 <p>We estimate the parameters of this model in R using the code below.</p>
-<div class="sourceCode" id="cb150"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb150-1"><a href="inference.html#cb150-1" aria-hidden="true" tabindex="-1"></a><span class="co"># load data</span></span>
-<span id="cb150-2"><a href="inference.html#cb150-2" aria-hidden="true" tabindex="-1"></a><span class="fu">data</span>(penguins, <span class="at">package =</span> <span class="st">&quot;palmerpenguins&quot;</span>)</span>
-<span id="cb150-3"><a href="inference.html#cb150-3" aria-hidden="true" tabindex="-1"></a><span class="co"># fit model</span></span>
-<span id="cb150-4"><a href="inference.html#cb150-4" aria-hidden="true" tabindex="-1"></a>mlmod <span class="ot">&lt;-</span> <span class="fu">lm</span>(bill_length_mm <span class="sc">~</span> body_mass_g <span class="sc">+</span> flipper_length_mm, <span class="at">data =</span> penguins)</span></code></pre></div>
+<div class="sourceCode" id="cb156"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb156-1"><a href="inference.html#cb156-1" aria-hidden="true" tabindex="-1"></a><span class="co"># load data</span></span>
+<span id="cb156-2"><a href="inference.html#cb156-2" aria-hidden="true" tabindex="-1"></a><span class="fu">data</span>(penguins, <span class="at">package =</span> <span class="st">&quot;palmerpenguins&quot;</span>)</span>
+<span id="cb156-3"><a href="inference.html#cb156-3" aria-hidden="true" tabindex="-1"></a><span class="co"># fit model</span></span>
+<span id="cb156-4"><a href="inference.html#cb156-4" aria-hidden="true" tabindex="-1"></a>mlmod <span class="ot">&lt;-</span> <span class="fu">lm</span>(bill_length_mm <span class="sc">~</span> body_mass_g <span class="sc">+</span> flipper_length_mm, <span class="at">data =</span> penguins)</span></code></pre></div>
 <p>We obtain the 95% confidence intervals for the 3 regression coefficients
 by running the code below.</p>
-<div class="sourceCode" id="cb151"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb151-1"><a href="inference.html#cb151-1" aria-hidden="true" tabindex="-1"></a><span class="fu">confint</span>(mlmod)</span>
-<span id="cb151-2"><a href="inference.html#cb151-2" aria-hidden="true" tabindex="-1"></a><span class="do">##                           2.5 %      97.5 %</span></span>
-<span id="cb151-3"><a href="inference.html#cb151-3" aria-hidden="true" tabindex="-1"></a><span class="do">## (Intercept)       -1.244658e+01 5.573192182</span></span>
-<span id="cb151-4"><a href="inference.html#cb151-4" aria-hidden="true" tabindex="-1"></a><span class="do">## body_mass_g       -4.534709e-04 0.001777908</span></span>
-<span id="cb151-5"><a href="inference.html#cb151-5" aria-hidden="true" tabindex="-1"></a><span class="do">## flipper_length_mm  1.582365e-01 0.285494420</span></span></code></pre></div>
+<div class="sourceCode" id="cb157"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb157-1"><a href="inference.html#cb157-1" aria-hidden="true" tabindex="-1"></a><span class="fu">confint</span>(mlmod)</span>
+<span id="cb157-2"><a href="inference.html#cb157-2" aria-hidden="true" tabindex="-1"></a><span class="do">##                           2.5 %      97.5 %</span></span>
+<span id="cb157-3"><a href="inference.html#cb157-3" aria-hidden="true" tabindex="-1"></a><span class="do">## (Intercept)       -1.244658e+01 5.573192182</span></span>
+<span id="cb157-4"><a href="inference.html#cb157-4" aria-hidden="true" tabindex="-1"></a><span class="do">## body_mass_g       -4.534709e-04 0.001777908</span></span>
+<span id="cb157-5"><a href="inference.html#cb157-5" aria-hidden="true" tabindex="-1"></a><span class="do">## flipper_length_mm  1.582365e-01 0.285494420</span></span></code></pre></div>
 <p>The 95% confidence interval for the intercept parameter is [-12.45,
 5.58]. We are 95% confident that the mean penguin bill length is between
 -12.25 and 5.58 mm for a penguin with a body mass of 0 g and a flipper
@@ -578,13 +578,13 @@ length of 0 mm. (This really isn’t sensible).</p>
 <p>If we wanted to get the 90% confidence interval for the
 <code>flipper_length_mm</code> coefficient by itself, we could use either of the
 commands shown below.</p>
-<div class="sourceCode" id="cb152"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb152-1"><a href="inference.html#cb152-1" aria-hidden="true" tabindex="-1"></a><span class="co"># two styles for determining the CI for a single parameter (at a 90% level)</span></span>
-<span id="cb152-2"><a href="inference.html#cb152-2" aria-hidden="true" tabindex="-1"></a><span class="fu">confint</span>(mlmod, <span class="at">parm =</span> <span class="dv">3</span>, <span class="at">level =</span> <span class="fl">0.90</span>)</span>
-<span id="cb152-3"><a href="inference.html#cb152-3" aria-hidden="true" tabindex="-1"></a><span class="do">##                         5 %      95 %</span></span>
-<span id="cb152-4"><a href="inference.html#cb152-4" aria-hidden="true" tabindex="-1"></a><span class="do">## flipper_length_mm 0.1685112 0.2752197</span></span>
-<span id="cb152-5"><a href="inference.html#cb152-5" aria-hidden="true" tabindex="-1"></a><span class="fu">confint</span>(mlmod, <span class="at">parm =</span> <span class="st">&quot;flipper_length_mm&quot;</span>, <span class="at">level =</span> <span class="fl">0.90</span>)</span>
-<span id="cb152-6"><a href="inference.html#cb152-6" aria-hidden="true" tabindex="-1"></a><span class="do">##                         5 %      95 %</span></span>
-<span id="cb152-7"><a href="inference.html#cb152-7" aria-hidden="true" tabindex="-1"></a><span class="do">## flipper_length_mm 0.1685112 0.2752197</span></span></code></pre></div>
+<div class="sourceCode" id="cb158"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb158-1"><a href="inference.html#cb158-1" aria-hidden="true" tabindex="-1"></a><span class="co"># two styles for determining the CI for a single parameter (at a 90% level)</span></span>
+<span id="cb158-2"><a href="inference.html#cb158-2" aria-hidden="true" tabindex="-1"></a><span class="fu">confint</span>(mlmod, <span class="at">parm =</span> <span class="dv">3</span>, <span class="at">level =</span> <span class="fl">0.90</span>)</span>
+<span id="cb158-3"><a href="inference.html#cb158-3" aria-hidden="true" tabindex="-1"></a><span class="do">##                         5 %      95 %</span></span>
+<span id="cb158-4"><a href="inference.html#cb158-4" aria-hidden="true" tabindex="-1"></a><span class="do">## flipper_length_mm 0.1685112 0.2752197</span></span>
+<span id="cb158-5"><a href="inference.html#cb158-5" aria-hidden="true" tabindex="-1"></a><span class="fu">confint</span>(mlmod, <span class="at">parm =</span> <span class="st">&quot;flipper_length_mm&quot;</span>, <span class="at">level =</span> <span class="fl">0.90</span>)</span>
+<span id="cb158-6"><a href="inference.html#cb158-6" aria-hidden="true" tabindex="-1"></a><span class="do">##                         5 %      95 %</span></span>
+<span id="cb158-7"><a href="inference.html#cb158-7" aria-hidden="true" tabindex="-1"></a><span class="do">## flipper_length_mm 0.1685112 0.2752197</span></span></code></pre></div>
 <p>We discuss how to “manually” construct these intervals using R in
 Section <a href="inference.html#manual-t-cis">6.10.1</a>.</p>
 </div>
@@ -622,24 +622,24 @@ for two events <span class="math inline">\(A\)</span> and <span class="math inli
 Thus, the family-wise confidence level of all <span class="math inline">\(k\)</span> intervals is AT LEAST <span class="math inline">\(1-\alpha\)</span> when the Bonferroni correction is used.</p>
 <p>The Bonferroni correction is known to be conservative, which means that the family-wise confidence level is typically much larger than <span class="math inline">\(1-\alpha\)</span>. This might sound like a desirable property, but conservative methods can have low power. In the context of our confidence intervals, this means our intervals are much wider than they need to be, so we aren’t able to draw precise conclusions about the plausible values of our regression coefficients.</p>
 <p>Let’s construct simultaneous confidence intervals for our <code>penguins</code> example using the Bonferroni correction. If we want to control the family-wise confidence level of our <span class="math inline">\(k=3\)</span> intervals at <span class="math inline">\(0.95\)</span>, then <span class="math inline">\(\alpha = 0.05\)</span> and the Bonferroni correction suggests that we should construct the individual intervals at a confidence level of <span class="math inline">\(1-0.05/3=0.983\)</span>. We construct the Bonferroni-adjusted confidence intervals using the code below.</p>
-<div class="sourceCode" id="cb153"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb153-1"><a href="inference.html#cb153-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Simultaneous 95% confidence intervals for mlmod</span></span>
-<span id="cb153-2"><a href="inference.html#cb153-2" aria-hidden="true" tabindex="-1"></a><span class="fu">confint</span>(mlmod, <span class="at">level =</span> <span class="dv">1</span> <span class="sc">-</span> <span class="fl">0.05</span><span class="sc">/</span><span class="dv">3</span>)</span>
-<span id="cb153-3"><a href="inference.html#cb153-3" aria-hidden="true" tabindex="-1"></a><span class="do">##                         0.833 %    99.167 %</span></span>
-<span id="cb153-4"><a href="inference.html#cb153-4" aria-hidden="true" tabindex="-1"></a><span class="do">## (Intercept)       -1.445714e+01 7.583749811</span></span>
-<span id="cb153-5"><a href="inference.html#cb153-5" aria-hidden="true" tabindex="-1"></a><span class="do">## body_mass_g       -7.024372e-04 0.002026874</span></span>
-<span id="cb153-6"><a href="inference.html#cb153-6" aria-hidden="true" tabindex="-1"></a><span class="do">## flipper_length_mm  1.440377e-01 0.299693234</span></span></code></pre></div>
+<div class="sourceCode" id="cb159"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb159-1"><a href="inference.html#cb159-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Simultaneous 95% confidence intervals for mlmod</span></span>
+<span id="cb159-2"><a href="inference.html#cb159-2" aria-hidden="true" tabindex="-1"></a><span class="fu">confint</span>(mlmod, <span class="at">level =</span> <span class="dv">1</span> <span class="sc">-</span> <span class="fl">0.05</span><span class="sc">/</span><span class="dv">3</span>)</span>
+<span id="cb159-3"><a href="inference.html#cb159-3" aria-hidden="true" tabindex="-1"></a><span class="do">##                         0.833 %    99.167 %</span></span>
+<span id="cb159-4"><a href="inference.html#cb159-4" aria-hidden="true" tabindex="-1"></a><span class="do">## (Intercept)       -1.445714e+01 7.583749811</span></span>
+<span id="cb159-5"><a href="inference.html#cb159-5" aria-hidden="true" tabindex="-1"></a><span class="do">## body_mass_g       -7.024372e-04 0.002026874</span></span>
+<span id="cb159-6"><a href="inference.html#cb159-6" aria-hidden="true" tabindex="-1"></a><span class="do">## flipper_length_mm  1.440377e-01 0.299693234</span></span></code></pre></div>
 <p>Alternatively, we can use the <code>confint_adjust</code> function from the <strong>api2lm</strong> package <span class="citation">(<a href="#ref-R-api2lm" role="doc-biblioref">French 2022</a>)</span> to construct this interval. The <code>confint_adjust</code> function works identically to the <code>confint</code> function except that it has an additional argument to indicate the type of adjustment to make when constructing the confidence intervals. Specifying <code>method = "bonferroni"</code> will produce Bonferroni-corrected intervals, as demonstrated in the code below.</p>
-<div class="sourceCode" id="cb154"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb154-1"><a href="inference.html#cb154-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(api2lm)</span>
-<span id="cb154-2"><a href="inference.html#cb154-2" aria-hidden="true" tabindex="-1"></a><span class="fu">confint_adjust</span>(mlmod, <span class="at">method =</span> <span class="st">&quot;bonferroni&quot;</span>)</span>
-<span id="cb154-3"><a href="inference.html#cb154-3" aria-hidden="true" tabindex="-1"></a><span class="do">## </span></span>
-<span id="cb154-4"><a href="inference.html#cb154-4" aria-hidden="true" tabindex="-1"></a><span class="do">## Bonferroni-adjusted confidence intervals</span></span>
-<span id="cb154-5"><a href="inference.html#cb154-5" aria-hidden="true" tabindex="-1"></a><span class="do">## </span></span>
-<span id="cb154-6"><a href="inference.html#cb154-6" aria-hidden="true" tabindex="-1"></a><span class="do">## Family-wise confidence level of at least 0.95 </span></span>
-<span id="cb154-7"><a href="inference.html#cb154-7" aria-hidden="true" tabindex="-1"></a><span class="do">## </span></span>
-<span id="cb154-8"><a href="inference.html#cb154-8" aria-hidden="true" tabindex="-1"></a><span class="do">##               term           lwr         upr</span></span>
-<span id="cb154-9"><a href="inference.html#cb154-9" aria-hidden="true" tabindex="-1"></a><span class="do">##        (Intercept) -1.445714e+01 7.583749811</span></span>
-<span id="cb154-10"><a href="inference.html#cb154-10" aria-hidden="true" tabindex="-1"></a><span class="do">##        body_mass_g -7.024372e-04 0.002026874</span></span>
-<span id="cb154-11"><a href="inference.html#cb154-11" aria-hidden="true" tabindex="-1"></a><span class="do">##  flipper_length_mm  1.440377e-01 0.299693234</span></span></code></pre></div>
+<div class="sourceCode" id="cb160"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb160-1"><a href="inference.html#cb160-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(api2lm)</span>
+<span id="cb160-2"><a href="inference.html#cb160-2" aria-hidden="true" tabindex="-1"></a><span class="fu">confint_adjust</span>(mlmod, <span class="at">method =</span> <span class="st">&quot;bonferroni&quot;</span>)</span>
+<span id="cb160-3"><a href="inference.html#cb160-3" aria-hidden="true" tabindex="-1"></a><span class="do">## </span></span>
+<span id="cb160-4"><a href="inference.html#cb160-4" aria-hidden="true" tabindex="-1"></a><span class="do">## Bonferroni-adjusted confidence intervals</span></span>
+<span id="cb160-5"><a href="inference.html#cb160-5" aria-hidden="true" tabindex="-1"></a><span class="do">## </span></span>
+<span id="cb160-6"><a href="inference.html#cb160-6" aria-hidden="true" tabindex="-1"></a><span class="do">## Family-wise confidence level of at least 0.95 </span></span>
+<span id="cb160-7"><a href="inference.html#cb160-7" aria-hidden="true" tabindex="-1"></a><span class="do">## </span></span>
+<span id="cb160-8"><a href="inference.html#cb160-8" aria-hidden="true" tabindex="-1"></a><span class="do">##               term           lwr         upr</span></span>
+<span id="cb160-9"><a href="inference.html#cb160-9" aria-hidden="true" tabindex="-1"></a><span class="do">##        (Intercept) -1.445714e+01 7.583749811</span></span>
+<span id="cb160-10"><a href="inference.html#cb160-10" aria-hidden="true" tabindex="-1"></a><span class="do">##        body_mass_g -7.024372e-04 0.002026874</span></span>
+<span id="cb160-11"><a href="inference.html#cb160-11" aria-hidden="true" tabindex="-1"></a><span class="do">##  flipper_length_mm  1.440377e-01 0.299693234</span></span></code></pre></div>
 <p><span class="citation">Working and Hotelling (<a href="#ref-workinghotelling" role="doc-biblioref">1929</a>)</span> developed another multiple comparisons procedure that can be used to preserve the family-wise confidence level of the intervals at <span class="math inline">\(1-\alpha\)</span>. The Working-Hotelling multiple comparisons procedure is valid for ALL linear combination of the regression coefficients, meaning that we can construct an arbitrarily large number of confidence intervals for linear combinations of the regression coefficients with this procedure and the family-wise confidence level will be at least <span class="math inline">\(1-\alpha\)</span> <span class="citation">(<a href="#ref-alr4" role="doc-biblioref">Weisberg 2014</a>)</span>.</p>
 <p>The Working-Hotelling procedure guarantees that if we construct the individual confidence intervals in the following way, then the family-wise confidence level will be at least <span class="math inline">\(1-\alpha\)</span>:
 <span class="math display" id="eq:wh-ci-betas">\[
@@ -647,17 +647,17 @@ Thus, the family-wise confidence level of all <span class="math inline">\(k\)</s
 \]</span></p>
 <p>The <code>confint_adjust</code> function from the <strong>api2lm</strong> package will produce these intervals when setting the <code>method</code> argument to <code>"wh"</code>. We construct Working-Hotelling-adjusted intervals with family-wise confidence level of at least 0.95 for the <code>penguins</code> example using the
 code below.</p>
-<div class="sourceCode" id="cb155"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb155-1"><a href="inference.html#cb155-1" aria-hidden="true" tabindex="-1"></a><span class="co"># 95% family-wise CIs using Working-Hotelling</span></span>
-<span id="cb155-2"><a href="inference.html#cb155-2" aria-hidden="true" tabindex="-1"></a><span class="fu">confint_adjust</span>(mlmod, <span class="at">method =</span> <span class="st">&quot;wh&quot;</span>)</span>
-<span id="cb155-3"><a href="inference.html#cb155-3" aria-hidden="true" tabindex="-1"></a><span class="do">## </span></span>
-<span id="cb155-4"><a href="inference.html#cb155-4" aria-hidden="true" tabindex="-1"></a><span class="do">## Working-Hotelling-adjusted confidence intervals</span></span>
-<span id="cb155-5"><a href="inference.html#cb155-5" aria-hidden="true" tabindex="-1"></a><span class="do">## </span></span>
-<span id="cb155-6"><a href="inference.html#cb155-6" aria-hidden="true" tabindex="-1"></a><span class="do">## Family-wise confidence level of at least 0.95 </span></span>
-<span id="cb155-7"><a href="inference.html#cb155-7" aria-hidden="true" tabindex="-1"></a><span class="do">## </span></span>
-<span id="cb155-8"><a href="inference.html#cb155-8" aria-hidden="true" tabindex="-1"></a><span class="do">##               term           lwr         upr</span></span>
-<span id="cb155-9"><a href="inference.html#cb155-9" aria-hidden="true" tabindex="-1"></a><span class="do">##        (Intercept) -1.630614e+01 9.432751051</span></span>
-<span id="cb155-10"><a href="inference.html#cb155-10" aria-hidden="true" tabindex="-1"></a><span class="do">##        body_mass_g -9.313981e-04 0.002255835</span></span>
-<span id="cb155-11"><a href="inference.html#cb155-11" aria-hidden="true" tabindex="-1"></a><span class="do">##  flipper_length_mm  1.309798e-01 0.312751116</span></span></code></pre></div>
+<div class="sourceCode" id="cb161"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb161-1"><a href="inference.html#cb161-1" aria-hidden="true" tabindex="-1"></a><span class="co"># 95% family-wise CIs using Working-Hotelling</span></span>
+<span id="cb161-2"><a href="inference.html#cb161-2" aria-hidden="true" tabindex="-1"></a><span class="fu">confint_adjust</span>(mlmod, <span class="at">method =</span> <span class="st">&quot;wh&quot;</span>)</span>
+<span id="cb161-3"><a href="inference.html#cb161-3" aria-hidden="true" tabindex="-1"></a><span class="do">## </span></span>
+<span id="cb161-4"><a href="inference.html#cb161-4" aria-hidden="true" tabindex="-1"></a><span class="do">## Working-Hotelling-adjusted confidence intervals</span></span>
+<span id="cb161-5"><a href="inference.html#cb161-5" aria-hidden="true" tabindex="-1"></a><span class="do">## </span></span>
+<span id="cb161-6"><a href="inference.html#cb161-6" aria-hidden="true" tabindex="-1"></a><span class="do">## Family-wise confidence level of at least 0.95 </span></span>
+<span id="cb161-7"><a href="inference.html#cb161-7" aria-hidden="true" tabindex="-1"></a><span class="do">## </span></span>
+<span id="cb161-8"><a href="inference.html#cb161-8" aria-hidden="true" tabindex="-1"></a><span class="do">##               term           lwr         upr</span></span>
+<span id="cb161-9"><a href="inference.html#cb161-9" aria-hidden="true" tabindex="-1"></a><span class="do">##        (Intercept) -1.630614e+01 9.432751051</span></span>
+<span id="cb161-10"><a href="inference.html#cb161-10" aria-hidden="true" tabindex="-1"></a><span class="do">##        body_mass_g -9.313981e-04 0.002255835</span></span>
+<span id="cb161-11"><a href="inference.html#cb161-11" aria-hidden="true" tabindex="-1"></a><span class="do">##  flipper_length_mm  1.309798e-01 0.312751116</span></span></code></pre></div>
 <p>In this example, the Bonferroni-adjusted intervals are narrower than the Working-Hotelling-adjusted intervals. The Working-Hotelling intervals tends to be narrower for small <span class="math inline">\(p\)</span> (e.g., <span class="math inline">\(p=1\)</span> or <span class="math inline">\(2\)</span>) and small <span class="math inline">\(n-p\)</span> (e.g., <span class="math inline">\(n-p = 1\)</span> or <span class="math inline">\(2\)</span>) <span class="citation">(<a href="#ref-bon_vs_scheffe" role="doc-biblioref">Mi and Sampson 1993</a>)</span>. Additionally, as the number of intervals increases, the Working-Hotelling intervals will eventually be narrower than the Bonferroni-adjusted intervals.</p>
 </div>
 </div>
@@ -750,51 +750,51 @@ model was <span class="math display">\[
 &amp;= 24.92 + 0.004 \mathtt{body\_mass\_g} + 9.92 D_C + 3.56 D_G.
 \end{aligned}
 \]</span> We fit this model below, assigning it the name <code>lmodp</code>.</p>
-<div class="sourceCode" id="cb156"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb156-1"><a href="inference.html#cb156-1" aria-hidden="true" tabindex="-1"></a><span class="co"># fit parallel lines model to penguins data</span></span>
-<span id="cb156-2"><a href="inference.html#cb156-2" aria-hidden="true" tabindex="-1"></a>lmodp <span class="ot">&lt;-</span> <span class="fu">lm</span>(bill_length_mm <span class="sc">~</span> body_mass_g <span class="sc">+</span> species,</span>
-<span id="cb156-3"><a href="inference.html#cb156-3" aria-hidden="true" tabindex="-1"></a>            <span class="at">data =</span> penguins)</span>
-<span id="cb156-4"><a href="inference.html#cb156-4" aria-hidden="true" tabindex="-1"></a><span class="fu">coef</span>(lmodp)</span>
-<span id="cb156-5"><a href="inference.html#cb156-5" aria-hidden="true" tabindex="-1"></a><span class="do">##      (Intercept)      body_mass_g speciesChinstrap </span></span>
-<span id="cb156-6"><a href="inference.html#cb156-6" aria-hidden="true" tabindex="-1"></a><span class="do">##     24.919470977      0.003748497      9.920884113 </span></span>
-<span id="cb156-7"><a href="inference.html#cb156-7" aria-hidden="true" tabindex="-1"></a><span class="do">##    speciesGentoo </span></span>
-<span id="cb156-8"><a href="inference.html#cb156-8" aria-hidden="true" tabindex="-1"></a><span class="do">##      3.557977539</span></span></code></pre></div>
+<div class="sourceCode" id="cb162"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb162-1"><a href="inference.html#cb162-1" aria-hidden="true" tabindex="-1"></a><span class="co"># fit parallel lines model to penguins data</span></span>
+<span id="cb162-2"><a href="inference.html#cb162-2" aria-hidden="true" tabindex="-1"></a>lmodp <span class="ot">&lt;-</span> <span class="fu">lm</span>(bill_length_mm <span class="sc">~</span> body_mass_g <span class="sc">+</span> species,</span>
+<span id="cb162-3"><a href="inference.html#cb162-3" aria-hidden="true" tabindex="-1"></a>            <span class="at">data =</span> penguins)</span>
+<span id="cb162-4"><a href="inference.html#cb162-4" aria-hidden="true" tabindex="-1"></a><span class="fu">coef</span>(lmodp)</span>
+<span id="cb162-5"><a href="inference.html#cb162-5" aria-hidden="true" tabindex="-1"></a><span class="do">##      (Intercept)      body_mass_g speciesChinstrap </span></span>
+<span id="cb162-6"><a href="inference.html#cb162-6" aria-hidden="true" tabindex="-1"></a><span class="do">##     24.919470977      0.003748497      9.920884113 </span></span>
+<span id="cb162-7"><a href="inference.html#cb162-7" aria-hidden="true" tabindex="-1"></a><span class="do">##    speciesGentoo </span></span>
+<span id="cb162-8"><a href="inference.html#cb162-8" aria-hidden="true" tabindex="-1"></a><span class="do">##      3.557977539</span></span></code></pre></div>
 <p>Let’s estimate the mean response for the “typical” <code>body_mass_g</code> of each <code>species</code>. We compute the mean <code>body_mass_g</code> of each <code>species</code> using the code below, assigning the resulting data frame the name <code>newpenguins</code>. We use the <code>group_by</code> and <code>summarize</code> functions from the <strong>dplyr</strong> package <span class="citation">(<a href="#ref-R-dplyr" role="doc-biblioref">Wickham, François, et al. 2022</a>)</span> to simplify this process.</p>
-<div class="sourceCode" id="cb157"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb157-1"><a href="inference.html#cb157-1" aria-hidden="true" tabindex="-1"></a><span class="co"># mean body_mass_g of each species</span></span>
-<span id="cb157-2"><a href="inference.html#cb157-2" aria-hidden="true" tabindex="-1"></a>newpenguins <span class="ot">&lt;-</span> penguins <span class="sc">|&gt;</span></span>
-<span id="cb157-3"><a href="inference.html#cb157-3" aria-hidden="true" tabindex="-1"></a>  dplyr<span class="sc">::</span><span class="fu">group_by</span>(species) <span class="sc">|&gt;</span></span>
-<span id="cb157-4"><a href="inference.html#cb157-4" aria-hidden="true" tabindex="-1"></a>  dplyr<span class="sc">::</span><span class="fu">summarize</span>(<span class="at">body_mass_g =</span> <span class="fu">mean</span>(body_mass_g, <span class="at">na.rm =</span> <span class="cn">TRUE</span>))</span>
-<span id="cb157-5"><a href="inference.html#cb157-5" aria-hidden="true" tabindex="-1"></a>newpenguins</span>
-<span id="cb157-6"><a href="inference.html#cb157-6" aria-hidden="true" tabindex="-1"></a><span class="do">## # A tibble: 3 × 2</span></span>
-<span id="cb157-7"><a href="inference.html#cb157-7" aria-hidden="true" tabindex="-1"></a><span class="do">##   species   body_mass_g</span></span>
-<span id="cb157-8"><a href="inference.html#cb157-8" aria-hidden="true" tabindex="-1"></a><span class="do">##   &lt;fct&gt;           &lt;dbl&gt;</span></span>
-<span id="cb157-9"><a href="inference.html#cb157-9" aria-hidden="true" tabindex="-1"></a><span class="do">## 1 Adelie          3701.</span></span>
-<span id="cb157-10"><a href="inference.html#cb157-10" aria-hidden="true" tabindex="-1"></a><span class="do">## 2 Chinstrap       3733.</span></span>
-<span id="cb157-11"><a href="inference.html#cb157-11" aria-hidden="true" tabindex="-1"></a><span class="do">## 3 Gentoo          5076.</span></span></code></pre></div>
+<div class="sourceCode" id="cb163"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb163-1"><a href="inference.html#cb163-1" aria-hidden="true" tabindex="-1"></a><span class="co"># mean body_mass_g of each species</span></span>
+<span id="cb163-2"><a href="inference.html#cb163-2" aria-hidden="true" tabindex="-1"></a>newpenguins <span class="ot">&lt;-</span> penguins <span class="sc">|&gt;</span></span>
+<span id="cb163-3"><a href="inference.html#cb163-3" aria-hidden="true" tabindex="-1"></a>  dplyr<span class="sc">::</span><span class="fu">group_by</span>(species) <span class="sc">|&gt;</span></span>
+<span id="cb163-4"><a href="inference.html#cb163-4" aria-hidden="true" tabindex="-1"></a>  dplyr<span class="sc">::</span><span class="fu">summarize</span>(<span class="at">body_mass_g =</span> <span class="fu">mean</span>(body_mass_g, <span class="at">na.rm =</span> <span class="cn">TRUE</span>))</span>
+<span id="cb163-5"><a href="inference.html#cb163-5" aria-hidden="true" tabindex="-1"></a>newpenguins</span>
+<span id="cb163-6"><a href="inference.html#cb163-6" aria-hidden="true" tabindex="-1"></a><span class="do">## # A tibble: 3 × 2</span></span>
+<span id="cb163-7"><a href="inference.html#cb163-7" aria-hidden="true" tabindex="-1"></a><span class="do">##   species   body_mass_g</span></span>
+<span id="cb163-8"><a href="inference.html#cb163-8" aria-hidden="true" tabindex="-1"></a><span class="do">##   &lt;fct&gt;           &lt;dbl&gt;</span></span>
+<span id="cb163-9"><a href="inference.html#cb163-9" aria-hidden="true" tabindex="-1"></a><span class="do">## 1 Adelie          3701.</span></span>
+<span id="cb163-10"><a href="inference.html#cb163-10" aria-hidden="true" tabindex="-1"></a><span class="do">## 2 Chinstrap       3733.</span></span>
+<span id="cb163-11"><a href="inference.html#cb163-11" aria-hidden="true" tabindex="-1"></a><span class="do">## 3 Gentoo          5076.</span></span></code></pre></div>
 <p>We now have a data frame with variables for the two predictors, <code>species</code> and <code>body_mass_g</code> , used to fit <code>lmodp</code>. Each row of <code>newpenguins</code> contains the mean <code>body_mass_g</code> for each level of <code>species</code> and is suitable for use in the <code>predict</code> function.</p>
 <p>In the code below, we estimate the mean <code>flipper_length_mm</code> based on the fitted model in <code>lmodp</code> for the mean <code>body_mass_g</code> of each level of <code>species</code>. We also choose to compute the estimated standard errors of
 each estimate by setting the <code>se.fit</code> argument to <code>TRUE</code>.</p>
-<div class="sourceCode" id="cb158"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb158-1"><a href="inference.html#cb158-1" aria-hidden="true" tabindex="-1"></a><span class="co"># estimate mean and standard error for 3 combinations of predictors</span></span>
-<span id="cb158-2"><a href="inference.html#cb158-2" aria-hidden="true" tabindex="-1"></a><span class="fu">predict</span>(lmodp, <span class="at">newdata =</span> newpenguins, <span class="at">se.fit =</span> <span class="cn">TRUE</span>)</span>
-<span id="cb158-3"><a href="inference.html#cb158-3" aria-hidden="true" tabindex="-1"></a><span class="do">## $fit</span></span>
-<span id="cb158-4"><a href="inference.html#cb158-4" aria-hidden="true" tabindex="-1"></a><span class="do">##        1        2        3 </span></span>
-<span id="cb158-5"><a href="inference.html#cb158-5" aria-hidden="true" tabindex="-1"></a><span class="do">## 38.79139 48.83382 47.50488 </span></span>
-<span id="cb158-6"><a href="inference.html#cb158-6" aria-hidden="true" tabindex="-1"></a><span class="do">## </span></span>
-<span id="cb158-7"><a href="inference.html#cb158-7" aria-hidden="true" tabindex="-1"></a><span class="do">## $se.fit</span></span>
-<span id="cb158-8"><a href="inference.html#cb158-8" aria-hidden="true" tabindex="-1"></a><span class="do">##         1         2         3 </span></span>
-<span id="cb158-9"><a href="inference.html#cb158-9" aria-hidden="true" tabindex="-1"></a><span class="do">## 0.1955643 0.2914228 0.2166833 </span></span>
-<span id="cb158-10"><a href="inference.html#cb158-10" aria-hidden="true" tabindex="-1"></a><span class="do">## </span></span>
-<span id="cb158-11"><a href="inference.html#cb158-11" aria-hidden="true" tabindex="-1"></a><span class="do">## $df</span></span>
-<span id="cb158-12"><a href="inference.html#cb158-12" aria-hidden="true" tabindex="-1"></a><span class="do">## [1] 338</span></span>
-<span id="cb158-13"><a href="inference.html#cb158-13" aria-hidden="true" tabindex="-1"></a><span class="do">## </span></span>
-<span id="cb158-14"><a href="inference.html#cb158-14" aria-hidden="true" tabindex="-1"></a><span class="do">## $residual.scale</span></span>
-<span id="cb158-15"><a href="inference.html#cb158-15" aria-hidden="true" tabindex="-1"></a><span class="do">## [1] 2.403134</span></span></code></pre></div>
+<div class="sourceCode" id="cb164"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb164-1"><a href="inference.html#cb164-1" aria-hidden="true" tabindex="-1"></a><span class="co"># estimate mean and standard error for 3 combinations of predictors</span></span>
+<span id="cb164-2"><a href="inference.html#cb164-2" aria-hidden="true" tabindex="-1"></a><span class="fu">predict</span>(lmodp, <span class="at">newdata =</span> newpenguins, <span class="at">se.fit =</span> <span class="cn">TRUE</span>)</span>
+<span id="cb164-3"><a href="inference.html#cb164-3" aria-hidden="true" tabindex="-1"></a><span class="do">## $fit</span></span>
+<span id="cb164-4"><a href="inference.html#cb164-4" aria-hidden="true" tabindex="-1"></a><span class="do">##        1        2        3 </span></span>
+<span id="cb164-5"><a href="inference.html#cb164-5" aria-hidden="true" tabindex="-1"></a><span class="do">## 38.79139 48.83382 47.50488 </span></span>
+<span id="cb164-6"><a href="inference.html#cb164-6" aria-hidden="true" tabindex="-1"></a><span class="do">## </span></span>
+<span id="cb164-7"><a href="inference.html#cb164-7" aria-hidden="true" tabindex="-1"></a><span class="do">## $se.fit</span></span>
+<span id="cb164-8"><a href="inference.html#cb164-8" aria-hidden="true" tabindex="-1"></a><span class="do">##         1         2         3 </span></span>
+<span id="cb164-9"><a href="inference.html#cb164-9" aria-hidden="true" tabindex="-1"></a><span class="do">## 0.1955643 0.2914228 0.2166833 </span></span>
+<span id="cb164-10"><a href="inference.html#cb164-10" aria-hidden="true" tabindex="-1"></a><span class="do">## </span></span>
+<span id="cb164-11"><a href="inference.html#cb164-11" aria-hidden="true" tabindex="-1"></a><span class="do">## $df</span></span>
+<span id="cb164-12"><a href="inference.html#cb164-12" aria-hidden="true" tabindex="-1"></a><span class="do">## [1] 338</span></span>
+<span id="cb164-13"><a href="inference.html#cb164-13" aria-hidden="true" tabindex="-1"></a><span class="do">## </span></span>
+<span id="cb164-14"><a href="inference.html#cb164-14" aria-hidden="true" tabindex="-1"></a><span class="do">## $residual.scale</span></span>
+<span id="cb164-15"><a href="inference.html#cb164-15" aria-hidden="true" tabindex="-1"></a><span class="do">## [1] 2.403134</span></span></code></pre></div>
 <p>An Adelie penguin with a body mass of 3700.662 g is estimated to have a mean flipper length of 38.79 mm with an estimated standard error of 0.196 mm. A Chinstrap penguin with a body mass of 3733.09 g is estimated to have a mean flipper length of 48.83 mm with an estimated standard error of 0.29 mm. A Gentoo penguin with a body mass of 5076.02 g is estimated to have a mean flipper length of 47.50 mm with an estimated standard error of 0.22 mm.</p>
 <p>To create each 98% confidence intervals for the mean response for each combination of predictors, we specify <code>level = 0.98</code> and <code>interval = "confidence"</code> in the <code>predict</code> function in the code below.</p>
-<div class="sourceCode" id="cb159"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb159-1"><a href="inference.html#cb159-1" aria-hidden="true" tabindex="-1"></a><span class="fu">predict</span>(lmodp, <span class="at">newdata =</span> newpenguins, <span class="at">level =</span> <span class="fl">0.98</span>, <span class="at">interval =</span> <span class="st">&quot;confidence&quot;</span>)</span>
-<span id="cb159-2"><a href="inference.html#cb159-2" aria-hidden="true" tabindex="-1"></a><span class="do">##        fit      lwr      upr</span></span>
-<span id="cb159-3"><a href="inference.html#cb159-3" aria-hidden="true" tabindex="-1"></a><span class="do">## 1 38.79139 38.33427 39.24851</span></span>
-<span id="cb159-4"><a href="inference.html#cb159-4" aria-hidden="true" tabindex="-1"></a><span class="do">## 2 48.83382 48.15264 49.51500</span></span>
-<span id="cb159-5"><a href="inference.html#cb159-5" aria-hidden="true" tabindex="-1"></a><span class="do">## 3 47.50488 46.99840 48.01136</span></span></code></pre></div>
+<div class="sourceCode" id="cb165"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb165-1"><a href="inference.html#cb165-1" aria-hidden="true" tabindex="-1"></a><span class="fu">predict</span>(lmodp, <span class="at">newdata =</span> newpenguins, <span class="at">level =</span> <span class="fl">0.98</span>, <span class="at">interval =</span> <span class="st">&quot;confidence&quot;</span>)</span>
+<span id="cb165-2"><a href="inference.html#cb165-2" aria-hidden="true" tabindex="-1"></a><span class="do">##        fit      lwr      upr</span></span>
+<span id="cb165-3"><a href="inference.html#cb165-3" aria-hidden="true" tabindex="-1"></a><span class="do">## 1 38.79139 38.33427 39.24851</span></span>
+<span id="cb165-4"><a href="inference.html#cb165-4" aria-hidden="true" tabindex="-1"></a><span class="do">## 2 48.83382 48.15264 49.51500</span></span>
+<span id="cb165-5"><a href="inference.html#cb165-5" aria-hidden="true" tabindex="-1"></a><span class="do">## 3 47.50488 46.99840 48.01136</span></span></code></pre></div>
 <p>The 98% confidence interval for the mean flipper length of an Adelie penguin with a body mass of 3700.662 g is [38.33, 39.25]. We are 98% confident that the mean flipper length of Adelie penguins with a body mass of 3700.662 is between 38.33 g and 39.25 g. Note: we are constructing a confidence interval for the mean flipper length of ALL
 Adelie penguins with this body mass, i.e., for
 <span class="math display">\[
@@ -803,30 +803,30 @@ E(\mathtt{flipper\_length\_mm}\mid \mathtt{body\_mass\_g} = 3700.662, \mathtt{sp
 which is an unknown characteristic of the population of all Adelie penguins. Similarly, the 98% confidence interval for the mean flipper length of Chinstrap penguins with a body mass of 3733.09 g is [48.15, 49.52]. Lastly, the mean flipper length of Gentoo penguins with a body mass of 5076.02 g is [46.99, 48.02].</p>
 <p>We provide details about manually computing confidence intervals for the mean response in Section <a href="inference.html#manual-calc-ci-mean-response">6.10.3</a>.</p>
 <p>We are once again faced with a multiple comparisons problem because we are making 3 inferences. To control the family-wise confidence level of our intervals, we can use the Bonferroni or Working-Hotelling corrections previously discussed in Section <a href="inference.html#adjusted-cis-betas">6.4.3</a>. Both corrections are implemented in the <code>predict_adjust</code> function in the <strong>api2lm</strong> package, which is intended to work identically to the <code>predict</code> function, but produces intervals that adjust for multiple comparisons. The only additional argument is <code>method</code>, with choices <code>"none"</code> (no correction), <code>"bonferroni"</code> (Bonferroni adjustment), or <code>"wh"</code> (Working-Hotelling adjustment). We produce both types of adjusted intervals in the code below. The Bonferroni-adjusted confidence intervals are slightly narrower in this example.</p>
-<div class="sourceCode" id="cb160"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb160-1"><a href="inference.html#cb160-1" aria-hidden="true" tabindex="-1"></a><span class="co"># bonferroni-adjusted confidence intervals for the mean response</span></span>
-<span id="cb160-2"><a href="inference.html#cb160-2" aria-hidden="true" tabindex="-1"></a><span class="fu">predict_adjust</span>(lmodp, <span class="at">newdata =</span> newpenguins, <span class="at">level =</span> <span class="fl">0.98</span>,</span>
-<span id="cb160-3"><a href="inference.html#cb160-3" aria-hidden="true" tabindex="-1"></a>               <span class="at">interval =</span> <span class="st">&quot;confidence&quot;</span>, <span class="at">method =</span> <span class="st">&quot;bonferroni&quot;</span>)</span>
-<span id="cb160-4"><a href="inference.html#cb160-4" aria-hidden="true" tabindex="-1"></a><span class="do">## </span></span>
-<span id="cb160-5"><a href="inference.html#cb160-5" aria-hidden="true" tabindex="-1"></a><span class="do">## Bonferroni-adjusted confidence intervals</span></span>
-<span id="cb160-6"><a href="inference.html#cb160-6" aria-hidden="true" tabindex="-1"></a><span class="do">## </span></span>
-<span id="cb160-7"><a href="inference.html#cb160-7" aria-hidden="true" tabindex="-1"></a><span class="do">## Family-wise confidence level of at least 0.98 </span></span>
-<span id="cb160-8"><a href="inference.html#cb160-8" aria-hidden="true" tabindex="-1"></a><span class="do">## </span></span>
-<span id="cb160-9"><a href="inference.html#cb160-9" aria-hidden="true" tabindex="-1"></a><span class="do">##        fit      lwr      upr</span></span>
-<span id="cb160-10"><a href="inference.html#cb160-10" aria-hidden="true" tabindex="-1"></a><span class="do">## 1 38.79139 38.25751 39.32527</span></span>
-<span id="cb160-11"><a href="inference.html#cb160-11" aria-hidden="true" tabindex="-1"></a><span class="do">## 2 48.83382 48.03826 49.62939</span></span>
-<span id="cb160-12"><a href="inference.html#cb160-12" aria-hidden="true" tabindex="-1"></a><span class="do">## 3 47.50488 46.91335 48.09641</span></span>
-<span id="cb160-13"><a href="inference.html#cb160-13" aria-hidden="true" tabindex="-1"></a><span class="co"># working-hotelling-adjusted confidence intervals for the mean response</span></span>
-<span id="cb160-14"><a href="inference.html#cb160-14" aria-hidden="true" tabindex="-1"></a><span class="fu">predict_adjust</span>(lmodp, <span class="at">newdata =</span> newpenguins, <span class="at">level =</span> <span class="fl">0.98</span>,</span>
-<span id="cb160-15"><a href="inference.html#cb160-15" aria-hidden="true" tabindex="-1"></a>               <span class="at">interval =</span> <span class="st">&quot;confidence&quot;</span>, <span class="at">method =</span> <span class="st">&quot;wh&quot;</span>)</span>
-<span id="cb160-16"><a href="inference.html#cb160-16" aria-hidden="true" tabindex="-1"></a><span class="do">## </span></span>
-<span id="cb160-17"><a href="inference.html#cb160-17" aria-hidden="true" tabindex="-1"></a><span class="do">## Working-Hotelling-adjusted confidence intervals</span></span>
-<span id="cb160-18"><a href="inference.html#cb160-18" aria-hidden="true" tabindex="-1"></a><span class="do">## </span></span>
-<span id="cb160-19"><a href="inference.html#cb160-19" aria-hidden="true" tabindex="-1"></a><span class="do">## Family-wise confidence level of at least 0.98 </span></span>
-<span id="cb160-20"><a href="inference.html#cb160-20" aria-hidden="true" tabindex="-1"></a><span class="do">## </span></span>
-<span id="cb160-21"><a href="inference.html#cb160-21" aria-hidden="true" tabindex="-1"></a><span class="do">##        fit      lwr      upr</span></span>
-<span id="cb160-22"><a href="inference.html#cb160-22" aria-hidden="true" tabindex="-1"></a><span class="do">## 1 38.79139 38.11858 39.46420</span></span>
-<span id="cb160-23"><a href="inference.html#cb160-23" aria-hidden="true" tabindex="-1"></a><span class="do">## 2 48.83382 47.83122 49.83642</span></span>
-<span id="cb160-24"><a href="inference.html#cb160-24" aria-hidden="true" tabindex="-1"></a><span class="do">## 3 47.50488 46.75941 48.25035</span></span></code></pre></div>
+<div class="sourceCode" id="cb166"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb166-1"><a href="inference.html#cb166-1" aria-hidden="true" tabindex="-1"></a><span class="co"># bonferroni-adjusted confidence intervals for the mean response</span></span>
+<span id="cb166-2"><a href="inference.html#cb166-2" aria-hidden="true" tabindex="-1"></a><span class="fu">predict_adjust</span>(lmodp, <span class="at">newdata =</span> newpenguins, <span class="at">level =</span> <span class="fl">0.98</span>,</span>
+<span id="cb166-3"><a href="inference.html#cb166-3" aria-hidden="true" tabindex="-1"></a>               <span class="at">interval =</span> <span class="st">&quot;confidence&quot;</span>, <span class="at">method =</span> <span class="st">&quot;bonferroni&quot;</span>)</span>
+<span id="cb166-4"><a href="inference.html#cb166-4" aria-hidden="true" tabindex="-1"></a><span class="do">## </span></span>
+<span id="cb166-5"><a href="inference.html#cb166-5" aria-hidden="true" tabindex="-1"></a><span class="do">## Bonferroni-adjusted confidence intervals</span></span>
+<span id="cb166-6"><a href="inference.html#cb166-6" aria-hidden="true" tabindex="-1"></a><span class="do">## </span></span>
+<span id="cb166-7"><a href="inference.html#cb166-7" aria-hidden="true" tabindex="-1"></a><span class="do">## Family-wise confidence level of at least 0.98 </span></span>
+<span id="cb166-8"><a href="inference.html#cb166-8" aria-hidden="true" tabindex="-1"></a><span class="do">## </span></span>
+<span id="cb166-9"><a href="inference.html#cb166-9" aria-hidden="true" tabindex="-1"></a><span class="do">##        fit      lwr      upr</span></span>
+<span id="cb166-10"><a href="inference.html#cb166-10" aria-hidden="true" tabindex="-1"></a><span class="do">## 1 38.79139 38.25751 39.32527</span></span>
+<span id="cb166-11"><a href="inference.html#cb166-11" aria-hidden="true" tabindex="-1"></a><span class="do">## 2 48.83382 48.03826 49.62939</span></span>
+<span id="cb166-12"><a href="inference.html#cb166-12" aria-hidden="true" tabindex="-1"></a><span class="do">## 3 47.50488 46.91335 48.09641</span></span>
+<span id="cb166-13"><a href="inference.html#cb166-13" aria-hidden="true" tabindex="-1"></a><span class="co"># working-hotelling-adjusted confidence intervals for the mean response</span></span>
+<span id="cb166-14"><a href="inference.html#cb166-14" aria-hidden="true" tabindex="-1"></a><span class="fu">predict_adjust</span>(lmodp, <span class="at">newdata =</span> newpenguins, <span class="at">level =</span> <span class="fl">0.98</span>,</span>
+<span id="cb166-15"><a href="inference.html#cb166-15" aria-hidden="true" tabindex="-1"></a>               <span class="at">interval =</span> <span class="st">&quot;confidence&quot;</span>, <span class="at">method =</span> <span class="st">&quot;wh&quot;</span>)</span>
+<span id="cb166-16"><a href="inference.html#cb166-16" aria-hidden="true" tabindex="-1"></a><span class="do">## </span></span>
+<span id="cb166-17"><a href="inference.html#cb166-17" aria-hidden="true" tabindex="-1"></a><span class="do">## Working-Hotelling-adjusted confidence intervals</span></span>
+<span id="cb166-18"><a href="inference.html#cb166-18" aria-hidden="true" tabindex="-1"></a><span class="do">## </span></span>
+<span id="cb166-19"><a href="inference.html#cb166-19" aria-hidden="true" tabindex="-1"></a><span class="do">## Family-wise confidence level of at least 0.98 </span></span>
+<span id="cb166-20"><a href="inference.html#cb166-20" aria-hidden="true" tabindex="-1"></a><span class="do">## </span></span>
+<span id="cb166-21"><a href="inference.html#cb166-21" aria-hidden="true" tabindex="-1"></a><span class="do">##        fit      lwr      upr</span></span>
+<span id="cb166-22"><a href="inference.html#cb166-22" aria-hidden="true" tabindex="-1"></a><span class="do">## 1 38.79139 38.11858 39.46420</span></span>
+<span id="cb166-23"><a href="inference.html#cb166-23" aria-hidden="true" tabindex="-1"></a><span class="do">## 2 48.83382 47.83122 49.83642</span></span>
+<span id="cb166-24"><a href="inference.html#cb166-24" aria-hidden="true" tabindex="-1"></a><span class="do">## 3 47.50488 46.75941 48.25035</span></span></code></pre></div>
 </div>
 <div id="pi-new-response" class="section level2 hasAnchor" number="6.7">
 <h2><span class="header-section-number">6.7</span> Prediction interval for a new response<a href="inference.html#pi-new-response" class="anchor-section" aria-label="Anchor link to header"></a></h2>
@@ -867,57 +867,57 @@ The standard deviation of the prediction error is sometimes known as the <strong
 \]</span></p>
 <p>The <code>predict</code> function can be used to create predictions and prediction intervals for a new response in the same way that it can be used to estimate the mean response and produce associated confidence intervals. If the <code>interval</code> argument is <code>"none"</code>, then predictions for a new response are returned. As we have already seen, <span class="math inline">\(\hat{E}(Y\mid \mathbf{x}_0)\)</span> and <span class="math inline">\(\hat{Y}(\mathbf{x}_0)\)</span> are the same number. If the <code>interval</code> argument is <code>"prediction"</code>, then the predicted new response and associated prediction interval will be produced for each row of data supplied to the <code>newdata</code> argument.</p>
 <p>Continuing the example started in Section <a href="inference.html#parametric-ci-mean-response">6.6</a>, we want to predict the response value for new, unobserved penguins having the observed mean <code>body_mass_g</code> for each level of <code>species</code>. The fitted model is stored in <code>lmodp</code> and the data frame with the predictors for the new responses is stored in <code>newpenguins</code>. We print the coefficients of the fitted model and the data frame of new predictors below for clarity.</p>
-<div class="sourceCode" id="cb161"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb161-1"><a href="inference.html#cb161-1" aria-hidden="true" tabindex="-1"></a><span class="fu">coef</span>(lmodp)</span>
-<span id="cb161-2"><a href="inference.html#cb161-2" aria-hidden="true" tabindex="-1"></a><span class="do">##      (Intercept)      body_mass_g speciesChinstrap </span></span>
-<span id="cb161-3"><a href="inference.html#cb161-3" aria-hidden="true" tabindex="-1"></a><span class="do">##     24.919470977      0.003748497      9.920884113 </span></span>
-<span id="cb161-4"><a href="inference.html#cb161-4" aria-hidden="true" tabindex="-1"></a><span class="do">##    speciesGentoo </span></span>
-<span id="cb161-5"><a href="inference.html#cb161-5" aria-hidden="true" tabindex="-1"></a><span class="do">##      3.557977539</span></span>
-<span id="cb161-6"><a href="inference.html#cb161-6" aria-hidden="true" tabindex="-1"></a>newpenguins</span>
-<span id="cb161-7"><a href="inference.html#cb161-7" aria-hidden="true" tabindex="-1"></a><span class="do">## # A tibble: 3 × 2</span></span>
-<span id="cb161-8"><a href="inference.html#cb161-8" aria-hidden="true" tabindex="-1"></a><span class="do">##   species   body_mass_g</span></span>
-<span id="cb161-9"><a href="inference.html#cb161-9" aria-hidden="true" tabindex="-1"></a><span class="do">##   &lt;fct&gt;           &lt;dbl&gt;</span></span>
-<span id="cb161-10"><a href="inference.html#cb161-10" aria-hidden="true" tabindex="-1"></a><span class="do">## 1 Adelie          3701.</span></span>
-<span id="cb161-11"><a href="inference.html#cb161-11" aria-hidden="true" tabindex="-1"></a><span class="do">## 2 Chinstrap       3733.</span></span>
-<span id="cb161-12"><a href="inference.html#cb161-12" aria-hidden="true" tabindex="-1"></a><span class="do">## 3 Gentoo          5076.</span></span></code></pre></div>
+<div class="sourceCode" id="cb167"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb167-1"><a href="inference.html#cb167-1" aria-hidden="true" tabindex="-1"></a><span class="fu">coef</span>(lmodp)</span>
+<span id="cb167-2"><a href="inference.html#cb167-2" aria-hidden="true" tabindex="-1"></a><span class="do">##      (Intercept)      body_mass_g speciesChinstrap </span></span>
+<span id="cb167-3"><a href="inference.html#cb167-3" aria-hidden="true" tabindex="-1"></a><span class="do">##     24.919470977      0.003748497      9.920884113 </span></span>
+<span id="cb167-4"><a href="inference.html#cb167-4" aria-hidden="true" tabindex="-1"></a><span class="do">##    speciesGentoo </span></span>
+<span id="cb167-5"><a href="inference.html#cb167-5" aria-hidden="true" tabindex="-1"></a><span class="do">##      3.557977539</span></span>
+<span id="cb167-6"><a href="inference.html#cb167-6" aria-hidden="true" tabindex="-1"></a>newpenguins</span>
+<span id="cb167-7"><a href="inference.html#cb167-7" aria-hidden="true" tabindex="-1"></a><span class="do">## # A tibble: 3 × 2</span></span>
+<span id="cb167-8"><a href="inference.html#cb167-8" aria-hidden="true" tabindex="-1"></a><span class="do">##   species   body_mass_g</span></span>
+<span id="cb167-9"><a href="inference.html#cb167-9" aria-hidden="true" tabindex="-1"></a><span class="do">##   &lt;fct&gt;           &lt;dbl&gt;</span></span>
+<span id="cb167-10"><a href="inference.html#cb167-10" aria-hidden="true" tabindex="-1"></a><span class="do">## 1 Adelie          3701.</span></span>
+<span id="cb167-11"><a href="inference.html#cb167-11" aria-hidden="true" tabindex="-1"></a><span class="do">## 2 Chinstrap       3733.</span></span>
+<span id="cb167-12"><a href="inference.html#cb167-12" aria-hidden="true" tabindex="-1"></a><span class="do">## 3 Gentoo          5076.</span></span></code></pre></div>
 <p>In the code below, we predict the <code>flipper_length_mm</code> for new penguins for the predictor values stored in <code>newpenguins</code> based on the fitted model in <code>lmodp</code>. We also construct the associated 99% prediction intervals.</p>
-<div class="sourceCode" id="cb162"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb162-1"><a href="inference.html#cb162-1" aria-hidden="true" tabindex="-1"></a><span class="co"># predict new response and compute prediction intervals</span></span>
-<span id="cb162-2"><a href="inference.html#cb162-2" aria-hidden="true" tabindex="-1"></a><span class="co"># for 3 combinations of predictors</span></span>
-<span id="cb162-3"><a href="inference.html#cb162-3" aria-hidden="true" tabindex="-1"></a><span class="fu">predict</span>(lmodp, <span class="at">newdata =</span> newpenguins,</span>
-<span id="cb162-4"><a href="inference.html#cb162-4" aria-hidden="true" tabindex="-1"></a>        <span class="at">interval =</span> <span class="st">&quot;prediction&quot;</span>, <span class="at">level =</span> <span class="fl">0.99</span>)</span>
-<span id="cb162-5"><a href="inference.html#cb162-5" aria-hidden="true" tabindex="-1"></a><span class="do">##        fit      lwr      upr</span></span>
-<span id="cb162-6"><a href="inference.html#cb162-6" aria-hidden="true" tabindex="-1"></a><span class="do">## 1 38.79139 32.54561 45.03718</span></span>
-<span id="cb162-7"><a href="inference.html#cb162-7" aria-hidden="true" tabindex="-1"></a><span class="do">## 2 48.83382 42.56301 55.10464</span></span>
-<span id="cb162-8"><a href="inference.html#cb162-8" aria-hidden="true" tabindex="-1"></a><span class="do">## 3 47.50488 41.25442 53.75534</span></span></code></pre></div>
+<div class="sourceCode" id="cb168"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb168-1"><a href="inference.html#cb168-1" aria-hidden="true" tabindex="-1"></a><span class="co"># predict new response and compute prediction intervals</span></span>
+<span id="cb168-2"><a href="inference.html#cb168-2" aria-hidden="true" tabindex="-1"></a><span class="co"># for 3 combinations of predictors</span></span>
+<span id="cb168-3"><a href="inference.html#cb168-3" aria-hidden="true" tabindex="-1"></a><span class="fu">predict</span>(lmodp, <span class="at">newdata =</span> newpenguins,</span>
+<span id="cb168-4"><a href="inference.html#cb168-4" aria-hidden="true" tabindex="-1"></a>        <span class="at">interval =</span> <span class="st">&quot;prediction&quot;</span>, <span class="at">level =</span> <span class="fl">0.99</span>)</span>
+<span id="cb168-5"><a href="inference.html#cb168-5" aria-hidden="true" tabindex="-1"></a><span class="do">##        fit      lwr      upr</span></span>
+<span id="cb168-6"><a href="inference.html#cb168-6" aria-hidden="true" tabindex="-1"></a><span class="do">## 1 38.79139 32.54561 45.03718</span></span>
+<span id="cb168-7"><a href="inference.html#cb168-7" aria-hidden="true" tabindex="-1"></a><span class="do">## 2 48.83382 42.56301 55.10464</span></span>
+<span id="cb168-8"><a href="inference.html#cb168-8" aria-hidden="true" tabindex="-1"></a><span class="do">## 3 47.50488 41.25442 53.75534</span></span></code></pre></div>
 <p>An new Adelie penguin with a body mass of 3700.662 g is predicted to have a flipper length of 38.79 mm. We are 99% confident that a new Adelie penguins with a body mass of 3700.662 g will have a flipper length between 32.54 mm and 45.04 mm. Similarly, the 99% prediction interval for the flipper length of a new Chinstrap penguin with a body mass of 3733.09 g is [48.56, 55.11]. The flipper length of a new Gentoo penguin with a body mass of 5076.02 g is between 41.25 and 53.75 with a confidence level of 0.99.</p>
 <p>Since we are making 3 predictions, our inferences suffer from the multiple comparisons problem. To control the family-wise confidence level of our intervals, we can use the Bonferroni correction with <span class="math inline">\(k=3\)</span>. The Working-Hotelling correction discussed in Section <a href="inference.html#adjusted-cis-betas">6.4.3</a> does not apply to new responses. However, a similar adjustment proposed by Scheffé does apply <span class="citation">(<a href="#ref-alsm2005" role="doc-biblioref">Kutner et al. 2005</a>)</span>. The prediction interval multiplier <span class="math inline">\(t^{\alpha/2}_{n-p}\)</span> used for a single prediction interval with confidence level <span class="math inline">\(1-\alpha\)</span> is replaced by
 <span class="math inline">\(\sqrt{k F^{1-\alpha}_{k,n-p}}\)</span> to control the family-wise confidence level at <span class="math inline">\(1-\alpha\)</span> for a family of <span class="math inline">\(k\)</span> prediction intervals. Recall that the Working-Hotelling multiplier was <span class="math inline">\(\sqrt{p F^{1-\alpha}_{p,n-p}}\)</span>. Thus, the Scheffé multiplier scales with the number of predictions being made while the Working-Hotelling multiplier scales with the number of estimated regression coefficients in the fitted model.</p>
 <p>Both the Bonferroni and Scheffé multiple comparisons corrections are implemented in the <code>predict_adjust</code> function in the <strong>api2lm</strong> package. In the prediction interval setting, we can choose the correction <code>method</code> argument to be <code>"none"</code> (no correction), <code>"bonferroni"</code> (Bonferroni adjustment), or <code>"scheffe"</code> (Scheffe adjustment). We produce both types of adjusted intervals in the code below. The Bonferroni-adjusted confidence intervals are slightly narrower in this example.</p>
-<div class="sourceCode" id="cb163"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb163-1"><a href="inference.html#cb163-1" aria-hidden="true" tabindex="-1"></a><span class="co"># bonferroni-adjusted prediction intervals for new responses</span></span>
-<span id="cb163-2"><a href="inference.html#cb163-2" aria-hidden="true" tabindex="-1"></a><span class="fu">predict_adjust</span>(lmodp, <span class="at">newdata =</span> newpenguins, <span class="at">level =</span> <span class="fl">0.99</span>,</span>
-<span id="cb163-3"><a href="inference.html#cb163-3" aria-hidden="true" tabindex="-1"></a>               <span class="at">interval =</span> <span class="st">&quot;prediction&quot;</span>,</span>
-<span id="cb163-4"><a href="inference.html#cb163-4" aria-hidden="true" tabindex="-1"></a>               <span class="at">method =</span> <span class="st">&quot;bonferroni&quot;</span>)</span>
-<span id="cb163-5"><a href="inference.html#cb163-5" aria-hidden="true" tabindex="-1"></a><span class="do">## </span></span>
-<span id="cb163-6"><a href="inference.html#cb163-6" aria-hidden="true" tabindex="-1"></a><span class="do">## Bonferroni-adjusted prediction intervals</span></span>
-<span id="cb163-7"><a href="inference.html#cb163-7" aria-hidden="true" tabindex="-1"></a><span class="do">## </span></span>
-<span id="cb163-8"><a href="inference.html#cb163-8" aria-hidden="true" tabindex="-1"></a><span class="do">## Family-wise confidence level of at least 0.99 </span></span>
-<span id="cb163-9"><a href="inference.html#cb163-9" aria-hidden="true" tabindex="-1"></a><span class="do">## </span></span>
-<span id="cb163-10"><a href="inference.html#cb163-10" aria-hidden="true" tabindex="-1"></a><span class="do">##        fit      lwr      upr</span></span>
-<span id="cb163-11"><a href="inference.html#cb163-11" aria-hidden="true" tabindex="-1"></a><span class="do">## 1 38.79139 31.66373 45.91905</span></span>
-<span id="cb163-12"><a href="inference.html#cb163-12" aria-hidden="true" tabindex="-1"></a><span class="do">## 2 48.83382 41.67760 55.99004</span></span>
-<span id="cb163-13"><a href="inference.html#cb163-13" aria-hidden="true" tabindex="-1"></a><span class="do">## 3 47.50488 40.37188 54.63787</span></span>
-<span id="cb163-14"><a href="inference.html#cb163-14" aria-hidden="true" tabindex="-1"></a><span class="co"># sheffe-adjusted prediction intervals for new responses</span></span>
-<span id="cb163-15"><a href="inference.html#cb163-15" aria-hidden="true" tabindex="-1"></a><span class="fu">predict_adjust</span>(lmodp, <span class="at">newdata =</span> newpenguins, <span class="at">level =</span> <span class="fl">0.99</span>,</span>
-<span id="cb163-16"><a href="inference.html#cb163-16" aria-hidden="true" tabindex="-1"></a>               <span class="at">interval =</span> <span class="st">&quot;prediction&quot;</span>,</span>
-<span id="cb163-17"><a href="inference.html#cb163-17" aria-hidden="true" tabindex="-1"></a>               <span class="at">method =</span> <span class="st">&quot;scheffe&quot;</span>)</span>
-<span id="cb163-18"><a href="inference.html#cb163-18" aria-hidden="true" tabindex="-1"></a><span class="do">## </span></span>
-<span id="cb163-19"><a href="inference.html#cb163-19" aria-hidden="true" tabindex="-1"></a><span class="do">## Scheffe-adjusted prediction intervals</span></span>
-<span id="cb163-20"><a href="inference.html#cb163-20" aria-hidden="true" tabindex="-1"></a><span class="do">## </span></span>
-<span id="cb163-21"><a href="inference.html#cb163-21" aria-hidden="true" tabindex="-1"></a><span class="do">## Family-wise confidence level of at least 0.99 </span></span>
-<span id="cb163-22"><a href="inference.html#cb163-22" aria-hidden="true" tabindex="-1"></a><span class="do">## </span></span>
-<span id="cb163-23"><a href="inference.html#cb163-23" aria-hidden="true" tabindex="-1"></a><span class="do">##        fit      lwr      upr</span></span>
-<span id="cb163-24"><a href="inference.html#cb163-24" aria-hidden="true" tabindex="-1"></a><span class="do">## 1 38.79139 30.60787 46.97492</span></span>
-<span id="cb163-25"><a href="inference.html#cb163-25" aria-hidden="true" tabindex="-1"></a><span class="do">## 2 48.83382 40.61751 57.05014</span></span>
-<span id="cb163-26"><a href="inference.html#cb163-26" aria-hidden="true" tabindex="-1"></a><span class="do">## 3 47.50488 39.31523 55.69453</span></span></code></pre></div>
+<div class="sourceCode" id="cb169"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb169-1"><a href="inference.html#cb169-1" aria-hidden="true" tabindex="-1"></a><span class="co"># bonferroni-adjusted prediction intervals for new responses</span></span>
+<span id="cb169-2"><a href="inference.html#cb169-2" aria-hidden="true" tabindex="-1"></a><span class="fu">predict_adjust</span>(lmodp, <span class="at">newdata =</span> newpenguins, <span class="at">level =</span> <span class="fl">0.99</span>,</span>
+<span id="cb169-3"><a href="inference.html#cb169-3" aria-hidden="true" tabindex="-1"></a>               <span class="at">interval =</span> <span class="st">&quot;prediction&quot;</span>,</span>
+<span id="cb169-4"><a href="inference.html#cb169-4" aria-hidden="true" tabindex="-1"></a>               <span class="at">method =</span> <span class="st">&quot;bonferroni&quot;</span>)</span>
+<span id="cb169-5"><a href="inference.html#cb169-5" aria-hidden="true" tabindex="-1"></a><span class="do">## </span></span>
+<span id="cb169-6"><a href="inference.html#cb169-6" aria-hidden="true" tabindex="-1"></a><span class="do">## Bonferroni-adjusted prediction intervals</span></span>
+<span id="cb169-7"><a href="inference.html#cb169-7" aria-hidden="true" tabindex="-1"></a><span class="do">## </span></span>
+<span id="cb169-8"><a href="inference.html#cb169-8" aria-hidden="true" tabindex="-1"></a><span class="do">## Family-wise confidence level of at least 0.99 </span></span>
+<span id="cb169-9"><a href="inference.html#cb169-9" aria-hidden="true" tabindex="-1"></a><span class="do">## </span></span>
+<span id="cb169-10"><a href="inference.html#cb169-10" aria-hidden="true" tabindex="-1"></a><span class="do">##        fit      lwr      upr</span></span>
+<span id="cb169-11"><a href="inference.html#cb169-11" aria-hidden="true" tabindex="-1"></a><span class="do">## 1 38.79139 31.66373 45.91905</span></span>
+<span id="cb169-12"><a href="inference.html#cb169-12" aria-hidden="true" tabindex="-1"></a><span class="do">## 2 48.83382 41.67760 55.99004</span></span>
+<span id="cb169-13"><a href="inference.html#cb169-13" aria-hidden="true" tabindex="-1"></a><span class="do">## 3 47.50488 40.37188 54.63787</span></span>
+<span id="cb169-14"><a href="inference.html#cb169-14" aria-hidden="true" tabindex="-1"></a><span class="co"># sheffe-adjusted prediction intervals for new responses</span></span>
+<span id="cb169-15"><a href="inference.html#cb169-15" aria-hidden="true" tabindex="-1"></a><span class="fu">predict_adjust</span>(lmodp, <span class="at">newdata =</span> newpenguins, <span class="at">level =</span> <span class="fl">0.99</span>,</span>
+<span id="cb169-16"><a href="inference.html#cb169-16" aria-hidden="true" tabindex="-1"></a>               <span class="at">interval =</span> <span class="st">&quot;prediction&quot;</span>,</span>
+<span id="cb169-17"><a href="inference.html#cb169-17" aria-hidden="true" tabindex="-1"></a>               <span class="at">method =</span> <span class="st">&quot;scheffe&quot;</span>)</span>
+<span id="cb169-18"><a href="inference.html#cb169-18" aria-hidden="true" tabindex="-1"></a><span class="do">## </span></span>
+<span id="cb169-19"><a href="inference.html#cb169-19" aria-hidden="true" tabindex="-1"></a><span class="do">## Scheffe-adjusted prediction intervals</span></span>
+<span id="cb169-20"><a href="inference.html#cb169-20" aria-hidden="true" tabindex="-1"></a><span class="do">## </span></span>
+<span id="cb169-21"><a href="inference.html#cb169-21" aria-hidden="true" tabindex="-1"></a><span class="do">## Family-wise confidence level of at least 0.99 </span></span>
+<span id="cb169-22"><a href="inference.html#cb169-22" aria-hidden="true" tabindex="-1"></a><span class="do">## </span></span>
+<span id="cb169-23"><a href="inference.html#cb169-23" aria-hidden="true" tabindex="-1"></a><span class="do">##        fit      lwr      upr</span></span>
+<span id="cb169-24"><a href="inference.html#cb169-24" aria-hidden="true" tabindex="-1"></a><span class="do">## 1 38.79139 30.60787 46.97492</span></span>
+<span id="cb169-25"><a href="inference.html#cb169-25" aria-hidden="true" tabindex="-1"></a><span class="do">## 2 48.83382 40.61751 57.05014</span></span>
+<span id="cb169-26"><a href="inference.html#cb169-26" aria-hidden="true" tabindex="-1"></a><span class="do">## 3 47.50488 39.31523 55.69453</span></span></code></pre></div>
 </div>
 <div id="hypothesis-tests-for-a-single-regression-coefficient" class="section level2 hasAnchor" number="6.8">
 <h2><span class="header-section-number">6.8</span> Hypothesis tests for a single regression coefficient<a href="inference.html#hypothesis-tests-for-a-single-regression-coefficient" class="anchor-section" aria-label="Anchor link to header"></a></h2>
@@ -962,15 +962,15 @@ H_a: &amp;\beta_1 \neq 0 \mid \beta_0\in \mathbb{R}, \beta_2 \in \mathbb{R}.
 \end{aligned}
 \]</span>
 R conveniently provides this information in the output of the <code>summary</code> function (specifically, the <code>coefficients</code> element if we don’t want extra information). We extract this information from the <code>mlmod</code> object in the code below.</p>
-<div class="sourceCode" id="cb164"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb164-1"><a href="inference.html#cb164-1" aria-hidden="true" tabindex="-1"></a><span class="fu">summary</span>(mlmod)<span class="sc">$</span>coefficients</span>
-<span id="cb164-2"><a href="inference.html#cb164-2" aria-hidden="true" tabindex="-1"></a><span class="do">##                        Estimate   Std. Error    t value</span></span>
-<span id="cb164-3"><a href="inference.html#cb164-3" aria-hidden="true" tabindex="-1"></a><span class="do">## (Intercept)       -3.4366939266 4.5805531903 -0.7502792</span></span>
-<span id="cb164-4"><a href="inference.html#cb164-4" aria-hidden="true" tabindex="-1"></a><span class="do">## body_mass_g        0.0006622186 0.0005672075  1.1675067</span></span>
-<span id="cb164-5"><a href="inference.html#cb164-5" aria-hidden="true" tabindex="-1"></a><span class="do">## flipper_length_mm  0.2218654584 0.0323484492  6.8586119</span></span>
-<span id="cb164-6"><a href="inference.html#cb164-6" aria-hidden="true" tabindex="-1"></a><span class="do">##                       Pr(&gt;|t|)</span></span>
-<span id="cb164-7"><a href="inference.html#cb164-7" aria-hidden="true" tabindex="-1"></a><span class="do">## (Intercept)       4.536070e-01</span></span>
-<span id="cb164-8"><a href="inference.html#cb164-8" aria-hidden="true" tabindex="-1"></a><span class="do">## body_mass_g       2.438263e-01</span></span>
-<span id="cb164-9"><a href="inference.html#cb164-9" aria-hidden="true" tabindex="-1"></a><span class="do">## flipper_length_mm 3.306943e-11</span></span></code></pre></div>
+<div class="sourceCode" id="cb170"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb170-1"><a href="inference.html#cb170-1" aria-hidden="true" tabindex="-1"></a><span class="fu">summary</span>(mlmod)<span class="sc">$</span>coefficients</span>
+<span id="cb170-2"><a href="inference.html#cb170-2" aria-hidden="true" tabindex="-1"></a><span class="do">##                        Estimate   Std. Error    t value</span></span>
+<span id="cb170-3"><a href="inference.html#cb170-3" aria-hidden="true" tabindex="-1"></a><span class="do">## (Intercept)       -3.4366939266 4.5805531903 -0.7502792</span></span>
+<span id="cb170-4"><a href="inference.html#cb170-4" aria-hidden="true" tabindex="-1"></a><span class="do">## body_mass_g        0.0006622186 0.0005672075  1.1675067</span></span>
+<span id="cb170-5"><a href="inference.html#cb170-5" aria-hidden="true" tabindex="-1"></a><span class="do">## flipper_length_mm  0.2218654584 0.0323484492  6.8586119</span></span>
+<span id="cb170-6"><a href="inference.html#cb170-6" aria-hidden="true" tabindex="-1"></a><span class="do">##                       Pr(&gt;|t|)</span></span>
+<span id="cb170-7"><a href="inference.html#cb170-7" aria-hidden="true" tabindex="-1"></a><span class="do">## (Intercept)       4.536070e-01</span></span>
+<span id="cb170-8"><a href="inference.html#cb170-8" aria-hidden="true" tabindex="-1"></a><span class="do">## body_mass_g       2.438263e-01</span></span>
+<span id="cb170-9"><a href="inference.html#cb170-9" aria-hidden="true" tabindex="-1"></a><span class="do">## flipper_length_mm 3.306943e-11</span></span></code></pre></div>
 <p>Moving from left to right, the first column (no name) indicates the coefficient term under consideration, the second column (<code>Estimate</code>) provides the estimated coefficients, the third column (<code>Std. Error</code>) provides the estimated standard error (<span class="math inline">\(\hat{\mathrm{se}}(\hat{\beta}_j)\)</span>) for each coefficient, the fourth column (<code>t value</code>) provides the test statistic associated with testing <span class="math inline">\(H_0: \beta_j = 0 \mid \boldsymbol{\beta}_{-j} \in \mathbb{R}^{p-1}\)</span> versus a suitable alternative for each coefficient, while the final column (<code>Pr(&gt;|t|)</code>) provides the two-tailed p-value associated with this test.</p>
 <p>Thus, for our test of the <code>body_mass_g</code> coefficient, the test statistic is <span class="math inline">\(T_2 = 1.17\)</span> and the associated p-value is 0.024. There is moderate evidence that the coefficient for <code>body_mass_g</code> differs from zero, assuming the model also allows for the inclusion of the intercept and <code>flipper_length_mm</code> coefficients.</p>
 </div>
@@ -1110,33 +1110,33 @@ F = \frac{SS_{reg}(CM)/(p-1)}{RSS(CM)/(n-p)}= \frac{SS_{reg}(CM)/(p-1)}{\hat{\si
 <div id="manual-t-cis" class="section level3 hasAnchor" number="6.10.1">
 <h3><span class="header-section-number">6.10.1</span> Manual calculation of the standard <span class="math inline">\(t\)</span>-based confidence interval for a regression coefficient<a href="inference.html#manual-t-cis" class="anchor-section" aria-label="Anchor link to header"></a></h3>
 <p>Consider the summary of the fitted linear model below, which summarizes a first-order linear model fit to the <code>penguins</code> data earlier in this chapter.</p>
-<div class="sourceCode" id="cb165"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb165-1"><a href="inference.html#cb165-1" aria-hidden="true" tabindex="-1"></a><span class="fu">summary</span>(mlmod)</span>
-<span id="cb165-2"><a href="inference.html#cb165-2" aria-hidden="true" tabindex="-1"></a><span class="do">## </span></span>
-<span id="cb165-3"><a href="inference.html#cb165-3" aria-hidden="true" tabindex="-1"></a><span class="do">## Call:</span></span>
-<span id="cb165-4"><a href="inference.html#cb165-4" aria-hidden="true" tabindex="-1"></a><span class="do">## lm(formula = bill_length_mm ~ body_mass_g + flipper_length_mm, </span></span>
-<span id="cb165-5"><a href="inference.html#cb165-5" aria-hidden="true" tabindex="-1"></a><span class="do">##     data = penguins)</span></span>
-<span id="cb165-6"><a href="inference.html#cb165-6" aria-hidden="true" tabindex="-1"></a><span class="do">## </span></span>
-<span id="cb165-7"><a href="inference.html#cb165-7" aria-hidden="true" tabindex="-1"></a><span class="do">## Residuals:</span></span>
-<span id="cb165-8"><a href="inference.html#cb165-8" aria-hidden="true" tabindex="-1"></a><span class="do">##     Min      1Q  Median      3Q     Max </span></span>
-<span id="cb165-9"><a href="inference.html#cb165-9" aria-hidden="true" tabindex="-1"></a><span class="do">## -8.8064 -2.5898 -0.7053  1.9911 18.8288 </span></span>
-<span id="cb165-10"><a href="inference.html#cb165-10" aria-hidden="true" tabindex="-1"></a><span class="do">## </span></span>
-<span id="cb165-11"><a href="inference.html#cb165-11" aria-hidden="true" tabindex="-1"></a><span class="do">## Coefficients:</span></span>
-<span id="cb165-12"><a href="inference.html#cb165-12" aria-hidden="true" tabindex="-1"></a><span class="do">##                     Estimate Std. Error t value Pr(&gt;|t|)</span></span>
-<span id="cb165-13"><a href="inference.html#cb165-13" aria-hidden="true" tabindex="-1"></a><span class="do">## (Intercept)       -3.4366939  4.5805532  -0.750    0.454</span></span>
-<span id="cb165-14"><a href="inference.html#cb165-14" aria-hidden="true" tabindex="-1"></a><span class="do">## body_mass_g        0.0006622  0.0005672   1.168    0.244</span></span>
-<span id="cb165-15"><a href="inference.html#cb165-15" aria-hidden="true" tabindex="-1"></a><span class="do">## flipper_length_mm  0.2218655  0.0323484   6.859 3.31e-11</span></span>
-<span id="cb165-16"><a href="inference.html#cb165-16" aria-hidden="true" tabindex="-1"></a><span class="do">##                      </span></span>
-<span id="cb165-17"><a href="inference.html#cb165-17" aria-hidden="true" tabindex="-1"></a><span class="do">## (Intercept)          </span></span>
-<span id="cb165-18"><a href="inference.html#cb165-18" aria-hidden="true" tabindex="-1"></a><span class="do">## body_mass_g          </span></span>
-<span id="cb165-19"><a href="inference.html#cb165-19" aria-hidden="true" tabindex="-1"></a><span class="do">## flipper_length_mm ***</span></span>
-<span id="cb165-20"><a href="inference.html#cb165-20" aria-hidden="true" tabindex="-1"></a><span class="do">## ---</span></span>
-<span id="cb165-21"><a href="inference.html#cb165-21" aria-hidden="true" tabindex="-1"></a><span class="do">## Signif. codes:  </span></span>
-<span id="cb165-22"><a href="inference.html#cb165-22" aria-hidden="true" tabindex="-1"></a><span class="do">## 0 &#39;***&#39; 0.001 &#39;**&#39; 0.01 &#39;*&#39; 0.05 &#39;.&#39; 0.1 &#39; &#39; 1</span></span>
-<span id="cb165-23"><a href="inference.html#cb165-23" aria-hidden="true" tabindex="-1"></a><span class="do">## </span></span>
-<span id="cb165-24"><a href="inference.html#cb165-24" aria-hidden="true" tabindex="-1"></a><span class="do">## Residual standard error: 4.124 on 339 degrees of freedom</span></span>
-<span id="cb165-25"><a href="inference.html#cb165-25" aria-hidden="true" tabindex="-1"></a><span class="do">##   (2 observations deleted due to missingness)</span></span>
-<span id="cb165-26"><a href="inference.html#cb165-26" aria-hidden="true" tabindex="-1"></a><span class="do">## Multiple R-squared:  0.4329, Adjusted R-squared:  0.4295 </span></span>
-<span id="cb165-27"><a href="inference.html#cb165-27" aria-hidden="true" tabindex="-1"></a><span class="do">## F-statistic: 129.4 on 2 and 339 DF,  p-value: &lt; 2.2e-16</span></span></code></pre></div>
+<div class="sourceCode" id="cb171"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb171-1"><a href="inference.html#cb171-1" aria-hidden="true" tabindex="-1"></a><span class="fu">summary</span>(mlmod)</span>
+<span id="cb171-2"><a href="inference.html#cb171-2" aria-hidden="true" tabindex="-1"></a><span class="do">## </span></span>
+<span id="cb171-3"><a href="inference.html#cb171-3" aria-hidden="true" tabindex="-1"></a><span class="do">## Call:</span></span>
+<span id="cb171-4"><a href="inference.html#cb171-4" aria-hidden="true" tabindex="-1"></a><span class="do">## lm(formula = bill_length_mm ~ body_mass_g + flipper_length_mm, </span></span>
+<span id="cb171-5"><a href="inference.html#cb171-5" aria-hidden="true" tabindex="-1"></a><span class="do">##     data = penguins)</span></span>
+<span id="cb171-6"><a href="inference.html#cb171-6" aria-hidden="true" tabindex="-1"></a><span class="do">## </span></span>
+<span id="cb171-7"><a href="inference.html#cb171-7" aria-hidden="true" tabindex="-1"></a><span class="do">## Residuals:</span></span>
+<span id="cb171-8"><a href="inference.html#cb171-8" aria-hidden="true" tabindex="-1"></a><span class="do">##     Min      1Q  Median      3Q     Max </span></span>
+<span id="cb171-9"><a href="inference.html#cb171-9" aria-hidden="true" tabindex="-1"></a><span class="do">## -8.8064 -2.5898 -0.7053  1.9911 18.8288 </span></span>
+<span id="cb171-10"><a href="inference.html#cb171-10" aria-hidden="true" tabindex="-1"></a><span class="do">## </span></span>
+<span id="cb171-11"><a href="inference.html#cb171-11" aria-hidden="true" tabindex="-1"></a><span class="do">## Coefficients:</span></span>
+<span id="cb171-12"><a href="inference.html#cb171-12" aria-hidden="true" tabindex="-1"></a><span class="do">##                     Estimate Std. Error t value Pr(&gt;|t|)</span></span>
+<span id="cb171-13"><a href="inference.html#cb171-13" aria-hidden="true" tabindex="-1"></a><span class="do">## (Intercept)       -3.4366939  4.5805532  -0.750    0.454</span></span>
+<span id="cb171-14"><a href="inference.html#cb171-14" aria-hidden="true" tabindex="-1"></a><span class="do">## body_mass_g        0.0006622  0.0005672   1.168    0.244</span></span>
+<span id="cb171-15"><a href="inference.html#cb171-15" aria-hidden="true" tabindex="-1"></a><span class="do">## flipper_length_mm  0.2218655  0.0323484   6.859 3.31e-11</span></span>
+<span id="cb171-16"><a href="inference.html#cb171-16" aria-hidden="true" tabindex="-1"></a><span class="do">##                      </span></span>
+<span id="cb171-17"><a href="inference.html#cb171-17" aria-hidden="true" tabindex="-1"></a><span class="do">## (Intercept)          </span></span>
+<span id="cb171-18"><a href="inference.html#cb171-18" aria-hidden="true" tabindex="-1"></a><span class="do">## body_mass_g          </span></span>
+<span id="cb171-19"><a href="inference.html#cb171-19" aria-hidden="true" tabindex="-1"></a><span class="do">## flipper_length_mm ***</span></span>
+<span id="cb171-20"><a href="inference.html#cb171-20" aria-hidden="true" tabindex="-1"></a><span class="do">## ---</span></span>
+<span id="cb171-21"><a href="inference.html#cb171-21" aria-hidden="true" tabindex="-1"></a><span class="do">## Signif. codes:  </span></span>
+<span id="cb171-22"><a href="inference.html#cb171-22" aria-hidden="true" tabindex="-1"></a><span class="do">## 0 &#39;***&#39; 0.001 &#39;**&#39; 0.01 &#39;*&#39; 0.05 &#39;.&#39; 0.1 &#39; &#39; 1</span></span>
+<span id="cb171-23"><a href="inference.html#cb171-23" aria-hidden="true" tabindex="-1"></a><span class="do">## </span></span>
+<span id="cb171-24"><a href="inference.html#cb171-24" aria-hidden="true" tabindex="-1"></a><span class="do">## Residual standard error: 4.124 on 339 degrees of freedom</span></span>
+<span id="cb171-25"><a href="inference.html#cb171-25" aria-hidden="true" tabindex="-1"></a><span class="do">##   (2 observations deleted due to missingness)</span></span>
+<span id="cb171-26"><a href="inference.html#cb171-26" aria-hidden="true" tabindex="-1"></a><span class="do">## Multiple R-squared:  0.4329, Adjusted R-squared:  0.4295 </span></span>
+<span id="cb171-27"><a href="inference.html#cb171-27" aria-hidden="true" tabindex="-1"></a><span class="do">## F-statistic: 129.4 on 2 and 339 DF,  p-value: &lt; 2.2e-16</span></span></code></pre></div>
 <p>If we want to manually produce 95% confidence intervals for the true regression coefficients for this model using Equation <a href="inference.html#eq:t-ci-betas">(6.4)</a>, then we need to acquire some basic information. We need:</p>
 <ul>
 <li>the estimated regression coefficients</li>
@@ -1145,20 +1145,20 @@ F = \frac{SS_{reg}(CM)/(p-1)}{RSS(CM)/(n-p)}= \frac{SS_{reg}(CM)/(p-1)}{\hat{\si
 <li>the estimated standard error of the estimated regression coefficients.</li>
 </ul>
 <p>The estimated regression coefficients can be extracted from our fitted model, <code>mlmod</code>, using the <code>coef</code> function. We extract and print the estimated coefficients using the code below while simultaneously assigning the vector the name <code>betahats</code>.</p>
-<div class="sourceCode" id="cb166"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb166-1"><a href="inference.html#cb166-1" aria-hidden="true" tabindex="-1"></a><span class="co"># extract estimated coefficients from mlmod</span></span>
-<span id="cb166-2"><a href="inference.html#cb166-2" aria-hidden="true" tabindex="-1"></a>(betahats <span class="ot">&lt;-</span> <span class="fu">coef</span>(mlmod))</span>
-<span id="cb166-3"><a href="inference.html#cb166-3" aria-hidden="true" tabindex="-1"></a><span class="do">##       (Intercept)       body_mass_g flipper_length_mm </span></span>
-<span id="cb166-4"><a href="inference.html#cb166-4" aria-hidden="true" tabindex="-1"></a><span class="do">##     -3.4366939266      0.0006622186      0.2218654584</span></span></code></pre></div>
+<div class="sourceCode" id="cb172"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb172-1"><a href="inference.html#cb172-1" aria-hidden="true" tabindex="-1"></a><span class="co"># extract estimated coefficients from mlmod</span></span>
+<span id="cb172-2"><a href="inference.html#cb172-2" aria-hidden="true" tabindex="-1"></a>(betahats <span class="ot">&lt;-</span> <span class="fu">coef</span>(mlmod))</span>
+<span id="cb172-3"><a href="inference.html#cb172-3" aria-hidden="true" tabindex="-1"></a><span class="do">##       (Intercept)       body_mass_g flipper_length_mm </span></span>
+<span id="cb172-4"><a href="inference.html#cb172-4" aria-hidden="true" tabindex="-1"></a><span class="do">##     -3.4366939266      0.0006622186      0.2218654584</span></span></code></pre></div>
 <p>The degrees of freedom <span class="math inline">\(n-p\)</span> is referred to as the residual degrees of freedom and can be obtained by using the <code>df.residual</code> function on the fitted model. Using the code below, we see that the residual degrees of freedom is 339 (this information was also in the summary of the fitted model).</p>
-<div class="sourceCode" id="cb167"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb167-1"><a href="inference.html#cb167-1" aria-hidden="true" tabindex="-1"></a><span class="fu">df.residual</span>(mlmod)</span>
-<span id="cb167-2"><a href="inference.html#cb167-2" aria-hidden="true" tabindex="-1"></a><span class="do">## [1] 339</span></span></code></pre></div>
+<div class="sourceCode" id="cb173"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb173-1"><a href="inference.html#cb173-1" aria-hidden="true" tabindex="-1"></a><span class="fu">df.residual</span>(mlmod)</span>
+<span id="cb173-2"><a href="inference.html#cb173-2" aria-hidden="true" tabindex="-1"></a><span class="do">## [1] 339</span></span></code></pre></div>
 <p>To construct a 95% confidence interval for our coefficients, we need to determine the <span class="math inline">\(0.975\)</span> quantile of a <span class="math inline">\(t\)</span> random variable with 339 degrees of freedom. This can be found using the <code>qt</code> function, as is done in the code below. We assign this value the name <code>mult</code>. Notice that value is a bit above 1.96, which is the value often seen in introductory statistics courses for confidence intervals based on the standard normal distribution (<span class="math inline">\(\mathcal{N}(0,1)\)</span> distribution).</p>
-<div class="sourceCode" id="cb168"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb168-1"><a href="inference.html#cb168-1" aria-hidden="true" tabindex="-1"></a>(mult <span class="ot">&lt;-</span> <span class="fu">qt</span>(<span class="fl">0.975</span>, <span class="at">df =</span> <span class="dv">339</span>))</span>
-<span id="cb168-2"><a href="inference.html#cb168-2" aria-hidden="true" tabindex="-1"></a><span class="do">## [1] 1.966986</span></span></code></pre></div>
+<div class="sourceCode" id="cb174"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb174-1"><a href="inference.html#cb174-1" aria-hidden="true" tabindex="-1"></a>(mult <span class="ot">&lt;-</span> <span class="fu">qt</span>(<span class="fl">0.975</span>, <span class="at">df =</span> <span class="dv">339</span>))</span>
+<span id="cb174-2"><a href="inference.html#cb174-2" aria-hidden="true" tabindex="-1"></a><span class="do">## [1] 1.966986</span></span></code></pre></div>
 <p>The estimated standard errors of each coefficient are shown in the summary of the fitted model. They are (approximately) 4.58, 0.00057, and 0.032 and can be obtained by extracting the 2nd column of the <code>coefficients</code> element produced by the <code>summary</code> function.</p>
-<div class="sourceCode" id="cb169"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb169-1"><a href="inference.html#cb169-1" aria-hidden="true" tabindex="-1"></a>(sehats <span class="ot">&lt;-</span> <span class="fu">summary</span>(mlmod)<span class="sc">$</span>coefficients[,<span class="dv">2</span>])</span>
-<span id="cb169-2"><a href="inference.html#cb169-2" aria-hidden="true" tabindex="-1"></a><span class="do">##       (Intercept)       body_mass_g flipper_length_mm </span></span>
-<span id="cb169-3"><a href="inference.html#cb169-3" aria-hidden="true" tabindex="-1"></a><span class="do">##      4.5805531903      0.0005672075      0.0323484492</span></span></code></pre></div>
+<div class="sourceCode" id="cb175"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb175-1"><a href="inference.html#cb175-1" aria-hidden="true" tabindex="-1"></a>(sehats <span class="ot">&lt;-</span> <span class="fu">summary</span>(mlmod)<span class="sc">$</span>coefficients[,<span class="dv">2</span>])</span>
+<span id="cb175-2"><a href="inference.html#cb175-2" aria-hidden="true" tabindex="-1"></a><span class="do">##       (Intercept)       body_mass_g flipper_length_mm </span></span>
+<span id="cb175-3"><a href="inference.html#cb175-3" aria-hidden="true" tabindex="-1"></a><span class="do">##      4.5805531903      0.0005672075      0.0323484492</span></span></code></pre></div>
 <p>A alternative approach is to use 3 step process below:</p>
 <ol style="list-style-type: decimal">
 <li>Use the <code>vcov</code> function to obtain the estimated variance matrix of
@@ -1172,17 +1172,17 @@ from the estimated variances of the estimated coefficients.</li>
 </ol>
 <p>We use this process in the code below, which returns the same estimated
 standard errors we previously obtained.</p>
-<div class="sourceCode" id="cb170"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb170-1"><a href="inference.html#cb170-1" aria-hidden="true" tabindex="-1"></a><span class="co"># 2nd approach to obtaining estimated standard errors</span></span>
-<span id="cb170-2"><a href="inference.html#cb170-2" aria-hidden="true" tabindex="-1"></a><span class="fu">sqrt</span>(<span class="fu">diag</span>(<span class="fu">vcov</span>(mlmod)))</span>
-<span id="cb170-3"><a href="inference.html#cb170-3" aria-hidden="true" tabindex="-1"></a><span class="do">##       (Intercept)       body_mass_g flipper_length_mm </span></span>
-<span id="cb170-4"><a href="inference.html#cb170-4" aria-hidden="true" tabindex="-1"></a><span class="do">##      4.5805531903      0.0005672075      0.0323484492</span></span></code></pre></div>
+<div class="sourceCode" id="cb176"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb176-1"><a href="inference.html#cb176-1" aria-hidden="true" tabindex="-1"></a><span class="co"># 2nd approach to obtaining estimated standard errors</span></span>
+<span id="cb176-2"><a href="inference.html#cb176-2" aria-hidden="true" tabindex="-1"></a><span class="fu">sqrt</span>(<span class="fu">diag</span>(<span class="fu">vcov</span>(mlmod)))</span>
+<span id="cb176-3"><a href="inference.html#cb176-3" aria-hidden="true" tabindex="-1"></a><span class="do">##       (Intercept)       body_mass_g flipper_length_mm </span></span>
+<span id="cb176-4"><a href="inference.html#cb176-4" aria-hidden="true" tabindex="-1"></a><span class="do">##      4.5805531903      0.0005672075      0.0323484492</span></span></code></pre></div>
 <p>Using the estimated coefficients (<code>betahats</code>), the appropriate quantile of the <span class="math inline">\(t\)</span> distribution (<code>mult</code>), and the estimated standard errors (<code>sehats</code>), we can manually produce the standard t-based confidence intervals using the code below.</p>
-<div class="sourceCode" id="cb171"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb171-1"><a href="inference.html#cb171-1" aria-hidden="true" tabindex="-1"></a><span class="fu">data.frame</span>(<span class="at">lb =</span> betahats <span class="sc">-</span> mult <span class="sc">*</span> sehats,</span>
-<span id="cb171-2"><a href="inference.html#cb171-2" aria-hidden="true" tabindex="-1"></a>           <span class="at">ub =</span> betahats <span class="sc">-</span> mult <span class="sc">*</span> sehats)</span>
-<span id="cb171-3"><a href="inference.html#cb171-3" aria-hidden="true" tabindex="-1"></a><span class="do">##                              lb            ub</span></span>
-<span id="cb171-4"><a href="inference.html#cb171-4" aria-hidden="true" tabindex="-1"></a><span class="do">## (Intercept)       -1.244658e+01 -1.244658e+01</span></span>
-<span id="cb171-5"><a href="inference.html#cb171-5" aria-hidden="true" tabindex="-1"></a><span class="do">## body_mass_g       -4.534709e-04 -4.534709e-04</span></span>
-<span id="cb171-6"><a href="inference.html#cb171-6" aria-hidden="true" tabindex="-1"></a><span class="do">## flipper_length_mm  1.582365e-01  1.582365e-01</span></span></code></pre></div>
+<div class="sourceCode" id="cb177"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb177-1"><a href="inference.html#cb177-1" aria-hidden="true" tabindex="-1"></a><span class="fu">data.frame</span>(<span class="at">lb =</span> betahats <span class="sc">-</span> mult <span class="sc">*</span> sehats,</span>
+<span id="cb177-2"><a href="inference.html#cb177-2" aria-hidden="true" tabindex="-1"></a>           <span class="at">ub =</span> betahats <span class="sc">-</span> mult <span class="sc">*</span> sehats)</span>
+<span id="cb177-3"><a href="inference.html#cb177-3" aria-hidden="true" tabindex="-1"></a><span class="do">##                              lb            ub</span></span>
+<span id="cb177-4"><a href="inference.html#cb177-4" aria-hidden="true" tabindex="-1"></a><span class="do">## (Intercept)       -1.244658e+01 -1.244658e+01</span></span>
+<span id="cb177-5"><a href="inference.html#cb177-5" aria-hidden="true" tabindex="-1"></a><span class="do">## body_mass_g       -4.534709e-04 -4.534709e-04</span></span>
+<span id="cb177-6"><a href="inference.html#cb177-6" aria-hidden="true" tabindex="-1"></a><span class="do">## flipper_length_mm  1.582365e-01  1.582365e-01</span></span></code></pre></div>
 </div>
 <div id="mean-response-calculations" class="section level3 hasAnchor" number="6.10.2">
 <h3><span class="header-section-number">6.10.2</span> Details about estimation of the mean response<a href="inference.html#mean-response-calculations" class="anchor-section" aria-label="Anchor link to header"></a></h3>
@@ -1242,79 +1242,79 @@ lines model given by<span class="math display">\[
 \end{aligned}
 \]</span>
 where <span class="math inline">\(D_C\)</span> and <span class="math inline">\(D_G\)</span> denote the indicator variables for the <code>Chinstrap</code> and <code>Gentoo</code> levels of the <code>species</code> variable. This fitted model is stored in <code>lmodp</code>. The estimated coefficients are shown in the code below.</p>
-<div class="sourceCode" id="cb172"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb172-1"><a href="inference.html#cb172-1" aria-hidden="true" tabindex="-1"></a><span class="fu">coef</span>(lmodp)</span>
-<span id="cb172-2"><a href="inference.html#cb172-2" aria-hidden="true" tabindex="-1"></a><span class="do">##      (Intercept)      body_mass_g speciesChinstrap </span></span>
-<span id="cb172-3"><a href="inference.html#cb172-3" aria-hidden="true" tabindex="-1"></a><span class="do">##     24.919470977      0.003748497      9.920884113 </span></span>
-<span id="cb172-4"><a href="inference.html#cb172-4" aria-hidden="true" tabindex="-1"></a><span class="do">##    speciesGentoo </span></span>
-<span id="cb172-5"><a href="inference.html#cb172-5" aria-hidden="true" tabindex="-1"></a><span class="do">##      3.557977539</span></span></code></pre></div>
+<div class="sourceCode" id="cb178"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb178-1"><a href="inference.html#cb178-1" aria-hidden="true" tabindex="-1"></a><span class="fu">coef</span>(lmodp)</span>
+<span id="cb178-2"><a href="inference.html#cb178-2" aria-hidden="true" tabindex="-1"></a><span class="do">##      (Intercept)      body_mass_g speciesChinstrap </span></span>
+<span id="cb178-3"><a href="inference.html#cb178-3" aria-hidden="true" tabindex="-1"></a><span class="do">##     24.919470977      0.003748497      9.920884113 </span></span>
+<span id="cb178-4"><a href="inference.html#cb178-4" aria-hidden="true" tabindex="-1"></a><span class="do">##    speciesGentoo </span></span>
+<span id="cb178-5"><a href="inference.html#cb178-5" aria-hidden="true" tabindex="-1"></a><span class="do">##      3.557977539</span></span></code></pre></div>
 <p>We want to estimate the mean response for the following combination of predictors stored in the <code>newpenguins</code> data frame, which is printed in the code below.</p>
-<div class="sourceCode" id="cb173"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb173-1"><a href="inference.html#cb173-1" aria-hidden="true" tabindex="-1"></a><span class="co"># mean body_mass_g of each species</span></span>
-<span id="cb173-2"><a href="inference.html#cb173-2" aria-hidden="true" tabindex="-1"></a>newpenguins</span>
-<span id="cb173-3"><a href="inference.html#cb173-3" aria-hidden="true" tabindex="-1"></a><span class="do">## # A tibble: 3 × 2</span></span>
-<span id="cb173-4"><a href="inference.html#cb173-4" aria-hidden="true" tabindex="-1"></a><span class="do">##   species   body_mass_g</span></span>
-<span id="cb173-5"><a href="inference.html#cb173-5" aria-hidden="true" tabindex="-1"></a><span class="do">##   &lt;fct&gt;           &lt;dbl&gt;</span></span>
-<span id="cb173-6"><a href="inference.html#cb173-6" aria-hidden="true" tabindex="-1"></a><span class="do">## 1 Adelie          3701.</span></span>
-<span id="cb173-7"><a href="inference.html#cb173-7" aria-hidden="true" tabindex="-1"></a><span class="do">## 2 Chinstrap       3733.</span></span>
-<span id="cb173-8"><a href="inference.html#cb173-8" aria-hidden="true" tabindex="-1"></a><span class="do">## 3 Gentoo          5076.</span></span></code></pre></div>
+<div class="sourceCode" id="cb179"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb179-1"><a href="inference.html#cb179-1" aria-hidden="true" tabindex="-1"></a><span class="co"># mean body_mass_g of each species</span></span>
+<span id="cb179-2"><a href="inference.html#cb179-2" aria-hidden="true" tabindex="-1"></a>newpenguins</span>
+<span id="cb179-3"><a href="inference.html#cb179-3" aria-hidden="true" tabindex="-1"></a><span class="do">## # A tibble: 3 × 2</span></span>
+<span id="cb179-4"><a href="inference.html#cb179-4" aria-hidden="true" tabindex="-1"></a><span class="do">##   species   body_mass_g</span></span>
+<span id="cb179-5"><a href="inference.html#cb179-5" aria-hidden="true" tabindex="-1"></a><span class="do">##   &lt;fct&gt;           &lt;dbl&gt;</span></span>
+<span id="cb179-6"><a href="inference.html#cb179-6" aria-hidden="true" tabindex="-1"></a><span class="do">## 1 Adelie          3701.</span></span>
+<span id="cb179-7"><a href="inference.html#cb179-7" aria-hidden="true" tabindex="-1"></a><span class="do">## 2 Chinstrap       3733.</span></span>
+<span id="cb179-8"><a href="inference.html#cb179-8" aria-hidden="true" tabindex="-1"></a><span class="do">## 3 Gentoo          5076.</span></span></code></pre></div>
 <p>We want to use the <code>newpenguins</code> data frame to generate the matrix of regressors used to estimate the associated mean responses. We can create the matrix of regressors using the <code>model.matrix</code> function. The main arguments of <code>model.matrix</code> are:</p>
 <ul>
 <li><code>object</code>: an object of the appropriate class. In our case, it is a formula or fitted model.</li>
 <li><code>data</code>: a data frame with the predictors needed to construct the matrix.</li>
 </ul>
 <p>We need only the right side of the formula used to fit the model in <code>lmodp</code> to create our matrix of regressor values. We can use the <code>formula</code> function to extract the formula used to fit <code>lmodp</code>. We then use <code>model.matrix</code> to create the matrix of regressor by values needed for estimating the mean. The matrix produced by <code>model.matrix</code>, <code>X0</code>, includes a column for the intercept term and the indicator variables in <code>lmodp</code>.</p>
-<div class="sourceCode" id="cb174"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb174-1"><a href="inference.html#cb174-1" aria-hidden="true" tabindex="-1"></a><span class="co"># determine formula used to fit lmodp</span></span>
-<span id="cb174-2"><a href="inference.html#cb174-2" aria-hidden="true" tabindex="-1"></a><span class="fu">formula</span>(lmodp)</span>
-<span id="cb174-3"><a href="inference.html#cb174-3" aria-hidden="true" tabindex="-1"></a><span class="do">## bill_length_mm ~ body_mass_g + species</span></span>
-<span id="cb174-4"><a href="inference.html#cb174-4" aria-hidden="true" tabindex="-1"></a><span class="co"># create matrix of regressor values from newpenguins</span></span>
-<span id="cb174-5"><a href="inference.html#cb174-5" aria-hidden="true" tabindex="-1"></a>(X0 <span class="ot">&lt;-</span> <span class="fu">model.matrix</span>(<span class="sc">~</span> body_mass_g <span class="sc">+</span> species, <span class="at">data =</span> newpenguins))</span>
-<span id="cb174-6"><a href="inference.html#cb174-6" aria-hidden="true" tabindex="-1"></a><span class="do">##   (Intercept) body_mass_g speciesChinstrap speciesGentoo</span></span>
-<span id="cb174-7"><a href="inference.html#cb174-7" aria-hidden="true" tabindex="-1"></a><span class="do">## 1           1    3700.662                0             0</span></span>
-<span id="cb174-8"><a href="inference.html#cb174-8" aria-hidden="true" tabindex="-1"></a><span class="do">## 2           1    3733.088                1             0</span></span>
-<span id="cb174-9"><a href="inference.html#cb174-9" aria-hidden="true" tabindex="-1"></a><span class="do">## 3           1    5076.016                0             1</span></span>
-<span id="cb174-10"><a href="inference.html#cb174-10" aria-hidden="true" tabindex="-1"></a><span class="do">## attr(,&quot;assign&quot;)</span></span>
-<span id="cb174-11"><a href="inference.html#cb174-11" aria-hidden="true" tabindex="-1"></a><span class="do">## [1] 0 1 2 2</span></span>
-<span id="cb174-12"><a href="inference.html#cb174-12" aria-hidden="true" tabindex="-1"></a><span class="do">## attr(,&quot;contrasts&quot;)</span></span>
-<span id="cb174-13"><a href="inference.html#cb174-13" aria-hidden="true" tabindex="-1"></a><span class="do">## attr(,&quot;contrasts&quot;)$species</span></span>
-<span id="cb174-14"><a href="inference.html#cb174-14" aria-hidden="true" tabindex="-1"></a><span class="do">## [1] &quot;contr.treatment&quot;</span></span></code></pre></div>
+<div class="sourceCode" id="cb180"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb180-1"><a href="inference.html#cb180-1" aria-hidden="true" tabindex="-1"></a><span class="co"># determine formula used to fit lmodp</span></span>
+<span id="cb180-2"><a href="inference.html#cb180-2" aria-hidden="true" tabindex="-1"></a><span class="fu">formula</span>(lmodp)</span>
+<span id="cb180-3"><a href="inference.html#cb180-3" aria-hidden="true" tabindex="-1"></a><span class="do">## bill_length_mm ~ body_mass_g + species</span></span>
+<span id="cb180-4"><a href="inference.html#cb180-4" aria-hidden="true" tabindex="-1"></a><span class="co"># create matrix of regressor values from newpenguins</span></span>
+<span id="cb180-5"><a href="inference.html#cb180-5" aria-hidden="true" tabindex="-1"></a>(X0 <span class="ot">&lt;-</span> <span class="fu">model.matrix</span>(<span class="sc">~</span> body_mass_g <span class="sc">+</span> species, <span class="at">data =</span> newpenguins))</span>
+<span id="cb180-6"><a href="inference.html#cb180-6" aria-hidden="true" tabindex="-1"></a><span class="do">##   (Intercept) body_mass_g speciesChinstrap speciesGentoo</span></span>
+<span id="cb180-7"><a href="inference.html#cb180-7" aria-hidden="true" tabindex="-1"></a><span class="do">## 1           1    3700.662                0             0</span></span>
+<span id="cb180-8"><a href="inference.html#cb180-8" aria-hidden="true" tabindex="-1"></a><span class="do">## 2           1    3733.088                1             0</span></span>
+<span id="cb180-9"><a href="inference.html#cb180-9" aria-hidden="true" tabindex="-1"></a><span class="do">## 3           1    5076.016                0             1</span></span>
+<span id="cb180-10"><a href="inference.html#cb180-10" aria-hidden="true" tabindex="-1"></a><span class="do">## attr(,&quot;assign&quot;)</span></span>
+<span id="cb180-11"><a href="inference.html#cb180-11" aria-hidden="true" tabindex="-1"></a><span class="do">## [1] 0 1 2 2</span></span>
+<span id="cb180-12"><a href="inference.html#cb180-12" aria-hidden="true" tabindex="-1"></a><span class="do">## attr(,&quot;contrasts&quot;)</span></span>
+<span id="cb180-13"><a href="inference.html#cb180-13" aria-hidden="true" tabindex="-1"></a><span class="do">## attr(,&quot;contrasts&quot;)$species</span></span>
+<span id="cb180-14"><a href="inference.html#cb180-14" aria-hidden="true" tabindex="-1"></a><span class="do">## [1] &quot;contr.treatment&quot;</span></span></code></pre></div>
 <p>We can obtain the estimated mean by taking the product of <code>X0</code> and the estimated coefficients for <code>lmodp</code>. We assign the estimated mean responses the name <code>est_means</code>.</p>
-<div class="sourceCode" id="cb175"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb175-1"><a href="inference.html#cb175-1" aria-hidden="true" tabindex="-1"></a>(est_means <span class="ot">&lt;-</span> X0 <span class="sc">%*%</span> <span class="fu">coef</span>(lmodp))</span>
-<span id="cb175-2"><a href="inference.html#cb175-2" aria-hidden="true" tabindex="-1"></a><span class="do">##       [,1]</span></span>
-<span id="cb175-3"><a href="inference.html#cb175-3" aria-hidden="true" tabindex="-1"></a><span class="do">## 1 38.79139</span></span>
-<span id="cb175-4"><a href="inference.html#cb175-4" aria-hidden="true" tabindex="-1"></a><span class="do">## 2 48.83382</span></span>
-<span id="cb175-5"><a href="inference.html#cb175-5" aria-hidden="true" tabindex="-1"></a><span class="do">## 3 47.50488</span></span></code></pre></div>
+<div class="sourceCode" id="cb181"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb181-1"><a href="inference.html#cb181-1" aria-hidden="true" tabindex="-1"></a>(est_means <span class="ot">&lt;-</span> X0 <span class="sc">%*%</span> <span class="fu">coef</span>(lmodp))</span>
+<span id="cb181-2"><a href="inference.html#cb181-2" aria-hidden="true" tabindex="-1"></a><span class="do">##       [,1]</span></span>
+<span id="cb181-3"><a href="inference.html#cb181-3" aria-hidden="true" tabindex="-1"></a><span class="do">## 1 38.79139</span></span>
+<span id="cb181-4"><a href="inference.html#cb181-4" aria-hidden="true" tabindex="-1"></a><span class="do">## 2 48.83382</span></span>
+<span id="cb181-5"><a href="inference.html#cb181-5" aria-hidden="true" tabindex="-1"></a><span class="do">## 3 47.50488</span></span></code></pre></div>
 <p>We now use Equation <a href="inference.html#eq:sehat-est-mean">(6.6)</a> to get the estimated standard error of each estimated mean response. First, we use <code>model.matrix</code> to extract the original matrix of regressors, <span class="math inline">\(\mathbf{X}\)</span>, from the fitted model <code>lmodp</code>. The <code>sigma</code> function is used to extract <span class="math inline">\(\hat{\sigma}\)</span> from <code>lmodp</code>. Each <em>row</em> of <code>X0</code> contains a particular instance regressor values. In the code below, we extract each row of <code>X0</code>, and then use Equation <a href="inference.html#eq:sehat-est-mean">(6.6)</a> to compute the estimated standard error associated with each estimated mean response; these are assigned the names <code>se1</code>, <code>se2</code>, and <code>se3</code>. That approach isn’t scalable, so we provide a scalable version of these computations that is assigned the name <code>sehat</code>.</p>
-<div class="sourceCode" id="cb176"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb176-1"><a href="inference.html#cb176-1" aria-hidden="true" tabindex="-1"></a><span class="co"># original matrix of regressors</span></span>
-<span id="cb176-2"><a href="inference.html#cb176-2" aria-hidden="true" tabindex="-1"></a>X <span class="ot">&lt;-</span> <span class="fu">model.matrix</span>(lmodp)</span>
-<span id="cb176-3"><a href="inference.html#cb176-3" aria-hidden="true" tabindex="-1"></a>sigmahat <span class="ot">&lt;-</span> <span class="fu">sigma</span>(lmodp)</span>
-<span id="cb176-4"><a href="inference.html#cb176-4" aria-hidden="true" tabindex="-1"></a><span class="co"># compute estimated standard error for each estimated mean response</span></span>
-<span id="cb176-5"><a href="inference.html#cb176-5" aria-hidden="true" tabindex="-1"></a><span class="co"># crossprod(X) = t(X) %*% X</span></span>
-<span id="cb176-6"><a href="inference.html#cb176-6" aria-hidden="true" tabindex="-1"></a>(sehat1 <span class="ot">&lt;-</span> sigmahat <span class="sc">*</span> <span class="fu">sqrt</span>(<span class="fu">t</span>(X0[<span class="dv">1</span>,]) <span class="sc">%*%</span> <span class="fu">solve</span>(<span class="fu">crossprod</span>(X), X0[<span class="dv">1</span>,])))</span>
-<span id="cb176-7"><a href="inference.html#cb176-7" aria-hidden="true" tabindex="-1"></a><span class="do">##           [,1]</span></span>
-<span id="cb176-8"><a href="inference.html#cb176-8" aria-hidden="true" tabindex="-1"></a><span class="do">## [1,] 0.1955643</span></span>
-<span id="cb176-9"><a href="inference.html#cb176-9" aria-hidden="true" tabindex="-1"></a>(sehat2 <span class="ot">&lt;-</span> sigmahat <span class="sc">*</span> <span class="fu">sqrt</span>(<span class="fu">t</span>(X0[<span class="dv">2</span>,]) <span class="sc">%*%</span> <span class="fu">solve</span>(<span class="fu">crossprod</span>(X), X0[<span class="dv">2</span>,])))</span>
-<span id="cb176-10"><a href="inference.html#cb176-10" aria-hidden="true" tabindex="-1"></a><span class="do">##           [,1]</span></span>
-<span id="cb176-11"><a href="inference.html#cb176-11" aria-hidden="true" tabindex="-1"></a><span class="do">## [1,] 0.2914228</span></span>
-<span id="cb176-12"><a href="inference.html#cb176-12" aria-hidden="true" tabindex="-1"></a>(sehat3 <span class="ot">&lt;-</span> sigmahat <span class="sc">*</span> <span class="fu">sqrt</span>(<span class="fu">t</span>(X0[<span class="dv">3</span>,]) <span class="sc">%*%</span> <span class="fu">solve</span>(<span class="fu">crossprod</span>(X), X0[<span class="dv">3</span>,])))</span>
-<span id="cb176-13"><a href="inference.html#cb176-13" aria-hidden="true" tabindex="-1"></a><span class="do">##           [,1]</span></span>
-<span id="cb176-14"><a href="inference.html#cb176-14" aria-hidden="true" tabindex="-1"></a><span class="do">## [1,] 0.2166833</span></span>
-<span id="cb176-15"><a href="inference.html#cb176-15" aria-hidden="true" tabindex="-1"></a><span class="co"># scalable computation of estimated standard errors</span></span>
-<span id="cb176-16"><a href="inference.html#cb176-16" aria-hidden="true" tabindex="-1"></a>(sehat <span class="ot">&lt;-</span> sigmahat <span class="sc">*</span> <span class="fu">sqrt</span>(<span class="fu">diag</span>(X0 <span class="sc">%*%</span> <span class="fu">solve</span>(<span class="fu">crossprod</span>(X), <span class="fu">t</span>(X0)))))</span>
-<span id="cb176-17"><a href="inference.html#cb176-17" aria-hidden="true" tabindex="-1"></a><span class="do">##         1         2         3 </span></span>
-<span id="cb176-18"><a href="inference.html#cb176-18" aria-hidden="true" tabindex="-1"></a><span class="do">## 0.1955643 0.2914228 0.2166833</span></span></code></pre></div>
+<div class="sourceCode" id="cb182"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb182-1"><a href="inference.html#cb182-1" aria-hidden="true" tabindex="-1"></a><span class="co"># original matrix of regressors</span></span>
+<span id="cb182-2"><a href="inference.html#cb182-2" aria-hidden="true" tabindex="-1"></a>X <span class="ot">&lt;-</span> <span class="fu">model.matrix</span>(lmodp)</span>
+<span id="cb182-3"><a href="inference.html#cb182-3" aria-hidden="true" tabindex="-1"></a>sigmahat <span class="ot">&lt;-</span> <span class="fu">sigma</span>(lmodp)</span>
+<span id="cb182-4"><a href="inference.html#cb182-4" aria-hidden="true" tabindex="-1"></a><span class="co"># compute estimated standard error for each estimated mean response</span></span>
+<span id="cb182-5"><a href="inference.html#cb182-5" aria-hidden="true" tabindex="-1"></a><span class="co"># crossprod(X) = t(X) %*% X</span></span>
+<span id="cb182-6"><a href="inference.html#cb182-6" aria-hidden="true" tabindex="-1"></a>(sehat1 <span class="ot">&lt;-</span> sigmahat <span class="sc">*</span> <span class="fu">sqrt</span>(<span class="fu">t</span>(X0[<span class="dv">1</span>,]) <span class="sc">%*%</span> <span class="fu">solve</span>(<span class="fu">crossprod</span>(X), X0[<span class="dv">1</span>,])))</span>
+<span id="cb182-7"><a href="inference.html#cb182-7" aria-hidden="true" tabindex="-1"></a><span class="do">##           [,1]</span></span>
+<span id="cb182-8"><a href="inference.html#cb182-8" aria-hidden="true" tabindex="-1"></a><span class="do">## [1,] 0.1955643</span></span>
+<span id="cb182-9"><a href="inference.html#cb182-9" aria-hidden="true" tabindex="-1"></a>(sehat2 <span class="ot">&lt;-</span> sigmahat <span class="sc">*</span> <span class="fu">sqrt</span>(<span class="fu">t</span>(X0[<span class="dv">2</span>,]) <span class="sc">%*%</span> <span class="fu">solve</span>(<span class="fu">crossprod</span>(X), X0[<span class="dv">2</span>,])))</span>
+<span id="cb182-10"><a href="inference.html#cb182-10" aria-hidden="true" tabindex="-1"></a><span class="do">##           [,1]</span></span>
+<span id="cb182-11"><a href="inference.html#cb182-11" aria-hidden="true" tabindex="-1"></a><span class="do">## [1,] 0.2914228</span></span>
+<span id="cb182-12"><a href="inference.html#cb182-12" aria-hidden="true" tabindex="-1"></a>(sehat3 <span class="ot">&lt;-</span> sigmahat <span class="sc">*</span> <span class="fu">sqrt</span>(<span class="fu">t</span>(X0[<span class="dv">3</span>,]) <span class="sc">%*%</span> <span class="fu">solve</span>(<span class="fu">crossprod</span>(X), X0[<span class="dv">3</span>,])))</span>
+<span id="cb182-13"><a href="inference.html#cb182-13" aria-hidden="true" tabindex="-1"></a><span class="do">##           [,1]</span></span>
+<span id="cb182-14"><a href="inference.html#cb182-14" aria-hidden="true" tabindex="-1"></a><span class="do">## [1,] 0.2166833</span></span>
+<span id="cb182-15"><a href="inference.html#cb182-15" aria-hidden="true" tabindex="-1"></a><span class="co"># scalable computation of estimated standard errors</span></span>
+<span id="cb182-16"><a href="inference.html#cb182-16" aria-hidden="true" tabindex="-1"></a>(sehat <span class="ot">&lt;-</span> sigmahat <span class="sc">*</span> <span class="fu">sqrt</span>(<span class="fu">diag</span>(X0 <span class="sc">%*%</span> <span class="fu">solve</span>(<span class="fu">crossprod</span>(X), <span class="fu">t</span>(X0)))))</span>
+<span id="cb182-17"><a href="inference.html#cb182-17" aria-hidden="true" tabindex="-1"></a><span class="do">##         1         2         3 </span></span>
+<span id="cb182-18"><a href="inference.html#cb182-18" aria-hidden="true" tabindex="-1"></a><span class="do">## 0.1955643 0.2914228 0.2166833</span></span></code></pre></div>
 <p>To finish the computation of our confidence intervals, we determine the correct multiplier, <span class="math inline">\(t_{n-p}^{\alpha/2}\)</span>. For a 98% confidence interval, <span class="math inline">\(\alpha = 0.02\)</span> and <span class="math inline">\(\alpha/2 = 0.01\)</span>. The degrees of freedom, <span class="math inline">\(n-p\)</span>, is 338 (as shown in the code below). So the multiplier can be represented as <span class="math inline">\(t_{338}^{0.01}\)</span>, which is the <span class="math inline">\(0.99\)</span> quantile of a <span class="math inline">\(t\)</span> distribution with 338 degrees of freedom. We provide this information to the <code>qt</code> function, which provides the quantiles of a <span class="math inline">\(t\)</span> distribution, using the code below to get the correct multiplier.</p>
-<div class="sourceCode" id="cb177"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb177-1"><a href="inference.html#cb177-1" aria-hidden="true" tabindex="-1"></a><span class="co"># degrees of freedom, n-p</span></span>
-<span id="cb177-2"><a href="inference.html#cb177-2" aria-hidden="true" tabindex="-1"></a><span class="fu">df.residual</span>(lmodp)</span>
-<span id="cb177-3"><a href="inference.html#cb177-3" aria-hidden="true" tabindex="-1"></a><span class="do">## [1] 338</span></span>
-<span id="cb177-4"><a href="inference.html#cb177-4" aria-hidden="true" tabindex="-1"></a><span class="co"># multiplier for confidence interval</span></span>
-<span id="cb177-5"><a href="inference.html#cb177-5" aria-hidden="true" tabindex="-1"></a>(mult <span class="ot">&lt;-</span> <span class="fu">qt</span>(<span class="fl">0.99</span>, <span class="at">df =</span> <span class="fu">df.residual</span>(lmodp)))</span>
-<span id="cb177-6"><a href="inference.html#cb177-6" aria-hidden="true" tabindex="-1"></a><span class="do">## [1] 2.337431</span></span></code></pre></div>
+<div class="sourceCode" id="cb183"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb183-1"><a href="inference.html#cb183-1" aria-hidden="true" tabindex="-1"></a><span class="co"># degrees of freedom, n-p</span></span>
+<span id="cb183-2"><a href="inference.html#cb183-2" aria-hidden="true" tabindex="-1"></a><span class="fu">df.residual</span>(lmodp)</span>
+<span id="cb183-3"><a href="inference.html#cb183-3" aria-hidden="true" tabindex="-1"></a><span class="do">## [1] 338</span></span>
+<span id="cb183-4"><a href="inference.html#cb183-4" aria-hidden="true" tabindex="-1"></a><span class="co"># multiplier for confidence interval</span></span>
+<span id="cb183-5"><a href="inference.html#cb183-5" aria-hidden="true" tabindex="-1"></a>(mult <span class="ot">&lt;-</span> <span class="fu">qt</span>(<span class="fl">0.99</span>, <span class="at">df =</span> <span class="fu">df.residual</span>(lmodp)))</span>
+<span id="cb183-6"><a href="inference.html#cb183-6" aria-hidden="true" tabindex="-1"></a><span class="do">## [1] 2.337431</span></span></code></pre></div>
 <p>Thus, our 98% confidence intervals for each mean response can be computed using the code below, which matches the results we obtained in Section <a href="inference.html#parametric-ci-mean-response">6.6</a>.</p>
-<div class="sourceCode" id="cb178"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb178-1"><a href="inference.html#cb178-1" aria-hidden="true" tabindex="-1"></a><span class="fu">data.frame</span>(<span class="at">lb =</span> est_means <span class="sc">-</span> mult <span class="sc">*</span> sehat,</span>
-<span id="cb178-2"><a href="inference.html#cb178-2" aria-hidden="true" tabindex="-1"></a>           <span class="at">ub =</span> est_means <span class="sc">+</span> mult <span class="sc">*</span> sehat)</span>
-<span id="cb178-3"><a href="inference.html#cb178-3" aria-hidden="true" tabindex="-1"></a><span class="do">##         lb       ub</span></span>
-<span id="cb178-4"><a href="inference.html#cb178-4" aria-hidden="true" tabindex="-1"></a><span class="do">## 1 38.33427 39.24851</span></span>
-<span id="cb178-5"><a href="inference.html#cb178-5" aria-hidden="true" tabindex="-1"></a><span class="do">## 2 48.15264 49.51500</span></span>
-<span id="cb178-6"><a href="inference.html#cb178-6" aria-hidden="true" tabindex="-1"></a><span class="do">## 3 46.99840 48.01136</span></span></code></pre></div>
+<div class="sourceCode" id="cb184"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb184-1"><a href="inference.html#cb184-1" aria-hidden="true" tabindex="-1"></a><span class="fu">data.frame</span>(<span class="at">lb =</span> est_means <span class="sc">-</span> mult <span class="sc">*</span> sehat,</span>
+<span id="cb184-2"><a href="inference.html#cb184-2" aria-hidden="true" tabindex="-1"></a>           <span class="at">ub =</span> est_means <span class="sc">+</span> mult <span class="sc">*</span> sehat)</span>
+<span id="cb184-3"><a href="inference.html#cb184-3" aria-hidden="true" tabindex="-1"></a><span class="do">##         lb       ub</span></span>
+<span id="cb184-4"><a href="inference.html#cb184-4" aria-hidden="true" tabindex="-1"></a><span class="do">## 1 38.33427 39.24851</span></span>
+<span id="cb184-5"><a href="inference.html#cb184-5" aria-hidden="true" tabindex="-1"></a><span class="do">## 2 48.15264 49.51500</span></span>
+<span id="cb184-6"><a href="inference.html#cb184-6" aria-hidden="true" tabindex="-1"></a><span class="do">## 3 46.99840 48.01136</span></span></code></pre></div>
 </div>
 <div id="new-response-pi-calculations" class="section level3 hasAnchor" number="6.10.4">
 <h3><span class="header-section-number">6.10.4</span> Details about prediction interval for a new response<a href="inference.html#new-response-pi-calculations" class="anchor-section" aria-label="Anchor link to header"></a></h3>
