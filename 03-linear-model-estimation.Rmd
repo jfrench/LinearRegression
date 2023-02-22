@@ -827,24 +827,28 @@ lmods <- lm(bill_length_mm ~ body_mass_g + species + body_mass_g:species,
 # extract estimated coefficients
 coef(lmods)
 ```
+
 Thus, the fitted separate lines model is
-\[
+
+$$
 \begin{aligned}
 &\hat{E}(\mathtt{bill\_length\_mm} \mid \mathtt{body\_mass\_g}, \mathtt{species}) \\
 &= 26.99 + 0.003 \mathtt{body\_mass\_g} + 5.18 D_C - 0.25 D_G \\
-&\quad + 0.001 \mathtt{body\_mass\_g} D_C + 0.0009 \mathtt{body\_mass\_g} D_G, (\#eq:sl-model-penguins)
-\end{aligned}
-\]
+& \quad + 0.001 \mathtt{body\_mass\_g} D_C + 0.0009 \mathtt{body\_mass\_g} D_G. \end{aligned}
+(\#eq:sl-model-penguins)
+$$
 
 When an observation has `species` level `Adelie`, then Equation \@ref(eq:sl-model-penguins) simplifies to
-\[
+
+$$
 \begin{aligned}
 &\hat{E}(\mathtt{bill\_length\_mm} \mid \mathtt{body\_mass\_g}, \mathtt{species}=\mathtt{Adelie}) \\
 &=26.99 + 0.003 \mathtt{body\_mass\_g} + 5.18 \cdot 0 - 0.25 \cdot 0\\
 &\quad + 0.001 \cdot \mathtt{body\_mass\_g} \cdot 0 + 0.0009 \cdot \mathtt{body\_mass\_g} \cdot 0\\
 &= 26.99 + 0.003 \mathtt{body\_mass\_g}.
 \end{aligned}
-\]
+$$
+
 When an observation has `species` level `Chinstrap`, then Equation \@ref(eq:sl-model-penguins) simplifies to
 \[
 \begin{aligned}

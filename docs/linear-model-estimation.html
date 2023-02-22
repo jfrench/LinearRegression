@@ -1245,24 +1245,24 @@ using the code below, using the <code>coef</code> function to extract the estima
 <span id="cb107-10"><a href="linear-model-estimation.html#cb107-10" aria-hidden="true" tabindex="-1"></a><span class="do">##                 5.1800537287                -0.2545906615 </span></span>
 <span id="cb107-11"><a href="linear-model-estimation.html#cb107-11" aria-hidden="true" tabindex="-1"></a><span class="do">## body_mass_g:speciesChinstrap    body_mass_g:speciesGentoo </span></span>
 <span id="cb107-12"><a href="linear-model-estimation.html#cb107-12" aria-hidden="true" tabindex="-1"></a><span class="do">##                 0.0012748183                 0.0009029956</span></span></code></pre></div>
-<p>Thus, the fitted separate lines model is
-<span class="math display" id="eq:sl-model-penguins">\[
+<p>Thus, the fitted separate lines model is</p>
+<p><span class="math display" id="eq:sl-model-penguins">\[
 \begin{aligned}
 &amp;\hat{E}(\mathtt{bill\_length\_mm} \mid \mathtt{body\_mass\_g}, \mathtt{species}) \\
 &amp;= 26.99 + 0.003 \mathtt{body\_mass\_g} + 5.18 D_C - 0.25 D_G \\
-&amp;\quad + 0.001 \mathtt{body\_mass\_g} D_C + 0.0009 \mathtt{body\_mass\_g} D_G, \tag{3.26}
-\end{aligned}
+&amp; \quad + 0.001 \mathtt{body\_mass\_g} D_C + 0.0009 \mathtt{body\_mass\_g} D_G. \end{aligned}
+\tag{3.26}
 \]</span></p>
-<p>When an observation has <code>species</code> level <code>Adelie</code>, then Equation <a href="linear-model-estimation.html#eq:sl-model-penguins">(3.26)</a> simplifies to
-<span class="math display">\[
+<p>When an observation has <code>species</code> level <code>Adelie</code>, then Equation <a href="linear-model-estimation.html#eq:sl-model-penguins">(3.26)</a> simplifies to</p>
+<p><span class="math display">\[
 \begin{aligned}
 &amp;\hat{E}(\mathtt{bill\_length\_mm} \mid \mathtt{body\_mass\_g}, \mathtt{species}=\mathtt{Adelie}) \\
 &amp;=26.99 + 0.003 \mathtt{body\_mass\_g} + 5.18 \cdot 0 - 0.25 \cdot 0\\
 &amp;\quad + 0.001 \cdot \mathtt{body\_mass\_g} \cdot 0 + 0.0009 \cdot \mathtt{body\_mass\_g} \cdot 0\\
 &amp;= 26.99 + 0.003 \mathtt{body\_mass\_g}.
 \end{aligned}
-\]</span>
-When an observation has <code>species</code> level <code>Chinstrap</code>, then Equation <a href="linear-model-estimation.html#eq:sl-model-penguins">(3.26)</a> simplifies to
+\]</span></p>
+<p>When an observation has <code>species</code> level <code>Chinstrap</code>, then Equation <a href="linear-model-estimation.html#eq:sl-model-penguins">(3.26)</a> simplifies to
 <span class="math display">\[
 \begin{aligned}
 &amp;\hat{E}(\mathtt{bill\_length\_mm} \mid \mathtt{body\_mass\_g}, \mathtt{species}=\mathtt{Chinstrap}) \\
