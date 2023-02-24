@@ -1,11 +1,15 @@
 ---
-title: "Lecture 04 - Linear Model Interpretation"
-author: "CU Denver"
-output:
-  html_document:
-    self_contained: true
+title: Lecture 04 - Linear Model Interpretation
+author: Joshua French
+date: ''
+format: html
+# format: ipynb
+# jupyter: ir
+# execute: 
+#   enabled: false
+self-contained: true
+title-block-banner: true
 ---
-
 
 ```{r, include=FALSE}
 # change Console output behavior
@@ -14,7 +18,7 @@ knitr::opts_chunk$set(collapse = TRUE)
 ```
 
 
-## Interpretation of coefficients
+# Interpretation of coefficients
 
 The standard approach to interpreting the coefficients of a fitted
 linear model is to consider the expected change in the response in
@@ -28,7 +32,9 @@ $$
 * The error term is treated as a random variable
 * Consequently, the response variable is also a random variable. 
 
-### Random Error Assumption
+**Random Error Assumption**
+
+---
 
 We assume that the errors all have mean 0, conditional on the values of the regressor variables. 
 
@@ -41,7 +47,9 @@ $$
 E(\epsilon \mid \mathbb{X})=0
 $$
 
-### Expected Value of Response
+**Expected Value of Response**
+
+---
 
 Using the assumption of mean zero errors, we have:
 
@@ -58,7 +66,9 @@ $$
 Note: All the coefficient $\beta_i$ terms are fixed, non-random.
 
 
-### Interpretation for simple linear regression
+**Interpretation for simple linear regression**
+
+---
 
 Suppose we have a simple linear regression model, so that 
 $$
@@ -72,7 +82,9 @@ The interpretations of the coefficients are:
     increases 1 unit, i.e., $\beta_1=E(Y\mid X=x^*+1)-E(Y\mid X=x^*)$,
     where $x^*$ is a fixed, real number.
 
-### Interpretation of Intercept
+**Interpretation of Intercept**
+
+---
 
 The intercept term $\beta_0$ is the expected value of the response when $X= 0$
 
@@ -83,7 +95,9 @@ E(Y\mid X = 0) &= \beta_0 + \beta_1 \cdot 0 \\
 \end{aligned}
 $$ 
 
-### Interpretation of Slope
+**Interpretation of Slope**
+
+---
 
 Similarly, for $\beta_1$, we notice that $$
 \begin{aligned}
@@ -113,7 +127,9 @@ Some basic interpretations of the coefficients are:
     expected to have a bill length 0.004 mm longer than the smaller
     penguin.
 
-### Rescaling Predictors to aid Interpretation
+**Rescaling Predictors to aid Interpretation**
+
+---
 
 * A weight difference of 1 gram is negligible in the context of penguin
 weights
@@ -149,7 +165,9 @@ regressor $(X_j + a)/c$ will have an estimated coefficient of
 $c\hat{\beta}_j$, where $a$ and $c$ are fixed, real numbers and assuming
 nothing else in the fitted model changes.
 
-### Interpretation for first-order multiple linear regression models
+**Interpretation for first-order multiple linear regression models**
+
+---
 
 Suppose we have a multiple linear regression model with $p-1$ *numeric*
 regressors, so that 
@@ -174,7 +192,7 @@ The interpretations of the coefficients from the model in Equation are:
     is a vector with $p-2$ fixed values (the number of regressors
     excluding $X_j$) and $x_j^*$ is a fixed real number. The
     non-intercept coefficients of a multiple linear regression model are
-    known as **partial slopes**.
+    known as *partial slopes*.
 
 ---
 
@@ -192,7 +210,9 @@ $$
 - Does the interpretation of the intercept always make sense?
 - What if $X_1$ was heart rate?
 
-### Issues Interpreting Polynomial Models
+**Issues Interpreting Polynomial Models**
+
+---
 
 In multiple regression models, a single predictor can be used more than once in the model. 
 
@@ -209,9 +229,11 @@ $X$ is used in both the second and third terms.
 
 The standard interpretation we discussed is applicable to first-order linear regression models.
 
-**First-order linear regression model:** no regressor is a function of any other regressor.
+*First-order linear regression model:* no regressor is a function of any other regressor.
 
-### Penguins Example Revisited
+**Penguins Example Revisited**
+
+---
 
 We interpret the first-order multiple linear regression model fit to the `penguins` data. The fitted multiple linear regression
 model is:
@@ -224,26 +246,22 @@ $$
 
 Some basic interpretations of the coefficients are:
 
--   **Intercept:** We expect a penguin with a body mass of 0 grams and a
+-   *Intercept:* We expect a penguin with a body mass of 0 grams and a
     flipper length of 0 mm to to have a bill length of -3.44 mm.
--   **`body_mass_g`:** If we increase body mass by 1 gram, we expect bill length to increase 0.0007 mm *holding all else constant*.
--   **`flipper_length_mm`:** If we increase flipper length by 1 mm, we expect the bill length to increase 0.22 mm *holding all else constant*.
+-   `body_mass_g`: If we increase body mass by 1 gram, we expect bill length to increase 0.0007 mm *holding all else constant*.
+-   `flipper_length_mm`: If we increase flipper length by 1 mm, we expect the bill length to increase 0.22 mm *holding all else constant*.
 
-### Roles of regressor variables
+**Roles of regressor variables**
+
+---
 
 Did you notice that the estimated coefficients for the intercept and the
 `body_mass_g` regressor changed between the simple model and the multiple regression model?
 
-```{r, echo=FALSE}
-knitr::kable(
-  data.frame(
-    "Regression Model"=c("Simple Linear", "Multiple"),
-    "Intercept Coef."=c(26.9, -3.44),
-    "Body Mass Coef."=c(0.004,0.0007),
-    check.names = F
-  )
-)
-```
+|Regression Model | Intercept Coef.| Body Mass Coef.|
+|:----------------|---------------:|---------------:|
+|Simple Linear    |           26.90|           4e-03|
+|Multiple         |           -3.44|           7e-04|
 
 * Why?
 
@@ -266,11 +284,11 @@ as you add or remove regressors from a model?
 - If a regressor is correlated with other regressors in a model, then adding or removing that regressor will impact the estimated coefficients in the new model.
 - The more correlated the regressors are, the more they tend to affect
 each others' estimated coefficients. 
-- A regressor will impact the estimated coefficients of the other regressors in a model unless it is **orthogonal** to the other regressors.
+- A regressor will impact the estimated coefficients of the other regressors in a model unless it is *orthogonal* to the other regressors.
 
 *Note:* Orthogonality is related to correlation, but there are important differences.
 
-## Effect plots
+# Effect plots
 
 An effect plot is a visual display that aids in helping us intuitively
 interpret the impact of a *predictor* in a model. As stated by
@@ -284,16 +302,18 @@ Fox et al. (2020):
 > multiple-coefficient terms such as regression splines and polynomials
 > ....
 
-An **effect plot** is a plot of the estimated mean response as a function of a *focal predictor* with the other *predictors* being held at "typical values". 
+An *effect plot* is a plot of the estimated mean response as a function of a *focal predictor* with the other *predictors* being held at "typical values". 
 
 *Recall:* the difference between predictors and regressors.
 
-- A **predictor** variable is a variable available to model the response variable. 
-- A **regressor** variable is a variable used in our regression model, whether that is an unmodified predictor variable, some transformation of a predictor, some combination of predictors, etc.
+- A *predictor* variable is a variable available to model the response variable. 
+- A *regressor* variable is a variable used in our regression model, whether that is an unmodified predictor variable, some transformation of a predictor, some combination of predictors, etc.
 
-### First-Order Model Effects Plot
+**First-Order Model Effects Plot**
 
-In a first-order linear model, none of the regressors interact, i.e., none of the regressors are functions of each other. Fox et al. (2020) use the terminology **fixed group** to refer to the group of predictors that do not interact with the focal predictor. 
+---
+
+In a first-order linear model, none of the regressors interact, i.e., none of the regressors are functions of each other. Fox et al. (2020) use the terminology *fixed group* to refer to the group of predictors that do not interact with the focal predictor. 
 
 To create our effect plot, we must first find the equation for the estimated mean response as a function of a focal predictor while holding the other predictors at their "typical" values. We set numeric fixed group predictors equal to their sample means when finding this function.
 
@@ -345,7 +365,7 @@ $\mathtt{flipper\_length\_mm}$ is a plot of $$
 \end{aligned}
 $$ as a function of $\mathtt{flipper\_length\_mm}$.
 
-The **`effects`** R package can be used to generate effect
+The `effects` R package can be used to generate effect
 plots for the predictors of a fitted linear model. 
 
 - First, the `effects::predictorEffect` function to compute the information needed to draw the plot. 
@@ -388,9 +408,11 @@ necessary effect plot information for all predictors simultaneously, but it is h
 plot(allEffects(mlmod))
 ```
 
-## Interpretation for categorical predictors
+# Interpretation for categorical predictors
 
-### Coefficient interpretation for parallel lines models
+**Coefficient interpretation for parallel lines models**
+
+---
 
 Consider a parallel lines model with numeric regressor $X$ and
 categorical predictor $C$ with levels $L_1$, $L_2$, and $L_3$. Predictor $C$
@@ -483,7 +505,9 @@ In the context of this model:
 -   A Gentoo penguin is expected to have a bill length 3.56 mm longer
     than an Adelie penguin, assuming their body mass is the same.
 
-### Effect plots for fitted models with non-interacting categorical predictors
+**Effect plots for fitted models with non-interacting categorical predictors**
+
+---
 
 How do we create an effect plot for a numeric focal predictor when a
 non-interacting categorical predictor is in the model (such as for the
@@ -583,7 +607,9 @@ The code below produces the effect plot for `species`. The confidence bands for 
 plot(predictorEffect("species", lmodp))
 ```
 
-### Coefficient interpretation for separate lines models
+**Coefficient interpretation for separate lines models**
+
+---
 
 Consider a separate lines model with numeric regressor $X$ and
 categorical predictor $C$ with levels $L_1$, $L_2$, and $L_3$. The
@@ -684,10 +710,12 @@ In the context of this model:
     length by Gentoo penguins to be 0.0009 mm larger than the
     corresponding change in bill length by Adelie penguins.
 
-### Effect plots for interacting categorical predictors
+**Effect plots for interacting categorical predictors**
+
+---
 
 We now discuss construction of effect plots for a separate lines model,
-which has an interaction between a categorical and numeric predictor. Fox et al. (2020) also discuss predictors in the **conditioning group**, which is the set of predictors that interact with the focal predictor.
+which has an interaction between a categorical and numeric predictor. Fox et al. (2020) also discuss predictors in the *conditioning group*, which is the set of predictors that interact with the focal predictor.
 
 When some predictors interact with the focal predictor, the effect plot
 of the focal predictor is a plot of the estimated mean response when the
@@ -778,13 +806,13 @@ vignette("predictor-effects-gallery", package = "effects")
 ```
 
 
-## Added-variable and leverage plots
+# Added-variable and leverage plots
 
-As we saw before, an **effect plot** is a plot
+As we saw before, an *effect plot* is a plot
 of the estimated mean relationship between the response and a focal
 predictor while holding the model's predictors at typical values,
 
-An **added-variable plot** or **partial regression plot** displays the
+An *added-variable plot* or *partial regression plot* displays the
 marginal effect of a regressor on the response after accounting for the
 other regressors in the model. An added-variable plot is a plot of two sets of residuals against one other.
 
@@ -857,7 +885,7 @@ title("(c)")
 par(mfrow = c(1, 1))
 ```
 
-From the **`car`** package, the `avPlot` function will
+From the `car` package, the `avPlot` function will
 produce an added-variable plot for a single regressor while the
 `avPlots` function will produce added-variable plots for one or more
 regressors.
@@ -917,7 +945,9 @@ avPlots(lmodp)
 - How should we interpret the relative strength of the linear relationships?
 - Is there any clustering apparent?
 
-### Leverage Plots
+**Leverage Plots**
+
+---
 
 It sometimes doesn't make sense to talk about the effect of adding a single indicator regressor when all of the other regressors are in the model. When we add a categorical predictor to our model, we simultaneously add $K-1$
 indicator variables as regressors; we do not add the indicator variables
@@ -929,12 +959,12 @@ more levels is the most basic of multiple degrees-of-freedom term, but
 you could also consider regressors related to the interaction between
 two or more predictors, polynomial regressors, etc.
 
-A **leverage plot**  allows us to visualize the impact of multiple degrees-of-freedom terms. The interpretation of leverage
+A *leverage plot*  allows us to visualize the impact of multiple degrees-of-freedom terms. The interpretation of leverage
 plots is similar to the interpretation of added-variable plots, though
 we refer to "predictors" or "terms" instead regressors (which may be
 combined into one plot). 
 
-The `leveragePlot` and `leveragePlots` functions in the **`car`** package produce single or multiple leverage plots, respectively, with arguments similar to the `avPlot` and `avPlots` functions.
+The `leveragePlot` and `leveragePlots` functions in the `car` package produce single or multiple leverage plots, respectively, with arguments similar to the `avPlot` and `avPlots` functions.
 
 ```{r leverageplot-lmodp, fig.cap = "Leverage plots for the predictors in the parallel lines model fit to the `penguins` data."}
 leveragePlots(lmodp)
@@ -998,15 +1028,17 @@ interaction term `body_mass_g:species` to the parallel lines regression
 model that regresses `bill_length_mm` on `body_mass_g` and `species`.
 
 
-## Going deeper
+# Going deeper
 
-### Orthogonality
+**Orthogonality**
+
+---
 
 Let $$\mathbf{X}_{[j]}=[x_{1,j},\ldots,x_{n,j}]$$ denote the $n\times 1$
 column vector of observed values for regressor $X_j$. (We can't use the
 notation $\mathbf{x}_j$ because that is the $p\times 1$ vector of
 regressor values for the $j$th observation). Regressors
-$\mathbf{X}_{[j]}$ and $\mathbf{X}_{[k]}$ are **orthogonal** if
+$\mathbf{X}_{[j]}$ and $\mathbf{X}_{[k]}$ are *orthogonal* if
 $\mathbf{X}_{[j]}^T \mathbf{X}_{[k]}=0$.
 
 Let $\boldsymbol{1}_{n\times1}$ denote an $n\times 1$ column vector of
@@ -1020,12 +1052,12 @@ of $\mathbf{X}_{[j]}$ and
 $\bar{\mathbf{x}}_j = \bar{x}_j \boldsymbol{1}_{n\times 1}$ denote the
 column vector that repeats $\bar{x}_j$ $n$ times.
 
-**Centering** $\mathbf{X}_{[j]}$ involves subtracting the sample mean of
+*Centering* $\mathbf{X}_{[j]}$ involves subtracting the sample mean of
 $\mathbf{X}_{[j]}$ from $\mathbf{X}_{[j]}$, i.e.,
 $\mathbf{X}_{[j]} - \bar{\mathbf{x}}_j$.
 
 Regressors $\mathbf{X}_{[j]}$ and $\mathbf{X}_{[k]}$ are
-**uncorrelated** if they are orthogonal after being centered, i.e., if
+*uncorrelated* if they are orthogonal after being centered, i.e., if
 $$
 (\mathbf{X}_{[j]} - \bar{\mathbf{x}}_j)^T (\mathbf{X}_{[k]} - \bar{\mathbf{x}}_k)=0.
 $$ Note that the sample covariance between vectors $\mathbf{X}_{[j]}$
