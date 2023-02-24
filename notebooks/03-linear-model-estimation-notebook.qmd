@@ -2,13 +2,14 @@
 title: Chapter 3 - Linear Model Estimation
 author: Joshua French
 date: ''
-format: html
-# format: ipynb
-# jupyter: ir
-# execute: 
-#   enabled: false
+# format: html
+format: ipynb
+jupyter: ir
+execute:
+  output: false
 self-contained: true
 title-block-banner: true
+wrap: 'none'
 ---
 
 To open this information in an interactive Colab notebook, click the Open in Colab graphic below.
@@ -105,6 +106,7 @@ Consider these potential "best fitting" lines that are drawn on the scatter plot
 ```{r}
 #| echo: false
 #| eval: true
+#| output: true
 lmod <- lm(y ~ x)
 coef_ls <- coef(lmod) # OLS estimates
 lad <- function(b) {
@@ -183,7 +185,7 @@ The observed data are modeled as
 ::: {.content-hidden unless-format="pdf"}
 $$
 \begin{aligned}
-Y_i &= \beta_0 + \beta_1 x_i + \epsilon \\
+Y_i &= \beta_0 + \beta_1 x_i + \epsilon_i \\
 &= E(Y\mid X = x_i) + \epsilon_i,
 \end{aligned}
 $$
@@ -194,7 +196,7 @@ for $i=1$, $2$,$\ldots$,$n$, where $\epsilon_i$ denotes the error for observatio
 **Important terminology**
 ---
 
-The **estimated regression model** is defined as
+The **estimated regression model** or **fitted model** is defined as
 
 ::: {.content-visible unless-format="pdf"}
 </br>  
@@ -207,7 +209,7 @@ $$
 $$
 :::
 
-where $\hat{\beta}_j$ denotes the estimated value of $\beta_j$ for $j=0,1$.
+where $\hat{\beta}_0$ and $\hat{\beta}_1$ are the estimated value of our regression parameters.
 
 The $i\text{th}$ **fitted value** is defined as
 
@@ -296,7 +298,11 @@ In a simple linear regression context, the fitted model is known as the **line o
 
 **Visualizing terms**
 ---
-```{r echo=FALSE}
+
+```{r}
+#| echo: false
+#| eval: true
+#| output: true
 set.seed(2)
 x <- c(3, 5, 7, 8, 9)
 y <- 2 + 2 * x + rnorm(5, sd = 4)
@@ -426,7 +432,7 @@ $$
 The `lm` function uses OLS estimation to fit a linear model to data. The function has two main arguments:
 
 -   `data`: the data frame in which the model variables are stored. This can be omitted if the variables are already stored in memory.
--   `formula`: a Wilkinson and Rogers (1973) style formula describing the linear regression model. For complete details, run `?stats:formula` in the Console. If `y` is the response variable and `x` is an available numeric predictor, then `formula = y ~ x` tells `lm` to fit the simple linear regression model $E(Y|X)=\beta_0+\beta_1 X$.
+-   `formula`: a Wilkinson and Rogers (1973) style formula describing the linear regression model. For complete details, run `?stats::formula` in the Console. If `y` is the response variable and `x` is an available numeric predictor, then `formula = y ~ x` tells `lm` to fit the simple linear regression model $E(Y|X)=\beta_0+\beta_1 X$.
 
 ```{r}
 lmod <- lm(bill_length_mm ~ body_mass_g, data = penguins) # fit model
@@ -509,21 +515,56 @@ abline(lmod)
 
 R provides many additional methods (generic functions that do something specific when applied to a certain type of object) for `lm` objects. Commonly used ones include:
 
+We now use some of the methods to extract important characteristics of our fitted model.
+
+We extract the estimated regression coefficients, $\hat{\beta}_0$ and $\hat{\beta}_1$, using the `coef` function.
+
 ```{r}
 (coeffs <- coef(lmod)) # extract, assign, and print coefficients
+```
+
+We extract the vector of residuals, $\hat{\epsilon}_1,\ldots, \hat{\epsilon}_n$, using the `residuals` function.
+
+```{r}
 ehat <- residuals(lmod) # extract and assign residuals
 head(ehat) # first few residuals
+```
+
+We extract the vector of fitted values, $\hat{Y}_1,\ldots, \hat{Y}_n$, using the `fitted` function.
+
+```{r}
 yhat <- fitted(lmod) # extract and assign fitted values
 head(yhat) # first few fitted values
+```
+
+We can also extract the vector of fitted values using the `predict` function.
+
+```{r}
 yhat2 <- predict(lmod) # compute and assign fitted values
 head(yhat2) # first few fitted values
+```
+
+We extract the RSS of the model using the `deviance` function.
+
+```{r}
 (rss <- deviance(lmod)) # extract, assign, and print rss
-(dfr <- df.residual(lmod)) # extract residual df
+```
+
+We extract the residual degrees of freedom using the `df.residual` function.
+
+```{r}
+(dfr <- df.residual(lmod)) # extract n - p
+```
+
+We extract the estimated error standard deviation, $\hat{\sigma}=\sqrt{\hat{\sigma}^2}$, using the `sigma` function. In the code below, we square $\hat{\sigma}$ to estimate the error variance, $\hat{\sigma}^2$.
+
+```{r}
 (sigmasqhat <- sigma(lmod)^2) # estimated error variance
 ```
 
 **Question:**
 
+- What are the first three fitted values?
 - What is the RSS of the fitted model?
 
 # Defining a linear model
@@ -604,7 +645,7 @@ A model is linear because of its *form* not the shape it produces.
 Some examples of linear regression models are:
 
 -   $E(Y|X) = \beta_0$.
--   $E(Y|X) = \beta_0 + +\beta_1 X + \beta_2 X^2$.
+-   $E(Y|X) = \beta_0 + \beta_1 X + \beta_2 X^2$.
 -   $E(Y|X_1, X_2) = \beta_0 + \beta_1 X_1 + \beta_2 X_2$.
 -   $E(Y|X_1, X_2) = \beta_0 + \beta_1 X_1 + \beta_2 X_2 + \beta_3 X_1 X_2$.
 -   $E(Y|X_1, X_2) = \beta_0 + \beta_1 \ln(X_1) + \beta_2 X_2^{-1}$.
@@ -893,7 +934,9 @@ We must transform the categorical predictor into one or more **indicator** or **
 
 An **indicator function** is a function that takes the value 1 if a certain property is true and 0 otherwise. 
 
-An **indicator variable** is the variable that results from applying an indicator function to each observation of a variable. Many notations exist for indicator functions. We use the notation,
+An **indicator variable** is the variable that results from applying an indicator function to each observation of a variable. 
+
+We denote indicator functions using the notation,
 
 $$
 I_S(x) =
@@ -904,6 +947,13 @@ I_S(x) =
 $$
 
 - This function returns 1 if $x$ is in the set $S$ and 0 otherwise.
+
+Some examples of indicator functions:
+
+- $I_{\{2,3\}}(2) = 1$.
+- $I_{\{2,3\}}(2.5) = 1$.
+- $I_{[2,3]}(2.5) = 1$, where $[2,3]$ is the interval from 2 to 3 and not the set containing only the numbers 2 and 3.
+- $I_{\{\text{red},\text{green}\}}(\text{green}) = 1$.
 
 Let $C$ denote a categorical predictor with levels $L_1$ and $L_2$. 
 
@@ -971,7 +1021,7 @@ $$
 
 If you had a categorical predictor $C$ with $K$ levels $L_1, L_2, \ldots, L_K$:
 
-- We can add indicator variables $D_2, D_3, \ldots, L_K$ to a simple linear regression model to create a parallel lines model for each level of $C$.
+- We can add indicator variables $D_2, D_3, \ldots, D_K$ to a simple linear regression model to create a parallel lines model for each level of $C$.
 - We can add regressors $D_2, D_3, \ldots, D_K, X D_2, X D_3, \ldots, X D_K$ to a simple linear regression model to create a separate lines model for each level of $C$.
 
 It is easy to imagine using multiple categorical predictors in a model, interacting one or more categorical predictors with one or more numeric regressors in model, etc. 
@@ -981,7 +1031,9 @@ These models can be fit easily using R but are more difficult to interpret.
 **Avoiding collinearity**
 ---
 
-Why didn't we add $D_1$ to the parallel lines model? Or $D_1$ and $D_1 X$ to the separate lines model?
+Consider the setting where $C$ has only 2 levels. 
+
+Why don't we add $D_1$ to the parallel lines model that already has $D_2$? Or $D_1$ and $D_1 X$ to the separate lines model that already has $D_2$ and $D_2 X$? 
 
 - We don't *need* to add them.
     - If an observation doesn't have level $L_2$ ($D_2=0$), then it must have level $L_1$.
@@ -1015,6 +1067,9 @@ ggplot(data = penguins) +
 **Question:** 
 
 - Does the relationship between bill length and body mass change depending on the species of penguin?
+
+**Using a categorical variable in the `lm` function**
+---
 
 How do you use a categorical variable in R's `lm` function?
 

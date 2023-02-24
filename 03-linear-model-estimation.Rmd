@@ -140,7 +140,7 @@ and
 Using the response values $Y_1, \ldots, Y_n$ and their associated regressor values $x_1, \ldots, x_n$, the observed data are modeled as
 \[
 \begin{aligned}
-Y_i &= \beta_0 + \beta_1 x_i + \epsilon \\
+Y_i &= \beta_0 + \beta_1 x_i + \epsilon_i \\
 &= E(Y\mid X = x_i) + \epsilon_i,
 \end{aligned}
 \]
@@ -278,7 +278,7 @@ E(\mathtt{bill\_length\_mm}\mid \mathtt{body\_mass\_g})=\beta_0+\beta_1\,\mathtt
 The `lm` function uses OLS estimation to fit a linear model to data. The function has two main arguments:
 
 -   `data`: the data frame in which the model variables are stored. This can be omitted if the variables are already stored in memory.
--   `formula`: a @wilkinsonrogers1973 style formula describing the linear regression model. For complete details, run `?stats:formula` in the Console. If `y` is the response variable and `x` is an available numeric predictor, then `formula = y ~ x` tells `lm` to fit the simple linear regression model $E(Y|X)=\beta_0+\beta_1 X$.
+-   `formula`: a @wilkinsonrogers1973 style formula describing the linear regression model. For complete details, run `?stats::formula` in the Console. If `y` is the response variable and `x` is an available numeric predictor, then `formula = y ~ x` tells `lm` to fit the simple linear regression model $E(Y|X)=\beta_0+\beta_1 X$.
 
 We use the code below to fit a linear model regressing `bill_length_mm` on `body_mass_g` using the `penguins` data frame and assign the result the name `lmod`. `lmod` is an object of class `lm`.
 ```{r}
@@ -342,18 +342,52 @@ R provides many additional methods (generic functions that do something specific
 
 We now use some of the methods to extract important characteristics of our fitted model.
 
+We extract the estimated regression coefficients, $\hat{\beta}_0$ and $\hat{\beta}_1$, using the `coef` function.
+
 ```{r}
 (coeffs <- coef(lmod)) # extract, assign, and print coefficients
+```
+
+We extract the vector of residuals, $\hat{\epsilon}_1,\ldots, \hat{\epsilon}_n$, using the `residuals` function.
+
+```{r}
 ehat <- residuals(lmod) # extract and assign residuals
 head(ehat) # first few residuals
+```
+
+We extract the vector of fitted values, $\hat{Y}_1,\ldots, \hat{Y}_n$, using the `fitted` function.
+
+```{r}
 yhat <- fitted(lmod) # extract and assign fitted values
 head(yhat) # first few fitted values
+```
+
+We can also extract the vector of fitted values using the `predict` function.
+
+```{r}
 yhat2 <- predict(lmod) # compute and assign fitted values
 head(yhat2) # first few fitted values
+
+```
+
+We extract the RSS of the model using the `deviance` function.
+
+```{r}
 (rss <- deviance(lmod)) # extract, assign, and print rss
+```
+
+We extract the residual degrees of freedom using the `df.residual` function.
+
+```{r}
 (dfr <- df.residual(lmod)) # extract n - p
+```
+
+We extract the estimated error standard deviation, $\hat{\sigma}=\sqrt{\hat{\sigma}^2}$, using the `sigma` function. In the code below, we square $\hat{\sigma}$ to estimate the error variance, $\hat{\sigma}^2$.
+
+```{r}
 (sigmasqhat <- sigma(lmod)^2) # estimated error variance
 ```
+
 From the output above, we that the the first 3 residuals are -2.99, -2.79, and 0.23. The first 3 fitted values are 42.09, 42.29, and 40.07. The RSS for the fitted model is 6564.49 with 340 degrees of freedom. The estimated error variance, $\hat{\sigma}^2$, is 19.31.
 
 We use the `methods` function to obtain a full list of methods available for `lm` objects using the code below.
@@ -420,7 +454,7 @@ E(Y\mid \mathbb{X}) = \sum_{j=0}^{p-1} g_j(\mathbb{X})\beta_j.
 A model is linear because of its *form*, not the shape it produces. Many of the linear model examples given below do not result in a straight line or surface, but are curved. Some examples of linear regression models are:
 
 -   $E(Y|X) = \beta_0$.
--   $E(Y|X) = \beta_0 + +\beta_1 X + \beta_2 X^2$.
+-   $E(Y|X) = \beta_0 + \beta_1 X + \beta_2 X^2$.
 -   $E(Y|X_1, X_2) = \beta_0 + \beta_1 X_1 + \beta_2 X_2$.
 -   $E(Y|X_1, X_2) = \beta_0 + \beta_1 X_1 + \beta_2 X_2 + \beta_3 X_1 X_2$.
 -   $E(Y|X_1, X_2) = \beta_0 + \beta_1 \ln(X_1) + \beta_2 X_2^{-1}$.
@@ -529,7 +563,7 @@ The RSS for a multiple linear regression model, as a function of the estimated r
 RSS(\hat{\boldsymbol{\beta}}) &= \sum_{i=1}^n \hat{\epsilon}_i^2 \\
 &= \hat{\boldsymbol{\epsilon}}^T \hat{\boldsymbol{\epsilon}} \\
 &= (\mathbf{y} - \hat{\mathbf{y}})^T (\mathbf{y} - \hat{\mathbf{y}}) \\
-& = (\mathbf{y} - \mathbf{X}\hat{\boldsymbol{\beta}})^T (\mathbf{y} - \hat{\boldsymbol{\beta}}).
+& = (\mathbf{y} - \mathbf{X}\hat{\boldsymbol{\beta}})^T (\mathbf{y} - \mathbf{X} \hat{\boldsymbol{\beta}}).
 \end{aligned} (\#eq:def-rss-matrix)
 \]
 The various expressions in Equation \@ref(eq:def-rss-matrix) are equivalent (cf. Equation \@ref(eq:epsilonhat-expressions)).
@@ -617,7 +651,12 @@ I_S(x) =
 0 & \textrm{if}\;x \notin S
 \end{cases},
 \]
-which is shorthand for a function that returns 1 if $x$ is in the set $S$ and 0 otherwise.
+which is shorthand for a function that returns 1 if $x$ is in the set $S$ and 0 otherwise. Some examples are:
+
+- $I_{\{2,3\}}(2) = 1$.
+- $I_{\{2,3\}}(2.5) = 1$.
+- $I_{[2,3]}(2.5) = 1$, where $[2,3]$ is the interval from 2 to 3 and not the set containing only the numbers 2 and 3.
+- $I_{\{\text{red},\text{green}\}}(\text{green}) = 1$.
 
 Let $C$ denote a categorical predictor with levels $L_1$ and $L_2$. The $C$ stands for "categorical", while the $L$ stands for "level". Let $c_i$ denote the value of $C$ for observation $i$.
 
@@ -663,13 +702,13 @@ E(Y\mid X, C) =
 
 ### Extensions
 
-We have presented the most basic regression models that include a categorical predictor. If we have a categorical predictor $C$ with $K$ levels $L_1, L_2, \ldots, L_K$, then we can add indicator variables $D_2, D_3, \ldots, L_K$ to a simple linear regression model to create a parallel lines model for each level of $C$. Similarly, we can add regressors $D_2, D_3, \ldots, D_K, X D_2, X D_3, \ldots, X D_K$ to a simple linear regression model to create a separate lines model for each level of $C$.
+We have presented the most basic regression models that include a categorical predictor. If we have a categorical predictor $C$ with $K$ levels $L_1, L_2, \ldots, L_K$, then we can add indicator variables $D_2, D_3, \ldots, D_K$ to a simple linear regression model to create a parallel lines model for each level of $C$. Similarly, we can add regressors $D_2, D_3, \ldots, D_K, X D_2, X D_3, \ldots, X D_K$ to a simple linear regression model to create a separate lines model for each level of $C$.
 
 It is easy to imagine using multiple categorical predictors in a model, interacting one or more categorical predictors with one or more numeric regressors in model, etc. These models can be fit easily using R (as we'll see below), though interpretation becomes more challenging.
 
 ### Avoiding an easy mistake
 
-Why didn't we add $D_1$ to the parallel lines model? Or $D_1$ and $D_1 X$ to the separate lines model? First, we notice that we don't *need* to add them. E.g., if an observation doesn't have level $L_2$ ($D_2=0$), then it must have level $L_1$. More importantly, we didn't do this because it will create linear dependencies in the columns of the regressor matrix $\mathbf{X}$.
+Consider the setting where $C$ has only 2 levels. Why don't we add $D_1$ to the parallel lines model that already has $D_2$? Or $D_1$ and $D_1 X$ to the separate lines model that already has $D_2$ and $D_2 X$? First, we notice that we don't *need* to add them. E.g., if an observation doesn't have level $L_2$ ($D_2=0$), then it must have level $L_1$. More importantly, we didn't do this because it will create linear dependencies in the columns of the regressor matrix $\mathbf{X}$.
 
 Let $\mathbf{d}_1=[d_{1,1}, d_{2,1}, \ldots, d_{n,1}]$ be the column vector of observed values for indicator variable $D_1$ and $\mathbf{d}_2$ be the column vector for $D_2$. Then for a two-level categorical variable, $\mathbf{d}_1 + \mathbf{d}_2$ is an $n\times 1$ vector of 1s, meaning that $D_1$ and $D_2$ will be linearly dependent with the intercept column of our $\mathbf{X}$ matrix. Thus, adding $D_1$ to the parallel lines model would result in $\mathbf{X}$ having linearly dependent columns, which creates estimation problems.
 
@@ -788,24 +827,28 @@ lmods <- lm(bill_length_mm ~ body_mass_g + species + body_mass_g:species,
 # extract estimated coefficients
 coef(lmods)
 ```
+
 Thus, the fitted separate lines model is
-\[
+
+$$
 \begin{aligned}
 &\hat{E}(\mathtt{bill\_length\_mm} \mid \mathtt{body\_mass\_g}, \mathtt{species}) \\
 &= 26.99 + 0.003 \mathtt{body\_mass\_g} + 5.18 D_C - 0.25 D_G \\
-&\quad + 0.001 \mathtt{body\_mass\_g} D_C + 0.0009 \mathtt{body\_mass\_g} D_G, (\#eq:sl-model-penguins)
-\end{aligned}
-\]
+& \quad + 0.001 \mathtt{body\_mass\_g} D_C + 0.0009 \mathtt{body\_mass\_g} D_G. \end{aligned}
+(\#eq:sl-model-penguins)
+$$
 
 When an observation has `species` level `Adelie`, then Equation \@ref(eq:sl-model-penguins) simplifies to
-\[
+
+$$
 \begin{aligned}
 &\hat{E}(\mathtt{bill\_length\_mm} \mid \mathtt{body\_mass\_g}, \mathtt{species}=\mathtt{Adelie}) \\
 &=26.99 + 0.003 \mathtt{body\_mass\_g} + 5.18 \cdot 0 - 0.25 \cdot 0\\
 &\quad + 0.001 \cdot \mathtt{body\_mass\_g} \cdot 0 + 0.0009 \cdot \mathtt{body\_mass\_g} \cdot 0\\
 &= 26.99 + 0.003 \mathtt{body\_mass\_g}.
 \end{aligned}
-\]
+$$
+
 When an observation has `species` level `Chinstrap`, then Equation \@ref(eq:sl-model-penguins) simplifies to
 \[
 \begin{aligned}

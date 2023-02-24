@@ -517,7 +517,7 @@ Figure 3.1: A scatter plot displaying pairs of heights for a mother and her adul
 <p>A <strong>regression analysis</strong> is the process of building a model describing the typical relationship between a set of observed variables. A regression analysis builds the model using observed values of the variables for <span class="math inline">\(n\)</span> subjects sampled from a population. In the present context, we want to model the height of adult daughters using their height of their mothers. The model we build is known as a <strong>regression model</strong>.</p>
 <p>The variables in a regression analysis may be divided into two types: the response variable and the predictor variables.</p>
 <p>The outcome variable we are trying to predict is known as the <strong>response variable</strong>. Response variables are also known as <strong>outcome</strong>, <strong>output</strong>, or <strong>dependent</strong> variables. The response variable is denoted by <span class="math inline">\(Y\)</span>. The observed value of <span class="math inline">\(Y\)</span> for observation <span class="math inline">\(i\)</span> is denoted <span class="math inline">\(Y_i\)</span>.</p>
-<p>The variables available to model the response variable are known as <strong>predictors variables</strong>. Predictor variables are also known as <strong>explanatory</strong>, <strong>regressor</strong>, <strong>input</strong>, <strong>dependent</strong> variables, or simply as <strong>features</strong>. Following the convention of <span class="citation">Weisberg (<a href="#ref-alr4" role="doc-biblioref">2014</a>)</span>, we use the term <strong>regressor</strong> to refer to the variables used in our regression model, whether that is the original predictor variable, some transformation of a predictor, some combination of predictors, etc. Thus, every predictor can be a regressor but not all regressors are a predictor. The regressor variables are denoted as <span class="math inline">\(X_1, X_2, \ldots, X_{p-1}\)</span>. The value of <span class="math inline">\(X_j\)</span> for observation <span class="math inline">\(i\)</span> is denoted by <span class="math inline">\(x_{i,j}\)</span>. If there is only a single regressor in the model, we can denote the single regressor as <span class="math inline">\(X\)</span> and the observed values of <span class="math inline">\(X\)</span> as <span class="math inline">\(x_1, x_2, \ldots, x_n\)</span>.</p>
+<p>The variables available to model the response variable are known as <strong>predictors variables</strong>. Predictor variables are also known as <strong>explanatory</strong>, <strong>regressor</strong>, <strong>input</strong>, <strong>independent</strong> variables, or simply as <strong>features</strong>. Following the convention of <span class="citation">Weisberg (<a href="#ref-alr4" role="doc-biblioref">2014</a>)</span>, we use the term <strong>regressor</strong> to refer to the variables used in our regression model, whether that is the original predictor variable, some transformation of a predictor, some combination of predictors, etc. Thus, every predictor can be a regressor but not all regressors are a predictor. The regressor variables are denoted as <span class="math inline">\(X_1, X_2, \ldots, X_{p-1}\)</span>. The value of <span class="math inline">\(X_j\)</span> for observation <span class="math inline">\(i\)</span> is denoted by <span class="math inline">\(x_{i,j}\)</span>. If there is only a single regressor in the model, we can denote the single regressor as <span class="math inline">\(X\)</span> and the observed values of <span class="math inline">\(X\)</span> as <span class="math inline">\(x_1, x_2, \ldots, x_n\)</span>.</p>
 <p>For the height data, the 5 pairs of observed data are denoted
 <span class="math display">\[(x_1, Y_1), (x_2, Y_2), \ldots, (x_5, Y_5),\]</span>
 with <span class="math inline">\((x_i, Y_i)\)</span> denoting the data for observation <span class="math inline">\(i\)</span>. <span class="math inline">\(x_i\)</span> denotes the mother’s height for observation <span class="math inline">\(i\)</span> and <span class="math inline">\(Y_i\)</span> denotes the daughter’s height for
@@ -533,7 +533,7 @@ Figure 3.2: Comparison of two potential fitted models to some observed data. The
 </div>
 <div id="s-slr-estimation" class="section level2 hasAnchor" number="3.2">
 <h2><span class="header-section-number">3.2</span> Estimation of the simple linear regression model<a href="linear-model-estimation.html#s-slr-estimation" class="anchor-section" aria-label="Anchor link to header"></a></h2>
-<p><strong>Parameter estimation</strong> is the process of using observed data to estimate values for the regression coefficients. There are many different methods of parameter estimation in statistics: method-of-moments, maximum likelihood, Bayesian, etc. The most common parameter estimation method for linear models is the <strong>least squares method</strong>, which is commonly called <strong>Ordinary Least Squares (OLS)</strong> estimation. OLS estimation estimates the regression coefficients with the values that minimize the residual sum of squares (RSS), which we will define shortly.</p>
+<p><strong>Parameter estimation</strong> is the process of using observed data to estimate parameters of a model. There are many different methods of parameter estimation in statistics: method-of-moments, maximum likelihood, Bayesian, etc. The most common parameter estimation method for linear models is the <strong>least squares method</strong>, which is commonly called <strong>Ordinary Least Squares (OLS)</strong> estimation. OLS estimation estimates the regression coefficients with the values that minimize the residual sum of squares (RSS), which we will define shortly.</p>
 <div id="ss:fv-resid-rss" class="section level3 hasAnchor" number="3.2.1">
 <h3><span class="header-section-number">3.2.1</span> Model definition, fitted values, residuals, and RSS<a href="linear-model-estimation.html#ss:fv-resid-rss" class="anchor-section" aria-label="Anchor link to header"></a></h3>
 <p>The regression model for <span class="math inline">\(Y\)</span> as a function of <span class="math inline">\(X\)</span>, denoted <span class="math inline">\(E(Y \mid X)\)</span>, is the expected value of <span class="math inline">\(Y\)</span> conditional on the regressor <span class="math inline">\(X\)</span>. Thus, a regression model specifically refers to the expected relationship between the response and regressors.</p>
@@ -582,7 +582,7 @@ and
 <p>Using the response values <span class="math inline">\(Y_1, \ldots, Y_n\)</span> and their associated regressor values <span class="math inline">\(x_1, \ldots, x_n\)</span>, the observed data are modeled as
 <span class="math display">\[
 \begin{aligned}
-Y_i &amp;= \beta_0 + \beta_1 x_i + \epsilon \\
+Y_i &amp;= \beta_0 + \beta_1 x_i + \epsilon_i \\
 &amp;= E(Y\mid X = x_i) + \epsilon_i,
 \end{aligned}
 \]</span>
@@ -697,7 +697,7 @@ E(\mathtt{bill\_length\_mm}\mid \mathtt{body\_mass\_g})=\beta_0+\beta_1\,\mathtt
 <p>The <code>lm</code> function uses OLS estimation to fit a linear model to data. The function has two main arguments:</p>
 <ul>
 <li><code>data</code>: the data frame in which the model variables are stored. This can be omitted if the variables are already stored in memory.</li>
-<li><code>formula</code>: a <span class="citation">Wilkinson and Rogers (<a href="#ref-wilkinsonrogers1973" role="doc-biblioref">1973</a>)</span> style formula describing the linear regression model. For complete details, run <code>?stats:formula</code> in the Console. If <code>y</code> is the response variable and <code>x</code> is an available numeric predictor, then <code>formula = y ~ x</code> tells <code>lm</code> to fit the simple linear regression model <span class="math inline">\(E(Y|X)=\beta_0+\beta_1 X\)</span>.</li>
+<li><code>formula</code>: a <span class="citation">Wilkinson and Rogers (<a href="#ref-wilkinsonrogers1973" role="doc-biblioref">1973</a>)</span> style formula describing the linear regression model. For complete details, run <code>?stats::formula</code> in the Console. If <code>y</code> is the response variable and <code>x</code> is an available numeric predictor, then <code>formula = y ~ x</code> tells <code>lm</code> to fit the simple linear regression model <span class="math inline">\(E(Y|X)=\beta_0+\beta_1 X\)</span>.</li>
 </ul>
 <p>We use the code below to fit a linear model regressing <code>bill_length_mm</code> on <code>body_mass_g</code> using the <code>penguins</code> data frame and assign the result the name <code>lmod</code>. <code>lmod</code> is an object of class <code>lm</code>.</p>
 <div class="sourceCode" id="cb90"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb90-1"><a href="linear-model-estimation.html#cb90-1" aria-hidden="true" tabindex="-1"></a>lmod <span class="ot">&lt;-</span> <span class="fu">lm</span>(bill_length_mm <span class="sc">~</span> body_mass_g, <span class="at">data =</span> penguins) <span class="co"># fit model</span></span>
@@ -778,47 +778,54 @@ Figure 3.5: The fitted model overlaid on the penguin data.
 <li><code>sigma</code>: extracts <span class="math inline">\(\hat{\sigma}\)</span> from an <code>lm</code> object.</li>
 </ul>
 <p>We now use some of the methods to extract important characteristics of our fitted model.</p>
+<p>We extract the estimated regression coefficients, <span class="math inline">\(\hat{\beta}_0\)</span> and <span class="math inline">\(\hat{\beta}_1\)</span>, using the <code>coef</code> function.</p>
 <div class="sourceCode" id="cb93"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb93-1"><a href="linear-model-estimation.html#cb93-1" aria-hidden="true" tabindex="-1"></a>(coeffs <span class="ot">&lt;-</span> <span class="fu">coef</span>(lmod)) <span class="co"># extract, assign, and print coefficients</span></span>
 <span id="cb93-2"><a href="linear-model-estimation.html#cb93-2" aria-hidden="true" tabindex="-1"></a><span class="do">##  (Intercept)  body_mass_g </span></span>
-<span id="cb93-3"><a href="linear-model-estimation.html#cb93-3" aria-hidden="true" tabindex="-1"></a><span class="do">## 26.898872424  0.004051417</span></span>
-<span id="cb93-4"><a href="linear-model-estimation.html#cb93-4" aria-hidden="true" tabindex="-1"></a>ehat <span class="ot">&lt;-</span> <span class="fu">residuals</span>(lmod) <span class="co"># extract and assign residuals</span></span>
-<span id="cb93-5"><a href="linear-model-estimation.html#cb93-5" aria-hidden="true" tabindex="-1"></a><span class="fu">head</span>(ehat) <span class="co"># first few residuals</span></span>
-<span id="cb93-6"><a href="linear-model-estimation.html#cb93-6" aria-hidden="true" tabindex="-1"></a><span class="do">##          1          2          3          5          6 </span></span>
-<span id="cb93-7"><a href="linear-model-estimation.html#cb93-7" aria-hidden="true" tabindex="-1"></a><span class="do">## -2.9916846 -2.7942554  0.2340237 -4.1762596 -2.3865430 </span></span>
-<span id="cb93-8"><a href="linear-model-estimation.html#cb93-8" aria-hidden="true" tabindex="-1"></a><span class="do">##          7 </span></span>
-<span id="cb93-9"><a href="linear-model-estimation.html#cb93-9" aria-hidden="true" tabindex="-1"></a><span class="do">## -2.6852575</span></span>
-<span id="cb93-10"><a href="linear-model-estimation.html#cb93-10" aria-hidden="true" tabindex="-1"></a>yhat <span class="ot">&lt;-</span> <span class="fu">fitted</span>(lmod) <span class="co"># extract and assign fitted values</span></span>
-<span id="cb93-11"><a href="linear-model-estimation.html#cb93-11" aria-hidden="true" tabindex="-1"></a><span class="fu">head</span>(yhat) <span class="co"># first few fitted values</span></span>
-<span id="cb93-12"><a href="linear-model-estimation.html#cb93-12" aria-hidden="true" tabindex="-1"></a><span class="do">##        1        2        3        5        6        7 </span></span>
-<span id="cb93-13"><a href="linear-model-estimation.html#cb93-13" aria-hidden="true" tabindex="-1"></a><span class="do">## 42.09168 42.29426 40.06598 40.87626 41.68654 41.58526</span></span>
-<span id="cb93-14"><a href="linear-model-estimation.html#cb93-14" aria-hidden="true" tabindex="-1"></a>yhat2 <span class="ot">&lt;-</span> <span class="fu">predict</span>(lmod) <span class="co"># compute and assign fitted values</span></span>
-<span id="cb93-15"><a href="linear-model-estimation.html#cb93-15" aria-hidden="true" tabindex="-1"></a><span class="fu">head</span>(yhat2) <span class="co"># first few fitted values</span></span>
-<span id="cb93-16"><a href="linear-model-estimation.html#cb93-16" aria-hidden="true" tabindex="-1"></a><span class="do">##        1        2        3        5        6        7 </span></span>
-<span id="cb93-17"><a href="linear-model-estimation.html#cb93-17" aria-hidden="true" tabindex="-1"></a><span class="do">## 42.09168 42.29426 40.06598 40.87626 41.68654 41.58526</span></span>
-<span id="cb93-18"><a href="linear-model-estimation.html#cb93-18" aria-hidden="true" tabindex="-1"></a>(rss <span class="ot">&lt;-</span> <span class="fu">deviance</span>(lmod)) <span class="co"># extract, assign, and print rss</span></span>
-<span id="cb93-19"><a href="linear-model-estimation.html#cb93-19" aria-hidden="true" tabindex="-1"></a><span class="do">## [1] 6564.494</span></span>
-<span id="cb93-20"><a href="linear-model-estimation.html#cb93-20" aria-hidden="true" tabindex="-1"></a>(dfr <span class="ot">&lt;-</span> <span class="fu">df.residual</span>(lmod)) <span class="co"># extract n - p</span></span>
-<span id="cb93-21"><a href="linear-model-estimation.html#cb93-21" aria-hidden="true" tabindex="-1"></a><span class="do">## [1] 340</span></span>
-<span id="cb93-22"><a href="linear-model-estimation.html#cb93-22" aria-hidden="true" tabindex="-1"></a>(sigmasqhat <span class="ot">&lt;-</span> <span class="fu">sigma</span>(lmod)<span class="sc">^</span><span class="dv">2</span>) <span class="co"># estimated error variance</span></span>
-<span id="cb93-23"><a href="linear-model-estimation.html#cb93-23" aria-hidden="true" tabindex="-1"></a><span class="do">## [1] 19.30734</span></span></code></pre></div>
+<span id="cb93-3"><a href="linear-model-estimation.html#cb93-3" aria-hidden="true" tabindex="-1"></a><span class="do">## 26.898872424  0.004051417</span></span></code></pre></div>
+<p>We extract the vector of residuals, <span class="math inline">\(\hat{\epsilon}_1,\ldots, \hat{\epsilon}_n\)</span>, using the <code>residuals</code> function.</p>
+<div class="sourceCode" id="cb94"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb94-1"><a href="linear-model-estimation.html#cb94-1" aria-hidden="true" tabindex="-1"></a>ehat <span class="ot">&lt;-</span> <span class="fu">residuals</span>(lmod) <span class="co"># extract and assign residuals</span></span>
+<span id="cb94-2"><a href="linear-model-estimation.html#cb94-2" aria-hidden="true" tabindex="-1"></a><span class="fu">head</span>(ehat) <span class="co"># first few residuals</span></span>
+<span id="cb94-3"><a href="linear-model-estimation.html#cb94-3" aria-hidden="true" tabindex="-1"></a><span class="do">##          1          2          3          5          6 </span></span>
+<span id="cb94-4"><a href="linear-model-estimation.html#cb94-4" aria-hidden="true" tabindex="-1"></a><span class="do">## -2.9916846 -2.7942554  0.2340237 -4.1762596 -2.3865430 </span></span>
+<span id="cb94-5"><a href="linear-model-estimation.html#cb94-5" aria-hidden="true" tabindex="-1"></a><span class="do">##          7 </span></span>
+<span id="cb94-6"><a href="linear-model-estimation.html#cb94-6" aria-hidden="true" tabindex="-1"></a><span class="do">## -2.6852575</span></span></code></pre></div>
+<p>We extract the vector of fitted values, <span class="math inline">\(\hat{Y}_1,\ldots, \hat{Y}_n\)</span>, using the <code>fitted</code> function.</p>
+<div class="sourceCode" id="cb95"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb95-1"><a href="linear-model-estimation.html#cb95-1" aria-hidden="true" tabindex="-1"></a>yhat <span class="ot">&lt;-</span> <span class="fu">fitted</span>(lmod) <span class="co"># extract and assign fitted values</span></span>
+<span id="cb95-2"><a href="linear-model-estimation.html#cb95-2" aria-hidden="true" tabindex="-1"></a><span class="fu">head</span>(yhat) <span class="co"># first few fitted values</span></span>
+<span id="cb95-3"><a href="linear-model-estimation.html#cb95-3" aria-hidden="true" tabindex="-1"></a><span class="do">##        1        2        3        5        6        7 </span></span>
+<span id="cb95-4"><a href="linear-model-estimation.html#cb95-4" aria-hidden="true" tabindex="-1"></a><span class="do">## 42.09168 42.29426 40.06598 40.87626 41.68654 41.58526</span></span></code></pre></div>
+<p>We can also extract the vector of fitted values using the <code>predict</code> function.</p>
+<div class="sourceCode" id="cb96"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb96-1"><a href="linear-model-estimation.html#cb96-1" aria-hidden="true" tabindex="-1"></a>yhat2 <span class="ot">&lt;-</span> <span class="fu">predict</span>(lmod) <span class="co"># compute and assign fitted values</span></span>
+<span id="cb96-2"><a href="linear-model-estimation.html#cb96-2" aria-hidden="true" tabindex="-1"></a><span class="fu">head</span>(yhat2) <span class="co"># first few fitted values</span></span>
+<span id="cb96-3"><a href="linear-model-estimation.html#cb96-3" aria-hidden="true" tabindex="-1"></a><span class="do">##        1        2        3        5        6        7 </span></span>
+<span id="cb96-4"><a href="linear-model-estimation.html#cb96-4" aria-hidden="true" tabindex="-1"></a><span class="do">## 42.09168 42.29426 40.06598 40.87626 41.68654 41.58526</span></span></code></pre></div>
+<p>We extract the RSS of the model using the <code>deviance</code> function.</p>
+<div class="sourceCode" id="cb97"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb97-1"><a href="linear-model-estimation.html#cb97-1" aria-hidden="true" tabindex="-1"></a>(rss <span class="ot">&lt;-</span> <span class="fu">deviance</span>(lmod)) <span class="co"># extract, assign, and print rss</span></span>
+<span id="cb97-2"><a href="linear-model-estimation.html#cb97-2" aria-hidden="true" tabindex="-1"></a><span class="do">## [1] 6564.494</span></span></code></pre></div>
+<p>We extract the residual degrees of freedom using the <code>df.residual</code> function.</p>
+<div class="sourceCode" id="cb98"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb98-1"><a href="linear-model-estimation.html#cb98-1" aria-hidden="true" tabindex="-1"></a>(dfr <span class="ot">&lt;-</span> <span class="fu">df.residual</span>(lmod)) <span class="co"># extract n - p</span></span>
+<span id="cb98-2"><a href="linear-model-estimation.html#cb98-2" aria-hidden="true" tabindex="-1"></a><span class="do">## [1] 340</span></span></code></pre></div>
+<p>We extract the estimated error standard deviation, <span class="math inline">\(\hat{\sigma}=\sqrt{\hat{\sigma}^2}\)</span>, using the <code>sigma</code> function. In the code below, we square <span class="math inline">\(\hat{\sigma}\)</span> to estimate the error variance, <span class="math inline">\(\hat{\sigma}^2\)</span>.</p>
+<div class="sourceCode" id="cb99"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb99-1"><a href="linear-model-estimation.html#cb99-1" aria-hidden="true" tabindex="-1"></a>(sigmasqhat <span class="ot">&lt;-</span> <span class="fu">sigma</span>(lmod)<span class="sc">^</span><span class="dv">2</span>) <span class="co"># estimated error variance</span></span>
+<span id="cb99-2"><a href="linear-model-estimation.html#cb99-2" aria-hidden="true" tabindex="-1"></a><span class="do">## [1] 19.30734</span></span></code></pre></div>
 <p>From the output above, we that the the first 3 residuals are -2.99, -2.79, and 0.23. The first 3 fitted values are 42.09, 42.29, and 40.07. The RSS for the fitted model is 6564.49 with 340 degrees of freedom. The estimated error variance, <span class="math inline">\(\hat{\sigma}^2\)</span>, is 19.31.</p>
 <p>We use the <code>methods</code> function to obtain a full list of methods available for <code>lm</code> objects using the code below.</p>
-<div class="sourceCode" id="cb94"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb94-1"><a href="linear-model-estimation.html#cb94-1" aria-hidden="true" tabindex="-1"></a><span class="fu">methods</span>(<span class="at">class =</span> <span class="st">&quot;lm&quot;</span>)</span>
-<span id="cb94-2"><a href="linear-model-estimation.html#cb94-2" aria-hidden="true" tabindex="-1"></a><span class="do">##  [1] add1           alias          anova         </span></span>
-<span id="cb94-3"><a href="linear-model-estimation.html#cb94-3" aria-hidden="true" tabindex="-1"></a><span class="do">##  [4] case.names     coerce         confint       </span></span>
-<span id="cb94-4"><a href="linear-model-estimation.html#cb94-4" aria-hidden="true" tabindex="-1"></a><span class="do">##  [7] cooks.distance deviance       dfbeta        </span></span>
-<span id="cb94-5"><a href="linear-model-estimation.html#cb94-5" aria-hidden="true" tabindex="-1"></a><span class="do">## [10] dfbetas        drop1          dummy.coef    </span></span>
-<span id="cb94-6"><a href="linear-model-estimation.html#cb94-6" aria-hidden="true" tabindex="-1"></a><span class="do">## [13] effects        extractAIC     family        </span></span>
-<span id="cb94-7"><a href="linear-model-estimation.html#cb94-7" aria-hidden="true" tabindex="-1"></a><span class="do">## [16] formula        fortify        hatvalues     </span></span>
-<span id="cb94-8"><a href="linear-model-estimation.html#cb94-8" aria-hidden="true" tabindex="-1"></a><span class="do">## [19] influence      initialize     kappa         </span></span>
-<span id="cb94-9"><a href="linear-model-estimation.html#cb94-9" aria-hidden="true" tabindex="-1"></a><span class="do">## [22] labels         logLik         model.frame   </span></span>
-<span id="cb94-10"><a href="linear-model-estimation.html#cb94-10" aria-hidden="true" tabindex="-1"></a><span class="do">## [25] model.matrix   nobs           plot          </span></span>
-<span id="cb94-11"><a href="linear-model-estimation.html#cb94-11" aria-hidden="true" tabindex="-1"></a><span class="do">## [28] predict        print          proj          </span></span>
-<span id="cb94-12"><a href="linear-model-estimation.html#cb94-12" aria-hidden="true" tabindex="-1"></a><span class="do">## [31] qr             residuals      rstandard     </span></span>
-<span id="cb94-13"><a href="linear-model-estimation.html#cb94-13" aria-hidden="true" tabindex="-1"></a><span class="do">## [34] rstudent       show           simulate      </span></span>
-<span id="cb94-14"><a href="linear-model-estimation.html#cb94-14" aria-hidden="true" tabindex="-1"></a><span class="do">## [37] slotsFromS3    summary        variable.names</span></span>
-<span id="cb94-15"><a href="linear-model-estimation.html#cb94-15" aria-hidden="true" tabindex="-1"></a><span class="do">## [40] vcov          </span></span>
-<span id="cb94-16"><a href="linear-model-estimation.html#cb94-16" aria-hidden="true" tabindex="-1"></a><span class="do">## see &#39;?methods&#39; for accessing help and source code</span></span></code></pre></div>
+<div class="sourceCode" id="cb100"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb100-1"><a href="linear-model-estimation.html#cb100-1" aria-hidden="true" tabindex="-1"></a><span class="fu">methods</span>(<span class="at">class =</span> <span class="st">&quot;lm&quot;</span>)</span>
+<span id="cb100-2"><a href="linear-model-estimation.html#cb100-2" aria-hidden="true" tabindex="-1"></a><span class="do">##  [1] add1           alias          anova         </span></span>
+<span id="cb100-3"><a href="linear-model-estimation.html#cb100-3" aria-hidden="true" tabindex="-1"></a><span class="do">##  [4] case.names     coerce         confint       </span></span>
+<span id="cb100-4"><a href="linear-model-estimation.html#cb100-4" aria-hidden="true" tabindex="-1"></a><span class="do">##  [7] cooks.distance deviance       dfbeta        </span></span>
+<span id="cb100-5"><a href="linear-model-estimation.html#cb100-5" aria-hidden="true" tabindex="-1"></a><span class="do">## [10] dfbetas        drop1          dummy.coef    </span></span>
+<span id="cb100-6"><a href="linear-model-estimation.html#cb100-6" aria-hidden="true" tabindex="-1"></a><span class="do">## [13] effects        extractAIC     family        </span></span>
+<span id="cb100-7"><a href="linear-model-estimation.html#cb100-7" aria-hidden="true" tabindex="-1"></a><span class="do">## [16] formula        fortify        hatvalues     </span></span>
+<span id="cb100-8"><a href="linear-model-estimation.html#cb100-8" aria-hidden="true" tabindex="-1"></a><span class="do">## [19] influence      initialize     kappa         </span></span>
+<span id="cb100-9"><a href="linear-model-estimation.html#cb100-9" aria-hidden="true" tabindex="-1"></a><span class="do">## [22] labels         logLik         model.frame   </span></span>
+<span id="cb100-10"><a href="linear-model-estimation.html#cb100-10" aria-hidden="true" tabindex="-1"></a><span class="do">## [25] model.matrix   nobs           plot          </span></span>
+<span id="cb100-11"><a href="linear-model-estimation.html#cb100-11" aria-hidden="true" tabindex="-1"></a><span class="do">## [28] predict        print          proj          </span></span>
+<span id="cb100-12"><a href="linear-model-estimation.html#cb100-12" aria-hidden="true" tabindex="-1"></a><span class="do">## [31] qr             residuals      rstandard     </span></span>
+<span id="cb100-13"><a href="linear-model-estimation.html#cb100-13" aria-hidden="true" tabindex="-1"></a><span class="do">## [34] rstudent       show           simulate      </span></span>
+<span id="cb100-14"><a href="linear-model-estimation.html#cb100-14" aria-hidden="true" tabindex="-1"></a><span class="do">## [37] slotsFromS3    summary        variable.names</span></span>
+<span id="cb100-15"><a href="linear-model-estimation.html#cb100-15" aria-hidden="true" tabindex="-1"></a><span class="do">## [40] vcov          </span></span>
+<span id="cb100-16"><a href="linear-model-estimation.html#cb100-16" aria-hidden="true" tabindex="-1"></a><span class="do">## see &#39;?methods&#39; for accessing help and source code</span></span></code></pre></div>
 </div>
 <div id="defining-a-linear-model" class="section level2 hasAnchor" number="3.4">
 <h2><span class="header-section-number">3.4</span> Defining a linear model<a href="linear-model-estimation.html#defining-a-linear-model" class="anchor-section" aria-label="Anchor link to header"></a></h2>
@@ -884,7 +891,7 @@ E(Y\mid \mathbb{X}) = \sum_{j=0}^{p-1} g_j(\mathbb{X})\beta_j.
 <p>A model is linear because of its <em>form</em>, not the shape it produces. Many of the linear model examples given below do not result in a straight line or surface, but are curved. Some examples of linear regression models are:</p>
 <ul>
 <li><span class="math inline">\(E(Y|X) = \beta_0\)</span>.</li>
-<li><span class="math inline">\(E(Y|X) = \beta_0 + +\beta_1 X + \beta_2 X^2\)</span>.</li>
+<li><span class="math inline">\(E(Y|X) = \beta_0 + \beta_1 X + \beta_2 X^2\)</span>.</li>
 <li><span class="math inline">\(E(Y|X_1, X_2) = \beta_0 + \beta_1 X_1 + \beta_2 X_2\)</span>.</li>
 <li><span class="math inline">\(E(Y|X_1, X_2) = \beta_0 + \beta_1 X_1 + \beta_2 X_2 + \beta_3 X_1 X_2\)</span>.</li>
 <li><span class="math inline">\(E(Y|X_1, X_2) = \beta_0 + \beta_1 \ln(X_1) + \beta_2 X_2^{-1}\)</span>.</li>
@@ -984,7 +991,7 @@ Using Equations <a href="linear-model-estimation.html#eq:def-fitted-values-matri
 RSS(\hat{\boldsymbol{\beta}}) &amp;= \sum_{i=1}^n \hat{\epsilon}_i^2 \\
 &amp;= \hat{\boldsymbol{\epsilon}}^T \hat{\boldsymbol{\epsilon}} \\
 &amp;= (\mathbf{y} - \hat{\mathbf{y}})^T (\mathbf{y} - \hat{\mathbf{y}}) \\
-&amp; = (\mathbf{y} - \mathbf{X}\hat{\boldsymbol{\beta}})^T (\mathbf{y} - \hat{\boldsymbol{\beta}}).
+&amp; = (\mathbf{y} - \mathbf{X}\hat{\boldsymbol{\beta}})^T (\mathbf{y} - \mathbf{X} \hat{\boldsymbol{\beta}}).
 \end{aligned} \tag{3.22}
 \]</span>
 The various expressions in Equation <a href="linear-model-estimation.html#eq:def-rss-matrix">(3.22)</a> are equivalent (cf. Equation <a href="linear-model-estimation.html#eq:epsilonhat-expressions">(3.21)</a>).</p>
@@ -1017,15 +1024,15 @@ which is consistent with the previous definition given in Equation <a href="line
 <li><code>y ~ x + I(x^2)</code> describe the multiple linear regression model <span class="math inline">\(E(Y|X)=\beta_0+\beta_1 X + \beta_2 X^2\)</span>. The <code>I()</code> function is a special function that tells R to create a regressor based on the syntax inside the <code>()</code> and include that regressor in the model.</li>
 </ul>
 <p>In the code below, we fit the linear model regressing <code>bill_length_mm</code> on <code>body_mass_g</code> and <code>flipper_length_mm</code> and then use the <code>coef</code> and <code>deviance</code> functions to extract the estimated coefficients and RSS of the fitted model, respectively.</p>
-<div class="sourceCode" id="cb95"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb95-1"><a href="linear-model-estimation.html#cb95-1" aria-hidden="true" tabindex="-1"></a><span class="co"># fit model</span></span>
-<span id="cb95-2"><a href="linear-model-estimation.html#cb95-2" aria-hidden="true" tabindex="-1"></a>mlmod <span class="ot">&lt;-</span> <span class="fu">lm</span>(bill_length_mm <span class="sc">~</span> body_mass_g <span class="sc">+</span> flipper_length_mm, <span class="at">data =</span> penguins)</span>
-<span id="cb95-3"><a href="linear-model-estimation.html#cb95-3" aria-hidden="true" tabindex="-1"></a><span class="co"># extract estimated coefficients</span></span>
-<span id="cb95-4"><a href="linear-model-estimation.html#cb95-4" aria-hidden="true" tabindex="-1"></a><span class="fu">coef</span>(mlmod)</span>
-<span id="cb95-5"><a href="linear-model-estimation.html#cb95-5" aria-hidden="true" tabindex="-1"></a><span class="do">##       (Intercept)       body_mass_g flipper_length_mm </span></span>
-<span id="cb95-6"><a href="linear-model-estimation.html#cb95-6" aria-hidden="true" tabindex="-1"></a><span class="do">##     -3.4366939266      0.0006622186      0.2218654584</span></span>
-<span id="cb95-7"><a href="linear-model-estimation.html#cb95-7" aria-hidden="true" tabindex="-1"></a><span class="co"># extract RSS</span></span>
-<span id="cb95-8"><a href="linear-model-estimation.html#cb95-8" aria-hidden="true" tabindex="-1"></a><span class="fu">deviance</span>(mlmod)</span>
-<span id="cb95-9"><a href="linear-model-estimation.html#cb95-9" aria-hidden="true" tabindex="-1"></a><span class="do">## [1] 5764.585</span></span></code></pre></div>
+<div class="sourceCode" id="cb101"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb101-1"><a href="linear-model-estimation.html#cb101-1" aria-hidden="true" tabindex="-1"></a><span class="co"># fit model</span></span>
+<span id="cb101-2"><a href="linear-model-estimation.html#cb101-2" aria-hidden="true" tabindex="-1"></a>mlmod <span class="ot">&lt;-</span> <span class="fu">lm</span>(bill_length_mm <span class="sc">~</span> body_mass_g <span class="sc">+</span> flipper_length_mm, <span class="at">data =</span> penguins)</span>
+<span id="cb101-3"><a href="linear-model-estimation.html#cb101-3" aria-hidden="true" tabindex="-1"></a><span class="co"># extract estimated coefficients</span></span>
+<span id="cb101-4"><a href="linear-model-estimation.html#cb101-4" aria-hidden="true" tabindex="-1"></a><span class="fu">coef</span>(mlmod)</span>
+<span id="cb101-5"><a href="linear-model-estimation.html#cb101-5" aria-hidden="true" tabindex="-1"></a><span class="do">##       (Intercept)       body_mass_g flipper_length_mm </span></span>
+<span id="cb101-6"><a href="linear-model-estimation.html#cb101-6" aria-hidden="true" tabindex="-1"></a><span class="do">##     -3.4366939266      0.0006622186      0.2218654584</span></span>
+<span id="cb101-7"><a href="linear-model-estimation.html#cb101-7" aria-hidden="true" tabindex="-1"></a><span class="co"># extract RSS</span></span>
+<span id="cb101-8"><a href="linear-model-estimation.html#cb101-8" aria-hidden="true" tabindex="-1"></a><span class="fu">deviance</span>(mlmod)</span>
+<span id="cb101-9"><a href="linear-model-estimation.html#cb101-9" aria-hidden="true" tabindex="-1"></a><span class="do">## [1] 5764.585</span></span></code></pre></div>
 <p>The fitted model is
 <span class="math display">\[
 \widehat{\mathtt{bill\_length\_mm}}=-3.44+0.0007 \,\mathtt{body\_mass\_g}+0.22\,\mathtt{flipper\_length\_mm}.
@@ -1068,7 +1075,13 @@ I_S(x) =
 0 &amp; \textrm{if}\;x \notin S
 \end{cases},
 \]</span>
-which is shorthand for a function that returns 1 if <span class="math inline">\(x\)</span> is in the set <span class="math inline">\(S\)</span> and 0 otherwise.</p>
+which is shorthand for a function that returns 1 if <span class="math inline">\(x\)</span> is in the set <span class="math inline">\(S\)</span> and 0 otherwise. Some examples are:</p>
+<ul>
+<li><span class="math inline">\(I_{\{2,3\}}(2) = 1\)</span>.</li>
+<li><span class="math inline">\(I_{\{2,3\}}(2.5) = 1\)</span>.</li>
+<li><span class="math inline">\(I_{[2,3]}(2.5) = 1\)</span>, where <span class="math inline">\([2,3]\)</span> is the interval from 2 to 3 and not the set containing only the numbers 2 and 3.</li>
+<li><span class="math inline">\(I_{\{\text{red},\text{green}\}}(\text{green}) = 1\)</span>.</li>
+</ul>
 <p>Let <span class="math inline">\(C\)</span> denote a categorical predictor with levels <span class="math inline">\(L_1\)</span> and <span class="math inline">\(L_2\)</span>. The <span class="math inline">\(C\)</span> stands for “categorical”, while the <span class="math inline">\(L\)</span> stands for “level”. Let <span class="math inline">\(c_i\)</span> denote the value of <span class="math inline">\(C\)</span> for observation <span class="math inline">\(i\)</span>.</p>
 <p>Let <span class="math inline">\(D_j\)</span> denote the indicator (dummy) variable for factor level <span class="math inline">\(L_j\)</span> of <span class="math inline">\(C\)</span>. The value of <span class="math inline">\(D_j\)</span> for observation <span class="math inline">\(i\)</span> is denoted <span class="math inline">\(d_{i,j}\)</span>, with
 <span class="math display">\[
@@ -1109,12 +1122,12 @@ E(Y\mid X, C) =
 </div>
 <div id="extensions" class="section level3 hasAnchor" number="3.8.3">
 <h3><span class="header-section-number">3.8.3</span> Extensions<a href="linear-model-estimation.html#extensions" class="anchor-section" aria-label="Anchor link to header"></a></h3>
-<p>We have presented the most basic regression models that include a categorical predictor. If we have a categorical predictor <span class="math inline">\(C\)</span> with <span class="math inline">\(K\)</span> levels <span class="math inline">\(L_1, L_2, \ldots, L_K\)</span>, then we can add indicator variables <span class="math inline">\(D_2, D_3, \ldots, L_K\)</span> to a simple linear regression model to create a parallel lines model for each level of <span class="math inline">\(C\)</span>. Similarly, we can add regressors <span class="math inline">\(D_2, D_3, \ldots, D_K, X D_2, X D_3, \ldots, X D_K\)</span> to a simple linear regression model to create a separate lines model for each level of <span class="math inline">\(C\)</span>.</p>
+<p>We have presented the most basic regression models that include a categorical predictor. If we have a categorical predictor <span class="math inline">\(C\)</span> with <span class="math inline">\(K\)</span> levels <span class="math inline">\(L_1, L_2, \ldots, L_K\)</span>, then we can add indicator variables <span class="math inline">\(D_2, D_3, \ldots, D_K\)</span> to a simple linear regression model to create a parallel lines model for each level of <span class="math inline">\(C\)</span>. Similarly, we can add regressors <span class="math inline">\(D_2, D_3, \ldots, D_K, X D_2, X D_3, \ldots, X D_K\)</span> to a simple linear regression model to create a separate lines model for each level of <span class="math inline">\(C\)</span>.</p>
 <p>It is easy to imagine using multiple categorical predictors in a model, interacting one or more categorical predictors with one or more numeric regressors in model, etc. These models can be fit easily using R (as we’ll see below), though interpretation becomes more challenging.</p>
 </div>
 <div id="avoiding-an-easy-mistake" class="section level3 hasAnchor" number="3.8.4">
 <h3><span class="header-section-number">3.8.4</span> Avoiding an easy mistake<a href="linear-model-estimation.html#avoiding-an-easy-mistake" class="anchor-section" aria-label="Anchor link to header"></a></h3>
-<p>Why didn’t we add <span class="math inline">\(D_1\)</span> to the parallel lines model? Or <span class="math inline">\(D_1\)</span> and <span class="math inline">\(D_1 X\)</span> to the separate lines model? First, we notice that we don’t <em>need</em> to add them. E.g., if an observation doesn’t have level <span class="math inline">\(L_2\)</span> (<span class="math inline">\(D_2=0\)</span>), then it must have level <span class="math inline">\(L_1\)</span>. More importantly, we didn’t do this because it will create linear dependencies in the columns of the regressor matrix <span class="math inline">\(\mathbf{X}\)</span>.</p>
+<p>Consider the setting where <span class="math inline">\(C\)</span> has only 2 levels. Why don’t we add <span class="math inline">\(D_1\)</span> to the parallel lines model that already has <span class="math inline">\(D_2\)</span>? Or <span class="math inline">\(D_1\)</span> and <span class="math inline">\(D_1 X\)</span> to the separate lines model that already has <span class="math inline">\(D_2\)</span> and <span class="math inline">\(D_2 X\)</span>? First, we notice that we don’t <em>need</em> to add them. E.g., if an observation doesn’t have level <span class="math inline">\(L_2\)</span> (<span class="math inline">\(D_2=0\)</span>), then it must have level <span class="math inline">\(L_1\)</span>. More importantly, we didn’t do this because it will create linear dependencies in the columns of the regressor matrix <span class="math inline">\(\mathbf{X}\)</span>.</p>
 <p>Let <span class="math inline">\(\mathbf{d}_1=[d_{1,1}, d_{2,1}, \ldots, d_{n,1}]\)</span> be the column vector of observed values for indicator variable <span class="math inline">\(D_1\)</span> and <span class="math inline">\(\mathbf{d}_2\)</span> be the column vector for <span class="math inline">\(D_2\)</span>. Then for a two-level categorical variable, <span class="math inline">\(\mathbf{d}_1 + \mathbf{d}_2\)</span> is an <span class="math inline">\(n\times 1\)</span> vector of 1s, meaning that <span class="math inline">\(D_1\)</span> and <span class="math inline">\(D_2\)</span> will be linearly dependent with the intercept column of our <span class="math inline">\(\mathbf{X}\)</span> matrix. Thus, adding <span class="math inline">\(D_1\)</span> to the parallel lines model would result in <span class="math inline">\(\mathbf{X}\)</span> having linearly dependent columns, which creates estimation problems.</p>
 <p>For a categorical predictor with <span class="math inline">\(K\)</span> levels, we only need indicator variables for <span class="math inline">\(K-1\)</span> levels of the categorical predictor. The level without an indicator variable in the regression model is known as the <strong>reference level</strong>, which is explained in Chapter <a href="interp-chapter.html#interp-chapter">4</a>. Technically, we can choose any level to be our reference level, but R automatically chooses the first level of a categorical (<code>factor</code>) variable to be the reference level, so we adopt that convention.</p>
 </div>
@@ -1122,11 +1135,11 @@ E(Y\mid X, C) =
 <div id="s:penguins-mlr2" class="section level2 hasAnchor" number="3.9">
 <h2><span class="header-section-number">3.9</span> Penguins example with categorical predictor<a href="linear-model-estimation.html#s:penguins-mlr2" class="anchor-section" aria-label="Anchor link to header"></a></h2>
 <p>We return once again to the <code>penguins</code> data previously introduced. We use the code below to produce Figure <a href="linear-model-estimation.html#fig:penguins-grouped-scatter">3.6</a>, which displays the grouped scatter plot of <code>bill_length_mm</code> versus <code>body_mass_g</code> that distinguishes the <code>species</code> of each observation. It is very clear that the relationship between bill length and body mass changes depending on the species of penguin.</p>
-<div class="sourceCode" id="cb96"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb96-1"><a href="linear-model-estimation.html#cb96-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(ggplot2) <span class="co"># load package</span></span>
-<span id="cb96-2"><a href="linear-model-estimation.html#cb96-2" aria-hidden="true" tabindex="-1"></a><span class="co"># create grouped scatterplot</span></span>
-<span id="cb96-3"><a href="linear-model-estimation.html#cb96-3" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(<span class="at">data =</span> penguins) <span class="sc">+</span></span>
-<span id="cb96-4"><a href="linear-model-estimation.html#cb96-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_point</span>(<span class="fu">aes</span>(<span class="at">x =</span> body_mass_g, <span class="at">y =</span> bill_length_mm, <span class="at">shape =</span> species, <span class="at">color =</span> species)) <span class="sc">+</span></span>
-<span id="cb96-5"><a href="linear-model-estimation.html#cb96-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">xlab</span>(<span class="st">&quot;body mass (g)&quot;</span>) <span class="sc">+</span> <span class="fu">ylab</span>(<span class="st">&quot;bill length (mm)&quot;</span>)</span></code></pre></div>
+<div class="sourceCode" id="cb102"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb102-1"><a href="linear-model-estimation.html#cb102-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(ggplot2) <span class="co"># load package</span></span>
+<span id="cb102-2"><a href="linear-model-estimation.html#cb102-2" aria-hidden="true" tabindex="-1"></a><span class="co"># create grouped scatterplot</span></span>
+<span id="cb102-3"><a href="linear-model-estimation.html#cb102-3" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(<span class="at">data =</span> penguins) <span class="sc">+</span></span>
+<span id="cb102-4"><a href="linear-model-estimation.html#cb102-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_point</span>(<span class="fu">aes</span>(<span class="at">x =</span> body_mass_g, <span class="at">y =</span> bill_length_mm, <span class="at">shape =</span> species, <span class="at">color =</span> species)) <span class="sc">+</span></span>
+<span id="cb102-5"><a href="linear-model-estimation.html#cb102-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">xlab</span>(<span class="st">&quot;body mass (g)&quot;</span>) <span class="sc">+</span> <span class="fu">ylab</span>(<span class="st">&quot;bill length (mm)&quot;</span>)</span></code></pre></div>
 <div class="figure"><span style="display:block;" id="fig:penguins-grouped-scatter"></span>
 <img src="A-Progessive-Introduction-to-Linear-Models_files/figure-html/penguins-grouped-scatter-1.png" alt="A grouped scatter plot of body mass versus bill length that distinguishes penguin species." width="672" />
 <p class="caption">
@@ -1138,14 +1151,14 @@ Figure 3.6: A grouped scatter plot of body mass versus bill length that distingu
 <p>Let <span class="math inline">\(D_C\)</span> denote the indicator variable for the <code>Chinstrap</code> level and <span class="math inline">\(D_G\)</span> denote the indicator variable for the <code>Gentoo</code> level. To fit the parallel lines regression model
 <span class="math display">\[E(\mathtt{bill\_length\_mm} \mid \mathtt{body\_mass\_g}, \mathtt{species}) = \beta_{0} + \beta_1 \mathtt{body\_mass\_g} + \beta_2 D_C + \beta_3 D_G,\]</span>
 we run the code below. The <code>coef</code> function is used to extract the estimated coefficients from our fitted model in <code>lmodp</code>.</p>
-<div class="sourceCode" id="cb97"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb97-1"><a href="linear-model-estimation.html#cb97-1" aria-hidden="true" tabindex="-1"></a><span class="co"># fit parallel lines model</span></span>
-<span id="cb97-2"><a href="linear-model-estimation.html#cb97-2" aria-hidden="true" tabindex="-1"></a>lmodp <span class="ot">&lt;-</span> <span class="fu">lm</span>(bill_length_mm <span class="sc">~</span> body_mass_g <span class="sc">+</span> species, <span class="at">data =</span> penguins)</span>
-<span id="cb97-3"><a href="linear-model-estimation.html#cb97-3" aria-hidden="true" tabindex="-1"></a><span class="co"># extract coefficients</span></span>
-<span id="cb97-4"><a href="linear-model-estimation.html#cb97-4" aria-hidden="true" tabindex="-1"></a><span class="fu">coef</span>(lmodp)</span>
-<span id="cb97-5"><a href="linear-model-estimation.html#cb97-5" aria-hidden="true" tabindex="-1"></a><span class="do">##      (Intercept)      body_mass_g speciesChinstrap </span></span>
-<span id="cb97-6"><a href="linear-model-estimation.html#cb97-6" aria-hidden="true" tabindex="-1"></a><span class="do">##     24.919470977      0.003748497      9.920884113 </span></span>
-<span id="cb97-7"><a href="linear-model-estimation.html#cb97-7" aria-hidden="true" tabindex="-1"></a><span class="do">##    speciesGentoo </span></span>
-<span id="cb97-8"><a href="linear-model-estimation.html#cb97-8" aria-hidden="true" tabindex="-1"></a><span class="do">##      3.557977539</span></span></code></pre></div>
+<div class="sourceCode" id="cb103"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb103-1"><a href="linear-model-estimation.html#cb103-1" aria-hidden="true" tabindex="-1"></a><span class="co"># fit parallel lines model</span></span>
+<span id="cb103-2"><a href="linear-model-estimation.html#cb103-2" aria-hidden="true" tabindex="-1"></a>lmodp <span class="ot">&lt;-</span> <span class="fu">lm</span>(bill_length_mm <span class="sc">~</span> body_mass_g <span class="sc">+</span> species, <span class="at">data =</span> penguins)</span>
+<span id="cb103-3"><a href="linear-model-estimation.html#cb103-3" aria-hidden="true" tabindex="-1"></a><span class="co"># extract coefficients</span></span>
+<span id="cb103-4"><a href="linear-model-estimation.html#cb103-4" aria-hidden="true" tabindex="-1"></a><span class="fu">coef</span>(lmodp)</span>
+<span id="cb103-5"><a href="linear-model-estimation.html#cb103-5" aria-hidden="true" tabindex="-1"></a><span class="do">##      (Intercept)      body_mass_g speciesChinstrap </span></span>
+<span id="cb103-6"><a href="linear-model-estimation.html#cb103-6" aria-hidden="true" tabindex="-1"></a><span class="do">##     24.919470977      0.003748497      9.920884113 </span></span>
+<span id="cb103-7"><a href="linear-model-estimation.html#cb103-7" aria-hidden="true" tabindex="-1"></a><span class="do">##    speciesGentoo </span></span>
+<span id="cb103-8"><a href="linear-model-estimation.html#cb103-8" aria-hidden="true" tabindex="-1"></a><span class="do">##      3.557977539</span></span></code></pre></div>
 <p>Thus, the fitted parallel lines model is
 <span class="math display" id="eq:pl-model-penguins">\[
 \begin{aligned}
@@ -1180,32 +1193,32 @@ Lastly, when an observation has <code>species</code> level <code>Gentoo</code>, 
 \]</span>
 Adding fitted lines for each <code>species</code> level to the scatter plot in Figure <a href="linear-model-estimation.html#fig:penguins-grouped-scatter">3.6</a> is a bit more difficult than before. One technique is to use <code>predict</code> to get the fitted values of each observation, use the <code>transform</code> function to add those values as a column to the original the data frame, then use <code>geom_line</code> to connect the fitted values from each group.</p>
 <p>We start by adding our fitted values to the <code>penguins</code> data frame. We use the <code>predict</code> function to obtained the fitted values of our fitted model and then use the <code>transform</code> function to add those values as the <code>pl_fitted</code> variable in the <code>penguins</code> data frame.</p>
-<div class="sourceCode" id="cb98"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb98-1"><a href="linear-model-estimation.html#cb98-1" aria-hidden="true" tabindex="-1"></a>penguins <span class="ot">&lt;-</span></span>
-<span id="cb98-2"><a href="linear-model-estimation.html#cb98-2" aria-hidden="true" tabindex="-1"></a>  penguins <span class="sc">|&gt;</span></span>
-<span id="cb98-3"><a href="linear-model-estimation.html#cb98-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">transform</span>(<span class="at">pl_fitted =</span> <span class="fu">predict</span>(lmodp))</span>
-<span id="cb98-4"><a href="linear-model-estimation.html#cb98-4" aria-hidden="true" tabindex="-1"></a><span class="do">## Error in data.frame(structure(list(species = structure(c(1L, 1L, 1L, 1L, : arguments imply differing number of rows: 344, 342</span></span></code></pre></div>
+<div class="sourceCode" id="cb104"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb104-1"><a href="linear-model-estimation.html#cb104-1" aria-hidden="true" tabindex="-1"></a>penguins <span class="ot">&lt;-</span></span>
+<span id="cb104-2"><a href="linear-model-estimation.html#cb104-2" aria-hidden="true" tabindex="-1"></a>  penguins <span class="sc">|&gt;</span></span>
+<span id="cb104-3"><a href="linear-model-estimation.html#cb104-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">transform</span>(<span class="at">pl_fitted =</span> <span class="fu">predict</span>(lmodp))</span>
+<span id="cb104-4"><a href="linear-model-estimation.html#cb104-4" aria-hidden="true" tabindex="-1"></a><span class="do">## Error in data.frame(structure(list(species = structure(c(1L, 1L, 1L, 1L, : arguments imply differing number of rows: 344, 342</span></span></code></pre></div>
 <p>We just received a nasty error. What is going on? The original <code>penguins</code> data frame has 344 rows. However, two rows had <code>NA</code> observations such that when we used the <code>lm</code> function to fit our parallel lines model, those observations were removed prior to fitting. The <code>predict</code> function produces fitted values for the observations used in the fitting process, so there are only 342 predicted values. There is a mismatch between the number of rows in <code>penguins</code> and the number of values we attempt to add in the new column <code>pl_fitted</code>, so we get an error.</p>
 <p>To handle this error, we refit our model while setting the <code>na.action</code> argument to <code>na.exclude</code>. As stated Details section of the documentation for the <code>lm</code> function (run <code>?lm</code> in the Console):</p>
 <blockquote>
 <p><span class="math inline">\(\ldots\)</span> when <code>na.exclude</code> is used the residuals and predictions are padded to the correct length by inserting <code>NA</code>s for cases omitted by <code>na.exclude</code>.</p>
 </blockquote>
 <p>We refit the parallel lines model below with <code>na.action = na.exclude</code>, then use the <code>predict</code> function to add the fitted values to the <code>penguins</code> data frame via the <code>transform</code> function.</p>
-<div class="sourceCode" id="cb99"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb99-1"><a href="linear-model-estimation.html#cb99-1" aria-hidden="true" tabindex="-1"></a><span class="co"># refit parallel lines model with new na.action behavior</span></span>
-<span id="cb99-2"><a href="linear-model-estimation.html#cb99-2" aria-hidden="true" tabindex="-1"></a>lmodp <span class="ot">&lt;-</span> <span class="fu">lm</span>(bill_length_mm <span class="sc">~</span> body_mass_g <span class="sc">+</span> species, <span class="at">data =</span> penguins, <span class="at">na.action =</span> na.exclude)</span>
-<span id="cb99-3"><a href="linear-model-estimation.html#cb99-3" aria-hidden="true" tabindex="-1"></a><span class="co"># add fitted values to penguins data frame</span></span>
-<span id="cb99-4"><a href="linear-model-estimation.html#cb99-4" aria-hidden="true" tabindex="-1"></a>penguins <span class="ot">&lt;-</span></span>
-<span id="cb99-5"><a href="linear-model-estimation.html#cb99-5" aria-hidden="true" tabindex="-1"></a>  penguins <span class="sc">|&gt;</span></span>
-<span id="cb99-6"><a href="linear-model-estimation.html#cb99-6" aria-hidden="true" tabindex="-1"></a>  <span class="fu">transform</span>(<span class="at">pl_fitted =</span> <span class="fu">predict</span>(lmodp))</span></code></pre></div>
+<div class="sourceCode" id="cb105"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb105-1"><a href="linear-model-estimation.html#cb105-1" aria-hidden="true" tabindex="-1"></a><span class="co"># refit parallel lines model with new na.action behavior</span></span>
+<span id="cb105-2"><a href="linear-model-estimation.html#cb105-2" aria-hidden="true" tabindex="-1"></a>lmodp <span class="ot">&lt;-</span> <span class="fu">lm</span>(bill_length_mm <span class="sc">~</span> body_mass_g <span class="sc">+</span> species, <span class="at">data =</span> penguins, <span class="at">na.action =</span> na.exclude)</span>
+<span id="cb105-3"><a href="linear-model-estimation.html#cb105-3" aria-hidden="true" tabindex="-1"></a><span class="co"># add fitted values to penguins data frame</span></span>
+<span id="cb105-4"><a href="linear-model-estimation.html#cb105-4" aria-hidden="true" tabindex="-1"></a>penguins <span class="ot">&lt;-</span></span>
+<span id="cb105-5"><a href="linear-model-estimation.html#cb105-5" aria-hidden="true" tabindex="-1"></a>  penguins <span class="sc">|&gt;</span></span>
+<span id="cb105-6"><a href="linear-model-estimation.html#cb105-6" aria-hidden="true" tabindex="-1"></a>  <span class="fu">transform</span>(<span class="at">pl_fitted =</span> <span class="fu">predict</span>(lmodp))</span></code></pre></div>
 <p>We now use the <code>geom_line</code> function to add the fitted lines for each <code>species</code> level to our scatter plot. Figure <a href="linear-model-estimation.html#fig:pl-penguin-fit">3.7</a> displays the results from running the code below. The parallel lines model shown in Figure <a href="linear-model-estimation.html#fig:pl-penguin-fit">3.7</a> fits the <code>penguins</code> data better than the simple linear regression model shown in Figure <a href="linear-model-estimation.html#fig:slr-penguin-fit">3.5</a>.</p>
-<div class="sourceCode" id="cb100"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb100-1"><a href="linear-model-estimation.html#cb100-1" aria-hidden="true" tabindex="-1"></a><span class="co"># create plot</span></span>
-<span id="cb100-2"><a href="linear-model-estimation.html#cb100-2" aria-hidden="true" tabindex="-1"></a><span class="co"># create scatterplot</span></span>
-<span id="cb100-3"><a href="linear-model-estimation.html#cb100-3" aria-hidden="true" tabindex="-1"></a><span class="co"># customize labels</span></span>
-<span id="cb100-4"><a href="linear-model-estimation.html#cb100-4" aria-hidden="true" tabindex="-1"></a><span class="co"># add lines for each level of species</span></span>
-<span id="cb100-5"><a href="linear-model-estimation.html#cb100-5" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(<span class="at">data =</span> penguins) <span class="sc">+</span></span>
-<span id="cb100-6"><a href="linear-model-estimation.html#cb100-6" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_point</span>(<span class="fu">aes</span>(<span class="at">x =</span> body_mass_g, <span class="at">y =</span> bill_length_mm,</span>
-<span id="cb100-7"><a href="linear-model-estimation.html#cb100-7" aria-hidden="true" tabindex="-1"></a>                 <span class="at">shape =</span> species, <span class="at">color =</span> species)) <span class="sc">+</span></span>
-<span id="cb100-8"><a href="linear-model-estimation.html#cb100-8" aria-hidden="true" tabindex="-1"></a>  <span class="fu">xlab</span>(<span class="st">&quot;body mass (g)&quot;</span>) <span class="sc">+</span> <span class="fu">ylab</span>(<span class="st">&quot;bill length (mm)&quot;</span>) <span class="sc">+</span></span>
-<span id="cb100-9"><a href="linear-model-estimation.html#cb100-9" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_line</span>(<span class="fu">aes</span>(<span class="at">x =</span> body_mass_g, <span class="at">y =</span> pl_fitted, <span class="at">color =</span> species))</span></code></pre></div>
+<div class="sourceCode" id="cb106"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb106-1"><a href="linear-model-estimation.html#cb106-1" aria-hidden="true" tabindex="-1"></a><span class="co"># create plot</span></span>
+<span id="cb106-2"><a href="linear-model-estimation.html#cb106-2" aria-hidden="true" tabindex="-1"></a><span class="co"># create scatterplot</span></span>
+<span id="cb106-3"><a href="linear-model-estimation.html#cb106-3" aria-hidden="true" tabindex="-1"></a><span class="co"># customize labels</span></span>
+<span id="cb106-4"><a href="linear-model-estimation.html#cb106-4" aria-hidden="true" tabindex="-1"></a><span class="co"># add lines for each level of species</span></span>
+<span id="cb106-5"><a href="linear-model-estimation.html#cb106-5" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(<span class="at">data =</span> penguins) <span class="sc">+</span></span>
+<span id="cb106-6"><a href="linear-model-estimation.html#cb106-6" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_point</span>(<span class="fu">aes</span>(<span class="at">x =</span> body_mass_g, <span class="at">y =</span> bill_length_mm,</span>
+<span id="cb106-7"><a href="linear-model-estimation.html#cb106-7" aria-hidden="true" tabindex="-1"></a>                 <span class="at">shape =</span> species, <span class="at">color =</span> species)) <span class="sc">+</span></span>
+<span id="cb106-8"><a href="linear-model-estimation.html#cb106-8" aria-hidden="true" tabindex="-1"></a>  <span class="fu">xlab</span>(<span class="st">&quot;body mass (g)&quot;</span>) <span class="sc">+</span> <span class="fu">ylab</span>(<span class="st">&quot;bill length (mm)&quot;</span>) <span class="sc">+</span></span>
+<span id="cb106-9"><a href="linear-model-estimation.html#cb106-9" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_line</span>(<span class="fu">aes</span>(<span class="at">x =</span> body_mass_g, <span class="at">y =</span> pl_fitted, <span class="at">color =</span> species))</span></code></pre></div>
 <div class="figure"><span style="display:block;" id="fig:pl-penguin-fit"></span>
 <img src="A-Progessive-Introduction-to-Linear-Models_files/figure-html/pl-penguin-fit-1.png" alt="The fitted lines from the separate lines model for each level of `species` is added to the grouped scatter plot of `bill_length_mm` versus `body_mass_g`." width="672" />
 <p class="caption">
@@ -1220,36 +1233,36 @@ Figure 3.7: The fitted lines from the separate lines model for each level of <co
 \end{aligned}
 \]</span>
 using the code below, using the <code>coef</code> function to extract the estimated coefficients. The terms with <code>:</code> are interaction variables, e.g., <code>body_mass_g:speciesChinstrap</code> is <span class="math inline">\(\hat{\beta}_4\)</span>, the coefficient for the interaction between regressor <span class="math inline">\(\mathtt{body\_mass\_g} D_C\)</span>.</p>
-<div class="sourceCode" id="cb101"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb101-1"><a href="linear-model-estimation.html#cb101-1" aria-hidden="true" tabindex="-1"></a><span class="co"># fit separate lines model</span></span>
-<span id="cb101-2"><a href="linear-model-estimation.html#cb101-2" aria-hidden="true" tabindex="-1"></a><span class="co"># na.omit = na.exclude used to change predict behavior</span></span>
-<span id="cb101-3"><a href="linear-model-estimation.html#cb101-3" aria-hidden="true" tabindex="-1"></a>lmods <span class="ot">&lt;-</span> <span class="fu">lm</span>(bill_length_mm <span class="sc">~</span> body_mass_g <span class="sc">+</span> species <span class="sc">+</span> body_mass_g<span class="sc">:</span>species,</span>
-<span id="cb101-4"><a href="linear-model-estimation.html#cb101-4" aria-hidden="true" tabindex="-1"></a>            <span class="at">data =</span> penguins, <span class="at">na.action =</span> na.exclude)</span>
-<span id="cb101-5"><a href="linear-model-estimation.html#cb101-5" aria-hidden="true" tabindex="-1"></a><span class="co"># extract estimated coefficients</span></span>
-<span id="cb101-6"><a href="linear-model-estimation.html#cb101-6" aria-hidden="true" tabindex="-1"></a><span class="fu">coef</span>(lmods)</span>
-<span id="cb101-7"><a href="linear-model-estimation.html#cb101-7" aria-hidden="true" tabindex="-1"></a><span class="do">##                  (Intercept)                  body_mass_g </span></span>
-<span id="cb101-8"><a href="linear-model-estimation.html#cb101-8" aria-hidden="true" tabindex="-1"></a><span class="do">##                26.9941391367                 0.0031878758 </span></span>
-<span id="cb101-9"><a href="linear-model-estimation.html#cb101-9" aria-hidden="true" tabindex="-1"></a><span class="do">##             speciesChinstrap                speciesGentoo </span></span>
-<span id="cb101-10"><a href="linear-model-estimation.html#cb101-10" aria-hidden="true" tabindex="-1"></a><span class="do">##                 5.1800537287                -0.2545906615 </span></span>
-<span id="cb101-11"><a href="linear-model-estimation.html#cb101-11" aria-hidden="true" tabindex="-1"></a><span class="do">## body_mass_g:speciesChinstrap    body_mass_g:speciesGentoo </span></span>
-<span id="cb101-12"><a href="linear-model-estimation.html#cb101-12" aria-hidden="true" tabindex="-1"></a><span class="do">##                 0.0012748183                 0.0009029956</span></span></code></pre></div>
-<p>Thus, the fitted separate lines model is
-<span class="math display" id="eq:sl-model-penguins">\[
+<div class="sourceCode" id="cb107"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb107-1"><a href="linear-model-estimation.html#cb107-1" aria-hidden="true" tabindex="-1"></a><span class="co"># fit separate lines model</span></span>
+<span id="cb107-2"><a href="linear-model-estimation.html#cb107-2" aria-hidden="true" tabindex="-1"></a><span class="co"># na.omit = na.exclude used to change predict behavior</span></span>
+<span id="cb107-3"><a href="linear-model-estimation.html#cb107-3" aria-hidden="true" tabindex="-1"></a>lmods <span class="ot">&lt;-</span> <span class="fu">lm</span>(bill_length_mm <span class="sc">~</span> body_mass_g <span class="sc">+</span> species <span class="sc">+</span> body_mass_g<span class="sc">:</span>species,</span>
+<span id="cb107-4"><a href="linear-model-estimation.html#cb107-4" aria-hidden="true" tabindex="-1"></a>            <span class="at">data =</span> penguins, <span class="at">na.action =</span> na.exclude)</span>
+<span id="cb107-5"><a href="linear-model-estimation.html#cb107-5" aria-hidden="true" tabindex="-1"></a><span class="co"># extract estimated coefficients</span></span>
+<span id="cb107-6"><a href="linear-model-estimation.html#cb107-6" aria-hidden="true" tabindex="-1"></a><span class="fu">coef</span>(lmods)</span>
+<span id="cb107-7"><a href="linear-model-estimation.html#cb107-7" aria-hidden="true" tabindex="-1"></a><span class="do">##                  (Intercept)                  body_mass_g </span></span>
+<span id="cb107-8"><a href="linear-model-estimation.html#cb107-8" aria-hidden="true" tabindex="-1"></a><span class="do">##                26.9941391367                 0.0031878758 </span></span>
+<span id="cb107-9"><a href="linear-model-estimation.html#cb107-9" aria-hidden="true" tabindex="-1"></a><span class="do">##             speciesChinstrap                speciesGentoo </span></span>
+<span id="cb107-10"><a href="linear-model-estimation.html#cb107-10" aria-hidden="true" tabindex="-1"></a><span class="do">##                 5.1800537287                -0.2545906615 </span></span>
+<span id="cb107-11"><a href="linear-model-estimation.html#cb107-11" aria-hidden="true" tabindex="-1"></a><span class="do">## body_mass_g:speciesChinstrap    body_mass_g:speciesGentoo </span></span>
+<span id="cb107-12"><a href="linear-model-estimation.html#cb107-12" aria-hidden="true" tabindex="-1"></a><span class="do">##                 0.0012748183                 0.0009029956</span></span></code></pre></div>
+<p>Thus, the fitted separate lines model is</p>
+<p><span class="math display" id="eq:sl-model-penguins">\[
 \begin{aligned}
 &amp;\hat{E}(\mathtt{bill\_length\_mm} \mid \mathtt{body\_mass\_g}, \mathtt{species}) \\
 &amp;= 26.99 + 0.003 \mathtt{body\_mass\_g} + 5.18 D_C - 0.25 D_G \\
-&amp;\quad + 0.001 \mathtt{body\_mass\_g} D_C + 0.0009 \mathtt{body\_mass\_g} D_G, \tag{3.26}
-\end{aligned}
+&amp; \quad + 0.001 \mathtt{body\_mass\_g} D_C + 0.0009 \mathtt{body\_mass\_g} D_G. \end{aligned}
+\tag{3.26}
 \]</span></p>
-<p>When an observation has <code>species</code> level <code>Adelie</code>, then Equation <a href="linear-model-estimation.html#eq:sl-model-penguins">(3.26)</a> simplifies to
-<span class="math display">\[
+<p>When an observation has <code>species</code> level <code>Adelie</code>, then Equation <a href="linear-model-estimation.html#eq:sl-model-penguins">(3.26)</a> simplifies to</p>
+<p><span class="math display">\[
 \begin{aligned}
 &amp;\hat{E}(\mathtt{bill\_length\_mm} \mid \mathtt{body\_mass\_g}, \mathtt{species}=\mathtt{Adelie}) \\
 &amp;=26.99 + 0.003 \mathtt{body\_mass\_g} + 5.18 \cdot 0 - 0.25 \cdot 0\\
 &amp;\quad + 0.001 \cdot \mathtt{body\_mass\_g} \cdot 0 + 0.0009 \cdot \mathtt{body\_mass\_g} \cdot 0\\
 &amp;= 26.99 + 0.003 \mathtt{body\_mass\_g}.
 \end{aligned}
-\]</span>
-When an observation has <code>species</code> level <code>Chinstrap</code>, then Equation <a href="linear-model-estimation.html#eq:sl-model-penguins">(3.26)</a> simplifies to
+\]</span></p>
+<p>When an observation has <code>species</code> level <code>Chinstrap</code>, then Equation <a href="linear-model-estimation.html#eq:sl-model-penguins">(3.26)</a> simplifies to
 <span class="math display">\[
 \begin{aligned}
 &amp;\hat{E}(\mathtt{bill\_length\_mm} \mid \mathtt{body\_mass\_g}, \mathtt{species}=\mathtt{Chinstrap}) \\
@@ -1268,15 +1281,15 @@ When an observation has <code>species</code> level <code>Gentoo</code>, then Equ
 \end{aligned}
 \]</span></p>
 <p>We use the code below to display the fitted lines for the separate lines model on the <code>penguins</code> data. Figure <a href="linear-model-estimation.html#fig:sl-penguin-fit">3.8</a> shows the results. The fitted lines match the observed data behavior reasonably well.</p>
-<div class="sourceCode" id="cb102"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb102-1"><a href="linear-model-estimation.html#cb102-1" aria-hidden="true" tabindex="-1"></a><span class="co"># add separate lines fitted values to penguins data frame</span></span>
-<span id="cb102-2"><a href="linear-model-estimation.html#cb102-2" aria-hidden="true" tabindex="-1"></a>penguins <span class="ot">&lt;-</span></span>
-<span id="cb102-3"><a href="linear-model-estimation.html#cb102-3" aria-hidden="true" tabindex="-1"></a>  penguins <span class="sc">|&gt;</span></span>
-<span id="cb102-4"><a href="linear-model-estimation.html#cb102-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">transform</span>(<span class="at">sl_fitted =</span> <span class="fu">predict</span>(lmods))</span>
-<span id="cb102-5"><a href="linear-model-estimation.html#cb102-5" aria-hidden="true" tabindex="-1"></a><span class="co"># use geom_line to add fitted lines to plot</span></span>
-<span id="cb102-6"><a href="linear-model-estimation.html#cb102-6" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(<span class="at">data =</span> penguins) <span class="sc">+</span></span>
-<span id="cb102-7"><a href="linear-model-estimation.html#cb102-7" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_point</span>(<span class="fu">aes</span>(<span class="at">x =</span> body_mass_g, <span class="at">y =</span> bill_length_mm, <span class="at">shape =</span> species, <span class="at">color =</span> species)) <span class="sc">+</span></span>
-<span id="cb102-8"><a href="linear-model-estimation.html#cb102-8" aria-hidden="true" tabindex="-1"></a>  <span class="fu">xlab</span>(<span class="st">&quot;body mass (g)&quot;</span>) <span class="sc">+</span> <span class="fu">ylab</span>(<span class="st">&quot;bill length (mm)&quot;</span>) <span class="sc">+</span></span>
-<span id="cb102-9"><a href="linear-model-estimation.html#cb102-9" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_line</span>(<span class="fu">aes</span>(<span class="at">x =</span> body_mass_g, <span class="at">y =</span> sl_fitted, <span class="at">col =</span> species))</span></code></pre></div>
+<div class="sourceCode" id="cb108"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb108-1"><a href="linear-model-estimation.html#cb108-1" aria-hidden="true" tabindex="-1"></a><span class="co"># add separate lines fitted values to penguins data frame</span></span>
+<span id="cb108-2"><a href="linear-model-estimation.html#cb108-2" aria-hidden="true" tabindex="-1"></a>penguins <span class="ot">&lt;-</span></span>
+<span id="cb108-3"><a href="linear-model-estimation.html#cb108-3" aria-hidden="true" tabindex="-1"></a>  penguins <span class="sc">|&gt;</span></span>
+<span id="cb108-4"><a href="linear-model-estimation.html#cb108-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">transform</span>(<span class="at">sl_fitted =</span> <span class="fu">predict</span>(lmods))</span>
+<span id="cb108-5"><a href="linear-model-estimation.html#cb108-5" aria-hidden="true" tabindex="-1"></a><span class="co"># use geom_line to add fitted lines to plot</span></span>
+<span id="cb108-6"><a href="linear-model-estimation.html#cb108-6" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(<span class="at">data =</span> penguins) <span class="sc">+</span></span>
+<span id="cb108-7"><a href="linear-model-estimation.html#cb108-7" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_point</span>(<span class="fu">aes</span>(<span class="at">x =</span> body_mass_g, <span class="at">y =</span> bill_length_mm, <span class="at">shape =</span> species, <span class="at">color =</span> species)) <span class="sc">+</span></span>
+<span id="cb108-8"><a href="linear-model-estimation.html#cb108-8" aria-hidden="true" tabindex="-1"></a>  <span class="fu">xlab</span>(<span class="st">&quot;body mass (g)&quot;</span>) <span class="sc">+</span> <span class="fu">ylab</span>(<span class="st">&quot;bill length (mm)&quot;</span>) <span class="sc">+</span></span>
+<span id="cb108-9"><a href="linear-model-estimation.html#cb108-9" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_line</span>(<span class="fu">aes</span>(<span class="at">x =</span> body_mass_g, <span class="at">y =</span> sl_fitted, <span class="at">col =</span> species))</span></code></pre></div>
 <div class="figure"><span style="display:block;" id="fig:sl-penguin-fit"></span>
 <img src="A-Progessive-Introduction-to-Linear-Models_files/figure-html/sl-penguin-fit-1.png" alt="The fitted model for each level of `species` is added to the grouped scatter plot of `bill_length_mm` versus `body_mass_g`." width="672" />
 <p class="caption">
@@ -1341,22 +1354,22 @@ Figure 3.9: The coefficient of determination values for 4 different data sets.
 </p>
 </div>
 <p>The coefficient of determination for the parallel lines model fit to the <code>penguins</code> data in Section <a href="linear-model-estimation.html#s:penguins-mlr2">3.9</a> is 0.81, as shown in the R output below. By adding the <code>body_mass_g</code> regressor and <code>species</code> predictor to the constant mean model of <code>bill_length_mm</code>, we reduced the RSS by 81%.</p>
-<div class="sourceCode" id="cb103"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb103-1"><a href="linear-model-estimation.html#cb103-1" aria-hidden="true" tabindex="-1"></a><span class="fu">summary</span>(lmodp)<span class="sc">$</span>r.squared</span>
-<span id="cb103-2"><a href="linear-model-estimation.html#cb103-2" aria-hidden="true" tabindex="-1"></a><span class="do">## [1] 0.8079566</span></span></code></pre></div>
+<div class="sourceCode" id="cb109"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb109-1"><a href="linear-model-estimation.html#cb109-1" aria-hidden="true" tabindex="-1"></a><span class="fu">summary</span>(lmodp)<span class="sc">$</span>r.squared</span>
+<span id="cb109-2"><a href="linear-model-estimation.html#cb109-2" aria-hidden="true" tabindex="-1"></a><span class="do">## [1] 0.8079566</span></span></code></pre></div>
 <p>It may seem sensible to choose between models based on the value of <span class="math inline">\(R^2\)</span>. This is unwise for two reasons:</p>
 <ol style="list-style-type: decimal">
 <li><span class="math inline">\(R^2\)</span> never decreases as regressors are added to an existing model. Basically, we can increase <span class="math inline">\(R^2\)</span> by simply adding regressors to our existing model, even if they are non-sensical.</li>
 <li><span class="math inline">\(R^2\)</span> doesn’t tell us whether a model adequately describes the pattern of the observed data. <span class="math inline">\(R^2\)</span> is a useful statistic for measuring model fit when there is approximately a linear relationship between the response values and fitted values.</li>
 </ol>
 <p>Regarding point 1, consider what happens when we add a regressor of random values to the parallel lines model fit to the <code>penguins</code> data. The code below sets a random number seed so that we can get the same results each time we run the code, creates the regressor <code>noisyx</code> by sampling 344 values randomly drawn from a <span class="math inline">\(\mathcal{N}(0,1)\)</span> distribution, adds <code>noisyx</code> as a regressor to the parallel lines regression model stored in <code>lmodp</code>, and then extracts the <span class="math inline">\(R^2\)</span> value. We use the <code>update</code> method to update our existing model. The <code>update</code> function takes an existing model as its first argument and then the <code>formula</code> for the updated model. The syntax <code>. ~ .</code> means “keep the same response (on the left) and the same regressors (on the right)”. We can then add or subtract regressors using the typical <code>formula</code> syntax. We use this approach to add the <code>noisyx</code> regressor to the regressors already in <code>lmodp</code>.</p>
-<div class="sourceCode" id="cb104"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb104-1"><a href="linear-model-estimation.html#cb104-1" aria-hidden="true" tabindex="-1"></a><span class="fu">set.seed</span>(<span class="dv">28</span>) <span class="co"># for reproducibility</span></span>
-<span id="cb104-2"><a href="linear-model-estimation.html#cb104-2" aria-hidden="true" tabindex="-1"></a><span class="co"># create regressor of random noise</span></span>
-<span id="cb104-3"><a href="linear-model-estimation.html#cb104-3" aria-hidden="true" tabindex="-1"></a>noisyx <span class="ot">&lt;-</span> <span class="fu">rnorm</span>(<span class="dv">344</span>)</span>
-<span id="cb104-4"><a href="linear-model-estimation.html#cb104-4" aria-hidden="true" tabindex="-1"></a><span class="co"># add noisyx as regressor to lmodp</span></span>
-<span id="cb104-5"><a href="linear-model-estimation.html#cb104-5" aria-hidden="true" tabindex="-1"></a>lmod_silly <span class="ot">&lt;-</span> <span class="fu">update</span>(lmodp, . <span class="sc">~</span> . <span class="sc">+</span> noisyx)</span>
-<span id="cb104-6"><a href="linear-model-estimation.html#cb104-6" aria-hidden="true" tabindex="-1"></a><span class="co"># extract R^2 from fitted model</span></span>
-<span id="cb104-7"><a href="linear-model-estimation.html#cb104-7" aria-hidden="true" tabindex="-1"></a><span class="fu">summary</span>(lmod_silly)<span class="sc">$</span>r.squared</span>
-<span id="cb104-8"><a href="linear-model-estimation.html#cb104-8" aria-hidden="true" tabindex="-1"></a><span class="do">## [1] 0.8087789</span></span></code></pre></div>
+<div class="sourceCode" id="cb110"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb110-1"><a href="linear-model-estimation.html#cb110-1" aria-hidden="true" tabindex="-1"></a><span class="fu">set.seed</span>(<span class="dv">28</span>) <span class="co"># for reproducibility</span></span>
+<span id="cb110-2"><a href="linear-model-estimation.html#cb110-2" aria-hidden="true" tabindex="-1"></a><span class="co"># create regressor of random noise</span></span>
+<span id="cb110-3"><a href="linear-model-estimation.html#cb110-3" aria-hidden="true" tabindex="-1"></a>noisyx <span class="ot">&lt;-</span> <span class="fu">rnorm</span>(<span class="dv">344</span>)</span>
+<span id="cb110-4"><a href="linear-model-estimation.html#cb110-4" aria-hidden="true" tabindex="-1"></a><span class="co"># add noisyx as regressor to lmodp</span></span>
+<span id="cb110-5"><a href="linear-model-estimation.html#cb110-5" aria-hidden="true" tabindex="-1"></a>lmod_silly <span class="ot">&lt;-</span> <span class="fu">update</span>(lmodp, . <span class="sc">~</span> . <span class="sc">+</span> noisyx)</span>
+<span id="cb110-6"><a href="linear-model-estimation.html#cb110-6" aria-hidden="true" tabindex="-1"></a><span class="co"># extract R^2 from fitted model</span></span>
+<span id="cb110-7"><a href="linear-model-estimation.html#cb110-7" aria-hidden="true" tabindex="-1"></a><span class="fu">summary</span>(lmod_silly)<span class="sc">$</span>r.squared</span>
+<span id="cb110-8"><a href="linear-model-estimation.html#cb110-8" aria-hidden="true" tabindex="-1"></a><span class="do">## [1] 0.8087789</span></span></code></pre></div>
 <p>The <span class="math inline">\(R^2\)</span> value increased from 0.8080 to 0.8088! So clearly, choosing the model with the largest <span class="math inline">\(R^2\)</span> can be a mistake, as it will tend to favor models with more regressors.</p>
 <p>Regarding point 2, <span class="math inline">\(R^2\)</span> can mislead us into thinking an inappropriate model fits better than it actually does. <span class="citation">Anscombe (<a href="#ref-anscombe1973graphs" role="doc-biblioref">1973</a>)</span> provided a canonical data set known as “Anscombe’s quartet” that illustrates this point. The data set is comprised of 4 different data sets. When a simple linear regression model is fit to each data set, we find that <span class="math inline">\(\hat{\beta}_0=3\)</span>, <span class="math inline">\(\hat{\beta}_1=0.5\)</span>, and that <span class="math inline">\(R^2=0.67\)</span>. However, as we will see, not all models describe the data particularly well!</p>
 <p>Anscombe’s quartet is available as the <code>anscombe</code> data set in the <strong>datasets</strong> package. The data set includes 11 observations of
@@ -1366,36 +1379,36 @@ Figure 3.9: The coefficient of determination values for 4 different data sets.
 <li><code>y1</code>, <code>y2</code>, <code>y3</code> <code>y4</code>: the response variable for each individual data set.</li>
 </ul>
 <p>We fit the simple linear regression model to the four data sets in the code below, then extract the coefficients and <span class="math inline">\(R^2\)</span> to verify the information provided above.</p>
-<div class="sourceCode" id="cb105"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb105-1"><a href="linear-model-estimation.html#cb105-1" aria-hidden="true" tabindex="-1"></a><span class="co"># fit model to first data set</span></span>
-<span id="cb105-2"><a href="linear-model-estimation.html#cb105-2" aria-hidden="true" tabindex="-1"></a>lmod_a1 <span class="ot">&lt;-</span> <span class="fu">lm</span>(y1 <span class="sc">~</span> x1, <span class="at">data =</span> anscombe)</span>
-<span id="cb105-3"><a href="linear-model-estimation.html#cb105-3" aria-hidden="true" tabindex="-1"></a><span class="co"># extract coefficients from fitted model</span></span>
-<span id="cb105-4"><a href="linear-model-estimation.html#cb105-4" aria-hidden="true" tabindex="-1"></a><span class="fu">coef</span>(lmod_a1)</span>
-<span id="cb105-5"><a href="linear-model-estimation.html#cb105-5" aria-hidden="true" tabindex="-1"></a><span class="do">## (Intercept)          x1 </span></span>
-<span id="cb105-6"><a href="linear-model-estimation.html#cb105-6" aria-hidden="true" tabindex="-1"></a><span class="do">##   3.0000909   0.5000909</span></span>
-<span id="cb105-7"><a href="linear-model-estimation.html#cb105-7" aria-hidden="true" tabindex="-1"></a><span class="co"># extract R^2 from fitted model</span></span>
-<span id="cb105-8"><a href="linear-model-estimation.html#cb105-8" aria-hidden="true" tabindex="-1"></a><span class="fu">summary</span>(lmod_a1)<span class="sc">$</span>r.squared</span>
-<span id="cb105-9"><a href="linear-model-estimation.html#cb105-9" aria-hidden="true" tabindex="-1"></a><span class="do">## [1] 0.6665425</span></span>
-<span id="cb105-10"><a href="linear-model-estimation.html#cb105-10" aria-hidden="true" tabindex="-1"></a><span class="co"># fit model to second data set</span></span>
-<span id="cb105-11"><a href="linear-model-estimation.html#cb105-11" aria-hidden="true" tabindex="-1"></a>lmod_a2 <span class="ot">&lt;-</span> <span class="fu">lm</span>(y2 <span class="sc">~</span> x2, <span class="at">data =</span> anscombe)</span>
-<span id="cb105-12"><a href="linear-model-estimation.html#cb105-12" aria-hidden="true" tabindex="-1"></a><span class="fu">coef</span>(lmod_a2)</span>
-<span id="cb105-13"><a href="linear-model-estimation.html#cb105-13" aria-hidden="true" tabindex="-1"></a><span class="do">## (Intercept)          x2 </span></span>
-<span id="cb105-14"><a href="linear-model-estimation.html#cb105-14" aria-hidden="true" tabindex="-1"></a><span class="do">##    3.000909    0.500000</span></span>
-<span id="cb105-15"><a href="linear-model-estimation.html#cb105-15" aria-hidden="true" tabindex="-1"></a><span class="fu">summary</span>(lmod_a2)<span class="sc">$</span>r.squared</span>
-<span id="cb105-16"><a href="linear-model-estimation.html#cb105-16" aria-hidden="true" tabindex="-1"></a><span class="do">## [1] 0.666242</span></span>
-<span id="cb105-17"><a href="linear-model-estimation.html#cb105-17" aria-hidden="true" tabindex="-1"></a><span class="co"># fit model to third data set</span></span>
-<span id="cb105-18"><a href="linear-model-estimation.html#cb105-18" aria-hidden="true" tabindex="-1"></a>lmod_a3 <span class="ot">&lt;-</span> <span class="fu">lm</span>(y3 <span class="sc">~</span> x3, <span class="at">data =</span> anscombe)</span>
-<span id="cb105-19"><a href="linear-model-estimation.html#cb105-19" aria-hidden="true" tabindex="-1"></a><span class="fu">coef</span>(lmod_a3)</span>
-<span id="cb105-20"><a href="linear-model-estimation.html#cb105-20" aria-hidden="true" tabindex="-1"></a><span class="do">## (Intercept)          x3 </span></span>
-<span id="cb105-21"><a href="linear-model-estimation.html#cb105-21" aria-hidden="true" tabindex="-1"></a><span class="do">##   3.0024545   0.4997273</span></span>
-<span id="cb105-22"><a href="linear-model-estimation.html#cb105-22" aria-hidden="true" tabindex="-1"></a><span class="fu">summary</span>(lmod_a3)<span class="sc">$</span>r.squared</span>
-<span id="cb105-23"><a href="linear-model-estimation.html#cb105-23" aria-hidden="true" tabindex="-1"></a><span class="do">## [1] 0.666324</span></span>
-<span id="cb105-24"><a href="linear-model-estimation.html#cb105-24" aria-hidden="true" tabindex="-1"></a><span class="co"># fit model to fourth data set</span></span>
-<span id="cb105-25"><a href="linear-model-estimation.html#cb105-25" aria-hidden="true" tabindex="-1"></a>lmod_a4 <span class="ot">&lt;-</span> <span class="fu">lm</span>(y4 <span class="sc">~</span> x4, <span class="at">data =</span> anscombe)</span>
-<span id="cb105-26"><a href="linear-model-estimation.html#cb105-26" aria-hidden="true" tabindex="-1"></a><span class="fu">coef</span>(lmod_a4)</span>
-<span id="cb105-27"><a href="linear-model-estimation.html#cb105-27" aria-hidden="true" tabindex="-1"></a><span class="do">## (Intercept)          x4 </span></span>
-<span id="cb105-28"><a href="linear-model-estimation.html#cb105-28" aria-hidden="true" tabindex="-1"></a><span class="do">##   3.0017273   0.4999091</span></span>
-<span id="cb105-29"><a href="linear-model-estimation.html#cb105-29" aria-hidden="true" tabindex="-1"></a><span class="fu">summary</span>(lmod_a4)<span class="sc">$</span>r.squared</span>
-<span id="cb105-30"><a href="linear-model-estimation.html#cb105-30" aria-hidden="true" tabindex="-1"></a><span class="do">## [1] 0.6667073</span></span></code></pre></div>
+<div class="sourceCode" id="cb111"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb111-1"><a href="linear-model-estimation.html#cb111-1" aria-hidden="true" tabindex="-1"></a><span class="co"># fit model to first data set</span></span>
+<span id="cb111-2"><a href="linear-model-estimation.html#cb111-2" aria-hidden="true" tabindex="-1"></a>lmod_a1 <span class="ot">&lt;-</span> <span class="fu">lm</span>(y1 <span class="sc">~</span> x1, <span class="at">data =</span> anscombe)</span>
+<span id="cb111-3"><a href="linear-model-estimation.html#cb111-3" aria-hidden="true" tabindex="-1"></a><span class="co"># extract coefficients from fitted model</span></span>
+<span id="cb111-4"><a href="linear-model-estimation.html#cb111-4" aria-hidden="true" tabindex="-1"></a><span class="fu">coef</span>(lmod_a1)</span>
+<span id="cb111-5"><a href="linear-model-estimation.html#cb111-5" aria-hidden="true" tabindex="-1"></a><span class="do">## (Intercept)          x1 </span></span>
+<span id="cb111-6"><a href="linear-model-estimation.html#cb111-6" aria-hidden="true" tabindex="-1"></a><span class="do">##   3.0000909   0.5000909</span></span>
+<span id="cb111-7"><a href="linear-model-estimation.html#cb111-7" aria-hidden="true" tabindex="-1"></a><span class="co"># extract R^2 from fitted model</span></span>
+<span id="cb111-8"><a href="linear-model-estimation.html#cb111-8" aria-hidden="true" tabindex="-1"></a><span class="fu">summary</span>(lmod_a1)<span class="sc">$</span>r.squared</span>
+<span id="cb111-9"><a href="linear-model-estimation.html#cb111-9" aria-hidden="true" tabindex="-1"></a><span class="do">## [1] 0.6665425</span></span>
+<span id="cb111-10"><a href="linear-model-estimation.html#cb111-10" aria-hidden="true" tabindex="-1"></a><span class="co"># fit model to second data set</span></span>
+<span id="cb111-11"><a href="linear-model-estimation.html#cb111-11" aria-hidden="true" tabindex="-1"></a>lmod_a2 <span class="ot">&lt;-</span> <span class="fu">lm</span>(y2 <span class="sc">~</span> x2, <span class="at">data =</span> anscombe)</span>
+<span id="cb111-12"><a href="linear-model-estimation.html#cb111-12" aria-hidden="true" tabindex="-1"></a><span class="fu">coef</span>(lmod_a2)</span>
+<span id="cb111-13"><a href="linear-model-estimation.html#cb111-13" aria-hidden="true" tabindex="-1"></a><span class="do">## (Intercept)          x2 </span></span>
+<span id="cb111-14"><a href="linear-model-estimation.html#cb111-14" aria-hidden="true" tabindex="-1"></a><span class="do">##    3.000909    0.500000</span></span>
+<span id="cb111-15"><a href="linear-model-estimation.html#cb111-15" aria-hidden="true" tabindex="-1"></a><span class="fu">summary</span>(lmod_a2)<span class="sc">$</span>r.squared</span>
+<span id="cb111-16"><a href="linear-model-estimation.html#cb111-16" aria-hidden="true" tabindex="-1"></a><span class="do">## [1] 0.666242</span></span>
+<span id="cb111-17"><a href="linear-model-estimation.html#cb111-17" aria-hidden="true" tabindex="-1"></a><span class="co"># fit model to third data set</span></span>
+<span id="cb111-18"><a href="linear-model-estimation.html#cb111-18" aria-hidden="true" tabindex="-1"></a>lmod_a3 <span class="ot">&lt;-</span> <span class="fu">lm</span>(y3 <span class="sc">~</span> x3, <span class="at">data =</span> anscombe)</span>
+<span id="cb111-19"><a href="linear-model-estimation.html#cb111-19" aria-hidden="true" tabindex="-1"></a><span class="fu">coef</span>(lmod_a3)</span>
+<span id="cb111-20"><a href="linear-model-estimation.html#cb111-20" aria-hidden="true" tabindex="-1"></a><span class="do">## (Intercept)          x3 </span></span>
+<span id="cb111-21"><a href="linear-model-estimation.html#cb111-21" aria-hidden="true" tabindex="-1"></a><span class="do">##   3.0024545   0.4997273</span></span>
+<span id="cb111-22"><a href="linear-model-estimation.html#cb111-22" aria-hidden="true" tabindex="-1"></a><span class="fu">summary</span>(lmod_a3)<span class="sc">$</span>r.squared</span>
+<span id="cb111-23"><a href="linear-model-estimation.html#cb111-23" aria-hidden="true" tabindex="-1"></a><span class="do">## [1] 0.666324</span></span>
+<span id="cb111-24"><a href="linear-model-estimation.html#cb111-24" aria-hidden="true" tabindex="-1"></a><span class="co"># fit model to fourth data set</span></span>
+<span id="cb111-25"><a href="linear-model-estimation.html#cb111-25" aria-hidden="true" tabindex="-1"></a>lmod_a4 <span class="ot">&lt;-</span> <span class="fu">lm</span>(y4 <span class="sc">~</span> x4, <span class="at">data =</span> anscombe)</span>
+<span id="cb111-26"><a href="linear-model-estimation.html#cb111-26" aria-hidden="true" tabindex="-1"></a><span class="fu">coef</span>(lmod_a4)</span>
+<span id="cb111-27"><a href="linear-model-estimation.html#cb111-27" aria-hidden="true" tabindex="-1"></a><span class="do">## (Intercept)          x4 </span></span>
+<span id="cb111-28"><a href="linear-model-estimation.html#cb111-28" aria-hidden="true" tabindex="-1"></a><span class="do">##   3.0017273   0.4999091</span></span>
+<span id="cb111-29"><a href="linear-model-estimation.html#cb111-29" aria-hidden="true" tabindex="-1"></a><span class="fu">summary</span>(lmod_a4)<span class="sc">$</span>r.squared</span>
+<span id="cb111-30"><a href="linear-model-estimation.html#cb111-30" aria-hidden="true" tabindex="-1"></a><span class="do">## [1] 0.6667073</span></span></code></pre></div>
 <p>Figure <a href="linear-model-estimation.html#fig:anscombe-plots">3.10</a> provides a scatter plot each data set and overlays their fitted models.</p>
 <div class="figure"><span style="display:block;" id="fig:anscombe-plots"></span>
 <img src="A-Progessive-Introduction-to-Linear-Models_files/figure-html/anscombe-plots-1.png" alt="Scatter plots of the four Anscombe data sets along with their line of best fit." width="672" />
@@ -1410,21 +1423,21 @@ R^2_a=1-(1-R^2)\frac{n-1}{n-p}=1-\frac{RSS/(n-p)}{TSS/(n-1)}.
 \]</span>
 Practically speaking, <span class="math inline">\(R^2_a\)</span> will only increase when a regressors substantively improves the fit of the model to the observed data. We favor models with larger values of <span class="math inline">\(R^2_a\)</span>. To extract the adjusted R-squared from a fitted model, we can use the syntax <code>summary(lmod)$adj.R.squared</code>, where <code>lmod</code> is the fitted model.</p>
 <p>Using the code below, we extract the <span class="math inline">\(R^2_a\)</span> for the 4 models we previously fit to the <code>penguins</code> data. Specifically, we extract <span class="math inline">\(R_a^2\)</span> for the simple linear regression model fit in Section <a href="linear-model-estimation.html#s:penguins-slr">3.3</a>, the multiple linear regression model in Section <a href="linear-model-estimation.html#s:penguins-mlr">3.6</a>, and the parallel and separate lines models fit in Section <a href="linear-model-estimation.html#s:penguins-mlr2">3.9</a>.</p>
-<div class="sourceCode" id="cb106"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb106-1"><a href="linear-model-estimation.html#cb106-1" aria-hidden="true" tabindex="-1"></a><span class="co"># simple linear regression model</span></span>
-<span id="cb106-2"><a href="linear-model-estimation.html#cb106-2" aria-hidden="true" tabindex="-1"></a><span class="fu">summary</span>(lmod)<span class="sc">$</span>adj.r.squared</span>
-<span id="cb106-3"><a href="linear-model-estimation.html#cb106-3" aria-hidden="true" tabindex="-1"></a><span class="do">## [1] 0.3522562</span></span>
-<span id="cb106-4"><a href="linear-model-estimation.html#cb106-4" aria-hidden="true" tabindex="-1"></a><span class="co"># multiple linear regression model</span></span>
-<span id="cb106-5"><a href="linear-model-estimation.html#cb106-5" aria-hidden="true" tabindex="-1"></a><span class="fu">summary</span>(mlmod)<span class="sc">$</span>adj.r.squared</span>
-<span id="cb106-6"><a href="linear-model-estimation.html#cb106-6" aria-hidden="true" tabindex="-1"></a><span class="do">## [1] 0.4295084</span></span>
-<span id="cb106-7"><a href="linear-model-estimation.html#cb106-7" aria-hidden="true" tabindex="-1"></a><span class="co"># parallel lines model</span></span>
-<span id="cb106-8"><a href="linear-model-estimation.html#cb106-8" aria-hidden="true" tabindex="-1"></a><span class="fu">summary</span>(lmodp)<span class="sc">$</span>adj.r.squared</span>
-<span id="cb106-9"><a href="linear-model-estimation.html#cb106-9" aria-hidden="true" tabindex="-1"></a><span class="do">## [1] 0.8062521</span></span>
-<span id="cb106-10"><a href="linear-model-estimation.html#cb106-10" aria-hidden="true" tabindex="-1"></a><span class="co"># separate lines model</span></span>
-<span id="cb106-11"><a href="linear-model-estimation.html#cb106-11" aria-hidden="true" tabindex="-1"></a><span class="fu">summary</span>(lmods)<span class="sc">$</span>adj.r.squared</span>
-<span id="cb106-12"><a href="linear-model-estimation.html#cb106-12" aria-hidden="true" tabindex="-1"></a><span class="do">## [1] 0.8069556</span></span></code></pre></div>
+<div class="sourceCode" id="cb112"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb112-1"><a href="linear-model-estimation.html#cb112-1" aria-hidden="true" tabindex="-1"></a><span class="co"># simple linear regression model</span></span>
+<span id="cb112-2"><a href="linear-model-estimation.html#cb112-2" aria-hidden="true" tabindex="-1"></a><span class="fu">summary</span>(lmod)<span class="sc">$</span>adj.r.squared</span>
+<span id="cb112-3"><a href="linear-model-estimation.html#cb112-3" aria-hidden="true" tabindex="-1"></a><span class="do">## [1] 0.3522562</span></span>
+<span id="cb112-4"><a href="linear-model-estimation.html#cb112-4" aria-hidden="true" tabindex="-1"></a><span class="co"># multiple linear regression model</span></span>
+<span id="cb112-5"><a href="linear-model-estimation.html#cb112-5" aria-hidden="true" tabindex="-1"></a><span class="fu">summary</span>(mlmod)<span class="sc">$</span>adj.r.squared</span>
+<span id="cb112-6"><a href="linear-model-estimation.html#cb112-6" aria-hidden="true" tabindex="-1"></a><span class="do">## [1] 0.4295084</span></span>
+<span id="cb112-7"><a href="linear-model-estimation.html#cb112-7" aria-hidden="true" tabindex="-1"></a><span class="co"># parallel lines model</span></span>
+<span id="cb112-8"><a href="linear-model-estimation.html#cb112-8" aria-hidden="true" tabindex="-1"></a><span class="fu">summary</span>(lmodp)<span class="sc">$</span>adj.r.squared</span>
+<span id="cb112-9"><a href="linear-model-estimation.html#cb112-9" aria-hidden="true" tabindex="-1"></a><span class="do">## [1] 0.8062521</span></span>
+<span id="cb112-10"><a href="linear-model-estimation.html#cb112-10" aria-hidden="true" tabindex="-1"></a><span class="co"># separate lines model</span></span>
+<span id="cb112-11"><a href="linear-model-estimation.html#cb112-11" aria-hidden="true" tabindex="-1"></a><span class="fu">summary</span>(lmods)<span class="sc">$</span>adj.r.squared</span>
+<span id="cb112-12"><a href="linear-model-estimation.html#cb112-12" aria-hidden="true" tabindex="-1"></a><span class="do">## [1] 0.8069556</span></span></code></pre></div>
 <p>With an <span class="math inline">\(R_a^2\)</span> of 0.8070, the separate lines regression model appears to be slightly favored over the other 3 models fit to the <code>penguins</code> data. To confirm that this statistic is meaningful (i.e., that the model provides a reasonable fit to the data), we use the code below to create a scatter plot of the response versus fitted values shown in Figure <a href="linear-model-estimation.html#fig:y-vs-yhat-penguins">3.11</a>. The points in Figure <a href="linear-model-estimation.html#fig:y-vs-yhat-penguins">3.11</a> follow a linear pattern, so the separate lines model seems to be a reasonable model for the <code>penguins</code> data.</p>
-<div class="sourceCode" id="cb107"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb107-1"><a href="linear-model-estimation.html#cb107-1" aria-hidden="true" tabindex="-1"></a><span class="fu">plot</span>(penguins<span class="sc">$</span>bill_length_mm <span class="sc">~</span> <span class="fu">fitted</span>(lmods),</span>
-<span id="cb107-2"><a href="linear-model-estimation.html#cb107-2" aria-hidden="true" tabindex="-1"></a>     <span class="at">xlab =</span> <span class="st">&quot;fitted values&quot;</span>, <span class="at">ylab =</span> <span class="st">&quot;bill length (mm)&quot;</span>)</span></code></pre></div>
+<div class="sourceCode" id="cb113"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb113-1"><a href="linear-model-estimation.html#cb113-1" aria-hidden="true" tabindex="-1"></a><span class="fu">plot</span>(penguins<span class="sc">$</span>bill_length_mm <span class="sc">~</span> <span class="fu">fitted</span>(lmods),</span>
+<span id="cb113-2"><a href="linear-model-estimation.html#cb113-2" aria-hidden="true" tabindex="-1"></a>     <span class="at">xlab =</span> <span class="st">&quot;fitted values&quot;</span>, <span class="at">ylab =</span> <span class="st">&quot;bill length (mm)&quot;</span>)</span></code></pre></div>
 <div class="figure"><span style="display:block;" id="fig:y-vs-yhat-penguins"></span>
 <img src="A-Progessive-Introduction-to-Linear-Models_files/figure-html/y-vs-yhat-penguins-1.png" alt="A scatter plot of the observed bill length versus the fitted values of the separate lines model for the `penguins` data." width="672" />
 <p class="caption">
@@ -1927,69 +1940,69 @@ E(\hat\beta_0\mid \mathbf{X}) &amp;= E(\bar Y - \hat{\beta}_1\bar x\mid \mathbf{
 <p>In this section, we manually produce (i.e., without the <code>lm</code> function) the <code>penguins</code> simple linear regression example in Section <a href="linear-model-estimation.html#s:penguins-slr">3.3</a>.</p>
 <p>First, we will manually fit a simple linear regression model that regresses <code>bill_length_mm</code> on <code>body_mass_g</code>.</p>
 <p>Using the <code>summary</code> function on the <code>penguins</code> data frame, we see that both <code>bill_length_mm</code> and <code>body_mass_g</code> have <code>NA</code> values.</p>
-<div class="sourceCode" id="cb108"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb108-1"><a href="linear-model-estimation.html#cb108-1" aria-hidden="true" tabindex="-1"></a><span class="fu">summary</span>(penguins)</span>
-<span id="cb108-2"><a href="linear-model-estimation.html#cb108-2" aria-hidden="true" tabindex="-1"></a><span class="do">##       species          island    bill_length_mm </span></span>
-<span id="cb108-3"><a href="linear-model-estimation.html#cb108-3" aria-hidden="true" tabindex="-1"></a><span class="do">##  Adelie   :152   Biscoe   :168   Min.   :32.10  </span></span>
-<span id="cb108-4"><a href="linear-model-estimation.html#cb108-4" aria-hidden="true" tabindex="-1"></a><span class="do">##  Chinstrap: 68   Dream    :124   1st Qu.:39.23  </span></span>
-<span id="cb108-5"><a href="linear-model-estimation.html#cb108-5" aria-hidden="true" tabindex="-1"></a><span class="do">##  Gentoo   :124   Torgersen: 52   Median :44.45  </span></span>
-<span id="cb108-6"><a href="linear-model-estimation.html#cb108-6" aria-hidden="true" tabindex="-1"></a><span class="do">##                                  Mean   :43.92  </span></span>
-<span id="cb108-7"><a href="linear-model-estimation.html#cb108-7" aria-hidden="true" tabindex="-1"></a><span class="do">##                                  3rd Qu.:48.50  </span></span>
-<span id="cb108-8"><a href="linear-model-estimation.html#cb108-8" aria-hidden="true" tabindex="-1"></a><span class="do">##                                  Max.   :59.60  </span></span>
-<span id="cb108-9"><a href="linear-model-estimation.html#cb108-9" aria-hidden="true" tabindex="-1"></a><span class="do">##                                  NA&#39;s   :2      </span></span>
-<span id="cb108-10"><a href="linear-model-estimation.html#cb108-10" aria-hidden="true" tabindex="-1"></a><span class="do">##  bill_depth_mm   flipper_length_mm  body_mass_g  </span></span>
-<span id="cb108-11"><a href="linear-model-estimation.html#cb108-11" aria-hidden="true" tabindex="-1"></a><span class="do">##  Min.   :13.10   Min.   :172.0     Min.   :2700  </span></span>
-<span id="cb108-12"><a href="linear-model-estimation.html#cb108-12" aria-hidden="true" tabindex="-1"></a><span class="do">##  1st Qu.:15.60   1st Qu.:190.0     1st Qu.:3550  </span></span>
-<span id="cb108-13"><a href="linear-model-estimation.html#cb108-13" aria-hidden="true" tabindex="-1"></a><span class="do">##  Median :17.30   Median :197.0     Median :4050  </span></span>
-<span id="cb108-14"><a href="linear-model-estimation.html#cb108-14" aria-hidden="true" tabindex="-1"></a><span class="do">##  Mean   :17.15   Mean   :200.9     Mean   :4202  </span></span>
-<span id="cb108-15"><a href="linear-model-estimation.html#cb108-15" aria-hidden="true" tabindex="-1"></a><span class="do">##  3rd Qu.:18.70   3rd Qu.:213.0     3rd Qu.:4750  </span></span>
-<span id="cb108-16"><a href="linear-model-estimation.html#cb108-16" aria-hidden="true" tabindex="-1"></a><span class="do">##  Max.   :21.50   Max.   :231.0     Max.   :6300  </span></span>
-<span id="cb108-17"><a href="linear-model-estimation.html#cb108-17" aria-hidden="true" tabindex="-1"></a><span class="do">##  NA&#39;s   :2       NA&#39;s   :2         NA&#39;s   :2     </span></span>
-<span id="cb108-18"><a href="linear-model-estimation.html#cb108-18" aria-hidden="true" tabindex="-1"></a><span class="do">##      sex           year        pl_fitted    </span></span>
-<span id="cb108-19"><a href="linear-model-estimation.html#cb108-19" aria-hidden="true" tabindex="-1"></a><span class="do">##  female:165   Min.   :2007   Min.   :35.60  </span></span>
-<span id="cb108-20"><a href="linear-model-estimation.html#cb108-20" aria-hidden="true" tabindex="-1"></a><span class="do">##  male  :168   1st Qu.:2007   1st Qu.:38.98  </span></span>
-<span id="cb108-21"><a href="linear-model-estimation.html#cb108-21" aria-hidden="true" tabindex="-1"></a><span class="do">##  NA&#39;s  : 11   Median :2008   Median :45.67  </span></span>
-<span id="cb108-22"><a href="linear-model-estimation.html#cb108-22" aria-hidden="true" tabindex="-1"></a><span class="do">##               Mean   :2008   Mean   :43.92  </span></span>
-<span id="cb108-23"><a href="linear-model-estimation.html#cb108-23" aria-hidden="true" tabindex="-1"></a><span class="do">##               3rd Qu.:2009   3rd Qu.:48.34  </span></span>
-<span id="cb108-24"><a href="linear-model-estimation.html#cb108-24" aria-hidden="true" tabindex="-1"></a><span class="do">##               Max.   :2009   Max.   :52.83  </span></span>
-<span id="cb108-25"><a href="linear-model-estimation.html#cb108-25" aria-hidden="true" tabindex="-1"></a><span class="do">##                              NA&#39;s   :2      </span></span>
-<span id="cb108-26"><a href="linear-model-estimation.html#cb108-26" aria-hidden="true" tabindex="-1"></a><span class="do">##    sl_fitted    </span></span>
-<span id="cb108-27"><a href="linear-model-estimation.html#cb108-27" aria-hidden="true" tabindex="-1"></a><span class="do">##  Min.   :36.08  </span></span>
-<span id="cb108-28"><a href="linear-model-estimation.html#cb108-28" aria-hidden="true" tabindex="-1"></a><span class="do">##  1st Qu.:38.95  </span></span>
-<span id="cb108-29"><a href="linear-model-estimation.html#cb108-29" aria-hidden="true" tabindex="-1"></a><span class="do">##  Median :45.40  </span></span>
-<span id="cb108-30"><a href="linear-model-estimation.html#cb108-30" aria-hidden="true" tabindex="-1"></a><span class="do">##  Mean   :43.92  </span></span>
-<span id="cb108-31"><a href="linear-model-estimation.html#cb108-31" aria-hidden="true" tabindex="-1"></a><span class="do">##  3rd Qu.:48.42  </span></span>
-<span id="cb108-32"><a href="linear-model-estimation.html#cb108-32" aria-hidden="true" tabindex="-1"></a><span class="do">##  Max.   :53.60  </span></span>
-<span id="cb108-33"><a href="linear-model-estimation.html#cb108-33" aria-hidden="true" tabindex="-1"></a><span class="do">##  NA&#39;s   :2</span></span></code></pre></div>
+<div class="sourceCode" id="cb114"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb114-1"><a href="linear-model-estimation.html#cb114-1" aria-hidden="true" tabindex="-1"></a><span class="fu">summary</span>(penguins)</span>
+<span id="cb114-2"><a href="linear-model-estimation.html#cb114-2" aria-hidden="true" tabindex="-1"></a><span class="do">##       species          island    bill_length_mm </span></span>
+<span id="cb114-3"><a href="linear-model-estimation.html#cb114-3" aria-hidden="true" tabindex="-1"></a><span class="do">##  Adelie   :152   Biscoe   :168   Min.   :32.10  </span></span>
+<span id="cb114-4"><a href="linear-model-estimation.html#cb114-4" aria-hidden="true" tabindex="-1"></a><span class="do">##  Chinstrap: 68   Dream    :124   1st Qu.:39.23  </span></span>
+<span id="cb114-5"><a href="linear-model-estimation.html#cb114-5" aria-hidden="true" tabindex="-1"></a><span class="do">##  Gentoo   :124   Torgersen: 52   Median :44.45  </span></span>
+<span id="cb114-6"><a href="linear-model-estimation.html#cb114-6" aria-hidden="true" tabindex="-1"></a><span class="do">##                                  Mean   :43.92  </span></span>
+<span id="cb114-7"><a href="linear-model-estimation.html#cb114-7" aria-hidden="true" tabindex="-1"></a><span class="do">##                                  3rd Qu.:48.50  </span></span>
+<span id="cb114-8"><a href="linear-model-estimation.html#cb114-8" aria-hidden="true" tabindex="-1"></a><span class="do">##                                  Max.   :59.60  </span></span>
+<span id="cb114-9"><a href="linear-model-estimation.html#cb114-9" aria-hidden="true" tabindex="-1"></a><span class="do">##                                  NA&#39;s   :2      </span></span>
+<span id="cb114-10"><a href="linear-model-estimation.html#cb114-10" aria-hidden="true" tabindex="-1"></a><span class="do">##  bill_depth_mm   flipper_length_mm  body_mass_g  </span></span>
+<span id="cb114-11"><a href="linear-model-estimation.html#cb114-11" aria-hidden="true" tabindex="-1"></a><span class="do">##  Min.   :13.10   Min.   :172.0     Min.   :2700  </span></span>
+<span id="cb114-12"><a href="linear-model-estimation.html#cb114-12" aria-hidden="true" tabindex="-1"></a><span class="do">##  1st Qu.:15.60   1st Qu.:190.0     1st Qu.:3550  </span></span>
+<span id="cb114-13"><a href="linear-model-estimation.html#cb114-13" aria-hidden="true" tabindex="-1"></a><span class="do">##  Median :17.30   Median :197.0     Median :4050  </span></span>
+<span id="cb114-14"><a href="linear-model-estimation.html#cb114-14" aria-hidden="true" tabindex="-1"></a><span class="do">##  Mean   :17.15   Mean   :200.9     Mean   :4202  </span></span>
+<span id="cb114-15"><a href="linear-model-estimation.html#cb114-15" aria-hidden="true" tabindex="-1"></a><span class="do">##  3rd Qu.:18.70   3rd Qu.:213.0     3rd Qu.:4750  </span></span>
+<span id="cb114-16"><a href="linear-model-estimation.html#cb114-16" aria-hidden="true" tabindex="-1"></a><span class="do">##  Max.   :21.50   Max.   :231.0     Max.   :6300  </span></span>
+<span id="cb114-17"><a href="linear-model-estimation.html#cb114-17" aria-hidden="true" tabindex="-1"></a><span class="do">##  NA&#39;s   :2       NA&#39;s   :2         NA&#39;s   :2     </span></span>
+<span id="cb114-18"><a href="linear-model-estimation.html#cb114-18" aria-hidden="true" tabindex="-1"></a><span class="do">##      sex           year        pl_fitted    </span></span>
+<span id="cb114-19"><a href="linear-model-estimation.html#cb114-19" aria-hidden="true" tabindex="-1"></a><span class="do">##  female:165   Min.   :2007   Min.   :35.60  </span></span>
+<span id="cb114-20"><a href="linear-model-estimation.html#cb114-20" aria-hidden="true" tabindex="-1"></a><span class="do">##  male  :168   1st Qu.:2007   1st Qu.:38.98  </span></span>
+<span id="cb114-21"><a href="linear-model-estimation.html#cb114-21" aria-hidden="true" tabindex="-1"></a><span class="do">##  NA&#39;s  : 11   Median :2008   Median :45.67  </span></span>
+<span id="cb114-22"><a href="linear-model-estimation.html#cb114-22" aria-hidden="true" tabindex="-1"></a><span class="do">##               Mean   :2008   Mean   :43.92  </span></span>
+<span id="cb114-23"><a href="linear-model-estimation.html#cb114-23" aria-hidden="true" tabindex="-1"></a><span class="do">##               3rd Qu.:2009   3rd Qu.:48.34  </span></span>
+<span id="cb114-24"><a href="linear-model-estimation.html#cb114-24" aria-hidden="true" tabindex="-1"></a><span class="do">##               Max.   :2009   Max.   :52.83  </span></span>
+<span id="cb114-25"><a href="linear-model-estimation.html#cb114-25" aria-hidden="true" tabindex="-1"></a><span class="do">##                              NA&#39;s   :2      </span></span>
+<span id="cb114-26"><a href="linear-model-estimation.html#cb114-26" aria-hidden="true" tabindex="-1"></a><span class="do">##    sl_fitted    </span></span>
+<span id="cb114-27"><a href="linear-model-estimation.html#cb114-27" aria-hidden="true" tabindex="-1"></a><span class="do">##  Min.   :36.08  </span></span>
+<span id="cb114-28"><a href="linear-model-estimation.html#cb114-28" aria-hidden="true" tabindex="-1"></a><span class="do">##  1st Qu.:38.95  </span></span>
+<span id="cb114-29"><a href="linear-model-estimation.html#cb114-29" aria-hidden="true" tabindex="-1"></a><span class="do">##  Median :45.40  </span></span>
+<span id="cb114-30"><a href="linear-model-estimation.html#cb114-30" aria-hidden="true" tabindex="-1"></a><span class="do">##  Mean   :43.92  </span></span>
+<span id="cb114-31"><a href="linear-model-estimation.html#cb114-31" aria-hidden="true" tabindex="-1"></a><span class="do">##  3rd Qu.:48.42  </span></span>
+<span id="cb114-32"><a href="linear-model-estimation.html#cb114-32" aria-hidden="true" tabindex="-1"></a><span class="do">##  Max.   :53.60  </span></span>
+<span id="cb114-33"><a href="linear-model-estimation.html#cb114-33" aria-hidden="true" tabindex="-1"></a><span class="do">##  NA&#39;s   :2</span></span></code></pre></div>
 <p>This is important to note because the <code>lm</code> function automatically removes any observation with <code>NA</code> values for any of the variables specified in the <code>formula</code> argument. In order to replicate our results, we must remove the same observations.</p>
 <p>We want to remove the rows of <code>penguins</code> where either <code>body_mass_g</code> or <code>bill_length_mm</code> have <code>NA</code> values. We do that below using the <code>na.omit</code> function (selecting only the relevant variables) and assign the cleaned
 object the name <code>penguins_clean</code>.</p>
-<div class="sourceCode" id="cb109"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb109-1"><a href="linear-model-estimation.html#cb109-1" aria-hidden="true" tabindex="-1"></a><span class="co"># remove rows of penguins where bill_length_mm or body_mass_g have NA values</span></span>
-<span id="cb109-2"><a href="linear-model-estimation.html#cb109-2" aria-hidden="true" tabindex="-1"></a>penguins_clean <span class="ot">&lt;-</span></span>
-<span id="cb109-3"><a href="linear-model-estimation.html#cb109-3" aria-hidden="true" tabindex="-1"></a>  penguins <span class="sc">|&gt;</span></span>
-<span id="cb109-4"><a href="linear-model-estimation.html#cb109-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">subset</span>(<span class="at">select =</span> <span class="fu">c</span>(<span class="st">&quot;bill_length_mm&quot;</span>, <span class="st">&quot;body_mass_g&quot;</span>)) <span class="sc">|&gt;</span></span>
-<span id="cb109-5"><a href="linear-model-estimation.html#cb109-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">na.omit</span>()</span></code></pre></div>
+<div class="sourceCode" id="cb115"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb115-1"><a href="linear-model-estimation.html#cb115-1" aria-hidden="true" tabindex="-1"></a><span class="co"># remove rows of penguins where bill_length_mm or body_mass_g have NA values</span></span>
+<span id="cb115-2"><a href="linear-model-estimation.html#cb115-2" aria-hidden="true" tabindex="-1"></a>penguins_clean <span class="ot">&lt;-</span></span>
+<span id="cb115-3"><a href="linear-model-estimation.html#cb115-3" aria-hidden="true" tabindex="-1"></a>  penguins <span class="sc">|&gt;</span></span>
+<span id="cb115-4"><a href="linear-model-estimation.html#cb115-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">subset</span>(<span class="at">select =</span> <span class="fu">c</span>(<span class="st">&quot;bill_length_mm&quot;</span>, <span class="st">&quot;body_mass_g&quot;</span>)) <span class="sc">|&gt;</span></span>
+<span id="cb115-5"><a href="linear-model-estimation.html#cb115-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">na.omit</span>()</span></code></pre></div>
 <p>We extract the <code>bill_length_mm</code> variable from the <code>penguins</code> data frame and assign it the name <code>y</code> since it will be the response variable. We extract the <code>body_mass_g</code> variable from the <code>penguins</code> data frame and
 assign it the name <code>x</code> since it will be the regressor variable. We also determine the number of observations and assign that value the name <code>n</code>.</p>
-<div class="sourceCode" id="cb110"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb110-1"><a href="linear-model-estimation.html#cb110-1" aria-hidden="true" tabindex="-1"></a><span class="co"># extract response and regressor from penguins_clean</span></span>
-<span id="cb110-2"><a href="linear-model-estimation.html#cb110-2" aria-hidden="true" tabindex="-1"></a>y <span class="ot">&lt;-</span> penguins_clean<span class="sc">$</span>bill_length_mm</span>
-<span id="cb110-3"><a href="linear-model-estimation.html#cb110-3" aria-hidden="true" tabindex="-1"></a>x <span class="ot">&lt;-</span> penguins_clean<span class="sc">$</span>body_mass_g</span>
-<span id="cb110-4"><a href="linear-model-estimation.html#cb110-4" aria-hidden="true" tabindex="-1"></a><span class="co"># determine number of observations</span></span>
-<span id="cb110-5"><a href="linear-model-estimation.html#cb110-5" aria-hidden="true" tabindex="-1"></a>n <span class="ot">&lt;-</span> <span class="fu">length</span>(y)</span></code></pre></div>
+<div class="sourceCode" id="cb116"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb116-1"><a href="linear-model-estimation.html#cb116-1" aria-hidden="true" tabindex="-1"></a><span class="co"># extract response and regressor from penguins_clean</span></span>
+<span id="cb116-2"><a href="linear-model-estimation.html#cb116-2" aria-hidden="true" tabindex="-1"></a>y <span class="ot">&lt;-</span> penguins_clean<span class="sc">$</span>bill_length_mm</span>
+<span id="cb116-3"><a href="linear-model-estimation.html#cb116-3" aria-hidden="true" tabindex="-1"></a>x <span class="ot">&lt;-</span> penguins_clean<span class="sc">$</span>body_mass_g</span>
+<span id="cb116-4"><a href="linear-model-estimation.html#cb116-4" aria-hidden="true" tabindex="-1"></a><span class="co"># determine number of observations</span></span>
+<span id="cb116-5"><a href="linear-model-estimation.html#cb116-5" aria-hidden="true" tabindex="-1"></a>n <span class="ot">&lt;-</span> <span class="fu">length</span>(y)</span></code></pre></div>
 <p>We now compute <span class="math inline">\(\hat{\beta}_1\)</span> and <span class="math inline">\(\hat{\beta}_0\)</span> using Equations <a href="linear-model-estimation.html#eq:slr-beta1hat">(3.9)</a> and <a href="linear-model-estimation.html#eq:slr-beta0hat">(3.10)</a>. Note that placing <code>()</code> around the assignment operations will both perform the assignment and print the results.</p>
-<div class="sourceCode" id="cb111"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb111-1"><a href="linear-model-estimation.html#cb111-1" aria-hidden="true" tabindex="-1"></a><span class="co"># compute OLS estimate of beta1</span></span>
-<span id="cb111-2"><a href="linear-model-estimation.html#cb111-2" aria-hidden="true" tabindex="-1"></a>(b1 <span class="ot">&lt;-</span> (<span class="fu">sum</span>(x <span class="sc">*</span> y) <span class="sc">-</span> <span class="fu">sum</span>(x) <span class="sc">*</span> <span class="fu">sum</span>(y) <span class="sc">/</span> n)<span class="sc">/</span>(<span class="fu">sum</span>(x<span class="sc">^</span><span class="dv">2</span>) <span class="sc">-</span> <span class="fu">sum</span>(x)<span class="sc">^</span><span class="dv">2</span><span class="sc">/</span>n))</span>
-<span id="cb111-3"><a href="linear-model-estimation.html#cb111-3" aria-hidden="true" tabindex="-1"></a><span class="do">## [1] 0.004051417</span></span>
-<span id="cb111-4"><a href="linear-model-estimation.html#cb111-4" aria-hidden="true" tabindex="-1"></a><span class="co"># compute OLS estimate of beta0</span></span>
-<span id="cb111-5"><a href="linear-model-estimation.html#cb111-5" aria-hidden="true" tabindex="-1"></a>(b0 <span class="ot">&lt;-</span> <span class="fu">mean</span>(y) <span class="sc">-</span> b1 <span class="sc">*</span> <span class="fu">mean</span>(x))</span>
-<span id="cb111-6"><a href="linear-model-estimation.html#cb111-6" aria-hidden="true" tabindex="-1"></a><span class="do">## [1] 26.89887</span></span></code></pre></div>
+<div class="sourceCode" id="cb117"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb117-1"><a href="linear-model-estimation.html#cb117-1" aria-hidden="true" tabindex="-1"></a><span class="co"># compute OLS estimate of beta1</span></span>
+<span id="cb117-2"><a href="linear-model-estimation.html#cb117-2" aria-hidden="true" tabindex="-1"></a>(b1 <span class="ot">&lt;-</span> (<span class="fu">sum</span>(x <span class="sc">*</span> y) <span class="sc">-</span> <span class="fu">sum</span>(x) <span class="sc">*</span> <span class="fu">sum</span>(y) <span class="sc">/</span> n)<span class="sc">/</span>(<span class="fu">sum</span>(x<span class="sc">^</span><span class="dv">2</span>) <span class="sc">-</span> <span class="fu">sum</span>(x)<span class="sc">^</span><span class="dv">2</span><span class="sc">/</span>n))</span>
+<span id="cb117-3"><a href="linear-model-estimation.html#cb117-3" aria-hidden="true" tabindex="-1"></a><span class="do">## [1] 0.004051417</span></span>
+<span id="cb117-4"><a href="linear-model-estimation.html#cb117-4" aria-hidden="true" tabindex="-1"></a><span class="co"># compute OLS estimate of beta0</span></span>
+<span id="cb117-5"><a href="linear-model-estimation.html#cb117-5" aria-hidden="true" tabindex="-1"></a>(b0 <span class="ot">&lt;-</span> <span class="fu">mean</span>(y) <span class="sc">-</span> b1 <span class="sc">*</span> <span class="fu">mean</span>(x))</span>
+<span id="cb117-6"><a href="linear-model-estimation.html#cb117-6" aria-hidden="true" tabindex="-1"></a><span class="do">## [1] 26.89887</span></span></code></pre></div>
 <p>The estimated value of <span class="math inline">\(\beta_0\)</span> is <span class="math inline">\(\hat{\beta}_0=26.90\)</span> and the estimated value of <span class="math inline">\(\beta_1\)</span> is <span class="math inline">\(\hat{\beta}_1=0.004\)</span>.</p>
 <p>We can also compute the residuals, the fitted values, the RSS, and the estimated error variance. Using the code below, the RSS for our model is 6564.49 and the estimated error variance if <span class="math inline">\(\hat{\sigma}^2=19.31\)</span>.</p>
-<div class="sourceCode" id="cb112"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb112-1"><a href="linear-model-estimation.html#cb112-1" aria-hidden="true" tabindex="-1"></a>yhat <span class="ot">&lt;-</span> b0 <span class="sc">+</span> b1 <span class="sc">*</span> x <span class="co"># compute fitted values</span></span>
-<span id="cb112-2"><a href="linear-model-estimation.html#cb112-2" aria-hidden="true" tabindex="-1"></a>ehat <span class="ot">&lt;-</span> y <span class="sc">-</span> yhat <span class="co"># compute residuals</span></span>
-<span id="cb112-3"><a href="linear-model-estimation.html#cb112-3" aria-hidden="true" tabindex="-1"></a>(rss <span class="ot">&lt;-</span> <span class="fu">sum</span>(ehat<span class="sc">^</span><span class="dv">2</span>)) <span class="co"># sum of the squared residuals</span></span>
-<span id="cb112-4"><a href="linear-model-estimation.html#cb112-4" aria-hidden="true" tabindex="-1"></a><span class="do">## [1] 6564.494</span></span>
-<span id="cb112-5"><a href="linear-model-estimation.html#cb112-5" aria-hidden="true" tabindex="-1"></a>(sigmasqhat <span class="ot">&lt;-</span> rss<span class="sc">/</span>(n<span class="dv">-2</span>)) <span class="co"># estimated error variance</span></span>
-<span id="cb112-6"><a href="linear-model-estimation.html#cb112-6" aria-hidden="true" tabindex="-1"></a><span class="do">## [1] 19.30734</span></span></code></pre></div>
+<div class="sourceCode" id="cb118"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb118-1"><a href="linear-model-estimation.html#cb118-1" aria-hidden="true" tabindex="-1"></a>yhat <span class="ot">&lt;-</span> b0 <span class="sc">+</span> b1 <span class="sc">*</span> x <span class="co"># compute fitted values</span></span>
+<span id="cb118-2"><a href="linear-model-estimation.html#cb118-2" aria-hidden="true" tabindex="-1"></a>ehat <span class="ot">&lt;-</span> y <span class="sc">-</span> yhat <span class="co"># compute residuals</span></span>
+<span id="cb118-3"><a href="linear-model-estimation.html#cb118-3" aria-hidden="true" tabindex="-1"></a>(rss <span class="ot">&lt;-</span> <span class="fu">sum</span>(ehat<span class="sc">^</span><span class="dv">2</span>)) <span class="co"># sum of the squared residuals</span></span>
+<span id="cb118-4"><a href="linear-model-estimation.html#cb118-4" aria-hidden="true" tabindex="-1"></a><span class="do">## [1] 6564.494</span></span>
+<span id="cb118-5"><a href="linear-model-estimation.html#cb118-5" aria-hidden="true" tabindex="-1"></a>(sigmasqhat <span class="ot">&lt;-</span> rss<span class="sc">/</span>(n<span class="dv">-2</span>)) <span class="co"># estimated error variance</span></span>
+<span id="cb118-6"><a href="linear-model-estimation.html#cb118-6" aria-hidden="true" tabindex="-1"></a><span class="do">## [1] 19.30734</span></span></code></pre></div>
 </div>
 <div id="mlr-derivation" class="section level3 hasAnchor" number="3.12.5">
 <h3><span class="header-section-number">3.12.5</span> Derivation of the OLS estimator for the multiple linear regression model coefficients<a href="linear-model-estimation.html#mlr-derivation" class="anchor-section" aria-label="Anchor link to header"></a></h3>
@@ -2028,14 +2041,14 @@ minimizes the RSS.</p>
 <div id="manual-calculation-of-penguins-multiple-linear-regression-example" class="section level3 hasAnchor" number="3.12.6">
 <h3><span class="header-section-number">3.12.6</span> Manual calculation of Penguins multiple linear regression example<a href="linear-model-estimation.html#manual-calculation-of-penguins-multiple-linear-regression-example" class="anchor-section" aria-label="Anchor link to header"></a></h3>
 <p>We manually verify the calculations for the <code>penguins</code> example given in Section @ref{s:penguins-mlr}, where we fit the multiple linear regression model regressing <code>bill_length_mm</code> on <code>body_mass_g</code> and <code>flipper_length_mm</code>. We refit the model below, specifying the argument <code>y = TRUE</code> so we can get the response vector used in the model.</p>
-<div class="sourceCode" id="cb113"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb113-1"><a href="linear-model-estimation.html#cb113-1" aria-hidden="true" tabindex="-1"></a><span class="co"># fit regression model, retaining the y vector</span></span>
-<span id="cb113-2"><a href="linear-model-estimation.html#cb113-2" aria-hidden="true" tabindex="-1"></a>mlmod <span class="ot">&lt;-</span> <span class="fu">lm</span>(bill_length_mm <span class="sc">~</span> body_mass_g <span class="sc">+</span> flipper_length_mm,</span>
-<span id="cb113-3"><a href="linear-model-estimation.html#cb113-3" aria-hidden="true" tabindex="-1"></a>            <span class="at">data =</span> penguins, <span class="at">y =</span> <span class="cn">TRUE</span>)</span></code></pre></div>
+<div class="sourceCode" id="cb119"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb119-1"><a href="linear-model-estimation.html#cb119-1" aria-hidden="true" tabindex="-1"></a><span class="co"># fit regression model, retaining the y vector</span></span>
+<span id="cb119-2"><a href="linear-model-estimation.html#cb119-2" aria-hidden="true" tabindex="-1"></a>mlmod <span class="ot">&lt;-</span> <span class="fu">lm</span>(bill_length_mm <span class="sc">~</span> body_mass_g <span class="sc">+</span> flipper_length_mm,</span>
+<span id="cb119-3"><a href="linear-model-estimation.html#cb119-3" aria-hidden="true" tabindex="-1"></a>            <span class="at">data =</span> penguins, <span class="at">y =</span> <span class="cn">TRUE</span>)</span></code></pre></div>
 <p>We can use <code>model.matrix</code> to extract the <span class="math inline">\(\mathbf{X}\)</span> matrix from our fitted model. And because we specified <code>y = TRUE</code> in our call to <code>lm</code>, we can also extract <code>y</code> from the fitted model using the code below.</p>
-<div class="sourceCode" id="cb114"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb114-1"><a href="linear-model-estimation.html#cb114-1" aria-hidden="true" tabindex="-1"></a><span class="co"># extract X matrix from fitted model</span></span>
-<span id="cb114-2"><a href="linear-model-estimation.html#cb114-2" aria-hidden="true" tabindex="-1"></a>X <span class="ot">&lt;-</span> <span class="fu">model.matrix</span>(mlmod)</span>
-<span id="cb114-3"><a href="linear-model-estimation.html#cb114-3" aria-hidden="true" tabindex="-1"></a><span class="co"># extract y vector from fitted model</span></span>
-<span id="cb114-4"><a href="linear-model-estimation.html#cb114-4" aria-hidden="true" tabindex="-1"></a>y <span class="ot">&lt;-</span> mlmod<span class="sc">$</span>y</span></code></pre></div>
+<div class="sourceCode" id="cb120"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb120-1"><a href="linear-model-estimation.html#cb120-1" aria-hidden="true" tabindex="-1"></a><span class="co"># extract X matrix from fitted model</span></span>
+<span id="cb120-2"><a href="linear-model-estimation.html#cb120-2" aria-hidden="true" tabindex="-1"></a>X <span class="ot">&lt;-</span> <span class="fu">model.matrix</span>(mlmod)</span>
+<span id="cb120-3"><a href="linear-model-estimation.html#cb120-3" aria-hidden="true" tabindex="-1"></a><span class="co"># extract y vector from fitted model</span></span>
+<span id="cb120-4"><a href="linear-model-estimation.html#cb120-4" aria-hidden="true" tabindex="-1"></a>y <span class="ot">&lt;-</span> mlmod<span class="sc">$</span>y</span></code></pre></div>
 <p>We’ll need to learn a few new commands in R to do the calculations:</p>
 <ul>
 <li><code>t</code> is the transpose of a matrix.</li>
@@ -2043,16 +2056,16 @@ minimizes the RSS.</p>
 <li><code>solve(A, b)</code> computes <span class="math inline">\(\mathbf{A}^{-1}\mathbf{b}\)</span>.</li>
 </ul>
 <p>Thus, we compute <span class="math inline">\(\hat{\boldsymbol{\beta}}\)</span> using the code below, which matches the estimate from the <code>lm</code> function.</p>
-<div class="sourceCode" id="cb115"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb115-1"><a href="linear-model-estimation.html#cb115-1" aria-hidden="true" tabindex="-1"></a><span class="co"># manually calculate betahat</span></span>
-<span id="cb115-2"><a href="linear-model-estimation.html#cb115-2" aria-hidden="true" tabindex="-1"></a><span class="fu">solve</span>(<span class="fu">t</span>(X) <span class="sc">%*%</span> X, <span class="fu">t</span>(X) <span class="sc">%*%</span> y)</span>
-<span id="cb115-3"><a href="linear-model-estimation.html#cb115-3" aria-hidden="true" tabindex="-1"></a><span class="do">##                            [,1]</span></span>
-<span id="cb115-4"><a href="linear-model-estimation.html#cb115-4" aria-hidden="true" tabindex="-1"></a><span class="do">## (Intercept)       -3.4366939266</span></span>
-<span id="cb115-5"><a href="linear-model-estimation.html#cb115-5" aria-hidden="true" tabindex="-1"></a><span class="do">## body_mass_g        0.0006622186</span></span>
-<span id="cb115-6"><a href="linear-model-estimation.html#cb115-6" aria-hidden="true" tabindex="-1"></a><span class="do">## flipper_length_mm  0.2218654584</span></span>
-<span id="cb115-7"><a href="linear-model-estimation.html#cb115-7" aria-hidden="true" tabindex="-1"></a><span class="co"># betahat from lm function</span></span>
-<span id="cb115-8"><a href="linear-model-estimation.html#cb115-8" aria-hidden="true" tabindex="-1"></a><span class="fu">coef</span>(mlmod)</span>
-<span id="cb115-9"><a href="linear-model-estimation.html#cb115-9" aria-hidden="true" tabindex="-1"></a><span class="do">##       (Intercept)       body_mass_g flipper_length_mm </span></span>
-<span id="cb115-10"><a href="linear-model-estimation.html#cb115-10" aria-hidden="true" tabindex="-1"></a><span class="do">##     -3.4366939266      0.0006622186      0.2218654584</span></span></code></pre></div>
+<div class="sourceCode" id="cb121"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb121-1"><a href="linear-model-estimation.html#cb121-1" aria-hidden="true" tabindex="-1"></a><span class="co"># manually calculate betahat</span></span>
+<span id="cb121-2"><a href="linear-model-estimation.html#cb121-2" aria-hidden="true" tabindex="-1"></a><span class="fu">solve</span>(<span class="fu">t</span>(X) <span class="sc">%*%</span> X, <span class="fu">t</span>(X) <span class="sc">%*%</span> y)</span>
+<span id="cb121-3"><a href="linear-model-estimation.html#cb121-3" aria-hidden="true" tabindex="-1"></a><span class="do">##                            [,1]</span></span>
+<span id="cb121-4"><a href="linear-model-estimation.html#cb121-4" aria-hidden="true" tabindex="-1"></a><span class="do">## (Intercept)       -3.4366939266</span></span>
+<span id="cb121-5"><a href="linear-model-estimation.html#cb121-5" aria-hidden="true" tabindex="-1"></a><span class="do">## body_mass_g        0.0006622186</span></span>
+<span id="cb121-6"><a href="linear-model-estimation.html#cb121-6" aria-hidden="true" tabindex="-1"></a><span class="do">## flipper_length_mm  0.2218654584</span></span>
+<span id="cb121-7"><a href="linear-model-estimation.html#cb121-7" aria-hidden="true" tabindex="-1"></a><span class="co"># betahat from lm function</span></span>
+<span id="cb121-8"><a href="linear-model-estimation.html#cb121-8" aria-hidden="true" tabindex="-1"></a><span class="fu">coef</span>(mlmod)</span>
+<span id="cb121-9"><a href="linear-model-estimation.html#cb121-9" aria-hidden="true" tabindex="-1"></a><span class="do">##       (Intercept)       body_mass_g flipper_length_mm </span></span>
+<span id="cb121-10"><a href="linear-model-estimation.html#cb121-10" aria-hidden="true" tabindex="-1"></a><span class="do">##     -3.4366939266      0.0006622186      0.2218654584</span></span></code></pre></div>
 
 </div>
 </div>
