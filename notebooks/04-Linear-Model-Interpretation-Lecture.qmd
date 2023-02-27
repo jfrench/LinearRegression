@@ -24,7 +24,9 @@ The standard approach to interpreting the coefficients of a fitted
 linear model is to consider the expected change in the response in
 relation to changes in the regressors in the model.
 
-Consider the typical multiple linear regression model of the response $$
+Consider the typical multiple linear regression model of the response: 
+
+$$
 Y=\beta_0+\beta_1 X_1 +\ldots + \beta_{p-1}X_{p-1}+\epsilon
 $$
 
@@ -41,6 +43,7 @@ We assume that the errors all have mean 0, conditional on the values of the regr
 $$
 E(\epsilon \mid X_1, X_2, \ldots, X_{p-1})=0
 $$
+
 Or, in matrix notation:
 
 $$
@@ -71,9 +74,11 @@ Note: All the coefficient $\beta_i$ terms are fixed, non-random.
 ---
 
 Suppose we have a simple linear regression model, so that 
+
 $$
 E(Y\mid X)=\beta_0 + \beta_1 X
 $$ 
+
 The interpretations of the coefficients are:
 
 -   $\beta_0$ is the expected response when the regressor is 0, i.e.,
@@ -99,12 +104,16 @@ $$
 
 ---
 
-Similarly, for $\beta_1$, we notice that $$
+Similarly, for $\beta_1$, we notice that: 
+
+$$
 \begin{aligned}
 E(Y\mid X=x^*+1)-E(Y\mid X=x^*) &= [\beta_0 + \beta_1 (x^* + 1)] - [\beta_0 + \beta_1 x^*] \\
 &= \beta_1.
 \end{aligned}
-$$ Thus, $\beta_1$ literally equals the change in the expected response
+$$ 
+
+Thus, $\beta_1$ literally equals the change in the expected response
 when the regressor increases by 1 unit.
 
 ---
@@ -114,10 +123,12 @@ unit" or "when $X$ increases by 1 unit". For example??
 
 To illustrate the interpretations given above, we interpret the simple
 linear regression model fit to the `penguins` data. The fitted simple linear regression model of `body_mass_g` regressed on
-`body_mass_g` is 
+`body_mass_g` is:
+
 $$
 \hat{E}(\mathtt{bill\_length\_mm}\mid \mathtt{body\_mass\_g})=26.9+0.004 \,\mathtt{body\_mass\_g}.
-$$ 
+$$
+
 
 Some basic interpretations of the coefficients are:
 
@@ -171,6 +182,7 @@ nothing else in the fitted model changes.
 
 Suppose we have a multiple linear regression model with $p-1$ *numeric*
 regressors, so that 
+
 $$
 E(Y\mid X_1,\ldots,X_{p-1})=\beta_0 + \beta_1 X_1 + \cdots + \beta_{p-1} X_{p-1}.(\#eq:mlr-equation)
 $$ 
@@ -218,7 +230,7 @@ In multiple regression models, a single predictor can be used more than once in 
 
 E.g., in the 2nd-degree polynomial regression model:
 
-$$E(Y\mid X) = \beta_0 + \beta_1 X + \beta_2 X^2,$$ 
+$$E(Y\mid X) = \beta_0 + \beta_1 X + \beta_2 X^2$$ 
 
 $X$ is used in both the second and third terms. 
 
@@ -237,6 +249,7 @@ The standard interpretation we discussed is applicable to first-order linear reg
 
 We interpret the first-order multiple linear regression model fit to the `penguins` data. The fitted multiple linear regression
 model is:
+
 $$
 \begin{aligned}
 &\hat{E}(\mathtt{bill\_length\_mm}\mid \mathtt{body\_mass\_g}, \mathtt{flipper\_length\_mm})\\
@@ -343,7 +356,8 @@ colMeans(mlmod$model)
 ```
 
 The effect plot for $\mathtt{body\_mass\_g}$ (on the response
-$\mathtt{bill\_length\_mm}$) is a plot of 
+$\mathtt{bill\_length\_mm}$) is a plot of,
+
 $$
 \begin{aligned}
 &\hat{E}(\mathtt{bill\_length\_mm}\mid \mathtt{body\_mass\_g}, \mathtt{flipper\_length\_mm} = 200.92)\\
@@ -357,13 +371,17 @@ as a function of $\mathtt{body\_mass\_g}$.
 Note: we used exact values
 in the calculation above. The intercept will be 40.76 instead of 41.14
 if you use the rounded values. Similarly, the effect plot for
-$\mathtt{flipper\_length\_mm}$ is a plot of $$
+$\mathtt{flipper\_length\_mm}$ is a plot of,
+
+$$
 \begin{aligned}
 &\hat{E}(\mathtt{bill\_length\_mm}\mid \mathtt{body\_mass\_g} = 4201.75,\mathtt{flipper\_length\_mm}) \\
 &=-3.44+0.0007 \cdot 4201.75+0.22\,\mathtt{flipper\_length\_mm} \\
 &=-0.65 + 0.22\,\mathtt{flipper\_length\_mm}
 \end{aligned}
-$$ as a function of $\mathtt{flipper\_length\_mm}$.
+$$ 
+
+as a function of $\mathtt{flipper\_length\_mm}$.
 
 The `effects` R package can be used to generate effect
 plots for the predictors of a fitted linear model. 
@@ -387,6 +405,7 @@ library(effects)
 # draw effect plot for body_mass_g
 plot(predictorEffect("body_mass_g", mlmod))
 ```
+
 There is a clear positive association between `body_mass_g` and `bill_length_mm`
 after accounting for the `flipper_length_mm` variable. The shaded area
 indicates the 95% confidence interval bands for the estimated mean
@@ -418,7 +437,8 @@ Consider a parallel lines model with numeric regressor $X$ and
 categorical predictor $C$ with levels $L_1$, $L_2$, and $L_3$. Predictor $C$
 must be transformed into two indicator variables, $D_2$ and $D_3$, for
 category levels $L_2$ and $L_3$, to be included in our linear model.
-$L_1$ is the reference level. The parallel lines model is formulated as
+$L_1$ is the reference level. The parallel lines model is formulated as:
+
 $$
 E(Y \mid X, C) = \beta_{int} + \beta_{X} X + \beta_{L_2} D_2 +  \beta_{L_3} D_3
 $$ 
@@ -428,7 +448,7 @@ $\beta_3$ with notation the indicates the regressor each coefficient is
 associated with.
 
 When an observation has level $L_1$ and $X=0$, then the expected
-response is 
+response is:
 
 $$
 \begin{aligned}
@@ -440,7 +460,7 @@ $$
 Thus, $\beta_{int}$ is the expected response for an observation with
 level $L_1$ when $X=0$.
 
-When an observation has a fixed level $L_j$ and $X$ increases from $x^*$ to $x^*+1$, then the change in the expected response is 
+When an observation has a fixed level $L_j$ and $X$ increases from $x^*$ to $x^*+1$, then the change in the expected response is:
 
 $$
 E(Y|X = x^* + 1, C=L_j) - E(Y|X = x^*, C=L_j)= \beta_X.
@@ -581,7 +601,7 @@ predictors are held at their sample mean. The sample mean is:
 mean(lmodp$model$body_mass_g)
 ```
 
-The estimated mean for the Adelie species when `body_mass_g` is fixed at 4201.75 is
+The estimated mean for the Adelie species when `body_mass_g` is fixed at 4201.75 is:
 
 $$
 \begin{aligned}
@@ -599,7 +619,9 @@ $$
 
 And,
 
-$$\hat{E}(\mathtt{bill\_length\_mm} \mid \mathtt{body\_mass\_g} = 4201.75, \mathtt{species}=\mathtt{Gentoo}) = 44.23$$
+$$
+\hat{E}(\mathtt{bill\_length\_mm} \mid \mathtt{body\_mass\_g} = 4201.75, \mathtt{species}=\mathtt{Gentoo}) = 44.23
+$$
 
 The code below produces the effect plot for `species`. The confidence bands for the estimated mean response are shown by the vertical bars.
 
@@ -616,12 +638,14 @@ categorical predictor $C$ with levels $L_1$, $L_2$, and $L_3$. The
 predictor $C$ will be transformed into two indicator variables, $D_2$
 and $D_3$, for category levels $L_2$ and $L_3$, with $L_1$ being the
 reference level. The separate lines model is formulated as:
+
 $$
 E(Y \mid X, C) = \beta_{int} + \beta_{X} X + \beta_{L_2} D_2 +  \beta_{L_3} D_3 + \beta_{XL_2} XD_2+\beta_{XL_3}XD_3
 $$
 
 When an observation has level $L_1$ and $X=x^*$, then the expected
-response is 
+response is:
+
 $$
 \begin{aligned}
 &E(Y\mid X = x^*, C=L_1) \\
@@ -646,7 +670,7 @@ $$
 \end{aligned}
 $$ 
 
-Following this same pattern, when $C=L_3$ we have 
+Following this same pattern, when $C=L_3$ we have: 
 
 $$
 E(Y|X = x^*, C=L_3) = (\beta_{int} + \beta_{L_3}) + (\beta_X + \beta_{XL_3})x^*
@@ -657,6 +681,7 @@ We can verify that for $j=2,3$,
 $$\beta_{L_j}= E(Y\mid X = 0, C=L_j) - E(Y\mid X = 0, C=L_1)$$ 
 
 And, 
+
 $$
 \begin{aligned}
 & \beta_{XL_j} \\
@@ -1022,8 +1047,7 @@ interaction term `body_mass_g:species`. We are unlikely to fit a model
 that includes the interaction term without also including the `species`
 term directly. Instead it makes more sense to judge the utility of
 adding `species` to the model regressing `bill_length_mm` on
-`body_mass_g` alone, which we already considered. Examining the leverage plot for the interaction term `body_mass_g:species` , we see the points have only a
-weak linear relationship. Thus, we expect limited utility in adding the
+`body_mass_g` alone, which we already considered. Examining the leverage plot for the interaction term `body_mass_g:species` , we see the points have only a weak linear relationship. Thus, we expect limited utility in adding the
 interaction term `body_mass_g:species` to the parallel lines regression
 model that regresses `bill_length_mm` on `body_mass_g` and `species`.
 
@@ -1034,8 +1058,13 @@ model that regresses `bill_length_mm` on `body_mass_g` and `species`.
 
 ---
 
-Let $$\mathbf{X}_{[j]}=[x_{1,j},\ldots,x_{n,j}]$$ denote the $n\times 1$
-column vector of observed values for regressor $X_j$. (We can't use the
+Let,
+
+$$
+\mathbf{X}_{[j]}=[x_{1,j},\ldots,x_{n,j}]
+$$ 
+
+denote the $n\times 1$ column vector of observed values for regressor $X_j$. (We can't use the
 notation $\mathbf{x}_j$ because that is the $p\times 1$ vector of
 regressor values for the $j$th observation). Regressors
 $\mathbf{X}_{[j]}$ and $\mathbf{X}_{[k]}$ are *orthogonal* if
@@ -1058,15 +1087,22 @@ $\mathbf{X}_{[j]} - \bar{\mathbf{x}}_j$.
 
 Regressors $\mathbf{X}_{[j]}$ and $\mathbf{X}_{[k]}$ are
 *uncorrelated* if they are orthogonal after being centered, i.e., if
+
 $$
 (\mathbf{X}_{[j]} - \bar{\mathbf{x}}_j)^T (\mathbf{X}_{[k]} - \bar{\mathbf{x}}_k)=0.
-$$ Note that the sample covariance between vectors $\mathbf{X}_{[j]}$
-and $\mathbf{X}_{[k]}$ is $$
+$$ 
+
+Note that the sample covariance between vectors $\mathbf{X}_{[j]}$
+and $\mathbf{X}_{[k]}$ is:
+
+$$
 \begin{aligned}
 \widehat{\mathrm{cov}}(\mathbf{X}_{[j]}, \mathbf{X}_{[k]}) &= \frac{1}{n-1}\sum_{i=1}^n (x_{i,j} - \bar{x}_j)(x_{i,k} - \bar{x}_k) \\
  &= \frac{1}{n-1}(\mathbf{X}_{[j]} - \bar{\mathbf{x}}_j)^T (\mathbf{X}_{[k]} - \bar{\mathbf{x}}_k).
 \end{aligned}
-$$Thus, two centered regressors are orthogonal if their covariance is
+$$
+
+Thus, two centered regressors are orthogonal if their covariance is
 zero.
 
 It is a desirable to have orthogonal regressors in your fitted model
