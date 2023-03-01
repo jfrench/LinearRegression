@@ -1003,8 +1003,8 @@ Regarding point 2, $R^2$ can mislead us into thinking an inappropriate model fit
 Anscombe's quartet is available as the `anscombe` data set in the **datasets** package. The data set includes `r nrow(anscombe)` observations of
 `r ncol(anscombe)` variables. The variables are:
 
--   `x1`, `x2`, `x3` `x4`: the regressor variable for each individual data set.
--   `y1`, `y2`, `y3` `y4`: the response variable for each individual data set.
+-   `x1`, `x2`, `x3`, `x4`: the regressor variable for each individual data set.
+-   `y1`, `y2`, `y3`, `y4`: the response variable for each individual data set.
 
 We fit the simple linear regression model to the four data sets in the code below, then extract the coefficients and $R^2$ to verify the information provided above.
 
@@ -1103,10 +1103,10 @@ We treat the response variable as a random variable. Perhaps surprisingly, we tr
 
 ```{r term-df, echo = FALSE}
 term <- c("$Y$", "$Y_i$", "$\\mathbf{y}$", "$X$",
-             "$X_j$", "$x_{i,j}$", "$\\mathbf{X}$", "$\\mathbf{x}_i$", "$\\beta_j$", "$\\boldsymbol{\\beta}$", "$\\epsilon$", "$\\epsilon_i$")
-description <- c("response variable", "response value for the $i$th observation", "the $n\\times 1$ column vector of response values", "regressor variable", "the $j$th regressor variable", "the value of the $j$th regressor variable for the $i$th observation", "the $n\\times p$ matrix of regressor values", "the $p\\times 1$ vector of regressor values for the $i$th observation", "the coefficient associated with the $j$th regressor variable", "the $p\\times 1$ column vector of regression coefficients", "the model error", "the error for the $i$th observation")
-observable <- c("Yes", "Yes", "Yes", "Yes", "Yes", "Yes", "Yes", "Yes", "No", "No", "No", "No")
-random <- c("Yes", "Yes", "Yes", "No", "No", "No", "No", "No", "No", "No", "Yes", "Yes")
+             "$X_j$", "$x_{i,j}$", "$\\mathbf{X}$", "$\\mathbf{x}_i$", "$\\beta_j$", "$\\boldsymbol{\\beta}$", "$\\epsilon$", "$\\epsilon_i$", "$\\boldsymbol{\\epsilon}$")
+description <- c("response variable", "response value for the $i$th observation", "the $n\\times 1$ column vector of response values", "regressor variable", "the $j$th regressor variable", "the value of the $j$th regressor variable for the $i$th observation", "the $n\\times p$ matrix of regressor values", "the $p\\times 1$ vector of regressor values for the $i$th observation", "the coefficient associated with the $j$th regressor variable", "the $p\\times 1$ column vector of regression coefficients", "the model error", "the error for the $i$th observation", "the $n\\times 1$ column vector of errors")
+observable <- c("Yes", "Yes", "Yes", "Yes", "Yes", "Yes", "Yes", "Yes", "No", "No", "No", "No", "No")
+random <- c("Yes", "Yes", "Yes", "No", "No", "No", "No", "No", "No", "No", "Yes", "Yes", "Yes")
 term_df <- data.frame(term, description, observable, random)
 kbl(term_df,
     col.names = c("Term", "Description", "Observable?", "Random?"),
@@ -1166,16 +1166,16 @@ First, we take the partial derivative of the RSS with respect to $\hat\beta_0$ a
 \]
 
 Next, we set the partial derivative equal to zero and rearrange the terms to solve for $\hat{\beta}_0$:
-\[
+$$
 \begin{aligned}
 0 &= \frac{\partial RSS(\hat\beta_0, \hat\beta_1)}{\partial \hat\beta_0}  &  \\
 0 &= -2\sum_{i=1}^n(Y_i - \hat\beta_0 - \hat\beta_1x_i) & \tiny\text{ (substitute partial deriviative)}\\
 0 &= \sum_{i=1}^n(Y_i - \hat\beta_0 - \hat\beta_1x_i) & \tiny\text{ (divide both sides by -2)} \\
 0 &= \sum_{i=1}^n Y_i - \sum_{i=1}^n\hat\beta_0 - \sum_{i=1}^n\hat\beta_1x_i &\tiny\text{ (by linearity of sum)} \\
-0 &= \sum_{i=1}^n Y_i - n\hat\beta_0 - \sum_{i=1}^n\hat\beta_1x_i & \tiny(\text{summing }\hat\beta_0\ n\text{ times equals }n\hat\beta_0) \\
-n\hat\beta_0 &= \sum_{i=1}^n Y_i-\sum_{i=1}^n\hat\beta_1x_i. &\tiny\text{ (algebra rearrange)}
+0 &= \sum_{i=1}^n Y_i - n\hat\beta_0 - \sum_{i=1}^n\hat\beta_1x_i & \tiny(\text{sum }\hat\beta_0\ n\text{ times equals }n\hat\beta_0) \\
+n\hat\beta_0 &= \sum_{i=1}^n Y_i-\hat{\beta}_1\sum_{i=1}^nx_i. &\tiny\text{ (algebra rearrange, factor }\hat{\beta}_1\text{)} \\
 \end{aligned}
-\]
+$$
 
 Finally, we divide both sides by $n$ to get the OLS estimator for $\hat\beta_0$ in terms of $\hat\beta_1$:
 \[

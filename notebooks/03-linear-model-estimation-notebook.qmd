@@ -1353,7 +1353,7 @@ $$
 E(Y)=\beta_0.
 $$
 
-Using basic calculus, we can show that the OLS estimator of $\beta_0$ for the model in Equation \@ref(eq:constant-mean-model) is $\hat{\beta}_0=\bar{Y}$. 
+Using basic calculus, we can show that the OLS estimator of $\beta_0$ for the constant mean model is $\hat{\beta}_0=\bar{Y}$. 
 
 For the constant mean model:
 
@@ -1434,6 +1434,8 @@ Consider the examples below relating $R^2$ to various fitted simple linear regre
 
 ```{r}
 #| echo: false
+#| eval: true
+#| output: true
 par(mfrow = c(2, 2))
 set.seed(27)
 x1 <- runif(25, 0, 10)
@@ -1514,35 +1516,66 @@ Anscombe (1973) provides a canonical data set known as "Anscombe's quartet" that
 
 Anscombe's quartet is available as the `anscombe` data set in the **datasets** package. The data set includes 11 observations of 8 variables. The variables are:
 
--   `x1`, `x2`, `x3` `x4`: the regressor variable for each individual data set.
--   `y1`, `y2`, `y3` `y4`: the response variable for each individual data set.
+-   `x1`, `x2`, `x3`, `x4`: the regressor variable for each individual data set.
+-   `y1`, `y2`, `y3`, `y4`: the response variable for each individual data set.
+
+
+We fit a simple linear regression model to each of the 4 data sets.
 
 ```{r}
 # fit model to first data set
 lmod_a1 <- lm(y1 ~ x1, data = anscombe)
-# extract coefficients from fitted model
-coef(lmod_a1)
-# extract R^2 from fitted model
-summary(lmod_a1)$r.squared
 # fit model to second data set
 lmod_a2 <- lm(y2 ~ x2, data = anscombe)
-coef(lmod_a2)
-summary(lmod_a2)$r.squared
 # fit model to third data set
 lmod_a3 <- lm(y3 ~ x3, data = anscombe)
-coef(lmod_a3)
-summary(lmod_a3)$r.squared
 # fit model to fourth data set
 lmod_a4 <- lm(y4 ~ x4, data = anscombe)
+```
+
+We extract the estimated coefficients from each fitted model to confirm that the estimated coefficients are nearly identical.
+
+```{r}
+coef(lmod_a1)
+```
+
+```{r}
+coef(lmod_a2)
+```
+
+```{r}
+coef(lmod_a3)
+```
+
+```{r}
 coef(lmod_a4)
+```
+
+We extract $R^2$ from each fitted model to confirm that they are nearly identical.
+
+```{r}
+summary(lmod_a1)$r.squared
+```
+
+```{r}
+summary(lmod_a2)$r.squared
+```
+
+```{r}
+summary(lmod_a3)$r.squared
+```
+
+```{r}
 summary(lmod_a4)$r.squared
 ```
 
-We overlays the fitted models on each data set.
+We overlay the fitted models on each data set.
 
 ```{r}
 #| echo: false
 #| message: false
+#| eval: true
+#| output: true
 adf = data.frame(x = unlist(anscombe[,1:4]),
                  y = unlist(anscombe[,5:8]),
                  set = factor(rep(1:4, each = 11)))
@@ -1553,7 +1586,10 @@ ggplot(adf, aes(x = x, y = y, group = set, col = set)) +
   theme_bw()
 ```
 
-Do all models describe the data equally well?
+**Question?**
+
+- Do all models describe the data equally well?
+- If not, comment on the deficiencies of the poorly fitting models.
 
 
 **Adjusted R-squared**
@@ -1586,6 +1622,7 @@ We double-check that the separate lines model is a sensible model.
 ```{r}
 plot(penguins$bill_length_mm ~ fitted(lmods),
      xlab = "fitted values", ylab = "bill length (mm)")
+abline(0, 1) # add 45 degree line
 ```
 
 # Summary of terms
@@ -1606,6 +1643,8 @@ An overview of terms used to define a linear model.
 |$\boldsymbol{\beta}$ |the $p\times 1$ column vector of regression coefficients             |No         |No     |
 |$\epsilon$           |the model error                                                      |No         |Yes    |
 |$\epsilon_i$         |the error for the $i\text{th}$ observation                                  |No         |Yes    |
+|$\boldsymbol{\epsilon}$         |the $n\times 1$ column vector of errors                                  |No         |Yes    |
+
 
 # Summary of functions
 
@@ -1682,8 +1721,8 @@ $$
 0 &= \sum_{i=1}^n(Y_i - \hat\beta_0 - \hat\beta_1x_i) & \tiny\text{ (divide both sides by -2)} \\
 0 &= \sum_{i=1}^n Y_i - \sum_{i=1}^n\hat\beta_0 - \sum_{i=1}^n\hat\beta_1x_i &\tiny\text{ (by linearity of sum)} \\
 0 &= \sum_{i=1}^n Y_i - n\hat\beta_0 - \sum_{i=1}^n\hat\beta_1x_i & \tiny(\text{summing }\hat\beta_0\ n\text{ times equals }n\hat\beta_0) \\
-n\hat\beta_0 &= \sum_{i=1}^n Y_i-\sum_{i=1}^n\hat\beta_1x_i. &\tiny\text{ (algebra rearrange)}
-&= \hat\beta_0 = \bar Y-\hat\beta_1\bar x &
+n\hat\beta_0 &= \sum_{i=1}^n Y_i-\hat{\beta}_1\sum_{i=1}^nx_i. &\tiny\text{ (algebra rearrange, factorring }\hat{\beta}_1\text{)} \\
+\hat\beta_0 &= \bar Y-\hat\beta_1\bar x &
 \end{aligned}
 $$
 :::
