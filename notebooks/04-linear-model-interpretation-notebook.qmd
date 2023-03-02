@@ -1,5 +1,5 @@
 ---
-title: Chapter 4 - Linear Model Interpretation
+title: "Chapter 4 - Linear Model Interpretation"
 author: Joshua French
 date: ''
 # format: html
@@ -55,12 +55,12 @@ $$
 
 * We treat the values of our regressor variables as being fixed, known values
 * The error term is treated as a random variable
-* Consequently, the response variable is also a random variable. 
+* Consequently, the response variable is also a random variable.
 
 **Random Error Assumption**
 ---
 
-We assume that the errors all have mean 0, conditional on the values of the regressor variables. 
+We assume that the errors all have mean 0, conditional on the values of the regressor variables.
 
 $$
 E(\epsilon \mid X_1, X_2, \ldots, X_{p-1})=0.
@@ -78,15 +78,15 @@ Using the assumption of mean zero errors, we have:
 
 
 ::: {.content-visible unless-format="pdf"}
-</br>  
-</br>  
-</br>  
-</br>  
-</br>  
-</br>  
-</br>  
+</br>
+</br>
+</br>
+</br>
+</br>
+</br>
+</br>
 :::
-  
+
 ::: {.content-hidden unless-format="pdf"}
 $$
 \begin{aligned}
@@ -105,10 +105,10 @@ Note: All the coefficient $\beta_i$ terms are fixed, non-random.
 **Interpretation for simple linear regression**
 ---
 
-Suppose we have a simple linear regression model, so that 
+Suppose we have a simple linear regression model, so that
 $$
 E(Y\mid X)=\beta_0 + \beta_1 X.
-$$ 
+$$
 The interpretations of the coefficients are:
 
 -   $\beta_0$ is the expected response when the regressor is 0, i.e.,
@@ -124,42 +124,42 @@ The intercept term $\beta_0$ is the expected value of the response when $X= 0$.
 
 
 ::: {.content-visible unless-format="pdf"}
-</br>  
-</br>  
-</br>  
+</br>
+</br>
+</br>
 :::
-  
+
 ::: {.content-hidden unless-format="pdf"}
 $$
 \begin{aligned}
 E(Y\mid X = 0) &= \beta_0 + \beta_1 \cdot 0 \\
 &= \beta_0.
 \end{aligned}
-$$ 
+$$
 :::
 
 **Interpretation of Slope**
 ---
 
-Similarly, for $\beta_1$, we notice that 
+Similarly, for $\beta_1$, we notice that
 
 ::: {.content-visible unless-format="pdf"}
-</br>  
-</br>  
-</br>  
-</br>  
-</br>  
-</br>  
-</br>  
+</br>
+</br>
+</br>
+</br>
+</br>
+</br>
+</br>
 :::
-  
+
 ::: {.content-hidden unless-format="pdf"}
 $$
 \begin{aligned}
 E(Y\mid X=x^*+1)-E(Y\mid X=x^*) &= [\beta_0 + \beta_1 (x^* + 1)] - [\beta_0 + \beta_1 x^*] \\
 &= \beta_1.
 \end{aligned}
-$$ 
+$$
 :::
 
 Thus, $\beta_1$ literally equals the change in the expected response
@@ -170,28 +170,28 @@ unit" or "when $X$ increases by 1 unit". For example??
 
 To illustrate the interpretations given above, we interpret the simple
 linear regression model fit to the `penguins` data. The fitted simple linear regression model of `body_mass_g` regressed on
-`body_mass_g` is 
+`body_mass_g` is
 $$
 \hat{E}(\mathtt{bill\_length\_mm}\mid \mathtt{body\_mass\_g})=26.9+0.004 \,\mathtt{body\_mass\_g}.
-$$ 
+$$
 
 Some basic interpretations of the coefficients are:
 
 
 
 ::: {.content-visible unless-format="pdf"}
-</br>  
-</br>  
-</br>  
-</br>  
-</br>  
-</br>  
-</br>  
+</br>
+</br>
+</br>
+</br>
+</br>
+</br>
+</br>
 :::
-  
+
 ::: {.content-hidden unless-format="pdf"}
 -   Intercept: The expected bill length of a penguin with a body mass of
-    0 grams is 26.9 mm. 
+    0 grams is 26.9 mm.
 -   `body_mass_g`: A penguin 1 gram heavier than another penguin is
     expected to have a bill length 0.004 mm longer than the smaller
     penguin.
@@ -203,7 +203,7 @@ Some basic interpretations of the coefficients are:
 * A weight difference of 1 gram is negligible in the context of penguin weights.
 * A bill length change of 0.004 mm is unlikely to be noticed.
 
-In the code below, we divide the `body_mass_g` variable by 1000 to convert the variable from grams to kilograms. 
+In the code below, we divide the `body_mass_g` variable by 1000 to convert the variable from grams to kilograms.
 
 We then fit the model regressing `bill_length_mm` on `body_mass_kg` and extract the
 estimated coefficients.
@@ -224,7 +224,7 @@ coefficients(slmod_scaled)
 - How do we reinterpret the model in the context of kilograms?
 
 Dividing `body_mass_g` by 1000 resulted in the estimated
-coefficient changing by a factor of 1000. 
+coefficient changing by a factor of 1000.
 
 More generally, if
 $\hat{\beta}_j$ is the estimated coefficient for $X_j$, then the
@@ -236,11 +236,11 @@ nothing else in the fitted model changes.
 ---
 
 Suppose we have a multiple linear regression model with $p-1$ *numeric*
-regressors, so that 
+regressors, so that
 
 $$
 E(Y\mid X_1,\ldots,X_{p-1})=\beta_0 + \beta_1 X_1 + \cdots + \beta_{p-1} X_{p-1}.
-$$ 
+$$
 
 Relying on the definition of $\mathbb{X}$, we denote the set of
 regressors without $X_j$ as
@@ -261,7 +261,7 @@ The interpretations of the coefficients from the model in Equation are:
     non-intercept coefficients of a multiple linear regression model are
     known as *partial slopes*.
 
-Regarding the interpretation of $\beta_0$, from the regression model: 
+Regarding the interpretation of $\beta_0$, from the regression model:
 
 $$
 \begin{aligned}
@@ -270,7 +270,7 @@ E(Y\mid X_1=0,\ldots,X_{p-1}=0) &= \beta_0 + \beta_1 \cdot 0 + \cdots + \beta_{p
 \end{aligned}
 $$
 
-**Question:** 
+**Question:**
 
 - Does the interpretation of the intercept always make sense?
 - What if $X_1$ was heart rate?
@@ -278,13 +278,13 @@ $$
 **Issues Interpreting Polynomial Models**
 ---
 
-In multiple regression models, a single predictor can be used more than once in the model. 
+In multiple regression models, a single predictor can be used more than once in the model.
 
 E.g., in the 2nd-degree polynomial regression model:
 
-$$E(Y\mid X) = \beta_0 + \beta_1 X + \beta_2 X^2,$$ 
+$$E(Y\mid X) = \beta_0 + \beta_1 X + \beta_2 X^2,$$
 
-$X$ is used in both the second and third terms. 
+$X$ is used in both the second and third terms.
 
 **Questions**
 
@@ -329,7 +329,7 @@ Did you notice that the estimated coefficients for the intercept and the
 * Why?
 
 The role a regressor plays in a regression model depends on what other
-regressors are in the model. 
+regressors are in the model.
 
 - Generally, we can't provide a definitive interpretation of a
 regressor's role in a fitted model without knowing what other regressors
@@ -346,7 +346,7 @@ as we add or remove regressors from a model?
 
 - If a regressor is correlated with other regressors in a model, then adding or removing that regressor will impact the estimated coefficients in the new model.
 - The more correlated the regressors are, the more they tend to affect
-each others' estimated coefficients. 
+each others' estimated coefficients.
 - A regressor will impact the estimated coefficients of the other regressors in a model unless it is *orthogonal* to the other regressors.
 
 *Note:* Orthogonality is related to correlation, but there are important differences.
@@ -365,22 +365,22 @@ Fox et al. (2020):
 > multiple-coefficient terms such as regression splines and polynomials
 > ....
 
-An *effect plot* is a plot of the estimated mean response as a function of a *focal predictor* with the other *predictors* being held at "typical values". 
+An *effect plot* is a plot of the estimated mean response as a function of a *focal predictor* with the other *predictors* being held at "typical values".
 
 *Recall:* the difference between predictors and regressors.
 
-- A *predictor* variable is a variable available to model the response variable. 
+- A *predictor* variable is a variable available to model the response variable.
 - A *regressor* variable is a variable used in our regression model, whether that is an unmodified predictor variable, some transformation of a predictor, some combination of predictors, etc.
 
 **First-Order Model Effects Plot**
 ---
 
-In a first-order linear model, none of the regressors interact, i.e., none of the regressors are functions of each other. Fox et al. (2020) use the terminology *fixed group* to refer to the group of predictors that do not interact with the focal predictor. 
+In a first-order linear model, none of the regressors interact, i.e., none of the regressors are functions of each other. Fox et al. (2020) use the terminology *fixed group* to refer to the group of predictors that do not interact with the focal predictor.
 
 To create our effect plot, we must first find the equation for the estimated mean response as a function of a focal predictor while holding the other predictors at their "typical" values. We set numeric fixed group predictors equal to their sample means when finding this function.
 
 We now construct effect plots for the estimated regression model of the
-`penguins` data that regressed `bill_length_mm` on `body_mass_g` and `flipper_length_mm`. The fitted model is 
+`penguins` data that regressed `bill_length_mm` on `body_mass_g` and `flipper_length_mm`. The fitted model is
 
 $$
 \begin{aligned}
@@ -400,23 +400,23 @@ mlmod <- lm(bill_length_mm ~ body_mass_g + flipper_length_mm, data = penguins)
 coef(mlmod)
 ```
 
-There are two predictors in the model, so we can create effect plots for both variables using the sample mean as a reference value. 
+There are two predictors in the model, so we can create effect plots for both variables using the sample mean as a reference value.
 
 ```{r}
 colMeans(mlmod$model)
 ```
 
 The effect plot for $\mathtt{body\_mass\_g}$ (on the response
-$\mathtt{bill\_length\_mm}$) is a plot of 
+$\mathtt{bill\_length\_mm}$) is a plot of
 $$
 \begin{aligned}
 &\hat{E}(\mathtt{bill\_length\_mm}\mid \mathtt{body\_mass\_g}, \mathtt{flipper\_length\_mm} = 200.92)\\
 &=-3.44+0.0007 \,\mathtt{body\_mass\_g}+0.22\cdot 200.92 \\
 &=41.14+0.0007 \,\mathtt{body\_mass\_g}
 \end{aligned}
-$$ 
+$$
 
-as a function of $\mathtt{body\_mass\_g}$. 
+as a function of $\mathtt{body\_mass\_g}$.
 
 Note: we used exact values
 in the calculation above. The intercept will be 40.76 instead of 41.14
@@ -430,9 +430,9 @@ $\mathtt{flipper\_length\_mm}$ is a plot of $$
 $$ as a function of $\mathtt{flipper\_length\_mm}$.
 
 The `effects` R package can be used to generate effect
-plots for the predictors of a fitted linear model. 
+plots for the predictors of a fitted linear model.
 
-- We use the `effects::predictorEffect` function to compute the information needed to draw the plot. 
+- We use the `effects::predictorEffect` function to compute the information needed to draw the plot.
 - We use the `plot` function to display the information.
 
 The `predictorEffect` function computes the estimated mean response for
@@ -459,7 +459,7 @@ There is a clear positive association between `body_mass_g` and `bill_length_mm`
 after accounting for the `flipper_length_mm` variable.
 
 The shaded area indicates the 95% confidence interval bands for the estimated mean
-response. 
+response.
 
 We next create an effect plot for `flipper_length_mm` using the code below.
 
@@ -489,82 +489,82 @@ category levels $L_2$ and $L_3$, to be included in our linear model.
 $L_1$ is the reference level. The parallel lines model is formulated as
 $$
 E(Y \mid X, C) = \beta_{int} + \beta_{X} X + \beta_{L_2} D_2 +  \beta_{L_3} D_3
-$$ 
+$$
 
 We replaced the usual $\beta_0$, $\beta_1$, $\beta_2$, and
 $\beta_3$ with notation the indicates the regressor each coefficient is
 associated with.
 
 When an observation has level $L_1$ and $X=0$, then the expected
-response is 
+response is
 
 ::: {.content-visible unless-format="pdf"}
-</br>  
-</br>  
-</br>  
-</br>  
-</br>  
-</br>  
-</br>  
+</br>
+</br>
+</br>
+</br>
+</br>
+</br>
+</br>
 :::
-  
+
 ::: {.content-hidden unless-format="pdf"}
 $$
 \begin{aligned}
 E(Y|X = 0, C=L_1) &= \beta_{int} + \beta_X \cdot 0 + \beta_{L_2} \cdot 0 + \beta_{L_3} \cdot 0 \\
 &= \beta_{int}.
 \end{aligned}
-$$ 
+$$
 :::
 
 Thus, $\beta_{int}$ is the expected response for an observation with
 level $L_1$ when $X=0$.
 
-When an observation has a fixed level $L_j$ and $X$ increases from $x^*$ to $x^*+1$, then the change in the expected response is 
+When an observation has a fixed level $L_j$ and $X$ increases from $x^*$ to $x^*+1$, then the change in the expected response is
 
 ::: {.content-visible unless-format="pdf"}
-</br>  
-</br>  
-</br>  
-</br>  
-</br>  
-</br>  
-</br>  
+</br>
+</br>
+</br>
+</br>
+</br>
+</br>
+</br>
 :::
-  
+
 ::: {.content-hidden unless-format="pdf"}
 $$
 E(Y|X = x^* + 1, C=L_j) - E(Y|X = x^*, C=L_j)= \beta_X.
-$$ 
+$$
 :::
 
 Thus, $\beta_X$ is the expected change in the response for an
 observation with fixed level $L_j$ when $X$ increases by 1 unit.
 
-When an observation has level $L_2$, the expected response is 
+When an observation has level $L_2$, the expected response is
 
 ::: {.content-visible unless-format="pdf"}
-</br>  
-</br>  
-</br>  
-</br>  
-</br>  
-</br>  
-</br>  
-</br>  
-</br>  
-</br>  
+</br>
+</br>
+</br>
+</br>
+</br>
+</br>
+</br>
+</br>
+</br>
+</br>
 :::
-  
+
 ::: {.content-hidden unless-format="pdf"}
 $$
 \begin{aligned}
 E(Y\mid X = x^*, C=L_2) &= \beta_{int} + \beta_X x^* + \beta_{L_2} \cdot 1 + \beta_{L_3} \cdot 0 \\
 &= \beta_{int} + \beta_X x^* + \beta_{L_2}.
 \end{aligned}
-$$ 
+$$
 
-Thus, 
+Thus,
 
 $$
 \begin{aligned}
@@ -572,14 +572,14 @@ $$
 &= (\beta_{int} + \beta_X x^* + \beta_{L_2}) - (\beta_{int} + \beta_X x^*) \\
 &=  \beta_{L_2}.
 \end{aligned}
-$$ 
+$$
 :::
 
 Thus, $\beta_{L_2}$ is the expected change in the response for a
 fixed value of $X$ when comparing on observation having level $L_1$ to
 level $L_2$ of predictor $C$. More specifically, $\beta_{L_2}$ indicates
 the distance between the estimated regression lines for observations
-having levels $L_1$ and $L_2$. 
+having levels $L_1$ and $L_2$.
 
 To summarize, assuming categorical predictor $C$ has $K$ levels instead of 3:
 
@@ -591,14 +591,14 @@ To summarize, assuming categorical predictor $C$ has $K$ levels instead of 3:
     the response when comparing observations having level $L_1$ and
     $L_j$ with $X$ fixed at the same value.
 
-We previously fit a parallel lines model to the `penguins` data that used both `body_mass_g` and `species` to explain the behavior of `bill_length_mm`. Letting $D_C$ denote the indicator variable for the `Chinstrap` level and $D_G$ denote the indicator variable for the `Gentoo` level, the fitted parallel lines model was 
+We previously fit a parallel lines model to the `penguins` data that used both `body_mass_g` and `species` to explain the behavior of `bill_length_mm`. Letting $D_C$ denote the indicator variable for the `Chinstrap` level and $D_G$ denote the indicator variable for the `Gentoo` level, the fitted parallel lines model was
 
 $$
 \begin{aligned}
 &\hat{E}(\mathtt{bill\_length\_mm} \mid \mathtt{body\_mass\_g}, \mathtt{species})\\
 &= 24.92 + 0.004 \mathtt{body\_mass\_g} + 9.92 D_C + 3.56 D_G.
 \end{aligned}
-$$ 
+$$
 
 In the context of this model:
 
@@ -617,9 +617,9 @@ In the context of this model:
 
 How do we create an effect plot for a numeric focal predictor when a
 non-interacting categorical predictor is in the model (such as for the
-parallel lines model we have been discussing)? 
+parallel lines model we have been discussing)?
 
-- First, determine the fitted model as a function of the focal predictor for each level of the categorical predictor. 
+- First, determine the fitted model as a function of the focal predictor for each level of the categorical predictor.
 - Then, we compute the weighted average of the equation with the weights being proportional to the number of observations in each group.
 
 Let's construct an effect plot for the `body_mass_g` predictor in the
@@ -635,7 +635,7 @@ $$
 &\hat{E}(\mathtt{bill\_length\_mm} \mid \mathtt{body\_mass\_g}, \mathtt{species}=\mathtt{Gentoo}) \\
 &= 28.48 + 0.004 \mathtt{body\_mass\_g}.
 \end{aligned}
-$$ 
+$$
 
 We recreate the fitted model producing these equations in R using the
 code below.
@@ -648,7 +648,7 @@ coef(lmodp)
 ```
 
 The code below determines the number of observations with each level of
-`species` for the data used in the fitted model `lmodp`. 
+`species` for the data used in the fitted model `lmodp`.
 
 ```{r}
 table(lmodp$model$species)
@@ -656,7 +656,7 @@ print(paste('Total:', length(lmodp$model$species)))
 ```
 
 The equation used to create the effect plot of `body_mass_g` is the
-weighted average of the response, with weights proportional to the number of observational having each level of the categorical predictor. Specifically, 
+weighted average of the response, with weights proportional to the number of observational having each level of the categorical predictor. Specifically,
 
 $$
 \begin{aligned}
@@ -666,7 +666,7 @@ $$
 &\quad + \frac{123}{342}(28.48 + 0.004 \mathtt{body\_mass\_g}) \\
 &=28.17 + 0.004 \mathtt{body\_mass\_g}.
 \end{aligned}
-$$ 
+$$
 
 The following code produces the effect plot for `body_mass_g` for the fitted parallel lines model. The association between `bill_length_mm` and `body_mass_g` is positive after accounting for `species`.
 
@@ -695,7 +695,7 @@ $$
 &= 24.92 + 0.004 \cdot 4201.75 \\
 &= 40.67.
 \end{aligned}
-$$ 
+$$
 
 Similarly,
 
@@ -726,18 +726,18 @@ E(Y \mid X, C) = \beta_{int} + \beta_{X} X + \beta_{L_2} D_2 +  \beta_{L_3} D_3 
 $$
 
 When an observation has level $L_1$ and $X=x^*$, then the expected
-response is 
+response is
 
 ::: {.content-visible unless-format="pdf"}
-</br>  
-</br>  
-</br>  
-</br>  
-</br>  
-</br>  
-</br>  
+</br>
+</br>
+</br>
+</br>
+</br>
+</br>
+</br>
 :::
-  
+
 ::: {.content-hidden unless-format="pdf"}
 $$
 \begin{aligned}
@@ -753,18 +753,18 @@ We can verify that:
 -   $\beta_{int} = E(Y\mid X = 0, C=L_1)$.
 -   $\beta_{X} = E(Y\mid X = x^* + 1, C=L_1) - E(Y\mid X = x^*, C=L_1)$.
 
-Similarly, when $C=L_2$, 
+Similarly, when $C=L_2$,
 
 ::: {.content-visible unless-format="pdf"}
-</br>  
-</br>  
-</br>  
-</br>  
-</br>  
-</br>  
-</br>  
+</br>
+</br>
+</br>
+</br>
+</br>
+</br>
+</br>
 :::
-  
+
 ::: {.content-hidden unless-format="pdf"}
 $$
 \begin{aligned}
@@ -776,7 +776,7 @@ $$
 $$
 :::
 
-Following this same pattern, when $C=L_3$ we have 
+Following this same pattern, when $C=L_3$ we have
 
 $$
 E(Y|X = x^*, C=L_3) = (\beta_{int} + \beta_{L_3}) + (\beta_X + \beta_{XL_3})x^*
@@ -784,9 +784,9 @@ $$
 
 We can verify that for $j=2,3$,
 
-$$\beta_{L_j}= E(Y\mid X = 0, C=L_j) - E(Y\mid X = 0, C=L_1)$$ 
+$$\beta_{L_j}= E(Y\mid X = 0, C=L_j) - E(Y\mid X = 0, C=L_1)$$
 
-And, 
+And,
 $$
 \begin{aligned}
 & \beta_{XL_j} \\
@@ -812,7 +812,7 @@ models, assuming categorical predictor $C$ has $K$ levels instead of 3:
     observations having level $L_j$ compared to the reference level.
 
 We illustrate these interpretation using the separate lines model to the
-`penguins` data. The fitted separate lines model was, 
+`penguins` data. The fitted separate lines model was,
 
 $$
 \begin{aligned}
@@ -820,7 +820,7 @@ $$
 &= 26.99 + 0.003 \mathtt{body\_mass\_g} + 5.18 D_C - 0.25 D_G \\
 &\quad + 0.001 D_C \mathtt{body\_mass\_g} + 0.0009 D_G \mathtt{body\_mass\_g}.
 \end{aligned}
-$$ 
+$$
 
 In the context of this model:
 
@@ -852,7 +852,7 @@ When some predictors interact with the focal predictor, the effect plot
 of the focal predictor is a plot of the estimated mean response when the
 fixed group predictors are held at their typical values and the
 conditioning group predictors vary over different combinations of
-discrete values. 
+discrete values.
 
 By default, to compute the
 estimated mean response as a function of the focal predictor, we:
@@ -891,11 +891,11 @@ $$
 \end{aligned}
 $$
 
-The effect plot of `body_mass_g` for the separate lines model is displayed using the code below. 
+The effect plot of `body_mass_g` for the separate lines model is displayed using the code below.
 
 - The `axes` argument to rotates the x-axis labels (otherwise the text overlaps)
 - The `lines` argument displays all three lines in one graphic instead of a
-separate panel for each level of `species`. 
+separate panel for each level of `species`.
 
 ```{r}
 # effect plot of body mass for separate lines model
@@ -913,10 +913,10 @@ Interpretation:
 compared to the other two types of penguins.
 
 The effect plot of `species` for the separate lines model will be a plot
-of the estimated mean response for each level of `species` when varying `body_mass_g` over 5 discrete values. 
+of the estimated mean response for each level of `species` when varying `body_mass_g` over 5 discrete values.
 
 By specifying `lines = list(multiline = TRUE)`, the estimated mean responses for each level of `species` are connected for each discrete value of
-`body_mass_g`. 
+`body_mass_g`.
 
 This plot allows us to determine the effect of `species` on `bill_length_mm` when we vary `body_mass_g` over 5 discrete values.
 
@@ -998,12 +998,12 @@ In regards to point 1 and 2:
 -   If the points in an added-variable plot for $X_j$ have a linear
     relationship, then adding $X_j$ to the model regressing $Y$ on
     $\mathbb{X}_{-j}$ is expected to improve our model's ability to
-    predict the behavior of $Y$. 
+    predict the behavior of $Y$.
 -   If the points in an added-variable plot for $X_j$ are curved, it
     indicates that that there is a deficiency in the fitted model
     (likely because we need to include one or more additional regressors
     to the model).
-    
+
 ```{r}
 #| echo: false
 #| eval: true
@@ -1061,21 +1061,21 @@ library(car)
 avPlots(mlmod)
 ```
 
-The blue line is the simple linear regression model that minimizes the RSS of the points. 
+The blue line is the simple linear regression model that minimizes the RSS of the points.
 
 **Question:**
 
 - Which variable seems to have more explanatory power?
 
 
-To create the added-variable plots for all regressors in the parallel lines model from `penguins` data, we use the fitted model: 
+To create the added-variable plots for all regressors in the parallel lines model from `penguins` data, we use the fitted model:
 
 $$
 \begin{aligned}
 &\hat{E}(\mathtt{bill\_length\_mm} \mid \mathtt{body\_mass\_g}, \mathtt{species})\\
 &= 24.92 + 0.004 \mathtt{body\_mass\_g} + 9.92 D_C + 3.56 D_G,
 \end{aligned}
-$$ 
+$$
 
 where $D_C$ and $D_G$ are indicator variables for the Chinstrap and
 Gentoo penguin species (Adelie penguins are the reference species).
@@ -1085,7 +1085,7 @@ avPlots(lmodp)
 ```
 
 
-**Question:** 
+**Question:**
 
 - How should we interpret the relative strength of the linear relationships?
 - Is there any clustering apparent?
@@ -1097,7 +1097,7 @@ It sometimes doesn't make sense to talk about the effect of adding a single regr
 
 - When we add a categorical predictor to our model, we simultaneously add $K-1$
 indicator variables as regressors; we do not add the indicator variables
-one-at-a-time. 
+one-at-a-time.
 
 We refer to regressors with this behavior as
 "multiple degrees-of-freedom terms".
@@ -1110,7 +1110,7 @@ two or more predictors, polynomial regressors, etc.
 A *leverage plot*  allows us to visualize the impact of multiple degrees-of-freedom terms. The interpretation of leverage
 plots is similar to the interpretation of added-variable plots, though
 we refer to "predictors" or "terms" instead regressors (which may be
-combined into one plot). 
+combined into one plot).
 
 The `leveragePlot` and `leveragePlots` functions in the `car` package produce single or multiple leverage plots, respectively, with arguments similar to the `avPlot` and `avPlots` functions.
 
@@ -1118,7 +1118,7 @@ The `leveragePlot` and `leveragePlots` functions in the `car` package produce si
 leveragePlots(lmodp)
 ```
 
-Interpretation: 
+Interpretation:
 
 - The leverage plot for `body_mass_g` has a moderate linear
 relationship, so we expect `body_mass_g` to have moderate value in
@@ -1460,4 +1460,3 @@ lm(y ~ x1)           # model with 1s and x1
 lm(y ~ x4 + x5 - 1)  # model with x4 and x5 only
 lm(y ~ x1 + x4 + x5) # model with 1s, x1, x4, x5
 ```
-
