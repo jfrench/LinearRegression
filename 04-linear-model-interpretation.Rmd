@@ -119,7 +119,7 @@ varies by only a single unit. While mathematically, the result is the
 same, the interpretation is more philosophically palatable. Regardless,
 interpretation is a bit of an art. There can be many correct ways to
 interpret a coefficient or the impact of a variable. Always double-check
-that the mathematics of your model supports your conclusions.
+that the mathematics of our model supports our conclusions.
 
 To illustrate the interpretations given above, we interpret the simple
 linear regression model fit to the `penguins` data in Section
@@ -278,14 +278,14 @@ effectively help the team. Something similar happens in regression
 models. Generally, we can't provide a definitive interpretation of a
 regressor's role in a fitted model without knowing what other regressors
 are in the model. Thus, when interpreting a regressor, it is common to
-include the something like *after accounting for the other variables in
+include something like *after accounting for the other variables in
 the model*. We do this because we are giving the interpretation of that
 regressor's role when the other variables are also in the model. If our
 model had different variables, then our interpretation would be
 different.
 
 There is also a technical reason why the estimated coefficients change
-as you add or remove regressors from a model. If a regressor is
+as we add or remove regressors from a model. If a regressor is
 correlated with other regressors in a model, then adding or removing
 that regressor will impact the estimated coefficients in the new model.
 The more correlated the regressors are, the more they tend to affect
@@ -389,7 +389,7 @@ $\mathtt{bill\_length\_mm}$) is a plot of $$
 \end{aligned}
 $$ as a function of $\mathtt{body\_mass\_g}$. Note: we used exact values
 in the calculation above. The intercept will be 40.76 instead of 41.14
-if you use the rounded values. Similarly, the effect plot for
+if we use the rounded values. Similarly, the effect plot for
 $\mathtt{flipper\_length\_mm}$ is a plot of $$
 \begin{aligned}
 &\hat{E}(\mathtt{bill\_length\_mm}\mid \mathtt{body\_mass\_g} = 4201.75,\mathtt{flipper\_length\_mm}) \\
@@ -408,10 +408,9 @@ different values of the focal predictor while holding the other
 predictors at their typical values. The main arguments of
 `predictorEffect` are:
 
--   `predictor`: the name of the predictor you want to plot. This is the
+-   `predictor`: the name of the predictor we want to plot. This is the
     "focal predictor".
--   `mod`: the fitted model. The function works with `lm` objects, but
-    also many other types of fitted models.
+-   `mod`: the fitted model. The function works with `lm` objects and many other types of fitted models.
 
 The `plot` function will take the output of the `predictorEffect`
 function and produce the desired effect plot.
@@ -772,9 +771,9 @@ estimated mean response as a function of the focal predictor, we:
 -   Average the estimated mean response equation across the different
     levels of a fixed group categorical predictor, with weights equal to
     the number of observations with each level.
--   We compute the estimated mean response function for 5 discrete
+-   Compute the estimated mean response function for 5 discrete
     values of numeric predictors in the conditioning group.
--   We compute the estimated mean response function for different levels
+-   Compute the estimated mean response function for different levels
     of a categorical predictor in the conditioning group.
 
 We provide examples of the effect plots for the `body_mass_g` and
@@ -837,7 +836,7 @@ of the estimated mean response in Equation
 was created using the code below. By specifying
 `lines = list(multiline = TRUE)`, the estimated mean responses for each
 level of `species` are connected for each discrete value of
-`body_mass_g`. Figure \@ref(fig:effect-plot-species-lmods) allows use to
+`body_mass_g`. Figure \@ref(fig:effect-plot-species-lmods) allows us to
 determine the effect of `species` on `bill_length_mm` when we vary
 `body_mass_g` over 5 discrete values. When varying `body_mass_g` across
 the values 2700, 3600, 4500, 5300, and 6300 g, we see greater changes in
@@ -970,7 +969,7 @@ The main arguments to the `avPlot` function are:
 
 The `avPlots` function replaces the `variable` argument with the `terms`
 argument. The `terms` argument should be a one-sided formula to indicate
-the regressors for which you want to construct added-variable plots (one
+the regressors for which we want to construct added-variable plots (one
 plot for each term). By default, an added-variable plot is created for
 each regressor. Run `car::avPlot` in the Console for information about
 about the arguments and details of the `avPlot` and `avPlots` functions.
@@ -1027,7 +1026,7 @@ avPlots(lmodp)
 
 A challenge in interpreting the added-variable plots of indicator
 variable regressors is that it often doesn't make sense to talk about
-the effect of adding a single indicator regressor when all of the other
+the effect of adding a single regressor when all of the other
 regressors are in the model. Specifically, we either add the categorical
 *predictor* to our regression model or we do not. When we add a
 categorical predictor to our model, we simultaneously add $K-1$
@@ -1035,7 +1034,7 @@ indicator variables as regressors; we do not add the indicator variables
 one-at-a-time. In general, we refer to regressors with this behavior as
 "multiple degrees-of-freedom terms". A categorical variable with 3 or
 more levels is the most basic of multiple degrees-of-freedom term, but
-you could also consider regressors related to the interaction between
+we can also consider regressors related to the interaction between
 two or more predictors, polynomial regressors, etc.
 
 A **leverage plot** is an extension of the added-variable plot that
@@ -1148,12 +1147,12 @@ and $\mathbf{X}_{[k]}$ is $$
 $$Thus, two centered regressors are orthogonal if their covariance is
 zero.
 
-It is a desirable to have orthogonal regressors in your fitted model
+It is a desirable to have orthogonal regressors in our fitted model
 because they simplify estimating the relationship between the regressors
 and the response. Specifically:
 
 *If a regressor is orthogonal to all other regressors (and the column of
-1s) in a model, adding or removing the orthogonal regressor from your
+1s) in a model, adding or removing the orthogonal regressor from our
 model will not impact the estimated regression coefficients of the other
 regressors.*
 
@@ -1306,7 +1305,7 @@ when the relevant regressor was included in the model.
 
 The easiest way to determine which vectors are orthogonal to each other
 and the intercept is to compute the cross product of the $\mathbf{X}$
-matrix for the largest set of regressors you are considering. Consider
+matrix for the largest set of regressors we are considering. Consider
 the matrix of cross products for the columns of 1s, `x1`, `x2`, `x3`, and
 `x4`.
 
