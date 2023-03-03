@@ -118,15 +118,20 @@ We prove these results in the sections below. To simplify the derivations below,
 
 ---
 
-:::{.theorem #mean-y}
-For our given linear model and under the assumptions summarized previously:
+For our given linear model and under the assumptions summarized previously, our response variable has mean:
 
 $$
 E(\mathbf{y}\mid \mathbf{X})=\mathbf{X}\boldsymbol{\beta}
 $$
-:::
 
-:::{.proof}
+*Proof:*
+
+::: {.content-visible unless-format="pdf"}
+</br>  
+</br>  
+</br>  
+:::
+::: {.content-hidden unless-format="pdf"}
 
 $$
 \begin{aligned}
@@ -141,16 +146,19 @@ $$
 
 $\vphantom{blank}$
 
-:::{.theorem #var-y}
-For the variance: 
+For the variance of the response: 
 
 $$
 \mathrm{var}(\mathbf{y}\mid \mathbf{X})=\sigma^2 \mathbf{I}
 $$
+*Proof:*
 
+::: {.content-visible unless-format="pdf"}
+</br>  
+</br>  
+</br>  
 :::
-
-:::{.proof}
+::: {.content-hidden unless-format="pdf"}
 
 $$
 \begin{aligned}
@@ -164,24 +172,27 @@ $$
 
 $\vphantom{blank}$
 
-:::{.theorem #dist-properties-y}
-
-Our response variable has the following distribution: 
+The response variable has the following distribution: 
 
 $$
 \mathbf{y}\mid \mathbf{X}\sim \mathcal{N}(\mathbf{X}\boldsymbol{\beta}, \sigma^2 \mathbf{I})
 $$
+
+*Proof:*
+
+::: {.content-visible unless-format="pdf"}
+</br>  
+</br>  
+</br>  
 :::
+::: {.content-hidden unless-format="pdf"}
 
-:::{.proof}
-
-We showed that: 
+We have shown that: 
 
 * $E(\mathbf{y}\mid \mathbf{X}) = \mathbf{X}\boldsymbol{\beta}$
 * $\mathrm{var}(\mathbf{y}\mathbf{X}) = \sigma^2 \mathbf{I}$
 
 Since $\mathbf{y}$ is a linear function of the multivariate normal vector $\boldsymbol{\epsilon}$, then $\mathbf{y}$ must also have a multivariate normal distribution.
-
 :::
 
 $\vphantom{blank}$
@@ -191,9 +202,7 @@ $\vphantom{blank}$
 
 ---
 
-::: {.theorem #unbiasedness-betahat}
-
-The OLS estimator for $\boldsymbol{\beta}$ is, 
+The OLS estimator for $\boldsymbol{\beta}$ is:
 
 $$
 \hat{\boldsymbol{\beta}}=(\mathbf{X}^T\mathbf{X})^T\mathbf{X}^T\mathbf{y},
@@ -204,9 +213,15 @@ This is an unbiased estimator for $\boldsymbol{\beta}$, i.e.:
 $$
 E(\hat{\boldsymbol{\beta}}\mid \mathbf{X})=\boldsymbol{\beta}
 $$
-:::
 
-:::{.proof}
+*Proof:*
+
+::: {.content-visible unless-format="pdf"}
+</br>  
+</br>  
+</br>  
+:::
+::: {.content-hidden unless-format="pdf"}
 We previously derived the following results,
 
 $$
@@ -233,16 +248,20 @@ $$
 
 $\vphantom{blah}$
 
-::: {.theorem #var-betahat}
-
 The OLS estimator $\hat{\boldsymbol{\beta}}$ has variance:
 
 $$
 \mathrm{var}(\hat{\boldsymbol{\beta}}\mid \mathbf{X})=\sigma^2(\mathbf{X}^T\mathbf{X})^{-1}
 $$
-:::
 
-:::{.proof}
+*Proof:*
+
+::: {.content-visible unless-format="pdf"}
+</br>  
+</br>  
+</br>  
+:::
+::: {.content-hidden unless-format="pdf"}
 
 $$
 \begin{aligned}
@@ -258,17 +277,21 @@ $$
 :::
 $\vphantom{blah}$
 
-:::{.theorem #dist-properties-betahat}
-
 The OLS estimator $\hat{\boldsymbol{\beta}}$ has the following distribution:
 
 $$
 \hat{\boldsymbol{\beta}}\mid \mathbf{X}\sim \mathcal{N}(\boldsymbol{\beta}, \sigma^2(\mathbf{X}^T\mathbf{X})^{-1})
 $$
 
-:::
 
-:::{.proof}
+*Proof:*
+
+::: {.content-visible unless-format="pdf"}
+</br>  
+</br>  
+</br>  
+:::
+::: {.content-hidden unless-format="pdf"}
 
 Since $\hat{\boldsymbol\beta}=(\mathbf{X}^T\mathbf{X})^{-1}\mathbf{X}^T\mathbf{y}$ is a linear combination of $\mathbf{y}$, and $\mathbf{y}$ is a multivariate normal random vector, then $\hat{\boldsymbol\beta}$ is also a multivariate normal random vector. Using the previous two results for the expectation and variance, 
 
@@ -310,12 +333,16 @@ $$
 
 The hat matrix is an important theoretical matrix, as it projects $\mathbf{y}$ into the space spanned by the vectors in $\mathbf{X}$. 
 
-::: {.theorem #h-properties}
 The hat matrix $\mathbf{H}$ is symmetric and idempotent.
+
+*Proof:*
+
+::: {.content-visible unless-format="pdf"}
+</br>  
+</br>  
+</br>  
 :::
-
-:::{.proof}
-
+::: {.content-hidden unless-format="pdf"}
 Notice that:
 
 $$
@@ -347,11 +374,17 @@ Therefore, $\mathbf{H}$ is idempotent.
 
 :::
 
-::: {.theorem #i-h-properties}
 The matrix $\mathbf{I} - \mathbf{H}$ is symmetric and idempotent.
-:::
 
-:::{.proof}
+*Proof:*
+
+::: {.content-visible unless-format="pdf"}
+</br>  
+</br>  
+</br>  
+:::
+::: {.content-hidden unless-format="pdf"}
+
 First, notice that:
 
 $$
@@ -376,17 +409,21 @@ $$
 Thus, $\mathbf{I}-\mathbf{H}$ is idempotent.
 :::
 
-::: {.theorem #mean-residuals}
-
 Under the assumptions we discussed previously, the errors have mean:
 
 $$
 E(\hat{\boldsymbol{\epsilon}}\mid \mathbf{X})=\mathbf{0}_{n\times 1}
 $$
 
-:::
 
-:::{.proof}
+*Proof:*
+
+::: {.content-visible unless-format="pdf"}
+</br>  
+</br>  
+</br>  
+:::
+::: {.content-hidden unless-format="pdf"}
 
 $$
 \begin{aligned}
@@ -405,16 +442,22 @@ $$
 
 $\vphantom{blank}$
 
-::: {.theorem #var-residuals}
 
 The errors have variance:
 
 $$
 \mathrm{var}(\hat{\boldsymbol{\epsilon}}\mid \mathbf{X})=\sigma^2 (\mathbf{I} - \mathbf{H})
 $$
-:::
 
-:::{.proof}
+
+*Proof:*
+
+::: {.content-visible unless-format="pdf"}
+</br>  
+</br>  
+</br>  
+:::
+::: {.content-hidden unless-format="pdf"}
 
 $$
 \begin{aligned}
@@ -428,24 +471,28 @@ $$
 
 :::
 
-::: {.theorem #dist-properties-residuals}
-
 The errors have the following distribution:
 
 $$
 \hat{\boldsymbol{\epsilon}}\mid \mathbf{X}\sim \mathcal{N}(\mathbf{0}_{n\times 1}, \sigma^2 (\mathbf{I} - \mathbf{H}))
 $$
 
-:::
 
-:::{.proof}
+
+*Proof:*
+
+::: {.content-visible unless-format="pdf"}
+</br>  
+</br>  
+</br>  
+:::
+::: {.content-hidden unless-format="pdf"}
 
 Since $\hat{\boldsymbol{\epsilon}}$  is a linear combination of multivariate normal vectors, and using previous results, it has mean $\mathbf{0}_{n\times1}$ and variance matrix $\sigma^2(\mathbf{I}-\mathbf{H})$.
 :::
 
 $\vphantom{blank}$
 
-:::{.theorem}
 
 The RSS can be represented as:
 
@@ -453,9 +500,15 @@ $$
 RSS=\mathbf{y}^T(\mathbf{I}-\mathbf{H})\mathbf{y}
 $$
 
-:::
 
-:::{.proof}
+*Proof:*
+
+::: {.content-visible unless-format="pdf"}
+</br>  
+</br>  
+</br>  
+:::
+::: {.content-hidden unless-format="pdf"}
 
 $$
 \begin{aligned}
