@@ -98,20 +98,21 @@ $$
 using standard matrix notation. We also assume that this model is correct (i.e., we have correctly specified the true model that generated the data) and that: 
 
 $$
-\boldsymbol{\epsilon}\mid \mathbf{X}\sim \mathcal{N}(\mathbf{0}_{n\times 1},\sigma^2 \mathbf{I}_{n\times n}).  (\#eq:error-assumption-inference)
+\boldsymbol{\epsilon}\mid \mathbf{X}\sim \mathcal{N}(\mathbf{0}_{n\times 1},\sigma^2 \mathbf{I}_{n\times n})
 $$
 
 This assumption applies to all errors, so we believe that all errors, observed and future, will have mean 0, variance $\sigma^2$, will be uncorrelated, and have a normal distribution.
 
-Under these assumptions, we showed in Chapter \@ref(linear-model-theory)
-that
+Under these assumptions, we showed before that: 
 
 $$
 \mathbf{y}\mid \mathbf{X}\sim \mathcal{N}(\mathbf{X}\boldsymbol{\beta}, \sigma^2 \mathbf{I}_{n\times n}).
 $$
-and
-$$\hat{\boldsymbol{\beta}}\mid \mathbf{X} \sim \mathcal{N}(\boldsymbol{\beta}, \sigma^2(\mathbf{X}^T\mathbf{X})^{-1}).
-(\#eq:prop-betahat)
+
+and: 
+
+$$
+\hat{\boldsymbol{\beta}}\mid \mathbf{X} \sim \mathcal{N}(\boldsymbol{\beta}, \sigma^2(\mathbf{X}^T\mathbf{X})^{-1})
 $$
 
 # Parametric confidence intervals for regression coefficients
@@ -121,16 +122,19 @@ $$
 
 ---
 
-Under the assumptions in Equations \@ref(eq:model-def-inference) and
-\@ref(eq:error-assumption-inference), we can prove (though we won't)
-that
+Under the assumptions in Equations \@ref(eq:model-def-inference) and \@ref(eq:error-assumption-inference), we can prove (though we won't) that:
+
 $$
 \frac{\hat{\beta}_j-\beta_j}{\hat{\mathrm{se}}(\hat{\beta}_j)}\sim t_{n-p}, \quad j=0,1,\ldots,p-1,
 $$
 
-where
-$\hat{\mathrm{se}}(\hat{\beta}_j)=\hat{\sigma}(\mathbf{X}^T\mathbf{X})^{-1}_{j+1,j+1}$
-is the estimated standard error of $\hat{\beta}_j$. Recall that
+where the estimated standard error of $\hat{\beta}_j$ is:
+
+$$
+\hat{\mathrm{se}}(\hat{\beta}_j)=\hat{\sigma}(\mathbf{X}^T\mathbf{X})^{-1}_{j+1,j+1}
+$$
+
+Recall that
 estimated standard error is the estimated standard deviation of the
 sampling distribution of $\hat{\beta}_j$. Also, recall that the notation
 $(\mathbf{X}^T\mathbf{X})^{-1}_{j+1,j+1}$ indicates the element in row
@@ -140,15 +144,13 @@ pivotal quantity with a $t$ distribution, and it can be used to derive a
 confidence interval
 
 A confidence interval for $\beta_j$ with confidence level $1-\alpha$ is
-given by the expression
+given by the expression: 
+
 $$
-\hat{\beta}_j \pm t^{\alpha/2}_{n-p} \hat{\mathrm{se}}(\hat{\beta}_j),\quad j=0,2,\ldots,p-1.
-(\#eq:t-ci-betas)
+\hat{\beta}_j \pm t^{\alpha/2}_{n-p} \hat{\mathrm{se}}(\hat{\beta}_j),\quad j=0,2,\ldots,p-1
 $$
-It is critical to note that the $1-\alpha$ confidence level refers to
-the procedure for a single interval, not the family of intervals we can
-produce for all $p$ coefficients. We discuss this issue in more detail
-in Section \@ref(mcp).
+
+It is critical to note that the $1-\alpha$ confidence level refers to the procedure for a single interval, not the family of intervals we can produce for all $p$ coefficients. We discuss this issue in more detail later.
 
 The `confint` function returns confidence intervals for the regression
 coefficients of a fitted model. Technically, the `confint` function is a
@@ -170,7 +172,7 @@ $$
 \end{aligned}
 $$
 
-We estimate the parameters of this model in R using the code below.
+We estimate the parameters of this model in R using the code below: 
 
 ```{r}
 # load data
@@ -197,8 +199,7 @@ The 95% confidence interval for the `body_mass_g` coefficient is
 `flipper_length_mm` regressor is also in the model.
 
 If we wanted to get the 90% confidence interval for the
-`flipper_length_mm` coefficient by itself, we could use either of the
-commands shown below.
+`flipper_length_mm` coefficient by itself, we could use either of the commands shown below.
 
 ```{r}
 # two styles for determining the CI for a single parameter (at a 90% level)
@@ -221,22 +222,26 @@ A **multiple comparisons problem** occurs anytime we make multiple inferences (c
 A **multiple comparisons procedure** is a procedure designed to adjust for multiple inferences. In the context of confidence intervals, a multiple comparisons procedure will produce a family of intervals that have a family-wise confidence level above some threshold. We discuss two basic multiple comparisons procedures for confidence
 intervals below.
 
-### Adjusted confidence intervals for regression coefficients {#adjusted-cis-betas}
+**Adjusted confidence intervals for regression coefficients** 
 
-@bonferroni1936 proposed a simple multiple comparisons procedure that is applicable in many contexts. This general procedure is known as the **Bonferroni correction**. We describe its application below.
+---
+
+Bonferroni (1936) proposed a simple multiple comparisons procedure that is applicable in many contexts. This general procedure is known as the **Bonferroni correction**. We describe its application below.
 
 Suppose we are constructing $k$ confidence intervals simultaneously. We control the family-wise confidence level of our intervals at $1-\alpha$ if we construct the individual confidence intervals with the level $1-\alpha/k$. We sketch a proof of this below.
 
 Boole's inequality [@boole] states that for a countable set of events $A_1, A_2, A_3 \ldots$,
-$$P(\cup_{j=1}^\infty A_j) \leq \sum_{j=1}^\infty P(A_j).$$ This is a
-generalization of the fact that
+$$P(\cup_{j=1}^\infty A_j) \leq \sum_{j=1}^\infty P(A_j).$$ This is a generalization of the fact that:
+
 $$
 P(A \cup B) = P(A) + P(B) - P(A\cap B) \leq P(A) + P(B)
 $$
+
 for two events $A$ and $B$. We can use Boole's inequality to show that the Bonferroni correction controls the family-wise confidence level of our confidence intervals at $1-\alpha$.
 
 Suppose that we construct a family of $k$ confidence intervals with individual confidence level $1-\alpha/k$ (and all assumptions are satisfied.) Then the probability that the confidence interval procedure for a specific interval doesn't contain the target parameter is
-$\alpha/k$. Then
+$\alpha/k$. Then: 
+
 $$
 \begin{aligned}
 & P(\mbox{All }k\mbox{ intervals contain the target parameter}) \\
@@ -247,6 +252,7 @@ $$
 &= 1-\alpha.
 \end{aligned}
 $$
+
 Thus, the family-wise confidence level of all $k$ intervals is AT LEAST $1-\alpha$ when the Bonferroni correction is used.
 
 The Bonferroni correction is known to be conservative, which means that the family-wise confidence level is typically much larger than $1-\alpha$. This might sound like a desirable property, but conservative methods can have low power. In the context of our confidence intervals, this means our intervals are much wider than they need to be, so we aren't able to draw precise conclusions about the plausible values of our regression coefficients.
@@ -258,7 +264,7 @@ Let's construct simultaneous confidence intervals for our `penguins` example usi
 confint(mlmod, level = 1 - 0.05/3)
 ```
 
-Alternatively, we can use the `confint_adjust` function from the **api2lm** package [@R-api2lm] to construct this interval. The `confint_adjust` function works identically to the `confint` function except that it has an additional argument to indicate the type of adjustment to make when constructing the confidence intervals. Specifying `method = "bonferroni"` will produce Bonferroni-corrected intervals, as demonstrated in the code below.
+Alternatively, we can use the `confint_adjust` function from the **api2lm** package [@R-api2lm] to construct this interval. The `confint_adjust` function works identically to the `confint` function except that it has an additional argument to indicate the type of adjustment to make when constructing the confidence intervals. Specifying `method = "bonferroni"` will produce Bonferroni-corrected intervals, as demonstrated in the code below: 
 
 ```{r}
 library(api2lm)
@@ -268,8 +274,9 @@ confint_adjust(mlmod, method = "bonferroni")
 @workinghotelling developed another multiple comparisons procedure that can be used to preserve the family-wise confidence level of the intervals at $1-\alpha$. The Working-Hotelling multiple comparisons procedure is valid for ALL linear combination of the regression coefficients, meaning that we can construct an arbitrarily large number of confidence intervals for linear combinations of the regression coefficients with this procedure and the family-wise confidence level will be at least $1-\alpha$ [@alr4].
 
 The Working-Hotelling procedure guarantees that if we construct the individual confidence intervals in the following way, then the family-wise confidence level will be at least $1-\alpha$:
+
 $$
-\hat{\beta}_j \pm \sqrt{p F^\alpha_{p,n-p}} \hat{\mathrm{se}}(\hat{\beta}_j),\quad j=0,2,\ldots,p-1. (\#eq:wh-ci-betas)
+\hat{\beta}_j \pm \sqrt{p F^\alpha_{p,n-p}} \hat{\mathrm{se}}(\hat{\beta}_j),\quad j=0,2,\ldots,p-1
 $$
 
 The `confint_adjust` function from the **api2lm** package will produce these intervals when setting the `method` argument to `"wh"`. We construct Working-Hotelling-adjusted intervals with family-wise confidence level of at least 0.95 for the `penguins` example using the
@@ -290,10 +297,12 @@ notation to describe a new response for a specific combination of regressor valu
 
 $E(Y\mid \mathbb{X}=\mathbf{x}_0)$ represents the average response when the regressor values are $\mathbf{x}_0$. Conceptually, this is the number we would get if were able to determine the average of an infinite number of responses with regressor values being fixed at $\mathbf{x}_0$.
 
-$Y(\mathbf{x}_0)$ represents the actual response we will will observe for a new observation with regressor values $\mathbf{x}_0$. Conceptually, we can think of $Y(\mathbf{x}_0)$ as the mean response for that combination of regressor values plus some error, or more formally,
+$Y(\mathbf{x}_0)$ represents the actual response we will will observe for a new observation with regressor values $\mathbf{x}_0$. Conceptually, we can think of $Y(\mathbf{x}_0)$ as the mean response for that combination of regressor values plus some error, or more formally:
+
 $$
 Y(\mathbf{x}_0)=E(Y\mid \mathbb{X}=\mathbf{x}_0)+\epsilon(\mathbf{x}_0),
 $$
+
 where $\epsilon(\mathbf{x_0})$ denotes the error for our new observation.
 
 Suppose we want to rent a new apartment or buy a new house. If we look through the available listings, we will likely filter our search results by certain characteristics. We might limit our search to dwellings with 3 bedrooms, 2 bathrooms, that are within a certain distance of public transportation, and have a certain amount of square footage. If we averaged the monthly rent or asking price of all the dwellings matching our specifications, then that would be an approximation of the mean response (we would need all the possible dwellings matching those considerations to get the true average). This average would give us an idea of the "typical" price of dwellings with those characteristics. On the other hand, we likely want to know the price of the dwelling we actually end up in. This is the "new response" we want to predict.
@@ -303,15 +312,15 @@ Though we can discuss predictions for both the mean response and a new response,
 # Confidence interval for the mean response 
 
 Consider a typical linear regression model with $p$ regression
-coefficients given by
+coefficients given by: 
 
 $$
 E(Y|\mathbb{X})=\beta_0+\beta_1 X_1 + \ldots \beta_{p-1} X_{p-1}
 $$
 
-We want to estimate the mean response for a specific combination of
-regressor values. The mean response for that combination of regressors
-is obtained via the equivalent expressions $$
+We want to estimate the mean response for a specific combination of regressor values. The mean response for that combination of regressors is obtained via the equivalent expressions 
+
+$$
 \begin{aligned}
 E(Y\mid \mathbb{X}=\mathbf{x}_0) &= \beta_0 + \sum_{j=1}^{p-1}x_{0,j}\beta_j \\
 &= \mathbf{x}_0^T \boldsymbol{\beta}. 
@@ -323,9 +332,9 @@ $E(Y\mid \mathbb{X}=\mathbf{x}_0)\equiv E(Y\mid \mathbf{x}_0)$.
 
 What does $E(Y\mid \mathbf{x}_0)$ represent? It represents the average response we will observe if we somehow managed to observe infinitely many responses with $\mathbb{X}=\mathbf{x}_0$.
 
-The Gauss-Markov Theorem discussed in Chapter
-\@ref(linear-model-estimation) indicates that the best linear unbiased
-estimator of the mean response is given by the equation$$
+The Gauss-Markov Theorem discussed before indicates that the best linear unbiased estimator of the mean response is given by the equation: 
+
+$$
 \begin{aligned}
 \hat{E}(Y\mid \mathbf{x}_0) &= \hat{\beta}_0 + \sum_{j=1}^{p-1}x_{0,j}\hat{\beta}_j \\
 &= \mathbf{x}_0^T \hat{\boldsymbol{\beta}}, 
@@ -334,9 +343,12 @@ $$
 
 which replaces the unknown, true coefficients by their OLS estimates.
 
-We want to create a confidence interval for $E(Y\mid \mathbf{x}_0)$. If we divide the estimation error of the mean response, i.e., $E(Y\mid \mathbf{x}_0)-\hat{E}(Y\mid \mathbf{x}_0)$, by its estimated standard deviation, then we obtain a pivotal quantity. More specifically, we have $$
-\frac{E(Y\mid \mathbf{x}_0)-\hat{E}(Y\mid \mathbf{x}_0)}{\sqrt{\hat{\mathrm{var}}\left(E(Y\mid \mathbf{x}_0)-\hat{E}(Y\mid \mathbf{x}_0)\right)}} = \frac{E(Y\mid \mathbf{x}_0)- \mathbf{x}_0 \hat{\boldsymbol{\beta}}}{ \hat{\mathrm{se}}(\mathbf{x}_0\hat{\boldsymbol{\beta}})}\sim t_{n-p},
+We want to create a confidence interval for $E(Y\mid \mathbf{x}_0)$. If we divide the estimation error of the mean response, i.e., $E(Y\mid \mathbf{x}_0)-\hat{E}(Y\mid \mathbf{x}_0)$, by its estimated standard deviation, then we obtain a pivotal quantity. More specifically, we have: 
+
 $$
+\frac{E(Y\mid \mathbf{x}_0)-\hat{E}(Y\mid \mathbf{x}_0)}{\sqrt{\hat{\mathrm{var}}\left(E(Y\mid \mathbf{x}_0)-\hat{E}(Y\mid \mathbf{x}_0)\right)}} = \frac{E(Y\mid \mathbf{x}_0)- \mathbf{x}_0 \hat{\boldsymbol{\beta}}}{ \hat{\mathrm{se}}(\mathbf{x}_0\hat{\boldsymbol{\beta}})}\sim t_{n-p}
+$$
+
 with:
 
 $$
@@ -379,17 +391,17 @@ that the `predict` function asks you to specify the values of the
 *predictor* variables for each estimate you want to make, not the
 complete set of regressors.
 
-Recall that in Section \@ref(s:penguins-mlr2), we fit a parallel lines
-model to the `penguins` data that used both `body_mass_g` and `species`
-to explain the behavior of `bill_length_mm`. Letting $D_C$ denote the
-indicator variable for the `Chinstrap` level and $D_G$ denote the
-indicator variable for the `Gentoo` level, the fitted parallel lines
-model was $$
+Recall we fit a parallel lines model to the `penguins` data that used both `body_mass_g` and `species`
+to explain the behavior of `bill_length_mm`. Letting $D_C$ denote the indicator variable for the `Chinstrap` level and $D_G$ denote the indicator variable for the `Gentoo` level, the fitted parallel lines model was: 
+
+$$
 \begin{aligned}
 &\hat{E}(\mathtt{bill\_length\_mm} \mid \mathtt{body\_mass\_g}, \mathtt{species})\\
 &= 24.92 + 0.004 \mathtt{body\_mass\_g} + 9.92 D_C + 3.56 D_G.
 \end{aligned}
-$$ We fit this model below, assigning it the name `lmodp`.
+$$
+
+We fit this model below, assigning it the name `lmodp`.
 
 ```{r}
 # fit parallel lines model to penguins data
@@ -407,6 +419,7 @@ newpenguins <- penguins |>
   dplyr::summarize(body_mass_g = mean(body_mass_g, na.rm = TRUE))
 newpenguins
 ```
+
 We now have a data frame with variables for the two predictors, `species` and `body_mass_g` , used to fit `lmodp`. Each row of `newpenguins` contains the mean `body_mass_g` for each level of `species` and is suitable for use in the `predict` function.
 
 In the code below, we estimate the mean `flipper_length_mm` based on the fitted model in `lmodp` for the mean `body_mass_g` of each level of `species`. We also choose to compute the estimated standard errors of
@@ -434,9 +447,9 @@ $$
 
 which is an unknown characteristic of the population of all Adelie penguins. Similarly, the 98% confidence interval for the mean flipper length of Chinstrap penguins with a body mass of 3733.09 g is [48.15, 49.52]. Lastly, the mean flipper length of Gentoo penguins with a body mass of 5076.02 g is [46.99, 48.02].
 
-We provide details about manually computing confidence intervals for the mean response in Section \@ref(manual-calc-ci-mean-response).
+We provide details about manually computing confidence intervals for the mean response in the Going Deeper section.
 
-We are once again faced with a multiple comparisons problem because we are making 3 inferences. To control the family-wise confidence level of our intervals, we can use the Bonferroni or Working-Hotelling corrections previously discussed in Section \@ref(adjusted-cis-betas). Both corrections are implemented in the `predict_adjust` function in the **api2lm** package, which is intended to work identically to the `predict` function, but produces intervals that adjust for multiple comparisons. The only additional argument is `method`, with choices `"none"` (no correction), `"bonferroni"` (Bonferroni adjustment), or `"wh"` (Working-Hotelling adjustment). We produce both types of adjusted intervals in the code below. The Bonferroni-adjusted confidence intervals are slightly narrower in this example.
+We are once again faced with a multiple comparisons problem because we are making 3 inferences. To control the family-wise confidence level of our intervals, we can use the Bonferroni or Working-Hotelling corrections previously discussed. Both corrections are implemented in the `predict_adjust` function in the **api2lm** package, which is intended to work identically to the `predict` function, but produces intervals that adjust for multiple comparisons. The only additional argument is `method`, with choices `"none"` (no correction), `"bonferroni"` (Bonferroni adjustment), or `"wh"` (Working-Hotelling adjustment). We produce both types of adjusted intervals in the code below. The Bonferroni-adjusted confidence intervals are slightly narrower in this example.
 
 ```{r}
 # bonferroni-adjusted confidence intervals for the mean response
@@ -449,10 +462,12 @@ predict_adjust(lmodp, newdata = newpenguins, level = 0.98,
 
 # Prediction interval for a new response
 
-We once again assume the regression model 
+We once again assume the regression model: 
+
 $$
 E(Y|\mathbb{X})=\beta_0+\beta_1 X_1 + \ldots \beta_{p-1} X_{p-1}.
 $$
+
 We want to predict a new response for a specific combination of regressor values, $\mathbf{x}_0$. The new response will be the mean response for that combination of regressors, $E(Y\mid \mathbf{x}_0)$, plus the error for that observation, $\epsilon(\mathbf{x}_0)$, i.e.:
 
 $$
@@ -479,28 +494,28 @@ We want to create a prediction interval for $Y(\mathbf{x}_0)$. A prediction inte
 $Y(\mathbf{x}_0)-\hat{Y}(\mathbf{x}_0)$, by its estimated standard deviation, $\widehat{\mathrm{sd}}(Y(\mathbf{x}_0)-\hat{Y}(\mathbf{x}_0))$, then we obtain a $t$-distributed pivotal quantity:
 
 $$
-\frac{Y(\mathbf{x}_0)-\hat{Y}(\mathbf{x}_0)}{\widehat{\mathrm{sd}}(Y(\mathbf{x}_0)-\hat{Y}(\mathbf{x}_0))} \sim t_{n-p},
+\frac{Y(\mathbf{x}_0)-\hat{Y}(\mathbf{x}_0)}{\widehat{\mathrm{sd}}(Y(\mathbf{x}_0)-\hat{Y}(\mathbf{x}_0))} \sim t_{n-p}
 $$
 
 where: 
 
 $$
-\widehat{\mathrm{sd}}(Y(\mathbf{x}_0)-\hat{Y}(\mathbf{x}_0))=\hat{\sigma}\sqrt{1 + \mathbf{x}_0^T (\mathbf{X}^T \mathbf{X})^{-1}\mathbf{x}_0}. (\#eq:sdhat-pred-error)
+\widehat{\mathrm{sd}}(Y(\mathbf{x}_0)-\hat{Y}(\mathbf{x}_0))=\hat{\sigma}\sqrt{1 + \mathbf{x}_0^T (\mathbf{X}^T \mathbf{X})^{-1}\mathbf{x}_0}
 $$
 
-The standard deviation of the prediction error is sometimes known as the **standard error of prediction**, but we do not use that terminology. A detailed derivation of $\widehat{\mathrm{sd}}(Y(\mathbf{x}_0)-\hat{Y}(\mathbf{x}_0))$ is provided in Section \@ref(new-response-pi-calculations). 
+The standard deviation of the prediction error is sometimes known as the **standard error of prediction**, but we do not use that terminology. A detailed derivation of $\widehat{\mathrm{sd}}(Y(\mathbf{x}_0)-\hat{Y}(\mathbf{x}_0))$ is provided in the Going Deeper section. 
 
-There is a conceptual and mathematical relationship between the standard deviation of the estimation error for the mean response and the prediction error for a new observation. If we compare the expression for $\hat{\mathrm{se}}(\hat{E}(Y\mid \mathbf{x}_0)) - E(Y\mid \mathbf{x}_0))$ in Equation \@ref(eq:sehat-est-mean) and $\widehat{\mathrm{sd}}(Y(\mathbf{x}_0)-\hat{Y}(\mathbf{x}_0))$ in Equation \@ref(eq:sdhat-pred-error), we see that $\widehat{\mathrm{sd}}(Y(\mathbf{x}_0)-\hat{Y}(\mathbf{x}_0))$ has an extra "1 +" under the square root. Because of this, *prediction intervals for a new response are always wider than a confidence interval for the mean response* when considering the same regressor values, $\mathbf{x}_0$, and confidence level. Conceptually, prediction intervals are wider because there are two sources of uncertainty in our prediction: estimating the mean response and predicting the error of the new response. Estimating the mean response does not require us to predict the error of a new response, so the uncertainty of our estimate is less. We can see that this is formally true through the derivations provided in Section \@ref(new-response-pi-calculations).
+There is a conceptual and mathematical relationship between the standard deviation of the estimation error for the mean response and the prediction error for a new observation. If we compare the expression for $\hat{\mathrm{se}}(\hat{E}(Y\mid \mathbf{x}_0)) - E(Y\mid \mathbf{x}_0))$ in the first equation and $\widehat{\mathrm{sd}}(Y(\mathbf{x}_0)-\hat{Y}(\mathbf{x}_0))$ in the second equation, we see that $\widehat{\mathrm{sd}}(Y(\mathbf{x}_0)-\hat{Y}(\mathbf{x}_0))$ has an extra "1 +" under the square root. Because of this, *prediction intervals for a new response are always wider than a confidence interval for the mean response* when considering the same regressor values, $\mathbf{x}_0$, and confidence level. Conceptually, prediction intervals are wider because there are two sources of uncertainty in our prediction: estimating the mean response and predicting the error of the new response. Estimating the mean response does not require us to predict the error of a new response, so the uncertainty of our estimate is less. We can see that this is formally true through the derivations provided in the Going Deeper section.
 
 A prediction interval for $Y(\mathbf{x}_0)$ with confidence level $1-\alpha$ is given by the expression: 
 
 $$
-\mathbf{x}_0\hat{\boldsymbol{\beta}} \pm t^{\alpha/2}_{n-p} \hat{\mathrm{sd}}(Y(\mathbf{x}_0)-\hat{Y}(\mathbf{x}_0)). (\#eq:t-pi-new-response)
+\mathbf{x}_0\hat{\boldsymbol{\beta}} \pm t^{\alpha/2}_{n-p} \hat{\mathrm{sd}}(Y(\mathbf{x}_0)-\hat{Y}(\mathbf{x}_0))
 $$
 
 The `predict` function can be used to create predictions and prediction intervals for a new response in the same way that it can be used to estimate the mean response and produce associated confidence intervals. If the `interval` argument is `"none"`, then predictions for a new response are returned. As we have already seen, $\hat{E}(Y\mid \mathbf{x}_0)$ and $\hat{Y}(\mathbf{x}_0)$ are the same number. If the `interval` argument is `"prediction"`, then the predicted new response and associated prediction interval will be produced for each row of data supplied to the `newdata` argument. 
 
-Continuing the example started in Section \@ref(parametric-ci-mean-response), we want to predict the response value for new, unobserved penguins having the observed mean `body_mass_g` for each level of `species`. The fitted model is stored in `lmodp` and the data frame with the predictors for the new responses is stored in `newpenguins`. We print the coefficients of the fitted model and the data frame of new predictors below for clarity.
+Continuing the example from before, we want to predict the response value for new, unobserved penguins having the observed mean `body_mass_g` for each level of `species`. The fitted model is stored in `lmodp` and the data frame with the predictors for the new responses is stored in `newpenguins`. We print the coefficients of the fitted model and the data frame of new predictors below for clarity.
 
 ```{r}
 coef(lmodp)
@@ -519,7 +534,7 @@ predict(lmodp, newdata = newpenguins,
 
 An new Adelie penguin with a body mass of 3700.662 g is predicted to have a flipper length of 38.79 mm. We are 99% confident that a new Adelie penguins with a body mass of 3700.662 g will have a flipper length between 32.54 mm and 45.04 mm. Similarly, the 99% prediction interval for the flipper length of a new Chinstrap penguin with a body mass of 3733.09 g is [48.56, 55.11]. The flipper length of a new Gentoo penguin with a body mass of 5076.02 g is between 41.25 and  53.75 with a confidence level of 0.99.
 
-Since we are making 3 predictions, our inferences suffer from the multiple comparisons problem. To control the family-wise confidence level of our intervals, we can use the Bonferroni correction with $k=3$. The Working-Hotelling correction discussed in Section \@ref(adjusted-cis-betas) does not apply to new responses. However, a similar adjustment proposed by Scheff&#233; does apply [@alsm2005]. The prediction interval multiplier $t^{\alpha/2}_{n-p}$ used for a single prediction interval with confidence level $1-\alpha$ is replaced by 
+Since we are making 3 predictions, our inferences suffer from the multiple comparisons problem. To control the family-wise confidence level of our intervals, we can use the Bonferroni correction with $k=3$. The Working-Hotelling correction does not apply to new responses. However, a similar adjustment proposed by Scheff&#233; does apply [@alsm2005]. The prediction interval multiplier $t^{\alpha/2}_{n-p}$ used for a single prediction interval with confidence level $1-\alpha$ is replaced by 
 $\sqrt{k F^{1-\alpha}_{k,n-p}}$ to control the family-wise confidence level at $1-\alpha$ for a family of $k$ prediction intervals. Recall that the Working-Hotelling multiplier was $\sqrt{p F^{1-\alpha}_{p,n-p}}$. Thus, the Scheff&#233; multiplier scales with the number of predictions being made while the Working-Hotelling multiplier scales with the number of estimated regression coefficients in the fitted model.
 
 Both the Bonferroni and Scheff&#233; multiple comparisons corrections are implemented in the `predict_adjust` function in the **api2lm** package. In the prediction interval setting, we can choose the correction `method` argument to be `"none"` (no correction), `"bonferroni"` (Bonferroni adjustment), or `"scheffe"` (Scheffe adjustment). We produce both types of adjusted intervals in the code below. The Bonferroni-adjusted confidence intervals are slightly narrower in this example.
@@ -812,7 +827,7 @@ $$
 
 <!-- Why? -->
 
-# Going deeper
+# Going Deeper
 
 **Manual calculation of the $t$-based confidence interval**
 
