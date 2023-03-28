@@ -311,9 +311,9 @@ $$
 Some basic interpretations of the coefficients are:
 
 -   *Intercept:* We expect a penguin with a body mass of 0 grams and a
-    flipper length of 0 mm to to have a bill length of -3.44 mm.
--   `body_mass_g`: If we increase body mass by 1 gram, we expect bill length to increase 0.0007 mm *holding all else constant*.
--   `flipper_length_mm`: If we increase flipper length by 1 mm, we expect the bill length to increase 0.22 mm *holding all else constant*.
+    flipper length of 0 mm to have a bill length of -3.44 mm.
+-   `body_mass_g`: For two penguins that have the same flipper length but one penguin has a body mass 1 gram larger, we expect the heavier penguin to have a bill length 0.0007 mm longer than the other penguin.
+-   `flipper_length_mm`: For two penguins with the same body mass but whose flipper lengths differ by 1 mm, we expect the penguin with longer flippers to have a bill length 0.22 mm longer than the other penguin.
 
 **Roles of regressor variables**
 ---
@@ -372,15 +372,21 @@ An *effect plot* is a plot of the estimated mean response as a function of a *fo
 - A *predictor* variable is a variable available to model the response variable.
 - A *regressor* variable is a variable used in our regression model, whether that is an unmodified predictor variable, some transformation of a predictor, some combination of predictors, etc.
 
-**First-Order Model Effects Plot**
+**First-Order Model Effect Plot**
 ---
 
-In a first-order linear model, none of the regressors interact, i.e., none of the regressors are functions of each other. Fox et al. (2020) use the terminology *fixed group* to refer to the group of predictors that do not interact with the focal predictor.
+In a first-order linear model, none of the regressors interact, i.e., none of the regressors are functions of each other.
 
-To create our effect plot, we must first find the equation for the estimated mean response as a function of a focal predictor while holding the other predictors at their "typical" values. We set numeric fixed group predictors equal to their sample means when finding this function.
+- Fox et al. (2020) use the terminology *fixed group* to refer to the group of predictors that do not interact with the focal predictor.
+
+To create an effect plot, we must first find the equation for the estimated mean response as a function of a focal predictor while holding the other predictors at their "typical" values.
+
+- We set numeric fixed group predictors equal to their sample means when finding this function.
 
 We now construct effect plots for the estimated regression model of the
-`penguins` data that regressed `bill_length_mm` on `body_mass_g` and `flipper_length_mm`. The fitted model is
+`penguins` data that regressed `bill_length_mm` on `body_mass_g` and `flipper_length_mm`.
+
+The fitted model is
 
 $$
 \begin{aligned}
@@ -402,12 +408,15 @@ coef(mlmod)
 
 There are two predictors in the model, so we can create effect plots for both variables using the sample mean as a reference value.
 
+We compute the sample means of the predictors below.
+
 ```{r}
 colMeans(mlmod$model)
 ```
 
 The effect plot for $\mathtt{body\_mass\_g}$ (on the response
 $\mathtt{bill\_length\_mm}$) is a plot of
+
 $$
 \begin{aligned}
 &\hat{E}(\mathtt{bill\_length\_mm}\mid \mathtt{body\_mass\_g}, \mathtt{flipper\_length\_mm} = 200.92)\\
@@ -418,16 +427,17 @@ $$
 
 as a function of $\mathtt{body\_mass\_g}$.
 
-Note: we used exact values
-in the calculation above. The intercept will be 40.76 instead of 41.14
-if we use the rounded values. Similarly, the effect plot for
-$\mathtt{flipper\_length\_mm}$ is a plot of $$
+Note: we used exact values in the calculation above. The intercept will be 40.76 instead of 41.14 if we use the rounded values. Similarly, the effect plot for $\mathtt{flipper\_length\_mm}$ is a plot of
+
+$$
 \begin{aligned}
 &\hat{E}(\mathtt{bill\_length\_mm}\mid \mathtt{body\_mass\_g} = 4201.75,\mathtt{flipper\_length\_mm}) \\
 &=-3.44+0.0007 \cdot 4201.75+0.22\,\mathtt{flipper\_length\_mm} \\
 &=-0.65 + 0.22\,\mathtt{flipper\_length\_mm}
 \end{aligned}
-$$ as a function of $\mathtt{flipper\_length\_mm}$.
+$$
+
+as a function of $\mathtt{flipper\_length\_mm}$.
 
 The `effects` R package can be used to generate effect
 plots for the predictors of a fitted linear model.
@@ -437,8 +447,9 @@ plots for the predictors of a fitted linear model.
 
 The `predictorEffect` function computes the estimated mean response for
 different values of the focal predictor while holding the other
-predictors at their typical values. The main arguments of
-`predictorEffect` are:
+predictors at their typical values.
+
+The main arguments of `predictorEffect` are:
 
 -   `predictor`: the name of the predictor we want to plot. This is the
     "focal predictor".
@@ -450,16 +461,15 @@ We load the **effects** package.
 library(effects)
 ```
 
-We now draw the effects plot for `body_mass_g`.
+We now draw the effect plot for `body_mass_g`.
+
 ```{r}
 plot(predictorEffect("body_mass_g", mlmod))
 ```
 
-There is a clear positive association between `body_mass_g` and `bill_length_mm`
-after accounting for the `flipper_length_mm` variable.
+There is a clear positive association between `body_mass_g` and `bill_length_mm` after accounting for the `flipper_length_mm` variable.
 
-The shaded area indicates the 95% confidence interval bands for the estimated mean
-response.
+The shaded area indicates the 95% confidence interval bands for the estimated mean response.
 
 We next create an effect plot for `flipper_length_mm` using the code below.
 
@@ -563,9 +573,24 @@ E(Y\mid X = x^*, C=L_2) &= \beta_{int} + \beta_X x^* + \beta_{L_2} \cdot 1 + \be
 &= \beta_{int} + \beta_X x^* + \beta_{L_2}.
 \end{aligned}
 $$
+:::
 
-Thus,
+What is the difference in the expected response when comparing an observation with level $L_2$ compared to an observation with level $L_1$, assuming that $X$ is the same for both observations?
 
+::: {.content-visible unless-format="pdf"}
+</br>
+</br>
+</br>
+</br>
+</br>
+</br>
+</br>
+</br>
+</br>
+</br>
+:::
+
+::: {.content-hidden unless-format="pdf"}
 $$
 \begin{aligned}
 & E(Y\mid X=x^*, C=L_2) - E(Y\mid X=x^*, C=L_1) \\
@@ -619,8 +644,8 @@ How do we create an effect plot for a numeric focal predictor when a
 non-interacting categorical predictor is in the model (such as for the
 parallel lines model we have been discussing)?
 
-- First, determine the fitted model as a function of the focal predictor for each level of the categorical predictor.
-- Then, we compute the weighted average of the equation with the weights being proportional to the number of observations in each group.
+- First, determine the fitted model equation as a function of the focal predictor for each level of the categorical predictor.
+- Then, compute the weighted average of the equation with the weights being proportional to the number of observations in each group.
 
 Let's construct an effect plot for the `body_mass_g` predictor in the
 context of the `penguins` parallel lines model discussed in the previous
@@ -679,8 +704,10 @@ plot(predictorEffect("body_mass_g", lmodp))
 An effect plot for a categorical predictor, assuming all other
 predictors in the model are non-interacting numerical predictors (i.e.,
 fixed group predictors), is a plot of the estimated mean response for
-each level of the categorical variable when the fixed group group
-predictors are held at their sample mean. The sample mean is:
+each level of the categorical variable when the fixed group
+predictors are held at their sample mean.
+
+The sample mean of the obsered `body_mass_g` values is:
 
 ```{r}
 # sample mean of body_mass_g variable used to fit lmodp
@@ -700,12 +727,12 @@ $$
 Similarly,
 
 $$
-\hat{E}(\mathtt{bill\_length\_mm} \mid \mathtt{body\_mass\_g} = 4201.75, \mathtt{species}=\mathtt{Chinstrap}) = 50.59
+\hat{E}(\mathtt{bill\_length\_mm} \mid \mathtt{body\_mass\_g} = 4201.75, \mathtt{species}=\mathtt{Chinstrap}) = 34.84 + 0.004(4201.75) = 50.59
 $$
 
 And,
 
-$$\hat{E}(\mathtt{bill\_length\_mm} \mid \mathtt{body\_mass\_g} = 4201.75, \mathtt{species}=\mathtt{Gentoo}) = 44.23$$
+$$\hat{E}(\mathtt{bill\_length\_mm} \mid \mathtt{body\_mass\_g} = 4201.75, \mathtt{species}=\mathtt{Gentoo}) = 28.48 + 0.004(4201.75) = 44.23$$
 
 The code below produces the effect plot for `species`. The confidence bands for the estimated mean response are shown by the vertical bars.
 
