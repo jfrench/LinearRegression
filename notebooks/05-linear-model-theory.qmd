@@ -1,0 +1,556 @@
+---
+title: Chapter 5 - Linear Model Theory
+author: Joshua French
+date: ''
+# format: html
+format: ipynb
+jupyter: ir
+execute:
+  output: false
+self-contained: true
+title-block-banner: true
+wrap: 'none'
+---
+
+To open this information in an interactive Colab notebook, click the Open in Colab graphic below.
+
+<a href="https://colab.research.google.com/github/jfrench/LinearRegression/blob/master/notebooks/05-linear-model-theory-notebook.ipynb">
+   <img src="https://colab.research.google.com/assets/colab-badge.svg">
+</a>
+
+---
+
+```{r}
+if(!require(palmerpenguins, quietly = TRUE)) {
+  install.packages("palmerpenguins", repos = "https://cran.rstudio.com/")
+  library(palmerpenguins)
+}
+```
+
+# Basic theoretical results for linear models
+
+In this chapter we discuss many basic theoretical results for linear models.
+
+We assume the responses can be modeled as:
+
+$$
+Y_i=\beta_0+\beta_1 x_{i,1} +\ldots + \beta_{p-1}x_{i,-1}+\epsilon_i,\quad i=1,2,\ldots,n,
+$$
+
+or using matrix formulation, as:
+
+$$
+\mathbf{y} = \mathbf{X}\boldsymbol{\beta}+\boldsymbol{\epsilon}
+$$
+
+
+# Standard assumptions
+
+We assume that the components of our linear model have the characteristics previously described in Chapter 3. We also need to make several specific assumptions about the errors. 
+
+**Error Assumption #1:** the mean of the errors is zero. This means that $E(\epsilon_i \mid \mathbb{X} = \mathbf{x}_i)=0$ for $i=1,2,\ldots,n$, or using matrix notation:
+
+$$
+E(\boldsymbol{\epsilon}\mid \mathbf{X}) = 0_{n\times 1}
+$$
+
+where "$\mid \mathbf{X}$" is notation meaning "conditional on knowing the regressor values for all observations".
+
+**Error Assumption #2:** the errors have constant variances and are uncorrelated, conditional on knowing the regressors:
+
+$$
+\mathrm{var}(\epsilon_i\mid \mathbb{X}=\mathbf{x}_i) = \sigma^2, \quad i=1,2,\ldots,n
+$$
+
+And: 
+
+$$
+\mathrm{cov}(\epsilon_i, \epsilon_j\mid \mathbf{X}) = 0, \quad i,j=1,2,\ldots,n,\quad i\neq j
+$$
+
+In matrix notation, this is stated as:
+
+$$
+\mathrm{var}(\mathbf{y} \mid {\mathbf{X}})=\sigma^2\mathbf{I}_{n\times n}
+$$
+
+**Error Assumption #3:** the errors are identically distributed. Formally, this may be written as:
+
+$$
+\epsilon_i \sim F, i=1,2,\ldots,n
+$$
+
+Where $F$ is some arbitrary distribution. 
+
+**Error Assumption #4:** In practice, it is common to assume the errors have a normal (Gaussian) distribution. Two uncorrelated normal random variables are also independent (this is true for normal random variables, but is not generally true for other distributions). Thus:
+
+$$
+\epsilon_1,\epsilon_2,\ldots,\epsilon_n \mid \mathbf{X}\stackrel{i.i.d.}{\sim} \mathcal{N}(0, \sigma^2)
+$$
+
+Or using matrix notation as:
+
+$$
+\boldsymbol{\epsilon}\mid \mathbf{X}\sim \mathsf{N}(\mathbf{0}_{n\times 1},\sigma^2 \mathbf{I}_{n\times n})
+$$
+
+In summary, our error assumptions are:
+
+1. $E(\epsilon_i \mid \mathbb{X}=\mathbf{x}_i)=0$ for $i=1,2,\ldots,n$.
+1. $\mathrm{var}(\epsilon_i\mid \mathbb{X}=\mathbf{x}_i)=\sigma^2$ for $i=1,2,\ldots,n$.
+1. $\mathrm{cov}(\epsilon_i,\epsilon_j\mid \mathbf{X})=0$ for $i\neq j$ with $i,j=1,2,\ldots,n$.
+1. $\epsilon_i$ has a normal distribution for $i=1,2,\ldots,n$.
+
+**Summary of results**
+
+---
+
+Combining these results with our linear model, we have:
+
+1. $\mathbf{y}\mid \mathbf{X}\sim \mathcal{N}(\mathbf{X}\boldsymbol{\beta}, \sigma^2 \mathbf{I}_{n\times n})$.
+1. $\hat{\boldsymbol{\beta}}\mid \mathbf{X}\sim \mathcal{N}(\boldsymbol{\beta}, \sigma^2(\mathbf{X}^T\mathbf{X})^{-1})$.
+1. $\hat{\boldsymbol{\epsilon}}\mid \mathbf{X}\sim \mathcal{N}(\mathbf{0}_{n\times 1}, \sigma^2 (\mathbf{I}_{n\times n} - \mathbf{H}))$.
+1. $\hat{\boldsymbol{\beta}}$ has the minimum variance among all unbiased estimators of $\boldsymbol{\beta}$ with the additional assumptions that the model is correct and $\mathbf{X}$ is full-rank.
+
+We prove these results in the sections below. To simplify the derivations below, we let $\mathbf{I}=\mathbf{I}_{n\times n}$.
+
+**Results for $\mathbf{y}$**
+
+---
+
+For our given linear model and under the assumptions summarized previously, our response variable has mean:
+
+$$
+E(\mathbf{y}\mid \mathbf{X})=\mathbf{X}\boldsymbol{\beta}
+$$
+
+*Proof:*
+
+::: {.content-visible unless-format="pdf"}
+</br>  
+</br>  
+</br>  
+:::
+::: {.content-hidden unless-format="pdf"}
+
+$$
+\begin{aligned}
+E(\mathbf{y}|\mathbf{X})&=E(\mathbf{X}\boldsymbol{\beta}+\boldsymbol\epsilon|\mathbf{X})&\tiny\text{(by definition)}\\
+&=E(\mathbf{X}\boldsymbol{\beta}|\mathbf{X})+E(\boldsymbol\epsilon|\mathbf{X})&\tiny\text{(linearity of expectation)}\\
+&=E(\mathbf{X}\boldsymbol{\beta}|\mathbf{X})+\mathbf{0}_{n\times 1}&\tiny\text{(by assumption about }\epsilon)\\
+&=\mathbf{X}\boldsymbol{\beta}&\tiny\text{(since }\mathbf{X}\text{ and } \boldsymbol{\beta} \text{ are constant})
+\end{aligned}
+$$
+
+:::
+
+$\vphantom{blank}$
+
+For the variance of the response: 
+
+$$
+\mathrm{var}(\mathbf{y}\mid \mathbf{X})=\sigma^2 \mathbf{I}
+$$
+*Proof:*
+
+::: {.content-visible unless-format="pdf"}
+</br>  
+</br>  
+</br>  
+:::
+::: {.content-hidden unless-format="pdf"}
+
+$$
+\begin{aligned}
+\text{var}(\mathbf{y}|\mathbf{X})&=\text{var}(\mathbf{X}\boldsymbol{\beta}+\boldsymbol\epsilon|\mathbf{X})&\tiny\text{(by definition)}\\
+&=\text{var}(\boldsymbol\epsilon|\mathbf{X})&\tiny(\mathbf{X}\boldsymbol{\beta}\text{ is constant)}\\
+&=\sigma^2\mathbf{I}.&\tiny\text{(by assumption)}
+\end{aligned}
+$$
+
+:::
+
+$\vphantom{blank}$
+
+The response variable has the following distribution: 
+
+$$
+\mathbf{y}\mid \mathbf{X}\sim \mathcal{N}(\mathbf{X}\boldsymbol{\beta}, \sigma^2 \mathbf{I})
+$$
+
+*Proof:*
+
+::: {.content-visible unless-format="pdf"}
+</br>  
+</br>  
+</br>  
+:::
+::: {.content-hidden unless-format="pdf"}
+
+We have shown that: 
+
+* $E(\mathbf{y}\mid \mathbf{X}) = \mathbf{X}\boldsymbol{\beta}$
+* $\mathrm{var}(\mathbf{y}\mathbf{X}) = \sigma^2 \mathbf{I}$
+
+Since $\mathbf{y}$ is a linear function of the multivariate normal vector $\boldsymbol{\epsilon}$, then $\mathbf{y}$ must also have a multivariate normal distribution.
+:::
+
+$\vphantom{blank}$
+
+
+**Results for $\hat{\boldsymbol{\beta}}$**
+
+---
+
+The OLS estimator for $\boldsymbol{\beta}$ is:
+
+$$
+\hat{\boldsymbol{\beta}}=(\mathbf{X}^T\mathbf{X})^T\mathbf{X}^T\mathbf{y},
+$$
+
+This is an unbiased estimator for $\boldsymbol{\beta}$, i.e.:
+
+$$
+E(\hat{\boldsymbol{\beta}}\mid \mathbf{X})=\boldsymbol{\beta}
+$$
+
+*Proof:*
+
+::: {.content-visible unless-format="pdf"}
+</br>  
+</br>  
+</br>  
+:::
+::: {.content-hidden unless-format="pdf"}
+We previously derived the following results,
+
+$$
+E(\mathbf{y}|\mathbf{X})=\mathbf{X}\boldsymbol\beta
+$$
+
+$$
+\text{var}(\mathbf{y}|\mathbf{X})=\sigma^2\mathbf{I}
+$$
+
+Then,
+
+$$
+\begin{aligned}
+E(\hat{\boldsymbol{\beta}}|\mathbf{X})&=E((\mathbf{X}^T\mathbf{X})^{-1}\mathbf{X}^T\mathbf{y}|\mathbf{X})&\tiny\text{(substitute OLS formula)}\\
+&=(\mathbf{X}^T\mathbf{X})^{-1}\mathbf{X}^TE(\mathbf{y}|\mathbf{X})&\tiny(\text{factor non-random terms)}\\
+&=(\mathbf{X}^T\mathbf{X})^{-1}\mathbf{X}^T\mathbf{X}&\tiny\text{(above result)}\\
+&=\mathbf{I}_{p\times p}\boldsymbol\beta&\tiny\text{(property of inverse matrices)}\\
+&=\boldsymbol\beta
+\end{aligned}
+$$
+
+:::
+
+$\vphantom{blah}$
+
+The OLS estimator $\hat{\boldsymbol{\beta}}$ has variance:
+
+$$
+\mathrm{var}(\hat{\boldsymbol{\beta}}\mid \mathbf{X})=\sigma^2(\mathbf{X}^T\mathbf{X})^{-1}
+$$
+
+*Proof:*
+
+::: {.content-visible unless-format="pdf"}
+</br>  
+</br>  
+</br>  
+:::
+::: {.content-hidden unless-format="pdf"}
+
+$$
+\begin{aligned}
+\text{var}(\hat{\boldsymbol\beta}|\mathbf{X})&=\text{var}((\mathbf{X}^T\mathbf{X})^{-1}\mathbf{X}^T\mathbf{y}|\mathbf{X})&\tiny\text{(by OLS formula)}\\
+&=(\mathbf{X}^T\mathbf{X})^{-1}\mathbf{X}^T\text{var}(\mathbf{y}|\mathbf{X})((\mathbf{X}^T\mathbf{X})^{-1}\mathbf{X}^T)^T&\tiny\text{(pull constants out of variance)}\\
+&=(\mathbf{X}^T\mathbf{X})^{-1}\mathbf{X}^T\text{var}(\mathbf{y}|\mathbf{X})\mathbf{X}(\mathbf{X}^T\mathbf{X})^{-1}&\tiny\text{(simplification)}\\
+&=(\mathbf{X}^T\mathbf{X})^{-1}\mathbf{X}^T(\sigma^2\mathbf{I})\mathbf{X}(\mathbf{X}^T\mathbf{X})^{-1}&\tiny\text{(previous result)}\\
+&=\sigma^2(\mathbf{X}^T\mathbf{X})^{-1}\mathbf{X}^T\mathbf{X}(\mathbf{X}^T\mathbf{X})^{-1}&\tiny(\sigma^2 \text{ is a scalar)}\\
+&=\sigma^2(\mathbf{X}^T\mathbf{X})^{-1}&\tiny\text{(simplification)}
+\end{aligned}
+$$
+
+:::
+$\vphantom{blah}$
+
+The OLS estimator $\hat{\boldsymbol{\beta}}$ has the following distribution:
+
+$$
+\hat{\boldsymbol{\beta}}\mid \mathbf{X}\sim \mathcal{N}(\boldsymbol{\beta}, \sigma^2(\mathbf{X}^T\mathbf{X})^{-1})
+$$
+
+
+*Proof:*
+
+::: {.content-visible unless-format="pdf"}
+</br>  
+</br>  
+</br>  
+:::
+::: {.content-hidden unless-format="pdf"}
+
+Since $\hat{\boldsymbol\beta}=(\mathbf{X}^T\mathbf{X})^{-1}\mathbf{X}^T\mathbf{y}$ is a linear combination of $\mathbf{y}$, and $\mathbf{y}$ is a multivariate normal random vector, then $\hat{\boldsymbol\beta}$ is also a multivariate normal random vector. Using the previous two results for the expectation and variance, 
+
+$$
+\hat{\boldsymbol\beta}|\mathbf{X} \sim N(\boldsymbol\beta,\sigma^2(\mathbf{X}^T\mathbf{X})^{-1})
+$$
+
+:::
+
+**Results for the residuals**
+
+---
+
+The residual vector can be expressed in various equivalent ways, such as
+
+$$
+\begin{aligned}
+\hat{\boldsymbol{\epsilon}} &= \mathbf{y}-\hat{\mathbf{y}} \\
+&= \mathbf{y}-\mathbf{X}\hat{\boldsymbol{\beta}}
+\end{aligned}
+$$
+
+The **hat** matrix is denoted as:
+
+$$
+\mathbf{H}=\mathbf{X}(\mathbf{X}^T\mathbf{X})^{-1}\mathbf{X}^T
+$$
+
+Thus, using the substitution $\hat{\boldsymbol{\beta}}=(\mathbf{X}^T\mathbf{X})^{-1}\mathbf{X}^T\mathbf{y}$ and the definition for $\mathbf{H}$, we see that:
+
+$$
+\begin{aligned}
+\hat{\boldsymbol{\epsilon}} &= \mathbf{y}-\mathbf{X}\hat{\boldsymbol{\beta}} \\ 
+&= \mathbf{y} - \mathbf{X}(\mathbf{X}^T\mathbf{X})^{-1}\mathbf{X}^T\mathbf{y} \\
+&= \mathbf{y} - \mathbf{H}\mathbf{y} \\
+&= (\mathbf{I}-\mathbf{H})\mathbf{y}
+\end{aligned}
+$$
+
+The hat matrix is an important theoretical matrix, as it projects $\mathbf{y}$ into the space spanned by the vectors in $\mathbf{X}$. 
+
+The hat matrix $\mathbf{H}$ is symmetric and idempotent.
+
+*Proof:*
+
+::: {.content-visible unless-format="pdf"}
+</br>  
+</br>  
+</br>  
+:::
+::: {.content-hidden unless-format="pdf"}
+Notice that:
+
+$$
+\begin{aligned}
+\mathbf{H}^T&=(\mathbf{X}(\mathbf{X}^T\mathbf{X})^{-1}\mathbf{X}^T)^T&\tiny\text{(definition of }\mathbf{H})\\
+&=(\mathbf{X}^T)^T((\mathbf{X}^T\mathbf{X})^{-1})^T\mathbf{X}^T&\tiny\text{(apply transpose to matrix product)}\\
+&=\mathbf{X}((\mathbf{X}^T\mathbf{X})^T)^{-1}\mathbf{X}^T&\tiny\text{(simplification, reversibility of inverse and transpose)}\\
+&=\mathbf{X}(\mathbf{X}^T(\mathbf{X}^T)^T)^{-1}\mathbf{X}^T&\tiny\text{(apply transpose to matrix product)}\\
+&=\mathbf{X}(\mathbf{X}^T\mathbf{X})^{-1}\mathbf{X}^T&\tiny\text{(simplification)}\\
+&=\mathbf{H}
+\end{aligned}
+$$
+
+Thus, $\mathbf{H}$ is symmetric.
+
+Additionally:
+
+$$
+\begin{aligned}
+\mathbf{H}\mathbf{H}&=(\mathbf{X}(\mathbf{X}^T\mathbf{X})^{-1}\mathbf{X}^T)(\mathbf{X}(\mathbf{X}^T\mathbf{X})^{-1}\mathbf{X}^T)&\tiny\text{(definition of }\mathbf{H}\text{)}\\
+&=\mathbf{X}(\mathbf{X}^T\mathbf{X})^{-1}(\mathbf{X}^T\mathbf{X})(\mathbf{X}^T\mathbf{X})^{-1}\mathbf{X}^t&\tiny\text{(associative property of matrices)}\\
+&=\mathbf{X}\mathbf{I}_{p\times p}(\mathbf{X}^T\mathbf{X})^{-1}\mathbf{X}^T&\tiny\text{(property of inverse matrices)}\\
+&=\mathbf{X}(\mathbf{X}^T\mathbf{X})^{-1}\mathbf{X}^T&\tiny\text{(simplification)}\\
+&=\mathbf{H}
+\end{aligned}
+$$
+
+Therefore, $\mathbf{H}$ is idempotent.
+
+:::
+
+The matrix $\mathbf{I} - \mathbf{H}$ is symmetric and idempotent.
+
+*Proof:*
+
+::: {.content-visible unless-format="pdf"}
+</br>  
+</br>  
+</br>  
+:::
+::: {.content-hidden unless-format="pdf"}
+
+First, notice that:
+
+$$
+\begin{aligned}
+(\mathbf{I}-\mathbf{H})^T &= \mathbf{I}^T-\mathbf{H}^T&\tiny\text{(transpose to matrix sum)}\\
+&= \mathbf{I}-\mathbf{H}&\tiny\text{(since }\mathbf{I}\text{ and }\mathbf{H}\text{ are symmetric)}
+\end{aligned}
+$$
+
+Thus, $\mathbf{I}-\mathbf{H}$ is symmetric.
+
+Next:
+
+$$
+\begin{aligned}
+(\mathbf{I}-\mathbf{H})(\mathbf{I}-\mathbf{H})&=\mathbf{I}-2\mathbf{H}+\mathbf{H}\mathbf{H}&\tiny\text{(transpose to matrix sum)}\\
+&=\mathbf{I}-2\mathbf{H}+\mathbf{H}&\tiny\text{(since H is idempotent)}\\
+&=\mathbf{I}-\mathbf{H}&\tiny\text{(simplification)}
+\end{aligned}
+$$
+
+Thus, $\mathbf{I}-\mathbf{H}$ is idempotent.
+:::
+
+Under the assumptions we discussed previously, the errors have mean:
+
+$$
+E(\hat{\boldsymbol{\epsilon}}\mid \mathbf{X})=\mathbf{0}_{n\times 1}
+$$
+
+
+*Proof:*
+
+::: {.content-visible unless-format="pdf"}
+</br>  
+</br>  
+</br>  
+:::
+::: {.content-hidden unless-format="pdf"}
+
+$$
+\begin{aligned}
+E(\hat{\boldsymbol{\epsilon}}|\mathbf{X})&=E((\mathbf{I}-\mathbf{H})\mathbf{y}|\mathbf{X})\\
+&=(\mathbf{I}-\mathbf{H})E(\mathbf{y}|\mathbf{X})&\tiny(\mathbf{I}-\mathbf{H}\text{ is non-random)}\\
+&=(\mathbf{I}-\mathbf{H})\mathbf{X}\boldsymbol\beta&\tiny\text{(earlier result)}\\
+&=\mathbf{X}\boldsymbol\beta-\mathbf{X}\boldsymbol\beta&\tiny\text{(distribute the product)}\\
+&=\mathbf{X}\boldsymbol\beta-\mathbf{X}^T(\mathbf{X}^T\mathbf{X})^{-1}\mathbf{X}^T\mathbf{X}\boldsymbol\beta&\tiny\text{(definition of H)}\\
+&=\mathbf{X}\boldsymbol\beta-\mathbf{X}\mathbf{I}_{p\times p}\boldsymbol\beta&\tiny\text{(property of inverse matrix)}\\
+&=\mathbf{X}\boldsymbol\beta-\mathbf{X}\boldsymbol\beta&\tiny\text{(simplification)}\\
+&=\mathbf{0}_{n\times1}&\tiny\text{(simplification)}
+\end{aligned}
+$$
+
+:::
+
+$\vphantom{blank}$
+
+
+The errors have variance:
+
+$$
+\mathrm{var}(\hat{\boldsymbol{\epsilon}}\mid \mathbf{X})=\sigma^2 (\mathbf{I} - \mathbf{H})
+$$
+
+
+*Proof:*
+
+::: {.content-visible unless-format="pdf"}
+</br>  
+</br>  
+</br>  
+:::
+::: {.content-hidden unless-format="pdf"}
+
+$$
+\begin{aligned}
+\text{var}(\hat{\boldsymbol{\epsilon}}|\mathbf{X})&=\text{var}((\mathbf{I}-\mathbf{H})\mathbf{y}|\mathbf{X})\\
+&=(\mathbf{I}-\mathbf{H})\text{var}(\mathbf{y}|\mathbf{X})(\mathbf{I}-\mathbf{H})^T&\tiny(\mathbf{I}-\mathbf{H}\text{ is nonrandom)}\\
+&=(\mathbf{I}-\mathbf{H})\sigma^2(\mathbf{I}-\mathbf{H})^T&\tiny\text{(earlier result)}\\
+&=\sigma^2(\mathbf{I}-\mathbf{H})(\mathbf{I}-\mathbf{H})&\tiny(\mathbf{I}-\mathbf{H}\text{ is symmetric)}\\
+&=\sigma^2(\mathbf{I}-\mathbf{H})&\tiny(\mathbf{I}-\mathbf{H}\text{ is idempotent)}
+\end{aligned}
+$$
+
+:::
+
+The errors have the following distribution:
+
+$$
+\hat{\boldsymbol{\epsilon}}\mid \mathbf{X}\sim \mathcal{N}(\mathbf{0}_{n\times 1}, \sigma^2 (\mathbf{I} - \mathbf{H}))
+$$
+
+
+
+*Proof:*
+
+::: {.content-visible unless-format="pdf"}
+</br>  
+</br>  
+</br>  
+:::
+::: {.content-hidden unless-format="pdf"}
+
+Since $\hat{\boldsymbol{\epsilon}}$  is a linear combination of multivariate normal vectors, and using previous results, it has mean $\mathbf{0}_{n\times1}$ and variance matrix $\sigma^2(\mathbf{I}-\mathbf{H})$.
+:::
+
+$\vphantom{blank}$
+
+
+The RSS can be represented as:
+
+$$
+RSS=\mathbf{y}^T(\mathbf{I}-\mathbf{H})\mathbf{y}
+$$
+
+
+*Proof:*
+
+::: {.content-visible unless-format="pdf"}
+</br>  
+</br>  
+</br>  
+:::
+::: {.content-hidden unless-format="pdf"}
+
+$$
+\begin{aligned}
+RSS &= \hat{\boldsymbol{\epsilon}}^T\hat{\boldsymbol{\epsilon}}&\tiny\text{(matrix representation of RSS)}\\
+&=((\mathbf{I}-\mathbf{H})\mathbf{y})^T(\mathbf{I}-\mathbf{H})\mathbf{y}&\tiny\text{(previous result)}\\
+&=\mathbf{y}^T(\mathbf{I}-\mathbf{H})^T(\mathbf{I}-\mathbf{H})\mathbf{y}&\tiny\text{(apply transpose)}\\
+&=\mathbf{y}^T(\mathbf{I}-\mathbf{H})(\mathbf{I}-\mathbf{H})\mathbf{y}&\tiny(\mathbf{I}-\mathbf{H} \text{ is symmetric)}\\
+&=\mathbf{y}^T(\mathbf{I}-\mathbf{H})\mathbf{y}&\tiny(\mathbf{I}-\mathbf{H} \text{ is idempotent)}\\
+\end{aligned}
+$$
+
+:::
+
+# The Gauss-Markov Theorem
+
+Suppose we will fit the regression model:
+
+$$
+\mathbf{y}=\mathbf{X}\boldsymbol{\beta} + \boldsymbol{\epsilon}
+$$
+
+Assume that 
+
+1. $E(\boldsymbol{\epsilon}\mid \mathbf{X}) = 0$.
+1. $\mathrm{var}(\boldsymbol{\epsilon}\mid \mathbf{X}) = \sigma^2 \mathbf{I}$, i.e., the errors have constant variance and are uncorrelated.
+1. $E(\mathbf{y}\mid \mathbf{X})=\mathbf{X}\boldsymbol{\beta}$
+1. $\mathbf{X}$ is a full-rank matrix.
+
+Then the **Gauss-Markov** states that the OLS estimator of $\boldsymbol{\beta}$, 
+
+$$
+\hat{\boldsymbol{\beta}}=(\mathbf{X}^T\mathbf{X})^T\mathbf{X}^T\mathbf{y}
+$$
+
+has the minimum variance among all unbiased estimators of $\boldsymbol{\beta}$ and this estimator is unique.
+
+Some comments:
+
+- Assumption 3 guarantees that we have hypothesized the correct model, i.e., that we have included exactly the correct regressors in our model. Not only are we fitting a linear model to the data, but our hypothesized model is actually correct.
+- Assumption 4 ensures that the OLS estimator can be computed (otherwise, there is no unique solution).
+- The Gauss-Markov theorem only applies to unbiased estimators of $\boldsymbol{\beta}$. Biased estimators could have a smaller variance.
+- The Gauss-Markov theorem states that no unbiased estimator of $\boldsymbol{\beta}$ can have a smaller variance than $\hat{\boldsymbol{\beta}}$.
+- The OLS estimator uniquely has the minimum variance property, meaning that if an $\tilde{\boldsymbol{\beta}}$ is another unbiased estimator of $\boldsymbol{\beta}$ and $\mathrm{var}(\tilde{\boldsymbol{\beta}}) = \mathrm{var}(\hat{\boldsymbol{\beta}})$, then in fact the two estimators are identical and $\tilde{\boldsymbol{\beta}}=\hat{\boldsymbol{\beta}}$.
+
+We do not prove this theorem.
