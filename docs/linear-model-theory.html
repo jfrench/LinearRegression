@@ -361,7 +361,7 @@ and
 \]</span>
 In matrix notation, this is stated as
 <span class="math display">\[
-\mathrm{var}(\mathbf{y} \mid {\mathbf{X}})=\sigma^2\mathbf{I}_{n\times n}.
+\mathrm{var}(\boldsymbol{\epsilon} \mid {\mathbf{X}})=\sigma^2\mathbf{I}_{n\times n}.
 \]</span></p>
 <p>Additionally, we assume that the errors are identically distributed. Formally, this may be written as
 <span class="math display" id="eq:errordist">\[
@@ -410,7 +410,7 @@ E(\mathbf{y}\mid \mathbf{X})=\mathbf{X}\boldsymbol{\beta}. \tag{5.4}
 E(\mathbf{y}|\mathbf{X})&amp;=E(\mathbf{X}\boldsymbol{\beta}+\boldsymbol\epsilon|\mathbf{X})&amp;\tiny\text{(by definition)}\\
 &amp;=E(\mathbf{X}\boldsymbol{\beta}|\mathbf{X})+E(\boldsymbol\epsilon|\mathbf{X})&amp;\tiny\text{(linearity of expectation)}\\
 &amp;=E(\mathbf{X}\boldsymbol{\beta}|\mathbf{X})+\mathbf{0}_{n\times 1}&amp;\tiny\text{(by assumption about }\epsilon)\\
-&amp;=\mathbf{X}\boldsymbol{\beta}&amp;\tiny\text{(since }\mathbf{X}\text{ and } \boldsymbol{\beta} \text{ are constant})
+&amp;=\mathbf{X}\boldsymbol{\beta}.&amp;\tiny\text{(since }\mathbf{X}\text{ and } \boldsymbol{\beta} \text{ are constant})
 \end{aligned}
 \]</span></p>
 </div>
@@ -543,8 +543,8 @@ E(\hat{\boldsymbol{\beta}}|\mathbf{X})&amp;=E((\mathbf{X}^T\mathbf{X})^{-1}\math
 \end{aligned}
 \]</span>
 Thus, <span class="math inline">\(\mathbf{H}\)</span> is symmetric.</p>
-<p>Additionally,
-<span class="math display">\[
+<p>Additionally,</p>
+<p><span class="math display">\[
 \begin{aligned}
 \mathbf{H}\mathbf{H}&amp;=(\mathbf{X}(\mathbf{X}^T\mathbf{X})^{-1}\mathbf{X}^T)(\mathbf{X}(\mathbf{X}^T\mathbf{X})^{-1}\mathbf{X}^T)&amp;\tiny\text{(definition of }\mathbf{H}\text{)}\\
 &amp;=\mathbf{X}(\mathbf{X}^T\mathbf{X})^{-1}(\mathbf{X}^T\mathbf{X})(\mathbf{X}^T\mathbf{X})^{-1}\mathbf{X}^t&amp;\tiny\text{(associative property of matrices)}\\
@@ -559,27 +559,27 @@ Thus, <span class="math inline">\(\mathbf{H}\)</span> is symmetric.</p>
 <p><span id="thm:i-h-properties" class="theorem"><strong>Theorem 5.8  </strong></span>The matrix <span class="math inline">\(\mathbf{I} - \mathbf{H}\)</span> is symmetric and idempotent.</p>
 </div>
 <div class="proof">
-<p><span id="unlabeled-div-8" class="proof"><em>Proof</em>. </span>First, notice that,
-<span class="math display">\[
+<p><span id="unlabeled-div-8" class="proof"><em>Proof</em>. </span>First, notice that,</p>
+<p><span class="math display">\[
 \begin{aligned}
 (\mathbf{I}-\mathbf{H})^T &amp;= \mathbf{I}^T-\mathbf{H}^T&amp;\tiny\text{(transpose to matrix sum)}\\
 &amp;= \mathbf{I}-\mathbf{H}.&amp;\tiny\text{(since }\mathbf{I}\text{ and }\mathbf{H}\text{ are symmetric)}
 \end{aligned}
-\]</span>
-Thus, <span class="math inline">\(\mathbf{I}-\mathbf{H}\)</span> is symmetric.</p>
-<p>Next,
-<span class="math display">\[
+\]</span></p>
+<p>Thus, <span class="math inline">\(\mathbf{I}-\mathbf{H}\)</span> is symmetric.</p>
+<p>Next,</p>
+<p><span class="math display">\[
 \begin{aligned}
 (\mathbf{I}-\mathbf{H})(\mathbf{I}-\mathbf{H})&amp;=\mathbf{I}-2\mathbf{H}+\mathbf{H}\mathbf{H}&amp;\tiny\text{(transpose to matrix sum)}\\
 &amp;=\mathbf{I}-2\mathbf{H}+\mathbf{H}&amp;\tiny\text{(since H is idempotent)}\\
 &amp;=\mathbf{I}-\mathbf{H}.&amp;\tiny\text{(simplification)}
 \end{aligned}
-\]</span>
-Thus, <span class="math inline">\(\mathbf{I}-\mathbf{H}\)</span> is idempotent.</p>
+\]</span></p>
+<p>Thus, <span class="math inline">\(\mathbf{I}-\mathbf{H}\)</span> is idempotent.</p>
 </div>
 <div class="theorem">
-<p><span id="thm:mean-residuals" class="theorem"><strong>Theorem 5.9  </strong></span>For the linear model given in Equation <a href="linear-model-theory.html#eq:linear-model-def-matrix">(5.1)</a> and under the assumptions summarized in Equation <a href="linear-model-theory.html#eq:error-assumptions-matrix">(5.3)</a>,
-<span class="math display" id="eq:mean-residuals">\[
+<p><span id="thm:mean-residuals" class="theorem"><strong>Theorem 5.9  </strong></span>For the linear model given in Equation <a href="linear-model-theory.html#eq:linear-model-def-matrix">(5.1)</a> and under the assumptions summarized in Equation <a href="linear-model-theory.html#eq:error-assumptions-matrix">(5.3)</a>,</p>
+<p><span class="math display" id="eq:mean-residuals">\[
 E(\hat{\boldsymbol{\epsilon}}\mid \mathbf{X})=\mathbf{0}_{n\times 1}.\tag{5.11}
 \]</span></p>
 </div>
@@ -599,8 +599,8 @@ E(\hat{\boldsymbol{\epsilon}}|\mathbf{X})&amp;=E((\mathbf{I}-\mathbf{H})\mathbf{
 </div>
 <p><span class="math inline">\(\vphantom{blank}\)</span></p>
 <div class="theorem">
-<p><span id="thm:var-residuals" class="theorem"><strong>Theorem 5.10  </strong></span>For the linear model given in Equation <a href="linear-model-theory.html#eq:linear-model-def-matrix">(5.1)</a> and under the assumptions summarized in Equation <a href="linear-model-theory.html#eq:error-assumptions-matrix">(5.3)</a>,
-<span class="math display" id="eq:var-residuals">\[
+<p><span id="thm:var-residuals" class="theorem"><strong>Theorem 5.10  </strong></span>For the linear model given in Equation <a href="linear-model-theory.html#eq:linear-model-def-matrix">(5.1)</a> and under the assumptions summarized in Equation <a href="linear-model-theory.html#eq:error-assumptions-matrix">(5.3)</a>,</p>
+<p><span class="math display" id="eq:var-residuals">\[
 \mathrm{var}(\hat{\boldsymbol{\epsilon}}\mid \mathbf{X})=\sigma^2 (\mathbf{I} - \mathbf{H}).\tag{5.12}
 \]</span></p>
 </div>
@@ -616,8 +616,8 @@ E(\hat{\boldsymbol{\epsilon}}|\mathbf{X})&amp;=E((\mathbf{I}-\mathbf{H})\mathbf{
 \]</span></p>
 </div>
 <div class="theorem">
-<p><span id="thm:dist-properties-residuals" class="theorem"><strong>Theorem 5.11  </strong></span>For the linear model given in Equation <a href="linear-model-theory.html#eq:linear-model-def-matrix">(5.1)</a> and under the assumptions summarized in Equation <a href="linear-model-theory.html#eq:error-assumptions-matrix">(5.3)</a>,
-<span class="math display" id="eq:dist-properties-residuals">\[
+<p><span id="thm:dist-properties-residuals" class="theorem"><strong>Theorem 5.11  </strong></span>For the linear model given in Equation <a href="linear-model-theory.html#eq:linear-model-def-matrix">(5.1)</a> and under the assumptions summarized in Equation <a href="linear-model-theory.html#eq:error-assumptions-matrix">(5.3)</a>,</p>
+<p><span class="math display" id="eq:dist-properties-residuals">\[
 \hat{\boldsymbol{\epsilon}}\mid \mathbf{X}\sim \mathsf{N}(\mathbf{0}_{n\times 1}, \sigma^2 (\mathbf{I} - \mathbf{H})).\tag{5.13}
 \]</span></p>
 </div>
@@ -626,8 +626,8 @@ E(\hat{\boldsymbol{\epsilon}}|\mathbf{X})&amp;=E((\mathbf{I}-\mathbf{H})\mathbf{
 </div>
 <p><span class="math inline">\(\vphantom{blank}\)</span></p>
 <div class="theorem">
-<p><span id="thm:unlabeled-div-12" class="theorem"><strong>Theorem 5.12  </strong></span>The RSS can be represented as,
-<span class="math display">\[
+<p><span id="thm:unlabeled-div-12" class="theorem"><strong>Theorem 5.12  </strong></span>The RSS can be represented as,</p>
+<p><span class="math display">\[
 RSS=\mathbf{y}^T(\mathbf{I}-\mathbf{H})\mathbf{y}.
 \]</span></p>
 </div>
@@ -638,7 +638,7 @@ RSS &amp;= \hat{\boldsymbol{\epsilon}}^T\hat{\boldsymbol{\epsilon}}&amp;\tiny\te
 &amp;=((\mathbf{I}-\mathbf{H})\mathbf{y})^T(\mathbf{I}-\mathbf{H})\mathbf{y}&amp;\tiny\text{(previous result)}\\
 &amp;=\mathbf{y}^T(\mathbf{I}-\mathbf{H})^T(\mathbf{I}-\mathbf{H})\mathbf{y}&amp;\tiny\text{(apply transpose)}\\
 &amp;=\mathbf{y}^T(\mathbf{I}-\mathbf{H})(\mathbf{I}-\mathbf{H})\mathbf{y}&amp;\tiny(\mathbf{I}-\mathbf{H} \text{ is symmetric)}\\
-&amp;=\mathbf{y}^T(\mathbf{I}-\mathbf{H})\mathbf{y}&amp;\tiny(\mathbf{I}-\mathbf{H} \text{ is idempotent)}\\
+&amp;=\mathbf{y}^T(\mathbf{I}-\mathbf{H})\mathbf{y}.&amp;\tiny(\mathbf{I}-\mathbf{H} \text{ is idempotent)}\\
 \end{aligned}
 \]</span></p>
 </div>

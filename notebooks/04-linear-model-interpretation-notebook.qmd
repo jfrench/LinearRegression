@@ -2,11 +2,11 @@
 title: "Chapter 4 - Linear Model Interpretation"
 author: Joshua French
 date: ''
-# format: html
-format: ipynb
-jupyter: ir
-execute:
-  output: false
+format: html
+# format: ipynb
+# jupyter: ir
+# execute:
+#   output: false
 self-contained: true
 title-block-banner: true
 wrap: 'none'
@@ -1209,17 +1209,25 @@ interaction term `body_mass_g:species`.
 **Orthogonality**
 ---
 
-Let $$\mathbf{X}_{[j]}=[x_{1,j},\ldots,x_{n,j}]$$ denote the $n\times 1$
-column vector of observed values for regressor $X_j$. (We can't use the
-notation $\mathbf{x}_j$ because that is the $p\times 1$ vector of
-regressor values for the $j$th observation). Regressors
-$\mathbf{X}_{[j]}$ and $\mathbf{X}_{[k]}$ are *orthogonal* if
-$\mathbf{X}_{[j]}^T \mathbf{X}_{[k]}=0$.
+Let
+
+$$\mathbf{X}_{[j]}=[x_{1,j},\ldots,x_{n,j}]$$
+
+denote the $n\times 1$ column vector of observed values for regressor the $j$th column of $\mathbf{X}$.
+
+- We can't use the notation $\mathbf{x}_j$ because that is the $p\times 1$ vector of regressor values for the $j$th observation. 
+
+Regressors $\mathbf{X}_{[j]}$ and $\mathbf{X}_{[k]}$ are *orthogonal* if $\mathbf{X}_{[j]}^T \mathbf{X}_{[k]}=0$.
 
 Let $\boldsymbol{1}_{n\times1}$ denote an $n\times 1$ column vector of
-1s. The definition of orthogonal vectors above implies that
-$\mathbf{X}_{[j]}$ is orthogonal to $\boldsymbol{1}_{n\times1}$ if $$
+1s.
+
+The definition of orthogonal vectors above implies that
+$\mathbf{X}_{[j]}$ is orthogonal to $\boldsymbol{1}_{n\times1}$ if
+
+$$
 \mathbf{X}_{[j]}^T \boldsymbol{1}_{n\times1} = \sum_{i=1}^n x_{i,j} = 0,$$
+
 i.e., if the values in $\mathbf{X}_{[j]}$ sum to zero.
 
 Let $\bar{x}_j = \frac{1}{n}\sum_{i=1}^n x_{i,j}$ denote the sample mean
@@ -1233,20 +1241,26 @@ $\mathbf{X}_{[j]} - \bar{\mathbf{x}}_j$.
 
 Regressors $\mathbf{X}_{[j]}$ and $\mathbf{X}_{[k]}$ are
 *uncorrelated* if they are orthogonal after being centered, i.e., if
+
 $$
 (\mathbf{X}_{[j]} - \bar{\mathbf{x}}_j)^T (\mathbf{X}_{[k]} - \bar{\mathbf{x}}_k)=0.
-$$ Note that the sample covariance between vectors $\mathbf{X}_{[j]}$
-and $\mathbf{X}_{[k]}$ is $$
+$$
+
+Note that the sample covariance between vectors $\mathbf{X}_{[j]}$
+and $\mathbf{X}_{[k]}$ is
+
+$$
 \begin{aligned}
 \widehat{\mathrm{cov}}(\mathbf{X}_{[j]}, \mathbf{X}_{[k]}) &= \frac{1}{n-1}\sum_{i=1}^n (x_{i,j} - \bar{x}_j)(x_{i,k} - \bar{x}_k) \\
  &= \frac{1}{n-1}(\mathbf{X}_{[j]} - \bar{\mathbf{x}}_j)^T (\mathbf{X}_{[k]} - \bar{\mathbf{x}}_k).
 \end{aligned}
-$$Thus, two centered regressors are orthogonal if their covariance is
+$$
+
+Thus, two centered regressors are orthogonal if their covariance is
 zero.
 
 It is a desirable to have orthogonal regressors in our fitted model
-because they simplify estimating the relationship between the regressors
-and the response. Specifically:
+because they simplify estimating the relationship between the regressors and the response.
 
 *If a regressor is orthogonal to all other regressors (and the column of
 1s) in a model, adding or removing the orthogonal regressor from our
@@ -1254,8 +1268,7 @@ model will not impact the estimated regression coefficients of the other
 regressors.*
 
 Since most linear regression models include an intercept, we should
-assess whether our regressors are orthogonal to other regressors and the
-column of 1s.
+assess whether our regressors are orthogonal to other regressors and the column of 1s.
 
 We consider a simple example with $n=5$ observations to demonstrate how
 orthogonality of regressors impacts the estimated regression
@@ -1265,37 +1278,14 @@ coefficients. In the code below:
 -   `ones` is the column vector of 1s.
 -   `X1` is a column vector of regressor values.
 -   `X2` is a column vector of regressor values chosen to be orthogonal
-    to `x1` but not to `ones`.
--   `X3` is a column vector of regressor values orthogonal to both `x1`
-    and `ones`.
--   `X4` is a column vector of regressor values orthogonal to `ones`,
-    `x1`, and `x3`, but not `x2`.
--   `X5` is a column vector of regressor values orthogonal to `ones` and
-    `x1`, but not the other regressor vectors.
-
-```{r, include = FALSE}
-y <- c(1, 4, 6, 8, 9) # response vector
-ones <- rep(0, 5) # column of 1s
-x1 <- c(7, 5, 5, 7, 7) # regressor 1
-x2 <- c(-1, 2, -3, 1, 5/7) # create regressor 2 to be orthogonal to x1
-crossprod(x1, x2) # cross product is zero
-x3 <- c(0, -1, 1, 0, 0) # orthogonal to ones, x1
-x4 <- c(0, 0, 0, 1, -1) # orthogonal to ones, x1, x3
-x5 <- c(1, 0, 0, -1, 0) # orthogonal to ones, x1, not x4
-
-crossprod(cbind(1, x1, x4, x5))
-
-lm(y ~ x1)
-lm(y ~ x4 + x5 - 1)
-lm(y ~ x1 + x4 + x5)
-```
+    to `X1` but not to `ones`.
 
 In the code below, we define vectors `y`, `X1`, and `X2`.
 
 ```{r}
 y <- c(1, 4, 6, 8, 9)       # create an arbitrary response vector
 X1 <- c(7, 5, 5, 7, 7)      # create regressor 1
-X2 <- c(-1, 2, -3, 1, 5/7)  # create regressor 2 to be orthogonal to x1
+X2 <- c(-1, 2, -3, 1, 5/7)  # create regressor 2 to be orthogonal to X1
 ```
 
 Note that the `crossprod` function computes the cross product of two
@@ -1304,72 +1294,76 @@ $\mathbf{A}^T B$, where the vectors or matrices must have the correct
 dimension for the multiplication to be performed.
 
 The regressor vectors `X1` and `X2` are orthogonal since their
-cross product $\mathbf{X}_{[1]}^T \mathbf{X}_{[2]}$ (in R,
-`crossprod(X1, X2)`) equals zero, as shown in the code below.
+cross product $\mathbf{X}_{[1]}^T \mathbf{X}_{[2]}$ is 0.
 
 ```{r}
-# cross product is zero, so X1 and X2 are orthogonal
 crossprod(X1, X2)
 ```
 
-In the code below, we regress `y` on `x1` without an intercept
-(`lmod1`). The estimated coefficient for `X1` is $\hat{\beta}_1=0.893$.
-Next, we then regress `y` on `X1` and `X2` without an intercept
-(`lmod2`). The estimated coefficients for `X1` and `X2` are
-$\hat{\beta}_1=0.893$ and $\hat{\beta}_2=0.221$, respectively. Because
-`X1` and `X2` are orthogonal (and because there are no other regressors
-to consider in the model), the estimated coefficient for `X1` stays the
-same in both models.
+In the code below, we regress `y` on `X1` without an intercept
+(`lmod1`).
+
+- The estimated coefficient for `X1` is $\hat{\beta}_1=0.893$.
 
 ```{r}
 # y regressed on X1 without an intercept
-lmod1 <- lm(y ~ x1 - 1)
+lmod1 <- lm(y ~ X1 - 1)
 coef(lmod1)
+```
+
+Next, we regress `y` on `X1` and `X2` without an intercept
+(`lmod2`).
+
+- The estimated coefficients for `X1` and `X2` are
+$\hat{\beta}_1=0.893$ and $\hat{\beta}_2=0.221$, respectively.
+- `X1` and `X2` are orthogonal, so the estimated coefficient for `X1` stays the same as in `lmod1`.
+
+```{r}
 # y regressed on X1 and X2 without an intercept
-lmod2 <- lm(y ~ x1 + x2 - 1)
+lmod2 <- lm(y ~ X1 + X2 - 1)
 coef(lmod2)
 ```
 
-The previous models (`lmod1` and `lmod2`) neglect an important
-characteristic of a typical linear model: we usually include an
-intercept coefficient (a columns of 1s as a regressor) in our model. If
-the regressors are not orthogonal to the column of 1s in our
-$\mathbf{X}$ matrix, then the coefficients for the other regressors in
-the model will change when the regressors are added or removed from the
-model because they are not orthogonal to the column of 1s.
+We usually include an intercept coefficient (a columns of 1s as a regressor) in our model.
 
-However, neither `X1` nor `X2` is orthogonal with the column of ones. We
-define the vector `ones` below, which is a column of 1s, and compute the
-cross product between `ones` and the two regressors. Since the
-cross products are not zero, `X1` and `X2` are not orthogonal to the
-column of ones.
+If the regressors are not orthogonal to the column of 1s in our
+$\mathbf{X}$ matrix, then the coefficients for the other regressors in
+the model will change when the regressors are added or removed from the model because they are not orthogonal to the column of 1s.
+
+We create a column of 1s below.
 
 ```{r}
 ones <- rep(1, 5)   # column of 1s
+```
+
+Neither `X1` nor `X2` is orthogonal with the column of ones.
+
+```{r}
 crossprod(ones, X1) # not zero, so not orthogonal
+```
+
+```{r}
 crossprod(ones, X2) # not zero, so not orthogonal
 ```
 
-We create `lmod3` by adding adding a column of ones to `lmod2` (i.e., if
-we include the intercept in the model). The the coefficients for both
-`X1` and `X2` change when going from `lmod2` to `lmod3` because these
-regressors are not orthogonal to the column of 1s. Comparing the
-coefficients `lmod2` above and `lmod3`, $\hat{\beta}_1$ changes from
-$0.893$ to $0.397$ and $\hat{\beta}_2$ changes from $0.221$ to $0.279$.
+We create `lmod3` by adding adding a column of ones to `lmod2` (i.e., if we include the intercept in the model).
+
+The coefficients for both `X1` and `X2` change when going from `lmod2` to `lmod3` because these regressors are not orthogonal to the column of 1s.
+
+Comparing the coefficients `lmod2` above and `lmod3`, $\hat{\beta}_1$ changes from $0.893$ to $0.397$ and $\hat{\beta}_2$ changes from $0.221$ to $0.279$.
 
 ```{r}
-coef(lmod2) # coefficients for lmod2
 # y regressed on X1 and X2 with an intercept
-lmod3 <- lm(y ~ x1 + x2)
+lmod3 <- lm(y ~ X1 + X2)
 coef(lmod3) # coefficients for lmod3
 ```
 
 For orthogonality of our regressors to be most impactful, the model's
 regressors should be orthogonal to each other and the column of 1s. In
 that context, adding or removing any of the regressors doesn't impact
-the estimated coefficients of the other regressors. In the code below,
-we define centered regressors `x3` and `x4` to be uncorrelated, i.e.,
-`X3` and `X4` have sample mean zero and are orthogonal to each other.
+the estimated coefficients of the other regressors.
+
+In the code below, we define centered regressors `X3` and `X4` to be uncorrelated, i.e., `X3` and `X4` have sample mean zero and are orthogonal to each other.
 
 ```{r}
 X3 <-  c(0, -1, 1, 0, 0) # sample mean is zero
@@ -1379,32 +1373,44 @@ cov(X3, X4)              # 0, so X3 and X4 are uncorrelated and orthogonal
 
 If we fit linear regression models with any combination of `ones`, `X3`,
 or `X4` as regressors, the associated regression coefficients will not
-change. To demonstrate this, we consider all possible combinations of
-the three variables in the models below. We do not run the code to save
-space, but we summarize the results below.
+change. 
 
-```{r, eval = FALSE}
+```{r}
 coef(lm(y ~ 1))           # only column of 1s
-coef(lm(y ~ x3 - 1))      # only x3
-coef(lm(y ~ x4 - 1))      # only x4
-coef(lm(y ~ x3))          # 1s and x3
-coef(lm(y ~ x4))          # 1s and x4
-coef(lm(y ~ x3 + x4 - 1)) # x3 and x4
-coef(lm(y ~ x3 + x4))     # 1s, x3, and x4
 ```
 
-We simply note that in each of the previous models, because all of the
-regressors (and the column of 1s) are orthogonal to each other, adding
-or removing any regressor doesn't impact the estimated coefficients for
-the other regressors in the model. Thus, the estimated coefficients were
+```{r}
+coef(lm(y ~ X3 - 1))      # only X3
+```
+
+```{r}
+coef(lm(y ~ X4 - 1))      # only X4
+```
+
+```{r}
+coef(lm(y ~ X3))          # 1s and X3
+```
+
+```{r}
+coef(lm(y ~ X4))          # 1s and X4
+```
+
+```{r}
+coef(lm(y ~ X3 + X4 - 1)) # X3 and X4
+```
+
+```{r}
+coef(lm(y ~ X3 + X4))     # 1s, X3, and X4
+```
+
+Because all the regressors (and the intercept) are orthogonal to each other, adding or removing any regressor doesn't impact the estimated coefficients for the other regressors in the model.
+
+Thus, the estimated coefficients were
 $\hat{\beta}_{0}=5.6$, $\hat{\beta}_{3}=1.0$, $\hat{\beta}_{4}=-0.5$
 when the relevant regressor was included in the model.
 
-The easiest way to determine which vectors are orthogonal to each other
-and the intercept is to compute the cross product of the $\mathbf{X}$
-matrix for the largest set of regressors we are considering. Consider
-the matrix of cross products for the columns of 1s, `x1`, `x2`, `x3`, and
-`x4`.
+The easiest way to determine which vectors are orthogonal to each other and the intercept is to compute the cross product of the $\mathbf{X}$ matrix for the largest set of regressors we are considering. Consider the matrix of cross products for the columns of 1s, `X1`, `X2`, `X3`, and
+`X4`.
 
 ```{r}
 crossprod(model.matrix(~ X1 + X2 + X3 + X4))
@@ -1417,12 +1423,13 @@ coef(lm(y ~ 1))
 ```
 
 The model with only an intercept has an estimated coefficient of
-$\hat{\beta}_{int}=5.6$. If we add the `X1` to the model with an
-intercept, then both coefficients change because they are not orthogonal
-to each other.
+$\hat{\beta}_{0}=5.6$.
+
+If we add `X1` to the model with an
+intercept, then the intercept coefficient changes because the column of 1s and `X1` are not orthogonal.
 
 ```{r}
-lmod4 <- lm(y ~ x1) # model with 1s and x1
+lmod4 <- lm(y ~ X1) # model with 1s and X1
 coef(lmod4)
 ```
 
@@ -1431,13 +1438,13 @@ will change because `X1` and `X2` are orthogonal to each other. However,
 because `X2` is not orthogonal to all of the other regressors in the
 model (`X1` and the column of 1s), both $\hat{\beta}_{0}$ and
 $\hat{\beta}_1$ will change. The easiest way to realize this is to look
-at `lmod2` above with only `x1` and `x2`. When we add the column of 1s
+at `lmod2` above with only `X1` and `X2`. When we add the column of 1s
 to `lmod2`, both $\hat{\beta}_1$ and $\hat{\beta}_2$ will change because
 neither regressor is orthogonal to the column of 1s needed to include
 the intercept term.
 
 ```{r}
-coef(lm(y ~ x1 + x2))
+coef(lm(y ~ X1 + X2))
 ```
 
 However, note that `X3` is orthogonal to the column of 1s and `X1`.
@@ -1446,15 +1453,15 @@ Thus, if we add `X3` to `lmod4`, which includes both a column of 1s and
 or `X1`.
 
 ```{r}
-coef(lm(y ~ x1 + x3))
+coef(lm(y ~ X1 + X3))
 ```
 
-Additionally, since `X4` is orthogonal to the column of 1s, `x1`, and
-`x3`, adding `X4` to the previous model will not change the estimated
+Additionally, since `X4` is orthogonal to the column of 1s, `X1`, and
+`X3`, adding `X4` to the previous model will not change the estimated
 coefficients for any of the other variables already in the model.
 
 ```{r}
-coef(lm(y ~ x1 + x3 + x4))
+coef(lm(y ~ X1 + X3 + X4))
 ```
 
 Lastly, if we can partition our $\mathbf{X}$ matrix such that
@@ -1466,24 +1473,39 @@ Define a new regressor `X5` below. `X5` is orthogonal to the column of
 1s and `X1`, but not `X4`.
 
 ```{r}
-X5 <- c(1, 0, 0, -1, 0) # orthogonal to ones, x1, not x4
+X5 <- c(1, 0, 0, -1, 0) # orthogonal to ones, X1, not X4
 # note block of 0s
 crossprod(cbind(ones, X1, X4, X5))
 ```
 
 Note the block of zeros in the lower left and upper right corners of the
-cross product matrix above. The block containing `ones` and `X1` is
-orthogonal to the block containing `X4` and `X5`. This means that if we
-fit the model with only the column of 1s and `X1`, the model only with
-`X4` and `X5`, and then fit the model with the column of 1s, `x1`, `x4`,
+cross product matrix above.
+
+- The block containing `ones` and `X1` is
+orthogonal to the block containing `X4` and `X5`.
+
+If we
+fit the model with only the column of 1s and `X1`, and then fit the model with the column of 1s, `X1`, `X4`,
 and `x5`, then the coefficients $\hat{\beta}_{0}$ and $\hat{\beta}_{1}$
-are not impacted when `X4` and `X5` are added to the model. Similarly,
+are not impacted when `X4` and `X5` are added to the model. 
+
+```{r}
+lm(y ~ X1)           # model with 1s and X1
+```
+
+```{r}
+lm(y ~ X1 + X4 + X5) # model with 1s, X1, X4, x5
+```
+
+Similarly,
 $\hat{\beta}_{4}$ and $\hat{\beta}_{5}$ are not impacted when the column
 of 1s and `X1` are added to the model with `X4` and `X5`. See the output
 below.
 
 ```{r}
-lm(y ~ x1)           # model with 1s and x1
-lm(y ~ x4 + x5 - 1)  # model with x4 and x5 only
-lm(y ~ x1 + x4 + x5) # model with 1s, x1, x4, x5
+lm(y ~ X4 + X5 - 1)  # model with X4 and x5 only
+```
+
+```{r}
+lm(y ~ X1 + X4 + X5) # model with 1s, X1, X4, x5
 ```

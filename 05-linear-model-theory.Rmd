@@ -30,7 +30,7 @@ and
 \]
 In matrix notation, this is stated as
 \[
-\mathrm{var}(\mathbf{y} \mid {\mathbf{X}})=\sigma^2\mathbf{I}_{n\times n}.
+\mathrm{var}(\boldsymbol{\epsilon} \mid {\mathbf{X}})=\sigma^2\mathbf{I}_{n\times n}.
 \]
 
 Additionally, we assume that the errors are identically distributed. Formally, this may be written as
@@ -80,7 +80,7 @@ E(\mathbf{y}\mid \mathbf{X})=\mathbf{X}\boldsymbol{\beta}. (\#eq:mean-y)
 E(\mathbf{y}|\mathbf{X})&=E(\mathbf{X}\boldsymbol{\beta}+\boldsymbol\epsilon|\mathbf{X})&\tiny\text{(by definition)}\\
 &=E(\mathbf{X}\boldsymbol{\beta}|\mathbf{X})+E(\boldsymbol\epsilon|\mathbf{X})&\tiny\text{(linearity of expectation)}\\
 &=E(\mathbf{X}\boldsymbol{\beta}|\mathbf{X})+\mathbf{0}_{n\times 1}&\tiny\text{(by assumption about }\epsilon)\\
-&=\mathbf{X}\boldsymbol{\beta}&\tiny\text{(since }\mathbf{X}\text{ and } \boldsymbol{\beta} \text{ are constant})
+&=\mathbf{X}\boldsymbol{\beta}.&\tiny\text{(since }\mathbf{X}\text{ and } \boldsymbol{\beta} \text{ are constant})
 \end{aligned}
 \]
 :::
@@ -191,26 +191,26 @@ For the linear model given in Equation \@ref(eq:linear-model-def-matrix) and und
 :::{.proof}
 Since $\hat{\boldsymbol\beta}=(\mathbf{X}^T\mathbf{X})^{-1}\mathbf{X}^T\mathbf{y}$ is a linear combination of $\mathbf{y}$, and $\mathbf{y}$ is a multivariate normal random vector, then $\hat{\boldsymbol\beta}$ is also a multivariate normal random vector. Using the previous two results for the expectation and variance, 
 
-\[
+$$
 \hat{\boldsymbol\beta}|\mathbf{X} \sim N(\boldsymbol\beta,\sigma^2(\mathbf{X}^T\mathbf{X})^{-1}).
-\]
+$$
 
 :::
 
 ## Results for the residuals
 
 The residual vector can be expressed in various equivalent ways, such as
-\[
+$$
 \begin{aligned}
 \hat{\boldsymbol{\epsilon}} &= \mathbf{y}-\hat{\mathbf{y}} \\
 &= \mathbf{y}-\mathbf{X}\hat{\boldsymbol{\beta}}.
 \end{aligned}
-\]
+$$
 
 The **hat** matrix is denoted as
-\[
+$$
 \mathbf{H}=\mathbf{X}(\mathbf{X}^T\mathbf{X})^{-1}\mathbf{X}^T.(\#eq:hat-matrix-def)
-\]
+$$
 
 Thus, using the substitution $\hat{\boldsymbol{\beta}}=(\mathbf{X}^T\mathbf{X})^{-1}\mathbf{X}^T\mathbf{y}$ and the definition for $\mathbf{H}$ in Equation \@ref(eq:hat-matrix-def), we see that
 $$
@@ -231,7 +231,7 @@ The hat matrix $\mathbf{H}$ is symmetric and idempotent.
 :::{.proof}
 
 Notice that,
-\[
+$$
 \begin{aligned}
 \mathbf{H}^T&=(\mathbf{X}(\mathbf{X}^T\mathbf{X})^{-1}\mathbf{X}^T)^T&\tiny\text{(definition of }\mathbf{H})\\
 &=(\mathbf{X}^T)^T((\mathbf{X}^T\mathbf{X})^{-1})^T\mathbf{X}^T&\tiny\text{(apply transpose to matrix product)}\\
@@ -240,11 +240,12 @@ Notice that,
 &=\mathbf{X}(\mathbf{X}^T\mathbf{X})^{-1}\mathbf{X}^T&\tiny\text{(simplification)}\\
 &=\mathbf{H}.
 \end{aligned}
-\]
+$$
 Thus, $\mathbf{H}$ is symmetric.
 
 Additionally,
-\[
+
+$$
 \begin{aligned}
 \mathbf{H}\mathbf{H}&=(\mathbf{X}(\mathbf{X}^T\mathbf{X})^{-1}\mathbf{X}^T)(\mathbf{X}(\mathbf{X}^T\mathbf{X})^{-1}\mathbf{X}^T)&\tiny\text{(definition of }\mathbf{H}\text{)}\\
 &=\mathbf{X}(\mathbf{X}^T\mathbf{X})^{-1}(\mathbf{X}^T\mathbf{X})(\mathbf{X}^T\mathbf{X})^{-1}\mathbf{X}^t&\tiny\text{(associative property of matrices)}\\
@@ -252,7 +253,7 @@ Additionally,
 &=\mathbf{X}(\mathbf{X}^T\mathbf{X})^{-1}\mathbf{X}^T&\tiny\text{(simplification)}\\
 &=\mathbf{H}.
 \end{aligned}
-\]
+$$
 
 Therefore, $\mathbf{H}$ is idempotent.
 
@@ -264,35 +265,40 @@ The matrix $\mathbf{I} - \mathbf{H}$ is symmetric and idempotent.
 
 :::{.proof}
 First, notice that,
-\[
+
+$$
 \begin{aligned}
 (\mathbf{I}-\mathbf{H})^T &= \mathbf{I}^T-\mathbf{H}^T&\tiny\text{(transpose to matrix sum)}\\
 &= \mathbf{I}-\mathbf{H}.&\tiny\text{(since }\mathbf{I}\text{ and }\mathbf{H}\text{ are symmetric)}
 \end{aligned}
-\]
+$$
+
 Thus, $\mathbf{I}-\mathbf{H}$ is symmetric.
 
 Next,
-\[
+
+$$
 \begin{aligned}
 (\mathbf{I}-\mathbf{H})(\mathbf{I}-\mathbf{H})&=\mathbf{I}-2\mathbf{H}+\mathbf{H}\mathbf{H}&\tiny\text{(transpose to matrix sum)}\\
 &=\mathbf{I}-2\mathbf{H}+\mathbf{H}&\tiny\text{(since H is idempotent)}\\
 &=\mathbf{I}-\mathbf{H}.&\tiny\text{(simplification)}
 \end{aligned}
-\]
+$$
+
 Thus, $\mathbf{I}-\mathbf{H}$ is idempotent.
 :::
 
 ::: {.theorem #mean-residuals}
 For the linear model given in Equation \@ref(eq:linear-model-def-matrix) and under the assumptions summarized in Equation \@ref(eq:error-assumptions-matrix),
-\[
+
+$$
 E(\hat{\boldsymbol{\epsilon}}\mid \mathbf{X})=\mathbf{0}_{n\times 1}.(\#eq:mean-residuals)
-\]
+$$
 :::
 
 :::{.proof}
 
-\[
+$$
 \begin{aligned}
 E(\hat{\boldsymbol{\epsilon}}|\mathbf{X})&=E((\mathbf{I}-\mathbf{H})\mathbf{y}|\mathbf{X})\\
 &=(\mathbf{I}-\mathbf{H})E(\mathbf{y}|\mathbf{X})&\tiny(\mathbf{I}-\mathbf{H}\text{ is non-random)}\\
@@ -303,7 +309,7 @@ E(\hat{\boldsymbol{\epsilon}}|\mathbf{X})&=E((\mathbf{I}-\mathbf{H})\mathbf{y}|\
 &=\mathbf{X}\boldsymbol\beta-\mathbf{X}\boldsymbol\beta&\tiny\text{(simplification)}\\
 &=\mathbf{0}_{n\times1}.&\tiny\text{(simplification)}
 \end{aligned}
-\]
+$$
 
 :::
 
@@ -311,14 +317,15 @@ $\vphantom{blank}$
 
 ::: {.theorem #var-residuals}
 For the linear model given in Equation \@ref(eq:linear-model-def-matrix) and under the assumptions summarized in Equation \@ref(eq:error-assumptions-matrix),
-\[
+
+$$
 \mathrm{var}(\hat{\boldsymbol{\epsilon}}\mid \mathbf{X})=\sigma^2 (\mathbf{I} - \mathbf{H}).(\#eq:var-residuals)
-\]
+$$
 :::
 
 :::{.proof}
 
-\[
+$$
 \begin{aligned}
 \text{var}(\hat{\boldsymbol{\epsilon}}|\mathbf{X})&=\text{var}((\mathbf{I}-\mathbf{H})\mathbf{y}|\mathbf{X})\\
 &=(\mathbf{I}-\mathbf{H})\text{var}(\mathbf{y}|\mathbf{X})(\mathbf{I}-\mathbf{H})^T&\tiny(\mathbf{I}-\mathbf{H}\text{ is nonrandom)}\\
@@ -326,15 +333,16 @@ For the linear model given in Equation \@ref(eq:linear-model-def-matrix) and und
 &=\sigma^2(\mathbf{I}-\mathbf{H})(\mathbf{I}-\mathbf{H})&\tiny(\mathbf{I}-\mathbf{H}\text{ is symmetric)}\\
 &=\sigma^2(\mathbf{I}-\mathbf{H}).&\tiny(\mathbf{I}-\mathbf{H}\text{ is idempotent)}
 \end{aligned}
-\]
+$$
 
 :::
 
 ::: {.theorem #dist-properties-residuals}
 For the linear model given in Equation \@ref(eq:linear-model-def-matrix) and under the assumptions summarized in Equation \@ref(eq:error-assumptions-matrix),
-\[
+
+$$
 \hat{\boldsymbol{\epsilon}}\mid \mathbf{X}\sim \mathsf{N}(\mathbf{0}_{n\times 1}, \sigma^2 (\mathbf{I} - \mathbf{H})).(\#eq:dist-properties-residuals)
-\]
+$$
 
 :::
 
@@ -346,21 +354,23 @@ $\vphantom{blank}$
 
 :::{.theorem}
 The RSS can be represented as,
-\[
+
+$$
 RSS=\mathbf{y}^T(\mathbf{I}-\mathbf{H})\mathbf{y}.
-\]
+$$
 :::
 
 :::{.proof}
-\[
+
+$$
 \begin{aligned}
 RSS &= \hat{\boldsymbol{\epsilon}}^T\hat{\boldsymbol{\epsilon}}&\tiny\text{(matrix representation of RSS)}\\
 &=((\mathbf{I}-\mathbf{H})\mathbf{y})^T(\mathbf{I}-\mathbf{H})\mathbf{y}&\tiny\text{(previous result)}\\
 &=\mathbf{y}^T(\mathbf{I}-\mathbf{H})^T(\mathbf{I}-\mathbf{H})\mathbf{y}&\tiny\text{(apply transpose)}\\
 &=\mathbf{y}^T(\mathbf{I}-\mathbf{H})(\mathbf{I}-\mathbf{H})\mathbf{y}&\tiny(\mathbf{I}-\mathbf{H} \text{ is symmetric)}\\
-&=\mathbf{y}^T(\mathbf{I}-\mathbf{H})\mathbf{y}&\tiny(\mathbf{I}-\mathbf{H} \text{ is idempotent)}\\
+&=\mathbf{y}^T(\mathbf{I}-\mathbf{H})\mathbf{y}.&\tiny(\mathbf{I}-\mathbf{H} \text{ is idempotent)}\\
 \end{aligned}
-\]
+$$
 :::
 
 ## The Gauss-Markov Theorem
