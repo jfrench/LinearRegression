@@ -236,7 +236,7 @@ $\vphantom{blank}$
 The OLS estimator for $\boldsymbol{\beta}$ is
 
 $$
-\hat{\boldsymbol{\beta}}=(\mathbf{X}^T\mathbf{X})^T\mathbf{X}^T\mathbf{y}.
+\hat{\boldsymbol{\beta}}=(\mathbf{X}^T\mathbf{X})^{-1}\mathbf{X}^T\mathbf{y}.
 $$
 
 This is an unbiased estimator for $\boldsymbol{\beta}$, i.e.,
@@ -275,7 +275,7 @@ $$
 \begin{aligned}
 E(\hat{\boldsymbol{\beta}}|\mathbf{X})&=E((\mathbf{X}^T\mathbf{X})^{-1}\mathbf{X}^T\mathbf{y}|\mathbf{X})&\tiny\text{(substitute OLS formula)}\\
 &=(\mathbf{X}^T\mathbf{X})^{-1}\mathbf{X}^TE(\mathbf{y}|\mathbf{X})&\tiny(\text{factor non-random terms)}\\
-&=(\mathbf{X}^T\mathbf{X})^{-1}\mathbf{X}^T\mathbf{X}&\tiny\text{(above result)}\\
+&=(\mathbf{X}^T\mathbf{X})^{-1}\mathbf{X}^T\mathbf{X}\boldsymbol{\beta}&\tiny\text{(previous result)}\\
 &=\mathbf{I}_{p\times p}\boldsymbol\beta&\tiny\text{(property of inverse matrices)}\\
 &=\boldsymbol\beta.
 \end{aligned}
