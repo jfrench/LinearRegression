@@ -60,7 +60,7 @@ of freedom. The $t$ distribution is a symmetric bell-shaped distribution
 like the normal distribution but has a larger standard deviation. As the
 degrees of freedom of a $t$ random variable increases it behaves more
 and more similarly to a random variable with a standard normal
-distribution (a $\mathcal{N}(0,1)$ distribution). Figure \@ref(fig:tquantile) displays the density of a $t$ distribution with 10 degrees of freedom while also indicating the 0.95 quantile of that distribution. Additional information about the $t$ distribution is available on Wikipedia at 
+distribution (a $\mathsf{N}(0,1)$ distribution). Figure \@ref(fig:tquantile) displays the density of a $t$ distribution with 10 degrees of freedom while also indicating the 0.95 quantile of that distribution. Additional information about the $t$ distribution is available on Wikipedia at 
 [https://en.wikipedia.org/wiki/Student%27s_t-distribution](https://en.wikipedia.org/wiki/Student%27s_t-distribution).
 
 ```{r tquantile, fig.cap = "The solid line shows the density of a $t$ random variable with 10 degrees of freedom. The dashed vertical line indicates $t^{0.05}_{10}$, the 0.95 quantile of a $t$ distribution with 10 degrees of freedom. The area to the left of the line is 0.95 while the area to the right is 0.05.", echo = FALSE}
@@ -81,7 +81,7 @@ the square of a $t$ random variable with $\nu$ degrees of freedom is
 equivalent to an $F$ random variable with $1$ numerator degree of
 freedom and $\nu$ denominator degrees of freedom.
 
-## Properties of the OLS estimator {#properties-betahat}
+## Assumptions and properties of the OLS estimator {#properties-betahat}
 
 We continue by reviewing some of the properties of
 $\hat{\boldsymbol{\beta}}$, the OLS estimator of the regression
@@ -96,7 +96,7 @@ We also assume that the model in Equation \@ref(eq:model-def-inference)
 is correct (i.e., we have correctly specified the true model that
 generated the data) and that
 $$
-\boldsymbol{\epsilon}\mid \mathbf{X}\sim \mathcal{N}(\mathbf{0}_{n\times 1},\sigma^2 \mathbf{I}_{n\times n}).  (\#eq:error-assumption-inference)
+\boldsymbol{\epsilon}\mid \mathbf{X}\sim \mathsf{N}(\mathbf{0}_{n\times 1},\sigma^2 \mathbf{I}_{n\times n}).  (\#eq:error-assumption-inference)
 $$
 This assumption applies to all errors, so we believe that all errors, observed and future, will have mean 0, variance $\sigma^2$, will be uncorrelated, and have a normal distribution.
 
@@ -104,10 +104,10 @@ Under these assumptions, we showed in Chapter \@ref(linear-model-theory)
 that
 
 $$
-\mathbf{y}\mid \mathbf{X}\sim \mathcal{N}(\mathbf{X}\boldsymbol{\beta}, \sigma^2 \mathbf{I}_{n\times n}).
+\mathbf{y}\mid \mathbf{X}\sim \mathsf{N}(\mathbf{X}\boldsymbol{\beta}, \sigma^2 \mathbf{I}_{n\times n}).
 $$
 and
-$$\hat{\boldsymbol{\beta}}\mid \mathbf{X} \sim \mathcal{N}(\boldsymbol{\beta}, \sigma^2(\mathbf{X}^T\mathbf{X})^{-1}).
+$$\hat{\boldsymbol{\beta}}\mid \mathbf{X} \sim \mathsf{N}(\boldsymbol{\beta}, \sigma^2(\mathbf{X}^T\mathbf{X})^{-1}).
 (\#eq:prop-betahat)
 $$
 
@@ -123,7 +123,7 @@ $$
 $$
 
 where
-$\hat{\mathrm{se}}(\hat{\beta}_j)=\hat{\sigma}(\mathbf{X}^T\mathbf{X})^{-1}_{j+1,j+1}$
+$\hat{\mathrm{se}}(\hat{\beta}_j)=\hat{\sigma}\sqrt{(\mathbf{X}^T\mathbf{X})^{-1}_{j+1,j+1}}$
 is the estimated standard error of $\hat{\beta}_j$. Recall that
 estimated standard error is the estimated standard deviation of the
 sampling distribution of $\hat{\beta}_j$. Also, recall that the notation
@@ -492,7 +492,7 @@ predict(lmodp, newdata = newpenguins,
         interval = "prediction", level = 0.99)
 ```
 
-An new Adelie penguin with a body mass of 3700.662 g is predicted to have a flipper length of 38.79 mm. We are 99% confident that a new Adelie penguins with a body mass of 3700.662 g will have a flipper length between 32.54 mm and 45.04 mm. Similarly, the 99% prediction interval for the flipper length of a new Chinstrap penguin with a body mass of 3733.09 g is [48.56, 55.11]. The flipper length of a new Gentoo penguin with a body mass of 5076.02 g is between 41.25 and  53.75 with a confidence level of 0.99.
+A new Adelie penguin with a body mass of 3700.662 g is predicted to have a flipper length of 38.79 mm. We are 99% confident that a new Adelie penguins with a body mass of 3700.662 g will have a flipper length between 32.54 mm and 45.04 mm. Similarly, the 99% prediction interval for the flipper length of a new Chinstrap penguin with a body mass of 3733.09 g is [48.56, 55.11]. The flipper length of a new Gentoo penguin with a body mass of 5076.02 g is between 41.25 and  53.75 with a confidence level of 0.99.
 
 Since we are making 3 predictions, our inferences suffer from the multiple comparisons problem. To control the family-wise confidence level of our intervals, we can use the Bonferroni correction with $k=3$. The Working-Hotelling correction discussed in Section \@ref(adjusted-cis-betas) does not apply to new responses. However, a similar adjustment proposed by Scheff&#233; does apply [@alsm2005]. The prediction interval multiplier $t^{\alpha/2}_{n-p}$ used for a single prediction interval with confidence level $1-\alpha$ is replaced by 
 $\sqrt{k F^{1-\alpha}_{k,n-p}}$ to control the family-wise confidence level at $1-\alpha$ for a family of $k$ prediction intervals. Recall that the Working-Hotelling multiplier was $\sqrt{p F^{1-\alpha}_{p,n-p}}$. Thus, the Scheff&#233; multiplier scales with the number of predictions being made while the Working-Hotelling multiplier scales with the number of estimated regression coefficients in the fitted model.
@@ -665,7 +665,7 @@ The degrees of freedom $n-p$ is referred to as the residual degrees of freedom a
 df.residual(mlmod)
 ```
 
-To construct a 95% confidence interval for our coefficients, we need to determine the $0.975$ quantile of a $t$ random variable with 339 degrees of freedom. This can be found using the `qt` function, as is done in the code below. We assign this value the name `mult`. Notice that value is a bit above 1.96, which is the value often seen in introductory statistics courses for confidence intervals based on the standard normal distribution ($\mathcal{N}(0,1)$ distribution).
+To construct a 95% confidence interval for our coefficients, we need to determine the $0.975$ quantile of a $t$ random variable with 339 degrees of freedom. This can be found using the `qt` function, as is done in the code below. We assign this value the name `mult`. Notice that value is a bit above 1.96, which is the value often seen in introductory statistics courses for confidence intervals based on the standard normal distribution ($\mathsf{N}(0,1)$ distribution).
 
 ```{r}
 (mult <- qt(0.975, df = 339))

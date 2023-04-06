@@ -26,7 +26,7 @@ if(!require(palmerpenguins, quietly = TRUE)) {
   library(palmerpenguins)
 }
 if(!require(api2lm, quietly = TRUE)) {
-  install.packages("apli2m", repos = "https://cran.rstudio.com/")
+  install.packages("api2lm", repos = "https://cran.rstudio.com/")
   library(api2lm)
 }
 ```
@@ -85,7 +85,7 @@ denominator degrees of freedom.
 - In fact, $[t_{\nu}]^2=F_{1,\nu}$, i.e.,
 the square of a $t$ random variable with $\nu$ degrees of freedom is equivalent to an $F$ random variable with $1$ numerator degree of freedom and $\nu$ denominator degrees of freedom.
 
-# Properties of the OLS estimator
+# Assumptions and properties of the OLS estimator
 ---
 
 We assume:
@@ -96,7 +96,7 @@ We assume:
 
 This assumption applies to all errors, so we believe that all errors, observed and future, will have mean 0, variance $\sigma^2$, will be uncorrelated with other observations, and have a normal distribution.
 
-Under these assumptions, we showed before that 
+Under these assumptions, we have already shown that 
 
 - $\mathbf{y}\mid \mathbf{X}\sim \mathsf{N}(\mathbf{X}\boldsymbol{\beta}, \sigma^2 \mathbf{I}_{n\times n})$.
 - $\hat{\boldsymbol{\beta}}\mid \mathbf{X} \sim \mathsf{N}(\boldsymbol{\beta}, \sigma^2(\mathbf{X}^T\mathbf{X})^{-1})$.
@@ -117,7 +117,7 @@ $$
 where the estimated standard error of $\hat{\beta}_j$ is
 
 $$
-\hat{\mathrm{se}}(\hat{\beta}_j)=\hat{\sigma}(\mathbf{X}^T\mathbf{X})^{-1}_{j+1,j+1}.
+\hat{\mathrm{se}}(\hat{\beta}_j)=\hat{\sigma}\sqrt{(\mathbf{X}^T\mathbf{X})^{-1}_{j+1,j+1}}.
 $$
 
 Recall that:
@@ -193,9 +193,12 @@ If we wanted to get the 90% confidence interval for the
 `flipper_length_mm` coefficient by itself, we could use either of the commands shown below.
 
 ```{r}
-# two styles for determining the CI for a single parameter (at a 90% level)
 confint(mlmod, parm = 3, level = 0.90)
-confint(mlmod, parm = "flipper_length_mm", level = 0.90)
+```
+
+```{r}
+confint(mlmod, parm = "flipper_length_mm",
+        level = 0.90)
 ```
 
 # The multiple comparisons problem
@@ -327,7 +330,7 @@ It is common to make two types of predictions in a regression context:
 - Prediction of a mean response.
 - Prediction of a new response.
 
-In either context, we want to make predictions with respect to a specific combination of regressor values, which we denote $\mathbf{x}_0$.
+In either context, we want to make predictions with respect to a specific combination of regressor values, which we denote $\mathbf{x}_0=[1,x_{0,1},\ldots,x_{0,p-1}]$.
 
 The mean response for a specific combination of regressors is denoted $E(Y\mid \mathbb{X}=\mathbf{x}_0)$.
 
@@ -347,7 +350,7 @@ $Y(\mathbf{x}_0)$ represents the actual response we will will observe for a new 
 Suppose we want to rent a new apartment or buy a new house. If we look through the available listings, we will likely filter our search results by certain characteristics. We might limit our search to dwellings with 3 bedrooms, 2 bathrooms, that are within a certain distance of public transportation, and have a certain amount of square footage.
 
 - If we averaged the monthly rent or asking price of all the dwellings matching our specifications, then that would be an approximation of the mean response (we would need all the possible dwellings matching those considerations to get the true average).
-- This average would give us an idea of the "typical" price of dwellings with those characteristics.
+-     This average would give us an idea of the "typical" price of dwellings with those characteristics.
 - On the other hand, we likely want to know the price of the dwelling we actually end up in. This is the "new response" we want to predict.
 
 It is common to distinguish the two scenarios by using the terminology:
@@ -361,10 +364,10 @@ Consider a typical linear regression model with $p$ regression
 coefficients given by:
 
 $$
-E(Y|\mathbb{X})=\beta_0+\beta_1 X_1 + \ldots \beta_{p-1} X_{p-1}
+E(Y|\mathbb{X})=\beta_0+\beta_1 X_1 + \ldots \beta_{p-1} X_{p-1}.
 $$
 
-We want to estimate the mean response for a specific combination of regressor values. The mean response for that combination of regressors is obtained via the equivalent expressions
+To estimate the mean response for a specific combination of regressor values, $\mathbf{x}_0=[1,x_{0,1},\ldots,x_{0,p-1}]$, we can use either of the following equations:
 
 $$
 \begin{aligned}
@@ -376,7 +379,7 @@ $$
 To simplify our notation, we drop the "$\mathbb{X}=$" in our discussion below, so
 $E(Y\mid \mathbb{X}=\mathbf{x}_0)\equiv E(Y\mid \mathbf{x}_0)$.
 
-What does $E(Y\mid \mathbf{x}_0)$ represent? It represents the average response we will observe if we somehow managed to observe infinitely many responses with $\mathbb{X}=\mathbf{x}_0$.
+$E(Y\mid \mathbf{x}_0)$ represents the average response we will observe if we somehow managed to observe infinitely many responses with $\mathbb{X}=\mathbf{x}_0$.
 
 The Gauss-Markov Theorem discussed before indicates that the best linear unbiased estimator of the mean response is given by the equation:
 
@@ -389,31 +392,34 @@ $$
 
 which replaces the unknown, true coefficients by their OLS estimates.
 
-We want to create a confidence interval for $E(Y\mid \mathbf{x}_0)$. If we divide the estimation error of the mean response, i.e., $E(Y\mid \mathbf{x}_0)-\hat{E}(Y\mid \mathbf{x}_0)$, by its estimated standard deviation, then we obtain a pivotal quantity. More specifically, we have:
+We want to create a confidence interval for $E(Y\mid \mathbf{x}_0)$.
+
+We can use the pivotal quantity 
 
 $$
-\frac{E(Y\mid \mathbf{x}_0)-\hat{E}(Y\mid \mathbf{x}_0)}{\sqrt{\hat{\mathrm{var}}\left(E(Y\mid \mathbf{x}_0)-\hat{E}(Y\mid \mathbf{x}_0)\right)}} = \frac{E(Y\mid \mathbf{x}_0)- \mathbf{x}_0 \hat{\boldsymbol{\beta}}}{ \hat{\mathrm{se}}(\mathbf{x}_0\hat{\boldsymbol{\beta}})}\sim t_{n-p}
+\frac{E(Y\mid \mathbf{x}_0)-\hat{E}(Y\mid \mathbf{x}_0)}{\sqrt{\hat{\mathrm{var}}\left(E(Y\mid \mathbf{x}_0)-\hat{E}(Y\mid \mathbf{x}_0)\right)}} = \frac{E(Y\mid \mathbf{x}_0)- \mathbf{x}_0 \hat{\boldsymbol{\beta}}}{ \hat{\mathrm{se}}(\mathbf{x}_0\hat{\boldsymbol{\beta}})}\sim t_{n-p}.
 $$
 
-with:
+The denominator is
 
 $$
-\hat{\mathrm{se}}(\mathbf{x}_0^T\hat{\boldsymbol{\beta}})=\hat{\sigma}\sqrt{\mathbf{x}_0^T (\mathbf{X}^T \mathbf{X})^{-1}\mathbf{x}_0}. (\#eq:sehat-est-mean)
+\hat{\mathrm{se}}(\mathbf{x}_0^T\hat{\boldsymbol{\beta}})=\hat{\sigma}\sqrt{\mathbf{x}_0^T (\mathbf{X}^T \mathbf{X})^{-1}\mathbf{x}_0}.
 $$
 
 A confidence interval for $E(Y\mid \mathbf{x}_0)$ with confidence
 level $1-\alpha$ is given by the expression:
 
 $$
-\mathbf{x}_0\hat{\boldsymbol{\beta}} \pm t^{\alpha/2}_{n-p} \hat{\mathrm{se}}(\mathbf{x}_0\hat{\boldsymbol{\beta}}). (\#eq:t-ci-mean-response)
+\mathbf{x}_0\hat{\boldsymbol{\beta}} \pm t^{\alpha/2}_{n-p} \hat{\mathrm{se}}(\mathbf{x}_0\hat{\boldsymbol{\beta}}).
 $$
 
-The `predict` function is a generic function used to make predictions
-based on fitted models. We can use this function to estimate the mean
-response for multiple combinations of predictor variables, compute the
-estimated standard error of each estimate, and obtain confidence
-intervals for the mean response. The primary arguments to the `lm`
-method for `predict` are:
+The `predict` method for an `lm` object can be used to:
+
+- Estimate the mean response for multiple combinations of predictor variables.
+- Compute the estimated standard error of each estimate.
+- Obtain confidence intervals for the mean response.
+
+The primary arguments to the `lm` method for `predict` are:
 
 -   `object`: A fitted model from the `lm` function.
 -   `newdata`: A data frame of predictor values. All predictors used in the formula used to fit `object` must be provided. Each row contains the predictor values for the mean response we want to estimate. If this is not provided, then the fitted values for each observation are returned.
@@ -431,14 +437,12 @@ method for `predict` are:
 Run `?predict.lm` in the Console for additional details about this
 function.
 
-We will estimate the mean response for the parallel lines model
-previously fit to the `penguins` data. We do this to emphasize the fact
-that the `predict` function asks you to specify the values of the
-*predictor* variables for each estimate you want to make, not the
-complete set of regressors.
+We will estimate the mean response for the parallel lines model previously fit to the `penguins` data.
 
-Recall we fit a parallel lines model to the `penguins` data that used both `body_mass_g` and `species`
-to explain the behavior of `bill_length_mm`. Letting $D_C$ denote the indicator variable for the `Chinstrap` level and $D_G$ denote the indicator variable for the `Gentoo` level, the fitted parallel lines model was:
+- This is to emphasize that the `predict` function asks you to specify the values of the
+*predictor* variables for each estimate you want to make, not the complete set of regressors.
+
+Recall we fit a parallel lines model to the `penguins` data that used both `body_mass_g` and `species` to explain the behavior of `bill_length_mm`. Letting $D_C$ denote the indicator variable for the `Chinstrap` level and $D_G$ denote the indicator variable for the `Gentoo` level, the fitted parallel lines model was:
 
 $$
 \begin{aligned}
@@ -456,7 +460,9 @@ lmodp <- lm(bill_length_mm ~ body_mass_g + species,
 coef(lmodp)
 ```
 
-Let's estimate the mean response for the "typical" `body_mass_g` of each `species`. We compute the mean `body_mass_g` of each `species` using the code below, assigning the resulting data frame the name `newpenguins`. We use the `group_by` and `summarize` functions from the **dplyr** package [@R-dplyr] to simplify this process.
+Let's estimate the mean response for the "typical" `body_mass_g` of each `species`.
+
+- We use the `group_by` and `summarize` functions from the **dplyr** package to simplify this process.
 
 ```{r}
 # mean body_mass_g of each species
@@ -466,22 +472,27 @@ newpenguins <- penguins |>
 newpenguins
 ```
 
-We now have a data frame with variables for the two predictors, `species` and `body_mass_g` , used to fit `lmodp`. Each row of `newpenguins` contains the mean `body_mass_g` for each level of `species` and is suitable for use in the `predict` function.
+In the code below, we:
 
-In the code below, we estimate the mean `flipper_length_mm` based on the fitted model in `lmodp` for the mean `body_mass_g` of each level of `species`. We also choose to compute the estimated standard errors of
+- Estimate the mean `flipper_length_mm` based on the fitted model in `lmodp` for the mean `body_mass_g` of each level of `species`.
+- Compute the estimated standard errors of
 each estimate by setting the `se.fit` argument to `TRUE`.
 
 ```{r}
-# estimate mean and standard error for 3 combinations of predictors
 predict(lmodp, newdata = newpenguins, se.fit = TRUE)
 ```
 
-An Adelie penguin with a body mass of 3700.662 g is estimated to have a mean flipper length of 38.79 mm with an estimated standard error of 0.196 mm. A Chinstrap penguin with a body mass of 3733.09 g is estimated to have a mean flipper length of 48.83 mm with an estimated standard error of 0.29 mm. A Gentoo penguin with a body mass of 5076.02 g is estimated to have a mean flipper length of 47.50 mm with an estimated standard error of 0.22 mm.
+An Adelie penguin with a body mass of 3700.662 g is estimated to have a mean flipper length of 38.79 mm with an estimated standard error of 0.196 mm.
+
+A Chinstrap penguin with a body mass of 3733.09 g is estimated to have a mean flipper length of 48.83 mm with an estimated standard error of 0.29 mm.
+
+A Gentoo penguin with a body mass of 5076.02 g is estimated to have a mean flipper length of 47.50 mm with an estimated standard error of 0.22 mm.
 
 To create each 98% confidence intervals for the mean response for each combination of predictors, we specify `level = 0.98` and `interval = "confidence"` in the `predict` function in the code below.
 
 ```{r}
-predict(lmodp, newdata = newpenguins, level = 0.98, interval = "confidence")
+predict(lmodp, newdata = newpenguins,
+        level = 0.98, interval = "confidence")
 ```
 
 The 98% confidence interval for the mean flipper length of an Adelie penguin with a body mass of 3700.662 g is [38.33, 39.25]. We are 98% confident that the mean flipper length of Adelie penguins with a body mass of 3700.662 is between 38.33 g and 39.25 g. Note: we are constructing a confidence interval for the mean flipper length of ALL
@@ -491,20 +502,36 @@ $$
 E(\mathtt{flipper\_length\_mm}\mid \mathtt{body\_mass\_g} = 3700.662, \mathtt{species} = \mathtt{Adelie}),
 $$
 
-which is an unknown characteristic of the population of all Adelie penguins. Similarly, the 98% confidence interval for the mean flipper length of Chinstrap penguins with a body mass of 3733.09 g is [48.15, 49.52]. Lastly, the mean flipper length of Gentoo penguins with a body mass of 5076.02 g is [46.99, 48.02].
+which is an unknown characteristic of the population of all Adelie penguins.
 
-We provide details about manually computing confidence intervals for the mean response in the Going Deeper section.
+Similarly, the 98% confidence interval for the mean flipper length of Chinstrap penguins with a body mass of 3733.09 g is [48.15, 49.52].
 
-We are once again faced with a multiple comparisons problem because we are making 3 inferences. To control the family-wise confidence level of our intervals, we can use the Bonferroni or Working-Hotelling corrections previously discussed. Both corrections are implemented in the `predict_adjust` function in the **api2lm** package, which is intended to work identically to the `predict` function, but produces intervals that adjust for multiple comparisons. The only additional argument is `method`, with choices `"none"` (no correction), `"bonferroni"` (Bonferroni adjustment), or `"wh"` (Working-Hotelling adjustment). We produce both types of adjusted intervals in the code below. The Bonferroni-adjusted confidence intervals are slightly narrower in this example.
+Lastly, the mean flipper length of Gentoo penguins with a body mass of 5076.02 g is [46.99, 48.02].
+
+We are once again faced with a multiple comparisons problem because we are making 3 inferences. To control the family-wise confidence level of our intervals, we can use the Bonferroni or Working-Hotelling corrections previously discussed. 
+
+Both corrections are implemented in the `predict_adjust` function in the **api2lm** package, which is intended to work identically to the `predict` function, but produces intervals that adjust for multiple comparisons.
+
+- The only additional argument is `method`, with choices `"none"` (no correction), `"bonferroni"` (Bonferroni adjustment), or `"wh"` (Working-Hotelling adjustment).
+
+We produce both types of adjusted intervals in the code below. 
+
+The Bonferroni-adjusted confidence intervals are slightly narrower in this example.
 
 ```{r}
-# bonferroni-adjusted confidence intervals for the mean response
-predict_adjust(lmodp, newdata = newpenguins, level = 0.98,
-               interval = "confidence", method = "bonferroni")
-# working-hotelling-adjusted confidence intervals for the mean response
-predict_adjust(lmodp, newdata = newpenguins, level = 0.98,
-               interval = "confidence", method = "wh")
+predict_adjust(lmodp, newdata = newpenguins,
+               level = 0.98,
+               interval = "confidence",
+               method = "bonferroni")
 ```
+
+```{r}
+predict_adjust(lmodp, newdata = newpenguins,
+               level = 0.98,
+               interval = "confidence",
+               method = "wh")
+```
+
 
 # Prediction interval for a new response
 
@@ -514,19 +541,24 @@ $$
 E(Y|\mathbb{X})=\beta_0+\beta_1 X_1 + \ldots \beta_{p-1} X_{p-1}.
 $$
 
-We want to predict a new response for a specific combination of regressor values, $\mathbf{x}_0$. The new response will be the mean response for that combination of regressors, $E(Y\mid \mathbf{x}_0)$, plus the error for that observation, $\epsilon(\mathbf{x}_0)$, i.e.:
+We want to predict a new response for a specific combination of regressor values, $\mathbf{x}_0=[1,x_{0,1},\ldots,x_{0,p-1}]$.
+
+The new response can be written as
 
 $$
 Y(\mathbf{x}_0)=E(Y\mid \mathbf{x}_0) + \epsilon(\mathbf{x}_0).
 $$
 
-Thus, our predicted new response, $\hat{Y}(\mathbf{x})$ is the estimated mean plus the estimated error, i.e.:
+Thus, our predicted new response, $\hat{Y}(\mathbf{x})$ is the sum of two components:
+
+- The estimated mean plus.
+- The estimated error.
 
 $$
 \hat{Y}(\mathbf{x}_0)=\hat{E}(Y\mid \mathbf{x}_0) + \hat{\epsilon}(\mathbf{x}_0).
 $$
 
-We have already used $\hat{E}(Y\mid \mathbf{x}_0)=\mathbf{x}_0^T\hat{\boldsymbol{\beta}}$ as the estimator for $E(Y\mid \mathbf{x}_0)$ since it is the best linear unbiased estimator according to the Gauss-Markov theorem. What should we use for $\hat{\epsilon}(\mathbf{x}_0)$? In short, because all of the errors, $\epsilon_1, \epsilon_2,\ldots, \epsilon_n, \epsilon(\mathbf{x}_0)$ are uncorrelated, our best guess is the mean value of the errors, which is zero. This is not true when the errors are correlated, but we do not discuss that in detail. Thus, the best predictor of a new response is:
+The Best Linear Unbiased Predictor of $Y(\mathbf{x}_0)$ is computed as
 
 $$
 \begin{aligned}
@@ -536,8 +568,17 @@ $$
 \end{aligned}
 $$
 
-We want to create a prediction interval for $Y(\mathbf{x}_0)$. A prediction interval is basically the same thing as a confidence interval, but the interval estimator is for a random variable instead of a parameter. If we divide the estimation error of the new response, i.e.,
-$Y(\mathbf{x}_0)-\hat{Y}(\mathbf{x}_0)$, by its estimated standard deviation, $\widehat{\mathrm{sd}}(Y(\mathbf{x}_0)-\hat{Y}(\mathbf{x}_0))$, then we obtain a $t$-distributed pivotal quantity:
+This is the best prediction because:
+
+- $\hat{E}(Y\mid \mathbf{x}_0)=\mathbf{x}_0^T\hat{\boldsymbol{\beta}}$ is the best linear unbiased estimator of $E(Y\mid \mathbf{x}_0)$ according to the Gauss-Markov theorem.
+- Our best guess for the error, $\epsilon(\mathbf{x}_0$ is zero because the errors have mean 0 and are uncorrelated.
+
+We want to create a prediction interval for $Y(\mathbf{x}_0)$. 
+
+- A prediction interval is similar to a confidence interval, but the interval estimator is for a random variable instead of a parameter.
+
+
+We can use the $t$-distributed pivotal quantity:
 
 $$
 \frac{Y(\mathbf{x}_0)-\hat{Y}(\mathbf{x}_0)}{\widehat{\mathrm{sd}}(Y(\mathbf{x}_0)-\hat{Y}(\mathbf{x}_0))} \sim t_{n-p}
@@ -546,12 +587,17 @@ $$
 where:
 
 $$
-\widehat{\mathrm{sd}}(Y(\mathbf{x}_0)-\hat{Y}(\mathbf{x}_0))=\hat{\sigma}\sqrt{1 + \mathbf{x}_0^T (\mathbf{X}^T \mathbf{X})^{-1}\mathbf{x}_0}
+\widehat{\mathrm{sd}}(Y(\mathbf{x}_0)-\hat{Y}(\mathbf{x}_0))=\hat{\sigma}\sqrt{1 + \mathbf{x}_0^T (\mathbf{X}^T \mathbf{X})^{-1}\mathbf{x}_0}.
 $$
 
-The standard deviation of the prediction error is sometimes known as the **standard error of prediction**, but we do not use that terminology. A detailed derivation of $\widehat{\mathrm{sd}}(Y(\mathbf{x}_0)-\hat{Y}(\mathbf{x}_0))$ is provided in the Going Deeper section.
+The standard deviation of the prediction error is sometimes known as the **standard error of prediction**, but we do not use that terminology.
 
-There is a conceptual and mathematical relationship between the standard deviation of the estimation error for the mean response and the prediction error for a new observation. If we compare the expression for $\hat{\mathrm{se}}(\hat{E}(Y\mid \mathbf{x}_0)) - E(Y\mid \mathbf{x}_0))$ in the first equation and $\widehat{\mathrm{sd}}(Y(\mathbf{x}_0)-\hat{Y}(\mathbf{x}_0))$ in the second equation, we see that $\widehat{\mathrm{sd}}(Y(\mathbf{x}_0)-\hat{Y}(\mathbf{x}_0))$ has an extra "1 +" under the square root. Because of this, *prediction intervals for a new response are always wider than a confidence interval for the mean response* when considering the same regressor values, $\mathbf{x}_0$, and confidence level. Conceptually, prediction intervals are wider because there are two sources of uncertainty in our prediction: estimating the mean response and predicting the error of the new response. Estimating the mean response does not require us to predict the error of a new response, so the uncertainty of our estimate is less. We can see that this is formally true through the derivations provided in the Going Deeper section.
+Comparing $\hat{\mathrm{se}}(\hat{E}(Y\mid \mathbf{x}_0)) - E(Y\mid \mathbf{x}_0))$  and $\widehat{\mathrm{sd}}(Y(\mathbf{x}_0)-\hat{Y}(\mathbf{x}_0))$, we can conclude that *prediction intervals for a new response are always wider than a confidence interval for the mean response* when considering the same regressor values, $\mathbf{x}_0$, and confidence level.
+
+Conceptually, prediction intervals are wider because there are two sources of uncertainty in our prediction:
+
+- Estimating the mean response.
+- Predicting the error of the new response. 
 
 A prediction interval for $Y(\mathbf{x}_0)$ with confidence level $1-\alpha$ is given by the expression:
 
@@ -559,39 +605,51 @@ $$
 \mathbf{x}_0\hat{\boldsymbol{\beta}} \pm t^{\alpha/2}_{n-p} \hat{\mathrm{sd}}(Y(\mathbf{x}_0)-\hat{Y}(\mathbf{x}_0))
 $$
 
-The `predict` function can be used to create predictions and prediction intervals for a new response in the same way that it can be used to estimate the mean response and produce associated confidence intervals. If the `interval` argument is `"none"`, then predictions for a new response are returned. As we have already seen, $\hat{E}(Y\mid \mathbf{x}_0)$ and $\hat{Y}(\mathbf{x}_0)$ are the same number. If the `interval` argument is `"prediction"`, then the predicted new response and associated prediction interval will be produced for each row of data supplied to the `newdata` argument.
+The `predict` function can be used to create predictions and prediction intervals for a new response in the same way that it can be used to estimate the mean response and produce associated confidence intervals.
 
-Continuing the example from before, we want to predict the response value for new, unobserved penguins having the observed mean `body_mass_g` for each level of `species`. The fitted model is stored in `lmodp` and the data frame with the predictors for the new responses is stored in `newpenguins`. We print the coefficients of the fitted model and the data frame of new predictors below for clarity.
+- If the `interval` argument is `"none"`, then predictions for a new response are returned.
+- If the `interval` argument is `"prediction"`, then the predicted new response and associated prediction interval will be produced for each row of data supplied to the `newdata` argument.
 
-```{r}
-coef(lmodp)
-newpenguins
-```
-
+Continuing the example from before, we want to predict the response value for new, unobserved penguins having the observed mean `body_mass_g` for each level of `species`. 
 
 In the code below, we predict the `flipper_length_mm` for new penguins for the predictor values stored in `newpenguins` based on the fitted model in `lmodp`. We also construct the associated 99% prediction intervals.
 
 ```{r}
-# predict new response and compute prediction intervals
-# for 3 combinations of predictors
 predict(lmodp, newdata = newpenguins,
         interval = "prediction", level = 0.99)
 ```
 
-An new Adelie penguin with a body mass of 3700.662 g is predicted to have a flipper length of 38.79 mm. We are 99% confident that a new Adelie penguins with a body mass of 3700.662 g will have a flipper length between 32.54 mm and 45.04 mm. Similarly, the 99% prediction interval for the flipper length of a new Chinstrap penguin with a body mass of 3733.09 g is [48.56, 55.11]. The flipper length of a new Gentoo penguin with a body mass of 5076.02 g is between 41.25 and  53.75 with a confidence level of 0.99.
+A new Adelie penguin with a body mass of 3700.662 g is predicted to have a flipper length of 38.79 mm. We are 99% confident that a new Adelie penguins with a body mass of 3700.662 g will have a flipper length between 32.54 mm and 45.04 mm.
 
-Since we are making 3 predictions, our inferences suffer from the multiple comparisons problem. To control the family-wise confidence level of our intervals, we can use the Bonferroni correction with $k=3$. The Working-Hotelling correction does not apply to new responses. However, a similar adjustment proposed by Scheff&#233; does apply [@alsm2005]. The prediction interval multiplier $t^{\alpha/2}_{n-p}$ used for a single prediction interval with confidence level $1-\alpha$ is replaced by
-$\sqrt{k F^{1-\alpha}_{k,n-p}}$ to control the family-wise confidence level at $1-\alpha$ for a family of $k$ prediction intervals. Recall that the Working-Hotelling multiplier was $\sqrt{p F^{1-\alpha}_{p,n-p}}$. Thus, the Scheff&#233; multiplier scales with the number of predictions being made while the Working-Hotelling multiplier scales with the number of estimated regression coefficients in the fitted model.
+Similarly, the 99% prediction interval for the flipper length of a new Chinstrap penguin with a body mass of 3733.09 g is [48.56, 55.11].
 
-Both the Bonferroni and Scheff&#233; multiple comparisons corrections are implemented in the `predict_adjust` function in the **api2lm** package. In the prediction interval setting, we can choose the correction `method` argument to be `"none"` (no correction), `"bonferroni"` (Bonferroni adjustment), or `"scheffe"` (Scheffe adjustment). We produce both types of adjusted intervals in the code below. The Bonferroni-adjusted confidence intervals are slightly narrower in this example.
+The flipper length of a new Gentoo penguin with a body mass of 5076.02 g is between 41.25 and  53.75 with a confidence level of 0.99.
+
+Since we are making 3 predictions, our inferences suffer from the multiple comparisons problem.
+
+To control the family-wise confidence level of our intervals, we can use the Bonferroni correction with $k=3$.
+
+The Working-Hotelling correction does not apply to new responses. A similar adjustment proposed by Scheff&#233; does apply (Kutner et al., 2005).
+
+- The prediction interval multiplier $t^{\alpha/2}_{n-p}$ used for a single prediction interval with confidence level $1-\alpha$ is replaced by
+$\sqrt{k F^{1-\alpha}_{k,n-p}}$ to control the family-wise confidence level at $1-\alpha$ for a family of $k$ prediction intervals.
+- The Working-Hotelling multiplier was $\sqrt{p F^{1-\alpha}_{p,n-p}}$. Thus, the Scheff&#233; multiplier scales with the number of predictions being made while the Working-Hotelling multiplier scales with the number of estimated regression coefficients in the fitted model.
+
+Both the Bonferroni and Scheff&#233; multiple comparisons corrections are implemented in the `predict_adjust` function in the **api2lm** package. 
+In the prediction interval setting, we can choose the correction `method` argument to be `"none"` (no correction), `"bonferroni"` (Bonferroni adjustment), or `"scheffe"` (Scheffe adjustment). 
+
+The Bonferroni-adjusted confidence intervals are slightly narrower in this example.
 
 ```{r}
-# bonferroni-adjusted prediction intervals for new responses
-predict_adjust(lmodp, newdata = newpenguins, level = 0.99,
+predict_adjust(lmodp, newdata = newpenguins,
+               level = 0.99,
                interval = "prediction",
                method = "bonferroni")
-# sheffe-adjusted prediction intervals for new responses
-predict_adjust(lmodp, newdata = newpenguins, level = 0.99,
+```
+
+```
+predict_adjust(lmodp, newdata = newpenguins,
+               level = 0.99,
                interval = "prediction",
                method = "scheffe")
 ```
@@ -660,7 +718,7 @@ Moving from left to right, the first column (no name) indicates the coefficient 
 
 Thus, for our test of the `body_mass_g` coefficient, the test statistic is $T_2 = 1.17$ and the associated p-value is 0.024. There is moderate evidence that the coefficient for `body_mass_g` differs from zero, assuming the model also allows for the inclusion of the intercept and `flipper_length_mm` coefficients.
 
-## Hypothesis tests for multiple regression coefficients
+# Hypothesis tests for multiple regression coefficients
 
 Suppose we have have a standard linear regression model with
 $p$ regression coefficients such as the one defined in Equation \@ref(eq:model-def-inference). We refer to this model as the "Complete Model".

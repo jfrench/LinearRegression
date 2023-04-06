@@ -303,7 +303,7 @@ $$
 E(\hat{\boldsymbol{\epsilon}}|\mathbf{X})&=E((\mathbf{I}-\mathbf{H})\mathbf{y}|\mathbf{X})\\
 &=(\mathbf{I}-\mathbf{H})E(\mathbf{y}|\mathbf{X})&\tiny(\mathbf{I}-\mathbf{H}\text{ is non-random)}\\
 &=(\mathbf{I}-\mathbf{H})\mathbf{X}\boldsymbol\beta&\tiny\text{(earlier result)}\\
-&=\mathbf{X}\boldsymbol\beta-\mathbf{X}\boldsymbol\beta&\tiny\text{(distribute the product)}\\
+&=\mathbf{X}\boldsymbol\beta-\mathbf{HX}\boldsymbol\beta&\tiny\text{(distribute the product)}\\
 &=\mathbf{X}\boldsymbol\beta-\mathbf{X}^T(\mathbf{X}^T\mathbf{X})^{-1}\mathbf{X}^T\mathbf{X}\boldsymbol\beta&\tiny\text{(definition of H)}\\
 &=\mathbf{X}\boldsymbol\beta-\mathbf{X}\mathbf{I}_{p\times p}\boldsymbol\beta&\tiny\text{(property of inverse matrix)}\\
 &=\mathbf{X}\boldsymbol\beta-\mathbf{X}\boldsymbol\beta&\tiny\text{(simplification)}\\
@@ -382,14 +382,14 @@ Suppose we will fit the regression model
 
 Assume that 
 
-1. $E(\boldsymbol{\epsilon}\mid \mathbf{X}) = 0$.
+1. $E(\boldsymbol{\epsilon}\mid \mathbf{X}) = \boldsymbol{0}_{n\times1}$.
 1. $\mathrm{var}(\boldsymbol{\epsilon}\mid \mathbf{X}) = \sigma^2 \mathbf{I}$, i.e., the errors have constant variance and are uncorrelated.
-1. $E(\mathbf{y}\mid \mathbf{X})=\mathbf{X}\boldsymbol{\beta}$
+1. $E(\mathbf{y}\mid \mathbf{X})=\mathbf{X}\boldsymbol{\beta}$.
 1. $\mathbf{X}$ is a full-rank matrix.
 
-Then the **Gauss-Markov** states that the OLS estimator of $\boldsymbol{\beta}$, 
+Then the **Gauss-Markov** Theorem states that the OLS estimator of $\boldsymbol{\beta}$, 
 \[
-\hat{\boldsymbol{\beta}}=(\mathbf{X}^T\mathbf{X})^T\mathbf{X}^T\mathbf{y},
+\hat{\boldsymbol{\beta}}=(\mathbf{X}^T\mathbf{X})^{-1}\mathbf{X}^T\mathbf{y},
 \]
 has the minimum variance among all unbiased estimators of $\boldsymbol{\beta}$ and this estimator is unique.
 
@@ -399,6 +399,6 @@ Some comments:
 - Assumption 4 ensures that the OLS estimator can be computed (otherwise, there is no unique solution).
 - The Gauss-Markov theorem only applies to unbiased estimators of $\boldsymbol{\beta}$. Biased estimators could have a smaller variance.
 - The Gauss-Markov theorem states that no unbiased estimator of $\boldsymbol{\beta}$ can have a smaller variance than $\hat{\boldsymbol{\beta}}$.
-- The OLS estimator uniquely has the minimum variance property, meaning that if an $\tilde{\boldsymbol{\beta}}$ is another unbiased estimator of $\boldsymbol{\beta}$ and $\mathrm{var}(\tilde{\boldsymbol{\beta}}) = \mathrm{var}(\hat{\boldsymbol{\beta}})$, then in fact the two estimators are identical and $\tilde{\boldsymbol{\beta}}=\hat{\boldsymbol{\beta}}$.
+- The OLS estimator uniquely has the minimum variance property, meaning that if $\tilde{\boldsymbol{\beta}}$ is another unbiased estimator of $\boldsymbol{\beta}$ and $\mathrm{var}(\tilde{\boldsymbol{\beta}}) = \mathrm{var}(\hat{\boldsymbol{\beta}})$, then in fact the two estimators are identical and $\tilde{\boldsymbol{\beta}}=\hat{\boldsymbol{\beta}}$.
 
 We do not prove this theorem.
