@@ -31,6 +31,12 @@ if(!require(api2lm, quietly = TRUE)) {
 }
 ```
 
+We adjust some printing options for clarity. 
+
+```{r}
+options(digits = 7, scipen = 2)
+```
+
 # Overview of inference and prediction
 
 ---
@@ -50,6 +56,7 @@ We will also introduce and discuss solutions for the multiple
 comparisons problem, which arises when we make multiple inferences or predictions simultaneously.
 
 # Necessary notation
+
 ---
 
 The $t$ distribution is a symmetric bell-shaped distribution
@@ -86,6 +93,7 @@ denominator degrees of freedom.
 the square of a $t$ random variable with $\nu$ degrees of freedom is equivalent to an $F$ random variable with $1$ numerator degree of freedom and $\nu$ denominator degrees of freedom.
 
 # Assumptions and properties of the OLS estimator
+
 ---
 
 We assume:
@@ -217,12 +225,11 @@ This is an example of the multiple comparisons problem.
 
 A **multiple comparisons problem** occurs anytime we make multiple inferences (confidence intervals, hypothesis tests, prediction intervals, etc.).
 
-- We are more likely to draw erroneous conclusions if we do not adjust for the fact that we are making multiple inferential statements.
-- E.g., a confidence interval procedure with level 0.95 will produce intervals that contain the target parameter with probability 0.95.
-- If we construct two confidence intervals with level 0.95, then the family-wise confidence level (i.e., the probability that both intervals simultaneously contain their respective target parameters) will be less than 0.95.
+- If we construct two confidence intervals with level 0.95, then the probability that both intervals simultaneously contain their respective target parameters will be less than 0.95.
 - We can guarantee that our family-wise confidence level will be at least 0.90, but we can't determine the exact value without more information
+- We are more likely to draw erroneous conclusions if we do not adjust for the fact that we are making multiple inferential statements.
 
-The **family-wise confidence level** is the probability that all intervals under consideration simultaneously contain their target parameter.
+The **family-wise confidence level** is the probability that a confidence interval procedure produces a family of intervals that simultaneously contain their target parameter.
 
 - The family-wise confidence level is also known as the **simultaneous** or **overall** confidence level.
 
@@ -276,6 +283,7 @@ The Bonferroni correction is known to be conservative, which means that the fami
 - i.e., Our intervals are much wider than they need to be, so we aren't able to draw precise conclusions about the plausible values of our regression coefficients.
 
 **Penguins example (continued)**
+
 ---
 
 Let's construct simultaneous confidence intervals for our `penguins` example using the Bonferroni correction.
