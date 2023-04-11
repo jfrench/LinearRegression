@@ -585,22 +585,22 @@ Let $RSS(RM)$ denote the RSS of the Reduced Model and $RSS(CM)$ denote the RSS o
 We want to perform a hypothesis test involving multiple regression coefficients in our model. Without be specific or developing complex notation, we cannot be precise in stating the hypotheses we wish to test. In the discussion below, we use RM as an abbreviation for the Reduced Model and CM as an abbreviation for the Complete Model. A general statement of the hypotheses we will test are:
 
 $H_0: \text{RM is an adequate model for describing the population}$
-$H_a: \text{FM is a more appropriate model for describing the population.}$
+$H_a: \text{CM is a more appropriate model for describing the population.}$
 
-We wish to statistically assess whether we can simplify our model to $RM$. If $RM$ doesn't adequately explain the patterns of the data, then we will conclude that $FM$ is a more appropriate model.
+We wish to statistically assess whether we can simplify our model to $RM$. If $RM$ doesn't adequately explain the patterns of the data, then we will conclude that $CM$ is a more appropriate model.
 
 If we assume that the assumptions in Equation
 \@ref(eq:error-assumption-inference) are true for $RM$ and that $RM$ is the true model, then 
 
 $$
-F=\frac{\frac{RSS_{RM}-RSS_{FM}}{df_{RM}-df_{FM}}}{\frac{RSS_{FM}}{df_{FM}}}=\frac{\frac{RSS_{RM}-RSS_{FM}}{df_{RM}-df_{FM}}}{\hat{\sigma}^2_{FM}}\sim F_{df_{RM}-df_{FM},df_{FM}}, (\#eq:f-stat-lh)
+F=\frac{\frac{RSS_{RM}-RSS_{CM}}{df_{RM}-df_{CM}}}{\frac{RSS_{CM}}{df_{CM}}}=\frac{\frac{RSS_{RM}-RSS_{CM}}{df_{RM}-df_{CM}}}{\hat{\sigma}^2_{CM}}\sim F_{df_{RM}-df_{CM},df_{CM}}, (\#eq:f-stat-lh)
 $$
-where $F_{df_{RM}-df_{FM},df_{FM}}$ is an $F$ random variable with $df_{RM}-df_{FM}$ numerator degrees of freedom and $df_{FM}$ denominator degrees of freedom and $\hat{\sigma}^2_{FM}$ is the estimated error variance of $FM$.
+where $F_{df_{RM}-df_{CM},df_{CM}}$ is an $F$ random variable with $df_{RM}-df_{CM}$ numerator degrees of freedom and $df_{CM}$ denominator degrees of freedom and $\hat{\sigma}^2_{CM}$ is the estimated error variance of $CM$.
 
 The p-value for this test is
 
 $$
-p\text{-value}=P(F\geq F_{df_{RM}-df_{FM},df_{FM}}).
+p\text{-value}=P(F\geq F_{df_{RM}-df_{CM},df_{CM}}).
 $$
 We consider two common uses for this test below.`
 
@@ -620,20 +620,134 @@ Alternatively, we can state these hypotheses as
 $H_0: \beta_1 = \cdots = \beta_{p-1} = 0 \mid \beta_0 \in \mathbb{R}$
 $H_a: \beta_0 \in \mathbb{R}, \beta_1 \in \mathbb{R}, \ldots, \beta_{p-1}\in \mathbb{R}$.
 
-Notice that the Reduced Model in $H_0$ is clearly a special case of the Complete Model with most of the regression coefficients set equal to zero. Notice that we specifically conditioned are hypotheses on the intercept coefficient, $\beta_0$ being included in both models we are comparing. 
+Notice that the Reduced Model in $H_0$ is clearly a special case of the Complete Model with most of the regression coefficients set equal to zero. Notice that we specifically conditioned our hypotheses on the intercept coefficient, $\beta_0$ being included in both models we are comparing. 
 We want to choose between the models specified in $H_0$ and $H_a$. 
 
-The $F$ statistic in Equation \@ref(eq:f-stat-lh) used for this test simplifies dramatically when performing a test for a regression relationship.Using a bit of calculus or by carefully using the OLS estimator of the regression coefficients, it is possible to show that for the Reduced Model that $\hat{\beta}_0=\bar{Y}$. Thus, for the $RSS_R = \sum_{i=1}^n (Y_i - \bar{Y})^2$, which is the definition of the TSS defined in Chapter \@ref(linear-model-estimation)! Then the numerator of our F statistic becomes $TSS - RSS_C$, which is mathematically equivalent to the regression sum of squares for the Complete Model. The degrees of freedom of $RSS_R = n - 1$. Similarly, the degrees of freedom of $RSS_C = n - p$. Thus $df_R - df_C = (n - 1) - (n - p) = p-1$. Thus, our F statistic for this test simplifies to 
+The $F$ statistic in Equation \@ref(eq:f-stat-lh) used for this test simplifies dramatically when performing a test for a regression relationship.Using a bit of calculus or by carefully using the OLS estimator of the regression coefficients, it is possible to show that for the Reduced Model that $\hat{\beta}_0=\bar{Y}$. Thus, for the $RSS_{RM} = \sum_{i=1}^n (Y_i - \bar{Y})^2$, which is the definition of the TSS defined in Chapter \@ref(linear-model-estimation)! Then the numerator of our F statistic becomes $TSS - RSS_{CM}$, which is mathematically equivalent to the regression sum of squares for the Complete Model. The degrees of freedom of $RSS_{RM} = n - 1$. Similarly, the degrees of freedom of $RSS_{CM} = n - p$. Thus $df_{RM} - df_{CM} = (n - 1) - (n - p) = p-1$. Thus, our F statistic for this test simplifies to 
 
 $$
 F = \frac{SS_{reg}(CM)/(p-1)}{RSS(CM)/(n-p)}= \frac{SS_{reg}(CM)/(p-1)}{\hat{\sigma}^2_{CM}}.
 $$
+Let's perform a test for a regression relationship for the model
+
+$$
+\begin{aligned}
+&E(\mathtt{bill\_length\_mm}\mid \mathtt{body\_mass\_g}, \mathtt{flipper\_length\_mm}) \\
+&=\beta_0+\beta_1 \mathtt{body\_mass\_g} + \beta_2 \mathtt{flipper\_length\_mm}.
+\end{aligned}
+$$
+
+The fitted model is stored in `mlmod`.
+
+We are testing 
+
+$H_0: E(\mathtt{bill\_length\_mm}\mid \mathtt{body\_mass\_g}, \mathtt{flipper\_length\_mm}) = \beta_0$
+$H_a: E(\mathtt{bill\_length\_mm} \mid \mathtt{body\_mass\_g}, \mathtt{flipper\_length\_mm}) = \beta_0 + \beta_1 \mathtt{body\_mass\_g} + \beta_{2} \mathtt{flipper\_length\_mm}.$
+
+The can also be stated as
+
+$H_0: \beta_1 = \beta_2 = 0 \mid \beta_0 \in \mathbb{R}$
+$H_a: \beta_1 \neq 0 \text{ or } \beta_2 \neq 0 \mid \beta_0 \in \mathbb{R}.$
+
+We can get the necessary information for the test for a regression relationship by using the `summary` function on `mlmod`.
+
+```{r}
+summary(mlmod)
+```
+
+The necessary information is in the last line of the `summary` output.
+
+```
+F-statistic: 129.4 on 2 and 339 DF,  p-value: < 2.2e-16
+```
+
+The test statistic for this test is 129.4 with a p-value close to 0.
+
+There is very strong evidence that at least one of the regression coefficients for `body_mass_g` or `flipper_length_mm` is non-zero in the model regression for `bill_length_mm` that already includes an intercept.
+
+Alternatively, the model regressing `bill_length_mm` on the intercept, `body_mass_g`, and `flipper_length_mm` is preferred to the model that has only an intercept.
 
 
+### A more general F test
 
-<!-- linear-model-estimation -->
+Let us consider a more general F test where multiple regression coefficients are set to zero. In general, the associated test statistic won't simplify in any standard way.
 
+We will illustrate the more general F test using the `penguins` data.
 
+Suppose we want to decide between the simple linear regression model and parallel lines model for `penguins` data.
+
+We want to test between
+
+$H_0: E(\mathtt{bill\_length\_mm} \mid \mathtt{body\_mass\_g}, \mathtt{species}) = \beta_{0} + \beta_1 \mathtt{body\_mass\_g}$
+$H_a: E(\mathtt{bill\_length\_mm} \mid \mathtt{body\_mass\_g}, \mathtt{species}) = \beta_{0} + \beta_1 \mathtt{body\_mass\_g} + \beta_2 D_C + \beta_3 D_G$
+
+where $D_C$ and $D_G$ denote the indicator variables for the `Chinstrap` and `Gentoo` level of penguin `species`.
+
+Alternatively, we could state this as 
+
+$H_0: \beta_2 = \beta_3 = 0 \mid \beta_0, \beta_1 \in \mathbb{R}$
+$H_a: \beta_2 \neq 0 \text{ or } \beta_3 \neq 0 \mid \beta_0, \beta_1 \in \mathbb{R}$.
+
+To perform our test, we fit both models. We fit the simple linear regression model in the code below.
+
+```{r}
+lmod <- lm(bill_length_mm ~ body_mass_g, data = penguins)
+coef(lmod)
+```
+
+We then fit the parallel lines model. 
+
+```{r}
+lmodp <- lm(bill_length_mm ~ body_mass_g + species, data = penguins)
+coef(lmodp)
+```
+
+We use the `anova` function to get the test statistic and p-value for our general F test. We supply the fitted $RM$ as the first argument to the function and then the fitted $CM$ as the second argument. We do that in the code below.
+
+```{r}
+anova(lmod, lmodp)
+```
+
+The test statistic (`F`) is 399.35 and the associated p-value (`Pr(>F)`) is close to 0.
+
+The is very strong evidence that the parallel lines model is preferred to the simple linear regression model for the `penguins` data. 
+
+We can do another test that compares the parallel lines model to the separate lines model for the `penguins` data. 
+
+We want to choose between 
+
+$$
+\begin{aligned}
+&H_0: E(\mathtt{bill\_length\_mm} \mid \mathtt{body\_mass\_g}, \mathtt{species}) = \beta_{0} + \beta_1 \mathtt{body\_mass\_g} + \beta_2 D_C + \beta_3 D_G \\
+&H_a: E(\mathtt{bill\_length\_mm} \mid \mathtt{body\_mass\_g}, \mathtt{species}) \\
+&\qquad = \beta_{0} + \beta_1 \mathtt{body\_mass\_g} + \beta_2 D_C + \beta_3 D_G + \beta_4 \mathtt{body\_mass\_g} D_C + \beta_5 \mathtt{body\_mass\_g} D_G.
+\end{aligned}
+$$
+
+Alternatively, we could state this as 
+
+$$
+\begin{aligned}
+&H_0: \beta_4 = \beta_5 = 0 \mid \beta_0, \beta_1, \beta_2, \beta_3 \in \mathbb{R}.\\
+&H_a: \beta_4 \neq 0 \text{ or } \beta_5 \neq 0 \mid \beta_0, \beta_1, \beta_2, \beta_3 \in \mathbb{R}.
+\end{aligned}
+$$
+
+We now fit the separate lines regression model to the `penguins` data. 
+
+```{r}
+lmods <- lm(bill_length_mm ~ body_mass_g + species + body_mass_g:species,
+            data = penguins)
+coef(lmods)
+```
+
+We once again use the `anova` function to get our associated test statistic and p-value, as shown in the code below.
+
+```{r}
+anova(lmodp, lmods)
+```
+
+The test statistic for this test is 1.62 with an associated p-value of 0.20. It appears the for the model regressing `bill_length_mm` on `body_mass_g` and `species`, the parallel lines model is adequate and we do not need the adequate complexity of the separate lines model.
 
 ## Going deeper
 

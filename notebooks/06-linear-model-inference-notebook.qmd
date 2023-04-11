@@ -664,34 +664,38 @@ predict_adjust(lmodp, newdata = newpenguins,
 
 # Hypothesis tests for a single regression coefficient
 
-If we assume we are fitting the multiple linear regression model in Equation \@ref(eq:model-def-inference), then our model has $p$ regression coefficient $\beta_0, \beta_1, \ldots, \beta_{p-1}$. How would we perform a hypothesis test for exactly one of these regression coefficients?
+If we assume we are fitting the standard multiple linear regression model, then our model has $p$ regression coefficient $\beta_0, \beta_1, \ldots, \beta_{p-1}$.
 
-Recall that if we make the assumptions in Equation
-\@ref(eq:error-assumption-inference), then
+How would we perform a hypothesis test for exactly one of these regression coefficients?
+
+Recall that under the assumptions made at the beginning of this notebook: 
 
 \begin{equation}
-\frac{\hat{\beta}_j-\beta_j}{\hat{\mathrm{se}}(\hat{\beta}_j)}\sim t_{n-p}, \quad j=0,1,\ldots,p-1. (\#eq:pivot-t-betaj)
+\frac{\hat{\beta}_j-\beta_j}{\hat{\mathrm{se}}(\hat{\beta}_j)}\sim t_{n-p}, \quad j=0,1,\ldots,p-1.
 \end{equation}
 
-Let's say we wish to test whether, for this model, $\beta_j$ differs from some constant number $c$ (typically, $c=0$). Let $\boldsymbol{\beta}_{-j}=\boldsymbol{\beta}\setminus{\beta_j}$, i.e., $\boldsymbol{\beta}_{-j}$ is the vector of all regression coefficients except $\beta_j$. $\boldsymbol{\beta}_{-j}$ has $p-1$ elements. We can state the hypotheses we wish to test as
+Let $\boldsymbol{\beta}_{-j}=\boldsymbol{\beta}\setminus{\beta_j}$, i.e., $\boldsymbol{\beta}_{-j}$ is the vector of all regression coefficients except $\beta_j$. $\boldsymbol{\beta}_{-j}$ has $p-1$ elements. 
+
+To test whether $\beta_j$ differs from some constant number $c$ (typically, $c=0$), we can test
 
 $$
 \begin{aligned}
 H_0: \beta_j &= c \mid \boldsymbol{\beta}_{-j}\in\mathbb{R}^{p-1} \\
-H_a: \beta_j &\neq c \mid \boldsymbol{\beta}_{-j}\in\mathbb{R}^{p-1}
+H_a: \beta_j &\neq c \mid \boldsymbol{\beta}_{-j}\in\mathbb{R}^{p-1}.
 \end{aligned}
 $$
 
-The first part of the null hypothesis in Equation \@ref(eq:betaj-H0Ha) states that $\beta_j = c$ while the first part of the alternative hypothesis assumes that $\beta_j \neq c$. But what does the second half of the hypotheses mean? The vertical bar means "assuming or conditional on", similar to the notation you would see in conditional probabilities or distributions. What this means is that we are performing the hypothesis test while assuming that the other coefficients are some real number (possibly even zero). Why state this at all? Isn't it implicitly assumed? No. We could perform a hypothesis test for $\beta_j$ for many different models that have differing regressors. By writing out hypotheses in the style of Equation \@ref(eq:betaj-H0Ha), we are being very clear that we are performing a test for $\beta_j$ in the context of the model that has the regressors associated with $\boldsymbol{\beta}_{-j}$.
+The vertical bar means "assuming or conditional on", similar to the notation you would see in conditional probabilities or distributions.
 
-How do the hypotheses in Equation \@ref(eq:betaj-H0Ha) affect the pivotal quantity in Equation \@ref(eq:pivot-t-betaj)? Under the null hypothesis, the statistic:
+Tests are model specific, so it is important to be clear exactly what model is under consideration.
+
+Under the null hypothesis, the statistic:
 
 $$
-T_j = \frac{\hat{\beta}_j-c}{\hat{\mathrm{se}}(\hat{\beta}_j)} \sim t_{n-p}
+T_j = \frac{\hat{\beta}_j-c}{\hat{\mathrm{se}}(\hat{\beta}_j)} \sim t_{n-p}.
 $$
 
-Thus, the null distribution of $T_j$ is a $t$ distribution with $n-p$ degrees of freedom. We emphasize that this is only true if the assumptions in Equation
-\@ref(eq:error-assumption-inference) are true.
+- This is only true if the standard assumptions are true.
 
 The p-value associated with this test is computed via the equation:
 
@@ -699,9 +703,13 @@ $$
 p\text{-value} = 2P(t_{n-p}\geq |T_j|).
 $$
 
-What if we wished to test a one-sided hypothesis? The p-value for a lower-tailed test is $p\text{-value}=P(t_{n-p}\leq T_j)$ while the p-value for an upper-tailed test is $p\text{-value}=P(t_{n-p}\geq T_j)$.
+What if we wished to test a one-sided hypothesis?
 
-The fitted model
+- The p-value for a lower-tailed test is $p\text{-value}=P(t_{n-p}\leq T_j)$.
+- The p-value for an upper-tailed test is $p\text{-value}=P(t_{n-p}\geq T_j)$.
+
+The fitted model for 
+
 $$
 \begin{aligned}
 &E(\mathtt{bill\_length\_mm}\mid \mathtt{body\_mass\_g}, \mathtt{flipper\_length\_mm}) \\
@@ -717,50 +725,79 @@ H_0: &\beta_1 = 0 \mid \beta_0\in \mathbb{R}, \beta_2 \in \mathbb{R} \\
 H_a: &\beta_1 \neq 0 \mid \beta_0\in \mathbb{R}, \beta_2 \in \mathbb{R}.
 \end{aligned}
 $$
-R conveniently provides this information in the output of the `summary` function (specifically, the `coefficients` element if we don't want extra information). We extract this information from the `mlmod` object in the code below.
+R conveniently provides this information in the output of the `summary` function (specifically, the `coefficients` element if we don't want extra information). 
 
 ```{r}
 summary(mlmod)$coefficients
 ```
-Moving from left to right, the first column (no name) indicates the coefficient term under consideration, the second column (`Estimate`) provides the estimated coefficients, the third column (`Std. Error`) provides the estimated standard error ($\hat{\mathrm{se}}(\hat{\beta}_j)$) for each coefficient, the fourth column (`t value`) provides the test statistic associated with testing $H_0: \beta_j = 0 \mid \boldsymbol{\beta}_{-j} \in \mathbb{R}^{p-1}$ versus a suitable alternative for each coefficient, while the final column (`Pr(>|t|)`) provides the two-tailed p-value associated with this test.
 
-Thus, for our test of the `body_mass_g` coefficient, the test statistic is $T_2 = 1.17$ and the associated p-value is 0.024. There is moderate evidence that the coefficient for `body_mass_g` differs from zero, assuming the model also allows for the inclusion of the intercept and `flipper_length_mm` coefficients.
+- The first column (no name) indicates the coefficient term under consideration.
+- The second column (`Estimate`) provides the estimated coefficients.
+- The third column (`Std. Error`) provides the estimated standard error ($\hat{\mathrm{se}}(\hat{\beta}_j)$) for each coefficient.
+- The fourth column (`t value`) provides the test statistic associated with testing $H_0: \beta_j = 0 \mid \boldsymbol{\beta}_{-j} \in \mathbb{R}^{p-1}$ versus a suitable alternative for each coefficient.
+- The final column (`Pr(>|t|)`) provides the two-tailed p-value associated with this test.
+
+Thus, for our test of the `body_mass_g` coefficient:
+
+- The test statistic is $T_2 = 1.17$.
+- The associated p-value is 0.024.
+- There is moderate evidence that the coefficient for `body_mass_g` differs from zero, assuming the model also allows for the inclusion of the intercept and `flipper_length_mm` coefficients.
 
 # Hypothesis tests for multiple regression coefficients
 
 Suppose we have have a standard linear regression model with
-$p$ regression coefficients such as the one defined in Equation \@ref(eq:model-def-inference). We refer to this model as the "Complete Model".
+$p$ regression coefficients.
 
-We want to compare the Complete Model to a "Reduced Model" that is a special case of the Complete Model. The most common examples of Reduced Model are:
+- We refer to this model as the "Complete Model".
+
+We want to compare the Complete Model to a "Reduced Model" that is a special case of the Complete Model.
+
+The most common examples of Reduced Model are:
 
 1. All of the coefficients except the intercept are set to zero.
 2. Some of the coefficients are set to zero.
 
-Less commonly considered examples of a Reduced Model set certain coefficients equal to each other or place other restrictions on the coefficients. We emphasize that the Reduced Model is a special case of the Complete Model. Alternatively, this relationship is sometimes described by saying the Reduced Model is *nested* in the Complete Model.
+Less commonly considered examples of a Reduced Model set certain coefficients equal to each other or place other restrictions on the coefficients.
 
-Let $RSS(RM)$ denote the RSS of the Reduced Model and $RSS(CM)$ denote the RSS of the Complete Model. Similarly, $df(RM)$ and $df(CM)$ denote the degrees of freedom associated with the RSS for the Reduced and Complete Models, respectively. Recall that the degrees of freedom associated with a RSS is simply $n$, the number of observations used to fit the model, minus the number of estimated regression coefficients in the model being considered.
+We emphasize that the Reduced Model is a special case of the Complete Model. 
 
-We want to perform a hypothesis test involving multiple regression coefficients in our model. Without be specific or developing complex notation, we cannot be precise in stating the hypotheses we wish to test. In the discussion below, we use RM as an abbreviation for the Reduced Model and CM as an abbreviation for the Complete Model. A general statement of the hypotheses we will test are:
+Alternatively, this relationship is sometimes described by saying the Reduced Model is *nested* in the Complete Model.
+
+- RM is the abbreviation for the Reduced Model. 
+- CM is the abbreviation for the Complete Model.
+
+Let:
+
+- $RSS(RM)$ denote the RSS of the Reduced Model.
+- $RSS(CM)$ denote the RSS of the Complete Model.
+- $df(RM)$ and $df(CM)$ denote the degrees of freedom associated with the RSS for the Reduced and Complete Models, respectively.
+    - The degrees of freedom associated with a RSS is simply $n$, the number of observations used to fit the model, minus the number of estimated regression coefficients in the model being considered.
+
+We want to perform a hypothesis test involving multiple regression coefficients in our model. 
+
+A general statement of the hypotheses we will test are:
 
 $H_0: \text{RM is an adequate model for describing the population}$
 
-$H_a: \text{FM is a more appropriate model for describing the population.}$
+$H_a: \text{CM is a more appropriate model for describing the population.}$
 
-We wish to statistically assess whether we can simplify our model to $RM$. If $RM$ doesn't adequately explain the patterns of the data, then we will conclude that $FM$ is a more appropriate model.
+We wish to statistically assess whether we can simplify our model to $RM$. If $RM$ doesn't adequately explain the patterns of the data, then we will conclude that $CM$ is a more appropriate model.
 
-If we assume that the assumptions in Equation
-\@ref(eq:error-assumption-inference) are true for $RM$ and that $RM$ is the true model, then
+Under the standard assumptions for $RM$ and that $RM$ is the true model:
 
 $$
-F=\frac{\frac{RSS_{RM}-RSS_{FM}}{df_{RM}-df_{FM}}}{\frac{RSS_{FM}}{df_{FM}}}=\frac{\frac{RSS_{RM}-RSS_{FM}}{df_{RM}-df_{FM}}}{\hat{\sigma}^2_{FM}}\sim F_{df_{RM}-df_{FM},df_{FM}}
+F=\frac{\frac{RSS_{RM}-RSS_{CM}}{df_{RM}-df_{CM}}}{\frac{RSS_{CM}}{df_{CM}}}=\frac{\frac{RSS_{RM}-RSS_{CM}}{df_{RM}-df_{CM}}}{\hat{\sigma}^2_{CM}}\sim F_{df_{RM}-df_{CM},df_{CM}}.
 $$
 
-where $F_{df_{RM}-df_{FM},df_{FM}}$ is an $F$ random variable with $df_{RM}-df_{FM}$ numerator degrees of freedom and $df_{FM}$ denominator degrees of freedom and $\hat{\sigma}^2_{FM}$ is the estimated error variance of $FM$.
+where:
+
+- $F_{df_{RM}-df_{CM},df_{CM}}$ is an $F$ random variable with $df_{RM}-df_{CM}$ numerator degrees of freedom and $df_{CM}$ denominator degrees of freedom. 
+- $\hat{\sigma}^2_{CM}$ is the estimated error variance of $CM$.
 
 The p-value for this test is
 
 $$
-p\text{-value}=P(F\geq F_{df_{RM}-df_{FM},df_{FM}}).
+p\text{-value}=P(F\geq F_{df_{RM}-df_{CM},df_{CM}}).
 $$
 We consider two common uses for this test below.`
 
@@ -782,296 +819,153 @@ Alternatively, we can state these hypotheses as
 $H_0: \beta_1 = \cdots = \beta_{p-1} = 0 \mid \beta_0 \in \mathbb{R}$
 $H_a: \beta_0 \in \mathbb{R}, \beta_1 \in \mathbb{R}, \ldots, \beta_{p-1}\in \mathbb{R}$.
 
-Notice that the Reduced Model in $H_0$ is clearly a special case of the Complete Model with most of the regression coefficients set equal to zero. Notice that we specifically conditioned are hypotheses on the intercept coefficient, $\beta_0$ being included in both models we are comparing.
-We want to choose between the models specified in $H_0$ and $H_a$.
+The Reduced Model in $H_0$ is a special case of the Complete Model with most of the regression coefficients set equal to zero.
 
-The $F$ statistic in Equation \@ref(eq:f-stat-lh) used for this test simplifies dramatically when performing a test for a regression relationship.Using a bit of calculus or by carefully using the OLS estimator of the regression coefficients, it is possible to show that for the Reduced Model that $\hat{\beta}_0=\bar{Y}$. Thus, for the $RSS_R = \sum_{i=1}^n (Y_i - \bar{Y})^2$, which is the definition of the TSS defined in Chapter \@ref(linear-model-estimation)! Then the numerator of our F statistic becomes $TSS - RSS_C$, which is mathematically equivalent to the regression sum of squares for the Complete Model. The degrees of freedom of $RSS_R = n - 1$. Similarly, the degrees of freedom of $RSS_C = n - p$. Thus $df_R - df_C = (n - 1) - (n - p) = p-1$. Thus, our F statistic for this test simplifies to
+The $F$ statistic simplifies dramatically when performing a test for a regression relationship.
+
+- For the RM, $\hat{\beta}_0=\bar{Y}$.
+- $RSS_{RM} = \sum_{i=1}^n (Y_i - \bar{Y})^2 = TSS!$
+- The numerator of our F statistic becomes $TSS - RSS_{CM}$, which is $SS_{reg}$ for the CM.
+- $RSS_{RM} = n - 1$.
+- $RSS_{CM} = n - p$.
+- $df_{RM} - df_{CM} = (n - 1) - (n - p) = p-1$. 
+
+Our F statistic for this test simplifies to
 
 $$
 F = \frac{SS_{reg}(CM)/(p-1)}{RSS(CM)/(n-p)}= \frac{SS_{reg}(CM)/(p-1)}{\hat{\sigma}^2_{CM}}.
 $$
 
+Let's perform a test for a regression relationship for the model
 
+$$
+\begin{aligned}
+&E(\mathtt{bill\_length\_mm}\mid \mathtt{body\_mass\_g}, \mathtt{flipper\_length\_mm}) \\
+&=\beta_0+\beta_1 \mathtt{body\_mass\_g} + \beta_2 \mathtt{flipper\_length\_mm}.
+\end{aligned}
+$$
 
-<!-- linear-model-estimation -->
+The fitted model is stored in `mlmod`.
 
+We are testing 
 
-# Going Deeper
+$H_0: E(\mathtt{bill\_length\_mm}\mid \mathtt{body\_mass\_g}, \mathtt{flipper\_length\_mm}) = \beta_0$
+$H_a: E(\mathtt{bill\_length\_mm} \mid \mathtt{body\_mass\_g}, \mathtt{flipper\_length\_mm}) = \beta_0 + \beta_1 \mathtt{body\_mass\_g} + \beta_{2} \mathtt{flipper\_length\_mm}.$
 
-**Manual calculation of the $t$-based confidence interval**
+The can also be stated as
 
-Consider the summary of the fitted linear model below, which summarizes a first-order linear model fit to the `penguins` data earlier in this chapter.
+$H_0: \beta_1 = \beta_2 = 0 \mid \beta_0 \in \mathbb{R}$
+$H_a: \beta_1 \neq 0 \text{ or } \beta_2 \neq 0 \mid \beta_0 \in \mathbb{R}.$
+
+We can get the necessary information for the test for a regression relationship by using the `summary` function on `mlmod`.
 
 ```{r}
 summary(mlmod)
 ```
 
-If we want to manually produce 95% confidence intervals for the true regression coefficients for this model using Equation \@ref(eq:t-ci-betas), then we need to acquire some basic information. We need:
+The necessary information is in the last line of the `summary` output.
 
--   the estimated regression coefficients
--   the degrees of freedom for the fitted model $n-p$
--   the $1-\alpha/2$ quantile of a $t$ random variable with $n-p$ degrees of freedom
--   the estimated standard error of the estimated regression coefficients.
-
-The estimated regression coefficients can be extracted from our fitted model, `mlmod`, using the `coef` function. We extract and print the estimated coefficients using the code below while simultaneously assigning the vector the name `betahats`.
-
-```{r}
-# extract estimated coefficients from mlmod
-(betahats <- coef(mlmod))
+```
+F-statistic: 129.4 on 2 and 339 DF,  p-value: < 2.2e-16
 ```
 
-The degrees of freedom $n-p$ is referred to as the residual degrees of freedom and can be obtained by using the `df.residual` function on the fitted model. Using the code below, we see that the residual degrees of freedom is 339 (this information was also in the summary of the fitted model).
+The test statistic for this test is 129.4 with a p-value close to 0.
 
-```{r}
-df.residual(mlmod)
-```
+There is very strong evidence that at least one of the regression coefficients for `body_mass_g` or `flipper_length_mm` is non-zero in the model regression for `bill_length_mm` that already includes an intercept.
 
-To construct a 95% confidence interval for our coefficients, we need to determine the $0.975$ quantile of a $t$ random variable with 339 degrees of freedom. This can be found using the `qt` function, as is done in the code below. We assign this value the name `mult`. Notice that value is a bit above 1.96, which is the value often seen in introductory statistics courses for confidence intervals based on the standard normal distribution ($\mathsf{N}(0,1)$ distribution).
+Alternatively, the model regressing `bill_length_mm` on the intercept, `body_mass_g`, and `flipper_length_mm` is preferred to the model that has only an intercept.
 
-```{r}
-(mult <- qt(0.975, df = 339))
-```
-
-The estimated standard errors of each coefficient are shown in the summary of the fitted model. They are (approximately) 4.58, 0.00057, and 0.032 and can be obtained by extracting the 2nd column of the `coefficients` element produced by the `summary` function.
-
-```{r}
-(sehats <- summary(mlmod)$coefficients[,2])
-```
-
-A alternative approach is to use 3 step process below:
-
-1.  Use the `vcov` function to obtain the estimated variance matrix of
-    $\hat{\boldsymbol{\beta}}$, i.e.,
-    $\hat{\mathrm{var}}(\hat{\boldsymbol{\beta}})$.
-2.  Use the `diag` function to extract the diagonal elements of this
-    matrix, which gives us
-    $\hat{\mathrm{var}}(\hat{\beta}_0), \hat{\mathrm{var}}(\hat{\beta}_1), \ldots, \hat{\mathrm{var}}(\hat{\beta}_{p-1})$.
-3.  Use the `sqrt` function to calculate the estimated standard errors
-    from the estimated variances of the estimated coefficients.
-
-We use this process in the code below, which returns the same estimated
-standard errors we previously obtained.
-
-```{r}
-# 2nd approach to obtaining estimated standard errors
-sqrt(diag(vcov(mlmod)))
-```
-
-Using the estimated coefficients (`betahats`), the appropriate quantile of the $t$ distribution (`mult`), and the estimated standard errors (`sehats`), we can manually produce the standard t-based confidence intervals using the code below.
-
-```{r}
-data.frame(lb = betahats - mult * sehats,
-           ub = betahats - mult * sehats)
-```
-
-**Details about estimation of the mean response**
+**A more general F test**
 
 ---
 
-Consider the estimated mean response for a specific combination of
-regressor values, denoted by $\mathbf{x}_0$, so that:
+Let us consider a more general F test where multiple regression coefficients are set to zero.
 
-$$
-\hat{E}(Y\mid \mathbf{x}_0)=\mathbf{x}_0^T\hat{\boldsymbol{\beta}}
-$$
+- Our test statistic typically doesn't simplify.
 
-Using some of the matrix-related results from Appendix
-\@ref(prob-review) and the result in Equation \@ref(eq:prop-betahat), we
-can determine that:
+We will illustrate the more general F test using the `penguins` data.
 
-$$
-\begin{aligned}
-\mathrm{var}\left(\hat{E}(Y \mid \mathbf{x}_0)\right) &= \mathrm{var}(\mathbf{x}_0^T \hat{\boldsymbol{\beta}}) \\
-&= \mathbf{x}_0^T \mathrm{var}(\hat{\boldsymbol{\beta}})\mathbf{x}_0\\
-&= \sigma^2 \mathbf{x}_0^T (\mathbf{X}^T \mathbf{X})^{-1}\mathbf{x}_0.
-\end{aligned}
-$$
+Suppose we want to decide between the simple linear regression model and parallel lines model for `penguins` data.
 
-To get the simplest expression for the confidence interval for
-$E(Y\mid\mathbf{x}_0)$, we have to make a number of connections that are often glossed over. We discuss them explicitly. Since the error
-variance, $\sigma^2$, in Equation \@ref(eq:var-est-mean-response) isn't
-known, we replace it with the typical estimator
-$\hat{\sigma}^2=RSS/(n-p)$ to get:
+We want to test between
 
-$$
-\hat{\mathrm{var}}\left(\hat{E}(Y\mid\mathbf{x}_0)\right)=\hat{\sigma}^2 \mathbf{x}_0^T (\mathbf{X}^T \mathbf{X})^{-1}\mathbf{x}_0
-$$
+$H_0: E(\mathtt{bill\_length\_mm} \mid \mathtt{body\_mass\_g}, \mathtt{species}) = \beta_{0} + \beta_1 \mathtt{body\_mass\_g}$
+$H_a: E(\mathtt{bill\_length\_mm} \mid \mathtt{body\_mass\_g}, \mathtt{species}) = \beta_{0} + \beta_1 \mathtt{body\_mass\_g} + \beta_2 D_C + \beta_3 D_G,$
 
+where $D_C$ and $D_G$ denote the indicator variables for the `Chinstrap` and `Gentoo` level of penguin `species`.
 
-The standard error of an estimator is the standard deviation of the
-estimator's variance, so we have
-$\mathrm{se}\left(\hat{E}(Y\mid\mathbf{x}_0)\right)=\sqrt{\mathrm{var}\left(\hat{E}(Y\mid \mathbf{x}_0)\right)}$.
-Similarly, we have that the estimated standard error for
-$\hat{E}(Y\mid \mathbf{x}_0)$ is
-$\hat{\mathrm{se}}\left(\hat{E}(Y\mid\mathbf{x}_0)\right)=\sqrt{\hat{\mathrm{var}}\left(\hat{E}(Y\mid \mathbf{x}_0)\right)}$.
-Taking the square root of Equation \@ref(eq:est-var-mean), we see that:
+Alternatively, we could state this as 
 
-$$
-\hat{\mathrm{se}}\left(\hat{E}(Y\mid \mathbf{x}_0)\right)=\hat{\sigma} \sqrt{\mathbf{x}_0^T (\mathbf{X}^T \mathbf{X})^{-1}\mathbf{x}_0}.
-$$
+$H_0: \beta_2 = \beta_3 = 0 \mid \beta_0, \beta_1 \in \mathbb{R}$
+$H_a: \beta_2 \neq 0 \text{ or } \beta_3 \neq 0 \mid \beta_0, \beta_1 \in \mathbb{R}$.
 
-Additionally, since $E(Y\mid \mathbf{x}_0)$ is an (unknown) constant, we
-also have that:
+To perform our test, we fit both models.
 
-$$\mathrm{var}\left(E(Y\mid \mathbf{x}_0)-\hat{E}(Y\mid \mathbf{x}_0)\right)=\mathrm{var}\left(\hat{E}(Y\mid \mathbf{x}_0)\right).
-$$
-
-If we divide the estimation error of the mean response, i.e.,
-$E(Y\mid \mathbf{x}_0)-\hat{E}(Y\mid \mathbf{x}_0)$, by its estimated
-standard deviation, then we obtain a pivotal quantity. More
-specifically, we have:
-
-$$
-\frac{E(Y\mid \mathbf{x}_0)-\hat{E}(Y\mid \mathbf{x}_0)}{\sqrt{\hat{\mathrm{var}}\left(E(Y\mid \mathbf{x}_0)-\hat{E}(Y\mid \mathbf{x}_0)\right)}} = \frac{E(Y\mid \mathbf{x}_0)- \mathbf{x}_0 \hat{\boldsymbol{\beta}}}{ \hat{\mathrm{se}}(\mathbf{x}_0\hat{\boldsymbol{\beta}})}\sim t_{n-p}.
-$$
-
-**Manual calculation of confidence intervals for the mean response**
-
----
-
-We discuss manual computation of the estimated mean response and associated confidence interval for a particular
-combination of regressor values based on the `penguins` example discussed in Section \@ref(parametric-ci-mean-response).
-
-Specifically, we estimate the mean response for the fitted parallel
-lines model given by$$
-\begin{aligned}
-&\hat{E}(\mathtt{bill\_length\_mm} \mid \mathtt{body\_mass\_g}, \mathtt{species})\\
-&= 24.92 + 0.004 \mathtt{body\_mass\_g} + 9.92 D_C + 3.56 D_G,
-\end{aligned}
-$$
-where $D_C$ and $D_G$ denote the indicator variables for the `Chinstrap` and `Gentoo` levels of the `species` variable. This fitted model is stored in `lmodp`. The estimated coefficients are shown in the code below.
+We fit the simple linear regression model.
 
 ```{r}
+lmod <- lm(bill_length_mm ~ body_mass_g, data = penguins)
+coef(lmod)
+```
+
+We then fit the parallel lines model. 
+
+```{r}
+lmodp <- lm(bill_length_mm ~ body_mass_g + species, data = penguins)
 coef(lmodp)
 ```
 
-We want to estimate the mean response for the following combination of predictors stored in the `newpenguins` data frame, which is printed in the code below.
-```{r}
-# mean body_mass_g of each species
-newpenguins
-```
+We use the `anova` function to get the test statistic and p-value for our general F test.
 
-We want to use the `newpenguins` data frame to generate the matrix of regressors used to estimate the associated mean responses. We can create the matrix of regressors using the `model.matrix` function. The main arguments of `model.matrix` are:
-
-- `object`: an object of the appropriate class. In our case, it is a formula or fitted model.
-- `data`: a data frame with the predictors needed to construct the matrix.
-
-We need only the right side of the formula used to fit the model in `lmodp` to create our matrix of regressor values. We can use the `formula` function to extract the formula used to fit `lmodp`. We then use `model.matrix` to create the matrix of regressor by values needed for estimating the mean. The matrix produced by `model.matrix`, `X0`, includes a column for the intercept term and the indicator variables in `lmodp`.
+- The fitted $RM$ is the first argument of the function.
+- The fitted $CM$ is the second argument of the function.
 
 ```{r}
-# determine formula used to fit lmodp
-formula(lmodp)
-# create matrix of regressor values from newpenguins
-(X0 <- model.matrix(~ body_mass_g + species, data = newpenguins))
-```
-We can obtain the estimated mean by taking the product of `X0` and the estimated coefficients for `lmodp`. We assign the estimated mean responses the name `est_means`.
-```{r}
-(est_means <- X0 %*% coef(lmodp))
+anova(lmod, lmodp)
 ```
 
-We now use Equation \@ref(eq:sehat-est-mean) to get the estimated standard error of each estimated mean response. First, we use `model.matrix` to extract the original matrix of regressors, $\mathbf{X}$, from the fitted model `lmodp`. The `sigma` function is used to extract $\hat{\sigma}$ from `lmodp`. Each *row* of `X0` contains a particular instance regressor values. In the code below, we extract each row of `X0`, and then use Equation \@ref(eq:sehat-est-mean) to compute the estimated standard error associated with each estimated mean response; these are assigned the names `se1`, `se2`, and `se3`. That approach isn't scalable, so we provide a scalable version of these computations that is assigned the name `sehat`.
+The test statistic (`F`) is 399.35 and the associated p-value (`Pr(>F)`) is close to 0.
 
-```{r}
-# original matrix of regressors
-X <- model.matrix(lmodp)
-sigmahat <- sigma(lmodp)
-# compute estimated standard error for each estimated mean response
-# crossprod(X) = t(X) %*% X
-(sehat1 <- sigmahat * sqrt(t(X0[1,]) %*% solve(crossprod(X), X0[1,])))
-(sehat2 <- sigmahat * sqrt(t(X0[2,]) %*% solve(crossprod(X), X0[2,])))
-(sehat3 <- sigmahat * sqrt(t(X0[3,]) %*% solve(crossprod(X), X0[3,])))
-# scalable computation of estimated standard errors
-(sehat <- sigmahat * sqrt(diag(X0 %*% solve(crossprod(X), t(X0)))))
-```
-To finish the computation of our confidence intervals, we determine the correct multiplier, $t_{n-p}^{\alpha/2}$. For a 98% confidence interval, $\alpha = 0.02$ and $\alpha/2 = 0.01$.  The degrees of freedom, $n-p$, is 338 (as shown in the code below). So the multiplier can be represented as $t_{338}^{0.01}$, which is the $0.99$ quantile of a $t$ distribution with 338 degrees of freedom. We provide this information to the `qt` function, which provides the quantiles of a $t$ distribution, using the code below to get the correct multiplier.
-```{r}
-# degrees of freedom, n-p
-df.residual(lmodp)
-# multiplier for confidence interval
-(mult <- qt(0.99, df = df.residual(lmodp)))
-```
-Thus, our 98% confidence intervals for each mean response can be computed using the code below, which matches the results we obtained in Section \@ref(parametric-ci-mean-response).
-```{r}
-data.frame(lb = est_means - mult * sehat,
-           ub = est_means + mult * sehat)
-```
+The is very strong evidence that the parallel lines model is preferred to the simple linear regression model for the `penguins` data. 
 
-### Details about prediction interval for a new response {#new-response-pi-calculations}
+We can do another test that compares the parallel lines model to the separate lines model for the `penguins` data. 
 
-We want to predict the value of a new response for a specific combination of regressor values, $\mathbf{x}_0$. The value of the new response is denoted by $Y(\mathbf{x}_0)$ and its prediction by $\hat{Y}(\mathbf{x}_0)$.
-
-In Section \@ref(pi-new-response), we briefly discussed that the new response may be written as:
-
-$$
-Y(\mathbf{x}_0) = E(Y \mid \mathbf{x}_0) + \epsilon(\mathbf{x}_0),
-$$
-
-and that the predicted new response, under our standard assumptions, is given by:
-
-$$
-\hat{Y}(\mathbf{x}_0)=\mathbf{x}_0^T\hat{\boldsymbol{\beta}}.
-$$
-
-Using these relationships, we can determine that the variance of the prediction error for a new response is given by:
+We want to choose between 
 
 $$
 \begin{aligned}
-\mathrm{var}\left(Y(\mathbf{x}_0)-\hat{Y}(\mathbf{x}_0)\right) &= \mathrm{var}(Y(\mathbf{x}_0)-\mathbf{x}_0^T \hat{\boldsymbol{\beta}}) \\
-&= \mathrm{var}(\mathbf{x}_0^T\boldsymbol{\beta} + \epsilon(\mathbf{x}_0)-\mathbf{x}_0^T \hat{\boldsymbol{\beta}}) \\
+&H_0: E(\mathtt{bill\_length\_mm} \mid \mathtt{body\_mass\_g}, \mathtt{species}) = \beta_{0} + \beta_1 \mathtt{body\_mass\_g} + \beta_2 D_C + \beta_3 D_G \\
+&H_a: E(\mathtt{bill\_length\_mm} \mid \mathtt{body\_mass\_g}, \mathtt{species}) \\
+&\qquad = \beta_{0} + \beta_1 \mathtt{body\_mass\_g} + \beta_2 D_C + \beta_3 D_G + \beta_4 \mathtt{body\_mass\_g} D_C + \beta_5 \mathtt{body\_mass\_g} D_G.
 \end{aligned}
 $$
 
-Recall from Appendix \@ref(prob-review) that the variance of a constant plus a random variable is equal to the variance of the random variable (since a constant doesn't vary!). Thus, Equation \@ref(eq:var-pred-error1) simplifies to: \
-
-$$
-\mathrm{var}\left(Y(\mathbf{x}_0)-\hat{Y}(\mathbf{x}_0)\right) = \mathrm{var}(\epsilon(\mathbf{x}_0)-\mathbf{x}_0^T \hat{\boldsymbol{\beta}})
-$$
-
-Using results from Appendix \@ref(prob-review) related to the variance of a sum of random variables, we have that:
+Alternatively, we could state this as 
 
 $$
 \begin{aligned}
-&\mathrm{var}\left(Y(\mathbf{x}_0)-\hat{Y}(\mathbf{x}_0)\right) \\
-&= \mathrm{var}(\epsilon(\mathbf{x}_0)-\mathbf{x}_0^T \hat{\boldsymbol{\beta}}) \\
-&= \mathrm{var}\left(\epsilon(\mathbf{x}_0)\right)+\mathrm{var}(-\mathbf{x}_0^T \hat{\boldsymbol{\beta}}) + 2\mathrm{cov}\left(\epsilon(\mathbf{x}_0), -\mathbf{x}_0^T \hat{\boldsymbol{\beta}}\right) \\
-&= \mathrm{var}\left(\epsilon(\mathbf{x}_0)\right)+(-1)^2\mathrm{var}(\mathbf{x}_0^T \hat{\boldsymbol{\beta}}) - 2\mathrm{cov}\left(\epsilon(\mathbf{x}_0), \mathbf{x}_0^T \hat{\boldsymbol{\beta}}\right) \\
-&= \mathrm{var}\left(\epsilon(\mathbf{x}_0)\right)+\mathrm{var}(\mathbf{x}_0^T \hat{\boldsymbol{\beta}}) - 2\mathrm{cov}\left(\epsilon(\mathbf{x}_0), \mathbf{x}_0^T \hat{\boldsymbol{\beta}}\right).
+&H_0: \beta_4 = \beta_5 = 0 \mid \beta_0, \beta_1, \beta_2, \beta_3 \in \mathbb{R}.\\
+&H_a: \beta_4 \neq 0 \text{ or } \beta_5 \neq 0 \mid \beta_0, \beta_1, \beta_2, \beta_3 \in \mathbb{R}.
 \end{aligned}
 $$
 
-The covariance term in the final line of Equation \@ref(eq:var-pred-error3) is 0 because $\epsilon(\mathbf{x}_0)$ and $\mathbf{x}_0^T\hat{\boldsymbol{\beta}}$ are uncorrelated. Why are they uncorrelated? Recall that $\epsilon(\mathbf{x}_0), \epsilon_1, \ldots, \epsilon_n$ are uncorrelated. Also, recall that  $\hat{\boldsymbol{\beta}}=(\mathbf{X}^T\mathbf{X})^{-1}\mathbf{X}^T\mathbf{y}$. Since $\mathbf{y}=[Y_1,Y_2,\ldots,Y_n]$ and $Y_i=\mathbf{x}_i^T\boldsymbol{\beta} + \epsilon_i$ for $i=1,2,\ldots,n$, the "randomness" of $\mathbf{x}_0^T\hat{\boldsymbol{\beta}}$ comes from $\epsilon_1, \epsilon_2, \ldots, \epsilon_n$. Since $\epsilon(\mathbf{x}_0)$ is uncorrelated with $\epsilon_1, \epsilon_2, \ldots, \epsilon_n$, we conclude that  $\epsilon(\mathbf{x}_0)$ and $\mathbf{x}_0^T\hat{\boldsymbol{\beta}}$ are uncorrelated, so their covariance is zero. Thus, we have:
+We fit the separate lines regression model to the `penguins` data. 
 
-$$
-\begin{aligned}
-\mathrm{var}\left(Y(\mathbf{x}_0)-\hat{Y}(\mathbf{x}_0)\right)
-=\mathrm{var}\left(\epsilon(\mathbf{x}_0)\right)+\mathrm{var}(\mathbf{x}_0^T \hat{\boldsymbol{\beta}}) .
-\end{aligned}
-$$
+```{r}
+lmods <- lm(bill_length_mm ~ body_mass_g + species + body_mass_g:species,
+            data = penguins)
+coef(lmods)
+```
 
-From our assumptions in Section \@ref(properties-betahat), we have that $\mathrm{var}(\epsilon(\mathbf{x}_0))=\sigma^2$. We determined in Section \@ref(mean-response-calculations) that:
+We use the `anova` function to get our associated test statistic and p-value.
 
-$$
-\mathrm{var}(\mathbf{x}_0^T\hat{\boldsymbol{\beta}})=\sigma^2 \mathbf{x}_0^T (\mathbf{X}^T \mathbf{X})^{-1}\mathbf{x}_0.
-$$
+```{r}
+anova(lmodp, lmods)
+```
 
-Using these two facts, we can conclude that:
-
-$$
-\begin{aligned}
-\mathrm{var}\left(Y(\mathbf{x}_0)-\hat{Y}(\mathbf{x}_0)\right)
-&=\sigma^2 + \sigma^2 \mathbf{x}_0^T (\mathbf{X}^T \mathbf{X})^{-1}\mathbf{x}_0\\
-&=\sigma^2\left(1 + \mathbf{x}_0^T (\mathbf{X}^T \mathbf{X})^{-1}\mathbf{x}_0\right)
-\end{aligned}
-$$
-
-Replacing $\sigma^2$ by the typical estimator $\hat{\sigma}^2=RSS/(n-p)$ to get the estimated variance of the prediction error and taking the square root of the estimated variance to get the estimated standard deviation of the prediction error, we have that:
-
-$$
-\widehat{\mathrm{sd}}\left(Y(\mathbf{x}_0)-\hat{Y}(\mathbf{x}_0)\right) = \hat{\sigma}\sqrt{1 + \mathbf{x}_0^T (\mathbf{X}^T \mathbf{X})^{-1}\mathbf{x}_0}
-$$
+The test statistic for this test is 1.62 with an associated p-value of 0.20. It appears the for the model regressing `bill_length_mm` on `body_mass_g` and `species`, the parallel lines model is adequate and we do not need the adequate complexity of the separate lines model.
 
 # References
-
 
 Bonferroni, Carlo. 1936. "Teoria Statistica Delle Classi e Calcolo Delle Probabilita." Pubblicazioni Del R Istituto Superiore Di Scienze Economiche e Commericiali Di Firenze 8: 3–62.
 
