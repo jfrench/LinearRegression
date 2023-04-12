@@ -426,10 +426,14 @@ div.csl-indent {
 <h1><span class="header-section-number">Chapter 6</span> Linear model inference and prediction<a href="inference.html#inference" class="anchor-section" aria-label="Anchor link to header"></a></h1>
 <div id="overview-of-inference-and-prediction" class="section level2 hasAnchor" number="6.1">
 <h2><span class="header-section-number">6.1</span> Overview of inference and prediction<a href="inference.html#overview-of-inference-and-prediction" class="anchor-section" aria-label="Anchor link to header"></a></h2>
-<p>In this chapter we will discuss statistical inference and prediction. Inference and prediction are often intertwined, so we discuss them together.</p>
+<p>In this chapter we will discuss statistical inference and
+prediction. Inference and prediction are often intertwined,
+so we discuss them together.</p>
 <p><span class="citation">Wasserman (<a href="#ref-wasserman2004all" role="doc-biblioref">2004</a>)</span> states</p>
 <blockquote>
-<p>Statistical inference, or “learning” as it is called in computer science, is the process of using data to infer the distribution that generated the data.</p>
+<p>Statistical inference, or “learning” as it is called in
+computer science, is the process of using data to infer
+the distribution that generated the data.</p>
 </blockquote>
 <p>In short, statistical inference is the process by which we
 use a sample of data to draw conclusions about some aspect
@@ -439,63 +443,86 @@ of the population distribution from which the sample came.</p>
 <li>Confidence intervals</li>
 <li>Hypothesis tests.</li>
 </ol>
-<p>We will discuss both types of inference for linear regression models under standard distributional assumptions. Appendix <a href="est-infer-review.html#est-infer-review">C</a> provides an overview of both confidence intervals and hypothesis tests in a more general context.</p>
-<p>We will also discuss prediction in this chapter. While inference focuses on drawing conclusions about the data-generating distribution, prediction focuses on selecting a plausible value or range of values for an unobserved response. It is common to make predictions using estimated parameters we find as part of the inferential process, though this isn’t required.</p>
-<p>We will also introduce and discuss solutions for the multiple
-comparisons problem, which arises when we make multiple inferences or
-predictions simultaneously.</p>
+<p>We will discuss both types of inference for linear
+regression models under standard distributional assumptions.
+Appendix <a href="est-infer-review.html#est-infer-review">C</a> provides an overview of
+both confidence intervals and hypothesis tests in a more
+general context.</p>
+<p>We will also discuss prediction in this chapter. While
+inference focuses on drawing conclusions about the
+data-generating distribution, prediction focuses on
+selecting a plausible value or range of values for an
+unobserved response. It is common to make predictions using
+estimated parameters we find as part of the inferential
+process, though this isn’t required.</p>
+<p>We will also introduce and discuss solutions for the
+multiple comparisons problem, which arises when we make
+multiple inferences or predictions simultaneously.</p>
 </div>
 <div id="necessary-notation" class="section level2 hasAnchor" number="6.2">
 <h2><span class="header-section-number">6.2</span> Necessary notation<a href="inference.html#necessary-notation" class="anchor-section" aria-label="Anchor link to header"></a></h2>
-<p>We briefly introduce some notation related to random variables and
-distributions that we will need in our discussion below.</p>
-<p>We let <span class="math inline">\(t_{\nu}\)</span> denote a random variable having a <span class="math inline">\(t\)</span> distribution with
-<span class="math inline">\(\nu\)</span> degrees of freedom. We will use the notation <span class="math inline">\(t_{\nu}^{\alpha}\)</span> to
-denote the <span class="math inline">\(1-\alpha\)</span> quantile of a <span class="math inline">\(t\)</span> distribution with <span class="math inline">\(\nu\)</span> degrees
-of freedom. The <span class="math inline">\(t\)</span> distribution is a symmetric bell-shaped distribution
-like the normal distribution but has a larger standard deviation. As the
-degrees of freedom of a <span class="math inline">\(t\)</span> random variable increases it behaves more
-and more similarly to a random variable with a standard normal
-distribution (a <span class="math inline">\(\mathsf{N}(0,1)\)</span> distribution). Figure <a href="inference.html#fig:tquantile">6.1</a> displays the density of a <span class="math inline">\(t\)</span> distribution with 10 degrees of freedom while also indicating the 0.95 quantile of that distribution. Additional information about the <span class="math inline">\(t\)</span> distribution is available on Wikipedia at
-<a href="https://en.wikipedia.org/wiki/Student%27s_t-distribution">https://en.wikipedia.org/wiki/Student%27s_t-distribution</a>.</p>
+<p>We briefly introduce some notation related to random
+variables and distributions that we will need in our
+discussion below.</p>
+<p>We let <span class="math inline">\(t_{\nu}\)</span> denote a random variable having a <span class="math inline">\(t\)</span>
+distribution with <span class="math inline">\(\nu\)</span> degrees of freedom. We will use the
+notation <span class="math inline">\(t_{\nu}^{\alpha}\)</span> to denote the <span class="math inline">\(1-\alpha\)</span>
+quantile of a <span class="math inline">\(t\)</span> distribution with <span class="math inline">\(\nu\)</span> degrees of
+freedom. The <span class="math inline">\(t\)</span> distribution is a symmetric bell-shaped
+distribution like the normal distribution but has a larger
+standard deviation. As the degrees of freedom of a <span class="math inline">\(t\)</span>
+random variable increases it behaves more and more similarly
+to a random variable with a standard normal distribution (a
+<span class="math inline">\(\mathsf{N}(0,1)\)</span> distribution). Figure <a href="inference.html#fig:tquantile">6.1</a>
+displays the density of a <span class="math inline">\(t\)</span> distribution with 10 degrees
+of freedom while also indicating the 0.95 quantile of that
+distribution. Additional information about the <span class="math inline">\(t\)</span>
+distribution is available on Wikipedia at
+<a href="https://en.wikipedia.org/wiki/Student%27s_t-distribution" class="uri">https://en.wikipedia.org/wiki/Student%27s_t-distribution</a>.</p>
 <div class="figure"><span style="display:block;" id="fig:tquantile"></span>
 <img src="A-Progessive-Introduction-to-Linear-Models_files/figure-html/tquantile-1.png" alt="The solid line shows the density of a $t$ random variable with 10 degrees of freedom. The dashed vertical line indicates $t^{0.05}_{10}$, the 0.95 quantile of a $t$ distribution with 10 degrees of freedom. The area to the left of the line is 0.95 while the area to the right is 0.05." width="672" />
 <p class="caption">
 Figure 6.1: The solid line shows the density of a <span class="math inline">\(t\)</span> random variable with 10 degrees of freedom. The dashed vertical line indicates <span class="math inline">\(t^{0.05}_{10}\)</span>, the 0.95 quantile of a <span class="math inline">\(t\)</span> distribution with 10 degrees of freedom. The area to the left of the line is 0.95 while the area to the right is 0.05.
 </p>
 </div>
-<p>We use the notation <span class="math inline">\(F_{\nu_1, \nu_2}\)</span> to denote a random variable
-having an <span class="math inline">\(F\)</span> distribution with <span class="math inline">\(\nu_1\)</span> numerator degrees of freedom and
-<span class="math inline">\(\nu_2\)</span> denominator degrees of freedom. We let
-<span class="math inline">\(F^{\alpha}_{\nu_1,\nu_2}\)</span> denote the <span class="math inline">\(1-\alpha\)</span> quantile of an <span class="math inline">\(F\)</span>
-random variables with <span class="math inline">\(\nu_1\)</span> numerator degrees of freedom and <span class="math inline">\(\nu_2\)</span>
-denominator degrees of freedom. In fact, <span class="math inline">\([t_{\nu}]^2=F_{1,\nu}\)</span>, i.e.,
-the square of a <span class="math inline">\(t\)</span> random variable with <span class="math inline">\(\nu\)</span> degrees of freedom is
-equivalent to an <span class="math inline">\(F\)</span> random variable with <span class="math inline">\(1\)</span> numerator degree of
-freedom and <span class="math inline">\(\nu\)</span> denominator degrees of freedom.</p>
+<p>We use the notation <span class="math inline">\(F_{\nu_1, \nu_2}\)</span> to denote a random
+variable having an <span class="math inline">\(F\)</span> distribution with <span class="math inline">\(\nu_1\)</span> numerator
+degrees of freedom and <span class="math inline">\(\nu_2\)</span> denominator degrees of
+freedom. We let <span class="math inline">\(F^{\alpha}_{\nu_1,\nu_2}\)</span> denote the
+<span class="math inline">\(1-\alpha\)</span> quantile of an <span class="math inline">\(F\)</span> random variables with <span class="math inline">\(\nu_1\)</span>
+numerator degrees of freedom and <span class="math inline">\(\nu_2\)</span> denominator degrees
+of freedom. In fact, <span class="math inline">\([t_{\nu}]^2=F_{1,\nu}\)</span>, i.e., the
+square of a <span class="math inline">\(t\)</span> random variable with <span class="math inline">\(\nu\)</span> degrees of
+freedom is equivalent to an <span class="math inline">\(F\)</span> random variable with <span class="math inline">\(1\)</span>
+numerator degree of freedom and <span class="math inline">\(\nu\)</span> denominator degrees of
+freedom.</p>
 </div>
 <div id="properties-betahat" class="section level2 hasAnchor" number="6.3">
 <h2><span class="header-section-number">6.3</span> Assumptions and properties of the OLS estimator<a href="inference.html#properties-betahat" class="anchor-section" aria-label="Anchor link to header"></a></h2>
 <p>We continue by reviewing some of the properties of
-<span class="math inline">\(\hat{\boldsymbol{\beta}}\)</span>, the OLS estimator of the regression
-coefficient vector.</p>
+<span class="math inline">\(\hat{\boldsymbol{\beta}}\)</span>, the OLS estimator of the
+regression coefficient vector.</p>
 <p>We assume that
 <span class="math display" id="eq:model-def-inference">\[
 \mathbf{y} = \mathbf{X}\boldsymbol{\beta}+\boldsymbol{\epsilon}, \tag{6.1}
-\]</span> using standard matrix notation.</p>
-<p>We also assume that the model in Equation <a href="inference.html#eq:model-def-inference">(6.1)</a>
-is correct (i.e., we have correctly specified the true model that
-generated the data) and that
+\]</span>
+using standard matrix notation.</p>
+<p>We also assume that the model in Equation
+<a href="inference.html#eq:model-def-inference">(6.1)</a> is correct (i.e., we have
+correctly specified the true model that generated the data)
+and that
 <span class="math display" id="eq:error-assumption-inference">\[
 \boldsymbol{\epsilon}\mid \mathbf{X}\sim \mathsf{N}(\mathbf{0}_{n\times 1},\sigma^2 \mathbf{I}_{n\times n}).  \tag{6.2}
 \]</span>
-This assumption applies to all errors, so we believe that all errors, observed and future, will have mean 0, variance <span class="math inline">\(\sigma^2\)</span>, will be uncorrelated, and have a normal distribution.</p>
-<p>Under these assumptions, we showed in Chapter <a href="linear-model-theory.html#linear-model-theory">5</a>
-that</p>
+This assumption applies to all errors, so we believe that
+all errors, observed and future, will have mean 0, variance
+<span class="math inline">\(\sigma^2\)</span>, will be uncorrelated, and have a normal
+distribution.</p>
+<p>Under these assumptions, we showed in Chapter
+<a href="linear-model-theory.html#linear-model-theory">5</a> that</p>
 <p><span class="math display">\[
 \mathbf{y}\mid \mathbf{X}\sim \mathsf{N}(\mathbf{X}\boldsymbol{\beta}, \sigma^2 \mathbf{I}_{n\times n}).
-\]</span>
-and
+\]</span> and
 <span class="math display" id="eq:prop-betahat">\[\hat{\boldsymbol{\beta}}\mid \mathbf{X} \sim \mathsf{N}(\boldsymbol{\beta}, \sigma^2(\mathbf{X}^T\mathbf{X})^{-1}).
 \tag{6.3}
 \]</span></p>
@@ -504,74 +531,85 @@ and
 <h2><span class="header-section-number">6.4</span> Parametric confidence intervals for regression coefficients<a href="inference.html#parametric-confidence-intervals-for-regression-coefficients" class="anchor-section" aria-label="Anchor link to header"></a></h2>
 <div id="tci" class="section level3 hasAnchor" number="6.4.1">
 <h3><span class="header-section-number">6.4.1</span> Standard <span class="math inline">\(t\)</span>-based confidence intervals<a href="inference.html#tci" class="anchor-section" aria-label="Anchor link to header"></a></h3>
-<p>Under the assumptions in Equations <a href="inference.html#eq:model-def-inference">(6.1)</a> and
-<a href="inference.html#eq:error-assumption-inference">(6.2)</a>, we can prove (though we won’t)
-that
-<span class="math display">\[
+<p>Under the assumptions in Equations
+<a href="inference.html#eq:model-def-inference">(6.1)</a> and
+<a href="inference.html#eq:error-assumption-inference">(6.2)</a>, we can prove (though
+we won’t) that <span class="math display">\[
 \frac{\hat{\beta}_j-\beta_j}{\hat{\mathrm{se}}(\hat{\beta}_j)}\sim t_{n-p}, \quad j=0,1,\ldots,p-1,
 \]</span></p>
 <p>where
 <span class="math inline">\(\hat{\mathrm{se}}(\hat{\beta}_j)=\hat{\sigma}\sqrt{(\mathbf{X}^T\mathbf{X})^{-1}_{j+1,j+1}}\)</span>
-is the estimated standard error of <span class="math inline">\(\hat{\beta}_j\)</span>. Recall that
-estimated standard error is the estimated standard deviation of the
-sampling distribution of <span class="math inline">\(\hat{\beta}_j\)</span>. Also, recall that the notation
-<span class="math inline">\((\mathbf{X}^T\mathbf{X})^{-1}_{j+1,j+1}\)</span> indicates the element in row
-<span class="math inline">\(j+1\)</span>, column <span class="math inline">\(j+1\)</span>, of the matrix <span class="math inline">\((\mathbf{X}^T\mathbf{X})^{-1}\)</span>.
-Thus, <span class="math inline">\((\hat{\beta}_j-\beta_j)/\hat{\mathrm{se}}(\hat{\beta}_j)\)</span> is a
-pivotal quantity with a <span class="math inline">\(t\)</span> distribution, and it can be used to derive a
-confidence interval</p>
-<p>A confidence interval for <span class="math inline">\(\beta_j\)</span> with confidence level <span class="math inline">\(1-\alpha\)</span> is
-given by the expression
+is the estimated standard error of <span class="math inline">\(\hat{\beta}_j\)</span>. Recall
+that estimated standard error is the estimated standard
+deviation of the sampling distribution of <span class="math inline">\(\hat{\beta}_j\)</span>.
+Also, recall that the notation
+<span class="math inline">\((\mathbf{X}^T\mathbf{X})^{-1}_{j+1,j+1}\)</span> indicates the
+element in row <span class="math inline">\(j+1\)</span>, column <span class="math inline">\(j+1\)</span>, of the matrix
+<span class="math inline">\((\mathbf{X}^T\mathbf{X})^{-1}\)</span>. Thus,
+<span class="math inline">\((\hat{\beta}_j-\beta_j)/\hat{\mathrm{se}}(\hat{\beta}_j)\)</span>
+is a pivotal quantity with a <span class="math inline">\(t\)</span> distribution, and it can be
+used to derive a confidence interval</p>
+<p>A confidence interval for <span class="math inline">\(\beta_j\)</span> with confidence level
+<span class="math inline">\(1-\alpha\)</span> is given by the expression
 <span class="math display" id="eq:t-ci-betas">\[
 \hat{\beta}_j \pm t^{\alpha/2}_{n-p} \hat{\mathrm{se}}(\hat{\beta}_j),\quad j=0,2,\ldots,p-1.
 \tag{6.4}
 \]</span>
-It is critical to note that the <span class="math inline">\(1-\alpha\)</span> confidence level refers to
-the procedure for a single interval, not the family of intervals we can
-produce for all <span class="math inline">\(p\)</span> coefficients. We discuss this issue in more detail
-in Section <a href="inference.html#mcp">6.5</a>.</p>
-<p>The <code>confint</code> function returns confidence intervals for the regression
-coefficients of a fitted model. Technically, the <code>confint</code> function is a
-generic function that has methods for many different object classes, but
-we only discuss its usage with <code>lm</code> objects. The <code>confint</code> function has
-3 main arguments:</p>
+It is critical to note that the <span class="math inline">\(1-\alpha\)</span> confidence
+level refers to the procedure for a single interval, not the
+family of intervals we can produce for all <span class="math inline">\(p\)</span> coefficients.
+We discuss this issue in more detail in Section <a href="inference.html#mcp">6.5</a>.</p>
+<p>The <code>confint</code> function returns confidence intervals for the
+regression coefficients of a fitted model. Technically, the
+<code>confint</code> function is a generic function that has methods
+for many different object classes, but we only discuss its
+usage with <code>lm</code> objects. The <code>confint</code> function has 3 main
+arguments:</p>
 <ul>
-<li><code>object</code>: a fitted model object. In our case, the object produced by the <code>lm</code> function.</li>
-<li><code>parm</code>: a vector of numbers or names indicating the parameters for which we want to construct confidence intervals. By default, confidence intervals are constructed for all parameters.</li>
-<li><code>level</code>: the confidence level desired for the confidence interval. The default value is <code>0.95</code>, which will produce 95% confidence intervals.</li>
+<li><code>object</code>: a fitted model object. In our case, the object
+produced by the <code>lm</code> function.</li>
+<li><code>parm</code>: a vector of numbers or names indicating the
+parameters for which we want to construct confidence
+intervals. By default, confidence intervals are
+constructed for all parameters.</li>
+<li><code>level</code>: the confidence level desired for the confidence
+interval. The default value is <code>0.95</code>, which will
+produce 95% confidence intervals.</li>
 </ul>
-<p>We once again use the <code>penguins</code> data from the <strong>palmerpenguins</strong>
-package <span class="citation">(<a href="#ref-R-palmerpenguins" role="doc-biblioref">Horst, Hill, and Gorman 2022</a>)</span> to illustrate what we have learned. Consider
-the regression model
-<span class="math display">\[
+<p>We once again use the <code>penguins</code> data from the
+<strong>palmerpenguins</strong> package <span class="citation">(<a href="#ref-R-palmerpenguins" role="doc-biblioref">Horst, Hill, and Gorman 2022</a>)</span> to illustrate
+what we have learned. Consider the regression model <span class="math display">\[
 \begin{aligned}
 &amp;E(\mathtt{bill\_length\_mm}\mid \mathtt{body\_mass\_g}, \mathtt{flipper\_length\_mm}) \\
 &amp;=\beta_0+\beta_1 \mathtt{body\_mass\_g} + \beta_2 \mathtt{flipper\_length\_mm}.
 \end{aligned}
 \]</span></p>
-<p>We estimate the parameters of this model in R using the code below.</p>
+<p>We estimate the parameters of this model in R using the code
+below.</p>
 <div class="sourceCode" id="cb1"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb1-1"><a href="inference.html#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="co"># load data</span></span>
 <span id="cb1-2"><a href="inference.html#cb1-2" aria-hidden="true" tabindex="-1"></a><span class="fu">data</span>(penguins, <span class="at">package =</span> <span class="st">&quot;palmerpenguins&quot;</span>)</span>
 <span id="cb1-3"><a href="inference.html#cb1-3" aria-hidden="true" tabindex="-1"></a><span class="co"># fit model</span></span>
 <span id="cb1-4"><a href="inference.html#cb1-4" aria-hidden="true" tabindex="-1"></a>mlmod <span class="ot">&lt;-</span> <span class="fu">lm</span>(bill_length_mm <span class="sc">~</span> body_mass_g <span class="sc">+</span> flipper_length_mm, <span class="at">data =</span> penguins)</span></code></pre></div>
-<p>We obtain the 95% confidence intervals for the 3 regression coefficients
-by running the code below.</p>
+<p>We obtain the 95% confidence intervals for the 3 regression
+coefficients by running the code below.</p>
 <div class="sourceCode" id="cb2"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb2-1"><a href="inference.html#cb2-1" aria-hidden="true" tabindex="-1"></a><span class="fu">confint</span>(mlmod)</span>
 <span id="cb2-2"><a href="inference.html#cb2-2" aria-hidden="true" tabindex="-1"></a><span class="do">##                           2.5 %      97.5 %</span></span>
 <span id="cb2-3"><a href="inference.html#cb2-3" aria-hidden="true" tabindex="-1"></a><span class="do">## (Intercept)       -1.244658e+01 5.573192182</span></span>
 <span id="cb2-4"><a href="inference.html#cb2-4" aria-hidden="true" tabindex="-1"></a><span class="do">## body_mass_g       -4.534709e-04 0.001777908</span></span>
 <span id="cb2-5"><a href="inference.html#cb2-5" aria-hidden="true" tabindex="-1"></a><span class="do">## flipper_length_mm  1.582365e-01 0.285494420</span></span></code></pre></div>
-<p>The 95% confidence interval for the intercept parameter is [-12.45,
-5.58]. We are 95% confident that the mean penguin bill length is between
--12.25 and 5.58 mm for a penguin with a body mass of 0 g and a flipper
-length of 0 mm. (This really isn’t sensible).</p>
-<p>The 95% confidence interval for the <code>body_mass_g</code> coefficient is
-[-0.00046, 0.002]. We are 95% confident the regression coefficient for
-<code>body_mass_g</code> is between -0.00046 and 0.002, assuming the
-<code>flipper_length_mm</code> regressor is also in the model.</p>
+<p>The 95% confidence interval for the intercept parameter is
+[-12.45, 5.58]. We are 95% confident that the mean penguin
+bill length is between -12.25 and 5.58 mm for a penguin with
+a body mass of 0 g and a flipper length of 0 mm. (This
+really isn’t sensible).</p>
+<p>The 95% confidence interval for the <code>body_mass_g</code>
+coefficient is [-0.00046, 0.002]. We are 95% confident the
+regression coefficient for <code>body_mass_g</code> is between -0.00046
+and 0.002, assuming the <code>flipper_length_mm</code> regressor is
+also in the model.</p>
 <p>If we wanted to get the 90% confidence interval for the
-<code>flipper_length_mm</code> coefficient by itself, we could use either of the
-commands shown below.</p>
+<code>flipper_length_mm</code> coefficient by itself, we could use
+either of the commands shown below.</p>
 <div class="sourceCode" id="cb3"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb3-1"><a href="inference.html#cb3-1" aria-hidden="true" tabindex="-1"></a><span class="co"># two styles for determining the CI for a single parameter (at a 90% level)</span></span>
 <span id="cb3-2"><a href="inference.html#cb3-2" aria-hidden="true" tabindex="-1"></a><span class="fu">confint</span>(mlmod, <span class="at">parm =</span> <span class="dv">3</span>, <span class="at">level =</span> <span class="fl">0.90</span>)</span>
 <span id="cb3-3"><a href="inference.html#cb3-3" aria-hidden="true" tabindex="-1"></a><span class="do">##                         5 %      95 %</span></span>
@@ -579,31 +617,74 @@ commands shown below.</p>
 <span id="cb3-5"><a href="inference.html#cb3-5" aria-hidden="true" tabindex="-1"></a><span class="fu">confint</span>(mlmod, <span class="at">parm =</span> <span class="st">&quot;flipper_length_mm&quot;</span>, <span class="at">level =</span> <span class="fl">0.90</span>)</span>
 <span id="cb3-6"><a href="inference.html#cb3-6" aria-hidden="true" tabindex="-1"></a><span class="do">##                         5 %      95 %</span></span>
 <span id="cb3-7"><a href="inference.html#cb3-7" aria-hidden="true" tabindex="-1"></a><span class="do">## flipper_length_mm 0.1685112 0.2752197</span></span></code></pre></div>
-<p>We discuss how to “manually” construct these intervals using R in
-Section <a href="inference.html#manual-t-cis">6.11.1</a>.</p>
+<p>We discuss how to “manually” construct these intervals using
+R in Section <a href="inference.html#manual-t-cis">6.11.1</a>.</p>
 </div>
 </div>
 <div id="mcp" class="section level2 hasAnchor" number="6.5">
 <h2><span class="header-section-number">6.5</span> The multiple comparisons problem<a href="inference.html#mcp" class="anchor-section" aria-label="Anchor link to header"></a></h2>
-<p>Our linear models typically have multiple regression coefficients, and thus, we typically want to construct confidence intervals for all of the coefficients.</p>
-<p>While individual confidence intervals have utility in providing us with plausible values of the unknown coefficients, the confidence level of the procedure described in Section <a href="inference.html#tci">6.4.1</a> is only valid for a single interval. Since we are constructing multiple intervals, the simultaneous confidence level of the procedure for the family of intervals is less than <span class="math inline">\(1-\alpha\)</span>. This is an example of the multiple comparisons problem.</p>
-<p>A <strong>multiple comparisons problem</strong> occurs anytime we make multiple inferences (confidence intervals, hypothesis tests, prediction intervals, etc.). We are more likely to draw erroneous conclusions if we do not adjust for the fact that we are making multiple inferential statements. E.g., a confidence interval procedure with level 0.95 will produce intervals that contain the target parameter with probability 0.95. If we construct two confidence intervals with level 0.95, then the family-wise confidence level (i.e., the probability that both intervals simultaneously contain their respective target parameters) will be less than 0.95. (We can guarantee that our family-wise confidence level will be at least 0.90, but we can’t determine the exact value without more information). In general, the <strong>family-wise confidence level</strong> is the probability that a confidence interval procedure produces a family of intervals that simultaneously contain their target parameter. The family-wise confidence level is also known as the <strong>simultaneous</strong> or <strong>overall</strong> confidence level.</p>
-<p>A <strong>multiple comparisons procedure</strong> is a procedure designed to adjust for multiple inferences. In the context of confidence intervals, a multiple comparisons procedure will produce a family of intervals that have a family-wise confidence level above some threshold. We discuss two basic multiple comparisons procedures for confidence
-intervals below.</p>
+<p>Our linear models typically have multiple regression
+coefficients, and thus, we typically want to construct
+confidence intervals for all of the coefficients.</p>
+<p>While individual confidence intervals have utility in
+providing us with plausible values of the unknown
+coefficients, the confidence level of the procedure
+described in Section <a href="inference.html#tci">6.4.1</a> is only valid for a single
+interval. Since we are constructing multiple intervals, the
+simultaneous confidence level of the procedure for the
+family of intervals is less than <span class="math inline">\(1-\alpha\)</span>. This is an
+example of the multiple comparisons problem.</p>
+<p>A <strong>multiple comparisons problem</strong> occurs anytime we make
+multiple inferences (confidence intervals, hypothesis tests,
+prediction intervals, etc.). We are more likely to draw
+erroneous conclusions if we do not adjust for the fact that
+we are making multiple inferential statements. E.g., a
+confidence interval procedure with level 0.95 will produce
+intervals that contain the target parameter with probability
+0.95. If we construct two confidence intervals with level
+0.95, then the family-wise confidence level (i.e., the
+probability that both intervals simultaneously contain their
+respective target parameters) will be less than 0.95. (We
+can guarantee that our family-wise confidence level will be
+at least 0.90, but we can’t determine the exact value
+without more information). In general, the <strong>family-wise
+confidence level</strong> is the probability that a confidence
+interval procedure produces a family of intervals that
+simultaneously contain their target parameter. The
+family-wise confidence level is also known as the
+<strong>simultaneous</strong> or <strong>overall</strong> confidence level.</p>
+<p>A <strong>multiple comparisons procedure</strong> is a procedure designed
+to adjust for multiple inferences. In the context of
+confidence intervals, a multiple comparisons procedure will
+produce a family of intervals that have a family-wise
+confidence level above some threshold. We discuss two basic
+multiple comparisons procedures for confidence intervals
+below.</p>
 <div id="adjusted-cis-betas" class="section level3 hasAnchor" number="6.5.1">
 <h3><span class="header-section-number">6.5.1</span> Adjusted confidence intervals for regression coefficients<a href="inference.html#adjusted-cis-betas" class="anchor-section" aria-label="Anchor link to header"></a></h3>
-<p><span class="citation">Bonferroni (<a href="#ref-bonferroni1936" role="doc-biblioref">1936</a>)</span> proposed a simple multiple comparisons procedure that is applicable in many contexts. This general procedure is known as the <strong>Bonferroni correction</strong>. We describe its application below.</p>
-<p>Suppose we are constructing <span class="math inline">\(k\)</span> confidence intervals simultaneously. We control the family-wise confidence level of our intervals at <span class="math inline">\(1-\alpha\)</span> if we construct the individual confidence intervals with the level <span class="math inline">\(1-\alpha/k\)</span>. We sketch a proof of this below.</p>
-<p>Boole’s inequality <span class="citation">(<a href="#ref-boole" role="doc-biblioref">Boole 1847</a>)</span> states that for a countable set of events <span class="math inline">\(A_1, A_2, A_3 \ldots\)</span>,
-<span class="math display">\[P(\cup_{j=1}^\infty A_j) \leq \sum_{j=1}^\infty P(A_j).\]</span> This is a
-generalization of the fact that
-<span class="math display">\[
+<p><span class="citation">Bonferroni (<a href="#ref-bonferroni1936" role="doc-biblioref">1936</a>)</span> proposed a simple multiple comparisons
+procedure that is applicable in many contexts. This general
+procedure is known as the <strong>Bonferroni correction</strong>. We
+describe its application below.</p>
+<p>Suppose we are constructing <span class="math inline">\(k\)</span> confidence intervals
+simultaneously. We control the family-wise confidence level
+of our intervals at <span class="math inline">\(1-\alpha\)</span> if we construct the
+individual confidence intervals with the level <span class="math inline">\(1-\alpha/k\)</span>.
+We sketch a proof of this below.</p>
+<p>Boole’s inequality <span class="citation">(<a href="#ref-boole" role="doc-biblioref">Boole 1847</a>)</span> states that for a countable set
+of events <span class="math inline">\(A_1, A_2, A_3 \ldots\)</span>,
+<span class="math display">\[P(\cup_{j=1}^\infty A_j) \leq \sum_{j=1}^\infty P(A_j).\]</span>
+This is a generalization of the fact that <span class="math display">\[
 P(A \cup B) = P(A) + P(B) - P(A\cap B) \leq P(A) + P(B)
-\]</span>
-for two events <span class="math inline">\(A\)</span> and <span class="math inline">\(B\)</span>. We can use Boole’s inequality to show that the Bonferroni correction controls the family-wise confidence level of our confidence intervals at <span class="math inline">\(1-\alpha\)</span>.</p>
-<p>Suppose that we construct a family of <span class="math inline">\(k\)</span> confidence intervals with individual confidence level <span class="math inline">\(1-\alpha/k\)</span> (and all assumptions are satisfied.) Then the probability that the confidence interval procedure for a specific interval doesn’t contain the target parameter is
-<span class="math inline">\(\alpha/k\)</span>. Then
-<span class="math display">\[
+\]</span> for two events <span class="math inline">\(A\)</span> and <span class="math inline">\(B\)</span>. We can use Boole’s inequality
+to show that the Bonferroni correction controls the
+family-wise confidence level of our confidence intervals at
+<span class="math inline">\(1-\alpha\)</span>.</p>
+<p>Suppose that we construct a family of <span class="math inline">\(k\)</span> confidence
+intervals with individual confidence level <span class="math inline">\(1-\alpha/k\)</span> (and
+all assumptions are satisfied.) Then the probability that
+the confidence interval procedure for a specific interval
+doesn’t contain the target parameter is <span class="math inline">\(\alpha/k\)</span>. Then <span class="math display">\[
 \begin{aligned}
 &amp; P(\mbox{All }k\mbox{ intervals contain the target parameter}) \\
 &amp; = 1 - P(\mbox{At least one of the }k\mbox{ intervals misses the target parameter}) \\
@@ -612,17 +693,39 @@ for two events <span class="math inline">\(A\)</span> and <span class="math inli
 &amp; = 1 - k(\alpha/k) \\
 &amp;= 1-\alpha.
 \end{aligned}
-\]</span>
-Thus, the family-wise confidence level of all <span class="math inline">\(k\)</span> intervals is AT LEAST <span class="math inline">\(1-\alpha\)</span> when the Bonferroni correction is used.</p>
-<p>The Bonferroni correction is known to be conservative, which means that the family-wise confidence level is typically much larger than <span class="math inline">\(1-\alpha\)</span>. This might sound like a desirable property, but conservative methods can have low power. In the context of our confidence intervals, this means our intervals are much wider than they need to be, so we aren’t able to draw precise conclusions about the plausible values of our regression coefficients.</p>
-<p>Let’s construct simultaneous confidence intervals for our <code>penguins</code> example using the Bonferroni correction. If we want to control the family-wise confidence level of our <span class="math inline">\(k=3\)</span> intervals at <span class="math inline">\(0.95\)</span>, then <span class="math inline">\(\alpha = 0.05\)</span> and the Bonferroni correction suggests that we should construct the individual intervals at a confidence level of <span class="math inline">\(1-0.05/3=0.983\)</span>. We construct the Bonferroni-adjusted confidence intervals using the code below.</p>
+\]</span> Thus, the family-wise confidence level of all <span class="math inline">\(k\)</span>
+intervals is AT LEAST <span class="math inline">\(1-\alpha\)</span> when the Bonferroni
+correction is used.</p>
+<p>The Bonferroni correction is known to be conservative, which
+means that the family-wise confidence level is typically
+much larger than <span class="math inline">\(1-\alpha\)</span>. This might sound like a
+desirable property, but conservative methods can have low
+power. In the context of our confidence intervals, this
+means our intervals are much wider than they need to be, so
+we aren’t able to draw precise conclusions about the
+plausible values of our regression coefficients.</p>
+<p>Let’s construct simultaneous confidence intervals for our
+<code>penguins</code> example using the Bonferroni correction. If we
+want to control the family-wise confidence level of our
+<span class="math inline">\(k=3\)</span> intervals at <span class="math inline">\(0.95\)</span>, then <span class="math inline">\(\alpha = 0.05\)</span> and the
+Bonferroni correction suggests that we should construct the
+individual intervals at a confidence level of
+<span class="math inline">\(1-0.05/3=0.983\)</span>. We construct the Bonferroni-adjusted
+confidence intervals using the code below.</p>
 <div class="sourceCode" id="cb4"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb4-1"><a href="inference.html#cb4-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Simultaneous 95% confidence intervals for mlmod</span></span>
 <span id="cb4-2"><a href="inference.html#cb4-2" aria-hidden="true" tabindex="-1"></a><span class="fu">confint</span>(mlmod, <span class="at">level =</span> <span class="dv">1</span> <span class="sc">-</span> <span class="fl">0.05</span><span class="sc">/</span><span class="dv">3</span>)</span>
 <span id="cb4-3"><a href="inference.html#cb4-3" aria-hidden="true" tabindex="-1"></a><span class="do">##                         0.833 %    99.167 %</span></span>
 <span id="cb4-4"><a href="inference.html#cb4-4" aria-hidden="true" tabindex="-1"></a><span class="do">## (Intercept)       -1.445714e+01 7.583749811</span></span>
 <span id="cb4-5"><a href="inference.html#cb4-5" aria-hidden="true" tabindex="-1"></a><span class="do">## body_mass_g       -7.024372e-04 0.002026874</span></span>
 <span id="cb4-6"><a href="inference.html#cb4-6" aria-hidden="true" tabindex="-1"></a><span class="do">## flipper_length_mm  1.440377e-01 0.299693234</span></span></code></pre></div>
-<p>Alternatively, we can use the <code>confint_adjust</code> function from the <strong>api2lm</strong> package <span class="citation">(<a href="#ref-R-api2lm" role="doc-biblioref">French 2022</a>)</span> to construct this interval. The <code>confint_adjust</code> function works identically to the <code>confint</code> function except that it has an additional argument to indicate the type of adjustment to make when constructing the confidence intervals. Specifying <code>method = "bonferroni"</code> will produce Bonferroni-corrected intervals, as demonstrated in the code below.</p>
+<p>Alternatively, we can use the <code>confint_adjust</code> function from
+the <strong>api2lm</strong> package <span class="citation">(<a href="#ref-R-api2lm" role="doc-biblioref">French 2022</a>)</span> to construct this
+interval. The <code>confint_adjust</code> function works identically to
+the <code>confint</code> function except that it has an additional
+argument to indicate the type of adjustment to make when
+constructing the confidence intervals. Specifying
+<code>method = "bonferroni"</code> will produce Bonferroni-corrected
+intervals, as demonstrated in the code below.</p>
 <div class="sourceCode" id="cb5"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb5-1"><a href="inference.html#cb5-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(api2lm)</span>
 <span id="cb5-2"><a href="inference.html#cb5-2" aria-hidden="true" tabindex="-1"></a><span class="fu">confint_adjust</span>(mlmod, <span class="at">method =</span> <span class="st">&quot;bonferroni&quot;</span>)</span>
 <span id="cb5-3"><a href="inference.html#cb5-3" aria-hidden="true" tabindex="-1"></a><span class="do">## </span></span>
@@ -634,13 +737,27 @@ Thus, the family-wise confidence level of all <span class="math inline">\(k\)</s
 <span id="cb5-9"><a href="inference.html#cb5-9" aria-hidden="true" tabindex="-1"></a><span class="do">##        (Intercept) -1.445714e+01 7.583749811</span></span>
 <span id="cb5-10"><a href="inference.html#cb5-10" aria-hidden="true" tabindex="-1"></a><span class="do">##        body_mass_g -7.024372e-04 0.002026874</span></span>
 <span id="cb5-11"><a href="inference.html#cb5-11" aria-hidden="true" tabindex="-1"></a><span class="do">##  flipper_length_mm  1.440377e-01 0.299693234</span></span></code></pre></div>
-<p><span class="citation">Working and Hotelling (<a href="#ref-workinghotelling" role="doc-biblioref">1929</a>)</span> developed another multiple comparisons procedure that can be used to preserve the family-wise confidence level of the intervals at <span class="math inline">\(1-\alpha\)</span>. The Working-Hotelling multiple comparisons procedure is valid for ALL linear combinations of the regression coefficients, meaning that we can construct an arbitrarily large number of confidence intervals for linear combinations of the regression coefficients with this procedure and the family-wise confidence level will be at least <span class="math inline">\(1-\alpha\)</span> <span class="citation">(<a href="#ref-alr4" role="doc-biblioref">Weisberg 2014</a>)</span>.</p>
-<p>The Working-Hotelling procedure guarantees that if we construct the individual confidence intervals in the following way, then the family-wise confidence level will be at least <span class="math inline">\(1-\alpha\)</span>:
-<span class="math display" id="eq:wh-ci-betas">\[
-\hat{\beta}_j \pm \sqrt{p F^\alpha_{p,n-p}} \hat{\mathrm{se}}(\hat{\beta}_j),\quad j=0,2,\ldots,p-1. \tag{6.5}
+<p><span class="citation">Working and Hotelling (<a href="#ref-workinghotelling" role="doc-biblioref">1929</a>)</span> developed another multiple comparisons
+procedure that can be used to preserve the family-wise
+confidence level of the intervals at <span class="math inline">\(1-\alpha\)</span>. The
+Working-Hotelling multiple comparisons procedure is valid
+for ALL linear combinations of the regression coefficients,
+meaning that we can construct an arbitrarily large number of
+confidence intervals for linear combinations of the
+regression coefficients with this procedure and the
+family-wise confidence level will be at least <span class="math inline">\(1-\alpha\)</span>
+<span class="citation">(<a href="#ref-alr4" role="doc-biblioref">Weisberg 2014</a>)</span>.</p>
+<p>The Working-Hotelling procedure guarantees that if we
+construct the individual confidence intervals in the
+following way, then the family-wise confidence level will be
+at least <span class="math inline">\(1-\alpha\)</span>: <span class="math display">\[
+\hat{\beta}_j \pm \sqrt{p F^\alpha_{p,n-p}} \hat{\mathrm{se}}(\hat{\beta}_j),\quad j=0,2,\ldots,p-1. (\#eq:wh-ci-betas)
 \]</span></p>
-<p>The <code>confint_adjust</code> function from the <strong>api2lm</strong> package will produce these intervals when setting the <code>method</code> argument to <code>"wh"</code>. We construct Working-Hotelling-adjusted intervals with family-wise confidence level of at least 0.95 for the <code>penguins</code> example using the
-code below.</p>
+<p>The <code>confint_adjust</code> function from the <strong>api2lm</strong> package
+will produce these intervals when setting the <code>method</code>
+argument to <code>"wh"</code>. We construct Working-Hotelling-adjusted
+intervals with family-wise confidence level of at least 0.95
+for the <code>penguins</code> example using the code below.</p>
 <div class="sourceCode" id="cb6"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb6-1"><a href="inference.html#cb6-1" aria-hidden="true" tabindex="-1"></a><span class="co"># 95% family-wise CIs using Working-Hotelling</span></span>
 <span id="cb6-2"><a href="inference.html#cb6-2" aria-hidden="true" tabindex="-1"></a><span class="fu">confint_adjust</span>(mlmod, <span class="at">method =</span> <span class="st">&quot;wh&quot;</span>)</span>
 <span id="cb6-3"><a href="inference.html#cb6-3" aria-hidden="true" tabindex="-1"></a><span class="do">## </span></span>
@@ -652,93 +769,160 @@ code below.</p>
 <span id="cb6-9"><a href="inference.html#cb6-9" aria-hidden="true" tabindex="-1"></a><span class="do">##        (Intercept) -1.630614e+01 9.432751051</span></span>
 <span id="cb6-10"><a href="inference.html#cb6-10" aria-hidden="true" tabindex="-1"></a><span class="do">##        body_mass_g -9.313981e-04 0.002255835</span></span>
 <span id="cb6-11"><a href="inference.html#cb6-11" aria-hidden="true" tabindex="-1"></a><span class="do">##  flipper_length_mm  1.309798e-01 0.312751116</span></span></code></pre></div>
-<p>In this example, the Bonferroni-adjusted intervals are narrower than the Working-Hotelling-adjusted intervals. The Working-Hotelling intervals tends to be narrower for small <span class="math inline">\(p\)</span> (e.g., <span class="math inline">\(p=1\)</span> or <span class="math inline">\(2\)</span>) and small <span class="math inline">\(n-p\)</span> (e.g., <span class="math inline">\(n-p = 1\)</span> or <span class="math inline">\(2\)</span>) <span class="citation">(<a href="#ref-bon_vs_scheffe" role="doc-biblioref">Mi and Sampson 1993</a>)</span>. Additionally, as the number of intervals increases, the Working-Hotelling intervals will eventually be narrower than the Bonferroni-adjusted intervals.</p>
+<p>In this example, the Bonferroni-adjusted intervals are
+narrower than the Working-Hotelling-adjusted intervals. The
+Working-Hotelling intervals tends to be narrower for small
+<span class="math inline">\(p\)</span> (e.g., <span class="math inline">\(p=1\)</span> or <span class="math inline">\(2\)</span>) and small <span class="math inline">\(n-p\)</span> (e.g., <span class="math inline">\(n-p = 1\)</span> or
+<span class="math inline">\(2\)</span>) <span class="citation">(<a href="#ref-bon_vs_scheffe" role="doc-biblioref">Mi and Sampson 1993</a>)</span>. Additionally, as the number of
+intervals increases, the Working-Hotelling intervals will
+eventually be narrower than the Bonferroni-adjusted
+intervals.</p>
 </div>
 </div>
 <div id="prediction-mean-response-versus-new-response" class="section level2 hasAnchor" number="6.6">
 <h2><span class="header-section-number">6.6</span> Prediction: mean response versus new response<a href="inference.html#prediction-mean-response-versus-new-response" class="anchor-section" aria-label="Anchor link to header"></a></h2>
-<p>It is common to make two types of predictions in a regression context: prediction of a mean response and prediction of a new response. In either context, we want to make predictions with respect to a specific
-combination of regressor values, which we denote <span class="math inline">\(\mathbf{x}_0\)</span>. Using our previous notation, the mean response for a specific combination of regressors is denoted <span class="math inline">\(E(Y\mid \mathbb{X}=\mathbf{x}_0)\)</span>. We do not have
-notation to describe a new response for a specific combination of regressor values, so we will use the notation <span class="math inline">\(Y(\mathbf{x}_0)\)</span>.</p>
-<p><span class="math inline">\(E(Y\mid \mathbb{X}=\mathbf{x}_0)\)</span> represents the average response when the regressor values are <span class="math inline">\(\mathbf{x}_0\)</span>. Conceptually, this is the number we would get if were able to determine the average of an infinite number of responses with regressor values being fixed at <span class="math inline">\(\mathbf{x}_0\)</span>.</p>
-<p><span class="math inline">\(Y(\mathbf{x}_0)\)</span> represents the actual response we will will observe for a new observation with regressor values <span class="math inline">\(\mathbf{x}_0\)</span>. Conceptually, we can think of <span class="math inline">\(Y(\mathbf{x}_0)\)</span> as the mean response for that combination of regressor values plus some error, or more formally,
-<span class="math display">\[
+<p>It is common to make two types of predictions in a
+regression context: prediction of a mean response and
+prediction of a new response. In either context, we want to
+make predictions with respect to a specific combination of
+regressor values, which we denote <span class="math inline">\(\mathbf{x}_0\)</span>. Using our
+previous notation, the mean response for a specific
+combination of regressors is denoted
+<span class="math inline">\(E(Y\mid \mathbb{X}=\mathbf{x}_0)\)</span>. We do not have notation
+to describe a new response for a specific combination of
+regressor values, so we will use the notation
+<span class="math inline">\(Y(\mathbf{x}_0)\)</span>.</p>
+<p><span class="math inline">\(E(Y\mid \mathbb{X}=\mathbf{x}_0)\)</span> represents the average
+response when the regressor values are <span class="math inline">\(\mathbf{x}_0\)</span>.
+Conceptually, this is the number we would get if were able
+to determine the average of an infinite number of responses
+with regressor values being fixed at <span class="math inline">\(\mathbf{x}_0\)</span>.</p>
+<p><span class="math inline">\(Y(\mathbf{x}_0)\)</span> represents the actual response we will
+will observe for a new observation with regressor values
+<span class="math inline">\(\mathbf{x}_0\)</span>. Conceptually, we can think of
+<span class="math inline">\(Y(\mathbf{x}_0)\)</span> as the mean response for that combination
+of regressor values plus some error, or more formally, <span class="math display">\[
 Y(\mathbf{x}_0)=E(Y\mid \mathbb{X}=\mathbf{x}_0)+\epsilon(\mathbf{x}_0),
-\]</span>
-where <span class="math inline">\(\epsilon(\mathbf{x_0})\)</span> denotes the error for our new observation.</p>
-<p>Suppose we want to rent a new apartment or buy a new house. If we look through the available listings, we will likely filter our search results by certain characteristics. We might limit our search to dwellings with 3 bedrooms, 2 bathrooms, that are within a certain distance of public transportation, and have a certain amount of square footage. If we averaged the monthly rent or asking price of all the dwellings matching our specifications, then that would be an approximation of the mean response (we would need all the possible dwellings matching those considerations to get the true average). This average would give us an idea of the “typical” price of dwellings with those characteristics. On the other hand, we likely want to know the price of the dwelling we actually end up in. This is the “new response” we want to predict.</p>
-<p>Though we can discuss predictions for both the mean response and a new response, it is common to distinguish the two scenarios by using the terminology “estimating the mean response” to refer to prediction of the the mean and “prediction a new response” when we want to predict a new observation. We use this convention in what follows to distinguish the two contexts.</p>
+\]</span> where <span class="math inline">\(\epsilon(\mathbf{x_0})\)</span> denotes the error for our
+new observation.</p>
+<p>Suppose we want to rent a new apartment or buy a new house.
+If we look through the available listings, we will likely
+filter our search results by certain characteristics. We
+might limit our search to dwellings with 3 bedrooms, 2
+bathrooms, that are within a certain distance of public
+transportation, and have a certain amount of square footage.
+If we averaged the monthly rent or asking price of all the
+dwellings matching our specifications, then that would be an
+approximation of the mean response for that combination of specifications (i.e., regressors). We would need all the
+possible dwellings matching those characteristics to get the
+true average. This average would give us an idea of the
+“typical” price of dwellings with those characteristics. On
+the other hand, we likely want to know the price of the
+dwelling we actually end up in. This is the “new response”
+we want to predict.</p>
+<p>Though we can discuss predictions for both the mean response
+and a new response, it is common to distinguish the two
+scenarios by using the terminology “estimating the mean
+response” to refer to prediction of the the mean and
+“prediction a new response” when we want to predict a new
+observation. We use this convention in what follows to
+distinguish the two contexts.</p>
 </div>
 <div id="parametric-ci-mean-response" class="section level2 hasAnchor" number="6.7">
 <h2><span class="header-section-number">6.7</span> Confidence interval for the mean response<a href="inference.html#parametric-ci-mean-response" class="anchor-section" aria-label="Anchor link to header"></a></h2>
-<p>Consider a typical linear regression model with <span class="math inline">\(p\)</span> regression
-coefficients given by
-<span class="math display">\[E(Y|\mathbb{X})=\beta_0+\beta_1 X_1 + \ldots \beta_{p-1} X_{p-1}.\]</span>We
-want to estimate the mean response for a specific combination of
-regressor values. The mean response for that combination of regressors
-is obtained via the equivalent expressions <span class="math display">\[
+<p>Consider a typical linear regression model with <span class="math inline">\(p\)</span>
+regression coefficients given by</p>
+<p><span class="math display">\[E(Y|\mathbb{X})=\beta_0+\beta_1 X_1 + \ldots \beta_{p-1} X_{p-1}.\]</span></p>
+<p>We want to estimate the mean response for a specific
+combination of regressor values. The mean response for that
+combination of regressors is obtained via the equivalent
+expressions</p>
+<p><span class="math display">\[
 \begin{aligned}
 E(Y\mid \mathbb{X}=\mathbf{x}_0) &amp;= \beta_0 + \sum_{j=1}^{p-1}x_{0,j}\beta_j \\
 &amp;= \mathbf{x}_0^T \boldsymbol{\beta}.
 \end{aligned}
 \]</span></p>
-<p>To simplify our notation, we drop the “<span class="math inline">\(\mathbb{X}=\)</span>” in our discussion below, so
+<p>To simplify our notation, we drop the “<span class="math inline">\(\mathbb{X}=\)</span>” in our
+discussion below, so
 <span class="math inline">\(E(Y\mid \mathbb{X}=\mathbf{x}_0)\equiv E(Y\mid \mathbf{x}_0)\)</span>.</p>
-<p>What does <span class="math inline">\(E(Y\mid \mathbf{x}_0)\)</span> represent? It represents the average response we will observe if we somehow managed to observe infinitely many responses with <span class="math inline">\(\mathbb{X}=\mathbf{x}_0\)</span>.</p>
+<p>What does <span class="math inline">\(E(Y\mid \mathbf{x}_0)\)</span> represent? It represents
+the average response we will observe if we somehow managed
+to observe infinitely many responses with
+<span class="math inline">\(\mathbb{X}=\mathbf{x}_0\)</span>.</p>
 <p>The Gauss-Markov Theorem discussed in Chapter
-<a href="linear-model-estimation.html#linear-model-estimation">3</a> indicates that the best linear unbiased
-estimator of the mean response is given by the equation<span class="math display">\[
+<a href="linear-model-estimation.html#linear-model-estimation">3</a> indicates that the best
+linear unbiased estimator of the mean response is given by
+the equation<span class="math display">\[
 \begin{aligned}
 \hat{E}(Y\mid \mathbf{x}_0) &amp;= \hat{\beta}_0 + \sum_{j=1}^{p-1}x_{0,j}\hat{\beta}_j \\
 &amp;= \mathbf{x}_0^T \hat{\boldsymbol{\beta}},
 \end{aligned}
 \]</span></p>
-<p>which replaces the unknown, true coefficients by their OLS estimates.</p>
-<p>We want to create a confidence interval for <span class="math inline">\(E(Y\mid \mathbf{x}_0)\)</span>. If we divide the estimation error of the mean response, i.e., <span class="math inline">\(E(Y\mid \mathbf{x}_0)-\hat{E}(Y\mid \mathbf{x}_0)\)</span>, by its estimated standard deviation, then we obtain a pivotal quantity. More specifically, we have <span class="math display">\[
-\frac{E(Y\mid \mathbf{x}_0)-\hat{E}(Y\mid \mathbf{x}_0)}{\sqrt{\hat{\mathrm{var}}\left(E(Y\mid \mathbf{x}_0)-\hat{E}(Y\mid \mathbf{x}_0)\right)}} = \frac{E(Y\mid \mathbf{x}_0)- \mathbf{x}_0 \hat{\boldsymbol{\beta}}}{ \hat{\mathrm{se}}(\mathbf{x}_0\hat{\boldsymbol{\beta}})}\sim t_{n-p},
-\]</span>
-with
-<span class="math display" id="eq:sehat-est-mean">\[
-\hat{\mathrm{se}}(\mathbf{x}_0^T\hat{\boldsymbol{\beta}})=\hat{\sigma}\sqrt{\mathbf{x}_0^T (\mathbf{X}^T \mathbf{X})^{-1}\mathbf{x}_0}. \tag{6.6}
-\]</span>
-A confidence interval for <span class="math inline">\(E(Y\mid \mathbf{x}_0)\)</span> with confidence
-level <span class="math inline">\(1-\alpha\)</span> is given by the expression
-<span class="math display" id="eq:t-ci-mean-response">\[
-\mathbf{x}_0\hat{\boldsymbol{\beta}} \pm t^{\alpha/2}_{n-p} \hat{\mathrm{se}}(\mathbf{x}_0\hat{\boldsymbol{\beta}}). \tag{6.7}
+<p>which replaces the unknown, true coefficients by their OLS
+estimates.</p>
+<p>We want to create a confidence interval for
+<span class="math inline">\(E(Y\mid \mathbf{x}_0)\)</span>. If we divide the estimation error
+of the mean response, i.e.,
+<span class="math inline">\(E(Y\mid \mathbf{x}_0)-\hat{E}(Y\mid \mathbf{x}_0)\)</span>, by its
+estimated standard deviation, then we obtain a pivotal
+quantity. More specifically, we have</p>
+<p><span class="math display">\[
+\frac{E(Y\mid \mathbf{x}_0)-\hat{E}(Y\mid \mathbf{x}_0)}{\sqrt{\hat{\mathrm{var}}\left(E(Y\mid \mathbf{x}_0)-\hat{E}(Y\mid \mathbf{x}_0)\right)}} = \frac{E(Y\mid \mathbf{x}_0)- \mathbf{x}_0^T \hat{\boldsymbol{\beta}}}{ \hat{\mathrm{se}}(\mathbf{x}_0^T\hat{\boldsymbol{\beta}})}\sim t_{n-p},
 \]</span></p>
-<p>The <code>predict</code> function is a generic function used to make predictions
-based on fitted models. We can use this function to estimate the mean
-response for multiple combinations of predictor variables, compute the
-estimated standard error of each estimate, and obtain confidence
-intervals for the mean response. The primary arguments to the <code>lm</code>
-method for <code>predict</code> are:</p>
+<p>with</p>
+<p><span class="math display" id="eq:sehat-est-mean">\[
+\hat{\mathrm{se}}(\mathbf{x}_0^T\hat{\boldsymbol{\beta}})=\hat{\sigma}\sqrt{\mathbf{x}_0^T (\mathbf{X}^T \mathbf{X})^{-1}\mathbf{x}_0}. \tag{6.5}
+\]</span></p>
+<p>A confidence interval for <span class="math inline">\(E(Y\mid \mathbf{x}_0)\)</span> with
+confidence level <span class="math inline">\(1-\alpha\)</span> is given by the expression</p>
+<p><span class="math display" id="eq:t-ci-mean-response">\[
+\mathbf{x}_0^T\hat{\boldsymbol{\beta}} \pm t^{\alpha/2}_{n-p} \hat{\mathrm{se}}(\mathbf{x}_0^T\hat{\boldsymbol{\beta}}). \tag{6.6}
+\]</span></p>
+<p>The <code>predict</code> function is a generic function used to make
+predictions based on fitted models. We can use this function
+to estimate the mean response for multiple combinations of
+predictor variables, compute the estimated standard error of
+each estimate, and obtain confidence intervals for the mean
+response. The primary arguments to the <code>lm</code> method for
+<code>predict</code> are:</p>
 <ul>
 <li><code>object</code>: A fitted model from the <code>lm</code> function.</li>
-<li><code>newdata</code>: A data frame of predictor values. All predictors used in the formula used to fit <code>object</code> must be provided. Each row contains the predictor values for the mean response we want to estimate. If this is not provided, then the fitted values for each observation are returned.</li>
-<li><code>se.fit</code>: A logical value indicating whether we want to explicitly
-compute the standard errors of each estimated mean, i.e.,
-<span class="math inline">\(\hat{\mathrm{se}}(\hat{E}(Y\mid \mathbf{x}_0))\)</span> for each estimate.</li>
-<li><code>interval</code>: The type of interval to compute. The default is <code>none</code>,
-meaning no interval is provided. Setting <code>interval = "confidence"</code>
-will return a confidence interval for the mean response associated
-with each row of <code>newdata</code>. Setting <code>interval = "prediction"</code> will
-return a prediction interval for a new response, which we will
-discuss in the next section.</li>
+<li><code>newdata</code>: A data frame of predictor values. All
+predictors used in the formula used to fit <code>object</code> must
+be provided. Each row contains the predictor values for
+the mean response we want to estimate. If this is not
+provided, then the fitted values for each observation
+are returned.</li>
+<li><code>se.fit</code>: A logical value indicating whether we want to
+explicitly compute the standard errors of each estimated
+mean, i.e.,
+<span class="math inline">\(\hat{\mathrm{se}}(\mathbf{x}_0^T \hat{\boldsymbol{\beta}})\)</span> for
+each estimate.</li>
+<li><code>interval</code>: The type of interval to compute. The default
+is <code>none</code>, meaning no interval is provided. Setting
+<code>interval = "confidence"</code> will return a confidence
+interval for the mean response associated with each row
+of <code>newdata</code>. Setting <code>interval = "prediction"</code> will
+return a prediction interval for a new response, which
+we will discuss in the next section.</li>
 <li><code>level</code>: The confidence level of the interval.</li>
 </ul>
-<p>Run <code>?predict.lm</code> in the Console for additional details about this
-function.</p>
-<p>We will estimate the mean response for the parallel lines model
-previously fit to the <code>penguins</code> data. We do this to emphasize the fact
-that the <code>predict</code> function asks you to specify the values of the
-<em>predictor</em> variables for each estimate you want to make, not the
-complete set of regressors.</p>
-<p>Recall that in Section <a href="linear-model-estimation.html#s:penguins-mlr2">3.9</a>, we fit a parallel lines
-model to the <code>penguins</code> data that used both <code>body_mass_g</code> and <code>species</code>
-to explain the behavior of <code>bill_length_mm</code>. Letting <span class="math inline">\(D_C\)</span> denote the
-indicator variable for the <code>Chinstrap</code> level and <span class="math inline">\(D_G\)</span> denote the
-indicator variable for the <code>Gentoo</code> level, the fitted parallel lines
-model was <span class="math display">\[
+<p>Run <code>?predict.lm</code> in the Console for additional details
+about this function.</p>
+<p>We will estimate the mean response for the parallel lines
+model previously fit to the <code>penguins</code> data. We do this to
+emphasize the fact that the <code>predict</code> function asks you to
+specify the values of the <em>predictor</em> variables for each
+estimate you want to make, not the complete set of
+regressors.</p>
+<p>Recall that in Section <a href="linear-model-estimation.html#s:penguins-mlr2">3.9</a>, we fit a
+parallel lines model to the <code>penguins</code> data that used both
+<code>body_mass_g</code> and <code>species</code> to explain the behavior of
+<code>bill_length_mm</code>. Letting <span class="math inline">\(D_C\)</span> denote the indicator
+variable for the <code>Chinstrap</code> level and <span class="math inline">\(D_G\)</span> denote the
+indicator variable for the <code>Gentoo</code> level, the fitted
+parallel lines model was <span class="math display">\[
 \begin{aligned}
 &amp;\hat{E}(\mathtt{bill\_length\_mm} \mid \mathtt{body\_mass\_g}, \mathtt{species})\\
 &amp;= 24.92 + 0.004 \mathtt{body\_mass\_g} + 9.92 D_C + 3.56 D_G.
@@ -750,7 +934,12 @@ model was <span class="math display">\[
 <span id="cb7-4"><a href="inference.html#cb7-4" aria-hidden="true" tabindex="-1"></a><span class="fu">coef</span>(lmodp)</span>
 <span id="cb7-5"><a href="inference.html#cb7-5" aria-hidden="true" tabindex="-1"></a><span class="do">##      (Intercept)      body_mass_g speciesChinstrap    speciesGentoo </span></span>
 <span id="cb7-6"><a href="inference.html#cb7-6" aria-hidden="true" tabindex="-1"></a><span class="do">##     24.919470977      0.003748497      9.920884113      3.557977539</span></span></code></pre></div>
-<p>Let’s estimate the mean response for the “typical” <code>body_mass_g</code> of each <code>species</code>. We compute the mean <code>body_mass_g</code> of each <code>species</code> using the code below, assigning the resulting data frame the name <code>newpenguins</code>. We use the <code>group_by</code> and <code>summarize</code> functions from the <strong>dplyr</strong> package <span class="citation">(<a href="#ref-R-dplyr" role="doc-biblioref">Wickham et al. 2023</a>)</span> to simplify this process.</p>
+<p>Let’s estimate the mean response for the “typical”
+<code>body_mass_g</code> of each <code>species</code>. We compute the mean
+<code>body_mass_g</code> of each <code>species</code> using the code below,
+assigning the resulting data frame the name <code>newpenguins</code>.
+We use the <code>group_by</code> and <code>summarize</code> functions from the
+<strong>dplyr</strong> package <span class="citation">(<a href="#ref-R-dplyr" role="doc-biblioref">Wickham et al. 2023</a>)</span> to simplify this process.</p>
 <div class="sourceCode" id="cb8"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb8-1"><a href="inference.html#cb8-1" aria-hidden="true" tabindex="-1"></a><span class="co"># mean body_mass_g of each species</span></span>
 <span id="cb8-2"><a href="inference.html#cb8-2" aria-hidden="true" tabindex="-1"></a>newpenguins <span class="ot">&lt;-</span> penguins <span class="sc">|&gt;</span></span>
 <span id="cb8-3"><a href="inference.html#cb8-3" aria-hidden="true" tabindex="-1"></a>  dplyr<span class="sc">::</span><span class="fu">group_by</span>(species) <span class="sc">|&gt;</span></span>
@@ -762,9 +951,16 @@ model was <span class="math display">\[
 <span id="cb8-9"><a href="inference.html#cb8-9" aria-hidden="true" tabindex="-1"></a><span class="do">## 1 Adelie          3701.</span></span>
 <span id="cb8-10"><a href="inference.html#cb8-10" aria-hidden="true" tabindex="-1"></a><span class="do">## 2 Chinstrap       3733.</span></span>
 <span id="cb8-11"><a href="inference.html#cb8-11" aria-hidden="true" tabindex="-1"></a><span class="do">## 3 Gentoo          5076.</span></span></code></pre></div>
-<p>We now have a data frame with variables for the two predictors, <code>species</code> and <code>body_mass_g</code> , used to fit <code>lmodp</code>. Each row of <code>newpenguins</code> contains the mean <code>body_mass_g</code> for each level of <code>species</code> and is suitable for use in the <code>predict</code> function.</p>
-<p>In the code below, we estimate the mean <code>flipper_length_mm</code> based on the fitted model in <code>lmodp</code> for the mean <code>body_mass_g</code> of each level of <code>species</code>. We also choose to compute the estimated standard errors of
-each estimate by setting the <code>se.fit</code> argument to <code>TRUE</code>.</p>
+<p>We now have a data frame with variables for the two
+predictors, <code>species</code> and <code>body_mass_g</code> , used to fit
+<code>lmodp</code>. Each row of <code>newpenguins</code> contains the mean
+<code>body_mass_g</code> for each level of <code>species</code> and is suitable
+for use in the <code>predict</code> function.</p>
+<p>In the code below, we estimate the mean <code>bill_length_mm</code>
+based on the fitted model in <code>lmodp</code> for the mean
+<code>body_mass_g</code> of each level of <code>species</code>. We also choose to
+compute the estimated standard errors of each estimate by
+setting the <code>se.fit</code> argument to <code>TRUE</code>.</p>
 <div class="sourceCode" id="cb9"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb9-1"><a href="inference.html#cb9-1" aria-hidden="true" tabindex="-1"></a><span class="co"># estimate mean and standard error for 3 combinations of predictors</span></span>
 <span id="cb9-2"><a href="inference.html#cb9-2" aria-hidden="true" tabindex="-1"></a><span class="fu">predict</span>(lmodp, <span class="at">newdata =</span> newpenguins, <span class="at">se.fit =</span> <span class="cn">TRUE</span>)</span>
 <span id="cb9-3"><a href="inference.html#cb9-3" aria-hidden="true" tabindex="-1"></a><span class="do">## $fit</span></span>
@@ -780,21 +976,57 @@ each estimate by setting the <code>se.fit</code> argument to <code>TRUE</code>.<
 <span id="cb9-13"><a href="inference.html#cb9-13" aria-hidden="true" tabindex="-1"></a><span class="do">## </span></span>
 <span id="cb9-14"><a href="inference.html#cb9-14" aria-hidden="true" tabindex="-1"></a><span class="do">## $residual.scale</span></span>
 <span id="cb9-15"><a href="inference.html#cb9-15" aria-hidden="true" tabindex="-1"></a><span class="do">## [1] 2.403134</span></span></code></pre></div>
-<p>An Adelie penguin with a body mass of 3700.662 g is estimated to have a mean flipper length of 38.79 mm with an estimated standard error of 0.196 mm. A Chinstrap penguin with a body mass of 3733.09 g is estimated to have a mean flipper length of 48.83 mm with an estimated standard error of 0.29 mm. A Gentoo penguin with a body mass of 5076.02 g is estimated to have a mean flipper length of 47.50 mm with an estimated standard error of 0.22 mm.</p>
-<p>To create each 98% confidence intervals for the mean response for each combination of predictors, we specify <code>level = 0.98</code> and <code>interval = "confidence"</code> in the <code>predict</code> function in the code below.</p>
+<p>An Adelie penguin with a body mass of 3700.662 g is
+estimated to have a mean bill length of 38.79 mm with an
+estimated standard error of 0.196 mm. A Chinstrap penguin
+with a body mass of 3733.09 g is estimated to have a mean
+bill length of 48.83 mm with an estimated standard error
+of 0.29 mm. A Gentoo penguin with a body mass of 5076.02 g
+is estimated to have a mean bill length of 47.50 mm with
+an estimated standard error of 0.22 mm.</p>
+<p>To compute the 98% confidence intervals for the mean
+response for each combination of predictors, we specify
+<code>level = 0.98</code> and <code>interval = "confidence"</code> in the
+<code>predict</code> function in the code below.</p>
 <div class="sourceCode" id="cb10"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb10-1"><a href="inference.html#cb10-1" aria-hidden="true" tabindex="-1"></a><span class="fu">predict</span>(lmodp, <span class="at">newdata =</span> newpenguins, <span class="at">level =</span> <span class="fl">0.98</span>, <span class="at">interval =</span> <span class="st">&quot;confidence&quot;</span>)</span>
 <span id="cb10-2"><a href="inference.html#cb10-2" aria-hidden="true" tabindex="-1"></a><span class="do">##        fit      lwr      upr</span></span>
 <span id="cb10-3"><a href="inference.html#cb10-3" aria-hidden="true" tabindex="-1"></a><span class="do">## 1 38.79139 38.33427 39.24851</span></span>
 <span id="cb10-4"><a href="inference.html#cb10-4" aria-hidden="true" tabindex="-1"></a><span class="do">## 2 48.83382 48.15264 49.51500</span></span>
 <span id="cb10-5"><a href="inference.html#cb10-5" aria-hidden="true" tabindex="-1"></a><span class="do">## 3 47.50488 46.99840 48.01136</span></span></code></pre></div>
-<p>The 98% confidence interval for the mean flipper length of an Adelie penguin with a body mass of 3700.662 g is [38.33, 39.25]. We are 98% confident that the mean flipper length of Adelie penguins with a body mass of 3700.662 is between 38.33 g and 39.25 g. Note: we are constructing a confidence interval for the mean flipper length of ALL
-Adelie penguins with this body mass, i.e., for
-<span class="math display">\[
+<p>The 98% confidence interval for the mean bill length of
+an Adelie penguin with a body mass of 3700.662 g is [38.33,
+39.25] mm. We are 98% confident that the mean bill length of
+Adelie penguins with a body mass of 3700.662 g is between
+38.33 and 39.25 mm. Note: we are constructing a confidence
+interval for the mean bill length of ALL Adelie penguins
+with this body mass, i.e., for</p>
+<p><span class="math display">\[
 E(\mathtt{flipper\_length\_mm}\mid \mathtt{body\_mass\_g} = 3700.662, \mathtt{species} = \mathtt{Adelie}),
-\]</span>
-which is an unknown characteristic of the population of all Adelie penguins. Similarly, the 98% confidence interval for the mean flipper length of Chinstrap penguins with a body mass of 3733.09 g is [48.15, 49.52]. Lastly, the mean flipper length of Gentoo penguins with a body mass of 5076.02 g is [46.99, 48.02].</p>
-<p>We provide details about manually computing confidence intervals for the mean response in Section <a href="inference.html#manual-calc-ci-mean-response">6.11.3</a>.</p>
-<p>We are once again faced with a multiple comparisons problem because we are making 3 inferences. To control the family-wise confidence level of our intervals, we can use the Bonferroni or Working-Hotelling corrections previously discussed in Section <a href="inference.html#adjusted-cis-betas">6.5.1</a>. Both corrections are implemented in the <code>predict_adjust</code> function in the <strong>api2lm</strong> package, which is intended to work identically to the <code>predict</code> function, but produces intervals that adjust for multiple comparisons. The only additional argument is <code>method</code>, with choices <code>"none"</code> (no correction), <code>"bonferroni"</code> (Bonferroni adjustment), or <code>"wh"</code> (Working-Hotelling adjustment). We produce both types of adjusted intervals in the code below. The Bonferroni-adjusted confidence intervals are slightly narrower in this example.</p>
+\]</span></p>
+<p>which is an unknown characteristic of the population of
+all Adelie penguins. Similarly, the 98% confidence interval
+for the mean bill length of Chinstrap penguins with a
+body mass of 3733.09 g is [48.15, 49.52] mm. Lastly, the mean
+flipper length of Gentoo penguins with a body mass of
+5076.02 g is [46.99, 48.02] mm.</p>
+<p>We provide details about manually computing confidence
+intervals for the mean response in Section
+<a href="inference.html#manual-calc-ci-mean-response">6.11.3</a>.</p>
+<p>We are once again faced with a multiple comparisons problem
+because we are making 3 inferences. To control the
+family-wise confidence level of our intervals, we can use
+the Bonferroni or Working-Hotelling corrections previously
+discussed in Section <a href="inference.html#adjusted-cis-betas">6.5.1</a>. Both
+corrections are implemented in the <code>predict_adjust</code> function
+in the <strong>api2lm</strong> package, which is intended to work
+identically to the <code>predict</code> function, but produces
+intervals that adjust for multiple comparisons. The only
+additional argument is <code>method</code>, with choices <code>"none"</code> (no
+correction), <code>"bonferroni"</code> (Bonferroni adjustment), or
+<code>"wh"</code> (Working-Hotelling adjustment). We produce both types
+of adjusted intervals in the code below. The
+Bonferroni-adjusted confidence intervals are slightly
+narrower in this example.</p>
 <div class="sourceCode" id="cb11"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb11-1"><a href="inference.html#cb11-1" aria-hidden="true" tabindex="-1"></a><span class="co"># bonferroni-adjusted confidence intervals for the mean response</span></span>
 <span id="cb11-2"><a href="inference.html#cb11-2" aria-hidden="true" tabindex="-1"></a><span class="fu">predict_adjust</span>(lmodp, <span class="at">newdata =</span> newpenguins, <span class="at">level =</span> <span class="fl">0.98</span>,</span>
 <span id="cb11-3"><a href="inference.html#cb11-3" aria-hidden="true" tabindex="-1"></a>               <span class="at">interval =</span> <span class="st">&quot;confidence&quot;</span>, <span class="at">method =</span> <span class="st">&quot;bonferroni&quot;</span>)</span>
@@ -822,43 +1054,104 @@ which is an unknown characteristic of the population of all Adelie penguins. Sim
 </div>
 <div id="pi-new-response" class="section level2 hasAnchor" number="6.8">
 <h2><span class="header-section-number">6.8</span> Prediction interval for a new response<a href="inference.html#pi-new-response" class="anchor-section" aria-label="Anchor link to header"></a></h2>
-<p>We once again assume the regression model
-<span class="math display">\[
+<p>We once again assume the regression model <span class="math display">\[
 E(Y|\mathbb{X})=\beta_0+\beta_1 X_1 + \ldots \beta_{p-1} X_{p-1}.
-\]</span>
-We want to predict a new response for a specific combination of regressor values, <span class="math inline">\(\mathbf{x}_0\)</span>. The new response will be the mean response for that combination of regressors, <span class="math inline">\(E(Y\mid \mathbf{x}_0)\)</span>, plus the error for that observation, <span class="math inline">\(\epsilon(\mathbf{x}_0)\)</span>, i.e.,
-<span class="math display">\[
+\]</span> We want to predict a new response for a specific
+combination of regressor values, <span class="math inline">\(\mathbf{x}_0\)</span>. The new
+response will be the mean response for that combination of
+regressors, <span class="math inline">\(E(Y\mid \mathbf{x}_0)\)</span>, plus the error for that
+observation, <span class="math inline">\(\epsilon(\mathbf{x}_0)\)</span>, i.e., <span class="math display">\[
 Y(\mathbf{x}_0)=E(Y\mid \mathbf{x}_0) + \epsilon(\mathbf{x}_0).
 \]</span></p>
-<p>Thus, our predicted new response, <span class="math inline">\(\hat{Y}(\mathbf{x})\)</span> is the estimated mean plus the estimated error, i.e.,
-<span class="math display">\[
+<p>Thus, our predicted new response, <span class="math inline">\(\hat{Y}(\mathbf{x})\)</span> is
+the estimated mean plus the estimated error, i.e., <span class="math display">\[
 \hat{Y}(\mathbf{x}_0)=\hat{E}(Y\mid \mathbf{x}_0) + \hat{\epsilon}(\mathbf{x}_0).
-\]</span>
-We have already used <span class="math inline">\(\hat{E}(Y\mid \mathbf{x}_0)=\mathbf{x}_0^T\hat{\boldsymbol{\beta}}\)</span> as the estimator for <span class="math inline">\(E(Y\mid \mathbf{x}_0)\)</span> since it is the best linear unbiased estimator according to the Gauss-Markov theorem. What should we use for <span class="math inline">\(\hat{\epsilon}(\mathbf{x}_0)\)</span>? In short, because all of the errors, <span class="math inline">\(\epsilon_1, \epsilon_2,\ldots, \epsilon_n, \epsilon(\mathbf{x}_0)\)</span> are uncorrelated, our best guess is the mean value of the errors, which is zero. This is not true when the errors are correlated, but we do not discuss that in detail. Thus, the best predictor of a new response is
-<span class="math display">\[
+\]</span> We have already used
+<span class="math inline">\(\hat{E}(Y\mid \mathbf{x}_0)=\mathbf{x}_0^T\hat{\boldsymbol{\beta}}\)</span>
+as the estimator for <span class="math inline">\(E(Y\mid \mathbf{x}_0)\)</span> since it is the
+best linear unbiased estimator according to the Gauss-Markov
+theorem. What should we use for
+<span class="math inline">\(\hat{\epsilon}(\mathbf{x}_0)\)</span>? In short, because all of the
+errors,
+<span class="math inline">\(\epsilon_1, \epsilon_2,\ldots, \epsilon_n, \epsilon(\mathbf{x}_0)\)</span>
+are uncorrelated and have a normal distribution with mean zero, our best guess is the mean value of the
+errors, which is zero. This is not true when the errors are
+correlated, but we do not discuss that in detail. Thus, the
+best predictor of a new response is <span class="math display">\[
 \begin{aligned}
 \hat{Y}(\mathbf{x}_0) &amp;=\hat{E}(Y\mid \mathbf{x}_0) + \hat{\epsilon}(\mathbf{x}_0)\\
 &amp;= \mathbf{x}_0^T\hat{\boldsymbol{\beta}} + 0 \\
 &amp;= \mathbf{x}_0^T\hat{\boldsymbol{\beta}}.
 \end{aligned}
 \]</span></p>
-<p>We want to create a prediction interval for <span class="math inline">\(Y(\mathbf{x}_0)\)</span>. A prediction interval is basically the same thing as a confidence interval, but the interval estimator is for a random variable instead of a parameter. If we divide the estimation error of the new response, i.e.,
-<span class="math inline">\(Y(\mathbf{x}_0)-\hat{Y}(\mathbf{x}_0)\)</span>, by its estimated standard deviation, <span class="math inline">\(\widehat{\mathrm{sd}}(Y(\mathbf{x}_0)-\hat{Y}(\mathbf{x}_0))\)</span>, then we obtain a <span class="math inline">\(t\)</span>-distributed pivotal quantity:
+<p>We want to create a prediction interval for
+<span class="math inline">\(Y(\mathbf{x}_0)\)</span>. A prediction interval is basically the
+same thing as a confidence interval, but the interval
+estimator is for a random variable instead of a parameter.
+If we divide the estimation error of the new response, i.e.,
+<span class="math inline">\(Y(\mathbf{x}_0)-\hat{Y}(\mathbf{x}_0)\)</span>, by its estimated
+standard deviation,
+<span class="math inline">\(\widehat{\mathrm{sd}}(Y(\mathbf{x}_0)-\hat{Y}(\mathbf{x}_0))\)</span>,
+then we obtain a <span class="math inline">\(t\)</span>-distributed pivotal quantity
 <span class="math display">\[
 \frac{Y(\mathbf{x}_0)-\hat{Y}(\mathbf{x}_0)}{\widehat{\mathrm{sd}}(Y(\mathbf{x}_0)-\hat{Y}(\mathbf{x}_0))} \sim t_{n-p},
 \]</span>
 where
 <span class="math display" id="eq:sdhat-pred-error">\[
-\widehat{\mathrm{sd}}(Y(\mathbf{x}_0)-\hat{Y}(\mathbf{x}_0))=\hat{\sigma}\sqrt{1 + \mathbf{x}_0^T (\mathbf{X}^T \mathbf{X})^{-1}\mathbf{x}_0}. \tag{6.8}
-\]</span>
-The standard deviation of the prediction error is sometimes known as the <strong>standard error of prediction</strong>, but we do not use that terminology. A detailed derivation of <span class="math inline">\(\widehat{\mathrm{sd}}(Y(\mathbf{x}_0)-\hat{Y}(\mathbf{x}_0))\)</span> is provided in Section <a href="inference.html#new-response-pi-calculations">6.11.4</a>.</p>
-<p>There is a conceptual and mathematical relationship between the standard deviation of the estimation error for the mean response and the prediction error for a new observation. If we compare the expression for <span class="math inline">\(\hat{\mathrm{se}}(\hat{E}(Y\mid \mathbf{x}_0)) - E(Y\mid \mathbf{x}_0))\)</span> in Equation <a href="inference.html#eq:sehat-est-mean">(6.6)</a> and <span class="math inline">\(\widehat{\mathrm{sd}}(Y(\mathbf{x}_0)-\hat{Y}(\mathbf{x}_0))\)</span> in Equation <a href="inference.html#eq:sdhat-pred-error">(6.8)</a>, we see that <span class="math inline">\(\widehat{\mathrm{sd}}(Y(\mathbf{x}_0)-\hat{Y}(\mathbf{x}_0))\)</span> has an extra “1 +” under the square root. Because of this, <em>prediction intervals for a new response are always wider than a confidence interval for the mean response</em> when considering the same regressor values, <span class="math inline">\(\mathbf{x}_0\)</span>, and confidence level. Conceptually, prediction intervals are wider because there are two sources of uncertainty in our prediction: estimating the mean response and predicting the error of the new response. Estimating the mean response does not require us to predict the error of a new response, so the uncertainty of our estimate is less. We can see that this is formally true through the derivations provided in Section <a href="inference.html#new-response-pi-calculations">6.11.4</a>.</p>
-<p>A prediction interval for <span class="math inline">\(Y(\mathbf{x}_0)\)</span> with confidence level <span class="math inline">\(1-\alpha\)</span> is given by the expression
-<span class="math display" id="eq:t-pi-new-response">\[
-\mathbf{x}_0\hat{\boldsymbol{\beta}} \pm t^{\alpha/2}_{n-p} \hat{\mathrm{sd}}(Y(\mathbf{x}_0)-\hat{Y}(\mathbf{x}_0)). \tag{6.9}
+\widehat{\mathrm{sd}}(Y(\mathbf{x}_0)-\hat{Y}(\mathbf{x}_0))=\hat{\sigma}\sqrt{1 + \mathbf{x}_0^T (\mathbf{X}^T \mathbf{X})^{-1}\mathbf{x}_0}. \tag{6.7}
 \]</span></p>
-<p>The <code>predict</code> function can be used to create predictions and prediction intervals for a new response in the same way that it can be used to estimate the mean response and produce associated confidence intervals. If the <code>interval</code> argument is <code>"none"</code>, then predictions for a new response are returned. As we have already seen, <span class="math inline">\(\hat{E}(Y\mid \mathbf{x}_0)\)</span> and <span class="math inline">\(\hat{Y}(\mathbf{x}_0)\)</span> are the same number. If the <code>interval</code> argument is <code>"prediction"</code>, then the predicted new response and associated prediction interval will be produced for each row of data supplied to the <code>newdata</code> argument.</p>
-<p>Continuing the example started in Section <a href="inference.html#parametric-ci-mean-response">6.7</a>, we want to predict the response value for new, unobserved penguins having the observed mean <code>body_mass_g</code> for each level of <code>species</code>. The fitted model is stored in <code>lmodp</code> and the data frame with the predictors for the new responses is stored in <code>newpenguins</code>. We print the coefficients of the fitted model and the data frame of new predictors below for clarity.</p>
+<p>The standard deviation of the prediction error is
+sometimes known as the <strong>standard error of prediction</strong>, but
+we do not use that terminology. A detailed derivation of
+<span class="math inline">\(\widehat{\mathrm{sd}}(Y(\mathbf{x}_0)-\hat{Y}(\mathbf{x}_0))\)</span>
+is provided in Section <a href="inference.html#new-response-pi-calculations">6.11.4</a>.</p>
+<p>A prediction interval for <span class="math inline">\(Y(\mathbf{x}_0)\)</span> with confidence
+level <span class="math inline">\(1-\alpha\)</span> is given by the expression <span class="math display">\[
+\mathbf{x}_0\hat{\boldsymbol{\beta}} \pm t^{\alpha/2}_{n-p} \hat{\mathrm{sd}}(Y(\mathbf{x}_0)-\hat{Y}(\mathbf{x}_0)). (\#eq:t-pi-new-response)
+\]</span></p>
+<p>There is a conceptual and mathematical relationship between
+the standard deviation of the estimation error for the mean
+response and the prediction error for a new observation. If
+we compare the expressions for
+<span class="math inline">\(\hat{\mathrm{se}}(\mathbf{x}_0^T\hat{\boldsymbol{\beta}})\)</span>
+in Equation <a href="inference.html#eq:sehat-est-mean">(6.5)</a> and
+<span class="math inline">\(\widehat{\mathrm{sd}}(Y(\mathbf{x}_0)-\hat{Y}(\mathbf{x}_0))\)</span>
+in Equation <a href="inference.html#eq:sdhat-pred-error">(6.7)</a>, we see that
+that
+<span class="math display">\[
+\hat{\mathrm{sd}}(Y(\mathbf{x}_0)-\hat{Y}(\mathbf{x}_0)) = \hat{\sigma} + \hat{\mathrm{se}}(\mathbf{x}_0^T\hat{\boldsymbol{\beta}}).
+\]</span>
+Because of this,
+<em>prediction intervals for a new response are always wider
+than a confidence interval for the mean response</em> when
+considering the same regressor values, <span class="math inline">\(\mathbf{x}_0\)</span>, and
+confidence level. Conceptually, prediction intervals are
+wider because there are two sources of uncertainty in our
+prediction: estimating the mean response and predicting the
+error of the new response. Estimating the mean response does
+not require us to predict the error of a new response, so
+the uncertainty of our estimate is less. We can see that
+this is formally true through the derivations provided in
+Section <a href="inference.html#new-response-pi-calculations">6.11.4</a>.</p>
+<p>The <code>predict</code> function can be used to create predictions and
+prediction intervals for a new response in the same way that
+it can be used to estimate the mean response and produce
+associated confidence intervals. If the <code>interval</code> argument
+is <code>"none"</code>, then predictions for a new response are
+returned. As we have already seen,
+<span class="math inline">\(\hat{E}(Y\mid \mathbf{x}_0)\)</span> and <span class="math inline">\(\hat{Y}(\mathbf{x}_0)\)</span>
+are the same number. If the <code>interval</code> argument is
+<code>"prediction"</code>, then the predicted new response and
+associated prediction interval will be produced for each row
+of data supplied to the <code>newdata</code> argument.</p>
+<p>Continuing the example started in Section
+<a href="inference.html#parametric-ci-mean-response">6.7</a>, we want to predict the
+response value for new, unobserved penguins having the
+observed mean <code>body_mass_g</code> for each level of <code>species</code>. The
+fitted model is stored in <code>lmodp</code> and the data frame with
+the predictors for the new responses is stored in
+<code>newpenguins</code>. We print the coefficients of the fitted model
+and the data frame of new predictors below for clarity.</p>
 <div class="sourceCode" id="cb12"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb12-1"><a href="inference.html#cb12-1" aria-hidden="true" tabindex="-1"></a><span class="fu">coef</span>(lmodp)</span>
 <span id="cb12-2"><a href="inference.html#cb12-2" aria-hidden="true" tabindex="-1"></a><span class="do">##      (Intercept)      body_mass_g speciesChinstrap    speciesGentoo </span></span>
 <span id="cb12-3"><a href="inference.html#cb12-3" aria-hidden="true" tabindex="-1"></a><span class="do">##     24.919470977      0.003748497      9.920884113      3.557977539</span></span>
@@ -869,7 +1162,10 @@ The standard deviation of the prediction error is sometimes known as the <strong
 <span id="cb12-8"><a href="inference.html#cb12-8" aria-hidden="true" tabindex="-1"></a><span class="do">## 1 Adelie          3701.</span></span>
 <span id="cb12-9"><a href="inference.html#cb12-9" aria-hidden="true" tabindex="-1"></a><span class="do">## 2 Chinstrap       3733.</span></span>
 <span id="cb12-10"><a href="inference.html#cb12-10" aria-hidden="true" tabindex="-1"></a><span class="do">## 3 Gentoo          5076.</span></span></code></pre></div>
-<p>In the code below, we predict the <code>flipper_length_mm</code> for new penguins for the predictor values stored in <code>newpenguins</code> based on the fitted model in <code>lmodp</code>. We also construct the associated 99% prediction intervals.</p>
+<p>In the code below, we predict the <code>bill_length_mm</code> for
+new penguins for the predictor values stored in
+<code>newpenguins</code> based on the fitted model in <code>lmodp</code>. We also
+construct the associated 99% prediction intervals.</p>
 <div class="sourceCode" id="cb13"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb13-1"><a href="inference.html#cb13-1" aria-hidden="true" tabindex="-1"></a><span class="co"># predict new response and compute prediction intervals</span></span>
 <span id="cb13-2"><a href="inference.html#cb13-2" aria-hidden="true" tabindex="-1"></a><span class="co"># for 3 combinations of predictors</span></span>
 <span id="cb13-3"><a href="inference.html#cb13-3" aria-hidden="true" tabindex="-1"></a><span class="fu">predict</span>(lmodp, <span class="at">newdata =</span> newpenguins,</span>
@@ -878,10 +1174,37 @@ The standard deviation of the prediction error is sometimes known as the <strong
 <span id="cb13-6"><a href="inference.html#cb13-6" aria-hidden="true" tabindex="-1"></a><span class="do">## 1 38.79139 32.54561 45.03718</span></span>
 <span id="cb13-7"><a href="inference.html#cb13-7" aria-hidden="true" tabindex="-1"></a><span class="do">## 2 48.83382 42.56301 55.10464</span></span>
 <span id="cb13-8"><a href="inference.html#cb13-8" aria-hidden="true" tabindex="-1"></a><span class="do">## 3 47.50488 41.25442 53.75534</span></span></code></pre></div>
-<p>A new Adelie penguin with a body mass of 3700.662 g is predicted to have a flipper length of 38.79 mm. We are 99% confident that a new Adelie penguins with a body mass of 3700.662 g will have a flipper length between 32.54 mm and 45.04 mm. Similarly, the 99% prediction interval for the flipper length of a new Chinstrap penguin with a body mass of 3733.09 g is [48.56, 55.11]. The flipper length of a new Gentoo penguin with a body mass of 5076.02 g is between 41.25 and 53.75 with a confidence level of 0.99.</p>
-<p>Since we are making 3 predictions, our inferences suffer from the multiple comparisons problem. To control the family-wise confidence level of our intervals, we can use the Bonferroni correction with <span class="math inline">\(k=3\)</span>. The Working-Hotelling correction discussed in Section <a href="inference.html#adjusted-cis-betas">6.5.1</a> does not apply to new responses. However, a similar adjustment proposed by Scheffé does apply <span class="citation">(<a href="#ref-alsm2005" role="doc-biblioref">Kutner et al. 2005</a>)</span>. The prediction interval multiplier <span class="math inline">\(t^{\alpha/2}_{n-p}\)</span> used for a single prediction interval with confidence level <span class="math inline">\(1-\alpha\)</span> is replaced by
-<span class="math inline">\(\sqrt{k F^{1-\alpha}_{k,n-p}}\)</span> to control the family-wise confidence level at <span class="math inline">\(1-\alpha\)</span> for a family of <span class="math inline">\(k\)</span> prediction intervals. Recall that the Working-Hotelling multiplier was <span class="math inline">\(\sqrt{p F^{1-\alpha}_{p,n-p}}\)</span>. Thus, the Scheffé multiplier scales with the number of predictions being made while the Working-Hotelling multiplier scales with the number of estimated regression coefficients in the fitted model.</p>
-<p>Both the Bonferroni and Scheffé multiple comparisons corrections are implemented in the <code>predict_adjust</code> function in the <strong>api2lm</strong> package. In the prediction interval setting, we can choose the correction <code>method</code> argument to be <code>"none"</code> (no correction), <code>"bonferroni"</code> (Bonferroni adjustment), or <code>"scheffe"</code> (Scheffe adjustment). We produce both types of adjusted intervals in the code below. The Bonferroni-adjusted confidence intervals are slightly narrower in this example.</p>
+<p>A new Adelie penguin with a body mass of 3700.662 g is
+predicted to have a bill length of 38.79 mm. We are 99%
+confident that a new Adelie penguins with a body mass of
+3700.662 g will have a flipper length between 32.54 and
+45.04 mm. Similarly, the 99% prediction interval for the
+bill length of a new Chinstrap penguin with a body mass
+of 3733.09 g is [48.56, 55.11] mm. The flipper length of a new
+Gentoo penguin with a body mass of 5076.02 g is between
+41.25 and 53.75 mm with a confidence level of 0.99.</p>
+<p>Since we are making 3 predictions, our inferences suffer
+from the multiple comparisons problem. To control the
+family-wise confidence level of our intervals, we can use
+the Bonferroni correction with <span class="math inline">\(k=3\)</span>. The Working-Hotelling
+correction discussed in Section <a href="inference.html#adjusted-cis-betas">6.5.1</a>
+does not apply to new responses. However, a similar
+adjustment proposed by Scheffé does apply <span class="citation">(<a href="#ref-alsm2005" role="doc-biblioref">Kutner et al. 2005</a>)</span>. The prediction interval multiplier used for a single prediction interval with confidence level <span class="math inline">\(1-\alpha\)</span> changes from <span class="math inline">\(t^{\alpha/2}_{n-p}\)</span> to <span class="math inline">\(\sqrt{k F^{\alpha}_{k,n-p}}\)</span> to control the family-wise confidence level at <span class="math inline">\(1-\alpha\)</span> for a family of <span class="math inline">\(k\)</span> prediction intervals. Recall that the
+Working-Hotelling multiplier was
+<span class="math inline">\(\sqrt{p F^{alpha}_{p,n-p}}\)</span>. Thus, the Scheffé
+multiplier scales with the number of predictions being made
+while the Working-Hotelling multiplier scales with the
+number of estimated regression coefficients in the fitted
+model.</p>
+<p>Both the Bonferroni and Scheffé multiple comparisons
+corrections are implemented in the <code>predict_adjust</code> function
+in the <strong>api2lm</strong> package. In the prediction interval
+setting, we can choose the correction <code>method</code> argument to
+be <code>"none"</code> (no correction), <code>"bonferroni"</code> (Bonferroni
+adjustment), or <code>"scheffe"</code> (Scheffé adjustment). We produce
+both types of adjusted intervals in the code below. The
+Bonferroni-adjusted confidence intervals are slightly
+narrower in this example.</p>
 <div class="sourceCode" id="cb14"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb14-1"><a href="inference.html#cb14-1" aria-hidden="true" tabindex="-1"></a><span class="co"># bonferroni-adjusted prediction intervals for new responses</span></span>
 <span id="cb14-2"><a href="inference.html#cb14-2" aria-hidden="true" tabindex="-1"></a><span class="fu">predict_adjust</span>(lmodp, <span class="at">newdata =</span> newpenguins, <span class="at">level =</span> <span class="fl">0.99</span>,</span>
 <span id="cb14-3"><a href="inference.html#cb14-3" aria-hidden="true" tabindex="-1"></a>               <span class="at">interval =</span> <span class="st">&quot;prediction&quot;</span>,</span>
@@ -911,98 +1234,204 @@ The standard deviation of the prediction error is sometimes known as the <strong
 </div>
 <div id="hypothesis-tests-for-a-single-regression-coefficient" class="section level2 hasAnchor" number="6.9">
 <h2><span class="header-section-number">6.9</span> Hypothesis tests for a single regression coefficient<a href="inference.html#hypothesis-tests-for-a-single-regression-coefficient" class="anchor-section" aria-label="Anchor link to header"></a></h2>
-<p>If we assume we are fitting the multiple linear regression model in Equation <a href="inference.html#eq:model-def-inference">(6.1)</a>, then our model has <span class="math inline">\(p\)</span> regression coefficient <span class="math inline">\(\beta_0, \beta_1, \ldots, \beta_{p-1}\)</span>. How would we perform a hypothesis test for exactly one of these regression coefficients?</p>
+<p>If we assume we are fitting the multiple linear regression
+model in Equation <a href="inference.html#eq:model-def-inference">(6.1)</a>, then our
+model has <span class="math inline">\(p\)</span> regression coefficient
+<span class="math inline">\(\beta_0, \beta_1, \ldots, \beta_{p-1}\)</span>. How can we
+perform a hypothesis test for exactly one of these
+regression coefficients?</p>
 <p>Recall that if we make the assumptions in Equation
 <a href="inference.html#eq:error-assumption-inference">(6.2)</a>, then</p>
-<p><span class="math display" id="eq:pivot-t-betaj">\[\begin{equation}
-\frac{\hat{\beta}_j-\beta_j}{\hat{\mathrm{se}}(\hat{\beta}_j)}\sim t_{n-p}, \quad j=0,1,\ldots,p-1. \tag{6.10}
-\end{equation}\]</span></p>
-<p>Let’s say we wish to test whether, for this model, <span class="math inline">\(\beta_j\)</span> differs from some constant number <span class="math inline">\(c\)</span> (typically, <span class="math inline">\(c=0\)</span>). Let <span class="math inline">\(\boldsymbol{\beta}_{-j}=\boldsymbol{\beta}\setminus{\beta_j}\)</span>, i.e., <span class="math inline">\(\boldsymbol{\beta}_{-j}\)</span> is the vector of all regression coefficients except <span class="math inline">\(\beta_j\)</span>. <span class="math inline">\(\boldsymbol{\beta}_{-j}\)</span> has <span class="math inline">\(p-1\)</span> elements. We can state the hypotheses we wish to test as
+<span class="math display" id="eq:pivot-t-betaj">\[\begin{equation}
+\frac{\hat{\beta}_j-\beta_j}{\hat{\mathrm{se}}(\hat{\beta}_j)}\sim t_{n-p}, \quad j=0,1,\ldots,p-1. \tag{6.8}
+\end{equation}\]</span>
+<p>Let’s say we wish to test whether, for this model, <span class="math inline">\(\beta_j\)</span>
+differs from some constant number <span class="math inline">\(c\)</span> (typically, <span class="math inline">\(c=0\)</span>).
+Let
+<span class="math inline">\(\boldsymbol{\beta}_{-j}=\boldsymbol{\beta}\setminus{\beta_j}\)</span>,
+i.e., <span class="math inline">\(\boldsymbol{\beta}_{-j}\)</span> is the vector of all
+regression coefficients except <span class="math inline">\(\beta_j\)</span>.
+<span class="math inline">\(\boldsymbol{\beta}_{-j}\)</span> has <span class="math inline">\(p-1\)</span> elements. We can state
+the hypotheses we wish to test as
 <span class="math display" id="eq:betaj-H0Ha">\[
 \begin{aligned}
 H_0: \beta_j &amp;= c \mid \boldsymbol{\beta}_{-j}\in\mathbb{R}^{p-1} \\
 H_a: \beta_j &amp;\neq c \mid \boldsymbol{\beta}_{-j}\in\mathbb{R}^{p-1}.
 \end{aligned}
-\tag{6.11}
+\tag{6.9}
 \]</span>
-The first part of the null hypothesis in Equation <a href="inference.html#eq:betaj-H0Ha">(6.11)</a> states that <span class="math inline">\(\beta_j = c\)</span> while the first part of the alternative hypothesis assumes that <span class="math inline">\(\beta_j \neq c\)</span>. But what does the second half of the hypotheses mean? The vertical bar means “assuming or conditional on”, similar to the notation you would see in conditional probabilities or distributions. What this means is that we are performing the hypothesis test while assuming that the other coefficients are some real number (possibly even zero). Why state this at all? Isn’t it implicitly assumed? No. We could perform a hypothesis test for <span class="math inline">\(\beta_j\)</span> for many different models that have differing regressors. By writing out hypotheses in the style of Equation <a href="inference.html#eq:betaj-H0Ha">(6.11)</a>, we are being very clear that we are performing a test for <span class="math inline">\(\beta_j\)</span> in the context of the model that has the regressors associated with <span class="math inline">\(\boldsymbol{\beta}_{-j}\)</span>.</p>
-<p>How do the hypotheses in Equation <a href="inference.html#eq:betaj-H0Ha">(6.11)</a> affect the pivotal quantity in Equation <a href="inference.html#eq:pivot-t-betaj">(6.10)</a>? Under the null hypothesis, the statistic
+The first part of the null hypothesis in Equation
+<a href="inference.html#eq:betaj-H0Ha">(6.9)</a> states that <span class="math inline">\(\beta_j = c\)</span> while the
+first part of the alternative hypothesis assumes that
+<span class="math inline">\(\beta_j \neq c\)</span>. But what does the second half of the
+hypotheses mean? The vertical bar means “assuming or
+conditional on”, similar to the notation you would see in
+conditional probabilities or distributions. What this means
+is that we are performing the hypothesis test while assuming
+that the other coefficients are some real number (possibly
+even zero). Why state this at all? Isn’t it implicitly
+assumed? No. We could perform a hypothesis test for
+<span class="math inline">\(\beta_j\)</span> for many different models that have differing
+regressors. By writing out hypotheses in the style of
+Equation <a href="inference.html#eq:betaj-H0Ha">(6.9)</a>, we are being very clear that
+we are performing a test for <span class="math inline">\(\beta_j\)</span> in the context of the
+model that has the regressors associated with
+<span class="math inline">\(\boldsymbol{\beta}_{-j}\)</span>. Tests are model specific, so it is important to be clarify the exact model under consideration</p>
+<p>How do the hypotheses in Equation <a href="inference.html#eq:betaj-H0Ha">(6.9)</a>
+affect the pivotal quantity in Equation
+<a href="inference.html#eq:pivot-t-betaj">(6.8)</a>? Under the null hypothesis, the
+statistic
 <span class="math display">\[
 T_j = \frac{\hat{\beta}_j-c}{\hat{\mathrm{se}}(\hat{\beta}_j)} \sim t_{n-p}.
 \]</span>
-Thus, the null distribution of <span class="math inline">\(T_j\)</span> is a <span class="math inline">\(t\)</span> distribution with <span class="math inline">\(n-p\)</span> degrees of freedom. We emphasize that this is only true if the assumptions in Equation
+Thus, the null distribution of <span class="math inline">\(T_j\)</span> is a <span class="math inline">\(t\)</span>
+distribution with <span class="math inline">\(n-p\)</span> degrees of freedom. We emphasize
+that this is only true if the assumptions in Equation
 <a href="inference.html#eq:error-assumption-inference">(6.2)</a> are true.</p>
-<p>The p-value associated with this test is computed via the equation
-<span class="math display">\[
+<p>The p-value associated with this test is computed via the
+equation <span class="math display">\[
 p\text{-value} = 2P(t_{n-p}\geq |T_j|).
-\]</span>
-What if we wished to test a one-sided hypothesis? The p-value for a lower-tailed test is <span class="math inline">\(p\text{-value}=P(t_{n-p}\leq T_j)\)</span> while the p-value for an upper-tailed test is <span class="math inline">\(p\text{-value}=P(t_{n-p}\geq T_j)\)</span>.</p>
-<p>The fitted model
+\]</span> What if we wished to test a one-sided hypothesis? The
+p-value for a lower-tailed test is
+<span class="math inline">\(p\text{-value}=P(t_{n-p}\leq T_j)\)</span> while the p-value for an
+upper-tailed test is <span class="math inline">\(p\text{-value}=P(t_{n-p}\geq T_j)\)</span>.</p>
+<p>We will perform a hypothesis test for the model
 <span class="math display">\[
 \begin{aligned}
 &amp;E(\mathtt{bill\_length\_mm}\mid \mathtt{body\_mass\_g}, \mathtt{flipper\_length\_mm}) \\
 &amp;=\beta_0+\beta_1 \mathtt{body\_mass\_g} + \beta_2 \mathtt{flipper\_length\_mm}.
 \end{aligned}
 \]</span></p>
-<p>is assigned the name <code>mlmod</code>. Suppose we want to test</p>
+<p>for the <code>penguins</code> data. The fitted model is assigned the name <code>mlmod</code>. Suppose we want to test</p>
 <p><span class="math display">\[
 \begin{aligned}
 H_0: &amp;\beta_1 = 0 \mid \beta_0\in \mathbb{R}, \beta_2 \in \mathbb{R} \\
 H_a: &amp;\beta_1 \neq 0 \mid \beta_0\in \mathbb{R}, \beta_2 \in \mathbb{R}.
 \end{aligned}
-\]</span>
-R conveniently provides this information in the output of the <code>summary</code> function (specifically, the <code>coefficients</code> element if we don’t want extra information). We extract this information from the <code>mlmod</code> object in the code below.</p>
+\]</span> R conveniently provides this information in the output of
+the <code>summary</code> function (specifically, the <code>coefficients</code>
+element if we don’t want extra information). We extract this
+information from the <code>mlmod</code> object in the code below.</p>
 <div class="sourceCode" id="cb15"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb15-1"><a href="inference.html#cb15-1" aria-hidden="true" tabindex="-1"></a><span class="fu">summary</span>(mlmod)<span class="sc">$</span>coefficients</span>
 <span id="cb15-2"><a href="inference.html#cb15-2" aria-hidden="true" tabindex="-1"></a><span class="do">##                        Estimate   Std. Error    t value     Pr(&gt;|t|)</span></span>
 <span id="cb15-3"><a href="inference.html#cb15-3" aria-hidden="true" tabindex="-1"></a><span class="do">## (Intercept)       -3.4366939266 4.5805531903 -0.7502792 4.536070e-01</span></span>
 <span id="cb15-4"><a href="inference.html#cb15-4" aria-hidden="true" tabindex="-1"></a><span class="do">## body_mass_g        0.0006622186 0.0005672075  1.1675067 2.438263e-01</span></span>
 <span id="cb15-5"><a href="inference.html#cb15-5" aria-hidden="true" tabindex="-1"></a><span class="do">## flipper_length_mm  0.2218654584 0.0323484492  6.8586119 3.306943e-11</span></span></code></pre></div>
-<p>Moving from left to right, the first column (no name) indicates the coefficient term under consideration, the second column (<code>Estimate</code>) provides the estimated coefficients, the third column (<code>Std. Error</code>) provides the estimated standard error (<span class="math inline">\(\hat{\mathrm{se}}(\hat{\beta}_j)\)</span>) for each coefficient, the fourth column (<code>t value</code>) provides the test statistic associated with testing <span class="math inline">\(H_0: \beta_j = 0 \mid \boldsymbol{\beta}_{-j} \in \mathbb{R}^{p-1}\)</span> versus a suitable alternative for each coefficient, while the final column (<code>Pr(&gt;|t|)</code>) provides the two-tailed p-value associated with this test.</p>
-<p>Thus, for our test of the <code>body_mass_g</code> coefficient, the test statistic is <span class="math inline">\(T_2 = 1.17\)</span> and the associated p-value is 0.024. There is moderate evidence that the coefficient for <code>body_mass_g</code> differs from zero, assuming the model also allows for the inclusion of the intercept and <code>flipper_length_mm</code> coefficients.</p>
+<p>Moving from left to right, the first column (no name)
+indicates the coefficient term under consideration, the
+second column (<code>Estimate</code>) provides the estimated
+coefficients, the third column (<code>Std. Error</code>) provides the
+estimated standard error
+(i.e., <span class="math inline">\(\hat{\mathrm{se}}(\hat{\beta}_j)\)</span>) for each coefficient,
+the fourth column (<code>t value</code>) provides the test statistic
+associated with testing
+<span class="math inline">\(H_0: \beta_j = 0 \mid \boldsymbol{\beta}_{-j} \in \mathbb{R}^{p-1}\)</span>
+versus a suitable alternative for each coefficient, while
+the final column (<code>Pr(&gt;|t|)</code>) provides the two-tailed
+p-value associated with this test.</p>
+<p>Thus, for our test of the <code>body_mass_g</code> coefficient, the
+test statistic is <span class="math inline">\(T_2 = 1.17\)</span> and the associated p-value is
+0.024. There is moderate evidence that the coefficient for
+<code>body_mass_g</code> differs from zero, assuming the model also
+allows for the inclusion of the intercept and
+<code>flipper_length_mm</code> coefficients.</p>
 </div>
 <div id="hypothesis-tests-for-multiple-regression-coefficients" class="section level2 hasAnchor" number="6.10">
 <h2><span class="header-section-number">6.10</span> Hypothesis tests for multiple regression coefficients<a href="inference.html#hypothesis-tests-for-multiple-regression-coefficients" class="anchor-section" aria-label="Anchor link to header"></a></h2>
 <p>Suppose we have have a standard linear regression model with
-<span class="math inline">\(p\)</span> regression coefficients such as the one defined in Equation <a href="inference.html#eq:model-def-inference">(6.1)</a>. We refer to this model as the “Complete Model”.</p>
-<p>We want to compare the Complete Model to a “Reduced Model” that is a special case of the Complete Model. The most common examples of Reduced Model are:</p>
+<span class="math inline">\(p\)</span> regression coefficients such as the one defined in
+Equation <a href="inference.html#eq:model-def-inference">(6.1)</a>. We refer to this
+model as the “Complete Model”.</p>
+<p>We want to compare the Complete Model to a “Reduced Model”. The Reduced Model is a special case of the Complete Model. Alternatively, we can say the Reduced Model is <em>nested</em> in the Complete Model. We use the abbreviations RM to indicate the Reduced Model and CM to indicate the Complete Model.</p>
+<p>The most common examples of Reduced Model are:</p>
 <ol style="list-style-type: decimal">
-<li>All of the coefficients except the intercept are set to zero.</li>
+<li>All of the coefficients except the intercept are set to
+zero.</li>
 <li>Some of the coefficients are set to zero.</li>
 </ol>
-<p>Less commonly considered examples of a Reduced Model set certain coefficients equal to each other or place other restrictions on the coefficients. We emphasize that the Reduced Model is a special case of the Complete Model. Alternatively, this relationship is sometimes described by saying the Reduced Model is <em>nested</em> in the Complete Model.</p>
-<p>Let <span class="math inline">\(RSS(RM)\)</span> denote the RSS of the Reduced Model and <span class="math inline">\(RSS(CM)\)</span> denote the RSS of the Complete Model. Similarly, <span class="math inline">\(df(RM)\)</span> and <span class="math inline">\(df(CM)\)</span> denote the degrees of freedom associated with the RSS for the Reduced and Complete Models, respectively. Recall that the degrees of freedom associated with a RSS is simply <span class="math inline">\(n\)</span>, the number of observations used to fit the model, minus the number of estimated regression coefficients in the model being considered.</p>
-<p>We want to perform a hypothesis test involving multiple regression coefficients in our model. Without be specific or developing complex notation, we cannot be precise in stating the hypotheses we wish to test. In the discussion below, we use RM as an abbreviation for the Reduced Model and CM as an abbreviation for the Complete Model. A general statement of the hypotheses we will test are:</p>
-<p><span class="math inline">\(H_0: \text{RM is an adequate model for describing the population}\)</span>
-<span class="math inline">\(H_a: \text{CM is a more appropriate model for describing the population.}\)</span></p>
-<p>We wish to statistically assess whether we can simplify our model to <span class="math inline">\(RM\)</span>. If <span class="math inline">\(RM\)</span> doesn’t adequately explain the patterns of the data, then we will conclude that <span class="math inline">\(CM\)</span> is a more appropriate model.</p>
+<p>Other examples of a RM set
+certain coefficients equal to each other or place other
+restrictions on the coefficients.</p>
+<p>Let <span class="math inline">\(RSS_{RM}\)</span> denote the RSS of the RM and
+<span class="math inline">\(RSS_{CM}\)</span> denote the RSS of the CM. Similarly,
+<span class="math inline">\(df_{RM}\)</span> and <span class="math inline">\(df_{CM}\)</span> denote the degrees of freedom
+associated with the RSS for the RM and CM,
+respectively. Recall that the degrees of freedom associated
+with a RSS is simply <span class="math inline">\(n\)</span>, the number of observations used to
+fit the model, minus the number of estimated regression
+coefficients in the model being considered.</p>
+<p>We want to perform a hypothesis test involving multiple
+regression coefficients in our model. Without be specific or
+developing complex notation, we cannot be precise in stating
+the hypotheses we wish to test. A general statement of
+the hypotheses we will test are:</p>
+<p><span class="math display">\[
+\begin{aligned}
+&amp;H_0: \text{RM is an adequate model for describing the population.} \\
+&amp;H_a: \text{CM is a more appropriate model for describing the population.}
+\end{aligned}
+\]</span></p>
+<p>We wish to statistically assess whether we can simplify our
+model from <span class="math inline">\(CM\)</span> to <span class="math inline">\(RM\)</span>. If <span class="math inline">\(RM\)</span> doesn’t adequately explain the
+patterns of the data, then we will conclude that <span class="math inline">\(CM\)</span> is a
+more appropriate model.</p>
 <p>If we assume that the assumptions in Equation
-<a href="inference.html#eq:error-assumption-inference">(6.2)</a> are true for <span class="math inline">\(RM\)</span> and that <span class="math inline">\(RM\)</span> is the true model, then</p>
+<a href="inference.html#eq:error-assumption-inference">(6.2)</a> are true for <span class="math inline">\(RM\)</span> and
+that <span class="math inline">\(RM\)</span> is the true model, then</p>
 <p><span class="math display" id="eq:f-stat-lh">\[
-F=\frac{\frac{RSS_{RM}-RSS_{CM}}{df_{RM}-df_{CM}}}{\frac{RSS_{CM}}{df_{CM}}}=\frac{\frac{RSS_{RM}-RSS_{CM}}{df_{RM}-df_{CM}}}{\hat{\sigma}^2_{CM}}\sim F_{df_{RM}-df_{CM},df_{CM}}, \tag{6.12}
-\]</span>
-where <span class="math inline">\(F_{df_{RM}-df_{CM},df_{CM}}\)</span> is an <span class="math inline">\(F\)</span> random variable with <span class="math inline">\(df_{RM}-df_{CM}\)</span> numerator degrees of freedom and <span class="math inline">\(df_{CM}\)</span> denominator degrees of freedom and <span class="math inline">\(\hat{\sigma}^2_{CM}\)</span> is the estimated error variance of <span class="math inline">\(CM\)</span>.</p>
+F=\frac{\frac{RSS_{RM}-RSS_{CM}}{df_{RM}-df_{CM}}}{\frac{RSS_{CM}}{df_{CM}}}=\frac{\frac{RSS_{RM}-RSS_{CM}}{df_{RM}-df_{CM}}}{\hat{\sigma}^2_{CM}}\sim F_{df_{RM}-df_{CM},df_{CM}}, \tag{6.10}
+\]</span> where <span class="math inline">\(F_{df_{RM}-df_{CM},df_{CM}}\)</span> is an <span class="math inline">\(F\)</span> random
+variable with <span class="math inline">\(df_{RM}-df_{CM}\)</span> numerator degrees of freedom
+and <span class="math inline">\(df_{CM}\)</span> denominator degrees of freedom and
+<span class="math inline">\(\hat{\sigma}^2_{CM}\)</span> is the estimated error variance of
+<span class="math inline">\(CM\)</span>.</p>
 <p>The p-value for this test is</p>
 <p><span class="math display">\[
 p\text{-value}=P(F\geq F_{df_{RM}-df_{CM},df_{CM}}).
-\]</span>
-We consider two common uses for this test below.`</p>
+\]</span> We consider two common uses for this test below.`</p>
 <div id="test-for-a-regression-relationship" class="section level3 hasAnchor" number="6.10.1">
 <h3><span class="header-section-number">6.10.1</span> Test for a regression relationship<a href="inference.html#test-for-a-regression-relationship" class="anchor-section" aria-label="Anchor link to header"></a></h3>
-<p>The most common test involving multiple parameters is to test whether <em>any</em> of the non-intercept regression coefficients different from zero.</p>
-<p>The is known as the “test for a regression relationship”.</p>
-<p>In this situation, the hypotheses to be tested may be stated as</p>
-<p><span class="math inline">\(H_0: E(Y \mid \mathbb{X}) = \beta_0\)</span>
-<span class="math inline">\(H_a: E(Y\mid \mathbb{X})) = \beta_0 + X_1\beta_1 + \cdots + X_{p-1}\beta_{p-1}.\)</span></p>
-<p>Alternatively, we can state these hypotheses as</p>
-<p><span class="math inline">\(H_0: \beta_1 = \cdots = \beta_{p-1} = 0 \mid \beta_0 \in \mathbb{R}\)</span>
-<span class="math inline">\(H_a: \beta_0 \in \mathbb{R}, \beta_1 \in \mathbb{R}, \ldots, \beta_{p-1}\in \mathbb{R}\)</span>.</p>
-<p>Notice that the Reduced Model in <span class="math inline">\(H_0\)</span> is clearly a special case of the Complete Model with most of the regression coefficients set equal to zero. Notice that we specifically conditioned our hypotheses on the intercept coefficient, <span class="math inline">\(\beta_0\)</span> being included in both models we are comparing.
-We want to choose between the models specified in <span class="math inline">\(H_0\)</span> and <span class="math inline">\(H_a\)</span>.</p>
-<p>The <span class="math inline">\(F\)</span> statistic in Equation <a href="inference.html#eq:f-stat-lh">(6.12)</a> used for this test simplifies dramatically when performing a test for a regression relationship.Using a bit of calculus or by carefully using the OLS estimator of the regression coefficients, it is possible to show that for the Reduced Model that <span class="math inline">\(\hat{\beta}_0=\bar{Y}\)</span>. Thus, for the <span class="math inline">\(RSS_{RM} = \sum_{i=1}^n (Y_i - \bar{Y})^2\)</span>, which is the definition of the TSS defined in Chapter <a href="linear-model-estimation.html#linear-model-estimation">3</a>! Then the numerator of our F statistic becomes <span class="math inline">\(TSS - RSS_{CM}\)</span>, which is mathematically equivalent to the regression sum of squares for the Complete Model. The degrees of freedom of <span class="math inline">\(RSS_{RM} = n - 1\)</span>. Similarly, the degrees of freedom of <span class="math inline">\(RSS_{CM} = n - p\)</span>. Thus <span class="math inline">\(df_{RM} - df_{CM} = (n - 1) - (n - p) = p-1\)</span>. Thus, our F statistic for this test simplifies to</p>
+<p>The most common test involving multiple parameters is to
+test whether <em>any</em> of the non-intercept regression
+coefficients differ from zero. This test is known as the “test for a regression relationship”.</p>
+<p>In this situation, the hypotheses to be tested may be stated
+as</p>
 <p><span class="math display">\[
-F = \frac{SS_{reg}(CM)/(p-1)}{RSS(CM)/(n-p)}= \frac{SS_{reg}(CM)/(p-1)}{\hat{\sigma}^2_{CM}}.
+\begin{aligned}
+&amp;H_0: E(Y \mid \mathbb{X}) = \beta_0 \\
+&amp;H_a: E(Y\mid \mathbb{X}) = \beta_0 + X_1\beta_1 + \cdots + X_{p-1}\beta_{p-1}.
+\end{aligned}
+\]</span></p>
+<p>Alternatively, we can state these hypotheses as</p>
+<p><span class="math display">\[
+\begin{aligned}
+&amp;H_0: \beta_1 = \cdots = \beta_{p-1} = 0 \mid \beta_0 \in \mathbb{R} \\
+&amp;H_a: \beta_0 \in \mathbb{R}, \beta_1 \in \mathbb{R}, \ldots, \beta_{p-1}\in \mathbb{R}.
+\end{aligned}
+\]</span></p>
+<p>Notice that the RM in <span class="math inline">\(H_0\)</span> is a special case of the CM in <span class="math inline">\(H_a\)</span> with all of the regression coefficients set equal to zero except for the intercept term. Notice that we specifically
+conditioned our hypotheses on the intercept coefficient,
+<span class="math inline">\(\beta_0\)</span>, being included in both models we are comparing.</p>
+<p>The <span class="math inline">\(F\)</span> statistic in Equation <a href="inference.html#eq:f-stat-lh">(6.10)</a> used for
+this test simplifies dramatically when performing a test for
+a regression relationship.Using a bit of calculus or by
+carefully using the OLS estimator of the regression
+coefficients, it is possible to show that for the Reduced
+Model that <span class="math inline">\(\hat{\beta}_0=\bar{Y}\)</span>. Thus, for the
+<span class="math inline">\(RSS_{RM} = \sum_{i=1}^n (Y_i - \bar{Y})^2\)</span>, which is the
+definition of the TSS defined in Chapter
+<a href="linear-model-estimation.html#linear-model-estimation">3</a>! Then the numerator of our F
+statistic becomes <span class="math inline">\(TSS - RSS_{CM}\)</span>, which is mathematically
+equivalent to the regression sum of squares for the Complete
+Model. The degrees of freedom of <span class="math inline">\(RSS_{RM} = n - 1\)</span>.
+Similarly, the degrees of freedom of <span class="math inline">\(RSS_{CM} = n - p\)</span>.
+Thus <span class="math inline">\(df_{RM} - df_{CM} = (n - 1) - (n - p) = p-1\)</span>. Thus,
+Our F statistic for this test simplifies to</p>
+<p><span class="math display">\[
+F = \frac{SS_{reg}/(p-1)}{RSS_{CM}/(n-p)}= \frac{SS_{reg}/(p-1)}{\hat{\sigma}^2_{CM}},
 \]</span>
-Let’s perform a test for a regression relationship for the model</p>
+where <span class="math inline">\(SS_{reg}\)</span> is for the CM.</p>
+<p>Using the <code>penguins</code> data, let’s perform a test for a regression relationship for the model</p>
 <p><span class="math display">\[
 \begin{aligned}
 &amp;E(\mathtt{bill\_length\_mm}\mid \mathtt{body\_mass\_g}, \mathtt{flipper\_length\_mm}) \\
@@ -1011,12 +1440,22 @@ Let’s perform a test for a regression relationship for the model</p>
 \]</span></p>
 <p>The fitted model is stored in <code>mlmod</code>.</p>
 <p>We are testing</p>
-<p><span class="math inline">\(H_0: E(\mathtt{bill\_length\_mm}\mid \mathtt{body\_mass\_g}, \mathtt{flipper\_length\_mm}) = \beta_0\)</span>
-<span class="math inline">\(H_a: E(\mathtt{bill\_length\_mm} \mid \mathtt{body\_mass\_g}, \mathtt{flipper\_length\_mm}) = \beta_0 + \beta_1 \mathtt{body\_mass\_g} + \beta_{2} \mathtt{flipper\_length\_mm}.\)</span></p>
-<p>The can also be stated as</p>
-<p><span class="math inline">\(H_0: \beta_1 = \beta_2 = 0 \mid \beta_0 \in \mathbb{R}\)</span>
-<span class="math inline">\(H_a: \beta_1 \neq 0 \text{ or } \beta_2 \neq 0 \mid \beta_0 \in \mathbb{R}.\)</span></p>
-<p>We can get the necessary information for the test for a regression relationship by using the <code>summary</code> function on <code>mlmod</code>.</p>
+<p><span class="math display">\[
+\begin{aligned}
+&amp;H_0: E(\mathtt{bill\_length\_mm}\mid \mathtt{body\_mass\_g}, \mathtt{flipper\_length\_mm}) = \beta_0 \\
+&amp;H_a: E(\mathtt{bill\_length\_mm} \mid \mathtt{body\_mass\_g}, \mathtt{flipper\_length\_mm}) = \beta_0 + \beta_1 \mathtt{body\_mass\_g} + \beta_{2} \mathtt{flipper\_length\_mm}.
+\end{aligned}
+\]</span>
+This can also be stated as</p>
+<p><span class="math display">\[
+\begin{aligned}
+&amp;H_0: \beta_1 = \beta_2 = 0 \mid \beta_0 \in \mathbb{R} \\
+&amp;H_a: \beta_1 \neq 0 \text{ or } \beta_2 \neq 0 \mid \beta_0 \in \mathbb{R}.
+\end{aligned}
+\]</span></p>
+<p>We can get the necessary information for the test for a
+regression relationship by using the <code>summary</code> function on
+<code>mlmod</code>.</p>
 <div class="sourceCode" id="cb16"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb16-1"><a href="inference.html#cb16-1" aria-hidden="true" tabindex="-1"></a><span class="fu">summary</span>(mlmod)</span>
 <span id="cb16-2"><a href="inference.html#cb16-2" aria-hidden="true" tabindex="-1"></a><span class="do">## </span></span>
 <span id="cb16-3"><a href="inference.html#cb16-3" aria-hidden="true" tabindex="-1"></a><span class="do">## Call:</span></span>
@@ -1039,25 +1478,45 @@ Let’s perform a test for a regression relationship for the model</p>
 <span id="cb16-20"><a href="inference.html#cb16-20" aria-hidden="true" tabindex="-1"></a><span class="do">##   (2 observations deleted due to missingness)</span></span>
 <span id="cb16-21"><a href="inference.html#cb16-21" aria-hidden="true" tabindex="-1"></a><span class="do">## Multiple R-squared:  0.4329, Adjusted R-squared:  0.4295 </span></span>
 <span id="cb16-22"><a href="inference.html#cb16-22" aria-hidden="true" tabindex="-1"></a><span class="do">## F-statistic: 129.4 on 2 and 339 DF,  p-value: &lt; 2.2e-16</span></span></code></pre></div>
-<p>The necessary information is in the last line of the <code>summary</code> output.</p>
+<p>The necessary information is in the last line of the
+<code>summary</code> output.</p>
 <pre><code>F-statistic: 129.4 on 2 and 339 DF,  p-value: &lt; 2.2e-16</code></pre>
-<p>The test statistic for this test is 129.4 with a p-value close to 0.</p>
-<p>There is very strong evidence that at least one of the regression coefficients for <code>body_mass_g</code> or <code>flipper_length_mm</code> is non-zero in the model regression for <code>bill_length_mm</code> that already includes an intercept.</p>
-<p>Alternatively, the model regressing <code>bill_length_mm</code> on the intercept, <code>body_mass_g</code>, and <code>flipper_length_mm</code> is preferred to the model that has only an intercept.</p>
+<p>The test statistic for this test is 129.4 with a p-value
+close to 0.</p>
+<p>There is very strong evidence that at least one of the
+regression coefficients for <code>body_mass_g</code> or
+<code>flipper_length_mm</code> is non-zero in the regression model for
+<code>bill_length_mm</code> that already includes an intercept.</p>
+<p>Alternatively, the model regressing <code>bill_length_mm</code> on the
+intercept, <code>body_mass_g</code>, and <code>flipper_length_mm</code> is
+preferred to the model that has only an intercept.</p>
 </div>
 <div id="a-more-general-f-test" class="section level3 hasAnchor" number="6.10.2">
 <h3><span class="header-section-number">6.10.2</span> A more general F test<a href="inference.html#a-more-general-f-test" class="anchor-section" aria-label="Anchor link to header"></a></h3>
-<p>Let us consider a more general F test where multiple regression coefficients are set to zero. In general, the associated test statistic won’t simplify in any standard way.</p>
-<p>We will illustrate the more general F test using the <code>penguins</code> data.</p>
-<p>Suppose we want to decide between the simple linear regression model and parallel lines model for <code>penguins</code> data.</p>
+<p>Let us consider a more general F test where multiple
+regression coefficients are set to zero. In general, the
+associated test statistic won’t simplify in any standard
+way.</p>
+<p>We will illustrate the more general F test using the
+<code>penguins</code> data.</p>
+<p>Suppose we want to decide between the simple linear
+regression model and the parallel lines model for the <code>penguins</code>
+data.</p>
 <p>We want to test between</p>
-<p><span class="math inline">\(H_0: E(\mathtt{bill\_length\_mm} \mid \mathtt{body\_mass\_g}, \mathtt{species}) = \beta_{0} + \beta_1 \mathtt{body\_mass\_g}\)</span>
-<span class="math inline">\(H_a: E(\mathtt{bill\_length\_mm} \mid \mathtt{body\_mass\_g}, \mathtt{species}) = \beta_{0} + \beta_1 \mathtt{body\_mass\_g} + \beta_2 D_C + \beta_3 D_G\)</span></p>
-<p>where <span class="math inline">\(D_C\)</span> and <span class="math inline">\(D_G\)</span> denote the indicator variables for the <code>Chinstrap</code> and <code>Gentoo</code> level of penguin <code>species</code>.</p>
+<p><span class="math display">\[
+\begin{aligned}
+&amp;H_0: E(\mathtt{bill\_length\_mm} \mid \mathtt{body\_mass\_g}, \mathtt{species}) = \beta_{0} + \beta_1 \mathtt{body\_mass\_g} \\
+&amp;H_a:  E(\mathtt{bill\_length\_mm} \mid \mathtt{body\_mass\_g}, \mathtt{species})\\
+&amp;\qquad = \beta_{0} + \beta_1 \mathtt{body\_mass\_g} + \beta_2 D_C + \beta_3 D_G,
+\end{aligned}
+\]</span>
+where <span class="math inline">\(D_C\)</span> and <span class="math inline">\(D_G\)</span> denote the indicator variables for the
+<code>Chinstrap</code> and <code>Gentoo</code> level of penguin <code>species</code>.</p>
 <p>Alternatively, we could state this as</p>
 <p><span class="math inline">\(H_0: \beta_2 = \beta_3 = 0 \mid \beta_0, \beta_1 \in \mathbb{R}\)</span>
 <span class="math inline">\(H_a: \beta_2 \neq 0 \text{ or } \beta_3 \neq 0 \mid \beta_0, \beta_1 \in \mathbb{R}\)</span>.</p>
-<p>To perform our test, we fit both models. We fit the simple linear regression model in the code below.</p>
+<p>To perform our test, we fit both models. We fit the simple
+linear regression model in the code below.</p>
 <div class="sourceCode" id="cb18"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb18-1"><a href="inference.html#cb18-1" aria-hidden="true" tabindex="-1"></a>lmod <span class="ot">&lt;-</span> <span class="fu">lm</span>(bill_length_mm <span class="sc">~</span> body_mass_g, <span class="at">data =</span> penguins)</span>
 <span id="cb18-2"><a href="inference.html#cb18-2" aria-hidden="true" tabindex="-1"></a><span class="fu">coef</span>(lmod)</span>
 <span id="cb18-3"><a href="inference.html#cb18-3" aria-hidden="true" tabindex="-1"></a><span class="do">##  (Intercept)  body_mass_g </span></span>
@@ -1067,7 +1526,10 @@ Let’s perform a test for a regression relationship for the model</p>
 <span id="cb19-2"><a href="inference.html#cb19-2" aria-hidden="true" tabindex="-1"></a><span class="fu">coef</span>(lmodp)</span>
 <span id="cb19-3"><a href="inference.html#cb19-3" aria-hidden="true" tabindex="-1"></a><span class="do">##      (Intercept)      body_mass_g speciesChinstrap    speciesGentoo </span></span>
 <span id="cb19-4"><a href="inference.html#cb19-4" aria-hidden="true" tabindex="-1"></a><span class="do">##     24.919470977      0.003748497      9.920884113      3.557977539</span></span></code></pre></div>
-<p>We use the <code>anova</code> function to get the test statistic and p-value for our general F test. We supply the fitted <span class="math inline">\(RM\)</span> as the first argument to the function and then the fitted <span class="math inline">\(CM\)</span> as the second argument. We do that in the code below.</p>
+<p>We use the <code>anova</code> function to get the test statistic and
+p-value for our general F test. We supply the fitted <span class="math inline">\(RM\)</span> as
+the first argument to the function and then the fitted <span class="math inline">\(CM\)</span>
+as the second argument. We do that in the code below.</p>
 <div class="sourceCode" id="cb20"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb20-1"><a href="inference.html#cb20-1" aria-hidden="true" tabindex="-1"></a><span class="fu">anova</span>(lmod, lmodp)</span>
 <span id="cb20-2"><a href="inference.html#cb20-2" aria-hidden="true" tabindex="-1"></a><span class="do">## Analysis of Variance Table</span></span>
 <span id="cb20-3"><a href="inference.html#cb20-3" aria-hidden="true" tabindex="-1"></a><span class="do">## </span></span>
@@ -1078,9 +1540,13 @@ Let’s perform a test for a regression relationship for the model</p>
 <span id="cb20-8"><a href="inference.html#cb20-8" aria-hidden="true" tabindex="-1"></a><span class="do">## 2    338 1952.0  2    4612.5 399.35 &lt; 2.2e-16 ***</span></span>
 <span id="cb20-9"><a href="inference.html#cb20-9" aria-hidden="true" tabindex="-1"></a><span class="do">## ---</span></span>
 <span id="cb20-10"><a href="inference.html#cb20-10" aria-hidden="true" tabindex="-1"></a><span class="do">## Signif. codes:  0 &#39;***&#39; 0.001 &#39;**&#39; 0.01 &#39;*&#39; 0.05 &#39;.&#39; 0.1 &#39; &#39; 1</span></span></code></pre></div>
-<p>The test statistic (<code>F</code>) is 399.35 and the associated p-value (<code>Pr(&gt;F)</code>) is close to 0.</p>
-<p>The is very strong evidence that the parallel lines model is preferred to the simple linear regression model for the <code>penguins</code> data.</p>
-<p>We can do another test that compares the parallel lines model to the separate lines model for the <code>penguins</code> data.</p>
+<p>The test statistic (<code>F</code>) is 399.35 and the associated
+p-value (<code>Pr(&gt;F)</code>) is close to 0.</p>
+<p>The is very strong evidence that the parallel lines model is
+preferred to the simple linear regression model for the
+<code>penguins</code> data.</p>
+<p>We can do another test that compares the parallel lines
+model to the separate lines model for the <code>penguins</code> data.</p>
 <p>We want to choose between</p>
 <p><span class="math display">\[
 \begin{aligned}
@@ -1096,7 +1562,8 @@ Let’s perform a test for a regression relationship for the model</p>
 &amp;H_a: \beta_4 \neq 0 \text{ or } \beta_5 \neq 0 \mid \beta_0, \beta_1, \beta_2, \beta_3 \in \mathbb{R}.
 \end{aligned}
 \]</span></p>
-<p>We now fit the separate lines regression model to the <code>penguins</code> data.</p>
+<p>We now fit the separate lines regression model to the
+<code>penguins</code> data.</p>
 <div class="sourceCode" id="cb21"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb21-1"><a href="inference.html#cb21-1" aria-hidden="true" tabindex="-1"></a>lmods <span class="ot">&lt;-</span> <span class="fu">lm</span>(bill_length_mm <span class="sc">~</span> body_mass_g <span class="sc">+</span> species <span class="sc">+</span> body_mass_g<span class="sc">:</span>species,</span>
 <span id="cb21-2"><a href="inference.html#cb21-2" aria-hidden="true" tabindex="-1"></a>            <span class="at">data =</span> penguins)</span>
 <span id="cb21-3"><a href="inference.html#cb21-3" aria-hidden="true" tabindex="-1"></a><span class="fu">coef</span>(lmods)</span>
@@ -1106,7 +1573,8 @@ Let’s perform a test for a regression relationship for the model</p>
 <span id="cb21-7"><a href="inference.html#cb21-7" aria-hidden="true" tabindex="-1"></a><span class="do">##                 5.1800537287                -0.2545906615 </span></span>
 <span id="cb21-8"><a href="inference.html#cb21-8" aria-hidden="true" tabindex="-1"></a><span class="do">## body_mass_g:speciesChinstrap    body_mass_g:speciesGentoo </span></span>
 <span id="cb21-9"><a href="inference.html#cb21-9" aria-hidden="true" tabindex="-1"></a><span class="do">##                 0.0012748183                 0.0009029956</span></span></code></pre></div>
-<p>We once again use the <code>anova</code> function to get our associated test statistic and p-value, as shown in the code below.</p>
+<p>We once again use the <code>anova</code> function to get our associated
+test statistic and p-value, as shown in the code below.</p>
 <div class="sourceCode" id="cb22"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb22-1"><a href="inference.html#cb22-1" aria-hidden="true" tabindex="-1"></a><span class="fu">anova</span>(lmodp, lmods)</span>
 <span id="cb22-2"><a href="inference.html#cb22-2" aria-hidden="true" tabindex="-1"></a><span class="do">## Analysis of Variance Table</span></span>
 <span id="cb22-3"><a href="inference.html#cb22-3" aria-hidden="true" tabindex="-1"></a><span class="do">## </span></span>
@@ -1115,14 +1583,17 @@ Let’s perform a test for a regression relationship for the model</p>
 <span id="cb22-6"><a href="inference.html#cb22-6" aria-hidden="true" tabindex="-1"></a><span class="do">##   Res.Df    RSS Df Sum of Sq      F Pr(&gt;F)</span></span>
 <span id="cb22-7"><a href="inference.html#cb22-7" aria-hidden="true" tabindex="-1"></a><span class="do">## 1    338 1952.0                           </span></span>
 <span id="cb22-8"><a href="inference.html#cb22-8" aria-hidden="true" tabindex="-1"></a><span class="do">## 2    336 1933.4  2    18.596 1.6159 0.2003</span></span></code></pre></div>
-<p>The test statistic for this test is 1.62 with an associated p-value of 0.20. It appears the for the model regressing <code>bill_length_mm</code> on <code>body_mass_g</code> and <code>species</code>, the parallel lines model is adequate and we do not need the adequate complexity of the separate lines model.</p>
+<p>The test statistic for this test is 1.62 with an associated
+p-value of 0.20. It appears that for the model regressing <code>bill_length_mm</code> on <code>body_mass_g</code> and <code>species</code>, the parallel lines model is adequate and we do not need the additional complexity of the separate lines model.</p>
 </div>
 </div>
 <div id="going-deeper-2" class="section level2 hasAnchor" number="6.11">
 <h2><span class="header-section-number">6.11</span> Going deeper<a href="inference.html#going-deeper-2" class="anchor-section" aria-label="Anchor link to header"></a></h2>
 <div id="manual-t-cis" class="section level3 hasAnchor" number="6.11.1">
 <h3><span class="header-section-number">6.11.1</span> Manual calculation of the standard <span class="math inline">\(t\)</span>-based confidence interval for a regression coefficient<a href="inference.html#manual-t-cis" class="anchor-section" aria-label="Anchor link to header"></a></h3>
-<p>Consider the summary of the fitted linear model below, which summarizes a first-order linear model fit to the <code>penguins</code> data earlier in this chapter.</p>
+<p>Consider the summary of the fitted linear model below, which
+summarizes a first-order linear model fit to the <code>penguins</code>
+data earlier in this chapter.</p>
 <div class="sourceCode" id="cb23"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb23-1"><a href="inference.html#cb23-1" aria-hidden="true" tabindex="-1"></a><span class="fu">summary</span>(mlmod)</span>
 <span id="cb23-2"><a href="inference.html#cb23-2" aria-hidden="true" tabindex="-1"></a><span class="do">## </span></span>
 <span id="cb23-3"><a href="inference.html#cb23-3" aria-hidden="true" tabindex="-1"></a><span class="do">## Call:</span></span>
@@ -1145,46 +1616,77 @@ Let’s perform a test for a regression relationship for the model</p>
 <span id="cb23-20"><a href="inference.html#cb23-20" aria-hidden="true" tabindex="-1"></a><span class="do">##   (2 observations deleted due to missingness)</span></span>
 <span id="cb23-21"><a href="inference.html#cb23-21" aria-hidden="true" tabindex="-1"></a><span class="do">## Multiple R-squared:  0.4329, Adjusted R-squared:  0.4295 </span></span>
 <span id="cb23-22"><a href="inference.html#cb23-22" aria-hidden="true" tabindex="-1"></a><span class="do">## F-statistic: 129.4 on 2 and 339 DF,  p-value: &lt; 2.2e-16</span></span></code></pre></div>
-<p>If we want to manually produce 95% confidence intervals for the true regression coefficients for this model using Equation <a href="inference.html#eq:t-ci-betas">(6.4)</a>, then we need to acquire some basic information. We need:</p>
+<p>If we want to manually produce 95% confidence intervals for
+the true regression coefficients for this model using
+Equation <a href="inference.html#eq:t-ci-betas">(6.4)</a>, then we need to acquire some
+basic information. We need:</p>
 <ul>
 <li>the estimated regression coefficients</li>
 <li>the degrees of freedom for the fitted model <span class="math inline">\(n-p\)</span></li>
-<li>the <span class="math inline">\(1-\alpha/2\)</span> quantile of a <span class="math inline">\(t\)</span> random variable with <span class="math inline">\(n-p\)</span> degrees of freedom</li>
-<li>the estimated standard error of the estimated regression coefficients.</li>
+<li>the <span class="math inline">\(1-\alpha/2\)</span> quantile of a <span class="math inline">\(t\)</span> random variable with
+<span class="math inline">\(n-p\)</span> degrees of freedom</li>
+<li>the estimated standard error of the estimated regression
+coefficients.</li>
 </ul>
-<p>The estimated regression coefficients can be extracted from our fitted model, <code>mlmod</code>, using the <code>coef</code> function. We extract and print the estimated coefficients using the code below while simultaneously assigning the vector the name <code>betahats</code>.</p>
+<p>The estimated regression coefficients can be extracted from
+our fitted model, <code>mlmod</code>, using the <code>coef</code> function. We
+extract and print the estimated coefficients using the code
+below while simultaneously assigning the vector the name
+<code>betahats</code>.</p>
 <div class="sourceCode" id="cb24"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb24-1"><a href="inference.html#cb24-1" aria-hidden="true" tabindex="-1"></a><span class="co"># extract estimated coefficients from mlmod</span></span>
 <span id="cb24-2"><a href="inference.html#cb24-2" aria-hidden="true" tabindex="-1"></a>(betahats <span class="ot">&lt;-</span> <span class="fu">coef</span>(mlmod))</span>
 <span id="cb24-3"><a href="inference.html#cb24-3" aria-hidden="true" tabindex="-1"></a><span class="do">##       (Intercept)       body_mass_g flipper_length_mm </span></span>
 <span id="cb24-4"><a href="inference.html#cb24-4" aria-hidden="true" tabindex="-1"></a><span class="do">##     -3.4366939266      0.0006622186      0.2218654584</span></span></code></pre></div>
-<p>The degrees of freedom <span class="math inline">\(n-p\)</span> is referred to as the residual degrees of freedom and can be obtained by using the <code>df.residual</code> function on the fitted model. Using the code below, we see that the residual degrees of freedom is 339 (this information was also in the summary of the fitted model).</p>
+<p>The degrees of freedom <span class="math inline">\(n-p\)</span> is referred to as the residual
+degrees of freedom and can be obtained by using the
+<code>df.residual</code> function on the fitted model. Using the code
+below, we see that the residual degrees of freedom is 339
+(this information was also in the summary of the fitted
+model).</p>
 <div class="sourceCode" id="cb25"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb25-1"><a href="inference.html#cb25-1" aria-hidden="true" tabindex="-1"></a><span class="fu">df.residual</span>(mlmod)</span>
 <span id="cb25-2"><a href="inference.html#cb25-2" aria-hidden="true" tabindex="-1"></a><span class="do">## [1] 339</span></span></code></pre></div>
-<p>To construct a 95% confidence interval for our coefficients, we need to determine the <span class="math inline">\(0.975\)</span> quantile of a <span class="math inline">\(t\)</span> random variable with 339 degrees of freedom. This can be found using the <code>qt</code> function, as is done in the code below. We assign this value the name <code>mult</code>. Notice that value is a bit above 1.96, which is the value often seen in introductory statistics courses for confidence intervals based on the standard normal distribution (<span class="math inline">\(\mathsf{N}(0,1)\)</span> distribution).</p>
+<p>To construct a 95% confidence interval for our coefficients,
+we need to determine the <span class="math inline">\(0.975\)</span> quantile of a <span class="math inline">\(t\)</span> random
+variable with 339 degrees of freedom. This can be found
+using the <code>qt</code> function, as is done in the code below. We
+assign this value the name <code>mult</code>. Notice that value is a
+bit above 1.96, which is the value often seen in
+introductory statistics courses for confidence intervals
+based on the standard normal distribution (<span class="math inline">\(\mathsf{N}(0,1)\)</span>
+distribution).</p>
 <div class="sourceCode" id="cb26"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb26-1"><a href="inference.html#cb26-1" aria-hidden="true" tabindex="-1"></a>(mult <span class="ot">&lt;-</span> <span class="fu">qt</span>(<span class="fl">0.975</span>, <span class="at">df =</span> <span class="dv">339</span>))</span>
 <span id="cb26-2"><a href="inference.html#cb26-2" aria-hidden="true" tabindex="-1"></a><span class="do">## [1] 1.966986</span></span></code></pre></div>
-<p>The estimated standard errors of each coefficient are shown in the summary of the fitted model. They are (approximately) 4.58, 0.00057, and 0.032 and can be obtained by extracting the 2nd column of the <code>coefficients</code> element produced by the <code>summary</code> function.</p>
+<p>The estimated standard errors of each coefficient are shown
+in the summary of the fitted model. They are (approximately)
+4.58, 0.00057, and 0.032 and can be obtained by extracting
+the 2nd column of the <code>coefficients</code> element produced by the
+<code>summary</code> function.</p>
 <div class="sourceCode" id="cb27"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb27-1"><a href="inference.html#cb27-1" aria-hidden="true" tabindex="-1"></a>(sehats <span class="ot">&lt;-</span> <span class="fu">summary</span>(mlmod)<span class="sc">$</span>coefficients[,<span class="dv">2</span>])</span>
 <span id="cb27-2"><a href="inference.html#cb27-2" aria-hidden="true" tabindex="-1"></a><span class="do">##       (Intercept)       body_mass_g flipper_length_mm </span></span>
 <span id="cb27-3"><a href="inference.html#cb27-3" aria-hidden="true" tabindex="-1"></a><span class="do">##      4.5805531903      0.0005672075      0.0323484492</span></span></code></pre></div>
 <p>A alternative approach is to use 3 step process below:</p>
 <ol style="list-style-type: decimal">
-<li>Use the <code>vcov</code> function to obtain the estimated variance matrix of
-<span class="math inline">\(\hat{\boldsymbol{\beta}}\)</span>, i.e.,
+<li>Use the <code>vcov</code> function to obtain the estimated variance
+matrix of <span class="math inline">\(\hat{\boldsymbol{\beta}}\)</span>, i.e.,
 <span class="math inline">\(\hat{\mathrm{var}}(\hat{\boldsymbol{\beta}})\)</span>.</li>
-<li>Use the <code>diag</code> function to extract the diagonal elements of this
-matrix, which gives us
+<li>Use the <code>diag</code> function to extract the diagonal elements
+of this matrix, which gives us
 <span class="math inline">\(\hat{\mathrm{var}}(\hat{\beta}_0), \hat{\mathrm{var}}(\hat{\beta}_1), \ldots, \hat{\mathrm{var}}(\hat{\beta}_{p-1})\)</span>.</li>
-<li>Use the <code>sqrt</code> function to calculate the estimated standard errors
-from the estimated variances of the estimated coefficients.</li>
+<li>Use the <code>sqrt</code> function to calculate the estimated
+standard errors from the estimated variances of the
+estimated coefficients.</li>
 </ol>
-<p>We use this process in the code below, which returns the same estimated
-standard errors we previously obtained.</p>
+<p>We use this process in the code below, which returns the
+same estimated standard errors we previously obtained.</p>
 <div class="sourceCode" id="cb28"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb28-1"><a href="inference.html#cb28-1" aria-hidden="true" tabindex="-1"></a><span class="co"># 2nd approach to obtaining estimated standard errors</span></span>
 <span id="cb28-2"><a href="inference.html#cb28-2" aria-hidden="true" tabindex="-1"></a><span class="fu">sqrt</span>(<span class="fu">diag</span>(<span class="fu">vcov</span>(mlmod)))</span>
 <span id="cb28-3"><a href="inference.html#cb28-3" aria-hidden="true" tabindex="-1"></a><span class="do">##       (Intercept)       body_mass_g flipper_length_mm </span></span>
 <span id="cb28-4"><a href="inference.html#cb28-4" aria-hidden="true" tabindex="-1"></a><span class="do">##      4.5805531903      0.0005672075      0.0323484492</span></span></code></pre></div>
-<p>Using the estimated coefficients (<code>betahats</code>), the appropriate quantile of the <span class="math inline">\(t\)</span> distribution (<code>mult</code>), and the estimated standard errors (<code>sehats</code>), we can manually produce the standard t-based confidence intervals using the code below.</p>
+<p>Using the estimated coefficients (<code>betahats</code>), the
+appropriate quantile of the <span class="math inline">\(t\)</span> distribution (<code>mult</code>), and
+the estimated standard errors (<code>sehats</code>), we can manually
+produce the standard t-based confidence intervals using the
+code below.</p>
 <div class="sourceCode" id="cb29"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb29-1"><a href="inference.html#cb29-1" aria-hidden="true" tabindex="-1"></a><span class="fu">data.frame</span>(<span class="at">lb =</span> betahats <span class="sc">-</span> mult <span class="sc">*</span> sehats,</span>
 <span id="cb29-2"><a href="inference.html#cb29-2" aria-hidden="true" tabindex="-1"></a>           <span class="at">ub =</span> betahats <span class="sc">-</span> mult <span class="sc">*</span> sehats)</span>
 <span id="cb29-3"><a href="inference.html#cb29-3" aria-hidden="true" tabindex="-1"></a><span class="do">##                              lb            ub</span></span>
@@ -1194,66 +1696,77 @@ standard errors we previously obtained.</p>
 </div>
 <div id="mean-response-calculations" class="section level3 hasAnchor" number="6.11.2">
 <h3><span class="header-section-number">6.11.2</span> Details about estimation of the mean response<a href="inference.html#mean-response-calculations" class="anchor-section" aria-label="Anchor link to header"></a></h3>
-<p>Consider the estimated mean response for a specific combination of
-regressor values, denoted by <span class="math inline">\(\mathbf{x}_0\)</span>, so that
+<p>Consider the estimated mean response for a specific
+combination of regressor values, denoted by <span class="math inline">\(\mathbf{x}_0\)</span>,
+so that
 <span class="math display">\[\hat{E}(Y\mid \mathbf{x}_0)=\mathbf{x}_0^T\hat{\boldsymbol{\beta}}.\]</span></p>
 <p>Using some of the matrix-related results from Appendix
-<a href="prob-review.html#prob-review">B</a> and the result in Equation <a href="inference.html#eq:prop-betahat">(6.3)</a>, we
-can determine that
+<a href="prob-review.html#prob-review">B</a> and the result in Equation
+<a href="inference.html#eq:prop-betahat">(6.3)</a>, we can determine that
 <span class="math display" id="eq:var-est-mean-response">\[
 \begin{aligned}
 \mathrm{var}\left(\hat{E}(Y \mid \mathbf{x}_0)\right) &amp;= \mathrm{var}(\mathbf{x}_0^T \hat{\boldsymbol{\beta}}) \\
 &amp;= \mathbf{x}_0^T \mathrm{var}(\hat{\boldsymbol{\beta}})\mathbf{x}_0\\
 &amp;= \sigma^2 \mathbf{x}_0^T (\mathbf{X}^T \mathbf{X})^{-1}\mathbf{x}_0.
 \end{aligned}
-\tag{6.13}
+\tag{6.11}
 \]</span>
-To get the simplest expression for the confidence interval for
-<span class="math inline">\(E(Y\mid\mathbf{x}_0)\)</span>, we have to make a number of connections that are often glossed over. We discuss them explicitly. Since the error
-variance, <span class="math inline">\(\sigma^2\)</span>, in Equation <a href="inference.html#eq:var-est-mean-response">(6.13)</a> isn’t
-known, we replace it with the typical estimator
+To get the simplest expression for the confidence
+interval for <span class="math inline">\(E(Y\mid\mathbf{x}_0)\)</span>, we have to make a
+number of connections that are often glossed over. We
+discuss them explicitly. Since the error variance,
+<span class="math inline">\(\sigma^2\)</span>, in Equation <a href="inference.html#eq:var-est-mean-response">(6.11)</a>
+isn’t known, we replace it with the typical estimator
 <span class="math inline">\(\hat{\sigma}^2=RSS/(n-p)\)</span> to get
 <span class="math display" id="eq:est-var-mean">\[
-\hat{\mathrm{var}}\left(\hat{E}(Y\mid\mathbf{x}_0)\right)=\hat{\sigma}^2 \mathbf{x}_0^T (\mathbf{X}^T \mathbf{X})^{-1}\mathbf{x}_0. \tag{6.14}
+\hat{\mathrm{var}}\left(\hat{E}(Y\mid\mathbf{x}_0)\right)=\hat{\sigma}^2 \mathbf{x}_0^T (\mathbf{X}^T \mathbf{X})^{-1}\mathbf{x}_0. \tag{6.12}
 \]</span></p>
-<p>The standard error of an estimator is the standard deviation of the
-estimator’s variance, so we have
+<p>The standard error of an estimator is the standard deviation
+of the estimator’s variance, so we have
 <span class="math inline">\(\mathrm{se}\left(\hat{E}(Y\mid\mathbf{x}_0)\right)=\sqrt{\mathrm{var}\left(\hat{E}(Y\mid \mathbf{x}_0)\right)}\)</span>.
 Similarly, we have that the estimated standard error for
 <span class="math inline">\(\hat{E}(Y\mid \mathbf{x}_0)\)</span> is
 <span class="math inline">\(\hat{\mathrm{se}}\left(\hat{E}(Y\mid\mathbf{x}_0)\right)=\sqrt{\hat{\mathrm{var}}\left(\hat{E}(Y\mid \mathbf{x}_0)\right)}\)</span>.
-Taking the square root of Equation <a href="inference.html#eq:est-var-mean">(6.14)</a>, we see that
+Taking the square root of Equation <a href="inference.html#eq:est-var-mean">(6.12)</a>,
+we see that
 <span class="math display">\[
 \hat{\mathrm{se}}\left(\hat{E}(Y\mid \mathbf{x}_0)\right)=\hat{\sigma} \sqrt{\mathbf{x}_0^T (\mathbf{X}^T \mathbf{X})^{-1}\mathbf{x}_0}.
 \]</span></p>
-<p>Additionally, since <span class="math inline">\(E(Y\mid \mathbf{x}_0)\)</span> is an (unknown) constant, we
-also have that
+<p>Additionally, since <span class="math inline">\(E(Y\mid \mathbf{x}_0)\)</span> is an (unknown)
+constant, we also have that
 <span class="math display">\[\mathrm{var}\left(E(Y\mid \mathbf{x}_0)-\hat{E}(Y\mid \mathbf{x}_0)\right)=\mathrm{var}\left(\hat{E}(Y\mid \mathbf{x}_0)\right).
 \]</span>
-If we divide the estimation error of the mean response, i.e.,
-<span class="math inline">\(E(Y\mid \mathbf{x}_0)-\hat{E}(Y\mid \mathbf{x}_0)\)</span>, by its estimated
-standard deviation, then we obtain a pivotal quantity. More
-specifically, we have
+If we divide the estimation error of the mean response,
+i.e., <span class="math inline">\(E(Y\mid \mathbf{x}_0)-\hat{E}(Y\mid \mathbf{x}_0)\)</span>,
+by its estimated standard deviation, then we obtain a
+pivotal quantity. More specifically, we have
 <span class="math display">\[
 \frac{E(Y\mid \mathbf{x}_0)-\hat{E}(Y\mid \mathbf{x}_0)}{\sqrt{\hat{\mathrm{var}}\left(E(Y\mid \mathbf{x}_0)-\hat{E}(Y\mid \mathbf{x}_0)\right)}} = \frac{E(Y\mid \mathbf{x}_0)- \mathbf{x}_0 \hat{\boldsymbol{\beta}}}{ \hat{\mathrm{se}}(\mathbf{x}_0\hat{\boldsymbol{\beta}})}\sim t_{n-p}.
 \]</span></p>
 </div>
 <div id="manual-calc-ci-mean-response" class="section level3 hasAnchor" number="6.11.3">
 <h3><span class="header-section-number">6.11.3</span> Manual calculation of confidence intervals for the mean response<a href="inference.html#manual-calc-ci-mean-response" class="anchor-section" aria-label="Anchor link to header"></a></h3>
-<p>We discuss manual computation of the estimated mean response and associated confidence interval for a particular
-combination of regressor values based on the <code>penguins</code> example discussed in Section <a href="inference.html#parametric-ci-mean-response">6.7</a>.</p>
-<p>Specifically, we estimate the mean response for the fitted parallel
-lines model given by<span class="math display">\[
+<p>We discuss manual computation of the estimated mean response
+and associated confidence interval for a particular
+combination of regressor values based on the <code>penguins</code>
+example discussed in Section
+<a href="inference.html#parametric-ci-mean-response">6.7</a>.</p>
+<p>Specifically, we estimate the mean response for the fitted
+parallel lines model given by<span class="math display">\[
 \begin{aligned}
 &amp;\hat{E}(\mathtt{bill\_length\_mm} \mid \mathtt{body\_mass\_g}, \mathtt{species})\\
 &amp;= 24.92 + 0.004 \mathtt{body\_mass\_g} + 9.92 D_C + 3.56 D_G,
 \end{aligned}
-\]</span>
-where <span class="math inline">\(D_C\)</span> and <span class="math inline">\(D_G\)</span> denote the indicator variables for the <code>Chinstrap</code> and <code>Gentoo</code> levels of the <code>species</code> variable. This fitted model is stored in <code>lmodp</code>. The estimated coefficients are shown in the code below.</p>
+\]</span> where <span class="math inline">\(D_C\)</span> and <span class="math inline">\(D_G\)</span> denote the indicator variables for
+the <code>Chinstrap</code> and <code>Gentoo</code> levels of the <code>species</code>
+variable. This fitted model is stored in <code>lmodp</code>. The
+estimated coefficients are shown in the code below.</p>
 <div class="sourceCode" id="cb30"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb30-1"><a href="inference.html#cb30-1" aria-hidden="true" tabindex="-1"></a><span class="fu">coef</span>(lmodp)</span>
 <span id="cb30-2"><a href="inference.html#cb30-2" aria-hidden="true" tabindex="-1"></a><span class="do">##      (Intercept)      body_mass_g speciesChinstrap    speciesGentoo </span></span>
 <span id="cb30-3"><a href="inference.html#cb30-3" aria-hidden="true" tabindex="-1"></a><span class="do">##     24.919470977      0.003748497      9.920884113      3.557977539</span></span></code></pre></div>
-<p>We want to estimate the mean response for the following combination of predictors stored in the <code>newpenguins</code> data frame, which is printed in the code below.</p>
+<p>We want to estimate the mean response for the following
+combination of predictors stored in the <code>newpenguins</code> data
+frame, which is printed in the code below.</p>
 <div class="sourceCode" id="cb31"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb31-1"><a href="inference.html#cb31-1" aria-hidden="true" tabindex="-1"></a><span class="co"># mean body_mass_g of each species</span></span>
 <span id="cb31-2"><a href="inference.html#cb31-2" aria-hidden="true" tabindex="-1"></a>newpenguins</span>
 <span id="cb31-3"><a href="inference.html#cb31-3" aria-hidden="true" tabindex="-1"></a><span class="do">## # A tibble: 3 × 2</span></span>
@@ -1262,12 +1775,25 @@ where <span class="math inline">\(D_C\)</span> and <span class="math inline">\(D
 <span id="cb31-6"><a href="inference.html#cb31-6" aria-hidden="true" tabindex="-1"></a><span class="do">## 1 Adelie          3701.</span></span>
 <span id="cb31-7"><a href="inference.html#cb31-7" aria-hidden="true" tabindex="-1"></a><span class="do">## 2 Chinstrap       3733.</span></span>
 <span id="cb31-8"><a href="inference.html#cb31-8" aria-hidden="true" tabindex="-1"></a><span class="do">## 3 Gentoo          5076.</span></span></code></pre></div>
-<p>We want to use the <code>newpenguins</code> data frame to generate the matrix of regressors used to estimate the associated mean responses. We can create the matrix of regressors using the <code>model.matrix</code> function. The main arguments of <code>model.matrix</code> are:</p>
+<p>We want to use the <code>newpenguins</code> data frame to generate the
+matrix of regressors used to estimate the associated mean
+responses. We can create the matrix of regressors using the
+<code>model.matrix</code> function. The main arguments of
+<code>model.matrix</code> are:</p>
 <ul>
-<li><code>object</code>: an object of the appropriate class. In our case, it is a formula or fitted model.</li>
-<li><code>data</code>: a data frame with the predictors needed to construct the matrix.</li>
+<li><code>object</code>: an object of the appropriate class. In our
+case, it is a formula or fitted model.</li>
+<li><code>data</code>: a data frame with the predictors needed to
+construct the matrix.</li>
 </ul>
-<p>We need only the right side of the formula used to fit the model in <code>lmodp</code> to create our matrix of regressor values. We can use the <code>formula</code> function to extract the formula used to fit <code>lmodp</code>. We then use <code>model.matrix</code> to create the matrix of regressor by values needed for estimating the mean. The matrix produced by <code>model.matrix</code>, <code>X0</code>, includes a column for the intercept term and the indicator variables in <code>lmodp</code>.</p>
+<p>We need only the right side of the formula used to fit the
+model in <code>lmodp</code> to create our matrix of regressor values.
+We can use the <code>formula</code> function to extract the formula
+used to fit <code>lmodp</code>. We then use <code>model.matrix</code> to create
+the matrix of regressor by values needed for estimating the
+mean. The matrix produced by <code>model.matrix</code>, <code>X0</code>, includes
+a column for the intercept term and the indicator variables
+in <code>lmodp</code>.</p>
 <div class="sourceCode" id="cb32"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb32-1"><a href="inference.html#cb32-1" aria-hidden="true" tabindex="-1"></a><span class="co"># determine formula used to fit lmodp</span></span>
 <span id="cb32-2"><a href="inference.html#cb32-2" aria-hidden="true" tabindex="-1"></a><span class="fu">formula</span>(lmodp)</span>
 <span id="cb32-3"><a href="inference.html#cb32-3" aria-hidden="true" tabindex="-1"></a><span class="do">## bill_length_mm ~ body_mass_g + species</span></span>
@@ -1282,13 +1808,27 @@ where <span class="math inline">\(D_C\)</span> and <span class="math inline">\(D
 <span id="cb32-12"><a href="inference.html#cb32-12" aria-hidden="true" tabindex="-1"></a><span class="do">## attr(,&quot;contrasts&quot;)</span></span>
 <span id="cb32-13"><a href="inference.html#cb32-13" aria-hidden="true" tabindex="-1"></a><span class="do">## attr(,&quot;contrasts&quot;)$species</span></span>
 <span id="cb32-14"><a href="inference.html#cb32-14" aria-hidden="true" tabindex="-1"></a><span class="do">## [1] &quot;contr.treatment&quot;</span></span></code></pre></div>
-<p>We can obtain the estimated mean by taking the product of <code>X0</code> and the estimated coefficients for <code>lmodp</code>. We assign the estimated mean responses the name <code>est_means</code>.</p>
+<p>We can obtain the estimated mean by taking the product of
+<code>X0</code> and the estimated coefficients for <code>lmodp</code>. We assign
+the estimated mean responses the name <code>est_means</code>.</p>
 <div class="sourceCode" id="cb33"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb33-1"><a href="inference.html#cb33-1" aria-hidden="true" tabindex="-1"></a>(est_means <span class="ot">&lt;-</span> X0 <span class="sc">%*%</span> <span class="fu">coef</span>(lmodp))</span>
 <span id="cb33-2"><a href="inference.html#cb33-2" aria-hidden="true" tabindex="-1"></a><span class="do">##       [,1]</span></span>
 <span id="cb33-3"><a href="inference.html#cb33-3" aria-hidden="true" tabindex="-1"></a><span class="do">## 1 38.79139</span></span>
 <span id="cb33-4"><a href="inference.html#cb33-4" aria-hidden="true" tabindex="-1"></a><span class="do">## 2 48.83382</span></span>
 <span id="cb33-5"><a href="inference.html#cb33-5" aria-hidden="true" tabindex="-1"></a><span class="do">## 3 47.50488</span></span></code></pre></div>
-<p>We now use Equation <a href="inference.html#eq:sehat-est-mean">(6.6)</a> to get the estimated standard error of each estimated mean response. First, we use <code>model.matrix</code> to extract the original matrix of regressors, <span class="math inline">\(\mathbf{X}\)</span>, from the fitted model <code>lmodp</code>. The <code>sigma</code> function is used to extract <span class="math inline">\(\hat{\sigma}\)</span> from <code>lmodp</code>. Each <em>row</em> of <code>X0</code> contains a particular instance regressor values. In the code below, we extract each row of <code>X0</code>, and then use Equation <a href="inference.html#eq:sehat-est-mean">(6.6)</a> to compute the estimated standard error associated with each estimated mean response; these are assigned the names <code>se1</code>, <code>se2</code>, and <code>se3</code>. That approach isn’t scalable, so we provide a scalable version of these computations that is assigned the name <code>sehat</code>.</p>
+<p>We now use Equation <a href="inference.html#eq:sehat-est-mean">(6.5)</a> to get the
+estimated standard error of each estimated mean response.
+First, we use <code>model.matrix</code> to extract the original matrix
+of regressors, <span class="math inline">\(\mathbf{X}\)</span>, from the fitted model <code>lmodp</code>.
+The <code>sigma</code> function is used to extract <span class="math inline">\(\hat{\sigma}\)</span> from
+<code>lmodp</code>. Each <em>row</em> of <code>X0</code> contains a particular instance
+regressor values. In the code below, we extract each row of
+<code>X0</code>, and then use Equation <a href="inference.html#eq:sehat-est-mean">(6.5)</a> to
+compute the estimated standard error associated with each
+estimated mean response; these are assigned the names <code>se1</code>,
+<code>se2</code>, and <code>se3</code>. That approach isn’t scalable, so we
+provide a scalable version of these computations that is
+assigned the name <code>sehat</code>.</p>
 <div class="sourceCode" id="cb34"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb34-1"><a href="inference.html#cb34-1" aria-hidden="true" tabindex="-1"></a><span class="co"># original matrix of regressors</span></span>
 <span id="cb34-2"><a href="inference.html#cb34-2" aria-hidden="true" tabindex="-1"></a>X <span class="ot">&lt;-</span> <span class="fu">model.matrix</span>(lmodp)</span>
 <span id="cb34-3"><a href="inference.html#cb34-3" aria-hidden="true" tabindex="-1"></a>sigmahat <span class="ot">&lt;-</span> <span class="fu">sigma</span>(lmodp)</span>
@@ -1307,14 +1847,26 @@ where <span class="math inline">\(D_C\)</span> and <span class="math inline">\(D
 <span id="cb34-16"><a href="inference.html#cb34-16" aria-hidden="true" tabindex="-1"></a>(sehat <span class="ot">&lt;-</span> sigmahat <span class="sc">*</span> <span class="fu">sqrt</span>(<span class="fu">diag</span>(X0 <span class="sc">%*%</span> <span class="fu">solve</span>(<span class="fu">crossprod</span>(X), <span class="fu">t</span>(X0)))))</span>
 <span id="cb34-17"><a href="inference.html#cb34-17" aria-hidden="true" tabindex="-1"></a><span class="do">##         1         2         3 </span></span>
 <span id="cb34-18"><a href="inference.html#cb34-18" aria-hidden="true" tabindex="-1"></a><span class="do">## 0.1955643 0.2914228 0.2166833</span></span></code></pre></div>
-<p>To finish the computation of our confidence intervals, we determine the correct multiplier, <span class="math inline">\(t_{n-p}^{\alpha/2}\)</span>. For a 98% confidence interval, <span class="math inline">\(\alpha = 0.02\)</span> and <span class="math inline">\(\alpha/2 = 0.01\)</span>. The degrees of freedom, <span class="math inline">\(n-p\)</span>, is 338 (as shown in the code below). So the multiplier can be represented as <span class="math inline">\(t_{338}^{0.01}\)</span>, which is the <span class="math inline">\(0.99\)</span> quantile of a <span class="math inline">\(t\)</span> distribution with 338 degrees of freedom. We provide this information to the <code>qt</code> function, which provides the quantiles of a <span class="math inline">\(t\)</span> distribution, using the code below to get the correct multiplier.</p>
+<p>To finish the computation of our confidence intervals, we
+determine the correct multiplier, <span class="math inline">\(t_{n-p}^{\alpha/2}\)</span>. For
+a 98% confidence interval, <span class="math inline">\(\alpha = 0.02\)</span> and
+<span class="math inline">\(\alpha/2 = 0.01\)</span>. The degrees of freedom, <span class="math inline">\(n-p\)</span>, is 338 (as
+shown in the code below). So the multiplier can be
+represented as <span class="math inline">\(t_{338}^{0.01}\)</span>, which is the <span class="math inline">\(0.99\)</span>
+quantile of a <span class="math inline">\(t\)</span> distribution with 338 degrees of freedom.
+We provide this information to the <code>qt</code> function, which
+provides the quantiles of a <span class="math inline">\(t\)</span> distribution, using the code
+below to get the correct multiplier.</p>
 <div class="sourceCode" id="cb35"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb35-1"><a href="inference.html#cb35-1" aria-hidden="true" tabindex="-1"></a><span class="co"># degrees of freedom, n-p</span></span>
 <span id="cb35-2"><a href="inference.html#cb35-2" aria-hidden="true" tabindex="-1"></a><span class="fu">df.residual</span>(lmodp)</span>
 <span id="cb35-3"><a href="inference.html#cb35-3" aria-hidden="true" tabindex="-1"></a><span class="do">## [1] 338</span></span>
 <span id="cb35-4"><a href="inference.html#cb35-4" aria-hidden="true" tabindex="-1"></a><span class="co"># multiplier for confidence interval</span></span>
 <span id="cb35-5"><a href="inference.html#cb35-5" aria-hidden="true" tabindex="-1"></a>(mult <span class="ot">&lt;-</span> <span class="fu">qt</span>(<span class="fl">0.99</span>, <span class="at">df =</span> <span class="fu">df.residual</span>(lmodp)))</span>
 <span id="cb35-6"><a href="inference.html#cb35-6" aria-hidden="true" tabindex="-1"></a><span class="do">## [1] 2.337431</span></span></code></pre></div>
-<p>Thus, our 98% confidence intervals for each mean response can be computed using the code below, which matches the results we obtained in Section <a href="inference.html#parametric-ci-mean-response">6.7</a>.</p>
+<p>Thus, our 98% confidence intervals for each mean response
+can be computed using the code below, which matches the
+results we obtained in Section
+<a href="inference.html#parametric-ci-mean-response">6.7</a>.</p>
 <div class="sourceCode" id="cb36"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb36-1"><a href="inference.html#cb36-1" aria-hidden="true" tabindex="-1"></a><span class="fu">data.frame</span>(<span class="at">lb =</span> est_means <span class="sc">-</span> mult <span class="sc">*</span> sehat,</span>
 <span id="cb36-2"><a href="inference.html#cb36-2" aria-hidden="true" tabindex="-1"></a>           <span class="at">ub =</span> est_means <span class="sc">+</span> mult <span class="sc">*</span> sehat)</span>
 <span id="cb36-3"><a href="inference.html#cb36-3" aria-hidden="true" tabindex="-1"></a><span class="do">##         lb       ub</span></span>
@@ -1324,28 +1876,40 @@ where <span class="math inline">\(D_C\)</span> and <span class="math inline">\(D
 </div>
 <div id="new-response-pi-calculations" class="section level3 hasAnchor" number="6.11.4">
 <h3><span class="header-section-number">6.11.4</span> Details about prediction interval for a new response<a href="inference.html#new-response-pi-calculations" class="anchor-section" aria-label="Anchor link to header"></a></h3>
-<p>We want to predict the value of a new response for a specific combination of regressor values, <span class="math inline">\(\mathbf{x}_0\)</span>. The value of the new response is denoted by <span class="math inline">\(Y(\mathbf{x}_0)\)</span> and its prediction by <span class="math inline">\(\hat{Y}(\mathbf{x}_0)\)</span>.</p>
-<p>In Section <a href="inference.html#pi-new-response">6.8</a>, we briefly discussed that the new response may be written as
+<p>We want to predict the value of a new response for a
+specific combination of regressor values, <span class="math inline">\(\mathbf{x}_0\)</span>.
+The value of the new response is denoted by
+<span class="math inline">\(Y(\mathbf{x}_0)\)</span> and its prediction by
+<span class="math inline">\(\hat{Y}(\mathbf{x}_0)\)</span>.</p>
+<p>In Section <a href="inference.html#pi-new-response">6.8</a>, we briefly discussed that
+the new response may be written as
 <span class="math display">\[
 Y(\mathbf{x}_0) = E(Y \mid \mathbf{x}_0) + \epsilon(\mathbf{x}_0),
 \]</span>
-and that the predicted new response, under our standard assumptions, is given by
+and that the predicted new response, under our standard
+assumptions, is given by
 <span class="math display">\[
 \hat{Y}(\mathbf{x}_0)=\mathbf{x}_0^T\hat{\boldsymbol{\beta}}.
 \]</span></p>
-<p>Using these relationships, we can determine that the variance of the prediction error for a new response is given by
+<p>Using these relationships, we can determine that the
+variance of the prediction error for a new response is given
+by
 <span class="math display" id="eq:var-pred-error1">\[
 \begin{aligned}
 \mathrm{var}\left(Y(\mathbf{x}_0)-\hat{Y}(\mathbf{x}_0)\right) &amp;= \mathrm{var}(Y(\mathbf{x}_0)-\mathbf{x}_0^T \hat{\boldsymbol{\beta}}) \\
 &amp;= \mathrm{var}(\mathbf{x}_0^T\boldsymbol{\beta} + \epsilon(\mathbf{x}_0)-\mathbf{x}_0^T \hat{\boldsymbol{\beta}}) \\
 \end{aligned}
-\tag{6.15}
+\tag{6.13}
 \]</span></p>
-<p>Recall from Appendix <a href="prob-review.html#prob-review">B</a> that the variance of a constant plus a random variable is equal to the variance of the random variable (since a constant doesn’t vary!). Thus, Equation <a href="inference.html#eq:var-pred-error1">(6.15)</a> simplifies to
+<p>Recall from Appendix <a href="prob-review.html#prob-review">B</a> that the variance of
+a constant plus a random variable is equal to the variance
+of the random variable (since a constant doesn’t vary!).
+Thus, Equation <a href="inference.html#eq:var-pred-error1">(6.13)</a> simplifies to
 <span class="math display" id="eq:var-pred-error2">\[
-\mathrm{var}\left(Y(\mathbf{x}_0)-\hat{Y}(\mathbf{x}_0)\right) = \mathrm{var}(\epsilon(\mathbf{x}_0)-\mathbf{x}_0^T \hat{\boldsymbol{\beta}}). \tag{6.16}
+\mathrm{var}\left(Y(\mathbf{x}_0)-\hat{Y}(\mathbf{x}_0)\right) = \mathrm{var}(\epsilon(\mathbf{x}_0)-\mathbf{x}_0^T \hat{\boldsymbol{\beta}}). \tag{6.14}
 \]</span>
-Using results from Appendix <a href="prob-review.html#prob-review">B</a> related to the variance of a sum of random variables, we have that
+Using results from Appendix <a href="prob-review.html#prob-review">B</a> related to
+the variance of a sum of random variables, we have that
 <span class="math display" id="eq:var-pred-error3">\[
 \begin{aligned}
 &amp;\mathrm{var}\left(Y(\mathbf{x}_0)-\hat{Y}(\mathbf{x}_0)\right) \\
@@ -1354,31 +1918,50 @@ Using results from Appendix <a href="prob-review.html#prob-review">B</a> related
 &amp;= \mathrm{var}\left(\epsilon(\mathbf{x}_0)\right)+(-1)^2\mathrm{var}(\mathbf{x}_0^T \hat{\boldsymbol{\beta}}) - 2\mathrm{cov}\left(\epsilon(\mathbf{x}_0), \mathbf{x}_0^T \hat{\boldsymbol{\beta}}\right) \\
 &amp;= \mathrm{var}\left(\epsilon(\mathbf{x}_0)\right)+\mathrm{var}(\mathbf{x}_0^T \hat{\boldsymbol{\beta}}) - 2\mathrm{cov}\left(\epsilon(\mathbf{x}_0), \mathbf{x}_0^T \hat{\boldsymbol{\beta}}\right).
 \end{aligned}
-\tag{6.17}
+\tag{6.15}
 \]</span></p>
-<p>The covariance term in the final line of Equation <a href="inference.html#eq:var-pred-error3">(6.17)</a> is 0 because <span class="math inline">\(\epsilon(\mathbf{x}_0)\)</span> and <span class="math inline">\(\mathbf{x}_0^T\hat{\boldsymbol{\beta}}\)</span> are uncorrelated. Why are they uncorrelated? Recall that <span class="math inline">\(\epsilon(\mathbf{x}_0), \epsilon_1, \ldots, \epsilon_n\)</span> are uncorrelated. Also, recall that <span class="math inline">\(\hat{\boldsymbol{\beta}}=(\mathbf{X}^T\mathbf{X})^{-1}\mathbf{X}^T\mathbf{y}\)</span>. Since <span class="math inline">\(\mathbf{y}=[Y_1,Y_2,\ldots,Y_n]\)</span> and <span class="math inline">\(Y_i=\mathbf{x}_i^T\boldsymbol{\beta} + \epsilon_i\)</span> for <span class="math inline">\(i=1,2,\ldots,n\)</span>, the “randomness” of <span class="math inline">\(\mathbf{x}_0^T\hat{\boldsymbol{\beta}}\)</span> comes from <span class="math inline">\(\epsilon_1, \epsilon_2, \ldots, \epsilon_n\)</span>. Since <span class="math inline">\(\epsilon(\mathbf{x}_0)\)</span> is uncorrelated with <span class="math inline">\(\epsilon_1, \epsilon_2, \ldots, \epsilon_n\)</span>, we conclude that <span class="math inline">\(\epsilon(\mathbf{x}_0)\)</span> and <span class="math inline">\(\mathbf{x}_0^T\hat{\boldsymbol{\beta}}\)</span> are uncorrelated, so their covariance is zero. Thus, we have</p>
+<p>The covariance term in the final line of Equation
+<a href="inference.html#eq:var-pred-error3">(6.15)</a> is 0 because
+<span class="math inline">\(\epsilon(\mathbf{x}_0)\)</span> and
+<span class="math inline">\(\mathbf{x}_0^T\hat{\boldsymbol{\beta}}\)</span> are uncorrelated.
+Why are they uncorrelated? Recall that
+<span class="math inline">\(\epsilon(\mathbf{x}_0), \epsilon_1, \ldots, \epsilon_n\)</span> are
+uncorrelated. Also, recall that
+<span class="math inline">\(\hat{\boldsymbol{\beta}}=(\mathbf{X}^T\mathbf{X})^{-1}\mathbf{X}^T\mathbf{y}\)</span>.
+Since <span class="math inline">\(\mathbf{y}=[Y_1,Y_2,\ldots,Y_n]\)</span> and
+<span class="math inline">\(Y_i=\mathbf{x}_i^T\boldsymbol{\beta} + \epsilon_i\)</span> for
+<span class="math inline">\(i=1,2,\ldots,n\)</span>, the “randomness” of
+<span class="math inline">\(\mathbf{x}_0^T\hat{\boldsymbol{\beta}}\)</span> comes from
+<span class="math inline">\(\epsilon_1, \epsilon_2, \ldots, \epsilon_n\)</span>. Since
+<span class="math inline">\(\epsilon(\mathbf{x}_0)\)</span> is uncorrelated with
+<span class="math inline">\(\epsilon_1, \epsilon_2, \ldots, \epsilon_n\)</span>, we conclude
+that <span class="math inline">\(\epsilon(\mathbf{x}_0)\)</span> and
+<span class="math inline">\(\mathbf{x}_0^T\hat{\boldsymbol{\beta}}\)</span> are uncorrelated,
+so their covariance is zero. Thus, we have</p>
 <p><span class="math display" id="eq:var-pred-error4">\[
 \begin{aligned}
 \mathrm{var}\left(Y(\mathbf{x}_0)-\hat{Y}(\mathbf{x}_0)\right)
 =\mathrm{var}\left(\epsilon(\mathbf{x}_0)\right)+\mathrm{var}(\mathbf{x}_0^T \hat{\boldsymbol{\beta}}) .
 \end{aligned}
-\tag{6.18}
-\]</span>
-From our assumptions in Section <a href="inference.html#properties-betahat">6.3</a>, we have that <span class="math inline">\(\mathrm{var}(\epsilon(\mathbf{x}_0))=\sigma^2\)</span>. We determined in Section <a href="inference.html#mean-response-calculations">6.11.2</a> that
+\tag{6.16}
+\]</span> From our assumptions in Section
+<a href="inference.html#properties-betahat">6.3</a>, we have that
+<span class="math inline">\(\mathrm{var}(\epsilon(\mathbf{x}_0))=\sigma^2\)</span>. We
+determined in Section <a href="inference.html#mean-response-calculations">6.11.2</a> that
 <span class="math display">\[
 \mathrm{var}(\mathbf{x}_0^T\hat{\boldsymbol{\beta}})=\sigma^2 \mathbf{x}_0^T (\mathbf{X}^T \mathbf{X})^{-1}\mathbf{x}_0.
-\]</span>
-Using these two facts, we can conclude that
-<span class="math display" id="eq:var-pred-error5">\[
+\]</span> Using these two facts, we can conclude that <span class="math display" id="eq:var-pred-error5">\[
 \begin{aligned}
 \mathrm{var}\left(Y(\mathbf{x}_0)-\hat{Y}(\mathbf{x}_0)\right)
 &amp;=\sigma^2 + \sigma^2 \mathbf{x}_0^T (\mathbf{X}^T \mathbf{X})^{-1}\mathbf{x}_0\\
 &amp;=\sigma^2\left(1 + \mathbf{x}_0^T (\mathbf{X}^T \mathbf{X})^{-1}\mathbf{x}_0\right).\\
 \end{aligned}
-\tag{6.19}
-\]</span>
-Replacing <span class="math inline">\(\sigma^2\)</span> by the typical estimator <span class="math inline">\(\hat{\sigma}^2=RSS/(n-p)\)</span> to get the estimated variance of the prediction error and taking the square root of the estimated variance to get the estimated standard deviation of the prediction error, we have that
-<span class="math display">\[
+\tag{6.17}
+\]</span> Replacing <span class="math inline">\(\sigma^2\)</span> by the typical estimator
+<span class="math inline">\(\hat{\sigma}^2=RSS/(n-p)\)</span> to get the estimated variance of
+the prediction error and taking the square root of the
+estimated variance to get the estimated standard deviation
+of the prediction error, we have that <span class="math display">\[
 \widehat{\mathrm{sd}}\left(Y(\mathbf{x}_0)-\hat{Y}(\mathbf{x}_0)\right) = \hat{\sigma}\sqrt{1 + \mathbf{x}_0^T (\mathbf{X}^T \mathbf{X})^{-1}\mathbf{x}_0}.
 \]</span></p>
 
