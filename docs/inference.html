@@ -1353,7 +1353,7 @@ certain coefficients equal to each other or place other
 restrictions on the coefficients.</p>
 <p>Let <span class="math inline">\(RSS_{RM}\)</span> denote the RSS of the RM and
 <span class="math inline">\(RSS_{CM}\)</span> denote the RSS of the CM. Similarly,
-<span class="math inline">\(df_{RM}\)</span> and <span class="math inline">\(df_{CM}\)</span> denote the degrees of freedom
+<span class="math inline">\(\mathrm{df}_{RM}\)</span> and <span class="math inline">\(\mathrm{df}_{CM}\)</span> denote the degrees of freedom
 associated with the RSS for the RM and CM,
 respectively. Recall that the degrees of freedom associated
 with a RSS is simply <span class="math inline">\(n\)</span>, the number of observations used to
@@ -1378,13 +1378,13 @@ more appropriate model.</p>
 <a href="inference.html#eq:error-assumption-inference">(6.2)</a> are true for <span class="math inline">\(RM\)</span> and
 that <span class="math inline">\(RM\)</span> is the true model, then</p>
 <p><span class="math display" id="eq:f-stat-lh">\[
-F=\frac{\frac{RSS_{RM}-RSS_{CM}}{df_{RM}-df_{CM}}}{\frac{RSS_{CM}}{df_{CM}}}=\frac{\frac{RSS_{RM}-RSS_{CM}}{df_{RM}-df_{CM}}}{\hat{\sigma}^2_{CM}}\sim F_{df_{RM}-df_{CM},df_{CM}}, \tag{6.10}
+F=\frac{\frac{RSS_{RM}-RSS_{CM}}{\mathrm{df}_{RM}-\mathrm{df}_{CM}}}{\frac{RSS_{CM}}{\mathrm{df}_{CM}}}=\frac{\frac{RSS_{RM}-RSS_{CM}}{\mathrm{df}_{RM}-\mathrm{df}_{CM}}}{\hat{\sigma}^2_{CM}}\sim F_{\mathrm{df}_{RM}-\mathrm{df}_{CM},\mathrm{df}_{CM}}, \tag{6.10}
 \]</span>
-where <span class="math inline">\(F_{df_{RM}-df_{CM},df_{CM}}\)</span> is an <span class="math inline">\(F\)</span> random
-variable with <span class="math inline">\(df_{RM}-df_{CM}\)</span> numerator degrees of freedom and <span class="math inline">\(df_{CM}\)</span> denominator degrees of freedom and <span class="math inline">\(\hat{\sigma}^2_{CM}\)</span> is the estimated error variance of <span class="math inline">\(CM\)</span>.</p>
+where <span class="math inline">\(F_{\mathrm{df}_{RM}-\mathrm{df}_{CM},\mathrm{df}_{CM}}\)</span> is an <span class="math inline">\(F\)</span> random
+variable with <span class="math inline">\(\mathrm{df}_{RM}-\mathrm{df}_{CM}\)</span> numerator degrees of freedom and <span class="math inline">\(\mathrm{df}_{CM}\)</span> denominator degrees of freedom and <span class="math inline">\(\hat{\sigma}^2_{CM}\)</span> is the estimated error variance of <span class="math inline">\(CM\)</span>.</p>
 <p>The p-value for this test is</p>
 <p><span class="math display">\[
-p\text{-value}=P(F_{df_{RM}-df_{CM},df_{CM}} \geq F).
+p\text{-value}=P(F_{\mathrm{df}_{RM}-\mathrm{df}_{CM},\mathrm{df}_{CM}} \geq F).
 \]</span></p>
 <p>We consider two common uses for this test below.</p>
 <div id="test-for-a-regression-relationship" class="section level3 hasAnchor" number="6.10.1">
@@ -1421,7 +1421,7 @@ statistic becomes <span class="math inline">\(TSS - RSS_{CM}\)</span>, which is 
 equivalent to the regression sum of squares for the Complete
 Model. The degrees of freedom of <span class="math inline">\(RSS_{RM} = n - 1\)</span>.
 Similarly, the degrees of freedom of <span class="math inline">\(RSS_{CM} = n - p\)</span>.
-Thus <span class="math inline">\(df_{RM} - df_{CM} = (n - 1) - (n - p) = p-1\)</span>. Thus,
+Thus <span class="math inline">\(\mathrm{df}_{RM} - \mathrm{df}_{CM} = (n - 1) - (n - p) = p-1\)</span>. Thus,
 Our F statistic for this test simplifies to</p>
 <p><span class="math display">\[
 F = \frac{SS_{reg}/(p-1)}{RSS_{CM}/(n-p)}= \frac{SS_{reg}/(p-1)}{\hat{\sigma}^2_{CM}},

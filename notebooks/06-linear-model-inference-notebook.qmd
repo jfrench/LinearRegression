@@ -2,11 +2,11 @@
 title: Chapter 6 - Linear Model Inference
 author: Joshua French
 date: ''
-# format: html
-format: ipynb
-jupyter: ir
-execute:
-  output: false
+format: html
+# format: ipynb
+# jupyter: ir
+# execute:
+#   output: false
 self-contained: true
 title-block-banner: true
 wrap: 'none'
@@ -790,7 +790,7 @@ We define the following notation:
 
 - $RSS_{RM}$ denotes the RSS of the Reduced Model.
 - $RSS_{CM}$ denotes the RSS of the Complete Model.
-- $df_{RM}$ and $df_{CM}$ denote the degrees of freedom associated with the RSS for the RM and CM, respectively.
+- $\mathrm{df}_{RM}$ and $\mathrm{df}_{CM}$ denote the degrees of freedom associated with the RSS for the RM and CM, respectively.
     - The degrees of freedom associated with a RSS is simply $n$, the number of observations used to fit the model, minus the number of estimated regression coefficients in the model being considered.
 
 A general statement of the hypotheses we will test is:
@@ -810,18 +810,18 @@ We wish to statistically assess whether we can simplify our model from $CM$ to $
 Under the standard assumptions for $RM$ and that $RM$ is the true model:
 
 $$
-F=\frac{\frac{RSS_{RM}-RSS_{CM}}{df_{RM}-df_{CM}}}{\frac{RSS_{CM}}{df_{CM}}}=\frac{\frac{RSS_{RM}-RSS_{CM}}{df_{RM}-df_{CM}}}{\hat{\sigma}^2_{CM}}\sim F_{df_{RM}-df_{CM},df_{CM}},
+F=\frac{\frac{RSS_{RM}-RSS_{CM}}{\mathrm{df}_{RM}-\mathrm{df}_{CM}}}{\frac{RSS_{CM}}{\mathrm{df}_{CM}}}=\frac{\frac{RSS_{RM}-RSS_{CM}}{\mathrm{df}_{RM}-\mathrm{df}_{CM}}}{\hat{\sigma}^2_{CM}}\sim F_{\mathrm{df}_{RM}-\mathrm{df}_{CM},\mathrm{df}_{CM}},
 $$
 
 where:
 
-- $F_{df_{RM}-df_{CM},df_{CM}}$ is an $F$ random variable with $df_{RM}-df_{CM}$ numerator degrees of freedom and $df_{CM}$ denominator degrees of freedom. 
+- $F_{\mathrm{df}_{RM}-\mathrm{df}_{CM},\mathrm{df}_{CM}}$ is an $F$ random variable with $\mathrm{df}_{RM}-\mathrm{df}_{CM}$ numerator degrees of freedom and $\mathrm{df}_{CM}$ denominator degrees of freedom. 
 - $\hat{\sigma}^2_{CM}$ is the estimated error variance of $CM$.
 
 The p-value for this test is
 
 $$
-p\text{-value}=P(F_{df_{RM}-df_{CM},df_{CM}} \geq F).
+p\text{-value}=P(F_{\mathrm{df}_{RM}-\mathrm{df}_{CM},\mathrm{df}_{CM}} \geq F).
 $$
 
 We consider two common uses for this test below.
@@ -862,9 +862,9 @@ The $F$ statistic simplifies dramatically when performing a test for a regressio
 - For the RM, $\hat{\beta}_0=\bar{Y}$.
 - $RSS_{RM} = \sum_{i=1}^n (Y_i - \bar{Y})^2 = TSS!$
 - The numerator of our F statistic becomes $TSS - RSS_{CM}$, which is $SS_{reg}$ for the CM.
-- $df_{RM} = n - 1$.
-- $df_{CM} = n - p$.
-- $df_{RM} - df_{CM} = (n - 1) - (n - p) = p-1$. 
+- $\mathrm{df}_{RM} = n - 1$.
+- $\mathrm{df}_{CM} = n - p$.
+- $\mathrm{df}_{RM} - \mathrm{df}_{CM} = (n - 1) - (n - p) = p-1$. 
 
 Our F statistic for this test simplifies to
 

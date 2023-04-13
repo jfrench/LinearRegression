@@ -4,7 +4,7 @@
 output:
   html_document:
     css: style.css
-  pdf_document:
+  p\mathrm{df}_document:
     includes:
       in_header: preamble.tex
 bibliography:
@@ -980,7 +980,7 @@ restrictions on the coefficients.
 
 Let $RSS_{RM}$ denote the RSS of the RM and
 $RSS_{CM}$ denote the RSS of the CM. Similarly,
-$df_{RM}$ and $df_{CM}$ denote the degrees of freedom
+$\mathrm{df}_{RM}$ and $\mathrm{df}_{CM}$ denote the degrees of freedom
 associated with the RSS for the RM and CM,
 respectively. Recall that the degrees of freedom associated
 with a RSS is simply $n$, the number of observations used to
@@ -1010,15 +1010,15 @@ If we assume that the assumptions in Equation
 that $RM$ is the true model, then
 
 $$
-F=\frac{\frac{RSS_{RM}-RSS_{CM}}{df_{RM}-df_{CM}}}{\frac{RSS_{CM}}{df_{CM}}}=\frac{\frac{RSS_{RM}-RSS_{CM}}{df_{RM}-df_{CM}}}{\hat{\sigma}^2_{CM}}\sim F_{df_{RM}-df_{CM},df_{CM}}, (\#eq:f-stat-lh)
+F=\frac{\frac{RSS_{RM}-RSS_{CM}}{\mathrm{df}_{RM}-\mathrm{df}_{CM}}}{\frac{RSS_{CM}}{\mathrm{df}_{CM}}}=\frac{\frac{RSS_{RM}-RSS_{CM}}{\mathrm{df}_{RM}-\mathrm{df}_{CM}}}{\hat{\sigma}^2_{CM}}\sim F_{\mathrm{df}_{RM}-\mathrm{df}_{CM},\mathrm{df}_{CM}}, (\#eq:f-stat-lh)
 $$
-where $F_{df_{RM}-df_{CM},df_{CM}}$ is an $F$ random
-variable with $df_{RM}-df_{CM}$ numerator degrees of freedom and $df_{CM}$ denominator degrees of freedom and $\hat{\sigma}^2_{CM}$ is the estimated error variance of $CM$.
+where $F_{\mathrm{df}_{RM}-\mathrm{df}_{CM},\mathrm{df}_{CM}}$ is an $F$ random
+variable with $\mathrm{df}_{RM}-\mathrm{df}_{CM}$ numerator degrees of freedom and $\mathrm{df}_{CM}$ denominator degrees of freedom and $\hat{\sigma}^2_{CM}$ is the estimated error variance of $CM$.
 
 The p-value for this test is
 
 $$
-p\text{-value}=P(F_{df_{RM}-df_{CM},df_{CM}} \geq F).
+p\text{-value}=P(F_{\mathrm{df}_{RM}-\mathrm{df}_{CM},\mathrm{df}_{CM}} \geq F).
 $$
 
 We consider two common uses for this test below.
@@ -1063,7 +1063,7 @@ statistic becomes $TSS - RSS_{CM}$, which is mathematically
 equivalent to the regression sum of squares for the Complete
 Model. The degrees of freedom of $RSS_{RM} = n - 1$.
 Similarly, the degrees of freedom of $RSS_{CM} = n - p$.
-Thus $df_{RM} - df_{CM} = (n - 1) - (n - p) = p-1$. Thus,
+Thus $\mathrm{df}_{RM} - \mathrm{df}_{CM} = (n - 1) - (n - p) = p-1$. Thus,
 Our F statistic for this test simplifies to
 
 $$
