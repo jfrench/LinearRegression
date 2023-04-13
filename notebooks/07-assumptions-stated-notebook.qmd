@@ -1,0 +1,140 @@
+---
+title: Chapter 7 - Assumptions Stated and Prioritized
+author: Joshua French
+date: ''
+# format: html
+format: ipynb
+jupyter: ir
+execute:
+  output: false
+self-contained: true
+title-block-banner: true
+wrap: 'none'
+---
+
+To open this information in an interactive Colab notebook, click the Open in Colab graphic below.
+
+<a href="https://colab.research.google.com/github/jfrench/LinearRegression/blob/master/notebooks/07-assumptions-stated-notebook.ipynb">
+   <img src="https://colab.research.google.com/assets/colab-badge.svg">
+</a>
+
+---
+
+# Standard assumptions concisely stated
+
+There are several standard assumptions made when performing linear regression. We have discussed some of them already in previous chapters, but we discuss them again for completeness and clarity.
+
+We partition the assumptions mentioned below into two categories: 
+
+- Theory-related assumptions.
+    - These assumptions are necessary to derive the theoretical properties of the estimators, confidence intervals, prediction intervals, etc.
+- Estimation-related assumptions.
+    - These assumptions are often not explicitly stated, but they are important for ensuring we have a trustworthy, interpretable fitted model.
+
+The response variable $Y$ is defined as
+$$
+Y = E(Y\mid \mathbb{X}) + \epsilon.
+$$
+
+# Theory-related assumptions
+
+## Assumption 1: Correct structure
+
+Assumption 1 is that the regression model is linear in the regression coefficients and correctly specified.
+
+This assumption states that the true data-generating model is linear in the regression coefficients (as opposed to a non-linear model).
+
+It also indicates that we have included exactly the correct regressors in our model. 
+
+- There are no missing or extra regressors in our regression equation.
+
+We can write this as
+$$
+E(Y \mid \mathbb{X}) = \beta_0 + \sum_{j=1}^{p-1}X_j \beta_j.
+$$
+This assumption implies that for our observed data
+$$
+E(\mathbf{y}|\mathbf{X})=\mathbf{X}\boldsymbol{\beta}.
+$$
+
+## Assumption 2: Error-related
+
+The second assumption is that all model errors, conditional on the associated regressor values, are independent and have identically-distributed normal distributions with mean 0 and constant variance $\sigma^2$.
+
+This may be succinctly stated as 
+$$
+\epsilon_0, \epsilon_1, \ldots \stackrel{i.i.d.}{\sim}\mathsf{N}(0,\sigma^2).
+$$
+
+For the errors of the observed data, $\boldsymbol{\epsilon}=[\epsilon_1, \epsilon_2, \epsilon_n]$, this may be succinctly stated as
+$$
+\boldsymbol{\epsilon}\mid \mathbf{X} \sim \mathsf{N}(\boldsymbol{0}_{n\times 1}, \sigma^2 \mathbf{I}_n).
+$$
+
+Note that Assumption 2 is actually comprised of four distinct assumptions:
+    a. $E(\epsilon \mid \mathbb{X})=0$, i.e., the mean of the errors is zero regardless of the values of the regressors. This is related to the structure assumption.
+    b. $\mathrm{var}(\epsilon \mid \mathbb{X})=0$, i.e., the variance of the errors is constant ($\sigma^2$) regardless of the values of the regressors.
+    c. Any two errors are uncorrelated, regardless of the values of their regressors, as long as they are not the same error, i.e., $\mathrm{cov}(\epsilon_i,\epsilon_j\mid \mathbb{X})=0$ for all $i\neq j$.
+    d. Each of the errors, regardless of the regressor values, are normally distributed.
+ 
+# Estimation-related assumptions
+
+## Assumption 3: Linearly independent regressors
+
+Assumption 3 is that the columns of $\mathbf{X}$ are linearly independent, i.e., none of the regressors are linear combinations of each other.
+
+- Linearly dependent columns are said to be collinear.
+
+A model with a collinear $\mathbf{X}$ matrix is not *identifiable*. 
+
+- This means that models with different parameter variables are exactly the same.
+
+An example of a non-identifiable model is $Y = \beta_0 + \beta_1 + \epsilon$.
+
+- $\beta_0 = 1$ and $\beta_1 = 1$ produces the same model as $\beta_0 = 3$ and $\beta_1 = -1$.
+- Practically, we cannot decide how to choose one combination of parameter values over another, so the parameters aren't identifiable.
+
+We can also have an issue with *practical collinearity*, which informally, means something like:
+
+- Our regressors are strongly correlated with each other.
+- We can approximate one column of $\mathbb{X}$ as a linear combination of other columns of $\mathbf{X}$.
+
+If the columns of $\mathbb{X}$ exhibit collinearity, then it makes it difficult to interpret the role of the variables in our model. 
+
+## Assumption 4: No influential observations
+
+Assumption 4 is that the fit of the model to the observed data isn't strongly influenced by a small subset of observations.
+
+Influential observations can make it difficult to determine whether Assumptions 1 and 2 are satisfied because they highly influence the fit of the model to the data.
+
+# Standard assumptions prioritized
+
+The assumptions previously stated are not equally important.
+
+Faraway (2014, Chapter 6) discusses that consequences of violating some assumptions is more severe than other assumptions. We build on this discussion.
+
+The order of importance is:
+
+1. **The structure of the model is correct (Assumption 1)**.
+    - If the structure of your model is incorrect, then no conclusions drawn from our model are trustworthy.
+    - It's possible that our conclusions aren't correct, but we have no confidence of that if the structure of our model is wrong. 
+2. **No points are overly influential in determining the model fit (Assumption 4)**.        - An overly influential observation can make it seem like the model is correctly specified when it is not (or vice versa).
+    - It can also impact assessing the other assumptions below.
+3. **The errors are uncorrelated (Assumption 2)**.
+    - If this assumption isn't satisfied, then we may unknowlingly add or delete regressors from our model (destroying the structure) trying to account for correlation in our errors.
+    - Additionally, our standard confidence intervals, prediction intervals, and hypothesis tests won't produce valid results.
+4. **The errors have constant variance (Assumption 2)**.
+  - Once again, our standard confidence intervals, prediction intervals, and hypothesis tests won't produce valid results.
+  - A slightly non-constant variance may not substantially impact the correctness of our inference.
+5. **The errors are normally distributed (Assumption 2)**.
+    - Violation of this assumption tends to have less severe consequences.
+    - If the previous assumptions are satisfied, then our OLS estimator of $\boldsymbol{\beta}$ is still the best linear unbiased estimator regardless of the normality of the errors.
+    - If the sample size is large enough, the central limit theorem tells us that our confidence interval procedures for the regression coefficients and the mean function are still approximately valid.
+    - However, if our sample size is small or we are interested in constructing a prediction interval, then non-normal errors can lead to untrustworthy confidence and prediction intervals.
+6. **Our regressors are practically collinear (Assumption 3)**.
+    - Assuming that the regressors aren't perfectly collinear (which means we're not thinking carefully about our model), then we can still estimate our parameters.
+    - If are regressors are practically collinear then we will struggle to interpret their role in the model because the estimates can change dramatically with small changes in our data.
+
+# References
+
+Faraway, J.J. (2014). Linear Models with R (2nd ed.). Chapman and Hall/CRC. [https://doi.org/10.1201/b17144](https://doi.org/10.1201/b17144)
