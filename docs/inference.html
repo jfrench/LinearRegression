@@ -1234,17 +1234,11 @@ narrower in this example.</p>
 </div>
 <div id="hypothesis-tests-for-a-single-regression-coefficient" class="section level2 hasAnchor" number="6.9">
 <h2><span class="header-section-number">6.9</span> Hypothesis tests for a single regression coefficient<a href="inference.html#hypothesis-tests-for-a-single-regression-coefficient" class="anchor-section" aria-label="Anchor link to header"></a></h2>
-<p>If we assume we are fitting the multiple linear regression
-model in Equation <a href="inference.html#eq:model-def-inference">(6.1)</a>, then our
+<p>If we assume we are fitting the multiple linear regression model in Equation <a href="inference.html#eq:model-def-inference">(6.1)</a>, then our
 model has <span class="math inline">\(p\)</span> regression coefficient
 <span class="math inline">\(\beta_0, \beta_1, \ldots, \beta_{p-1}\)</span>. How can we
 perform a hypothesis test for exactly one of these
 regression coefficients?</p>
-<p>Recall that if we make the assumptions in Equation
-<a href="inference.html#eq:error-assumption-inference">(6.2)</a>, then</p>
-<span class="math display" id="eq:pivot-t-betaj">\[\begin{equation}
-\frac{\hat{\beta}_j-\beta_j}{\hat{\mathrm{se}}(\hat{\beta}_j)}\sim t_{n-p}, \quad j=0,1,\ldots,p-1. \tag{6.8}
-\end{equation}\]</span>
 <p>Let’s say we wish to test whether, for this model, <span class="math inline">\(\beta_j\)</span>
 differs from some constant number <span class="math inline">\(c\)</span> (typically, <span class="math inline">\(c=0\)</span>).
 Let
@@ -1258,10 +1252,10 @@ the hypotheses we wish to test as
 H_0: \beta_j &amp;= c \mid \boldsymbol{\beta}_{-j}\in\mathbb{R}^{p-1} \\
 H_a: \beta_j &amp;\neq c \mid \boldsymbol{\beta}_{-j}\in\mathbb{R}^{p-1}.
 \end{aligned}
-\tag{6.9}
+\tag{6.8}
 \]</span>
 The first part of the null hypothesis in Equation
-<a href="inference.html#eq:betaj-H0Ha">(6.9)</a> states that <span class="math inline">\(\beta_j = c\)</span> while the
+<a href="inference.html#eq:betaj-H0Ha">(6.8)</a> states that <span class="math inline">\(\beta_j = c\)</span> while the
 first part of the alternative hypothesis assumes that
 <span class="math inline">\(\beta_j \neq c\)</span>. But what does the second half of the
 hypotheses mean? The vertical bar means “assuming or
@@ -1273,13 +1267,18 @@ even zero). Why state this at all? Isn’t it implicitly
 assumed? No. We could perform a hypothesis test for
 <span class="math inline">\(\beta_j\)</span> for many different models that have differing
 regressors. By writing out hypotheses in the style of
-Equation <a href="inference.html#eq:betaj-H0Ha">(6.9)</a>, we are being very clear that
+Equation <a href="inference.html#eq:betaj-H0Ha">(6.8)</a>, we are being very clear that
 we are performing a test for <span class="math inline">\(\beta_j\)</span> in the context of the
 model that has the regressors associated with
 <span class="math inline">\(\boldsymbol{\beta}_{-j}\)</span>. Tests are model specific, so it is important to be clarify the exact model under consideration</p>
-<p>How do the hypotheses in Equation <a href="inference.html#eq:betaj-H0Ha">(6.9)</a>
+<p>Recall that if we make the assumptions in Equation
+<a href="inference.html#eq:error-assumption-inference">(6.2)</a>, then</p>
+<span class="math display" id="eq:pivot-t-betaj">\[\begin{equation}
+\frac{\hat{\beta}_j-\beta_j}{\hat{\mathrm{se}}(\hat{\beta}_j)}\sim t_{n-p}, \quad j=0,1,\ldots,p-1. \tag{6.9}
+\end{equation}\]</span>
+<p>How do the hypotheses in Equation <a href="inference.html#eq:betaj-H0Ha">(6.8)</a>
 affect the pivotal quantity in Equation
-<a href="inference.html#eq:pivot-t-betaj">(6.8)</a>? Under the null hypothesis, the
+<a href="inference.html#eq:pivot-t-betaj">(6.9)</a>? Under the null hypothesis, the
 statistic
 <span class="math display">\[
 T_j = \frac{\hat{\beta}_j-c}{\hat{\mathrm{se}}(\hat{\beta}_j)} \sim t_{n-p}.
@@ -1299,7 +1298,7 @@ upper-tailed test is <span class="math inline">\(p\text{-value}=P(t_{n-p}\geq T_
 <span class="math display">\[
 \begin{aligned}
 &amp;E(\mathtt{bill\_length\_mm}\mid \mathtt{body\_mass\_g}, \mathtt{flipper\_length\_mm}) \\
-&amp;=\beta_0+\beta_1 \mathtt{body\_mass\_g} + \beta_2 \mathtt{flipper\_length\_mm}.
+&amp;=\beta_0+\beta_1 \mathtt{body\_mass\_g} + \beta_2 \mathtt{flipper\_length\_mm}
 \end{aligned}
 \]</span></p>
 <p>for the <code>penguins</code> data. The fitted model is assigned the name <code>mlmod</code>. Suppose we want to test</p>
@@ -1330,15 +1329,15 @@ versus a suitable alternative for each coefficient, while
 the final column (<code>Pr(&gt;|t|)</code>) provides the two-tailed
 p-value associated with this test.</p>
 <p>Thus, for our test of the <code>body_mass_g</code> coefficient, the
-test statistic is <span class="math inline">\(T_2 = 1.17\)</span> and the associated p-value is
-0.024. There is moderate evidence that the coefficient for
+test statistic is <span class="math inline">\(T_1 = 1.17\)</span> and the associated p-value is
+0.24. There is no evidence that the coefficient for
 <code>body_mass_g</code> differs from zero, assuming the model also
 allows for the inclusion of the intercept and
 <code>flipper_length_mm</code> coefficients.</p>
 </div>
 <div id="hypothesis-tests-for-multiple-regression-coefficients" class="section level2 hasAnchor" number="6.10">
 <h2><span class="header-section-number">6.10</span> Hypothesis tests for multiple regression coefficients<a href="inference.html#hypothesis-tests-for-multiple-regression-coefficients" class="anchor-section" aria-label="Anchor link to header"></a></h2>
-<p>Suppose we have have a standard linear regression model with
+<p>Suppose we have a standard linear regression model with
 <span class="math inline">\(p\)</span> regression coefficients such as the one defined in
 Equation <a href="inference.html#eq:model-def-inference">(6.1)</a>. We refer to this
 model as the “Complete Model”.</p>
@@ -1380,22 +1379,19 @@ more appropriate model.</p>
 that <span class="math inline">\(RM\)</span> is the true model, then</p>
 <p><span class="math display" id="eq:f-stat-lh">\[
 F=\frac{\frac{RSS_{RM}-RSS_{CM}}{df_{RM}-df_{CM}}}{\frac{RSS_{CM}}{df_{CM}}}=\frac{\frac{RSS_{RM}-RSS_{CM}}{df_{RM}-df_{CM}}}{\hat{\sigma}^2_{CM}}\sim F_{df_{RM}-df_{CM},df_{CM}}, \tag{6.10}
-\]</span> where <span class="math inline">\(F_{df_{RM}-df_{CM},df_{CM}}\)</span> is an <span class="math inline">\(F\)</span> random
-variable with <span class="math inline">\(df_{RM}-df_{CM}\)</span> numerator degrees of freedom
-and <span class="math inline">\(df_{CM}\)</span> denominator degrees of freedom and
-<span class="math inline">\(\hat{\sigma}^2_{CM}\)</span> is the estimated error variance of
-<span class="math inline">\(CM\)</span>.</p>
+\]</span>
+where <span class="math inline">\(F_{df_{RM}-df_{CM},df_{CM}}\)</span> is an <span class="math inline">\(F\)</span> random
+variable with <span class="math inline">\(df_{RM}-df_{CM}\)</span> numerator degrees of freedom and <span class="math inline">\(df_{CM}\)</span> denominator degrees of freedom and <span class="math inline">\(\hat{\sigma}^2_{CM}\)</span> is the estimated error variance of <span class="math inline">\(CM\)</span>.</p>
 <p>The p-value for this test is</p>
 <p><span class="math display">\[
-p\text{-value}=P(F\geq F_{df_{RM}-df_{CM},df_{CM}}).
-\]</span> We consider two common uses for this test below.`</p>
+p\text{-value}=P(F_{df_{RM}-df_{CM},df_{CM}} \geq F).
+\]</span></p>
+<p>We consider two common uses for this test below.</p>
 <div id="test-for-a-regression-relationship" class="section level3 hasAnchor" number="6.10.1">
 <h3><span class="header-section-number">6.10.1</span> Test for a regression relationship<a href="inference.html#test-for-a-regression-relationship" class="anchor-section" aria-label="Anchor link to header"></a></h3>
-<p>The most common test involving multiple parameters is to
-test whether <em>any</em> of the non-intercept regression
+<p>The most common test involving multiple parameters is to test whether <em>any</em> of the non-intercept regression
 coefficients differ from zero. This test is known as the “test for a regression relationship”.</p>
-<p>In this situation, the hypotheses to be tested may be stated
-as</p>
+<p>In this situation, the hypotheses to be tested may be stated as</p>
 <p><span class="math display">\[
 \begin{aligned}
 &amp;H_0: E(Y \mid \mathbb{X}) = \beta_0 \\
@@ -1406,7 +1402,7 @@ as</p>
 <p><span class="math display">\[
 \begin{aligned}
 &amp;H_0: \beta_1 = \cdots = \beta_{p-1} = 0 \mid \beta_0 \in \mathbb{R} \\
-&amp;H_a: \beta_0 \in \mathbb{R}, \beta_1 \in \mathbb{R}, \ldots, \beta_{p-1}\in \mathbb{R}.
+&amp;H_a: \beta_1 \in \mathbb{R}  \text{ or } \ldots  \text{ or } \beta_{p-1}\in \mathbb{R} \mid \beta_0 \in \mathbb{R}.
 \end{aligned}
 \]</span></p>
 <p>Notice that the RM in <span class="math inline">\(H_0\)</span> is a special case of the CM in <span class="math inline">\(H_a\)</span> with all of the regression coefficients set equal to zero except for the intercept term. Notice that we specifically
@@ -1494,18 +1490,16 @@ preferred to the model that has only an intercept.</p>
 <div id="a-more-general-f-test" class="section level3 hasAnchor" number="6.10.2">
 <h3><span class="header-section-number">6.10.2</span> A more general F test<a href="inference.html#a-more-general-f-test" class="anchor-section" aria-label="Anchor link to header"></a></h3>
 <p>Let us consider a more general F test where multiple
-regression coefficients are set to zero. In general, the
-associated test statistic won’t simplify in any standard
-way.</p>
+regression coefficients are set to zero. In general, the associated test statistic won’t simplify in any standard way.</p>
 <p>We will illustrate the more general F test using the
 <code>penguins</code> data.</p>
 <p>Suppose we want to decide between the simple linear
-regression model and the parallel lines model for the <code>penguins</code>
-data.</p>
+regression model and the parallel lines model for the <code>penguins</code> data.</p>
 <p>We want to test between</p>
 <p><span class="math display">\[
 \begin{aligned}
-&amp;H_0: E(\mathtt{bill\_length\_mm} \mid \mathtt{body\_mass\_g}, \mathtt{species}) = \beta_{0} + \beta_1 \mathtt{body\_mass\_g} \\
+&amp;H_0: E(\mathtt{bill\_length\_mm} \mid \mathtt{body\_mass\_g}, \mathtt{species})\\
+&amp;\qquad= \beta_{0} + \beta_1 \mathtt{body\_mass\_g} \\
 &amp;H_a:  E(\mathtt{bill\_length\_mm} \mid \mathtt{body\_mass\_g}, \mathtt{species})\\
 &amp;\qquad = \beta_{0} + \beta_1 \mathtt{body\_mass\_g} + \beta_2 D_C + \beta_3 D_G,
 \end{aligned}
@@ -1513,10 +1507,13 @@ data.</p>
 where <span class="math inline">\(D_C\)</span> and <span class="math inline">\(D_G\)</span> denote the indicator variables for the
 <code>Chinstrap</code> and <code>Gentoo</code> level of penguin <code>species</code>.</p>
 <p>Alternatively, we could state this as</p>
-<p><span class="math inline">\(H_0: \beta_2 = \beta_3 = 0 \mid \beta_0, \beta_1 \in \mathbb{R}\)</span>
-<span class="math inline">\(H_a: \beta_2 \neq 0 \text{ or } \beta_3 \neq 0 \mid \beta_0, \beta_1 \in \mathbb{R}\)</span>.</p>
-<p>To perform our test, we fit both models. We fit the simple
-linear regression model in the code below.</p>
+<p><span class="math display">\[
+\begin{aligned}
+&amp;H_0: \beta_2 = \beta_3 = 0 \mid \beta_0 \in \mathbb{R}, \beta_1 \in \mathbb{R}\\
+&amp;H_a:  \beta_2 \neq 0 \text{ or } \beta_3 \neq 0 \mid \beta_0\in \mathbb{R}, \beta_1 \in \mathbb{R}.
+\end{aligned}
+\]</span></p>
+<p>To perform our test, we must fit both models. We fit the simple linear regression model in the code below.</p>
 <div class="sourceCode" id="cb18"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb18-1"><a href="inference.html#cb18-1" aria-hidden="true" tabindex="-1"></a>lmod <span class="ot">&lt;-</span> <span class="fu">lm</span>(bill_length_mm <span class="sc">~</span> body_mass_g, <span class="at">data =</span> penguins)</span>
 <span id="cb18-2"><a href="inference.html#cb18-2" aria-hidden="true" tabindex="-1"></a><span class="fu">coef</span>(lmod)</span>
 <span id="cb18-3"><a href="inference.html#cb18-3" aria-hidden="true" tabindex="-1"></a><span class="do">##  (Intercept)  body_mass_g </span></span>
@@ -1542,15 +1539,14 @@ as the second argument. We do that in the code below.</p>
 <span id="cb20-10"><a href="inference.html#cb20-10" aria-hidden="true" tabindex="-1"></a><span class="do">## Signif. codes:  0 &#39;***&#39; 0.001 &#39;**&#39; 0.01 &#39;*&#39; 0.05 &#39;.&#39; 0.1 &#39; &#39; 1</span></span></code></pre></div>
 <p>The test statistic (<code>F</code>) is 399.35 and the associated
 p-value (<code>Pr(&gt;F)</code>) is close to 0.</p>
-<p>The is very strong evidence that the parallel lines model is
-preferred to the simple linear regression model for the
-<code>penguins</code> data.</p>
+<p>The is very strong evidence that the parallel lines model is preferred to the simple linear regression model for the <code>penguins</code> data.</p>
 <p>We can do another test that compares the parallel lines
 model to the separate lines model for the <code>penguins</code> data.</p>
 <p>We want to choose between</p>
 <p><span class="math display">\[
 \begin{aligned}
-&amp;H_0: E(\mathtt{bill\_length\_mm} \mid \mathtt{body\_mass\_g}, \mathtt{species}) = \beta_{0} + \beta_1 \mathtt{body\_mass\_g} + \beta_2 D_C + \beta_3 D_G \\
+&amp;H_0: E(\mathtt{bill\_length\_mm} \mid \mathtt{body\_mass\_g}, \mathtt{species}) \\
+&amp;=\qquad \beta_{0} + \beta_1 \mathtt{body\_mass\_g} + \beta_2 D_C + \beta_3 D_G \\
 &amp;H_a: E(\mathtt{bill\_length\_mm} \mid \mathtt{body\_mass\_g}, \mathtt{species}) \\
 &amp;\qquad = \beta_{0} + \beta_1 \mathtt{body\_mass\_g} + \beta_2 D_C + \beta_3 D_G + \beta_4 \mathtt{body\_mass\_g} D_C + \beta_5 \mathtt{body\_mass\_g} D_G.
 \end{aligned}
@@ -1558,8 +1554,8 @@ model to the separate lines model for the <code>penguins</code> data.</p>
 <p>Alternatively, we could state this as</p>
 <p><span class="math display">\[
 \begin{aligned}
-&amp;H_0: \beta_4 = \beta_5 = 0 \mid \beta_0, \beta_1, \beta_2, \beta_3 \in \mathbb{R}.\\
-&amp;H_a: \beta_4 \neq 0 \text{ or } \beta_5 \neq 0 \mid \beta_0, \beta_1, \beta_2, \beta_3 \in \mathbb{R}.
+&amp;H_0: \beta_4 = \beta_5 = 0 \mid \{\beta_0, \beta_1, \beta_2, \beta_3\} \in \mathbb{R}^4.\\
+&amp;H_a: \beta_4 \neq 0 \text{ or } \beta_5 \neq 0 \mid \{\beta_0, \beta_1, \beta_2, \beta_3\} \in \mathbb{R}^4.
 \end{aligned}
 \]</span></p>
 <p>We now fit the separate lines regression model to the

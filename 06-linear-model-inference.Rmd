@@ -846,21 +846,12 @@ predict_adjust(lmodp, newdata = newpenguins, level = 0.99,
 
 ## Hypothesis tests for a single regression coefficient
 
-If we assume we are fitting the multiple linear regression
-model in Equation \@ref(eq:model-def-inference), then our
+If we assume we are fitting the multiple linear regression model in Equation \@ref(eq:model-def-inference), then our
 model has $p$ regression coefficient
 $\beta_0, \beta_1, \ldots, \beta_{p-1}$. How can we
 perform a hypothesis test for exactly one of these
 regression coefficients?
 
-Recall that if we make the assumptions in Equation
-\@ref(eq:error-assumption-inference), then
-
-```{=tex}
-\begin{equation}
-\frac{\hat{\beta}_j-\beta_j}{\hat{\mathrm{se}}(\hat{\beta}_j)}\sim t_{n-p}, \quad j=0,1,\ldots,p-1. (\#eq:pivot-t-betaj)
-\end{equation}
-```
 Let's say we wish to test whether, for this model, $\beta_j$
 differs from some constant number $c$ (typically, $c=0$).
 Let
@@ -894,6 +885,15 @@ we are performing a test for $\beta_j$ in the context of the
 model that has the regressors associated with
 $\boldsymbol{\beta}_{-j}$. Tests are model specific, so it is important to be clarify the exact model under consideration
 
+Recall that if we make the assumptions in Equation
+\@ref(eq:error-assumption-inference), then
+
+```{=tex}
+\begin{equation}
+\frac{\hat{\beta}_j-\beta_j}{\hat{\mathrm{se}}(\hat{\beta}_j)}\sim t_{n-p}, \quad j=0,1,\ldots,p-1. (\#eq:pivot-t-betaj)
+\end{equation}
+```
+
 How do the hypotheses in Equation \@ref(eq:betaj-H0Ha)
 affect the pivotal quantity in Equation
 \@ref(eq:pivot-t-betaj)? Under the null hypothesis, the
@@ -919,7 +919,7 @@ We will perform a hypothesis test for the model
 $$
 \begin{aligned}
 &E(\mathtt{bill\_length\_mm}\mid \mathtt{body\_mass\_g}, \mathtt{flipper\_length\_mm}) \\
-&=\beta_0+\beta_1 \mathtt{body\_mass\_g} + \beta_2 \mathtt{flipper\_length\_mm}.
+&=\beta_0+\beta_1 \mathtt{body\_mass\_g} + \beta_2 \mathtt{flipper\_length\_mm}
 \end{aligned}
 $$
 
@@ -953,15 +953,15 @@ the final column (`Pr(>|t|)`) provides the two-tailed
 p-value associated with this test.
 
 Thus, for our test of the `body_mass_g` coefficient, the
-test statistic is $T_2 = 1.17$ and the associated p-value is
-0.024. There is moderate evidence that the coefficient for
+test statistic is $T_1 = 1.17$ and the associated p-value is
+0.24. There is no evidence that the coefficient for
 `body_mass_g` differs from zero, assuming the model also
 allows for the inclusion of the intercept and
 `flipper_length_mm` coefficients.
 
 ## Hypothesis tests for multiple regression coefficients
 
-Suppose we have have a standard linear regression model with
+Suppose we have a standard linear regression model with
 $p$ regression coefficients such as the one defined in
 Equation \@ref(eq:model-def-inference). We refer to this
 model as the "Complete Model".
@@ -1011,26 +1011,24 @@ that $RM$ is the true model, then
 
 $$
 F=\frac{\frac{RSS_{RM}-RSS_{CM}}{df_{RM}-df_{CM}}}{\frac{RSS_{CM}}{df_{CM}}}=\frac{\frac{RSS_{RM}-RSS_{CM}}{df_{RM}-df_{CM}}}{\hat{\sigma}^2_{CM}}\sim F_{df_{RM}-df_{CM},df_{CM}}, (\#eq:f-stat-lh)
-$$ where $F_{df_{RM}-df_{CM},df_{CM}}$ is an $F$ random
-variable with $df_{RM}-df_{CM}$ numerator degrees of freedom
-and $df_{CM}$ denominator degrees of freedom and
-$\hat{\sigma}^2_{CM}$ is the estimated error variance of
-$CM$.
+$$
+where $F_{df_{RM}-df_{CM},df_{CM}}$ is an $F$ random
+variable with $df_{RM}-df_{CM}$ numerator degrees of freedom and $df_{CM}$ denominator degrees of freedom and $\hat{\sigma}^2_{CM}$ is the estimated error variance of $CM$.
 
 The p-value for this test is
 
 $$
-p\text{-value}=P(F\geq F_{df_{RM}-df_{CM},df_{CM}}).
-$$ We consider two common uses for this test below.\`
+p\text{-value}=P(F_{df_{RM}-df_{CM},df_{CM}} \geq F).
+$$
+
+We consider two common uses for this test below.
 
 ### Test for a regression relationship
 
-The most common test involving multiple parameters is to
-test whether *any* of the non-intercept regression
+The most common test involving multiple parameters is to test whether *any* of the non-intercept regression
 coefficients differ from zero. This test is known as the "test for a regression relationship".
 
-In this situation, the hypotheses to be tested may be stated
-as
+In this situation, the hypotheses to be tested may be stated as
 
 $$
 \begin{aligned}
@@ -1044,7 +1042,7 @@ Alternatively, we can state these hypotheses as
 $$
 \begin{aligned}
 &H_0: \beta_1 = \cdots = \beta_{p-1} = 0 \mid \beta_0 \in \mathbb{R} \\
-&H_a: \beta_0 \in \mathbb{R}, \beta_1 \in \mathbb{R}, \ldots, \beta_{p-1}\in \mathbb{R}.
+&H_a: \beta_1 \in \mathbb{R}  \text{ or } \ldots  \text{ or } \beta_{p-1}\in \mathbb{R} \mid \beta_0 \in \mathbb{R}.
 \end{aligned}
 $$
 
@@ -1132,22 +1130,20 @@ preferred to the model that has only an intercept.
 ### A more general F test
 
 Let us consider a more general F test where multiple
-regression coefficients are set to zero. In general, the
-associated test statistic won't simplify in any standard
-way.
+regression coefficients are set to zero. In general, the associated test statistic won't simplify in any standard way.
 
 We will illustrate the more general F test using the
 `penguins` data.
 
 Suppose we want to decide between the simple linear
-regression model and the parallel lines model for the `penguins`
-data.
+regression model and the parallel lines model for the `penguins` data.
 
 We want to test between
 
 $$
 \begin{aligned}
-&H_0: E(\mathtt{bill\_length\_mm} \mid \mathtt{body\_mass\_g}, \mathtt{species}) = \beta_{0} + \beta_1 \mathtt{body\_mass\_g} \\
+&H_0: E(\mathtt{bill\_length\_mm} \mid \mathtt{body\_mass\_g}, \mathtt{species})\\
+&\qquad= \beta_{0} + \beta_1 \mathtt{body\_mass\_g} \\
 &H_a:  E(\mathtt{bill\_length\_mm} \mid \mathtt{body\_mass\_g}, \mathtt{species})\\
 &\qquad = \beta_{0} + \beta_1 \mathtt{body\_mass\_g} + \beta_2 D_C + \beta_3 D_G,
 \end{aligned}
@@ -1157,11 +1153,14 @@ where $D_C$ and $D_G$ denote the indicator variables for the
 
 Alternatively, we could state this as
 
-$H_0: \beta_2 = \beta_3 = 0 \mid \beta_0, \beta_1 \in \mathbb{R}$
-$H_a: \beta_2 \neq 0 \text{ or } \beta_3 \neq 0 \mid \beta_0, \beta_1 \in \mathbb{R}$.
+$$
+\begin{aligned}
+&H_0: \beta_2 = \beta_3 = 0 \mid \beta_0 \in \mathbb{R}, \beta_1 \in \mathbb{R}\\
+&H_a:  \beta_2 \neq 0 \text{ or } \beta_3 \neq 0 \mid \beta_0\in \mathbb{R}, \beta_1 \in \mathbb{R}.
+\end{aligned}
+$$
 
-To perform our test, we fit both models. We fit the simple
-linear regression model in the code below.
+To perform our test, we must fit both models. We fit the simple linear regression model in the code below.
 
 ```{r}
 lmod <- lm(bill_length_mm ~ body_mass_g, data = penguins)
@@ -1187,9 +1186,7 @@ anova(lmod, lmodp)
 The test statistic (`F`) is 399.35 and the associated
 p-value (`Pr(>F)`) is close to 0.
 
-The is very strong evidence that the parallel lines model is
-preferred to the simple linear regression model for the
-`penguins` data.
+The is very strong evidence that the parallel lines model is preferred to the simple linear regression model for the `penguins` data.
 
 We can do another test that compares the parallel lines
 model to the separate lines model for the `penguins` data.
@@ -1198,7 +1195,8 @@ We want to choose between
 
 $$
 \begin{aligned}
-&H_0: E(\mathtt{bill\_length\_mm} \mid \mathtt{body\_mass\_g}, \mathtt{species}) = \beta_{0} + \beta_1 \mathtt{body\_mass\_g} + \beta_2 D_C + \beta_3 D_G \\
+&H_0: E(\mathtt{bill\_length\_mm} \mid \mathtt{body\_mass\_g}, \mathtt{species}) \\
+&=\qquad \beta_{0} + \beta_1 \mathtt{body\_mass\_g} + \beta_2 D_C + \beta_3 D_G \\
 &H_a: E(\mathtt{bill\_length\_mm} \mid \mathtt{body\_mass\_g}, \mathtt{species}) \\
 &\qquad = \beta_{0} + \beta_1 \mathtt{body\_mass\_g} + \beta_2 D_C + \beta_3 D_G + \beta_4 \mathtt{body\_mass\_g} D_C + \beta_5 \mathtt{body\_mass\_g} D_G.
 \end{aligned}
@@ -1208,8 +1206,8 @@ Alternatively, we could state this as
 
 $$
 \begin{aligned}
-&H_0: \beta_4 = \beta_5 = 0 \mid \beta_0, \beta_1, \beta_2, \beta_3 \in \mathbb{R}.\\
-&H_a: \beta_4 \neq 0 \text{ or } \beta_5 \neq 0 \mid \beta_0, \beta_1, \beta_2, \beta_3 \in \mathbb{R}.
+&H_0: \beta_4 = \beta_5 = 0 \mid \{\beta_0, \beta_1, \beta_2, \beta_3\} \in \mathbb{R}^4.\\
+&H_a: \beta_4 \neq 0 \text{ or } \beta_5 \neq 0 \mid \{\beta_0, \beta_1, \beta_2, \beta_3\} \in \mathbb{R}^4.
 \end{aligned}
 $$
 

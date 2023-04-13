@@ -34,7 +34,7 @@ if(!require(api2lm, quietly = TRUE)) {
 We adjust some printing options for clarity. 
 
 ```{r}
-options(digits = 5, scipen = 2)
+options(digits = 7, scipen = 2)
 ```
 
 # Overview of inference and prediction
@@ -683,13 +683,9 @@ If we assume we are fitting the standard multiple linear regression model, then 
 
 How can we perform a hypothesis test for exactly one of these regression coefficients?
 
-Recall that under the assumptions made at the beginning of this notebook: 
+Let $\boldsymbol{\beta}_{-j}=\boldsymbol{\beta}\setminus{\beta_j}$, i.e., $\boldsymbol{\beta}_{-j}$ is the vector of all regression coefficients except $\beta_j$. 
 
-\begin{equation}
-\frac{\hat{\beta}_j-\beta_j}{\hat{\mathrm{se}}(\hat{\beta}_j)}\sim t_{n-p}, \quad j=0,1,\ldots,p-1.
-\end{equation}
-
-Let $\boldsymbol{\beta}_{-j}=\boldsymbol{\beta}\setminus{\beta_j}$, i.e., $\boldsymbol{\beta}_{-j}$ is the vector of all regression coefficients except $\beta_j$. $\boldsymbol{\beta}_{-j}$ has $p-1$ elements. 
+- $\boldsymbol{\beta}_{-j}$ has $p-1$ elements. 
 
 To test whether $\beta_j$ differs from some constant number $c$ (typically, $c=0$), we can test
 
@@ -701,7 +697,14 @@ H_a: \beta_j &\neq c \mid \boldsymbol{\beta}_{-j}\in\mathbb{R}^{p-1}.
 $$
 
 The vertical bar means "assuming or conditional on", similar to the notation you would see in conditional probabilities or distributions.
+
 - Tests are model specific, so it is important to be clarify the exact model under consideration.
+
+Recall that under the assumptions made at the beginning of this notebook: 
+
+$$
+\frac{\hat{\beta}_j-\beta_j}{\hat{\mathrm{se}}(\hat{\beta}_j)}\sim t_{n-p}, \quad j=0,1,\ldots,p-1.
+$$
 
 Under the null hypothesis, the statistic:
 
@@ -727,7 +730,7 @@ We will perform a hypothesis test for the model
 $$
 \begin{aligned}
 &E(\mathtt{bill\_length\_mm}\mid \mathtt{body\_mass\_g}, \mathtt{flipper\_length\_mm}) \\
-&=\beta_0+\beta_1 \mathtt{body\_mass\_g} + \beta_2 \mathtt{flipper\_length\_mm}.
+&=\beta_0+\beta_1 \mathtt{body\_mass\_g} + \beta_2 \mathtt{flipper\_length\_mm}
 \end{aligned}
 $$
 
@@ -758,13 +761,13 @@ summary(mlmod)$coefficients
 
 Thus, for our test of the `body_mass_g` coefficient:
 
-- The test statistic is $T_2 = 1.17$.
-- The associated p-value is 0.024.
-- There is moderate evidence that the coefficient for `body_mass_g` differs from zero, assuming the model also allows for the inclusion of the intercept and `flipper_length_mm` coefficients.
+- The test statistic is $T_1 = 1.17$.
+- The associated p-value is 0.24.
+- There is no evidence that the coefficient for `body_mass_g` differs from zero, assuming the model also allows for the inclusion of the intercept and `flipper_length_mm` coefficients.
 
 # Hypothesis tests for multiple regression coefficients
 
-Suppose we have have a standard linear regression model with
+Suppose we have a standard linear regression model with
 $p$ regression coefficients.
 
 - We refer to this model as the "Complete Model".
@@ -783,7 +786,7 @@ The most common examples of Reduced Model are:
 
 Other examples of a RM set certain coefficients equal to each other or place other restrictions on the coefficients.
 
-Let:
+We define the following notation:
 
 - $RSS_{RM}$ denotes the RSS of the Reduced Model.
 - $RSS_{CM}$ denotes the RSS of the Complete Model.
@@ -807,7 +810,7 @@ We wish to statistically assess whether we can simplify our model from $CM$ to $
 Under the standard assumptions for $RM$ and that $RM$ is the true model:
 
 $$
-F=\frac{\frac{RSS_{RM}-RSS_{CM}}{df_{RM}-df_{CM}}}{\frac{RSS_{CM}}{df_{CM}}}=\frac{\frac{RSS_{RM}-RSS_{CM}}{df_{RM}-df_{CM}}}{\hat{\sigma}^2_{CM}}\sim F_{df_{RM}-df_{CM},df_{CM}}.
+F=\frac{\frac{RSS_{RM}-RSS_{CM}}{df_{RM}-df_{CM}}}{\frac{RSS_{CM}}{df_{CM}}}=\frac{\frac{RSS_{RM}-RSS_{CM}}{df_{RM}-df_{CM}}}{\hat{\sigma}^2_{CM}}\sim F_{df_{RM}-df_{CM},df_{CM}},
 $$
 
 where:
@@ -818,9 +821,10 @@ where:
 The p-value for this test is
 
 $$
-p\text{-value}=P(F\geq F_{df_{RM}-df_{CM},df_{CM}}).
+p\text{-value}=P(F_{df_{RM}-df_{CM},df_{CM}} \geq F).
 $$
-We consider two common uses for this test below.`
+
+We consider two common uses for this test below.
 
 **Test for a regression relationship**
 
@@ -844,7 +848,7 @@ Alternatively, we can state these hypotheses as
 $$
 \begin{aligned}
 &H_0: \beta_1 = \cdots = \beta_{p-1} = 0 \mid \beta_0 \in \mathbb{R} \\
-&H_a: \beta_0 \in \mathbb{R}, \beta_1 \in \mathbb{R}, \ldots, \beta_{p-1}\in \mathbb{R}.
+&H_a: \beta_1 \in \mathbb{R}  \text{ or } \ldots  \text{ or } \beta_{p-1}\in \mathbb{R} \mid \beta_0 \in \mathbb{R}.
 \end{aligned}
 $$
 
@@ -858,8 +862,8 @@ The $F$ statistic simplifies dramatically when performing a test for a regressio
 - For the RM, $\hat{\beta}_0=\bar{Y}$.
 - $RSS_{RM} = \sum_{i=1}^n (Y_i - \bar{Y})^2 = TSS!$
 - The numerator of our F statistic becomes $TSS - RSS_{CM}$, which is $SS_{reg}$ for the CM.
-- $RSS_{RM} = n - 1$.
-- $RSS_{CM} = n - p$.
+- $df_{RM} = n - 1$.
+- $df_{CM} = n - p$.
 - $df_{RM} - df_{CM} = (n - 1) - (n - p) = p-1$. 
 
 Our F statistic for this test simplifies to
@@ -928,13 +932,14 @@ Let us consider a more general F test where multiple regression coefficients are
 
 We will illustrate the more general F test using the `penguins` data.
 
-Suppose we want to decide between the simple linear regression model and parallel lines models for the `penguins` data.
+Suppose we want to decide between the simple linear regression model and the parallel lines model for the `penguins` data.
 
 We want to test between
 
 $$
 \begin{aligned}
-&H_0: E(\mathtt{bill\_length\_mm} \mid \mathtt{body\_mass\_g}, \mathtt{species}) = \beta_{0} + \beta_1 \mathtt{body\_mass\_g} \\
+&H_0: E(\mathtt{bill\_length\_mm} \mid \mathtt{body\_mass\_g}, \mathtt{species})\\
+&\qquad= \beta_{0} + \beta_1 \mathtt{body\_mass\_g} \\
 &H_a:  E(\mathtt{bill\_length\_mm} \mid \mathtt{body\_mass\_g}, \mathtt{species})\\
 &\qquad = \beta_{0} + \beta_1 \mathtt{body\_mass\_g} + \beta_2 D_C + \beta_3 D_G,
 \end{aligned}
@@ -944,10 +949,14 @@ where $D_C$ and $D_G$ denote the indicator variables for the `Chinstrap` and `Ge
 
 Alternatively, we could state this as 
 
-$H_0: \beta_2 = \beta_3 = 0 \mid \beta_0, \beta_1 \in \mathbb{R}$
-$H_a: \beta_2 \neq 0 \text{ or } \beta_3 \neq 0 \mid \beta_0, \beta_1 \in \mathbb{R}$.
+$$
+\begin{aligned}
+&H_0: \beta_2 = \beta_3 = 0 \mid \beta_0 \in \mathbb{R}, \beta_1 \in \mathbb{R}\\
+&H_a:  \beta_2 \neq 0 \text{ or } \beta_3 \neq 0 \mid \beta_0\in \mathbb{R}, \beta_1 \in \mathbb{R}.
+\end{aligned}
+$$
 
-To perform our test, we fit both models.
+To perform our test, we must fit both models.
 
 We fit the simple linear regression model first.
 
@@ -982,7 +991,8 @@ We want to choose between
 
 $$
 \begin{aligned}
-&H_0: E(\mathtt{bill\_length\_mm} \mid \mathtt{body\_mass\_g}, \mathtt{species}) = \beta_{0} + \beta_1 \mathtt{body\_mass\_g} + \beta_2 D_C + \beta_3 D_G \\
+&H_0: E(\mathtt{bill\_length\_mm} \mid \mathtt{body\_mass\_g}, \mathtt{species}) \\
+&\qquad= \beta_{0} + \beta_1 \mathtt{body\_mass\_g} + \beta_2 D_C + \beta_3 D_G \\
 &H_a: E(\mathtt{bill\_length\_mm} \mid \mathtt{body\_mass\_g}, \mathtt{species}) \\
 &\qquad = \beta_{0} + \beta_1 \mathtt{body\_mass\_g} + \beta_2 D_C + \beta_3 D_G + \beta_4 \mathtt{body\_mass\_g} D_C + \beta_5 \mathtt{body\_mass\_g} D_G.
 \end{aligned}
@@ -992,8 +1002,8 @@ Alternatively, we could state this as
 
 $$
 \begin{aligned}
-&H_0: \beta_4 = \beta_5 = 0 \mid \beta_0, \beta_1, \beta_2, \beta_3 \in \mathbb{R}.\\
-&H_a: \beta_4 \neq 0 \text{ or } \beta_5 \neq 0 \mid \beta_0, \beta_1, \beta_2, \beta_3 \in \mathbb{R}.
+&H_0: \beta_4 = \beta_5 = 0 \mid \{\beta_0, \beta_1, \beta_2, \beta_3\} \in \mathbb{R}^4.\\
+&H_a: \beta_4 \neq 0 \text{ or } \beta_5 \neq 0 \mid \{\beta_0, \beta_1, \beta_2, \beta_3\} \in \mathbb{R}^4.
 \end{aligned}
 $$
 
