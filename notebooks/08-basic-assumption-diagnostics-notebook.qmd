@@ -1,0 +1,783 @@
+---
+title: Chapter 8 - Basic assumption diagnostics
+author: Joshua French
+date: ''
+format: html
+# format: ipynb
+# jupyter: ir
+# execute:
+#   output: false
+self-contained: true
+title-block-banner: true
+wrap: 'none'
+---
+
+To open this information in an interactive Colab notebook, click the Open in Colab graphic below.
+
+<a href="https://colab.research.google.com/github/jfrench/LinearRegression/blob/master/notebooks/08-basic-assumptions-diagnostics-notebook.ipynb">
+   <img src="https://colab.research.google.com/assets/colab-badge.svg">
+</a>
+
+---
+
+```{r}
+if(!require(faraway, quietly = TRUE)) {
+  install.packages("faraway",
+                   repos = "https://cran.rstudio.com/")
+}
+if(!require(KingCountyHouses, quietly = TRUE)) {
+  install.packages("KingCountyHouses",
+                   repos = "https://cran.rstudio.com/")
+}
+if(!require(car, quietly = TRUE)) {
+  install.packages("car",
+                   repos = "https://cran.rstudio.com/")
+  library(car)
+}
+```
+
+We adjust some printing options for clarity. 
+
+```{r}
+options(digits = 7, scipen = 2)
+```
+
+We discuss basic, but effective approaches for assessing the validity of several of the assumptions discussed in the previous notebook.
+
+# Illustration data sets
+
+To facilitate this discussion we will consider two data sets. 
+
+The first data set we will consider is the `prostate` data set, which is available in the **faraway** R package. The data provide information about 97 men who were going to receive a radical prostatectomy. The data set has 97 rows and 9 columns with the variables:
+
+The prostate data frame has 97 rows and 9 columns. A study on 97 men with prostate cancer who were due to receive a radical prostatectomy. The **faraway** package provides the following descriptions of the variables:
+
+- `lcavol`: log(cancer volume).
+- `lweight`: log(prostate weight).
+- `age`: age in years.
+- `lbph`: log(benign prostatic hyperplasia amount).
+- `svi`: seminal vesicle invasion.
+- `lcp`: log(capsular penetration).
+- `gleason`: Gleason score.
+- `pgg45`: percentage Gleason scores 4 or 5.
+- `lpsa`: log(prostate specific antigen).
+
+We load this data set.
+
+```{r}
+data(prostate, package = "faraway")
+```
+
+The `svi` variable is a factor, so we convert it to a factor with appropriate levels.
+
+```{r}
+prostate$svi <- factor(prostate$svi,
+                       labels = c("non-invasive", "invasive"))
+```
+
+We will also use the `home_prices` data set in the **KingCountyHouses** package. The `home_prices` data set contains the sales prices of homes sold in King County, WA between 2014-05-02 and 2015-05-27. The data set is a data frame (tibble) with 21,613 rows and 19 columns. A subset of the relevant variables includes:
+
+- `date_sold`: date of sale.
+- `price`: sale price (log10 units).
+- `bedrooms`: number of bedrooms.
+- `bathrooms`: number of bathrooms.
+- `sqft_living`: size of living space.
+- `sqft_lot`: size of property.
+- `floors`: number of floors.
+- `waterfront`: indicator variable for a waterfront view.
+- `view`: a numeric rating of the quality of the home's view.
+- `condition`: a factor variable indicating the condition of the house (poor to very good).
+- `sqft_above`: size of living space above ground.
+- `sqft_basement` (numeric):size of living space below ground.
+- `yr_built`: year the home was built.
+- `year_renovated`: the year renovated and, if not renovated, the year built.
+- `zip_code`: the zip code of the home.
+
+We load the data below.
+
+```{r}
+data(home_prices, package = "KingCountyHouses")
+```
+
+We do not wish to work with all of the variables for practical reasons, so we keep only the first 13 variables of the data frame.
+
+```{r}
+home_prices <- home_prices[,1:13]
+```
+
+We will also remove the `sqft_basement` variable because the `sqrt_above` and `sqft_basement` variables sum to equal `sqft_living`, so we will have an issue with collinearity if we don't remove one of hte variables.
+
+```{r}
+home_prices <- home_prices[,-12]
+```
+
+#
+
+The validity of our assumptions depend on the model fit to the data.
+
+For the prostate data we will regress `lpsa` on all the remaining variables in the `prostate` data frame. 
+
+- A shortcut for this is to use the formula `y ~ .`, where `y` is the response and `.` indicates to use all of the variables in the data frame containing `y`.
+
+```{r}
+lmod_prostate <- lm(lpsa ~ ., data = prostate)
+coef(lmod_prostate)
+```
+
+Similarly, for the `home_prices` data set, we will regress the `price` variable on all of the remaining variables in `home_prices`.
+
+```{r}
+lmod_homes <- lm(price ~ ., data = home_prices)
+coef(lmod_homes)
+```
+
+# Checking structure
+
+As mentioned in the previous chapter, the most important assumption is that the model structure is correct.
+
+Technically, this assumption is impossible to verify. However, we can verify that the model does an adequate job of approximating the behavior of the observed data.
+
+- If the model doesn't do a good job of mimicking the behavior of the observed data, then we can say this this assumption is violated.
+
+The most basic approach for assessing whether the structural assumption is satisfied is to determine whether the residuals plot of the residuals versus fitted values.
+
+- If the residuals are randomly, but approximately symmetrically, scattered around a horizontal line running through 0 on the y-axis, then this assumption is satisfied.
+
+
+Why does this approach work?
+
+- We assume that the errors have mean zero for any combination of our predictors.
+- If our fitted model adequately captures the mean of the data, then the residuals will have the same property.
+- We expect our residuals to randomly fluctuate above and below 0 with no systematic pattern related to a specific combination of regressors. 
+
+We plot the residuals versus the fitted values because it is a single plot relating the residuals to different combinations of regressors and links nicely with checkign several other assumptions.
+
+The `residualPlot` function in the **car** package is a convenient way of producing a plot of the residuals versus fitted values for a fitted model.
+
+The `residualPlot` function is a complex function, so we set `quadratic = FALSE` to get a simple plot.
+
+**Structural check for `prostate` data**
+
+---
+
+We examine a plot of the residuals versus fitted values for the model fitted to the `prostate` data.
+
+```{r}
+residualPlot(lmod_prostate, quadratic = FALSE)
+```
+
+The points appear to be randomly scattered above and below 0 as we move from left to right across the x-axis. There is no clear violate of the structural assumption.
+
+A more details assessment of this assumption involves plotting the residuals versus each of the predictors.
+
+- If the structural assumption is correct, then the residuals should randomly scatter above and below 0 as the predictor value changes.
+
+The `residualsPlots` function provided by the **car** package will produce plots of the residuals versus each first-order predictor and the fitted values.
+
+- Setting `tests = FALSE` and `quadratic = FALSE` simplifies the output produced by the function.
+- Setting `fitted = FALSE` prevents the function from display a plot of the residuals versus fitted values.
+
+We consider a the residual plots for the model fit to the `prostate` data below. Because there would be 9 plots by default, we select only 4 of the predictors to simplify our display.
+
+```{r}
+residualPlots(lmod_prostate, 
+              terms = ~ lcavol + age + svi + gleason,
+              tests = FALSE, quadratic = FALSE, fitted = FALSE)
+```
+
+
+The residual plots for `lcavol` and `age` looking relatively symmetric around 0 with no clear patterns.
+
+For a categorical predictor like `svi`, we want the boxplot of the residuals to by symmetric around zero, which is what we see for this data.
+
+Looking at the residual plot for the `gleason` predictor, it appears that the variability of the residuals may be smaller for higher values of `gleason`. 
+
+- This may be something to explore further.
+- There are relatively few obserations with high gleason values, so it is difficult to draw a definitive conclusion.
+
+
+**Structural check for `home_prices` data**
+
+---
+
+We now examine a plot of the residuals versus fitted values for the `home_prices` data.
+
+```{r}
+residualPlot(lmod_homes, quadratic = FALSE)
+```
+
+There are many many points in this plot compared to the residual plot for the `prostate` data, making it a bit more difficult to assess this assumption.
+
+The bulk of the data between the fitted values 5.25 and 6.5 is approximately symmetric around zero (as far as we can tell). 
+
+There is one unusual point in the upper left part of the plot. This is an outlier. Since this is only a single unusual point for a data set with a lot of observations, this is not something to be concerned about.
+
+However, the residuals begin to systematically fall below 0 when the fitted values are above 6.5. This is an indication that we have a structural deficiency in our fitted model that should be addressed.
+
+# Checking constant variance 
+
+Another key assumption is that the variance of the errors is constant for all combinations of regressor values.
+
+Similar to the check of structure, we can check this assumption through residual plots.
+
+However, it is important to note that even if the errors have constant variance, the residuals do not.
+
+Even if the variance of the errors is constant,
+
+$$\mathrm{var}(\hat{\epsilon}_i) = \frac{\sigma^2}{\sqrt{1-h_i}}, \quad i = 1,2,\ldots,n,$$
+
+where $h_i=\mathbf{H}_{i,i}$ is $i$th diagonal element of the hat matrix $\mathbf{H}=\mathbf{X}(\mathbf{X}^T\mathbf{X})^{-1}\mathbf{X}^T$.
+
+It is recommended that instead of assessing the validity of this assumption with the ordinary residuals, we instead use the standardized residuals given by the expression
+
+$$r_i = \frac{\hat{\epsilon}_i}{\hat{\sigma}\sqrt{1-h_i}}, \quad i=1,2,\ldots,n.$$
+
+The standardized residuals should have mean 0 and variance 1.
+
+With respect to assessing the validity of this constant variance assumption, plots of the standardized residuals versus fitted values or predictors should have constant thickness symmetric about 0 as we move from left to right along the x-axis.
+
+Consider the 4 plots below:
+
+- Panel (a) shows data that perfectly satisfy this assumption. However, the plot itself doesn't have perfect constant thickness as we move from left to right along the axis.
+- Panel (b) shows data with increasing variability as we move from left to right across the x-axis. This is difficult to see in the plot because the variability increases but then appears to decrase.
+- Panel (c) shows data that has slightly decreasing variability as we move from left to right along the x-axis. However, this is difficult to see in the plot..
+- Panel (d) shows data that has a structural issue (notice the curve in the data compared to the 0-line) while the points also increase in variability as we move from left to right along the x-axis.
+
+```{r}
+#| echo: false
+#| eval: true
+#| output: true
+par(mfrow = c(2, 2))
+set.seed(1)
+x <- runif(30, 0.5, 7.5)
+y1 <- 2 + x + rnorm(30)
+y2 <- 2 + x + rnorm(30, sd = x)
+y3 <- 2 + x + rnorm(30, sd = 10 - x)
+y4 <- 2 + x + rnorm(30, x + 2 * (x-4)^2, sd = (1 + x^1.25))
+lmod1 <- lm(y1 ~ x)
+lmod2 <- lm(y2 ~ x)
+lmod3 <- lm(y3 ~ x)
+lmod4 <- lm(y4 ~ x)
+plot(rstandard(lmod1) ~ fitted(lmod1),
+     xlab = "fitted", ylab = "standardized resid",
+     main = "(a)")
+abline(0, 0, lty = 2)
+plot(rstandard(lmod2) ~ fitted(lmod2),
+     xlab = "fitted", ylab = "standardized resid",
+     main = "(b)")
+abline(0, 0, lty = 3)
+plot(rstandard(lmod1) ~ fitted(lmod3),
+     xlab = "fitted", ylab = "standardized resid",
+     main = "(c)")
+abline(0, 0, lty = 2)
+plot(rstandard(lmod4) ~ fitted(lmod4),
+     xlab = "fitted", ylab = "standardized resid",
+     main = "(d)")
+abline(0, 0, lty = 2)
+par(mfrow = c(1, 1))
+```
+
+What should we do if the plots are inconclusive? 
+
+- We don't conclude an assumption is violated unless the violation is clear.
+- Try to use a different method.
+
+A scale-location plot can be used to assess whether the variance is constant when the standardized residual plot is inconclusive AND the structural assumption doesn't appear to be violated.
+
+A *scale-location* plot is a plot of $\sqrt{|\hat{\boldsymbol{\epsilon}}|}$) versus $\hat{\mathbf{y}}$, i.e., a plot of the square root of the absolute value of the residuals versus the fitted values.
+
+- If the constant variance assumption is satisfied (i.e., not clearly violated), then this plot should should have constant thickness as we move from left to right along the x-axis.
+
+Recall that in panel (c) of the previous plot that we thought there was a slight decrease in the variability of the residuals as we moved from left-to-right across the x-axis. 
+
+We produce a scale-location plot for panel (c) above.
+
+- The red line is a visual indication of how the variability changes from left to right and should be approximately flat if this assumption is not violated. 
+- The red line clearly decreases in our plot indicating a violation of the constant variance assumption.
+
+```{r}
+#| echo: false
+#| eval: true
+#| output: true
+plot(lmod3, which = 3)
+```
+
+**Constant variance check for `prostate` data**
+
+---
+
+We now assess the validity of the constant variance assumption for the `prostate` data. 
+
+The `residualPlot` frunction from the **car** package can be used to construct a plot of the standardized residuals versus the fitted values.
+
+- Set `type = "rstandard"`.
+
+We produce a standarized residual plot for the model fitted to the `prostate` data.
+
+```{r}
+residualPlot(lmod_prostate, type = "rstandard", quadratic = FALSE)
+```
+
+
+The plot of the standardized residuals versus the fitted values has almost perfectly constant thickness as we move from left to right along the x-axis, so there is not indication of a non-constant variance issue for our fitted model.
+
+We can produce plots of the standardized residuals versus the predictors using the `residualPlots` function.
+
+There is no indication of a violation of the constant variance assumption in the plots below.
+
+```{r}
+residualPlots(lmod_prostate, type = "rstandard",
+              terms = ~ lcavol + age + svi + pgg45,
+              tests = FALSE, quadratic = FALSE, fitted = FALSE)
+```
+
+**Constant variance check for `home_prices` data**
+
+---
+
+We now assess the validity of the constant error variance assumption for the `home_prices` data. 
+
+Our standardized residual plot seems to show clear evidence that the variability tends to decrease as we move from left to right along the x-axis.
+
+```{r}
+residualPlot(lmod_homes, type = "rstandard", quadratic = FALSE)
+```
+
+
+The verify our belief, we can look at a scale-location plot for the fitted model
+
+The `plot` function can be used to produce a scale-location plot.
+
+- The `plot` function has a method for `lm` objects.
+- Setting the `which` argument to 3 will produce a scale-location plot.
+
+We produce a scale-location plot of the fitted model for `home_prices`.
+
+```{r}
+plot(lmod_homes, which = 3)
+```
+
+The red line shows that the variability decreases as we move from left to right. It then appears to increase, but this is an artifact of the model having a structural deficiency for larger fitted values. Focusing on the fitted values less than 6.25, we do see the absolute value of the standardized residuals tend to decrease as we move from left to right.
+
+<!-- ## Checking Normality of Residuals -->
+
+<!-- - Tests and confidence intervals are based on the assumption that the errors are normally distributed. -->
+
+
+<!-- - We seem to have detected an issue.  -->
+<!-- - This test does not tell us how to fix it! -->
+<!-- - Maybe construct two different models? Maybe a transformation of the variables will address this issue? -->
+
+<!-- When the errors are nonnormal: -->
+
+<!-- - Estimates will still be unbiased (assuming the model is correct and the error mean is zero). -->
+<!-- - Tests and confidence intervals will not be exact, but the central limit theorem says that the intervals and tests will be increasingly accurate as the sample size increases. -->
+<!-- - The consequences can generally be ignored for short-tailed distributions. -->
+<!-- - For skewed errors, a transformation may solve the problem. -->
+<!-- - For heavy-tailed errors, it is best to use robust methods that give less weight to outlying observations. -->
+<!-- - You may go back to step 1 and maybe consider a different model, though the problem may not be present in a different model. -->
+
+
+<!-- ## Q-Q Plots -->
+
+<!-- - **q-q plots** are great plots for checking the normality assumption. -->
+<!-- - On the x-axis goes z-scores for the sorted residuals (if they were normally distributed) -->
+<!-- - A reference line is often plotted for comparison with $N(0,1)$ -->
+<!-- - If the residuals are distributed similarly to observations coming from a normal distribution, then the points of a q-q plot will lie approximately in a straight line at a $45^{\circ}$ angle. -->
+
+
+<!-- ```{r} -->
+<!-- # Using base R -->
+<!-- qqnorm(residuals(lmod), ylab = "Residuals") -->
+<!-- qqline(residuals(lmod)) -->
+<!-- ``` -->
+
+
+<!-- - We can plot the residuals from the summary output we stored in `lmod`. This will produce a q-q plot for the **standardized residuals**, along with a helpful reference line. -->
+
+<!-- ```{r} -->
+<!-- plot(lmod, which = 2) -->
+<!-- ``` -->
+
+<!-- - The ``car::qqPlot` function is q-q plot for the **studentized residuals**, along with pointwise confidence bands for what is expected if $\boldsymbol\epsilon \sim N(0, \sigma^2 I)$. -->
+
+
+<!-- ```{r} -->
+<!-- # Using car package -->
+<!-- qqPlot(lmod)  -->
+<!-- ``` -->
+
+
+<!-- ### Interpreting q-q Plots -->
+
+<!-- If the marked points are: -->
+
+<!-- - **Flatter than the line**, there is less data than we'd have if normal -->
+<!-- - **Steeper than the line**, there is more data than we'd have if normal. -->
+
+<!-- ```{r} -->
+<!-- set.seed(53) -->
+<!-- qqPlot(rnorm(50), ylab = "observed data", -->
+<!--        xlab = "normal quantiles", main = "normal data") -->
+<!-- #hist(rnorm(50), ylab = "frequency", -->
+<!-- #       xlab = "observed data", main = "normal data") -->
+<!-- ``` -->
+
+<!-- ```{r} -->
+<!-- set.seed(53) -->
+<!-- qqPlot(exp(rnorm(50)), ylab = "observed data", -->
+<!--        xlab = "normal quantiles", main = "positively-skewed data")  -->
+<!-- #hist(exp(rnorm(50)), ylab = "frequency", -->
+<!-- #       xlab = "observed data", main = "positively-skewed data") -->
+<!-- ``` -->
+
+<!-- ```{r} -->
+<!-- # Heavy tailed data -->
+<!-- # Middle hump taller and more narrow -->
+<!-- # Tails go further out to left and right -->
+<!-- set.seed(53) -->
+<!-- qqPlot(rcauchy(50), ylab = "observed data", -->
+<!--        xlab = "normal quantiles", main = "heavy-tailed data") -->
+<!-- hist(rcauchy(50), ylab = "frequency", breaks = 20, -->
+<!--        xlab = "observed data", main = "heavy-tailed data") -->
+<!-- ``` -->
+
+<!-- ```{r} -->
+<!-- # Light tailed data -->
+<!-- # Middle hump less tall and wider -->
+<!-- # Less tails than normal distribution -->
+<!-- set.seed(53) -->
+<!-- qqPlot(runif(50), ylab = "observed data", -->
+<!--        xlab = "normal quantiles", main = "light-tailed data") -->
+<!-- hist(runif(50), ylab = "frequency", breaks = 20, -->
+<!--        xlab = "observed data", main = "light-tailed data") -->
+<!-- ``` -->
+
+<!-- ```{r} -->
+<!-- # Skewed Data -->
+<!-- set.seed(53) -->
+<!-- qqPlot(rexp(50), ylab = "observed data", -->
+<!--        xlab = "normal quantiles", main = "Skewed Right") -->
+<!-- hist(rexp(50), ylab = "frequency", breaks = 20, -->
+<!--        xlab = "observed data", main = "Skewed Right") -->
+<!-- ``` -->
+
+<!-- ## The Shapiro-Wilk test for Normality -->
+
+<!-- A formal test of normality can be performed using the **Shapiro-Wilk test**.   -->
+
+<!-- - The null hypothesis of the Shapiro-Wilk test is that the residuals are a random sample from a normal distribution.   -->
+<!-- - The alternative is that the residuals are not a sample from a normal distribution. -->
+<!-- - `shapiro.test(residuals(lmod))` will perform a Shapiro-Wilk test. -->
+<!-- - A statistical decision is made using the usual approach with $p$-values.   -->
+
+<!-- ```{r} -->
+<!-- shapiro.test(residuals(lmod)) # Shapiro-Wilk test. -->
+<!-- ``` -->
+
+<!-- ## Question 1: Interpret the result of this test in practical terms. -->
+
+<!-- - There is insufficient evidence to conclude the residuals come from a non-normal distribution.  -->
+
+<!-- While the Shapiro-Wilk test is a tidy way to assess normality, it is not as flexible as the q-q plot. -->
+
+<!-- - It does not suggest a way to correct the problem. -->
+<!-- - It is easily influenced by the number of observations so that even minor departures from normality are detected, even when there is little reason to abandon the least squares approach. -->
+
+<!-- ## Checking for Correlated Errorrs -->
+
+<!-- - It is difficult to check for correlated errors because there are so many possible patterns of correlation that may occur. -->
+<!--   - The structure of temporal or spatial data makes this easier to check. -->
+<!-- - If the errors $\boldsymbol\epsilon$ are uncorrelated, then the residuals $\hat{\boldsymbol\epsilon}$ are typically close to uncorrelated. -->
+
+
+<!-- ## Motivating Example: Global warming -->
+
+<!-- The dataset `faraway::globwarm` consists of 1001 observations related to the average northern hemisphere temperature from 1856-2000 and eight climate proxies from 1000-2000 AD. Data can be used to predict temperatures prior to 1856. -->
+
+<!-- ```{r} -->
+<!-- data(globwarm, package = "faraway") -->
+<!-- summary(globwarm) -->
+<!-- ``` -->
+
+
+<!-- - This is **temporal** data since each observation has an associated time (`year`).  -->
+<!-- - There are 856 observations prior to 1856 that are missing `nhtemp` values. -->
+<!--   - By default, these observations are omitted from our model (by R) -->
+
+<!-- ```{r} -->
+<!-- # We exclude year from the model but include all other regressors -->
+<!-- lmod2 <- lm(nhtemp ~ . - year, data = globwarm) -->
+<!-- summary(lmod2) -->
+<!-- ``` -->
+
+<!-- ## Plotting Residuals Against Time -->
+
+<!-- If the errors are uncorrelated, we expect a random scatter of points around $\hat{\epsilon}=0$. -->
+
+<!-- ```{r} -->
+<!-- # residuals vs time -->
+<!-- plot(residuals(lmod2) ~ year,  -->
+<!--      data = na.omit(globwarm), ylab = "residuals") -->
+<!-- abline(h = 0) -->
+<!-- ``` -->
+
+<!-- ## Question 2: Do you notice any correlation in the errors? -->
+
+<!-- There seems to be a cyclical pattern to the residuals over time. -->
+
+<!-- - A positive error in one period carries over into a positive error in the next year. -->
+<!-- - A negative error in one year carries over to a negative error in the next year. -->
+<!-- - This suggests a positive serial correlation. -->
+
+<!-- ## Plotting Successive Pairs of Residuals -->
+
+<!-- Another approach to check for serial correlation is to plot successive pairs of residuals. -->
+
+<!-- ```{r} -->
+<!-- n = nobs(lmod2) -->
+<!-- plot(tail(residuals(lmod2), n - 1) ~      # extracts (e_1, e_2, ..., e_49) -->
+<!--       head(residuals(lmod2), n - 1),      # extracts (e_2, e_3, ..., e_50) -->
+<!--      xlab = expression(hat(epsilon)[i]), -->
+<!--      ylab =expression(hat(epsilon)[i+1])) -->
+<!-- abline(h= 0 , v = 0, col = grey(0.75)) -->
+<!-- ``` -->
+
+<!-- ## Question 3: Interpret the plot above. How does this confirm a positive serial correlation? -->
+
+
+<!-- - The positive linear trend in the previous plot suggests positive serial correlation. -->
+<!-- - If there was no association, we would expect a cloud of points. -->
+
+<!-- ## The Durbin-Watson Test for Uncorrelated Errors  -->
+
+<!-- A formal test for serial correlation between residuals can be performed using the **Durbin-Watson test**.   -->
+
+
+<!-- - Let $\rho$ denote the temporal correlation between residuals. -->
+<!--   - H~0~: The residuals are uncorrelated, $\rho = 0$. -->
+<!--   - H~a~: The residuals are related in some way ($\rho = 0$, $\rho > 0$, or $\rho < 0$). -->
+<!-- - The test statistic is: -->
+
+<!-- $$DW = \frac{\sum_{i=2}^n(\hat{\epsilon}_i - \hat{\epsilon}_{i-1})^2}{\sum_{i=1}^n \hat{\epsilon}_i^2}$$ -->
+
+<!-- - The test can be implemented in the `lmtest` package. -->
+
+<!-- ```{r} -->
+<!-- library(lmtest) -->
+<!-- dwtest(lmod2, alternative = "greater") # note greater is the default -->
+<!-- ``` -->
+
+<!-- ## Question 4: Interpret the result of this test in practical terms. -->
+
+<!-- We can reject the null hypothesis and we have significant evidence in support of the alternative hypothesis that the residuals have  a positive serial correlation. -->
+
+
+<!-- - **Generalized least squares** (which takes into account dependence) can be used for data with correlated errors. -->
+<!-- - When there is no apparent temporal or spatial link between observations, it is almost impossible to check for correlation between errors.	On the other hand, there is generally no reason to suspect it either! -->
+
+<!-- ---- -->
+
+<!-- ## Practice Example: A Model for SAT Scores   -->
+
+<!-- 1. Using the `sat` dataset in the `faraway` package, fit a model with the total SAT score as the response and `expend`, `salary`, `ratio`, and `takers` as predictors.  -->
+
+<!-- ```{r} -->
+<!-- library(car) -->
+<!-- data(sat, package = "faraway") -->
+<!-- summary(sat) -->
+<!-- ``` -->
+
+<!-- ```{r} -->
+<!-- # fit model -->
+<!-- lmod2 <- lm(total ~ expend + salary + ratio + takers, data = sat) -->
+<!-- faraway::sumary(lmod2) -->
+<!-- ``` -->
+
+
+<!-- 2. Perform regression diagnostics on this model to answer the following questions.  -->
+
+<!--   a. Check the mean-zero error assumption. -->
+
+<!-- ```{r} -->
+<!-- # plot residuals vs fitted values.   -->
+<!-- residualPlot(lmod2, quadratic = FALSE) -->
+<!-- ``` -->
+
+<!-- - This assumptions seems to be satisfied. There is one prediction which had a large (negative) residual, but that is likely due to variability in sampling and not a violation of this assumption. -->
+
+
+<!--   b. Check the constant error variance assumption. -->
+
+<!-- - From the plot above, this seems okay, but the variance does seem a little smaller in the middle? There is not as much data in the middle, so we can't rule out this assumption. -->
+
+<!-- ```{r} -->
+<!-- # More resolution -->
+<!-- plot(lmod2, which = 3) -->
+<!-- ``` -->
+
+<!-- ```{r} -->
+<!-- # fitted values vs regressors -->
+<!-- residualPlots(lmod2, fitted = FALSE, tests = FALSE, quadratic = TRUE) -->
+<!-- ``` -->
+
+<!-- - Nothing too alarming in the plots above. The residuals against takers plot probably looks the most problematic, but no clear indications of heteroscedasticity. -->
+<!-- - Maybe a slight nonlinear, quadratic pattern with `takers`? -->
+
+
+<!-- ```{r} -->
+<!-- # fit model -->
+<!-- lmod3 <- lm(total ~ expend + salary + ratio + takers + I(takers^2), data = sat) -->
+<!-- faraway::sumary(lmod3) -->
+<!-- ``` -->
+
+<!-- ```{r} -->
+<!-- # plot residuals vs fitted values.   -->
+<!-- par(mfrow = c(1, 2)) -->
+<!-- residualPlot(lmod2, quadratic = FALSE) -->
+<!-- residualPlot(lmod3, quadratic = FALSE) -->
+<!-- ``` -->
+
+<!-- ```{r} -->
+<!-- par(mfrow = c(1, 2)) -->
+<!-- # More resolution -->
+<!-- plot(lmod2, which = 3) -->
+<!-- plot(lmod3, which = 3) -->
+<!-- par(mfrow = c(1, 1)) -->
+<!-- ``` -->
+
+<!-- ```{r} -->
+<!-- # fitted values vs regressors -->
+<!-- residualPlots(lmod3, fitted = FALSE, tests = FALSE, quadratic = TRUE) -->
+<!-- ``` -->
+
+<!-- - Did we fix the problem or cause more problems? -->
+
+<!-- ```{r} -->
+<!-- # fit model -->
+<!-- lmod4 <- lm(total ~ expend + salary + ratio + takers + I(expend^2) + I(salary^2) + I(takers^2), data = sat) -->
+<!-- faraway::sumary(lmod4) -->
+<!-- ``` -->
+
+<!-- ```{r} -->
+<!-- # fitted values vs regressors -->
+<!-- residualPlots(lmod4, fitted = FALSE, tests = FALSE, quadratic = TRUE) -->
+<!-- ``` -->
+
+<!-- ```{r} -->
+<!-- # plot residuals vs fitted values.   -->
+<!-- par(mfrow = c(1, 3)) -->
+<!-- residualPlot(lmod2, quadratic = FALSE) -->
+<!-- residualPlot(lmod3, quadratic = FALSE) -->
+<!-- residualPlot(lmod4, quadratic = FALSE) -->
+<!-- par(mfrow = c(1, 1)) -->
+<!-- ``` -->
+
+<!--   c. Check the normal error assumption.  -->
+
+<!-- ```{r} -->
+<!-- # check normality assumption -->
+<!-- # no major evidence of a problem -->
+<!-- qqPlot(residuals(lmod2)) -->
+<!-- ``` -->
+
+<!-- - This assumption looks good too! -->
+
+
+<!--   d. Should we check for correlated errors? -->
+
+<!-- - There are tons of possible patterns we could try to investigate, but we really have no reason to suspect any correlation in the errors.  -->
+<!-- - All of the data is from the same years (1994-1995), and we do not know which observations were taken at what time. So there is no temporal data. -->
+<!-- - I suppose we do have some spatial data, such as state, so we could look for a pattern by region for example?  -->
+
+
+<!-- ```{r} -->
+<!--  # 9 states is south -->
+<!-- sat$region[row.names(sat) == "Alabama" | row.names(sat) == "Arkansas" | row.names(sat) == "Louisiana" | row.names(sat) == "Tennessee" | row.names(sat) == "North Carolina" | row.names(sat) =="South Carolina" | row.names(sat) == "Georgia" | row.names(sat) == "Florida" | row.names(sat) == "Mississippi"]  <- "South" -->
+
+<!--  # 13 states is northeast -->
+<!-- sat$region[row.names(sat) == "Maine" | row.names(sat) == "Vermont" | row.names(sat) == "New Hampshire" | row.names(sat) == "Massachusetts" | row.names(sat) == "Connecticut" | row.names(sat) == "Rhode Island" | row.names(sat) == "New York" | row.names(sat) == "New Jersey" | row.names(sat) == "Pennsylvania" | row.names(sat) == "West Virginia" | row.names(sat) == "Virginia" | row.names(sat) == "Maryland" | row.names(sat) == "Delaware"]  <- "Northeast"  -->
+
+<!-- # 9 states in Midwest -->
+<!-- sat$region[row.names(sat) == "Minnesota" | row.names(sat) == "Wisconsin" | row.names(sat) == "Illinois" | row.names(sat) == "Iowa" | row.names(sat) == "Missouri" | row.names(sat) == "Kentucky" | row.names(sat) == "Indiana" | row.names(sat) == "Ohio" | row.names(sat) == "Michigan"]  <- "Midwest"  -->
+
+<!-- # 10 states in plains -->
+<!-- sat$region[row.names(sat) == "Montana" | row.names(sat) == "North Dakota" | row.names(sat) == "Wyoming" | row.names(sat) == "Colorado" | row.names(sat) == "New Mexico" | row.names(sat) == "Texas" | row.names(sat) == "Kansas" | row.names(sat) == "Nebraska" | row.names(sat) == "South Dakota" | row.names(sat) == "Oklahoma"]  <- "Plains"  -->
+
+<!-- # 9 States in Pacific -->
+<!-- sat$region[row.names(sat) == "Washington" | row.names(sat) == "Oregon" | row.names(sat) == "Idaho" | row.names(sat) == "California" | row.names(sat) == "Nevada" | row.names(sat) == "Arizona" | row.names(sat) == "Utah" | row.names(sat) == "Alaska" | row.names(sat) == "Hawaii"]  <- "Pacific"  -->
+<!-- ``` -->
+
+<!-- ```{r} -->
+<!-- sat$region <- factor(sat$region) -->
+<!-- levels(sat$region) -->
+<!-- ``` -->
+
+<!-- ```{r} -->
+<!-- # plot residuals vs fitted values.   -->
+<!-- residualPlot(lmod2, quadratic = FALSE, groups = sat$region) -->
+<!-- ``` -->
+
+<!-- ```{r} -->
+<!-- # Remove Utah -->
+<!-- sat <- sat[!(row.names(sat) %in% "Utah"), ] -->
+
+<!-- # plot residuals vs fitted values.   -->
+<!-- residualPlot(lmod2, quadratic = FALSE, groups = sat$region) -->
+<!-- ``` -->
+
+<!-- ----- -->
+
+<!-- ## Summary of Methods for Checking Error Assumptions -->
+
+<!-- **Mean-zero error assumption**:  -->
+
+<!-- - Plot of residuals versus fitted values -->
+
+<!-- **Constant error variance assumption**: -->
+
+<!-- - Plot of residuals versus fitted values -->
+<!-- - Plot of $\sqrt{| \hat{\epsilon} |}$ versus fitted values. -->
+<!-- - Plot of standardized residuals versus fitted values. -->
+<!-- - Plot of residuals versus each regressor. -->
+
+
+<!-- **Normal error assumption**: -->
+
+<!-- - q-q of residuals -->
+<!-- - Shapiro-Wilk test -->
+
+<!-- **Autocorrelated errors**: -->
+
+<!-- - Plot of residuals versus time -->
+<!-- - Plot of successive pairs of residuals -->
+<!-- - Durbin-Watson test -->
+
+
+<!-- ## Summary of useful R functions for checking error assumptions -->
+
+<!-- ## Residuals: -->
+
+<!-- - `residuals(lmod)` extracts the OLS residuals. -->
+<!-- - `rstandard(lmod)` extracts the standardized residuals. -->
+<!-- - `rstudent(lmod)` extracts the studentized residuals. -->
+
+<!-- ## Mean-zero error assumption: -->
+
+<!-- - `car::residualPlot` constructs a plot of the residuals versus fitted values. -->
+<!-- - `plot(lmod, which = 1)` constructs a plot of the residuals versus fitted values. -->
+
+<!-- ## Constant error variance assumption: -->
+
+<!-- - `car::residualPlots` constructs a plots of the residuals versus each predictor and the residuals versus the fitted values. -->
+<!-- - `plot(lmod, which = 3)` constructs a plot of **square root of standardized residuals** versus the fitted values to increase resolution. -->
+
+<!-- ## To assess error normality:  -->
+
+<!-- - `car::qqPlot(lmod)` will produce a q-q plot for the **studentized residuals**, along with the appropriate t-based, pointwise confidence bands for what is expected if $\boldsymbol\epsilon \sim N(0, \sigma^2 I)$. -->
+<!-- - `plot(lmod, which = 2)` will produce a q-q plot for the **standardized residuals**, along with a helpful reference line. -->
+<!-- - `shapiro.test(residuals(lmod))` performs a Shapiro-Wilk test on the residuals. -->
+
+<!-- ## Correlated Errors -->
+
+<!-- - `lmtest::dwtest` performs a Durbin-Watson test on the residuals of a fitted model -->
