@@ -1684,11 +1684,11 @@ the estimated standard errors (<code>sehats</code>), we can manually
 produce the standard t-based confidence intervals using the
 code below.</p>
 <div class="sourceCode" id="cb29"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb29-1"><a href="inference.html#cb29-1" aria-hidden="true" tabindex="-1"></a><span class="fu">data.frame</span>(<span class="at">lb =</span> betahats <span class="sc">-</span> mult <span class="sc">*</span> sehats,</span>
-<span id="cb29-2"><a href="inference.html#cb29-2" aria-hidden="true" tabindex="-1"></a>           <span class="at">ub =</span> betahats <span class="sc">-</span> mult <span class="sc">*</span> sehats)</span>
-<span id="cb29-3"><a href="inference.html#cb29-3" aria-hidden="true" tabindex="-1"></a><span class="do">##                              lb            ub</span></span>
-<span id="cb29-4"><a href="inference.html#cb29-4" aria-hidden="true" tabindex="-1"></a><span class="do">## (Intercept)       -1.244658e+01 -1.244658e+01</span></span>
-<span id="cb29-5"><a href="inference.html#cb29-5" aria-hidden="true" tabindex="-1"></a><span class="do">## body_mass_g       -4.534709e-04 -4.534709e-04</span></span>
-<span id="cb29-6"><a href="inference.html#cb29-6" aria-hidden="true" tabindex="-1"></a><span class="do">## flipper_length_mm  1.582365e-01  1.582365e-01</span></span></code></pre></div>
+<span id="cb29-2"><a href="inference.html#cb29-2" aria-hidden="true" tabindex="-1"></a>           <span class="at">ub =</span> betahats <span class="sc">+</span> mult <span class="sc">*</span> sehats)</span>
+<span id="cb29-3"><a href="inference.html#cb29-3" aria-hidden="true" tabindex="-1"></a><span class="do">##                              lb          ub</span></span>
+<span id="cb29-4"><a href="inference.html#cb29-4" aria-hidden="true" tabindex="-1"></a><span class="do">## (Intercept)       -1.244658e+01 5.573192182</span></span>
+<span id="cb29-5"><a href="inference.html#cb29-5" aria-hidden="true" tabindex="-1"></a><span class="do">## body_mass_g       -4.534709e-04 0.001777908</span></span>
+<span id="cb29-6"><a href="inference.html#cb29-6" aria-hidden="true" tabindex="-1"></a><span class="do">## flipper_length_mm  1.582365e-01 0.285494420</span></span></code></pre></div>
 </div>
 <div id="mean-response-calculations" class="section level3 hasAnchor" number="6.11.2">
 <h3><span class="header-section-number">6.11.2</span> Details about estimation of the mean response<a href="inference.html#mean-response-calculations" class="anchor-section" aria-label="Anchor link to header"></a></h3>
