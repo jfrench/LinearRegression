@@ -2,11 +2,11 @@
 title: Chapter 9 - Basic structure and error assumption diagnostics
 author: Joshua French
 date: ''
-# format: html
-format: ipynb
-jupyter: ir
-execute:
-  output: false
+format: html
+# format: ipynb
+# jupyter: ir
+# execute:
+#   output: false
 self-contained: true
 title-block-banner: true
 wrap: 'none'
@@ -511,8 +511,8 @@ Q-q plots are generally constructed under the assumption that the data are indep
 
 - Ordinary residuals do not have constant variance.
 - It is preferable to scale the residuals to have constant variance prior to constructing a q-q plot.
-    - The standardized residuals, $r_i$, $i=1,2,\ldots,n$ are one form of scaled residuals with variance equal to 1.
-    - The studentized residuals, $t_i$, $i=1,2,\ldots,n$ are another form of residuals scaled to have a variance of 1.
+    - The standardized residuals are one form of scaled residuals with variance equal to 1.
+    - The studentized residuals are another form of residuals scaled to have a variance of 1.
         - The denominator uses a different estimate of $\sigma$ than the standardized residuals. We do not discuss those details here.
         - In that case, we actually want to compare the observed values to quantiles from a $t$ distribution with $n-p-1$ degrees of freedom, assuming our model has $p$ estimated regression coefficients.
 - Though the residuals are not independent, the correlation is typically weak and can be ignored when constructing a q-q plot.
