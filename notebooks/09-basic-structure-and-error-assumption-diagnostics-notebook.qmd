@@ -510,12 +510,15 @@ qqline(e2)
 Q-q plots are generally constructed under the assumption that the data are independent and identically distributed. 
 
 - Ordinary residuals do not have constant variance.
-- It is preferable to scale the residuals to have constant variance prior to constructing a q-q plot.
-    - The standardized residuals are one form of scaled residuals with variance equal to 1.
-    - The studentized residuals are another form of residuals scaled to have a variance of 1.
-        - The denominator uses a different estimate of $\sigma$ than the standardized residuals. We do not discuss those details here.
-        - In that case, we actually want to compare the observed values to quantiles from a $t$ distribution with $n-p-1$ degrees of freedom, assuming our model has $p$ estimated regression coefficients.
+-     We should scale the residuals to have constant variance prior to constructing a q-q plot.
 - Though the residuals are not independent, the correlation is typically weak and can be ignored when constructing a q-q plot.
+
+The standardized residuals are one form of scaled residuals with variance equal to 1.
+
+The studentized residuals are another form of residuals scaled to have a variance of 1.
+
+- The denominator uses a different estimate of the error variance, $\sigma^2$, than the standardized residuals. We do not discuss those details here.
+- The studentized residuals should be have a $t$ distribution with $n-p-1$ degrees of freedom under the standard assumptions, assuming our model has $p$ estimated regression coefficients.
 
 Standardized or studentized residuals should be used to assess the normality assumption.
 
