@@ -1,0 +1,755 @@
+---
+title: Chapter 7 - Variable selection
+author: Joshua French
+date: ''
+# format: html
+format: ipynb
+jupyter: ir
+execute:
+  output: false
+self-contained: true
+title-block-banner: true
+wrap: 'none'
+---
+
+To open this information in an interactive Colab notebook, click the Open in Colab graphic below.
+
+<a href="https://colab.research.google.com/github/jfrench/LinearRegression/blob/master/notebooks/07-variable-selection-notebook.ipynb">
+   <img src="https://colab.research.google.com/assets/colab-badge.svg">
+</a>
+
+---
+
+```{r}
+if(!require(faraway, quietly = TRUE)) {
+  install.packages("faraway",
+                   repos = "https://cran.rstudio.com/")
+}
+if(!require(leaps, quietly = TRUE)) {
+  install.packages("leaps", repos = "https://cran.rstudio.com/")
+  library(leaps)
+}
+if(!require(caret, quietly = TRUE)) {
+  install.packages("caret", repos = "https://cran.rstudio.com/")
+  library(caret)
+}
+```
+
+We adjust some printing options for clarity. 
+
+```{r}
+options(digits = 7, scipen = 2)
+```
+
+# Choosing our regressors
+
+We usually do not know what model we should fit to our data when we start the analysis process.
+
+We use the initial data exploration process to give us insight into what variables and relationships we might need to capture with our fitted linear model.
+
+*Variable selection* is the process of selecting the regressors that should be included in our regression model.
+
+- The variable selection process guides us in objectively identifying the "best" subset of regressors to include in our model.
+    - What is meant by "best"?
+
+Why do we need to perform variable selection? Wouldn't it be better to include all regressors in our model?
+
+Including all available regressors in our model may be a bad decision: 
+
+- The more parameters we need to estimate the less precise our estimates tend to be.
+    - The data can only provide a limited amount of information and that information must be divided among more parameters, leaving less information to make the estimates precise.
+- Adding additional regressors to our model makes the model more complex.
+    - Interpreting the effect of a regressor in a complex model will be more challenging since it may interact with the other regressors in the model.
+- Data collection can be an expensive, non-trivial task.
+    - Including unnecessary predictors in our model can waste time and money.
+
+Similar to what has been suggested by Chaterjee and Hadi (2013) and Faraway (2014), we will attempt to find the simplest model that adequately explains the data.
+
+- The principle of parsimony.
+- Occam's razor.
+
+There are two main aspects to performing a variable selection procedure:
+
+- The strategy used to search for the "best" model.
+- The criterion used to select the "best" model.
+
+It is also important to remember that variable selection is highly impacted by:
+
+- Transformations of the response and regressor variables included in the model.
+- Observations that wield unusually great power in determining the values of the estimated coefficients.
+
+Variable selection is not a linear process.
+
+The process is usually something like:
+
+1. Use a variable selection procedure to select a model.
+2. Identify deficiencies in our model.
+3. Use the information learned in step 2 to start the model selection process over at step 1 until we have a model we deem to be acceptable.
+
+# Illustration data set
+
+To illustrate the variable selection process we will consider the `prostate` data set, which is available in the **faraway** R package. The data set provides information about 97 men who were going to receive a radical prostatectomy.
+
+The `prostate` data set is a data frame has 97 rows and 9 columns. The **faraway** package provides the following descriptions of the variables:
+
+- `lcavol`: log(cancer volume).
+- `lweight`: log(prostate weight).
+- `age`: age in years.
+- `lbph`: log(benign prostatic hyperplasia amount).
+- `svi`: seminal vesicle invasion.
+- `lcp`: log(capsular penetration).
+- `gleason`: Gleason score.
+- `pgg45`: percentage Gleason scores 4 or 5.
+- `lpsa`: log(prostate specific antigen).
+
+We load this data set.
+
+```{r}
+data(prostate, package = "faraway")
+```
+
+The `svi` variable is a factor, so we convert it to a factor with appropriate levels.
+
+```{r}
+prostate$svi <- factor(prostate$svi,
+                       labels = c("non-invasive", "invasive"))
+```
+
+# Search strategies
+
+There are three main search strategies frequently used to pick a best model.
+
+## Exhaustive search
+
+---
+
+An *exhaustive search* fits possible models using all combinations of the available regressors.
+
+- If the number of available regressors is $p$ (including the intercept-related regressor), there are $2^p$ possible models.
+- An exhaustive search is not feasible unless the number of regressors is relatively small.
+    - "Relatively small" continues to become larger as our computers become more powerful.
+    - Approaches for reducing the computational cost of the exhaustive approach are available, e.g., Schatzoff et al. (1968) and Furnival (1971).
+
+## Best subset regression
+
+---
+
+We use the following notation:
+
+- $\mathcal{M}$: a specific regression model.
+- $RSS_{\mathcal{M}}$: the RSS for fitted model $\mathcal{M}$.
+- $p_{\mathcal{M}}$: the estimated number of regression coefficients for model $\mathcal{M}$.
+
+The *best subset* search strategy determines the model $\mathcal{M}$ that minimizes the $RSS_{\mathcal{M}}$ for each value, $1\leq $p_{\mathcal{M}}$ \leq p$ (Hastie et al., 2020).
+
+- The is helpful because the selection criterion for a specific value of $p_{\mathcal{M}}$ is often optimized by the model that minimizes the RSS for that value of $p_{\mathcal{M}}$. 
+- Furnival and Wilson (1971) proposed a "leaps and bounds" algorithm to efficiently perform best subset selection.
+
+An efficient best subset search is implemented in the `regsubsets` function in the **leaps** package.
+
+## Stepwise regression
+
+---
+
+The *stepwise regression* search strategy adds or removes a regressor from a model based on whether it optimizes the selection criterion under consideration.
+
+- *Forward selection* starts with the intercept-only model and then sequentially adds the regressor that improves the selection criterion the most.
+- *Backward elimination* starts with the model that includes all regressors (the complete model) and then sequentially removes the regressor that improves the selection criterion the most.
+- *Stepwise selection* starts with the complete model and then sequentially removes or adds the regressor that improves the selection criterion the most.
+    - It is similar to backward elimination but can also re-add a regressor that has already been removed from the model.
+    - It can also be implemented with a forward selection approach, but R uses the backward elimination-based approach.
+- A stepwise regression search strategy terminates when the selection criterion cannot be improved by adding or removing (depending on the context) a single regressor.
+
+Stepwise regression is implemented in the `step` function in the **stats** package (which is bundled with the base version of R). 
+
+# Selection criteria
+
+We typically use one or more selection criteria to evaluate the fit of a model to our data.
+
+We describe many common selection criteria below.
+
+## R-squared, adjusted R-squared, and $\hat{\sigma}^2
+
+One of the most common selection criteria is the coefficient of determination, $R^2$. The $R^2$ for model $\mathcal{M}$ is defined as
+
+$$
+R^2_{\mathcal{M}} = 1 - \frac{RSS_{\mathcal{M}}}{TSS}.
+$$
+
+We favor regression models with larger values of $R^2_{\mathcal{M}}$.
+
+- $R^2_{\mathcal{M}}$ monotonically increases with the number of regressors and shouldn't be used to choose between models with different numbers of regressors.
+
+Recall that the adjusted coefficient of determination modifies the $R^2$ statistic to account for model complexity.
+
+The formula for $R^2_a$ for model $\mathcal{M}$, $R^2_{a,\mathcal{M}}$, is 
+
+$$
+R^2_{a,\mathcal{M}} = 1 - \frac{RSS_\mathcal{M}/(n-p_\mathcal{M})}{TSS/(n-1)}.
+$$
+
+$R^2_{a,\mathcal{M}}$ is only supposed to increase when adding a new regressor to a model results in a substantial reduction in the RSS.
+
+We favor regression models with larger values of $R^2_{a,\mathcal{M}}$.
+
+Equivalent to maximizing the $R^2_{a,\mathcal{M}}$ is finding the model $\mathcal{M}$ that minimizes the associated estimated error variance, $\hat{\sigma}^2$, which makes up the numerator of the proportion in the formula for $R^2_a$. 
+
+The estimated error variance of model $\mathcal{M}$ is defined as
+
+$$
+\hat{\sigma}^2_\mathcal{M} = \frac{RSS_\mathcal{M}}{n-p_\mathcal{M}}.
+$$
+
+For models with a fixed value of $p_\mathcal{M}$ (i.e., the same number of regressors), the $R^2_\mathcal{M}$, $R^2_{a,\mathcal{M}}$, and $\hat{\sigma}^2_\mathcal{M}$ statistics are all optimized by finding the model that minimizes the RSS, so best subset selection is an excellent search strategy for these statistics.
+
+**Best subset $R^2_a$ `prostate` example**
+
+---
+
+We now use a best subset regression approach to identify the "best" model based on the $R^2_a$ statistic.
+
+To perform the initial best subsets regression we use the `regsubsets` function in the **leaps** package. The main arguments of `regsubsets` are:
+
+- `x`: A model formula describing the largest model (in terms of regressors) to consider (preferable) or the $\mathbf{X}$ matrix of the largest model to consider.
+- `data`: The data frame containing the data we are fitting our model to. This is needed if the formula in `x` relies on variables in `data`.
+- `nvmax`: The maximum number of subsets to consider (i.e., the number of regressors, excluding the intercept, in the model).
+    - The default value of `nvmax` is 8, so this must be increased if we want to consider more than 8 regressors.
+- `force.in`: columns of $\mathbf{X}$ that must be kept in each model.
+- `force.out`: columns of $\mathbf{X}$ that must be kept out of each model.
+
+We specify the complete model for the `prostate` data in the `regsubsets` function below.
+
+```{r}
+rs <- regsubsets(lpsa ~ ., data = prostate)
+```
+
+The `rs` object from the `regsubsets` function can be summarized using the `summary` function.
+
+```{r}
+summary(rs)
+```
+
+The `summary` function tells us:
+
+- The model `lpsa ~ lcavol` (using formula notation) is the 1 regressor model that minimizes the RSS.
+- The model `lpsa ~ lcavol + lweight` is the 2 regressor model that minimizes the RSS.
+- The model `lpsa ~ lcavol + lweight + svi` is the 3 regressor model that minimizes the RSS.
+- etc.
+
+The `plot` method for `regsubsets` objects can be used to easily identify the model that optimizes the selection criterion.
+
+- We change the `scale` argument to indicate the statistic we want to plot.
+- The options include `"bic"`, `"Cp"`, `"adjr2"`, and `"r2"`.
+
+To determine the model the maximizes the adjusted $R^2$ statistic, we change the `scale` argument of the `plot` method to `"adjr2"`.
+
+```{r}
+plot(rs, scale = "adjr2")
+```
+
+The top row of the plot indicates the model that maximizes the adjusted $R^2$.
+
+- The model with an intercept, `lcavol`, `lweight`, `lpbh`, `sviinvasive` (the indicator variable for the `invasive` level of `svi`), `lcp`, and `pgg45` is the model that maximizes the adjusted $R^2$.
+
+A similar plot for the coefficient of determination, $R^2$, can be constructed by specifying `scale = "r2"` in the `plot` function.
+
+
+It is also common to visualize the results of a best subset search strategy by creating a scatter plot of the selection criterion for the best model for each value of $p_\mathcal{M}$ versus $p_\mathcal{M}$ or the number of regressors.
+
+We can extract the best adjusted $R^2$ statistics for each value of $p_\mathcal{M}$ from the `summary` of `rs` and plot those statistics versus the number of regressors in the model.
+
+```{r}
+srs <- summary(rs)
+plot(srs$adjr2 ~ seq_along(srs$adjr2),
+     xlab = "number of regressors", 
+     ylab = "Adjusted R-squared")
+```
+
+As before, we can see that the best model has 7 regressors. We must match this information with the information presented by the `summary` function to identify the regressors in the model that optimizes the selection criterion.
+
+## Information criteria
+
+*Information criteria* are statistics meant to measure how well a model fits the observed data while also accounting for the complexity of the model.
+
+- An adjustment is needed because we can almost always make our model fit the data "better" by making the model more complex.
+- To make comparisons between the models fair we need to also account for complexity.
+
+Akaike (1973) proposed the most famous information criterion, which is now known as the Akaike Information Criterion (AIC).
+
+For a specific model $\mathcal{M}$, the AIC statistic is computed as
+
+$$
+-2\ln L(\mathcal{M})+2p_{\mathcal{M}}.
+$$
+
+The log-likelihood function, $\ln L(\mathcal{M})$, quantifies the likelihood of the observed data set being produced by the fitted model.
+
+- $L(\mathcal{M})$ is the joint density of the data evaluated at the maximum likelihood estimates of the regression coefficients and the error variance.
+    - The OLS estimator of $\boldsymbol{\beta}$ is identical to the maximum likelihood estimator of $\boldsymbol{\beta}$.
+    - The maximum likelihood estimator of $\sigma^2$ for a model $\mathcal{M}$ is $\hat{sigma}^2_{MLE}=RSS_{\mathcal{M}}/n$.
+- $L(\mathcal{M})$ is larger when the model fits the data better.
+- $-2L(\mathcal{M})$ will be smaller when the model fits the data better.
+
+The log-likelihood function of a fitted linear regression model $\mathcal{M}$ that assumes normally-distributed responses is computed as
+
+$$
+\ln L(\mathcal{M}) = -\frac{n}{2}\Bigl(\ln(RSS_{\mathcal{M}}/n) + \ln(2\pi) +1\Bigr).
+$$
+
+
+
+$p_{\mathcal{M}}$ is a measure of the model complexity.
+
+- The larger $p_{\mathcal{M}}$ is, the more complex the model is.
+
+When using the AIC statistic to evaluate model fit, we prefer models with a smaller AIC statistic.
+
+Schwarz (1978) proposed the Bayesian Information Criterion (BIC), which is very similar to the AIC statistic. 
+
+For a specific model $\mathcal{M}$, the BIC statistic is computed as
+
+$$
+-2\ln L(\mathcal{M})+\log(n)p_{\mathcal{M}}.
+$$
+
+The main difference between the AIC and BIC statistics is that the BIC statistic will penalize more harshly for model complexity anytime $n\geq 8$ (since $\log(n) \geq 2$).
+
+When using the BIC statistic to evaluate model fit, we prefer models with smaller BIC statistics.
+
+The BIC statistic tends to favor simpler models than the AIC statistic.
+
+For models with a fixed value of $p_\mathcal{M}$ (i.e., the same number of regressors), both the AIC and BIC statistics are optimized by finding the model that minimizes the RSS, so best subset selection is an excellent search strategy for these selection criteria.
+
+**Best subset BIC `prostate` example**
+
+---
+
+We continue our previous example of the `prostate` data and attempt to find the model that minimizes the BIC statistic.
+
+We use the `plot` function on the `rs` object produced by the `regsubsets` function while setting `scale = "bic"`.
+
+```{r}
+plot(rs, scale = "bic")
+```
+
+The model that includes the intercept, `lcavol`, `lweight`, and `sviinvasive` minimizes the BIC criterion.
+
+**Forward selection and backward elimination with AIC `prostate` example**
+
+---
+
+The `regsubsets` function doesn't compute the `AIC` statistic.
+
+However, we can do a stepwise regression search strategy using this statistic. 
+
+To implement a stepwise selection or backward elimination search strategy, we must first fit the complete model that has all the regressors under consideration.
+
+```{r}
+lmod <- lm(lpsa ~ ., data = prostate)
+```
+
+We can use the `step` function to implement a stepwise regression search strategy using the AIC or BIC statistics. The `step` function has several main arguments
+
+- `object`: the fitted model object.
+- `direction`: the stepwise regression approach. The choices can be:
+    - `"both"`: stepwise selection.
+    - `"forward"`: forward selection.
+    - `"backward"`: backward elimination.
+- `k`: the penalty parameter multiplied by $p_\mathcal{M}$.
+    - The default is 2, which results in computing the AIC statistic.
+    - Specifying `k = log(nobs(object))`, i.e., `k = log(n)`, will results in computing the BIC statistic.
+- `scope`: the range of models examined in the search. This is mostly relevant in implementing forward selection, in which case the formula for the fitted complete model should be provided.
+
+We run the stepwise selection algorithm using the AIC selection criterion.
+
+```{r}
+step(lmod, direction = "both")
+```
+
+To summarize the output from the `step` function:
+
+1. The first model has all regressors with a starting AIC statistic of -58.32.
+2. A sequence of models are fit by sequentially removing a regressor from the complete model and computing the AIC statistic for the new model.
+    - The model that has all regressors except `gleason` has an AIC statistic of -60.2.
+    - The model that has all regressors except `lcavol` has an AIC statistic of -20.6.
+    - The model that minimizes the AIC is the one that removes `gleason`, so we remove `gleason` from the complete model and continue.
+    - Using our formula notation, the best model is `lpsa ~ lcavol + lweight + age + lbph + svi + lcp + pgg45`.
+3. We continue by computing the AIC statistic for the models that result from removing one regressor from the model that already excludes `gleason`.
+    - We also compute the AIC statistic we would get if we added `gleason` back into the model.
+4. We continue this iterative process until we have the model `lpsa ~ lcavol + lweight + age + lbph + svi`.
+    - The algorithm terminates at this point because adding an available regressor or removing a regressor already in the model results in a larger AIC than the current model.
+    
+Our final model is the model that includes the intercept, `lcavol`, `lweight`, `age`, `lbph`, and `svi`.
+
+We now implement the forward selection strategy using the BIC selection criterion.
+
+We must fit our initial model that has only an intercept.
+
+```{r}
+lmod0 <- lm(lpsa ~ 1, data = prostate)
+```
+
+The `scope` argument should be set to the formula of the complete model, which can be extracted using `formula(lmod)`.
+
+```{r}
+step(lmod0, scope = formula(lmod), direction = "forward", k = log(nobs(lmod)))
+```
+
+Our final model when using the forward selection search strategy and the BIC selection criterion includes `lcavol`, `lweight`, and `svi`, which is substantially simpler than the model produced by stepwise selection with the AIC statistic.
+
+## Mallow's $C_p$ Statistic
+
+Mallow’s $C_p$ statistic is a criterion designed to quantify the predictive ability of a model.
+
+Mallow’s $C_p$ statistic estimates the total mean-squared error of our fitted values divided by the error variance,  i.e., 
+
+$$
+\frac{1}{\sigma^2} \sum_{i=1}^n E\big[ (\hat{Y}_i - E(Y_i))^2 \big].
+$$
+
+Mallow's $C_p$ statistic for model $\mathcal{M}$ is the estimate of the quantity above and given by the equation
+
+$$
+C_{p_{\mathcal{M}}} = \frac{\mbox{RSS}_{\mathcal{M}}}{\hat{\sigma}^2} + 2p_{\mathcal{M}} - n,
+$$
+where $\hat{\sigma}^2$ is the estimated error variance for the complete model.
+
+Kutner et al. (2015) summarize how to use Mallow's $C_p$ statistic.
+
+- If a model with $p_{\mathcal{M}}$ regression coefficients fits the data well and has little or no bias, then $E(C_{p_{\mathcal{M}}}) \approx p_{\mathcal{M}}$.
+    - A model with a biased fit will have $C_{p_{\mathcal{M}}}$ much larger than $p_{\mathcal{M}}$.
+    - Models with $C_{p_{\mathcal{M}}}$ less than $p_{\mathcal{M}}$ do not show evidence of bias.
+    - For the model with all regressors regression coefficients, then $C_p=p$ (the number of regressors in the complete model). This tells us nothing about the predictive ability of the model.
+
+To use Mallow's $C_p$ to select a model, we plot $C_{p_{\mathcal{M}}}$ versus $p_{\mathcal{M}}$ and compare this to the $45^{\circ}$ line $C_{p_{\mathcal{M}}}= p_{\mathcal{M}}$ .
+
+We favor models with smaller $p_{\mathcal{M}}$ and $C_{p_{\mathcal{M}}}$ close to $p_\mathcal{M}$.
+
+**Mallow's $C_p$ `prostate` example**
+
+---
+
+We can use the output of the `summary` function for our `regsubsets` object, `rs`, to identify the best model with respect to Mallow's $C_p$.
+
+```{r}
+# number of estimated coefficients
+p <- seq_along(srs$cp) + 1
+plot(srs$cp ~ p, ylab = "Mallow's Cp", ylim = c(0, max(p)))
+abline(0, 1)
+```
+
+The value of $C_p$ closest to $p$ is $p = 6$ (the 5 regressor model).
+
+We refer back to the output of `summary(bs)`:
+
+```{r}
+srs$which
+```
+
+
+The best subset 5 regressor model includes the intercept, `lcavol`, `lweight`, `age`, `lbph`, and `sviinvasive`.
+
+## Test statistics and p-values
+
+Test statistics and p-values are often used as selection criteria for dropping/adding individual regressors in conjunction with a stepwise regression search strategy.
+
+- If performing backward elimination, we want to drop the least significant regressor, i.e., the regressor that has the largest p-value (or equivalently, the smallest test statistic.)
+- If performing forward selection, we want to add the most significant regressor, i.e., the regressor that has the smallest p-value (or equivalently, the largest test statistic.)
+- The procedure is terminated when all the test statistics are larger than some threshold, or more commonly, all the p-values are less than some threshold, $\alpha_v$.
+    - $\alpha_v = 0.05$ or $0.10$ are common choices.
+
+
+Test statistics and p-values are not trustworthy in this setting because of the multiple comparisons problem.
+
+Test statistics and p-values should not be used as selection criterion unless a comparison between specific models is being made.
+
+However, we illustrate using this selection criterion below.
+
+**Backward elimination with test statistics `prostate` example**
+
+---
+
+We will perform backward elimination on the `prostate` data using p-values with $\alpha_v = 0.10$.
+
+The `drop1` function can be used to implement the backward elimination search strategy with p-values/test statistics.
+
+- The `test` argument should be set to `"F"`.
+    - The test statistic and p-value are equivalent to the square of the test statistic based on a $t$ distribution for the $t$ test of a single coefficient.
+    - If not specified, the function will automatically use the AIC statistic.
+- The `add1` function can similarly be used for forward selection.
+
+We decide which regressor should be dropped first from the complete model.
+
+```{r}
+drop1(lmod, test = "F")
+```
+
+The `gleason` regressor has the smallest test statistic (0.0822) and the largest p-value (0.775), so it should be removed from the model.
+
+We use the `update` function to remove the `gleason` regressor from the complete model.
+
+```{r}
+lmod2 <- update(lmod, formula = . ~ . - gleason)
+```
+
+- The `formula = . ~ . - gleason` means using the same response and regressors as the current model except that we delete `gleason` from the regressors in the model.
+
+We now continue this process successively until removing all the remaining regressors have a p-value less than 0.10.
+
+```{r}
+drop1(lmod2, test = "F")
+```
+
+```{r}
+lmod3 <- update(lmod2, formula = . ~ . - lcp)
+drop1(lmod3, test = "F")
+```
+
+```{r}
+lmod4 <- update(lmod3, formula = . ~ . - pgg45)
+drop1(lmod4, test = "F")
+```
+
+```{r}
+lmod5 <- update(lmod4, formula = . ~ . - age)
+drop1(lmod5, test = "F")
+```
+
+```{r}
+lmod6 <- update(lmod5, formula = . ~ . - lbph)
+drop1(lmod6, test = "F")
+```
+
+The final model includes the intercept and the regressors `lcavol`, `lweight`, and `svi`.
+
+- Each of the regressors has a p-value less than 0.10.
+
+## Regularization methods
+
+*Regularization methods* add one or more penalty terms to the RSS and seek to minimize the penalized RSS.
+
+- These penalties have the effect of "shrinking" the estimated coefficients.
+- These models are typically better at prediction than the best model fit using OLS.
+- The estimates produced by regularization methods are not unbiased.
+    - Since the estimates are biased, these procedures should not be used if we are trying to determine the magnitude of the effect of a regressor on the response.
+
+The most best known regularization methods are ridge regression, LASSO, and the elastic net. 
+
+*Ridge regression* (Hoerl and Kennard, 1970) seeks to choose the estimated coefficients that minimizes the objective function 
+
+$$
+\sum_{i=1}^n (Y_i - \hat{\beta}_0) - \sum_{j=1}^{p-1} x_{i,j} \hat{\beta}_j)^2 + \lambda\sum_{j=0}^{p-1} \hat{\beta}_j^2,
+$$
+for $\lambda \geq 0$.
+
+The LASSO (least absolute shrinkage and selection operator) method proposed by Tibshirani (1996) seeks to minimize the objective function
+
+$$
+\sum_{i=1}^n (Y_i - \hat{\beta}_0) - \sum_{j=1}^{p-1} x_{i,j} \hat{\beta}_j)^2 + \lambda\sum_{j=0}^{p-1} |\hat{\beta}|,
+$$
+for $\lambda \geq 0$.
+
+The elastic net (Zou and Hastie, 2005) is a compromise between the ridge and LASSO regression methods and seeks to minimize 
+
+$$
+\sum_{i=1}^n (Y_i - \hat{\beta}_0) - \sum_{j=1}^{p-1} x_{i,j} \hat{\beta}_j)^2 + \lambda_1\sum_{j=0}^{p-1} |\hat{\beta}| + \lambda_2\sum_{j=0}^{p-1} \hat{\beta}_j^2,
+$$
+for $\lambda_1 \geq 0$ and $\lambda_2 \geq 0$.
+
+The $\lambda, \lambda_1, \lambda_2$ are penalty weights that must be selected as part of the fitting process. We want to choose the $\lambda$ that will result in the smallest penalized RSS. 
+
+While the coefficients of the ridge regression and elastic net methods will shrink toward zero and be smaller than the OLS counterparts (assuming the penalties aren't zero), they will never actually reach zero.
+
+The coefficients of the LASSO method will reach zero, so it can be quite useful as a variable selection procedure.
+
+We do not consider examples of regularization methods at this time.
+
+## Observed MSE, RMSE, MAE, and cross-validation
+
+### MSE, RMSE, and MAE
+
+The *observed mean square error (MSE)* of a model is the average of the squared prediction errors, i.e., 
+
+$$\text{MSE} = \frac{1}{n}\sum_{i=1}^n (Y_i - \hat{Y}_i)^2.$$
+
+  - For our observed data, the MSE would simply be the RSS divided by $n$.
+
+The *observed root mean squared error (RMSE)* is simply the square root of the MSE, and is sometimes used in place of the observed MSE.
+
+- The RMSE or MSE will produce identical variable selection results since they are 1-1 transformations of each other.
+
+The *mean absolute error* is the average of the absolute difference between the true response and the predicted response, i.e., 
+
+$$\text{MAE} = \frac{1}{n}\sum_{i=1}^n |Y_i - \hat{Y}_i|.$$
+
+The observed MSE, RMSE, and MAD are intended to quantify the predictive accuracy of a model.
+
+- Computing these statistics using all of the data will be overly optimistic about our model's predictive ability since we are using the data we want to predict to build the prediction model!
+- To get a more realistic assessment of prediction accuracy, we should use part of the data to fit our model and then use that model to predict the response values of the data we didn't use.
+    - This is the motivation behind a procedure called cross-validation.
+
+
+### Cross-validation
+
+*Cross-validation*  partitions the data into at least two parts:
+
+- A *training data set* that is used to fit the model.
+- A *test data set* that we use estimate the fitted model's predictive accuracy.
+
+The cross-validation procedure works as follows:
+
+1. Split the data into a training and test set.
+2. Using a training data set to fit a model.
+3. Use the fitted model to predict the responses of the test set.
+4. Compute the the prediction criterion (e.g, the MSE) using the predicted responses for the test set.
+
+
+The training and testing data sets for can be partitioned in different ways. We discuss two common approaches.
+
+#### Leave-One Out Cross-validation
+
+*Leave-one-out (LOO) cross-validation* uses each observation (individually) as a test data set, using the other $n-1$ observations as the training data.
+
+#### k-Fold Cross-validation
+
+*k-fold cross-validation* breaks the data into $k$ unique sets.
+
+- For each set, the other $k-1$ sets are used as training data, and then the fitted model is used to predict the responses for the $k$th testing set.
+- We must fit $k$ models to determine the observed MSE, RMSE, or MAD.
+
+Both LOO and k-fold cross-validation are conveniently implemented in the **caret** package.
+
+## Cross-validation `prostate` example
+
+The **caret** package (i.e., Classification And REgression Training) can be used to streamline the model training process for regression and classification problems.
+
+We will use both LOO and 5-fold cross-validation to assess the predictive accuracy of the complete model to the model that has only the regressors `lcavol`, `lweight`, and `svi`.
+
+We first define the training/test splits using the `trainControl` function. 
+
+  - We specify `method = "cv"` to indicate that we want to train using cross-validation.
+  - We specify `number = 5` to indicate that we want to perform 5-fold crossprodication.
+
+
+```{r}
+cv_5fold <- trainControl(method="cv", number = 5)
+```
+
+We next specify the formulas of the models wish to compare.
+
+```{r}
+f0 = lpsa ~ lcavol + lweight + svi # reduced model
+f1 = lpsa ~ . # complete model
+```
+
+Next, we use the `train` function to train our model to the based on the chosen training method. We provide:
+
+- `form`: The formula of the model we want to train.
+- `data`: The data frame in which the model variables are located.
+- `trControl`: The selected cross-validation procedure.
+- `method`: The fitting method.
+    - We will set `method = "lm"` to fit a linear regression model.
+
+We train both models below
+
+```{r}
+modela <- train(f0, data = prostate, trControl = cv_5fold, method = "lm")
+modelb <- train(f1, data = prostate, trControl = cv_5fold, method = "lm")
+```
+
+We print the results of the smaller model below.
+
+```{r}
+print(modela) # reduced, 5-fold
+```
+
+Next, we print the results of the complete model.
+
+```{r}
+print(modelb) # full, 5-fold
+```
+The RMSE of the reduced model is smaller than for the complete mdoel, but the MAE is larger.
+
+- Our results our inconclusive.
+
+Because our partitions are randomly selected, k-fold cross-validation results will change slightly if we rerun the procedure!
+
+We can do something similar with LOO cross-validation, though the results will be similar.
+
+We specify LOO cross-validation using the `trainControl` function below.
+
+```{r}
+cv_loo <- trainControl(method="LOOCV")
+```
+
+We train the models using LOO cross-validation.
+
+```{r}
+modelc <- train(f0, data = prostate, trControl=cv_loo, method = "lm")
+modeld <- train(f1, data = prostate, trControl=cv_loo, method = "lm")
+```
+
+```{r}
+print(modelc) # reduced, LOO
+```
+
+```{r}
+print(modeld) # complete, LOO
+```
+
+Our results are similar to before: the RMSE of the reduced model is smaller than the complete model with the MAE of the complete model is smaller than the reduced model.
+
+- Neither model shoudl be convincingly preferred.
+
+
+LOO cross-validation results are unique because there is only one way to successively use each observation as a test set.
+
+# Model Hierarchy
+
+We should respect hierarchy in models when it is naturally present.
+
+- A lower order term should be retained if a higher order term is retained to increase the flexibility.
+- In polynomial models, $X^2$ is a higher order term than $X$.
+- The model $E(Y\mid X) =\beta_0+\beta_2 X^2$, the maximum/minimum value MUST occur $X=0$.
+  - For the model $E(Y\mid X)=\beta_0+\beta_1 X+\beta_2 X^2$, the maximum/minimum value can occur anywhere along the real line (depending on what the data suggest the parameters should be).
+- If we fit the model $E(Y\mid X =\beta_0+\beta_1 X+\beta_2 X^2)$ and $\beta_1$ is not significant, it would not make philosophical sense to remove $X$ from the model but still keep $X^2$.
+
+# Summary
+
+Variable selection is combination of choosing a search strategy and a selection criterion.
+
+The exhaustive search strategy is too computationally expensive to run except on smaller data sets.
+
+- Both the best subsets and stepwise regression search strategies reduce the computational cost of our search.
+
+The AIC, BIC, $R^2_a$, and Mallow's $C_p$ statistics are common choices for selection criteria.
+
+Combining the observed RMSE or MAE selection criterion with cross-validation will give us more accurate assessments of the predictive ability of our model, but this is difficult to do for an extensive search strategy.
+
+- We often use one of the other selection criteria/search strategies to narrow down the possible models to a few final candidate models and then use cross-validation to make a final decision.
+
+# References
+
+Akaike, H. (1973), "Information theory and an extension of the maximum likelihood principle", in Petrov, B. N.; Csáki, F. (eds.), 2nd International Symposium on Information Theory, Tsahkadsor, Armenia, USSR, September 2-8, 1971, Budapest: Akadémiai Kiadó, pp. 267–281
+
+Chaterjee, S., and Hadi, A. S. (2013). Regression Analysis By Example (5th ed.) Wiley.
+
+Faraway, J.J. (2014). Linear Models with R (2nd ed.). Chapman and Hall/CRC. [https://doi.org/10.1201/b17144](https://doi.org/10.1201/b17144)
+
+Furnival, G. M. (1971). All Possible Regressions with Less Computation. Technometrics, 13(2), 403–408. [https://doi.org/10.2307/1266801](https://doi.org/10.2307/1266801)
+
+Furnival, G. M., & Wilson, R. W. (1974). Regressions by Leaps and Bounds. Technometrics, 16(4), 499–511. [https://doi.org/10.2307/1267601](https://doi.org/10.2307/1267601)
+
+Arthur E. Hoerl & Robert W. Kennard (1970) Ridge Regression: Biased Estimation for Nonorthogonal Problems, Technometrics, 12:1, 55-67, [https://doi.org/10.1080/00401706.1970.10488634](https://doi.org/10.1080/00401706.1970.10488634).
+
+Trevor Hastie. Robert Tibshirani. Ryan Tibshirani. "Best Subset, Forward Stepwise or Lasso? Analysis and Recommendations Based on Extensive Comparisons." Statist. Sci. 35 (4) 579 - 592, November 2020. [https://doi.org/10.1214/19-STS733] (https://doi.org/10.1214/19-STS733)
+
+Kutner, Michael H, Christopher J Nachtsheim, John Neter, and William Li. 2005. Applied Linear Statistical Models, 5th Edition. McGraw-Hill/Irwin, New York.
+
+Schatzoff, M., Tsao, R., & Fienberg, S. (1968). Efficient Calculation of All Possible Regressions. Technometrics, 10(4), 769–779. [https://doi.org/10.2307/1267458](https://doi.org/10.2307/1267458)
+
+Schwarz, Gideon E. (1978), "Estimating the dimension of a model", Annals of Statistics, 6 (2): 461–464
+
+Tibshirani, R. (1996). Regression Shrinkage and Selection via the Lasso. Journal of the Royal Statistical Society. Series B (Methodological), 58(1), 267–288. [http://www.jstor.org/stable/2346178](http://www.jstor.org/stable/2346178)
+
+Hui Zou, Trevor Hastie, Regularization and Variable Selection Via the Elastic Net, Journal of the Royal Statistical Society Series B: Statistical Methodology, Volume 67, Issue 2, April 2005, Pages 301–320, [https://doi.org/10.1111/j.1467-9868.2005.00503.x](https://doi.org/10.1111/j.1467-9868.2005.00503.x)
