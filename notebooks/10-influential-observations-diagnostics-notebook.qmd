@@ -1,0 +1,528 @@
+---
+title: Chapter 10 - Influential observations diagnostics
+author: Joshua French
+date: ''
+# format: html
+format: ipynb
+jupyter: ir
+execute:
+  output: false
+self-contained: true
+title-block-banner: true
+wrap: 'none'
+---
+
+To open this information in an interactive Colab notebook, click the Open in Colab graphic below.
+
+<a href="https://colab.research.google.com/github/jfrench/LinearRegression/blob/master/notebooks/10-influential-observations-diagnostics-notebook.ipynb">
+   <img src="https://colab.research.google.com/assets/colab-badge.svg">
+</a>
+
+---
+
+```{r}
+if(!require(KingCountyHouses, quietly = TRUE)) {
+  install.packages("KingCountyHouses",
+                   repos = "https://cran.rstudio.com/")
+}
+if(!require(car, quietly = TRUE)) {
+  install.packages("car",
+                   repos = "https://cran.rstudio.com/")
+  library(car)
+}
+if(!require(plotly, quietly = TRUE)) {
+  install.packages("plotly",
+                   repos = "https://cran.rstudio.com/")
+  library(plotly)
+}
+```
+
+We adjust some printing options for clarity. 
+
+```{r}
+options(digits = 7, scipen = 2)
+```
+
+# Influential observations
+
+One of the key assumptions we implicitly make when we fit a regression model to data is that the fit of the model isn't dramatically influenced by a few observations.
+
+- Each observation should have a similar impact on the fitted model.
+
+We want our model fit to behave like a democracy (each observation has an equal say in the fit) instead of a dictatorship or oligarchy (only a few observations, at most have real power in determining the fit of the model to the data).
+
+An **influential observation** dramatically changes the fitted model based on whether it is included in or excluded from the analysis. 
+
+- An observation may not be influential on its own but can be influential when combined with a few other observations.
+
+Influential observations are often extreme with respect to their response values or their associated predictors.
+
+- An **outlier** is an observation that is unusual with respect to the fitted model.
+- A **leverage point** is an observation that has the potential to greatly impact the fitted model because the predictor values associated with the observation are extreme relative to most of the data. 
+
+Outliers, leverage points, and influential observations are all model specific.
+
+- An outlier (etc.) may be an outlier for one fitted model but not for a different one.
+
+In what follows, we assume that our fitted model has $p$ regression coefficients to estimate.
+
+# `home_prices` data
+
+To facilitate our discussion we will again use the `home_prices` data set in the **KingCountyHouses** package that was introduced in Chapter 9. The `home_prices` data set contains the sales prices of homes sold in King County, WA between 2014-05-02 and 2015-05-27. The original data set is a data frame (tibble) with 21,613 rows and 19 columns, but we restrict our analysis to the following variables:
+
+- `price`: sale price (log10 units).
+- `bedrooms`: number of bedrooms.
+- `bathrooms`: number of bathrooms.
+- `sqft_living`: size of living space.
+- `sqft_lot`: size of property.
+- `floors`: number of floors.
+- `waterfront`: indicator variable for a waterfront view..
+
+We load and simplify the data below.
+
+```{r}
+data(home_prices, package = "KingCountyHouses")
+home_prices <- home_prices[, 2:8]
+```
+
+The validity of the assumptions we want to check depends on the model fit to the data.
+
+We will regress the `price` variable on all of the remaining variables in `home_prices`.
+
+```{r}
+lmod <- lm(price ~ ., data = home_prices)
+coef(lmod)
+```
+
+# LOO and studentized residuals
+
+Leave-one-out (LOO) and studentized residuals are specific types of residuals that are useful for identifying outliers and influential observations.
+
+LOO residuals are directly connected with LOO cross-validation.
+
+- LOO residuals are also known as deleted residuals.
+
+Let $\hat{Y}_i(i)$ denote the prediction of observation $i$ for the model that was fit using all $n$ observations except the $i$th one. 
+
+- This is predicted response for observation $i$ using LOO cross-validation.
+
+The **leave-one-out residual for observation $i$** is defined as
+
+$$l_i = Y_i - \hat{Y}_{i(i)}.$$
+
+If an observation is influential, then the LOO residual may be substantially larger in magnitude than the ordinary residual.
+
+- An influential observation is like a black hole that pulls the fitted model toward itself, so its associated residual might be small.
+
+Interestingly, the $i$th LOO residual can be computed via the equation 
+
+$$
+l_i = \frac{\hat{\epsilon}_i}{1-h_i},
+$$
+where the $h_i=\mathbf{H}_{i,i}$ is the $i$th diagonal element of the hat matrix given by $\mathbf{H} = \mathbf{X}(\mathbf{X}^T\mathbf{X})^{-1}\mathbf{X}^T$.
+
+- We do not need to fit multiple models to compute the the LOO residuals.
+
+Let $\hat{\sigma}_{(i)}^2$ denote the estimated error variance for the model model that uses all $n$ observations except observation $i$.
+
+- We will call this the **LOO estimated error variance**.
+
+A **studentized residual** is a LOO residual that has been scaled to have a $t$ distribution with $n-p-1$ degrees of freedom.
+
+- The studentized residuals will have the same variance since they are identically distributed.
+
+The studentized residual for observation $i$ is defined as
+
+$$
+t_i = \frac{\hat{\epsilon_i}}{\hat{\sigma}_{(i)}\sqrt{1-h_i}}.
+$$
+
+Under the standard assumptions, the studentized residuals each have a $t_{n-p-1}$ distribution but are not independent.
+
+The studentized residuals for a fitted model can be obtained from an `lm` object using the `rstudent` function.
+
+We summarize the studentized residuals for the model fit to the `home_prices` data below.
+
+```{r}
+stud_resid <- rstudent(lmod)
+summary(stud_resid)
+```
+
+# Finding outliers
+
+We describe two common approaches for identifying outliers.
+
+The simplest approach is to identify the visually unusual observations from an index plot of the studentized residuals.
+
+- An index plot is a plot of a set of statistics versus their observation number.
+- In this case, it will be a scatter plot of the pairs $(i, t_i)$ for $i=1,2,\ldots,n$.
+
+The other approach is to compare the set of studentized residuals with the appropriate quantile of a $t_{n-p-1}$ distribution.
+
+- To evaluate whether a *single* observation is an outlier, we would compare its studentized residual to $t^{1-\alpha/2}_{n-p-1}$, i.e., the $1-\alpha$ quantile of a $t$ distribution with $n-p-1$ degrees of freedom.
+    - If $|t_i| > t^{1-\alpha/2}_{n-p-1}$, then observation $i$ is an outlier. 
+    - We don't do this because we have more than one observation to evaluate.
+    
+To identify the outliers from the $n$ observations of our fitted model, we should adjust the previous idea using the Bonferroni correction to address the multiple comparisons problem.
+
+We conclude observation $i$ is an outlier if $|t_i| > t^{1-\alpha/2n}_{n-p-1}$.
+
+**`KingCountyHomeSales` outlier example**
+
+---
+
+We use the methods described above to identify the outliers of the model we fit to the `KingCountyHomesSales` data.
+
+We first create an index plot of the studentized residuals based on the fitted model `lmod`.
+
+```{r}
+plot(rstudent(lmod), ylab = "studentized residuals")
+```
+
+We see that there are a few outlying observations, though it is difficult to identify them.
+
+The `infIndexPlot` from the **car** package offers a more convenient alternative. `infIndexPlot` has three main arguments that we need to know about:
+
+- `model`: the fitted model.
+- `vars`: the statistic we want to plot. In our case we want to set this argument to `"Studentized"`. 
+- `id`: a list that controls how points are labeled. Run `?car::infIndexPlot` for details.
+
+```{r}
+infIndexPlot(lmod, vars = "Studentized")
+```
+
+From the plot above we see that the two most unusual observations are observations 12778 and 15871.
+
+To identify outliers using the appropriate Bonferroni-corrected $t$ quantile, we can use the `outlierTest` function from the **car** package. The main argument to the `outlierTest` function is `model`, with is the fitted model. Additional arguments controlling things like the desired significance level, the maximum number of outliers to show, and the order of the results can also be specified.
+
+```{r}
+outlierTest(lmod)
+```
+
+The outlier test identifies five outliers: observations 12778, 15871, 4025, 7253, and 21051.
+
+We examine these observations in the `home_prices` data set. We see that the outliers are all large houses sold for (relatively) high prices.
+
+```{r}
+home_prices[c(12778, 15871, 4025, 7253, 21051), ]
+```
+
+# Finding Leverage Points
+
+The leverage values are the diagonal elements of the hat matrix $H=X(X^T X)^{-1} X^T$. 
+
+The $i$th leverage value is given by $h_i=\mathbf{H}_{i,i}$, the $i$th diagonal position of the hat matrix.
+
+We can extract the leverage values of a fitted model using the `hatvalues` function.
+
+The leverage values of a fitted model have the following two properties:
+
+- $0\leq h_i \leq 1$ for $i=1,2,\ldots,n$.
+- $\sum_{i=1}^n h_i = p$.
+
+An observation is declared to be a leverage point if its leverage value is unusually large.
+
+- Observation $i$ is often declared to be an outlier if $h_i > 2p/n$.
+    - This approach can be overly sensitive.
+- Alternatively, we can simple make a relative comparison of the leverage values to determine the ones that are unusually large relative to the others.
+
+An easy way to use these approaches for identifying outliers is to create an index plot of the leverage values with a horizontal line through the y-axis at $2p/n$.
+
+**`home_prices` leverage example**
+
+---
+
+We seek to identify the leverage points of the `home_prices` data based on our fitted model.
+
+We create an index plot of the points below.
+
+```{r}
+h <- hatvalues(lmod) # get leverage values
+thresh <- 2 * length(coef(lmod))/nobs(lmod) # 2*p/n
+plot(h, ylab = "leverage") # index plot
+abline(h = 2 * length(coef(lmod))/nobs(lmod)) #reference
+```
+
+We can see that there are a consider number of points above the reference line at $y = 2p/n$. There are two points noticeably different than the rest. Which observations are they?
+
+The `infIndexPlot` function can be used to identify the leverage points. We will label the 3 largest leverage vales in the plot below even though only the 2 most extreme observations appear to be leverage points.
+
+```{r}
+infIndexPlot(lmod, vars = "hat", id = list(n = 3))
+```
+
+Observations 1720 and 15871 are leverage points Observation 17320 has the next largest leverage value, but doesn't appear to be a leverage point relative to the others.
+
+
+# Influential Observations
+
+An **influential observation** dramatically changes the fitted model based on whether it is included in or excluded from the analysis.
+
+- An outlier with high leverage is more likely to be influential.
+
+Measures of influence are often related to various LOO statistics.
+
+- The LOO residuals, $d_1, d_2, \ldots, d_n$, where $l_i = Y_i - \hat{Y}_{i(i)}. 
+- The LOO estimates of error variance, $\hat{\sigma}^2_{(1)}, \hat{\sigma}^2_{(2)}, \ldots, \hat^2{\sigma}_{(n)}$.
+
+Two other measures we haven't yet discussed are the DFBETA and DFFITS.
+
+## DFBETA and and DFFITS
+
+The DFBETA measure of influence is an $n\times p$ matrix of statistics that measures the change in the estimated regression coefficients when we exclude each observation from the analysis compared to the estimated coefficients using all the data.
+
+The $i$th row of DFBETA is 
+
+$$
+\text{DFBETA}_i = \hat{\boldsymbol{\beta}} - \hat{\boldsymbol{\beta}}_{(i)}
+$$
+
+- $\hat{\boldsymbol{\beta}} = [\hat{\beta}_0, \hat{\beta}_1, \ldots, \hat{\beta}_{p-1}]$.
+- $\hat{\boldsymbol{\beta}}_{(i)} = [\hat{\beta}_{0(i)}, \hat{\beta}_{1(i)}, \ldots, \hat{\beta}_{p-1(i)}]$ is the estimated regression coefficients obtained when we exclude the $i$th observation from our analysis.
+- $\text{DFBETA}_{ij} = \hat{\beta}_j - \hat{\beta}_{j(i)}$.
+
+The scale of the estimated coefficients can be very different, so DFBETAS is an extension of DFBETA to scales the statistics to have similar variances.
+
+DFBETAS is also an $n\times p$ matrix of statistics with the $j$th element of the $i$th row being defined as
+
+$$\text{DFBETAS}_{ij} = \frac{\hat{\beta}_j - \hat{\beta}_{j(i)}}{\hat{\mathrm{se}}(\hat{\beta}_j)}.$$
+
+One way of identifying influential observations is to create index plots the DFBETA or DFBETAs values for each regression coefficient and determine the estimates that substantially change.
+
+DFFITS is the $n$-dimension vector of differences between the fitted values from the fitted model and the LOO predictions for the observed data.
+
+The $i$th DFFITS value is
+
+$$\text{DFFITS}_i = \hat{Y}_i - \hat{Y}_{i(i)}.$$
+
+- A large difference between a fitted value and its associated LOO predicted values provides evidence an observation is influential.
+
+An index plot of DFFITS will indicate the observations most influential in changing their associated predicted value. 
+
+**DBETAS and DFFITS `home_prices` example**
+
+---
+
+We can use the `dfbetasPlot` function in the **car** package to get index plots of the DFBETAS statistics for each coefficients. Some of the main arguments to the `dfbetasPlots` function are:
+
+- `model`: the fitted model.
+- `terms`: the regressor terms we want to plot using formula notation.
+- `id.n`: the number of observations to print an associated id label.
+
+We plot the `bedrooms`, `bathrooms`, `sqft_living`, and `sqft_lot` variables for the fitted model of our `home_prices` data and id the 3 most unusual observations.
+
+```{r}
+dfbetasPlots(lmod, terms = ~ bedrooms + bathrooms + sqft_living + sqft_lot,
+             id.n = 3)
+```
+
+From our DFBETAS plots, we see:
+
+- Observation 15871 is impactful in determining the magnitude of the `bedrooms`, `bathrooms`, and `sqft_living` coefficients.
+- Observation 12778 is impactful in determining the magnitude of the `sqft_living` coefficients.
+- Observation 1720 is impactful in determining the magnitude of the `sqft_lot` coefficients.
+
+If we examine these variables for these observations, we see that the observations are unusual with respect to one or more of those variables.
+
+```{r}
+home_prices[c(1720, 12778, 15871),
+            c("bedrooms", "bathrooms", "sqft_living", "sqft_lot")]
+```
+
+We must manually create an index plot for our DFFITS statistics.
+
+We can extract the DFFITS statistics using the `dffits` on our fitted model.
+
+```{r}
+DFFITS <- dffits(lmod)
+plot(DFFITS)
+```
+
+We can see two influential observations, but we don't know which observations they are.
+
+Since the influential observations both have DFFITS values greater than 0.75, we can use a simple logical expression to identify them.
+
+```{r}
+which(DFFITS > 0.75)
+```
+
+Observations 1720 and 15871 are once again identified as influential observations.
+
+A more satisfying approach is to create an interactive plot using the `plot_ly` function of the **plotly** package.
+
+The `plot_ly` function is powerful but complex. We will not discuss it in detail beyond saying that the function requires the `data` argument, which is a data frame that has all of the variables we want to plot.
+
+We create a data frame with the index number and the DFFITS statistics.
+
+```{r}
+df <- data.frame(index = seq_along(DFFITS),
+                 DFFITS = DFFITS)
+```
+
+We now create an interactive index plot of the DFFITS statistics.
+
+```{r}
+# plot_ly(df, x = ~index, y = ~DFFITS, name = ~index)
+```
+
+## Cook's Distance
+
+The **Cook’s distance** summarize the potential influence of an observation with a single statistic.
+
+The Cook’s distance for the $i$ observation is
+
+$$D_i=\frac{\sum_{k=1}^n (Y_k - \hat{Y}_{k(i)})^2}{p \widehat{\sigma}^2} = \frac{1}{p} r_i^2 \frac{h_i}{1-h_i}$$
+
+- $\hat{Y}_{k(i)}$ is the predicted response for observation $k$ when observation $i$ is not included in the analysis (this is a type of LOO residual).
+- The **standardized residual** for observation $i$ is
+
+$$
+r_i = \frac{\hat{\epsilon}_i}{\widehat{\sigma}\sqrt{1-h_i}}.
+$$
+
+Cook's distance combines both:
+
+- The standardized residual (measurement of outlier).
+- The leverage (as measured by the hat value $h_i$).
+
+The statistic quantifies the amount of influence potential an observation has.
+
+An index plot of the Cook's distances can be used to identify observations with unusually large Cook's distances.
+
+- Cook’s distance values can be obtained using the `cooks.distance` function.
+- Observations with unusually large Cook's distances are declared to be influential.
+
+## Influence plots
+
+An **influence plot** plots the studentized residuals versus the leverage values.
+
+- The `car::influencePlot` function can be used to create this.
+- Look for observations that have unusually large residuals, leverage values, and especially both.
+- The circles are sized proportionally to the magnitude of the Cook’s distances
+
+**`home_prices` influential observations example
+
+An index plot of the Cook's distances can be created using the `plot` method for fitted `lm` objects and specifying `which = 4`.
+
+- `id.n` can used to indicate the number of observations to label.
+
+```{r}
+plot(lmod, which = 4, id.n = 3)
+```
+
+Observations 1720, 12778, and 15871 have substantially larger Cook's distances than the other observations.
+
+Alternatively, the `infIndexPlot` function from the **car** package can be used to create an index plot of the Cook's distances.
+
+- Set `var = "Cook"`.
+
+```{r}
+infIndexPlot(lmod, var = "Cook", id = list(n = 3))
+```
+
+An influence plot can be created using the `influencePlot` function from the **car** package.
+
+```{r}
+influencePlot(lmod)
+```
+
+Observations 1720, 12778, and 15871 have substantially larger Cook's distances than the other observations.
+
+A plot of the standardized residuals versus leverage values can be obtained using the `plot` method of fitted `lm` objects by specifying `which = 5`.
+
+- Contours for Cook's distance are added to the plot.
+- Any point beyond these contours is considered an influential observation.
+
+```{r}
+plot(lmod, which = 5) # standardized residuals vs leverage
+```
+
+Observations 1720, 12778, and 15871 have the most unusual combinations of leverage values and standardized residuals.
+
+# What should we do about outliers and influential observations?
+
+## Should we correct or delete the observation(s)?
+
+- **If they’re data entry errors**, either correct the problem or remove them if they can't be corrected. They’re wrong, so they don’t tell us anything useful!
+- **If they are not part of the population of interest**, remove them.
+  - For example, you are studying dogs, but this observation is a cat.
+- **Removing them just because they break the model is a really bad idea?**
+  - Like really really bad.
+  - Make sure to indicate that you removed them from the data set and explain why.
+  - Just remember, it is generally going to be a bad idea.
+
+## Should we keep them and fit a different model?
+
+- An outlier/influential point for one model may not be for another.
+- Examine the physical context—why did it happen?
+  - An outlier/influential point may be interesting in itself. We should aspire to be outliers!
+    - For example, an outlier in a statistical analysis of credit card transactions may indicate fraud. We should not always strive to be outliers!
+  - This may suggest a better model.
+- Use **robust regression**, which is not as affected by outliers/influential observations.
+
+# Summary
+
+- Influential observations are usually a combination of outliers and leverage points.
+- Never automatically remove outliers or influential points!
+      - They may provide important information that may otherwise be missed.
+- Fit the model with and without the influential observation(s).
+    - Do your results qualitatively change?
+
+# Practice: SAT Example
+
+Using the `sat ` dataset in the faraway package to answer the questions below.
+
+```{r}
+data(sat, package = "faraway")
+```
+
+## Part 1: Fit a model with the total SAT score as the response and expend, salary, ratio, and takers as regressors.
+
+
+## Part 2: Perform regression diagnostics on this model to answer the following questions. 
+
+- Check for leverage points.
+- Check for outliers.
+- Check for influential points.
+
+# Summary of methods for identifying unusual observations
+
+## Outliers
+
+- Index plot of studentized residuals
+- Bonferroni outlier test
+
+## Leverage points:
+
+- Index plot of leverage values
+
+## Influential observations:
+
+- Index plot of DFBETA or DFBETAS or DFFITS.
+- Index plot of Cook’s distances
+- Influence plot
+
+# Summary of useful R functions for identifying unusual observations
+
+Assume `lmod` is the fitted model produced by the `lm` function.
+
+## Outliers
+
+- `rstudent(lmod)` extracts the studentized residuals from a fitted model.
+- `car::outlierTest(lmod)` performs a Bonferroni outlier test
+- `car::infIndexPlot(lmod, vars = "Studentized")` creates an index plot of the studentized residuals.
+
+## Leverage points
+
+- `hatvalues(lmod)` extracts the leverage values from a fitted model.
+- `infIndexPlot(lmod, vars = "hat")` creates an index plot of the leverage values.
+
+## Influential observations
+
+- `car::dfbetaPlots` and `car::dfbetasPlots` construct index plots of DFBETA and DFBETAS, respectively.
+- `cooks.distance` extracts the Cook’s distances from a fitted model.
+- `infIndexPlot(lmod, vars = "Cook")` constructs an index plot of the Cook’s distances.
+- `plot(lmod, which = 4)` constructs an index plot of the Cook’s statistics.
+- `car::influencePlot` constructs an influence plot of the studentized residuals versus the leverage values.
+- `plot(lmod, which = 4)` constructs an influence plot of the standardized residuals versus the leverage values.
+- `influence(lmod)` computes a number of leave-one-out-related measures of observational influence.

@@ -2,11 +2,11 @@
 title: Chapter 7 - Variable selection
 author: Joshua French
 date: ''
-# format: html
-format: ipynb
-jupyter: ir
-execute:
-  output: false
+format: html
+# format: ipynb
+# jupyter: ir
+# execute:
+#   output: false
 self-contained: true
 title-block-banner: true
 wrap: 'none'
@@ -62,6 +62,9 @@ Including all available regressors in our model may be a bad decision:
     - Interpreting the effect of a regressor in a complex model will be more challenging since it may interact with the other regressors in the model.
 - Data collection can be an expensive, non-trivial task.
     - Including unnecessary predictors in our model can waste time and money.
+- Many data sets have more regressors than observations.
+    - The model will be non-identifiable if we use all regressors and we will not be able to estimate the parameters of the model using OLS.
+    - We must reduce the number of regressors in order to do statistical analysis.
 
 Similar to what has been suggested by Chaterjee and Hadi (2013) and Faraway (2014), we will attempt to find the simplest model that adequately explains the data.
 
@@ -140,7 +143,7 @@ We use the following notation:
 - $RSS_{\mathcal{M}}$: the RSS for fitted model $\mathcal{M}$.
 - $p_{\mathcal{M}}$: the estimated number of regression coefficients for model $\mathcal{M}$.
 
-The *best subset* search strategy determines the model $\mathcal{M}$ that minimizes the $RSS_{\mathcal{M}}$ for each value, $1\leq $p_{\mathcal{M}}$ \leq p$ (Hastie et al., 2020).
+The *best subset* search strategy determines the model $\mathcal{M}$ that minimizes the $RSS_{\mathcal{M}}$ for each value, $1\leq p_{\mathcal{M}} \leq p$ (Hastie et al., 2020).
 
 - The is helpful because the selection criterion for a specific value of $p_{\mathcal{M}}$ is often optimized by the model that minimizes the RSS for that value of $p_{\mathcal{M}}$. 
 - Furnival and Wilson (1971) proposed a "leaps and bounds" algorithm to efficiently perform best subset selection.
@@ -168,7 +171,7 @@ We typically use one or more selection criteria to evaluate the fit of a model t
 
 We describe many common selection criteria below.
 
-## R-squared, adjusted R-squared, and $\hat{\sigma}^2
+## R-squared, adjusted R-squared, and $\hat{\sigma}^2$
 
 One of the most common selection criteria is the coefficient of determination, $R^2$. The $R^2$ for model $\mathcal{M}$ is defined as
 
@@ -276,17 +279,17 @@ As before, we can see that the best model has 7 regressors. We must match this i
 
 Akaike (1973) proposed the most famous information criterion, which is now known as the Akaike Information Criterion (AIC).
 
-For a specific model $\mathcal{M}$, the AIC statistic is computed as
+The AIC statistic is computed for model $\mathcal{M}$ as
 
 $$
--2\ln L(\mathcal{M})+2p_{\mathcal{M}}.
+AIC_{\mathcal{M}} = -2\ln L(\mathcal{M})+2p_{\mathcal{M}}.
 $$
 
 The log-likelihood function, $\ln L(\mathcal{M})$, quantifies the likelihood of the observed data set being produced by the fitted model.
 
 - $L(\mathcal{M})$ is the joint density of the data evaluated at the maximum likelihood estimates of the regression coefficients and the error variance.
     - The OLS estimator of $\boldsymbol{\beta}$ is identical to the maximum likelihood estimator of $\boldsymbol{\beta}$.
-    - The maximum likelihood estimator of $\sigma^2$ for a model $\mathcal{M}$ is $\hat{sigma}^2_{MLE}=RSS_{\mathcal{M}}/n$.
+    - The maximum likelihood estimator of $\sigma^2$ for model $\mathcal{M}$ is $\hat{\sigma}^2_{MLE}=RSS_{\mathcal{M}}/n$.
 - $L(\mathcal{M})$ is larger when the model fits the data better.
 - $-2L(\mathcal{M})$ will be smaller when the model fits the data better.
 
@@ -309,7 +312,7 @@ Schwarz (1978) proposed the Bayesian Information Criterion (BIC), which is very 
 For a specific model $\mathcal{M}$, the BIC statistic is computed as
 
 $$
--2\ln L(\mathcal{M})+\log(n)p_{\mathcal{M}}.
+BIC_{\mathcal{M}} = -2\ln L(\mathcal{M})+\log(n)p_{\mathcal{M}}.
 $$
 
 The main difference between the AIC and BIC statistics is that the BIC statistic will penalize more harshly for model complexity anytime $n\geq 8$ (since $\log(n) \geq 2$).
@@ -318,7 +321,7 @@ When using the BIC statistic to evaluate model fit, we prefer models with smalle
 
 The BIC statistic tends to favor simpler models than the AIC statistic.
 
-For models with a fixed value of $p_\mathcal{M}$ (i.e., the same number of regressors), both the AIC and BIC statistics are optimized by finding the model that minimizes the RSS, so best subset selection is an excellent search strategy for these selection criteria.
+For models with a fixed value of $p_\mathcal{M}$ (i.e., the same number of regressors), both the AIC and BIC statistics are optimized by finding the model that minimizes the RSS, so best subset regression is an excellent search strategy for these selection criteria.
 
 **Best subset BIC `prostate` example**
 
@@ -334,7 +337,7 @@ plot(rs, scale = "bic")
 
 The model that includes the intercept, `lcavol`, `lweight`, and `sviinvasive` minimizes the BIC criterion.
 
-**Forward selection and backward elimination with AIC `prostate` example**
+**Stepwise selection adn forward selection with AIC and BIC `prostate` example**
 
 ---
 
@@ -582,7 +585,7 @@ The *mean absolute error* is the average of the absolute difference between the 
 
 $$\text{MAE} = \frac{1}{n}\sum_{i=1}^n |Y_i - \hat{Y}_i|.$$
 
-The observed MSE, RMSE, and MAD are intended to quantify the predictive accuracy of a model.
+The observed MSE, RMSE, and MAE are intended to quantify the predictive accuracy of a model.
 
 - Computing these statistics using all of the data will be overly optimistic about our model's predictive ability since we are using the data we want to predict to build the prediction model!
 - To get a more realistic assessment of prediction accuracy, we should use part of the data to fit our model and then use that model to predict the response values of the data we didn't use.
@@ -615,7 +618,7 @@ The training and testing data sets for can be partitioned in different ways. We 
 *k-fold cross-validation* breaks the data into $k$ unique sets.
 
 - For each set, the other $k-1$ sets are used as training data, and then the fitted model is used to predict the responses for the $k$th testing set.
-- We must fit $k$ models to determine the observed MSE, RMSE, or MAD.
+- We must fit $k$ models to determine the observed MSE, RMSE, or MAE.
 
 Both LOO and k-fold cross-validation are conveniently implemented in the **caret** package.
 
@@ -623,13 +626,18 @@ Both LOO and k-fold cross-validation are conveniently implemented in the **caret
 
 The **caret** package (i.e., Classification And REgression Training) can be used to streamline the model training process for regression and classification problems.
 
-We will use both LOO and 5-fold cross-validation to assess the predictive accuracy of the complete model to the model that has only the regressors `lcavol`, `lweight`, and `svi`.
+We will use both LOO and 5-fold cross-validation to compare the prediction accuracy of the complete model to the model that has only the regressors `lcavol`, `lweight`, and `svi`.
+
+- Because 5-fold cross-validation will randomly partition the data into 5 groups, we will set the random number generator for reproducible results.
+
+```{r}
+set.seed(98)
+```
 
 We first define the training/test splits using the `trainControl` function. 
 
   - We specify `method = "cv"` to indicate that we want to train using cross-validation.
   - We specify `number = 5` to indicate that we want to perform 5-fold crossprodication.
-
 
 ```{r}
 cv_5fold <- trainControl(method="cv", number = 5)
@@ -642,7 +650,7 @@ f0 = lpsa ~ lcavol + lweight + svi # reduced model
 f1 = lpsa ~ . # complete model
 ```
 
-Next, we use the `train` function to train our model to the based on the chosen training method. We provide:
+Next, we use the `train` function to train our model using the selected cross-validation procedure. The main arguments of the `train` function are:
 
 - `form`: The formula of the model we want to train.
 - `data`: The data frame in which the model variables are located.
@@ -657,24 +665,31 @@ modela <- train(f0, data = prostate, trControl = cv_5fold, method = "lm")
 modelb <- train(f1, data = prostate, trControl = cv_5fold, method = "lm")
 ```
 
-We print the results of the smaller model below.
+
+We now compare the results of our test predictions using the `summary` and `resamples` functions from the **caret** package.
+
+The `resamples` function takes:
+
+- `x`: a list of fitted models fit to the same data set using the same training scheme.
+- `modelNames`: (optional) A character vector with names for the fitted model.
+
+The `summary` function takes the output of the `resamples` function and summarizes the selection criteria for the tests partitions.
+
+- The `mean` statistic for a selection criterion is the best single number to compare the fits of different models across all test partitions.
 
 ```{r}
-print(modela) # reduced, 5-fold
+resamp <- resamples(list(modela, modelb),
+                    modelNames = c("reduced", "complete"))
+summary(resamp, metric = c("RMSE", "MAE"))
 ```
 
-Next, we print the results of the complete model.
+The RMSE for the reduced model is 0.74 and 0.72 for the complete model. The MAE is 0.60 for the reduced model and 0.57 for the complete model.
 
-```{r}
-print(modelb) # full, 5-fold
-```
-The RMSE of the reduced model is smaller than for the complete mdoel, but the MAE is larger.
+- These results suggest we should prefer the complete model for prediction accuracy.
 
-- Our results our inconclusive.
+Because our partitions are randomly selected, k-fold cross-validation results will change slightly if we rerun the procedure using a different random number seed!
 
-Because our partitions are randomly selected, k-fold cross-validation results will change slightly if we rerun the procedure!
-
-We can do something similar with LOO cross-validation, though the results will be similar.
+We now compare the fitted models using LOO cross-validation.
 
 We specify LOO cross-validation using the `trainControl` function below.
 
@@ -689,18 +704,20 @@ modelc <- train(f0, data = prostate, trControl=cv_loo, method = "lm")
 modeld <- train(f1, data = prostate, trControl=cv_loo, method = "lm")
 ```
 
+
+Extracting the `results` element of a fitted `train` object is a nice way to summarize the fit of the model.
+
 ```{r}
-print(modelc) # reduced, LOO
+modelc$results
 ```
 
 ```{r}
-print(modeld) # complete, LOO
+modeld$results
 ```
 
-Our results are similar to before: the RMSE of the reduced model is smaller than the complete model with the MAE of the complete model is smaller than the reduced model.
+The RMSE of the reduced model is 0.74 smaller than the complete model, which has an RMSE of 0.75. Conversely, the MAE of the complete model is 0.57, which is smaller than the reduced model MAE of 0.59..
 
-- Neither model shoudl be convincingly preferred.
-
+- Neither model should be convincingly preferred based on LOO cross-validation.
 
 LOO cross-validation results are unique because there is only one way to successively use each observation as a test set.
 
@@ -713,6 +730,8 @@ We should respect hierarchy in models when it is naturally present.
 - The model $E(Y\mid X) =\beta_0+\beta_2 X^2$, the maximum/minimum value MUST occur $X=0$.
   - For the model $E(Y\mid X)=\beta_0+\beta_1 X+\beta_2 X^2$, the maximum/minimum value can occur anywhere along the real line (depending on what the data suggest the parameters should be).
 - If we fit the model $E(Y\mid X =\beta_0+\beta_1 X+\beta_2 X^2)$ and $\beta_1$ is not significant, it would not make philosophical sense to remove $X$ from the model but still keep $X^2$.
+
+Best subset and stepwise regression search strategies do not intrinsically respect model hierarchy, so we need to be careful in using the results of a variable selection procedure.
 
 # Summary
 
