@@ -263,7 +263,7 @@ An **influential observation** dramatically changes the fitted model based on wh
 Measures of influence are often related to various LOO statistics.
 
 - The LOO residuals, $d_1, d_2, \ldots, d_n$, where $l_i = Y_i - \hat{Y}_{i(i)}. 
-- The LOO estimates of error variance, $\hat{\sigma}^2_{(1)}, \hat{\sigma}^2_{(2)}, \ldots, \hat^2{\sigma}_{(n)}$.
+- The LOO estimates of error variance, $\hat{\sigma}^2_{(1)}, \hat{\sigma}^2_{(2)}, \ldots, \hat{\sigma}^2_{(n)}$.
 
 Two other measures we haven't yet discussed are the DFBETA and DFFITS.
 
@@ -460,32 +460,12 @@ Observations 1720, 12778, and 15871 have the most unusual combinations of levera
   - This may suggest a better model.
 - Use **robust regression**, which is not as affected by outliers/influential observations.
 
-# Summary
 
 - Influential observations are usually a combination of outliers and leverage points.
 - Never automatically remove outliers or influential points!
       - They may provide important information that may otherwise be missed.
 - Fit the model with and without the influential observation(s).
     - Do your results qualitatively change?
-
-# Practice: SAT Example
-
-Using the `sat ` dataset in the faraway package to answer the questions below.
-
-```{r}
-data(sat, package = "faraway")
-```
-
-## Part 1: Fit a model with the total SAT score as the response and expend, salary, ratio, and takers as regressors.
-
-
-## Part 2: Perform regression diagnostics on this model to answer the following questions. 
-
-- Check for leverage points.
-- Check for outliers.
-- Check for influential points.
-
-# Summary of methods for identifying unusual observations
 
 ## Outliers
 

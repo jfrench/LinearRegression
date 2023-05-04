@@ -337,7 +337,7 @@ plot(rs, scale = "bic")
 
 The model that includes the intercept, `lcavol`, `lweight`, and `sviinvasive` minimizes the BIC criterion.
 
-**Stepwise selection adn forward selection with AIC and BIC `prostate` example**
+**Stepwise selection and forward selection with AIC and BIC `prostate` example**
 
 ---
 
@@ -417,7 +417,7 @@ C_{p_{\mathcal{M}}} = \frac{\mbox{RSS}_{\mathcal{M}}}{\hat{\sigma}^2} + 2p_{\mat
 $$
 where $\hat{\sigma}^2$ is the estimated error variance for the complete model.
 
-Kutner et al. (2015) summarize how to use Mallow's $C_p$ statistic.
+Kutner et al. (2005) summarize how to use Mallow's $C_p$ statistic.
 
 - If a model with $p_{\mathcal{M}}$ regression coefficients fits the data well and has little or no bias, then $E(C_{p_{\mathcal{M}}}) \approx p_{\mathcal{M}}$.
     - A model with a biased fit will have $C_{p_{\mathcal{M}}}$ much larger than $p_{\mathcal{M}}$.
@@ -541,21 +541,21 @@ The most best known regularization methods are ridge regression, LASSO, and the 
 *Ridge regression* (Hoerl and Kennard, 1970) seeks to choose the estimated coefficients that minimizes the objective function 
 
 $$
-\sum_{i=1}^n (Y_i - \hat{\beta}_0) - \sum_{j=1}^{p-1} x_{i,j} \hat{\beta}_j)^2 + \lambda\sum_{j=0}^{p-1} \hat{\beta}_j^2,
+\sum_{i=1}^n (Y_i - \hat{\beta}_0 - \sum_{j=1}^{p-1} x_{i,j} \hat{\beta}_j)^2 + \lambda\sum_{j=0}^{p-1} \hat{\beta}_j^2,
 $$
 for $\lambda \geq 0$.
 
 The LASSO (least absolute shrinkage and selection operator) method proposed by Tibshirani (1996) seeks to minimize the objective function
 
 $$
-\sum_{i=1}^n (Y_i - \hat{\beta}_0) - \sum_{j=1}^{p-1} x_{i,j} \hat{\beta}_j)^2 + \lambda\sum_{j=0}^{p-1} |\hat{\beta}|,
+\sum_{i=1}^n (Y_i - \hat{\beta}_0 - \sum_{j=1}^{p-1} x_{i,j} \hat{\beta}_j)^2 + \lambda\sum_{j=0}^{p-1} |\hat{\beta}_j|,
 $$
 for $\lambda \geq 0$.
 
 The elastic net (Zou and Hastie, 2005) is a compromise between the ridge and LASSO regression methods and seeks to minimize 
 
 $$
-\sum_{i=1}^n (Y_i - \hat{\beta}_0) - \sum_{j=1}^{p-1} x_{i,j} \hat{\beta}_j)^2 + \lambda_1\sum_{j=0}^{p-1} |\hat{\beta}| + \lambda_2\sum_{j=0}^{p-1} \hat{\beta}_j^2,
+\sum_{i=1}^n (Y_i - \hat{\beta}_0 - \sum_{j=1}^{p-1} x_{i,j} \hat{\beta}_j)^2 + \lambda_1\sum_{j=0}^{p-1} |\hat{\beta}_j| + \lambda_2\sum_{j=0}^{p-1} \hat{\beta}_j^2,
 $$
 for $\lambda_1 \geq 0$ and $\lambda_2 \geq 0$.
 
@@ -637,7 +637,7 @@ set.seed(98)
 We first define the training/test splits using the `trainControl` function. 
 
   - We specify `method = "cv"` to indicate that we want to train using cross-validation.
-  - We specify `number = 5` to indicate that we want to perform 5-fold crossprodication.
+  - We specify `number = 5` to indicate that we want to perform 5-fold cross-validation.
 
 ```{r}
 cv_5fold <- trainControl(method="cv", number = 5)
@@ -729,7 +729,7 @@ We should respect hierarchy in models when it is naturally present.
 - In polynomial models, $X^2$ is a higher order term than $X$.
 - The model $E(Y\mid X) =\beta_0+\beta_2 X^2$, the maximum/minimum value MUST occur $X=0$.
   - For the model $E(Y\mid X)=\beta_0+\beta_1 X+\beta_2 X^2$, the maximum/minimum value can occur anywhere along the real line (depending on what the data suggest the parameters should be).
-- If we fit the model $E(Y\mid X =\beta_0+\beta_1 X+\beta_2 X^2)$ and $\beta_1$ is not significant, it would not make philosophical sense to remove $X$ from the model but still keep $X^2$.
+- If we fit the model $E(Y\mid X) =\beta_0+\beta_1 X+\beta_2 X^2$ and $\beta_1$ is not significant, it would not make philosophical sense to remove $X$ from the model but still keep $X^2$.
 
 Best subset and stepwise regression search strategies do not intrinsically respect model hierarchy, so we need to be careful in using the results of a variable selection procedure.
 
