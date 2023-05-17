@@ -1,0 +1,46 @@
+---
+title: "OER Conference Notebook"
+author: Joshua French
+date: ''
+format: ipynb
+jupyter: ir
+execute:
+  output: false
+self-contained: true
+title-block-banner: true
+---
+
+To open this information in an interactive Colab notebook, click the Open in Colab graphic below.
+
+<a href="https://colab.research.google.com/github/jfrench/LinearRegression/blob/master/notebooks/z-oer-demo-notebook.ipynb"> <img src="https://colab.research.google.com/assets/colab-badge.svg"/> </a>
+
+# Load some data
+
+```{r}
+data(mtcars)
+```
+
+# Create some plots
+
+Create a scatter plot of `mpg` vs `wt`.
+
+```{r}
+plot(mpg ~ wt, data = mtcars,
+     xlab = "weight (1000 lbs)",
+     ylab = "miles per gallon")
+```
+
+# Build a model
+
+```{r}
+lmod <- lm(mpg ~ wt, data = mtcars)
+```
+
+# Fit of model
+
+```{r}
+plot(mpg ~ wt, data = mtcars,
+     xlab = "weight (1000 lbs)",
+     ylab = "miles per gallon")
+abline(lmod)
+```
