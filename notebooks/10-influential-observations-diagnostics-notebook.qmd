@@ -2,11 +2,11 @@
 title: Chapter 10 - Influential observations diagnostics
 author: Joshua French
 date: ''
-# format: html
-format: ipynb
-jupyter: ir
-execute:
-  output: false
+format: html
+# format: ipynb
+# jupyter: ir
+# execute:
+#   output: false
 self-contained: true
 title-block-banner: true
 wrap: 'none'
@@ -182,7 +182,7 @@ plot(rstudent(lmod), ylab = "studentized residuals")
 
 We see that there are a few outlying observations, though it is difficult to identify them.
 
-The `outlier_plot` function from the **api2lm** package offers a more convenient way to identify outliers using an index plot of the studentized residuals. `outlier_plot` has three main arguments that we need to know about:
+The `outlier_plot` function from the **api2lm** package offers a more convenient way to identify outliers using an index plot of the studentized residuals. `outlier_plot` has several arguments that we need to know about:
 
 - `model`: the fitted model.
 - `id_n`: the number of points to identify with labels. 
@@ -250,7 +250,7 @@ Alternatively, we can make a relative comparison of the leverage values to deter
 
 We seek to identify the leverage points of the `home_sales` data based on our fitted model.
 
-We create an index plot of the points using the `leverage_plot` function. The `leverage_plot` function takes a few main arguments:
+We create an index plot of the leverage values using the `leverage_plot` function. The `leverage_plot` function takes a few main arguments:
 
 - `model`: the fitted model.
 - `id_n`: the number of points to identify with labels. 
