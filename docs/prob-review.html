@@ -6,7 +6,7 @@
   <meta http-equiv="X-UA-Compatible" content="IE=edge" />
   <title>B Overview of probability, random variables, and random vectors | A Progressive Introduction to Linear Models</title>
   <meta name="description" content="A collection of material that progressively introduces how to fit and use linear models." />
-  <meta name="generator" content="bookdown 0.33 and GitBook 2.6.7" />
+  <meta name="generator" content="bookdown 0.34 and GitBook 2.6.7" />
 
   <meta property="og:title" content="B Overview of probability, random variables, and random vectors | A Progressive Introduction to Linear Models" />
   <meta property="og:type" content="book" />
@@ -53,8 +53,8 @@
 <script src="libs/anchor-sections-1.1.0/anchor-sections.js"></script>
 <script src="libs/kePrint-0.0.1/kePrint.js"></script>
 <link href="libs/lightable-0.0.1/lightable.css" rel="stylesheet" />
-<script src="libs/htmlwidgets-1.6.1/htmlwidgets.js"></script>
-<script src="libs/plotly-binding-4.10.1/plotly.js"></script>
+<script src="libs/htmlwidgets-1.6.2/htmlwidgets.js"></script>
+<script src="libs/plotly-binding-4.10.2/plotly.js"></script>
 <script src="libs/typedarray-0.1/typedarray.min.js"></script>
 <link href="libs/crosstalk-1.2.0/css/crosstalk.min.css" rel="stylesheet" />
 <script src="libs/crosstalk-1.2.0/js/crosstalk.min.js"></script>
@@ -127,6 +127,10 @@ code span.vs { color: #4070a0; } /* VerbatimString */
 code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warning */
 </style>
 
+<style type="text/css">
+  
+  div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+</style>
 <style type="text/css">
 /* Used with Pandoc 2.11+ new --citeproc when CSL is used */
 div.csl-bib-body { }
@@ -307,27 +311,30 @@ div.csl-indent {
 <ul>
 <li class="chapter" data-level="6.1" data-path="inference.html"><a href="inference.html#overview-of-inference-and-prediction"><i class="fa fa-check"></i><b>6.1</b> Overview of inference and prediction</a></li>
 <li class="chapter" data-level="6.2" data-path="inference.html"><a href="inference.html#necessary-notation"><i class="fa fa-check"></i><b>6.2</b> Necessary notation</a></li>
-<li class="chapter" data-level="6.3" data-path="inference.html"><a href="inference.html#properties-betahat"><i class="fa fa-check"></i><b>6.3</b> Properties of the OLS estimator</a></li>
+<li class="chapter" data-level="6.3" data-path="inference.html"><a href="inference.html#properties-betahat"><i class="fa fa-check"></i><b>6.3</b> Assumptions and properties of the OLS estimator</a></li>
 <li class="chapter" data-level="6.4" data-path="inference.html"><a href="inference.html#parametric-confidence-intervals-for-regression-coefficients"><i class="fa fa-check"></i><b>6.4</b> Parametric confidence intervals for regression coefficients</a>
 <ul>
 <li class="chapter" data-level="6.4.1" data-path="inference.html"><a href="inference.html#tci"><i class="fa fa-check"></i><b>6.4.1</b> Standard <span class="math inline">\(t\)</span>-based confidence intervals</a></li>
-<li class="chapter" data-level="6.4.2" data-path="inference.html"><a href="inference.html#mcp"><i class="fa fa-check"></i><b>6.4.2</b> The multiple comparisons problem</a></li>
-<li class="chapter" data-level="6.4.3" data-path="inference.html"><a href="inference.html#adjusted-cis-betas"><i class="fa fa-check"></i><b>6.4.3</b> Adjusted confidence intervals for regression coefficients</a></li>
 </ul></li>
-<li class="chapter" data-level="6.5" data-path="inference.html"><a href="inference.html#prediction-mean-response-versus-new-response"><i class="fa fa-check"></i><b>6.5</b> Prediction: mean response versus new response</a></li>
-<li class="chapter" data-level="6.6" data-path="inference.html"><a href="inference.html#parametric-ci-mean-response"><i class="fa fa-check"></i><b>6.6</b> Confidence interval for the mean response</a></li>
-<li class="chapter" data-level="6.7" data-path="inference.html"><a href="inference.html#pi-new-response"><i class="fa fa-check"></i><b>6.7</b> Prediction interval for a new response</a></li>
-<li class="chapter" data-level="6.8" data-path="inference.html"><a href="inference.html#hypothesis-tests-for-a-single-regression-coefficient"><i class="fa fa-check"></i><b>6.8</b> Hypothesis tests for a single regression coefficient</a></li>
-<li class="chapter" data-level="6.9" data-path="inference.html"><a href="inference.html#hypothesis-tests-for-multiple-regression-coefficients"><i class="fa fa-check"></i><b>6.9</b> Hypothesis tests for multiple regression coefficients</a>
+<li class="chapter" data-level="6.5" data-path="inference.html"><a href="inference.html#mcp"><i class="fa fa-check"></i><b>6.5</b> The multiple comparisons problem</a>
 <ul>
-<li class="chapter" data-level="6.9.1" data-path="inference.html"><a href="inference.html#test-for-a-regression-relationship"><i class="fa fa-check"></i><b>6.9.1</b> Test for a regression relationship</a></li>
+<li class="chapter" data-level="6.5.1" data-path="inference.html"><a href="inference.html#adjusted-cis-betas"><i class="fa fa-check"></i><b>6.5.1</b> Adjusted confidence intervals for regression coefficients</a></li>
 </ul></li>
-<li class="chapter" data-level="6.10" data-path="inference.html"><a href="inference.html#going-deeper-2"><i class="fa fa-check"></i><b>6.10</b> Going deeper</a>
+<li class="chapter" data-level="6.6" data-path="inference.html"><a href="inference.html#prediction-mean-response-versus-new-response"><i class="fa fa-check"></i><b>6.6</b> Prediction: mean response versus new response</a></li>
+<li class="chapter" data-level="6.7" data-path="inference.html"><a href="inference.html#parametric-ci-mean-response"><i class="fa fa-check"></i><b>6.7</b> Confidence interval for the mean response</a></li>
+<li class="chapter" data-level="6.8" data-path="inference.html"><a href="inference.html#pi-new-response"><i class="fa fa-check"></i><b>6.8</b> Prediction interval for a new response</a></li>
+<li class="chapter" data-level="6.9" data-path="inference.html"><a href="inference.html#hypothesis-tests-for-a-single-regression-coefficient"><i class="fa fa-check"></i><b>6.9</b> Hypothesis tests for a single regression coefficient</a></li>
+<li class="chapter" data-level="6.10" data-path="inference.html"><a href="inference.html#hypothesis-tests-for-multiple-regression-coefficients"><i class="fa fa-check"></i><b>6.10</b> Hypothesis tests for multiple regression coefficients</a>
 <ul>
-<li class="chapter" data-level="6.10.1" data-path="inference.html"><a href="inference.html#manual-t-cis"><i class="fa fa-check"></i><b>6.10.1</b> Manual calculation of the standard <span class="math inline">\(t\)</span>-based confidence interval for a regression coefficient</a></li>
-<li class="chapter" data-level="6.10.2" data-path="inference.html"><a href="inference.html#mean-response-calculations"><i class="fa fa-check"></i><b>6.10.2</b> Details about estimation of the mean response</a></li>
-<li class="chapter" data-level="6.10.3" data-path="inference.html"><a href="inference.html#manual-calc-ci-mean-response"><i class="fa fa-check"></i><b>6.10.3</b> Manual calculation of confidence intervals for the mean response</a></li>
-<li class="chapter" data-level="6.10.4" data-path="inference.html"><a href="inference.html#new-response-pi-calculations"><i class="fa fa-check"></i><b>6.10.4</b> Details about prediction interval for a new response</a></li>
+<li class="chapter" data-level="6.10.1" data-path="inference.html"><a href="inference.html#test-for-a-regression-relationship"><i class="fa fa-check"></i><b>6.10.1</b> Test for a regression relationship</a></li>
+<li class="chapter" data-level="6.10.2" data-path="inference.html"><a href="inference.html#a-more-general-f-test"><i class="fa fa-check"></i><b>6.10.2</b> A more general F test</a></li>
+</ul></li>
+<li class="chapter" data-level="6.11" data-path="inference.html"><a href="inference.html#going-deeper-2"><i class="fa fa-check"></i><b>6.11</b> Going deeper</a>
+<ul>
+<li class="chapter" data-level="6.11.1" data-path="inference.html"><a href="inference.html#manual-t-cis"><i class="fa fa-check"></i><b>6.11.1</b> Manual calculation of the standard <span class="math inline">\(t\)</span>-based confidence interval for a regression coefficient</a></li>
+<li class="chapter" data-level="6.11.2" data-path="inference.html"><a href="inference.html#mean-response-calculations"><i class="fa fa-check"></i><b>6.11.2</b> Details about estimation of the mean response</a></li>
+<li class="chapter" data-level="6.11.3" data-path="inference.html"><a href="inference.html#manual-calc-ci-mean-response"><i class="fa fa-check"></i><b>6.11.3</b> Manual calculation of confidence intervals for the mean response</a></li>
+<li class="chapter" data-level="6.11.4" data-path="inference.html"><a href="inference.html#new-response-pi-calculations"><i class="fa fa-check"></i><b>6.11.4</b> Details about prediction interval for a new response</a></li>
 </ul></li>
 </ul></li>
 <li class="appendix"><span><b>Appendix</b></span></li>
@@ -384,7 +391,7 @@ div.csl-indent {
 <li class="chapter" data-level="B.3.5" data-path="prob-review.html"><a href="prob-review.html#covariance"><i class="fa fa-check"></i><b>B.3.5</b> Covariance</a></li>
 <li class="chapter" data-level="B.3.6" data-path="prob-review.html"><a href="prob-review.html#useful-facts-for-transformations-of-multiple-random-variables"><i class="fa fa-check"></i><b>B.3.6</b> Useful facts for transformations of multiple random variables</a></li>
 <li class="chapter" data-level="B.3.7" data-path="prob-review.html"><a href="prob-review.html#example-binomial"><i class="fa fa-check"></i><b>B.3.7</b> Example (Binomial)</a></li>
-<li class="chapter" data-level="B.3.8" data-path="prob-review.html"><a href="prob-review.html#example-continuous-bivariate-distribution"><i class="fa fa-check"></i><b>B.3.8</b> Example (Continuous bivariate distribution)</a></li>
+<li class="chapter" data-level="B.3.8" data-path="prob-review.html"><a href="prob-review.html#continuous-bivariate-distribution-example"><i class="fa fa-check"></i><b>B.3.8</b> Example (Continuous bivariate distribution)</a></li>
 </ul></li>
 <li class="chapter" data-level="B.4" data-path="prob-review.html"><a href="prob-review.html#random-vectors"><i class="fa fa-check"></i><b>B.4</b> Random vectors</a>
 <ul>
@@ -596,8 +603,8 @@ assuming the sum is well-defined.</p>
 <p>Note that <span class="math inline">\(\mathrm{var}(Y)=E(Y-E(Y))^2=E(Y^2)-[E(Y)]^2\)</span>. The last expression is often easier to compute.</p>
 <p>The <strong>standard deviation</strong> of Y is
 <span class="math display">\[SD(Y)=\sqrt{\mathrm{var}(Y)  }.\]</span></p>
-<div id="example-bernoulli-distribution" class="section level4 hasAnchor" number="8.2.1.1">
-<h4><span class="header-section-number">B.2.1.1</span> Example (Bernoulli distribution)<a href="prob-review.html#example-bernoulli-distribution" class="anchor-section" aria-label="Anchor link to header"></a></h4>
+<div id="bernoulli-distribution-example" class="section level4 hasAnchor" number="8.2.1.1">
+<h4><span class="header-section-number">B.2.1.1</span> Example (Bernoulli distribution)<a href="prob-review.html#bernoulli-distribution-example" class="anchor-section" aria-label="Anchor link to header"></a></h4>
 <p>A random variable <span class="math inline">\(Y\)</span> is said to have a Bernoulli distribution with probability <span class="math inline">\(\theta\)</span>, denoted <span class="math inline">\(Y\sim \mathsf{Bernoulli}(\theta)\)</span>, if <span class="math inline">\(\mathcal{S} = \{0, 1\}\)</span> and <span class="math inline">\(P(Y = 1) = \theta\)</span>, where <span class="math inline">\(\theta\in (0,1)\)</span>.</p>
 <p>The pmf of a Bernoulli random variable is
 <span class="math display">\[f_Y(y) = \theta^y (1-\theta)^{(1-y)}.\]</span></p>
@@ -764,7 +771,7 @@ where <span class="math inline">\(g\)</span> is a function of the random variabl
 <p>An alternative explanation of a Binomial random variable is that it is the sum of <span class="math inline">\(n\)</span> independent and identically-distributed Bernoulli random variables. Alternatively, let <span class="math inline">\(Y_1,Y_2,\ldots,Y_n\stackrel{i.i.d.}{\sim} \mathsf{Bernoulli}(\theta)\)</span>, where i.i.d. stands for independent and identically distributed, i.e., <span class="math inline">\(Y_1, Y_2, \ldots, Y_n\)</span> are independent random variables with identical distributions. Then <span class="math inline">\(Y=\sum_{i=1}^n Y_i \sim \mathsf{Bin}(n,\theta)\)</span>.</p>
 <p>A Binomial random variable with <span class="math inline">\(\theta = 0.5\)</span> models the question: what is the probability of flipping <span class="math inline">\(y\)</span> heads in <span class="math inline">\(n\)</span> flips?</p>
 <p>Using this information and the facts above, we can easily determine the mean and variance of <span class="math inline">\(Y\)</span>.</p>
-<p>Using our results from Section <a href="#bernoulli-distribution-example"><strong>??</strong></a>, we can see that <span class="math inline">\(E(Y_i) = \theta\)</span> for <span class="math inline">\(i=1,2,\ldots,n\)</span>. Similarly, <span class="math inline">\(\mathrm{var}(Y_i)=\theta(1-\theta)\)</span> for <span class="math inline">\(i=1,2,\ldots,n\)</span>.</p>
+<p>Using our results from Section <a href="prob-review.html#bernoulli-distribution-example">B.2.1.1</a>, we can see that <span class="math inline">\(E(Y_i) = \theta\)</span> for <span class="math inline">\(i=1,2,\ldots,n\)</span>. Similarly, <span class="math inline">\(\mathrm{var}(Y_i)=\theta(1-\theta)\)</span> for <span class="math inline">\(i=1,2,\ldots,n\)</span>.</p>
 <p>We determine that:
 <span class="math display">\[
 E(Y)=E\biggl(\sum_{i=1}^n Y_i\biggr)=\sum_{i=1}^n E(Y_i) = \sum_{i=1}^n \theta = n\theta.
@@ -774,8 +781,8 @@ E(Y)=E\biggl(\sum_{i=1}^n Y_i\biggr)=\sum_{i=1}^n E(Y_i) = \sum_{i=1}^n \theta =
 \mathrm{var}(Y) = \mathrm{var}(\sum_{i=1}^n Y_i) = \sum_{i=1}^n\mathrm{var}(Y_i)=\sum_{i=1}^n \theta(1-\theta) = n\theta(1-\theta).
 \]</span></p>
 </div>
-<div id="example-continuous-bivariate-distribution" class="section level3 hasAnchor" number="8.3.8">
-<h3><span class="header-section-number">B.3.8</span> Example (Continuous bivariate distribution)<a href="prob-review.html#example-continuous-bivariate-distribution" class="anchor-section" aria-label="Anchor link to header"></a></h3>
+<div id="continuous-bivariate-distribution-example" class="section level3 hasAnchor" number="8.3.8">
+<h3><span class="header-section-number">B.3.8</span> Example (Continuous bivariate distribution)<a href="prob-review.html#continuous-bivariate-distribution-example" class="anchor-section" aria-label="Anchor link to header"></a></h3>
 <p>Hydration is important for health. Like many people, the author has a water bottle he uses to say hydrated through the day and drinks several liters of water per day. Let’s say the author refills his water bottle every 3 hours. Let <span class="math inline">\(Y\)</span> denote the proportion of the water bottle filled with water at the beginning of the 3-hour window. Let <span class="math inline">\(X\)</span> denote the amount of water the author consumes in the 3-hour window (measured in the the proportion of total water bottle capacity). We know that <span class="math inline">\(0\leq X \leq Y \leq 1\)</span>. The joint density of the random variables is</p>
 <p><span class="math display">\[
 f(x,y)=4y^2,\quad 0 \leq x\leq y\leq 1,
@@ -901,7 +908,7 @@ Alternatively, the variance of <span class="math inline">\(\mathbf{y}\)</span> i
 </div>
 <div id="example-continuous-bivariate-distribution-continued" class="section level3 hasAnchor" number="8.4.4">
 <h3><span class="header-section-number">B.4.4</span> Example (Continuous bivariate distribution continued)<a href="prob-review.html#example-continuous-bivariate-distribution-continued" class="anchor-section" aria-label="Anchor link to header"></a></h3>
-<p>Using the definitions and results in <a href="prob-review.html#random-vectors">B.4</a>, we want to answer <strong>Q7</strong> of the example in <a href="#continuous-bivariate-distribution-example"><strong>??</strong></a>. Summarizing only the essential details, we have a random vector <span class="math inline">\(\mathbf{z}=[X, Y]\)</span> with mean <span class="math inline">\(E(\mathbf{z})=[2/5, 4/5]\)</span> and covariance matrix
+<p>Using the definitions and results in <a href="prob-review.html#random-vectors">B.4</a>, we want to answer <strong>Q7</strong> of the example in <a href="prob-review.html#continuous-bivariate-distribution-example">B.3.8</a>. Summarizing only the essential details, we have a random vector <span class="math inline">\(\mathbf{z}=[X, Y]\)</span> with mean <span class="math inline">\(E(\mathbf{z})=[2/5, 4/5]\)</span> and covariance matrix
 <span class="math display">\[
 \mathrm{var}(\mathbf{z})=
 \begin{bmatrix}

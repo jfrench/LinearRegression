@@ -6,7 +6,7 @@
   <meta http-equiv="X-UA-Compatible" content="IE=edge" />
   <title>Chapter 4 Interpreting a fitted linear model | A Progressive Introduction to Linear Models</title>
   <meta name="description" content="A collection of material that progressively introduces how to fit and use linear models." />
-  <meta name="generator" content="bookdown 0.33 and GitBook 2.6.7" />
+  <meta name="generator" content="bookdown 0.34 and GitBook 2.6.7" />
 
   <meta property="og:title" content="Chapter 4 Interpreting a fitted linear model | A Progressive Introduction to Linear Models" />
   <meta property="og:type" content="book" />
@@ -53,8 +53,8 @@
 <script src="libs/anchor-sections-1.1.0/anchor-sections.js"></script>
 <script src="libs/kePrint-0.0.1/kePrint.js"></script>
 <link href="libs/lightable-0.0.1/lightable.css" rel="stylesheet" />
-<script src="libs/htmlwidgets-1.6.1/htmlwidgets.js"></script>
-<script src="libs/plotly-binding-4.10.1/plotly.js"></script>
+<script src="libs/htmlwidgets-1.6.2/htmlwidgets.js"></script>
+<script src="libs/plotly-binding-4.10.2/plotly.js"></script>
 <script src="libs/typedarray-0.1/typedarray.min.js"></script>
 <link href="libs/crosstalk-1.2.0/css/crosstalk.min.css" rel="stylesheet" />
 <script src="libs/crosstalk-1.2.0/js/crosstalk.min.js"></script>
@@ -127,6 +127,10 @@ code span.vs { color: #4070a0; } /* VerbatimString */
 code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warning */
 </style>
 
+<style type="text/css">
+  
+  div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+</style>
 <style type="text/css">
 /* Used with Pandoc 2.11+ new --citeproc when CSL is used */
 div.csl-bib-body { }
@@ -307,27 +311,30 @@ div.csl-indent {
 <ul>
 <li class="chapter" data-level="6.1" data-path="inference.html"><a href="inference.html#overview-of-inference-and-prediction"><i class="fa fa-check"></i><b>6.1</b> Overview of inference and prediction</a></li>
 <li class="chapter" data-level="6.2" data-path="inference.html"><a href="inference.html#necessary-notation"><i class="fa fa-check"></i><b>6.2</b> Necessary notation</a></li>
-<li class="chapter" data-level="6.3" data-path="inference.html"><a href="inference.html#properties-betahat"><i class="fa fa-check"></i><b>6.3</b> Properties of the OLS estimator</a></li>
+<li class="chapter" data-level="6.3" data-path="inference.html"><a href="inference.html#properties-betahat"><i class="fa fa-check"></i><b>6.3</b> Assumptions and properties of the OLS estimator</a></li>
 <li class="chapter" data-level="6.4" data-path="inference.html"><a href="inference.html#parametric-confidence-intervals-for-regression-coefficients"><i class="fa fa-check"></i><b>6.4</b> Parametric confidence intervals for regression coefficients</a>
 <ul>
 <li class="chapter" data-level="6.4.1" data-path="inference.html"><a href="inference.html#tci"><i class="fa fa-check"></i><b>6.4.1</b> Standard <span class="math inline">\(t\)</span>-based confidence intervals</a></li>
-<li class="chapter" data-level="6.4.2" data-path="inference.html"><a href="inference.html#mcp"><i class="fa fa-check"></i><b>6.4.2</b> The multiple comparisons problem</a></li>
-<li class="chapter" data-level="6.4.3" data-path="inference.html"><a href="inference.html#adjusted-cis-betas"><i class="fa fa-check"></i><b>6.4.3</b> Adjusted confidence intervals for regression coefficients</a></li>
 </ul></li>
-<li class="chapter" data-level="6.5" data-path="inference.html"><a href="inference.html#prediction-mean-response-versus-new-response"><i class="fa fa-check"></i><b>6.5</b> Prediction: mean response versus new response</a></li>
-<li class="chapter" data-level="6.6" data-path="inference.html"><a href="inference.html#parametric-ci-mean-response"><i class="fa fa-check"></i><b>6.6</b> Confidence interval for the mean response</a></li>
-<li class="chapter" data-level="6.7" data-path="inference.html"><a href="inference.html#pi-new-response"><i class="fa fa-check"></i><b>6.7</b> Prediction interval for a new response</a></li>
-<li class="chapter" data-level="6.8" data-path="inference.html"><a href="inference.html#hypothesis-tests-for-a-single-regression-coefficient"><i class="fa fa-check"></i><b>6.8</b> Hypothesis tests for a single regression coefficient</a></li>
-<li class="chapter" data-level="6.9" data-path="inference.html"><a href="inference.html#hypothesis-tests-for-multiple-regression-coefficients"><i class="fa fa-check"></i><b>6.9</b> Hypothesis tests for multiple regression coefficients</a>
+<li class="chapter" data-level="6.5" data-path="inference.html"><a href="inference.html#mcp"><i class="fa fa-check"></i><b>6.5</b> The multiple comparisons problem</a>
 <ul>
-<li class="chapter" data-level="6.9.1" data-path="inference.html"><a href="inference.html#test-for-a-regression-relationship"><i class="fa fa-check"></i><b>6.9.1</b> Test for a regression relationship</a></li>
+<li class="chapter" data-level="6.5.1" data-path="inference.html"><a href="inference.html#adjusted-cis-betas"><i class="fa fa-check"></i><b>6.5.1</b> Adjusted confidence intervals for regression coefficients</a></li>
 </ul></li>
-<li class="chapter" data-level="6.10" data-path="inference.html"><a href="inference.html#going-deeper-2"><i class="fa fa-check"></i><b>6.10</b> Going deeper</a>
+<li class="chapter" data-level="6.6" data-path="inference.html"><a href="inference.html#prediction-mean-response-versus-new-response"><i class="fa fa-check"></i><b>6.6</b> Prediction: mean response versus new response</a></li>
+<li class="chapter" data-level="6.7" data-path="inference.html"><a href="inference.html#parametric-ci-mean-response"><i class="fa fa-check"></i><b>6.7</b> Confidence interval for the mean response</a></li>
+<li class="chapter" data-level="6.8" data-path="inference.html"><a href="inference.html#pi-new-response"><i class="fa fa-check"></i><b>6.8</b> Prediction interval for a new response</a></li>
+<li class="chapter" data-level="6.9" data-path="inference.html"><a href="inference.html#hypothesis-tests-for-a-single-regression-coefficient"><i class="fa fa-check"></i><b>6.9</b> Hypothesis tests for a single regression coefficient</a></li>
+<li class="chapter" data-level="6.10" data-path="inference.html"><a href="inference.html#hypothesis-tests-for-multiple-regression-coefficients"><i class="fa fa-check"></i><b>6.10</b> Hypothesis tests for multiple regression coefficients</a>
 <ul>
-<li class="chapter" data-level="6.10.1" data-path="inference.html"><a href="inference.html#manual-t-cis"><i class="fa fa-check"></i><b>6.10.1</b> Manual calculation of the standard <span class="math inline">\(t\)</span>-based confidence interval for a regression coefficient</a></li>
-<li class="chapter" data-level="6.10.2" data-path="inference.html"><a href="inference.html#mean-response-calculations"><i class="fa fa-check"></i><b>6.10.2</b> Details about estimation of the mean response</a></li>
-<li class="chapter" data-level="6.10.3" data-path="inference.html"><a href="inference.html#manual-calc-ci-mean-response"><i class="fa fa-check"></i><b>6.10.3</b> Manual calculation of confidence intervals for the mean response</a></li>
-<li class="chapter" data-level="6.10.4" data-path="inference.html"><a href="inference.html#new-response-pi-calculations"><i class="fa fa-check"></i><b>6.10.4</b> Details about prediction interval for a new response</a></li>
+<li class="chapter" data-level="6.10.1" data-path="inference.html"><a href="inference.html#test-for-a-regression-relationship"><i class="fa fa-check"></i><b>6.10.1</b> Test for a regression relationship</a></li>
+<li class="chapter" data-level="6.10.2" data-path="inference.html"><a href="inference.html#a-more-general-f-test"><i class="fa fa-check"></i><b>6.10.2</b> A more general F test</a></li>
+</ul></li>
+<li class="chapter" data-level="6.11" data-path="inference.html"><a href="inference.html#going-deeper-2"><i class="fa fa-check"></i><b>6.11</b> Going deeper</a>
+<ul>
+<li class="chapter" data-level="6.11.1" data-path="inference.html"><a href="inference.html#manual-t-cis"><i class="fa fa-check"></i><b>6.11.1</b> Manual calculation of the standard <span class="math inline">\(t\)</span>-based confidence interval for a regression coefficient</a></li>
+<li class="chapter" data-level="6.11.2" data-path="inference.html"><a href="inference.html#mean-response-calculations"><i class="fa fa-check"></i><b>6.11.2</b> Details about estimation of the mean response</a></li>
+<li class="chapter" data-level="6.11.3" data-path="inference.html"><a href="inference.html#manual-calc-ci-mean-response"><i class="fa fa-check"></i><b>6.11.3</b> Manual calculation of confidence intervals for the mean response</a></li>
+<li class="chapter" data-level="6.11.4" data-path="inference.html"><a href="inference.html#new-response-pi-calculations"><i class="fa fa-check"></i><b>6.11.4</b> Details about prediction interval for a new response</a></li>
 </ul></li>
 </ul></li>
 <li class="appendix"><span><b>Appendix</b></span></li>
@@ -384,7 +391,7 @@ div.csl-indent {
 <li class="chapter" data-level="B.3.5" data-path="prob-review.html"><a href="prob-review.html#covariance"><i class="fa fa-check"></i><b>B.3.5</b> Covariance</a></li>
 <li class="chapter" data-level="B.3.6" data-path="prob-review.html"><a href="prob-review.html#useful-facts-for-transformations-of-multiple-random-variables"><i class="fa fa-check"></i><b>B.3.6</b> Useful facts for transformations of multiple random variables</a></li>
 <li class="chapter" data-level="B.3.7" data-path="prob-review.html"><a href="prob-review.html#example-binomial"><i class="fa fa-check"></i><b>B.3.7</b> Example (Binomial)</a></li>
-<li class="chapter" data-level="B.3.8" data-path="prob-review.html"><a href="prob-review.html#example-continuous-bivariate-distribution"><i class="fa fa-check"></i><b>B.3.8</b> Example (Continuous bivariate distribution)</a></li>
+<li class="chapter" data-level="B.3.8" data-path="prob-review.html"><a href="prob-review.html#continuous-bivariate-distribution-example"><i class="fa fa-check"></i><b>B.3.8</b> Example (Continuous bivariate distribution)</a></li>
 </ul></li>
 <li class="chapter" data-level="B.4" data-path="prob-review.html"><a href="prob-review.html#random-vectors"><i class="fa fa-check"></i><b>B.4</b> Random vectors</a>
 <ul>
@@ -438,8 +445,9 @@ in describing the behavior of the response variable.</p>
 <p>The standard approach to interpreting the coefficients of a fitted
 linear model is to consider the expected change in the response in
 relation to changes in the regressors in the model.</p>
-<p>Consider the typical multiple linear regression model of the response <span class="math display">\[
-Y=\beta_0+\beta_1 X_1 +\ldots + \beta_{p-1}X_{p-1}+\epsilon.(\#eq:mlr-equation-ch4)
+<p>Consider the typical multiple linear regression model of the response
+<span class="math display" id="eq:mlr-equation-ch4">\[
+Y=\beta_0+\beta_1 X_1 +\ldots + \beta_{p-1}X_{p-1}+\epsilon.\tag{4.1}
 \]</span></p>
 <p>As discussed in Chapter <a href="linear-model-estimation.html#linear-model-estimation">3</a>, we treat the
 values of our regressor variables as being fixed, known values. The
@@ -448,15 +456,15 @@ response variable is also a random variable. Additionally, we assume
 that the errors all have mean 0, conditional on the values of the
 regressor variables. More formally, we write this assumption as</p>
 <p><span class="math display" id="eq:mean-error-assumption">\[
-E(\epsilon \mid X_1, X_2, \ldots, X_{p-1})=0.\tag{4.1}
+E(\epsilon \mid X_1, X_2, \ldots, X_{p-1})=0.\tag{4.2}
 \]</span></p>
 <p>Recall that we use the notation <span class="math inline">\(\mathbb{X} = \{X_1,\ldots,X_{p-1}\}\)</span> to
 denote the set of all regressors, which will help us simplify the
 derivations below. Thus, the assumption in Equation
-<a href="interp-chapter.html#eq:mean-error-assumption">(4.1)</a> can be expressed as
+<a href="interp-chapter.html#eq:mean-error-assumption">(4.2)</a> can be expressed as
 <span class="math inline">\(E(\epsilon \mid \mathbb{X})=0\)</span>. Using the assumption in Equation
-<a href="interp-chapter.html#eq:mean-error-assumption">(4.1)</a> and applying it to the model in Equation
-<a href="#eq:mlr-equation-ch4">(<strong>??</strong>)</a>, we see that</p>
+<a href="interp-chapter.html#eq:mean-error-assumption">(4.2)</a> and applying it to the model in Equation
+<a href="interp-chapter.html#eq:mlr-equation-ch4">(4.1)</a>, we see that</p>
 <p><span class="math display">\[
 \begin{aligned}
 &amp; E(Y\mid X_1, X_2, \ldots, X_{p-1}) \\
@@ -476,9 +484,11 @@ predictors as regressors, and interpretation for parallel and separate
 lines regression model.</p>
 <div id="interpretation-for-simple-linear-regression" class="section level3 hasAnchor" number="4.1.1">
 <h3><span class="header-section-number">4.1.1</span> Interpretation for simple linear regression<a href="interp-chapter.html#interpretation-for-simple-linear-regression" class="anchor-section" aria-label="Anchor link to header"></a></h3>
-<p>Suppose we have a simple linear regression model, so that <span class="math display">\[
-E(Y\mid X)=\beta_0 + \beta_1 X. (\#eq:slr-equation)
-\]</span> The interpretations of the coefficients are:</p>
+<p>Suppose we have a simple linear regression model, so that
+<span class="math display" id="eq:slr-equation">\[
+E(Y\mid X)=\beta_0 + \beta_1 X. \tag{4.3}
+\]</span>
+The interpretations of the coefficients are:</p>
 <ul>
 <li><span class="math inline">\(\beta_0\)</span> is the expected response when the regressor is 0, i.e.,
 <span class="math inline">\(\beta_0=E(Y\mid X=0)\)</span>.</li>
@@ -487,19 +497,22 @@ increases 1 unit, i.e., <span class="math inline">\(\beta_1=E(Y\mid X=x^*+1)-E(Y
 where <span class="math inline">\(x^*\)</span> is a fixed, real number.</li>
 </ul>
 <p>Regarding the interpretation of <span class="math inline">\(\beta_0\)</span>, from the regression model in
-Equation <a href="#eq:slr-equation">(<strong>??</strong>)</a>, notice that <span class="math display">\[
+Equation <a href="interp-chapter.html#eq:slr-equation">(4.3)</a>, notice that
+<span class="math display">\[
 \begin{aligned}
 E(Y\mid X = 0) &amp;= \beta_0 + \beta_1 \cdot 0 \\
 &amp;= \beta_0.
 \end{aligned}
 \]</span> This is why <span class="math inline">\(\beta_0\)</span> is the expected value of the response variable
 when the regressor is zero.</p>
-<p>Similarly, for <span class="math inline">\(\beta_1\)</span>, we notice that <span class="math display">\[
+<p>Similarly, for <span class="math inline">\(\beta_1\)</span>, we notice that
+<span class="math display">\[
 \begin{aligned}
 E(Y\mid X=x^*+1)-E(Y\mid X=x^*) &amp;= [\beta_0 + \beta_1 (x^* + 1)] - [\beta_0 + \beta_1 x^*] \\
 &amp;= \beta_1.
 \end{aligned}
-\]</span> Thus, <span class="math inline">\(\beta_1\)</span> literally equals the change in the expected response
+\]</span>
+Thus, <span class="math inline">\(\beta_1\)</span> literally equals the change in the expected response
 when the regressor increases by 1 unit.</p>
 <p>The regressors we use in our regression analysis are often observational
 in nature, meaning that we do not control them. And even if we could
@@ -508,7 +521,7 @@ regressors was the size of an island, how would we realistically go
 about increasing the size of the island? thus, in the context of
 observational data, it may not make sense to say “we increase <span class="math inline">\(X\)</span> by 1
 unit” or “when <span class="math inline">\(X\)</span> increases by 1 unit”. An alternative approach,
-alluded to by <span class="citation">Faraway (<a href="#ref-lmwr2" role="doc-biblioref">2014</a>)</span>, is to consider the expected response difference
+alluded to by <span class="citation">Faraway (<a href="#ref-lmwr2">2014</a>)</span>, is to consider the expected response difference
 between observations that are identical with respect to all regressors
 we include in our model except the regressor under consideration, which
 varies by only a single unit. While mathematically, the result is the
@@ -520,9 +533,11 @@ that the mathematics of our model supports our conclusions.</p>
 linear regression model fit to the <code>penguins</code> data in Section
 <a href="linear-model-estimation.html#s:penguins-slr">3.3</a>. From Section <a href="linear-model-estimation.html#s:penguins-slr">3.3</a>, the fitted
 simple linear regression model of <code>body_mass_g</code> regressed on
-<code>body_mass_g</code> is <span class="math display">\[
-\hat{E}(\mathtt{bill\_length\_mm}\mid \mathtt{body\_mass\_g})=26.9+0.004 (\#eq:slr-penguin-orig) \,\mathtt{body\_mass\_g}.
-\]</span> Some basic interpretations of the coefficients are:</p>
+<code>body_mass_g</code> is
+<span class="math display" id="eq:slr-penguin-orig">\[
+\hat{E}(\mathtt{bill\_length\_mm}\mid \mathtt{body\_mass\_g})=26.9+0.004 \tag{4.4} \,\mathtt{body\_mass\_g}.
+\]</span>
+Some basic interpretations of the coefficients are:</p>
 <ul>
 <li>Intercept: The expected bill length of a penguin with a body mass of
 0 grams is 26.9 mm. We discussed the absurdity of this
@@ -541,23 +556,25 @@ variable by 1000 to convert the variable from grams to kilograms, and
 consequently, save the rescaled variable as <code>body_mass_kg</code>. We then fit
 the model regressing <code>bill_length_mm</code> on <code>body_mass_kg</code> and extract the
 estimated coefficients.</p>
-<div class="sourceCode" id="cb122"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb122-1"><a href="interp-chapter.html#cb122-1" aria-hidden="true" tabindex="-1"></a><span class="co"># load penguins data</span></span>
-<span id="cb122-2"><a href="interp-chapter.html#cb122-2" aria-hidden="true" tabindex="-1"></a><span class="fu">data</span>(penguins, <span class="at">package =</span> <span class="st">&quot;palmerpenguins&quot;</span>)</span>
-<span id="cb122-3"><a href="interp-chapter.html#cb122-3" aria-hidden="true" tabindex="-1"></a><span class="co"># transform body mass variable from g to kg</span></span>
-<span id="cb122-4"><a href="interp-chapter.html#cb122-4" aria-hidden="true" tabindex="-1"></a>penguins <span class="ot">&lt;-</span> penguins <span class="sc">|&gt;</span> <span class="fu">transform</span>(<span class="at">body_mass_kg =</span> body_mass_g<span class="sc">/</span><span class="dv">1000</span>)</span>
-<span id="cb122-5"><a href="interp-chapter.html#cb122-5" aria-hidden="true" tabindex="-1"></a><span class="co"># fit model with body_mass_kg</span></span>
-<span id="cb122-6"><a href="interp-chapter.html#cb122-6" aria-hidden="true" tabindex="-1"></a>slmod_scaled <span class="ot">&lt;-</span> <span class="fu">lm</span>(bill_length_mm <span class="sc">~</span> body_mass_kg, <span class="at">data =</span> penguins)</span>
-<span id="cb122-7"><a href="interp-chapter.html#cb122-7" aria-hidden="true" tabindex="-1"></a><span class="co"># extract coefficients</span></span>
-<span id="cb122-8"><a href="interp-chapter.html#cb122-8" aria-hidden="true" tabindex="-1"></a><span class="fu">coefficients</span>(slmod_scaled)</span>
-<span id="cb122-9"><a href="interp-chapter.html#cb122-9" aria-hidden="true" tabindex="-1"></a><span class="do">##  (Intercept) body_mass_kg </span></span>
-<span id="cb122-10"><a href="interp-chapter.html#cb122-10" aria-hidden="true" tabindex="-1"></a><span class="do">##    26.898872     4.051417</span></span></code></pre></div>
-<p>The fitted model from above is <span class="math display">\[
-\hat{E}(\mathtt{bill\_length\_mm}\mid \mathtt{body\_mass\_kg})=26.9+4.05 \,\mathtt{body\_mass\_kg}.(\#eq:slr-penguin-rescaled)
-\]</span> Thus, we can interpret the estimated coefficient for <code>body_mass_kg</code>
+<div class="sourceCode" id="cb122"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb122-1"><a href="interp-chapter.html#cb122-1" tabindex="-1"></a><span class="co"># load penguins data</span></span>
+<span id="cb122-2"><a href="interp-chapter.html#cb122-2" tabindex="-1"></a><span class="fu">data</span>(penguins, <span class="at">package =</span> <span class="st">&quot;palmerpenguins&quot;</span>)</span>
+<span id="cb122-3"><a href="interp-chapter.html#cb122-3" tabindex="-1"></a><span class="co"># transform body mass variable from g to kg</span></span>
+<span id="cb122-4"><a href="interp-chapter.html#cb122-4" tabindex="-1"></a>penguins <span class="ot">&lt;-</span> penguins <span class="sc">|&gt;</span> <span class="fu">transform</span>(<span class="at">body_mass_kg =</span> body_mass_g<span class="sc">/</span><span class="dv">1000</span>)</span>
+<span id="cb122-5"><a href="interp-chapter.html#cb122-5" tabindex="-1"></a><span class="co"># fit model with body_mass_kg</span></span>
+<span id="cb122-6"><a href="interp-chapter.html#cb122-6" tabindex="-1"></a>slmod_scaled <span class="ot">&lt;-</span> <span class="fu">lm</span>(bill_length_mm <span class="sc">~</span> body_mass_kg, <span class="at">data =</span> penguins)</span>
+<span id="cb122-7"><a href="interp-chapter.html#cb122-7" tabindex="-1"></a><span class="co"># extract coefficients</span></span>
+<span id="cb122-8"><a href="interp-chapter.html#cb122-8" tabindex="-1"></a><span class="fu">coefficients</span>(slmod_scaled)</span>
+<span id="cb122-9"><a href="interp-chapter.html#cb122-9" tabindex="-1"></a><span class="do">##  (Intercept) body_mass_kg </span></span>
+<span id="cb122-10"><a href="interp-chapter.html#cb122-10" tabindex="-1"></a><span class="do">##    26.898872     4.051417</span></span></code></pre></div>
+<p>The fitted model from above is
+<span class="math display" id="eq:slr-penguin-rescaled">\[
+\hat{E}(\mathtt{bill\_length\_mm}\mid \mathtt{body\_mass\_kg})=26.9+4.05 \,\mathtt{body\_mass\_kg}.\tag{4.5}
+\]</span>
+Thus, we can interpret the estimated coefficient for <code>body_mass_kg</code>
 as something like, “A penguin that is 1 kg larger than another penguin
 is expected to have a bill length 4 mm longer than the smaller penguin”.</p>
 <p>Comparing the estimated coefficients from Equations
-<a href="#eq:slr-penguin-orig">(<strong>??</strong>)</a> and <a href="#eq:slr-penguin-rescaled">(<strong>??</strong>)</a>, we see
+<a href="interp-chapter.html#eq:slr-penguin-orig">(4.4)</a> and <a href="interp-chapter.html#eq:slr-penguin-rescaled">(4.5)</a>, we see
 that dividing <code>body_mass_g</code> by 1000 resulted in the estimated
 coefficient changing by a factor of 1000. More generally, if
 <span class="math inline">\(\hat{\beta}_j\)</span> is the estimated coefficient for <span class="math inline">\(X_j\)</span>, then the
@@ -568,13 +585,15 @@ nothing else in the fitted model changes.</p>
 <div id="interp-1st-order-ml" class="section level3 hasAnchor" number="4.1.2">
 <h3><span class="header-section-number">4.1.2</span> Interpretation for first-order multiple linear regression models<a href="interp-chapter.html#interp-1st-order-ml" class="anchor-section" aria-label="Anchor link to header"></a></h3>
 <p>Suppose we have a multiple linear regression model with <span class="math inline">\(p-1\)</span> <em>numeric</em>
-regressors, so that <span class="math display">\[
-E(Y\mid X_1,\ldots,X_{p-1})=\beta_0 + \beta_1 X_1 + \cdots + \beta_{p-1} X_{p-1}.(\#eq:mlr-equation)
-\]</span> Relying on the definition of <span class="math inline">\(\mathbb{X}\)</span>, we denote the set of
+regressors, so that
+<span class="math display" id="eq:mlr-equation">\[
+E(Y\mid X_1,\ldots,X_{p-1})=\beta_0 + \beta_1 X_1 + \cdots + \beta_{p-1} X_{p-1}.\tag{4.6}
+\]</span>
+Relying on the definition of <span class="math inline">\(\mathbb{X}\)</span>, we denote the set of
 regressors without <span class="math inline">\(X_j\)</span> as
 <span class="math inline">\(\mathbb{X}_{-j} = \mathbb{X}\setminus\{X_j\}\)</span>.</p>
 <p>The interpretations of the coefficients from the model in Equation
-<a href="#eq:mlr-equation">(<strong>??</strong>)</a> are:</p>
+<a href="interp-chapter.html#eq:mlr-equation">(4.6)</a> are:</p>
 <ul>
 <li><span class="math inline">\(\beta_0\)</span> is the expected response when all regressors are 0, i.e.,
 <span class="math inline">\(\beta_0=E(Y\mid X_1=0,\ldots,X_{p-1}=0)\)</span>.</li>
@@ -590,7 +609,8 @@ non-intercept coefficients of a multiple linear regression model are
 known as <strong>partial slopes</strong>.</li>
 </ul>
 <p>Regarding the interpretation of <span class="math inline">\(\beta_0\)</span>, from the regression model in
-Equation <a href="#eq:mlr-equation">(<strong>??</strong>)</a>, notice that <span class="math display">\[
+Equation <a href="interp-chapter.html#eq:mlr-equation">(4.6)</a>, notice that
+<span class="math display">\[
 \begin{aligned}
 E(Y\mid X_1=0,\ldots,X_{p-1}=0) &amp;= \beta_0 + \beta_1 \cdot 0 + \cdots + \beta_{p-1} \cdot 0\\
 &amp;= \beta_0.
@@ -610,7 +630,11 @@ observed data.</p>
 <p>A notable problem with the standard mathematical interpretation of
 multiple regression models is that a single predictor can be used more
 than once in the model. E.g., in the 2nd-degree polynomial regression
-model <span class="math display">\[E(Y\mid X) = \beta_0 + \beta_1 X + \beta_2 X^2,\]</span> <span class="math inline">\(X\)</span> is used in
+model
+<span class="math display">\[
+E(Y\mid X) = \beta_0 + \beta_1 X + \beta_2 X^2,
+\]</span>
+<span class="math inline">\(X\)</span> is used in
 both the second and third terms. So it is not possible to increase <span class="math inline">\(X\)</span>
 while keeping <span class="math inline">\(X^2\)</span> fixed. The mathematical interpretation given in this
 section is applicable to first-order linear regression models (cf.
@@ -625,12 +649,13 @@ coefficients for categorical predictors, which are discussed in Section
 <p>To illustrate the interpretations given above, we interpret the
 first-order multiple linear regression model fit to the <code>penguins</code> data
 in Section <a href="linear-model-estimation.html#s:penguins-mlr">3.6</a>. The fitted multiple linear regression
-model is <span class="math display">\[
+model is
+<span class="math display" id="eq:mlr-penguins-interp">\[
 \begin{aligned}
 &amp;\hat{E}(\mathtt{bill\_length\_mm}\mid \mathtt{body\_mass\_g}, \mathtt{flipper\_length\_mm})\\
 &amp;=-3.44+0.0007 \,\mathtt{body\_mass\_g}+0.22\,\mathtt{flipper\_length\_mm}.
 \end{aligned}
-(\#eq:mlr-penguins-interp)
+\tag{4.7}
 \]</span></p>
 <p>Some basic interpretations of the coefficients are:</p>
 <ul>
@@ -645,8 +670,8 @@ flipper length of 0 mm to have a bill length of -3.44 mm.</li>
 <p>Did you notice that the estimated coefficients for the intercept and the
 <code>body_mass_g</code> regressor changed between the fitted simple linear model
 and the fitted multiple linear regression model for the <code>penguins</code>
-example in the sections above (cf. Equations <a href="#eq:slr-penguin-orig">(<strong>??</strong>)</a>
-and <a href="#eq:mlr-penguins-interp">(<strong>??</strong>)</a>)? Why does this happen? What is going
+example in the sections above (cf. Equations <a href="interp-chapter.html#eq:slr-penguin-orig">(4.4)</a>
+and <a href="interp-chapter.html#eq:mlr-penguins-interp">(4.7)</a>)? Why does this happen? What is going
 on?</p>
 <p>The role a regressor plays in a regression model depends on what other
 regressors are in the model. Recall a team setting you’ve been in where
@@ -679,7 +704,7 @@ orthogonality and how it affects estimation.</p>
 <h2><span class="header-section-number">4.2</span> Effect plots<a href="interp-chapter.html#effect-plots" class="anchor-section" aria-label="Anchor link to header"></a></h2>
 <p>An effect plot is a visual display that aids in helping us intuitively
 interpret the impact of a <em>predictor</em> in a model. As stated by
-<span class="citation">Fox and Weisberg (<a href="#ref-fox2020predictor" role="doc-biblioref">2020</a>)</span>:</p>
+<span class="citation">Fox and Weisberg (<a href="#ref-fox2020predictor">2020</a>)</span>:</p>
 <blockquote>
 <p>Summarization of the effects of predictors using tables of coefficient
 estimates is often incomplete. Effects, and particularly plots of
@@ -705,7 +730,7 @@ combination of predictors, etc.
 regression models with numeric regressors since these are the simplest
 to construct. In a first-order linear model, none of the regressors
 interact, i.e., none of the regressors are functions of each other.
-<span class="citation">Fox and Weisberg (<a href="#ref-fox2020predictor" role="doc-biblioref">2020</a>)</span> use the terminology <strong>fixed group</strong> to refer to the
+<span class="citation">Fox and Weisberg (<a href="#ref-fox2020predictor">2020</a>)</span> use the terminology <strong>fixed group</strong> to refer to the
 group of predictors that do not interact with the focal predictor. For a
 first-order regression model, all of the non-focal predictors are part
 of the fixed group. To create our effect plot, we must first find the
@@ -717,23 +742,24 @@ finding this function.</p>
 <code>penguins</code> data that regressed <code>bill_length_mm</code> on <code>body_mass_g</code> and
 <code>flipper_length_mm</code> (previously considered in Section
 <a href="linear-model-estimation.html#s:penguins-mlr">3.6</a>). We refit that model using the code below and
-assign it the name <code>mlmod</code>. The fitted model is <span class="math display">\[
+assign it the name <code>mlmod</code>. The fitted model is
+<span class="math display" id="eq:mlr-effect-equation">\[
 \begin{aligned}
 &amp;\hat{E}(\mathtt{bill\_length\_mm}\mid \mathtt{body\_mass\_g}, \mathtt{flipper\_length\_mm})\\
 &amp;=-3.44+0.0007 \,\mathtt{body\_mass\_g}+0.22\,\mathtt{flipper\_length\_mm}.
 \end{aligned}
-(\#eq:mlr-effect-equation)
+\tag{4.8}
 \]</span></p>
-<div class="sourceCode" id="cb123"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb123-1"><a href="interp-chapter.html#cb123-1" aria-hidden="true" tabindex="-1"></a><span class="co"># load penguins data since it hasn&#39;t been loaded in this chapter</span></span>
-<span id="cb123-2"><a href="interp-chapter.html#cb123-2" aria-hidden="true" tabindex="-1"></a><span class="fu">data</span>(penguins, <span class="at">package =</span> <span class="st">&quot;palmerpenguins&quot;</span>)</span>
-<span id="cb123-3"><a href="interp-chapter.html#cb123-3" aria-hidden="true" tabindex="-1"></a><span class="co"># refit multiple linear regression model</span></span>
-<span id="cb123-4"><a href="interp-chapter.html#cb123-4" aria-hidden="true" tabindex="-1"></a>mlmod <span class="ot">&lt;-</span> <span class="fu">lm</span>(bill_length_mm <span class="sc">~</span> body_mass_g <span class="sc">+</span> flipper_length_mm, <span class="at">data =</span> penguins)</span>
-<span id="cb123-5"><a href="interp-chapter.html#cb123-5" aria-hidden="true" tabindex="-1"></a><span class="co"># extract estimated coefficients</span></span>
-<span id="cb123-6"><a href="interp-chapter.html#cb123-6" aria-hidden="true" tabindex="-1"></a><span class="fu">coef</span>(mlmod)</span>
-<span id="cb123-7"><a href="interp-chapter.html#cb123-7" aria-hidden="true" tabindex="-1"></a><span class="do">##       (Intercept)       body_mass_g flipper_length_mm </span></span>
-<span id="cb123-8"><a href="interp-chapter.html#cb123-8" aria-hidden="true" tabindex="-1"></a><span class="do">##     -3.4366939266      0.0006622186      0.2218654584</span></span></code></pre></div>
+<div class="sourceCode" id="cb123"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb123-1"><a href="interp-chapter.html#cb123-1" tabindex="-1"></a><span class="co"># load penguins data since it hasn&#39;t been loaded in this chapter</span></span>
+<span id="cb123-2"><a href="interp-chapter.html#cb123-2" tabindex="-1"></a><span class="fu">data</span>(penguins, <span class="at">package =</span> <span class="st">&quot;palmerpenguins&quot;</span>)</span>
+<span id="cb123-3"><a href="interp-chapter.html#cb123-3" tabindex="-1"></a><span class="co"># refit multiple linear regression model</span></span>
+<span id="cb123-4"><a href="interp-chapter.html#cb123-4" tabindex="-1"></a>mlmod <span class="ot">&lt;-</span> <span class="fu">lm</span>(bill_length_mm <span class="sc">~</span> body_mass_g <span class="sc">+</span> flipper_length_mm, <span class="at">data =</span> penguins)</span>
+<span id="cb123-5"><a href="interp-chapter.html#cb123-5" tabindex="-1"></a><span class="co"># extract estimated coefficients</span></span>
+<span id="cb123-6"><a href="interp-chapter.html#cb123-6" tabindex="-1"></a><span class="fu">coef</span>(mlmod)</span>
+<span id="cb123-7"><a href="interp-chapter.html#cb123-7" tabindex="-1"></a><span class="do">##       (Intercept)       body_mass_g flipper_length_mm </span></span>
+<span id="cb123-8"><a href="interp-chapter.html#cb123-8" tabindex="-1"></a><span class="do">##     -3.4366939266      0.0006622186      0.2218654584</span></span></code></pre></div>
 <p>There are two predictors in the model in Equation
-<a href="#eq:mlr-effect-equation">(<strong>??</strong>)</a>, <code>body_mass_g</code> and <code>flipper_length_mm</code>, so
+<a href="interp-chapter.html#eq:mlr-effect-equation">(4.8)</a>, <code>body_mass_g</code> and <code>flipper_length_mm</code>, so
 we can create effect plots for both variables. Since each predictor is
 numeric and doesn’t interact with other predictors, the “typical” value
 used to determine the estimated mean response will be the sample mean of
@@ -750,27 +776,31 @@ to get the sample mean of each variable. The sample means of the
 <span class="math inline">\(\overline{\mathtt{body\_mass\_g}}=4201.75\)</span> and
 <span class="math inline">\(\overline{\mathtt{flipper\_length\_mm}}=200.92\)</span>, respectively, as shown
 in the code below.</p>
-<div class="sourceCode" id="cb124"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb124-1"><a href="interp-chapter.html#cb124-1" aria-hidden="true" tabindex="-1"></a><span class="fu">colMeans</span>(mlmod<span class="sc">$</span>model)</span>
-<span id="cb124-2"><a href="interp-chapter.html#cb124-2" aria-hidden="true" tabindex="-1"></a><span class="do">##    bill_length_mm       body_mass_g flipper_length_mm </span></span>
-<span id="cb124-3"><a href="interp-chapter.html#cb124-3" aria-hidden="true" tabindex="-1"></a><span class="do">##          43.92193        4201.75439         200.91520</span></span></code></pre></div>
+<div class="sourceCode" id="cb124"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb124-1"><a href="interp-chapter.html#cb124-1" tabindex="-1"></a><span class="fu">colMeans</span>(mlmod<span class="sc">$</span>model)</span>
+<span id="cb124-2"><a href="interp-chapter.html#cb124-2" tabindex="-1"></a><span class="do">##    bill_length_mm       body_mass_g flipper_length_mm </span></span>
+<span id="cb124-3"><a href="interp-chapter.html#cb124-3" tabindex="-1"></a><span class="do">##          43.92193        4201.75439         200.91520</span></span></code></pre></div>
 <p>The effect plot for <span class="math inline">\(\mathtt{body\_mass\_g}\)</span> (on the response
-<span class="math inline">\(\mathtt{bill\_length\_mm}\)</span>) is a plot of <span class="math display">\[
+<span class="math inline">\(\mathtt{bill\_length\_mm}\)</span>) is a plot of
+<span class="math display">\[
 \begin{aligned}
 &amp;\hat{E}(\mathtt{bill\_length\_mm}\mid \mathtt{body\_mass\_g}, \mathtt{flipper\_length\_mm} = 200.92)\\
 &amp;=-3.44+0.0007 \,\mathtt{body\_mass\_g}+0.22\cdot 200.92 \\
 &amp;=41.14+0.0007 \,\mathtt{body\_mass\_g}
 \end{aligned}
-\]</span> as a function of <span class="math inline">\(\mathtt{body\_mass\_g}\)</span>. Note: we used exact values
+\]</span>
+as a function of <span class="math inline">\(\mathtt{body\_mass\_g}\)</span>. Note: we used exact values
 in the calculation above. The intercept will be 40.76 instead of 41.14
 if we use the rounded values. Similarly, the effect plot for
-<span class="math inline">\(\mathtt{flipper\_length\_mm}\)</span> is a plot of <span class="math display">\[
+<span class="math inline">\(\mathtt{flipper\_length\_mm}\)</span> is a plot of
+<span class="math display">\[
 \begin{aligned}
 &amp;\hat{E}(\mathtt{bill\_length\_mm}\mid \mathtt{body\_mass\_g} = 4201.75,\mathtt{flipper\_length\_mm}) \\
 &amp;=-3.44+0.0007 \cdot 4201.75+0.22\,\mathtt{flipper\_length\_mm} \\
 &amp;=-0.65 + 0.22\,\mathtt{flipper\_length\_mm}
 \end{aligned}
-\]</span> as a function of <span class="math inline">\(\mathtt{flipper\_length\_mm}\)</span>.</p>
-<p>The <strong><code>effects</code></strong> package <span class="citation">(<a href="#ref-R-effects" role="doc-biblioref">Fox et al. 2022</a>)</span> can be used to generate effect
+\]</span>
+as a function of <span class="math inline">\(\mathtt{flipper\_length\_mm}\)</span>.</p>
+<p>The <strong><code>effects</code></strong> package <span class="citation">(<a href="#ref-R-effects">Fox et al. 2022</a>)</span> can be used to generate effect
 plots for the predictors of a fitted linear model. We start by using the
 <code>effects::predictorEffect</code> function to compute the information needed to
 draw the plot, then the <code>plot</code> function to display the information.</p>
@@ -789,17 +819,17 @@ function and produce the desired effect plot.</p>
 the <code>predictorEffect</code> function) and then combine calls to the <code>plot</code> and
 <code>predictorEffect</code> functions to create an effect plot for <code>body_mass_g</code>,
 which is shown in Figure <a href="interp-chapter.html#fig:effect-plot-body-mass">4.1</a>.</p>
-<div class="sourceCode" id="cb125"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb125-1"><a href="interp-chapter.html#cb125-1" aria-hidden="true" tabindex="-1"></a><span class="co"># load effects package</span></span>
-<span id="cb125-2"><a href="interp-chapter.html#cb125-2" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(effects)</span>
-<span id="cb125-3"><a href="interp-chapter.html#cb125-3" aria-hidden="true" tabindex="-1"></a><span class="do">## Loading required package: carData</span></span>
-<span id="cb125-4"><a href="interp-chapter.html#cb125-4" aria-hidden="true" tabindex="-1"></a><span class="do">## lattice theme set by effectsTheme()</span></span>
-<span id="cb125-5"><a href="interp-chapter.html#cb125-5" aria-hidden="true" tabindex="-1"></a><span class="do">## See ?effectsTheme for details.</span></span>
-<span id="cb125-6"><a href="interp-chapter.html#cb125-6" aria-hidden="true" tabindex="-1"></a><span class="co"># draw effect plot for body_mass_g</span></span>
-<span id="cb125-7"><a href="interp-chapter.html#cb125-7" aria-hidden="true" tabindex="-1"></a><span class="fu">plot</span>(<span class="fu">predictorEffect</span>(<span class="st">&quot;body_mass_g&quot;</span>, mlmod))</span></code></pre></div>
+<div class="sourceCode" id="cb125"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb125-1"><a href="interp-chapter.html#cb125-1" tabindex="-1"></a><span class="co"># load effects package</span></span>
+<span id="cb125-2"><a href="interp-chapter.html#cb125-2" tabindex="-1"></a><span class="fu">library</span>(effects)</span>
+<span id="cb125-3"><a href="interp-chapter.html#cb125-3" tabindex="-1"></a><span class="do">## Loading required package: carData</span></span>
+<span id="cb125-4"><a href="interp-chapter.html#cb125-4" tabindex="-1"></a><span class="do">## lattice theme set by effectsTheme()</span></span>
+<span id="cb125-5"><a href="interp-chapter.html#cb125-5" tabindex="-1"></a><span class="do">## See ?effectsTheme for details.</span></span>
+<span id="cb125-6"><a href="interp-chapter.html#cb125-6" tabindex="-1"></a><span class="co"># draw effect plot for body_mass_g</span></span>
+<span id="cb125-7"><a href="interp-chapter.html#cb125-7" tabindex="-1"></a><span class="fu">plot</span>(<span class="fu">predictorEffect</span>(<span class="st">&quot;body_mass_g&quot;</span>, mlmod))</span></code></pre></div>
 <div class="figure"><span style="display:block;" id="fig:effect-plot-body-mass"></span>
 <img src="A-Progessive-Introduction-to-Linear-Models_files/figure-html/effect-plot-body-mass-1.png" alt="Effect plot for body mass based on the fitted model in Equation \@ref(eq:mlr-effect-equation)." width="672" />
 <p class="caption">
-Figure 4.1: Effect plot for body mass based on the fitted model in Equation <a href="#eq:mlr-effect-equation">(<strong>??</strong>)</a>.
+Figure 4.1: Effect plot for body mass based on the fitted model in Equation <a href="interp-chapter.html#eq:mlr-effect-equation">(4.8)</a>.
 </p>
 </div>
 <p>We see from Figure <a href="interp-chapter.html#fig:effect-plot-body-mass">4.1</a> that there is a
@@ -816,12 +846,12 @@ indicate observed values of the x-axis variable.</p>
 Figure <a href="interp-chapter.html#fig:effect-plot-flipper-length">4.2</a>, using the code below.
 There is a clear positive association between <code>flipper_length_mm</code> and
 <code>bill_length_mm</code> after accounting for <code>body_mass_g</code>.</p>
-<div class="sourceCode" id="cb126"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb126-1"><a href="interp-chapter.html#cb126-1" aria-hidden="true" tabindex="-1"></a><span class="co"># draw effect plot for flipper_length_mm</span></span>
-<span id="cb126-2"><a href="interp-chapter.html#cb126-2" aria-hidden="true" tabindex="-1"></a><span class="fu">plot</span>(<span class="fu">predictorEffect</span>(<span class="st">&quot;flipper_length_mm&quot;</span>, mlmod))</span></code></pre></div>
+<div class="sourceCode" id="cb126"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb126-1"><a href="interp-chapter.html#cb126-1" tabindex="-1"></a><span class="co"># draw effect plot for flipper_length_mm</span></span>
+<span id="cb126-2"><a href="interp-chapter.html#cb126-2" tabindex="-1"></a><span class="fu">plot</span>(<span class="fu">predictorEffect</span>(<span class="st">&quot;flipper_length_mm&quot;</span>, mlmod))</span></code></pre></div>
 <div class="figure"><span style="display:block;" id="fig:effect-plot-flipper-length"></span>
 <img src="A-Progessive-Introduction-to-Linear-Models_files/figure-html/effect-plot-flipper-length-1.png" alt="Effect plot for flipper length based on the fitted model in Equation \@ref(eq:mlr-effect-equation)." width="672" />
 <p class="caption">
-Figure 4.2: Effect plot for flipper length based on the fitted model in Equation <a href="#eq:mlr-effect-equation">(<strong>??</strong>)</a>.
+Figure 4.2: Effect plot for flipper length based on the fitted model in Equation <a href="interp-chapter.html#eq:mlr-effect-equation">(4.8)</a>.
 </p>
 </div>
 <p>Alternatively, we could use <code>effects::allEffects</code> to compute the
@@ -831,11 +861,11 @@ predictors in one graphic. This approach is quicker, but the individual
 effect plots can sometimes be too small for practical use. We
 demonstrate this faster approach in the code below, which produces
 Figure <a href="interp-chapter.html#fig:mlmod-effect-plots-all">4.3</a>.</p>
-<div class="sourceCode" id="cb127"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb127-1"><a href="interp-chapter.html#cb127-1" aria-hidden="true" tabindex="-1"></a><span class="fu">plot</span>(<span class="fu">allEffects</span>(mlmod))</span></code></pre></div>
+<div class="sourceCode" id="cb127"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb127-1"><a href="interp-chapter.html#cb127-1" tabindex="-1"></a><span class="fu">plot</span>(<span class="fu">allEffects</span>(mlmod))</span></code></pre></div>
 <div class="figure"><span style="display:block;" id="fig:mlmod-effect-plots-all"></span>
 <img src="A-Progessive-Introduction-to-Linear-Models_files/figure-html/mlmod-effect-plots-all-1.png" alt="All effect plots for predictors of the fitted model in Equation \@ref(eq:mlr-effect-equation)." width="672" />
 <p class="caption">
-Figure 4.3: All effect plots for predictors of the fitted model in Equation <a href="#eq:mlr-effect-equation">(<strong>??</strong>)</a>.
+Figure 4.3: All effect plots for predictors of the fitted model in Equation <a href="interp-chapter.html#eq:mlr-effect-equation">(4.8)</a>.
 </p>
 </div>
 </div>
@@ -852,36 +882,45 @@ must be transformed into two indicator variables, <span class="math inline">\(D_
 category levels <span class="math inline">\(L_2\)</span> and <span class="math inline">\(L_3\)</span>, to be included in our linear model.
 <span class="math inline">\(L_1\)</span> is the reference level. The parallel lines model is formulated as
 <span class="math display" id="eq:pl-def-interp">\[
-E(Y \mid X, C) = \beta_{int} + \beta_{X} X + \beta_{L_2} D_2 +  \beta_{L_3} D_3, \tag{4.2}
-\]</span> where we replace the usual <span class="math inline">\(\beta_0\)</span>, <span class="math inline">\(\beta_1\)</span>, <span class="math inline">\(\beta_2\)</span>, and
+E(Y \mid X, C) = \beta_{int} + \beta_{X} X + \beta_{L_2} D_2 +  \beta_{L_3} D_3, \tag{4.9}
+\]</span>
+where we replace the usual <span class="math inline">\(\beta_0\)</span>, <span class="math inline">\(\beta_1\)</span>, <span class="math inline">\(\beta_2\)</span>, and
 <span class="math inline">\(\beta_3\)</span> with notation the indicates the regressor each coefficient is
 associated with.</p>
 <p>When an observation has level <span class="math inline">\(L_1\)</span> and <span class="math inline">\(X=0\)</span>, then the expected
-response is <span class="math display">\[
+response is
+<span class="math display">\[
 \begin{aligned}
 E(Y|X = 0, C=L_1) &amp;= \beta_{int} + \beta_X \cdot 0 + \beta_{L_2} \cdot 0 + \beta_{L_3} \cdot 0 \\
 &amp;= \beta_{int}.
 \end{aligned}
-\]</span> Thus, <span class="math inline">\(\beta_{int}\)</span> is the expected response for an observation with
+\]</span>
+Thus, <span class="math inline">\(\beta_{int}\)</span> is the expected response for an observation with
 level <span class="math inline">\(L_1\)</span> when <span class="math inline">\(X=0\)</span>.</p>
 <p>When an observation has a fixed level <span class="math inline">\(L_j\)</span> (it doesn’t matter which
 level) and <span class="math inline">\(X\)</span> increases from <span class="math inline">\(x^*\)</span> to <span class="math inline">\(x^*+1\)</span>, then the change in the
-expected response is <span class="math display">\[
+expected response is
+<span class="math display">\[
 E(Y|X = x^* + 1, C=L_j) - E(Y|X = x^*, C=L_j)= \beta_X.
-\]</span> Thus, <span class="math inline">\(\beta_X\)</span> is the expected change in the response for an
+\]</span>
+Thus, <span class="math inline">\(\beta_X\)</span> is the expected change in the response for an
 observation with fixed level <span class="math inline">\(L_j\)</span> when <span class="math inline">\(X\)</span> increases by 1 unit.</p>
-<p>When an observation has level <span class="math inline">\(L_2\)</span>, the expected response is <span class="math display">\[
+<p>When an observation has level <span class="math inline">\(L_2\)</span>, the expected response is
+<span class="math display">\[
 \begin{aligned}
 E(Y\mid X = x^*, C=L_2) &amp;= \beta_{int} + \beta_X x^* + \beta_{L_2} \cdot 1 + \beta_{L_3} \cdot 0 \\
 &amp;= \beta_{int} + \beta_X x^* + \beta_{L_2}.
 \end{aligned}
-\]</span> Thus, <span class="math display">\[
+\]</span>
+Thus,
+<span class="math display">\[
 \begin{aligned}
 &amp; E(Y\mid X=x^*, C=L_2) - E(Y\mid X=x^*, C=L_1) \\
 &amp;= (\beta_{int} + \beta_X x^* + \beta_{L_2}) - (\beta_{int} + \beta_X x^*) \\
 &amp;=  \beta_{L_2}.
 \end{aligned}
-\]</span> Thus, <span class="math inline">\(\beta_{L_2}\)</span> is the expected change in the response for a
+\]</span>
+Thus, <span class="math inline">\(\beta_{L_2}\)</span> is the expected change in the response for a
 fixed value of <span class="math inline">\(X\)</span> when comparing on observation having level <span class="math inline">\(L_1\)</span> to
 level <span class="math inline">\(L_2\)</span> of predictor <span class="math inline">\(C\)</span>. More specifically, <span class="math inline">\(\beta_{L_2}\)</span> indicates
 the distance between the estimated regression lines for observations
@@ -891,7 +930,7 @@ observations having level <span class="math inline">\(L_1\)</span>. <span class=
 level of <span class="math inline">\(C\)</span> because we must refer to it to interpret our model with
 respect to other levels of <span class="math inline">\(C\)</span>.</p>
 <p>To summarize the interpretation of the coefficients in parallel lines
-models like Equation <a href="interp-chapter.html#eq:pl-def-interp">(4.2)</a>, assuming categorical
+models like Equation <a href="interp-chapter.html#eq:pl-def-interp">(4.9)</a>, assuming categorical
 predictor <span class="math inline">\(C\)</span> has <span class="math inline">\(K\)</span> levels instead of 3:</p>
 <ul>
 <li><span class="math inline">\(\beta_{int}\)</span> represents the expected response for observations
@@ -906,12 +945,14 @@ the response when comparing observations having level <span class="math inline">
 <code>penguins</code> data that used both <code>body_mass_g</code> and <code>species</code> to explain
 the behavior of <code>bill_length_mm</code>. Letting <span class="math inline">\(D_C\)</span> denote the indicator
 variable for the <code>Chinstrap</code> level and <span class="math inline">\(D_G\)</span> denote the indicator
-variable for the <code>Gentoo</code> level, the fitted parallel lines model was <span class="math display">\[
+variable for the <code>Gentoo</code> level, the fitted parallel lines model was
+<span class="math display">\[
 \begin{aligned}
 &amp;\hat{E}(\mathtt{bill\_length\_mm} \mid \mathtt{body\_mass\_g}, \mathtt{species})\\
 &amp;= 24.92 + 0.004 \mathtt{body\_mass\_g} + 9.92 D_C + 3.56 D_G.
 \end{aligned}
-\]</span> In the context of this model:</p>
+\]</span>
+In the context of this model:</p>
 <ul>
 <li>The expected bill length for an Adelie penguin with a body mass of 0
 grams is 24.92 mm.</li>
@@ -937,7 +978,8 @@ observations in each group.</p>
 context of the <code>penguins</code> parallel lines model discussed in the previous
 section. In Section <a href="linear-model-estimation.html#s:penguins-mlr2">3.9</a>, we determined that the
 fitted parallel lines model simplified to the following equations
-depending on the level of <code>species</code>: <span class="math display" id="eq:pl-equations">\[
+depending on the level of <code>species</code>:
+<span class="math display" id="eq:pl-equations">\[
 \begin{aligned}
 &amp;\hat{E}(\mathtt{bill\_length\_mm} \mid \mathtt{body\_mass\_g}, \mathtt{species}=\mathtt{Adelie}) \\
 &amp;= 24.92 + 0.004 \mathtt{body\_mass\_g} \\
@@ -946,29 +988,31 @@ depending on the level of <code>species</code>: <span class="math display" id="e
 &amp;\hat{E}(\mathtt{bill\_length\_mm} \mid \mathtt{body\_mass\_g}, \mathtt{species}=\mathtt{Gentoo}) \\
 &amp;= 28.48 + 0.004 \mathtt{body\_mass\_g}.
 \end{aligned}
-\tag{4.3}
-\]</span> We recreate the fitted model producing these equations in R using the
+\tag{4.10}
+\]</span>
+We recreate the fitted model producing these equations in R using the
 code below.</p>
-<div class="sourceCode" id="cb128"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb128-1"><a href="interp-chapter.html#cb128-1" aria-hidden="true" tabindex="-1"></a><span class="co"># refit the parallel lines model</span></span>
-<span id="cb128-2"><a href="interp-chapter.html#cb128-2" aria-hidden="true" tabindex="-1"></a>lmodp <span class="ot">&lt;-</span> <span class="fu">lm</span>(bill_length_mm <span class="sc">~</span> body_mass_g <span class="sc">+</span> species, <span class="at">data =</span> penguins)</span>
-<span id="cb128-3"><a href="interp-chapter.html#cb128-3" aria-hidden="true" tabindex="-1"></a><span class="co"># double-check coefficients</span></span>
-<span id="cb128-4"><a href="interp-chapter.html#cb128-4" aria-hidden="true" tabindex="-1"></a><span class="fu">coef</span>(lmodp)</span>
-<span id="cb128-5"><a href="interp-chapter.html#cb128-5" aria-hidden="true" tabindex="-1"></a><span class="do">##      (Intercept)      body_mass_g speciesChinstrap </span></span>
-<span id="cb128-6"><a href="interp-chapter.html#cb128-6" aria-hidden="true" tabindex="-1"></a><span class="do">##     24.919470977      0.003748497      9.920884113 </span></span>
-<span id="cb128-7"><a href="interp-chapter.html#cb128-7" aria-hidden="true" tabindex="-1"></a><span class="do">##    speciesGentoo </span></span>
-<span id="cb128-8"><a href="interp-chapter.html#cb128-8" aria-hidden="true" tabindex="-1"></a><span class="do">##      3.557977539</span></span></code></pre></div>
+<div class="sourceCode" id="cb128"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb128-1"><a href="interp-chapter.html#cb128-1" tabindex="-1"></a><span class="co"># refit the parallel lines model</span></span>
+<span id="cb128-2"><a href="interp-chapter.html#cb128-2" tabindex="-1"></a>lmodp <span class="ot">&lt;-</span> <span class="fu">lm</span>(bill_length_mm <span class="sc">~</span> body_mass_g <span class="sc">+</span> species, <span class="at">data =</span> penguins)</span>
+<span id="cb128-3"><a href="interp-chapter.html#cb128-3" tabindex="-1"></a><span class="co"># double-check coefficients</span></span>
+<span id="cb128-4"><a href="interp-chapter.html#cb128-4" tabindex="-1"></a><span class="fu">coef</span>(lmodp)</span>
+<span id="cb128-5"><a href="interp-chapter.html#cb128-5" tabindex="-1"></a><span class="do">##      (Intercept)      body_mass_g speciesChinstrap </span></span>
+<span id="cb128-6"><a href="interp-chapter.html#cb128-6" tabindex="-1"></a><span class="do">##     24.919470977      0.003748497      9.920884113 </span></span>
+<span id="cb128-7"><a href="interp-chapter.html#cb128-7" tabindex="-1"></a><span class="do">##    speciesGentoo </span></span>
+<span id="cb128-8"><a href="interp-chapter.html#cb128-8" tabindex="-1"></a><span class="do">##      3.557977539</span></span></code></pre></div>
 <p>The code below determines the number of observations with each level of
 <code>species</code> for the data used in the fitted model <code>lmodp</code>. We see that 151
 Adelie, 68 Chinstrap, and 123 Gentoo penguins (342 total penguins) were
 used to fit the model stored in <code>lmodp</code>.</p>
-<div class="sourceCode" id="cb129"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb129-1"><a href="interp-chapter.html#cb129-1" aria-hidden="true" tabindex="-1"></a><span class="fu">table</span>(lmodp<span class="sc">$</span>model<span class="sc">$</span>species)</span>
-<span id="cb129-2"><a href="interp-chapter.html#cb129-2" aria-hidden="true" tabindex="-1"></a><span class="do">## </span></span>
-<span id="cb129-3"><a href="interp-chapter.html#cb129-3" aria-hidden="true" tabindex="-1"></a><span class="do">##    Adelie Chinstrap    Gentoo </span></span>
-<span id="cb129-4"><a href="interp-chapter.html#cb129-4" aria-hidden="true" tabindex="-1"></a><span class="do">##       151        68       123</span></span></code></pre></div>
+<div class="sourceCode" id="cb129"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb129-1"><a href="interp-chapter.html#cb129-1" tabindex="-1"></a><span class="fu">table</span>(lmodp<span class="sc">$</span>model<span class="sc">$</span>species)</span>
+<span id="cb129-2"><a href="interp-chapter.html#cb129-2" tabindex="-1"></a><span class="do">## </span></span>
+<span id="cb129-3"><a href="interp-chapter.html#cb129-3" tabindex="-1"></a><span class="do">##    Adelie Chinstrap    Gentoo </span></span>
+<span id="cb129-4"><a href="interp-chapter.html#cb129-4" tabindex="-1"></a><span class="do">##       151        68       123</span></span></code></pre></div>
 <p>The equation used to create the effect plot of <code>body_mass_g</code> is the
-weighted average of the equations in Equation <a href="interp-chapter.html#eq:pl-equations">(4.3)</a>,
+weighted average of the equations in Equation <a href="interp-chapter.html#eq:pl-equations">(4.10)</a>,
 with weights proportional to the number of observational having each
-level of the categorical predictor. Specifically, <span class="math display">\[
+level of the categorical predictor. Specifically,
+<span class="math display">\[
 \begin{aligned}
 &amp; \hat{E}(\mathtt{bill\_length\_mm} \mid \mathtt{body\_mass\_g}, \mathtt{species}=\mathtt{typical}) \\
 &amp;= \frac{151}{342}(24.92 + 0.004 \mathtt{body\_mass\_g})\\
@@ -976,12 +1020,13 @@ level of the categorical predictor. Specifically, <span class="math display">\[
 &amp;\quad + \frac{123}{342}(28.48 + 0.004 \mathtt{body\_mass\_g}) \\
 &amp;=28.17 + 0.004 \mathtt{body\_mass\_g}.
 \end{aligned}
-\]</span> The effect plot for <code>body_mass_g</code> for the fitted parallel lines model
+\]</span>
+The effect plot for <code>body_mass_g</code> for the fitted parallel lines model
 is shown in Figure <a href="interp-chapter.html#fig:effect-plot-plmod-body-mass">4.4</a>. The
 association between <code>bill_length_mm</code> and <code>body_mass_g</code> is positive after
 accounting for <code>species</code>.</p>
-<div class="sourceCode" id="cb130"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb130-1"><a href="interp-chapter.html#cb130-1" aria-hidden="true" tabindex="-1"></a><span class="co"># draw effect plot for body_mass_g</span></span>
-<span id="cb130-2"><a href="interp-chapter.html#cb130-2" aria-hidden="true" tabindex="-1"></a><span class="fu">plot</span>(<span class="fu">predictorEffect</span>(<span class="st">&quot;body_mass_g&quot;</span>, lmodp))</span></code></pre></div>
+<div class="sourceCode" id="cb130"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb130-1"><a href="interp-chapter.html#cb130-1" tabindex="-1"></a><span class="co"># draw effect plot for body_mass_g</span></span>
+<span id="cb130-2"><a href="interp-chapter.html#cb130-2" tabindex="-1"></a><span class="fu">plot</span>(<span class="fu">predictorEffect</span>(<span class="st">&quot;body_mass_g&quot;</span>, lmodp))</span></code></pre></div>
 <div class="figure"><span style="display:block;" id="fig:effect-plot-plmod-body-mass"></span>
 <img src="A-Progessive-Introduction-to-Linear-Models_files/figure-html/effect-plot-plmod-body-mass-1.png" alt="The effect plot of `body_mass_g` for the fitted parallel lines model." width="672" />
 <p class="caption">
@@ -999,18 +1044,20 @@ each level of the categorical variable when the fixed group group
 predictors are held at their sample mean. The sample mean of the
 <code>body_mass_g</code> values used to fit <code>lmodp</code> is 4201.75, as shown in the
 code below.</p>
-<div class="sourceCode" id="cb131"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb131-1"><a href="interp-chapter.html#cb131-1" aria-hidden="true" tabindex="-1"></a><span class="co"># sample mean of body_mass_g variable used to fit lmodp</span></span>
-<span id="cb131-2"><a href="interp-chapter.html#cb131-2" aria-hidden="true" tabindex="-1"></a><span class="fu">mean</span>(lmodp<span class="sc">$</span>model<span class="sc">$</span>body_mass_g)</span>
-<span id="cb131-3"><a href="interp-chapter.html#cb131-3" aria-hidden="true" tabindex="-1"></a><span class="do">## [1] 4201.754</span></span></code></pre></div>
-<p>Using the first equation in Equation <a href="interp-chapter.html#eq:pl-equations">(4.3)</a>, the
+<div class="sourceCode" id="cb131"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb131-1"><a href="interp-chapter.html#cb131-1" tabindex="-1"></a><span class="co"># sample mean of body_mass_g variable used to fit lmodp</span></span>
+<span id="cb131-2"><a href="interp-chapter.html#cb131-2" tabindex="-1"></a><span class="fu">mean</span>(lmodp<span class="sc">$</span>model<span class="sc">$</span>body_mass_g)</span>
+<span id="cb131-3"><a href="interp-chapter.html#cb131-3" tabindex="-1"></a><span class="do">## [1] 4201.754</span></span></code></pre></div>
+<p>Using the first equation in Equation <a href="interp-chapter.html#eq:pl-equations">(4.10)</a>, the
 estimated mean for the Adelie species when <code>body_mass_g</code> is fixed at
-4201.75 is <span class="math display">\[
+4201.75 is
+<span class="math display">\[
 \begin{aligned}
 &amp;\hat{E}(\mathtt{bill\_length\_mm} \mid \mathtt{body\_mass\_g} = 4201.75, \mathtt{species}=\mathtt{Adelie}) \\
 &amp;= 24.92 + 0.004 \cdot 4201.75 \\
 &amp;= 40.67.
 \end{aligned}
-\]</span> Similarly,
+\]</span>
+Similarly,
 <span class="math inline">\(\hat{E}(\mathtt{bill\_length\_mm} \mid \mathtt{body\_mass\_g} = 4201.75, \mathtt{species}=\mathtt{Chinstrap}) = 50.59\)</span>
 and
 <span class="math inline">\(\hat{E}(\mathtt{bill\_length\_mm} \mid \mathtt{body\_mass\_g} = 4201.75, \mathtt{species}=\mathtt{Gentoo}) = 44.23\)</span>.</p>
@@ -1020,7 +1067,7 @@ for <code>body_mass_g</code>, the <code>bill_length_mm</code> tends to be larges
 Chinstrap penguins, second largest for Gentoo penguins, and smallest for
 Adelie penguins. The confidence bands for the estimated mean response
 are shown by the vertical bars.</p>
-<div class="sourceCode" id="cb132"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb132-1"><a href="interp-chapter.html#cb132-1" aria-hidden="true" tabindex="-1"></a><span class="fu">plot</span>(<span class="fu">predictorEffect</span>(<span class="st">&quot;species&quot;</span>, lmodp))</span></code></pre></div>
+<div class="sourceCode" id="cb132"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb132-1"><a href="interp-chapter.html#cb132-1" tabindex="-1"></a><span class="fu">plot</span>(<span class="fu">predictorEffect</span>(<span class="st">&quot;species&quot;</span>, lmodp))</span></code></pre></div>
 <div class="figure"><span style="display:block;" id="fig:eff-plot-species-plmod"></span>
 <img src="A-Progessive-Introduction-to-Linear-Models_files/figure-html/eff-plot-species-plmod-1.png" alt="An effect plot for `species` after accounting for `body_mass_g`." width="672" />
 <p class="caption">
@@ -1034,37 +1081,46 @@ Figure 4.5: An effect plot for <code>species</code> after accounting for <code>b
 categorical predictor <span class="math inline">\(C\)</span> with levels <span class="math inline">\(L_1\)</span>, <span class="math inline">\(L_2\)</span>, and <span class="math inline">\(L_3\)</span>. The
 predictor <span class="math inline">\(C\)</span> will be transformed into two indicator variables, <span class="math inline">\(D_2\)</span>
 and <span class="math inline">\(D_3\)</span>, for category levels <span class="math inline">\(L_2\)</span> and <span class="math inline">\(L_3\)</span>, with <span class="math inline">\(L_1\)</span> being the
-reference level. The separate lines model is formulated as <span class="math display" id="eq:sl-def-interp">\[
-E(Y \mid X, C) = \beta_{int} + \beta_{X} X + \beta_{L_2} D_2 +  \beta_{L_3} D_3 + \beta_{XL_2} XD_2+\beta_{XL_3}XD_3. \tag{4.4}
+reference level. The separate lines model is formulated as
+<span class="math display" id="eq:sl-def-interp">\[
+E(Y \mid X, C) = \beta_{int} + \beta_{X} X + \beta_{L_2} D_2 +  \beta_{L_3} D_3 + \beta_{XL_2} XD_2+\beta_{XL_3}XD_3. \tag{4.11}
 \]</span></p>
 <p>When an observation has level <span class="math inline">\(L_1\)</span> and <span class="math inline">\(X=x^*\)</span>, then the expected
-response is <span class="math display">\[
+response is
+<span class="math display" id="eq:slr-mean-L1">\[
 \begin{aligned}
 &amp;E(Y\mid X = x^*, C=L_1) \\
 &amp;= \beta_{int} + \beta_X \cdot x^* + \beta_{L_2} \cdot 0 + \beta_{L_3} \cdot 0  + \beta_{X L_2} \cdot x^* \cdot 0 + \beta_{X L_3}\cdot x^* \cdot 0 \\
 &amp;= \beta_{int} + \beta_X x^*.
 \end{aligned}
-(\#eq:slr-mean-L1)
+\tag{4.12}
 \]</span></p>
-<p>Using Equation <a href="#eq:slr-mean-L1">(<strong>??</strong>)</a>, we can verify that:</p>
+<p>Using Equation <a href="interp-chapter.html#eq:slr-mean-L1">(4.12)</a>, we can verify that:</p>
 <ul>
 <li><span class="math inline">\(\beta_{int} = E(Y\mid X = 0, C=L_1)\)</span>.</li>
 <li><span class="math inline">\(\beta_{X} = E(Y\mid X = x^* + 1, C=L_1) - E(Y\mid X = x^*, C=L_1)\)</span>.</li>
 </ul>
-<p>Similarly, when <span class="math inline">\(C=L_2\)</span>, <span class="math display">\[
+<p>Similarly, when <span class="math inline">\(C=L_2\)</span>,
+<span class="math display" id="eq:slr-mean-L2">\[
 \begin{aligned}
 &amp; E(Y|X = x^*, C=L_2) \\
 &amp;= \beta_{int} + \beta_X \cdot x^* + \beta_{L_2} \cdot 1 + \beta_{L_3} \cdot 0  + \beta_{X L_2} \cdot x^* \cdot 1 + \beta_{X L_3}\cdot x^* \cdot 0 \\
 &amp;= \beta_{int} + \beta_X x^* + \beta_{L_2} + \beta_{XL_2}x^*\\
 &amp;= (\beta_{int} + \beta_{L_2}) + (\beta_X + \beta_{XL_2})x^*.
 \end{aligned}
-(\#eq:slr-mean-L2)
-\]</span> Following this same pattern, when <span class="math inline">\(C=L_3\)</span> we have <span class="math display">\[
-E(Y|X = x^*, C=L_3) = (\beta_{int} + \beta_{L_3}) + (\beta_X + \beta_{XL_3})x^*. (\#eq:slr-mean-L3)
+\tag{4.13}
+\]</span>
+Following this same pattern, when <span class="math inline">\(C=L_3\)</span> we have
+<span class="math display" id="eq:slr-mean-L3">\[
+E(Y|X = x^*, C=L_3) = (\beta_{int} + \beta_{L_3}) + (\beta_X + \beta_{XL_3})x^*. \tag{4.14}
 \]</span></p>
-<p>Using Equations <a href="#eq:slr-mean-L1">(<strong>??</strong>)</a>, <a href="#eq:slr-mean-L2">(<strong>??</strong>)</a>, and
-<a href="#eq:slr-mean-L3">(<strong>??</strong>)</a>, we can verify that for <span class="math inline">\(j=2,3\)</span>,
-<span class="math display">\[\beta_{L_j}= E(Y\mid X = 0, C=L_j) - E(Y\mid X = 0, C=L_1),\]</span> and <span class="math display">\[
+<p>Using Equations <a href="interp-chapter.html#eq:slr-mean-L1">(4.12)</a>, <a href="interp-chapter.html#eq:slr-mean-L2">(4.13)</a>, and
+<a href="interp-chapter.html#eq:slr-mean-L3">(4.14)</a>, we can verify that for <span class="math inline">\(j=2,3\)</span>,
+<span class="math display">\[
+\beta_{L_j}= E(Y\mid X = 0, C=L_j) - E(Y\mid X = 0, C=L_1),
+\]</span>
+and
+<span class="math display">\[
 \begin{aligned}
 &amp; \beta_{XL_j} \\
 &amp;= [E(Y\mid X = x^*+1, C=L_j) - E(Y\mid X = x^*, C=L_j)]\\
@@ -1072,7 +1128,7 @@ E(Y|X = x^*, C=L_3) = (\beta_{int} + \beta_{L_3}) + (\beta_X + \beta_{XL_3})x^*.
 \end{aligned}
 \]</span></p>
 <p>To summarize the interpretation of the coefficients in separate lines
-models like Equation <a href="interp-chapter.html#eq:sl-def-interp">(4.4)</a>, assuming categorical
+models like Equation <a href="interp-chapter.html#eq:sl-def-interp">(4.11)</a>, assuming categorical
 predictor <span class="math inline">\(C\)</span> has <span class="math inline">\(K\)</span> levels instead of 3:</p>
 <ul>
 <li><span class="math inline">\(\beta_{int}\)</span> represents the expected response for observations
@@ -1090,14 +1146,16 @@ observations having level <span class="math inline">\(L_j\)</span> compared to t
 </ul>
 <p>We illustrate these interpretation using the separate lines model to the
 <code>penguins</code> data in Section <a href="linear-model-estimation.html#s:penguins-mlr2">3.9</a>. The fitted
-separate lines model was <span class="math display">\[
+separate lines model was
+<span class="math display" id="eq:sl-refit-interp">\[
 \begin{aligned}
 &amp;\hat{E}(\mathtt{bill\_length\_mm} \mid \mathtt{body\_mass\_g}, \mathtt{species}) \\
 &amp;= 26.99 + 0.003 \mathtt{body\_mass\_g} + 5.18 D_C - 0.25 D_G \\
 &amp;\quad + 0.001 D_C \mathtt{body\_mass\_g} + 0.0009 D_G \mathtt{body\_mass\_g}.
 \end{aligned}
-(\#eq:sl-refit-interp)
-\]</span> In the context of this model:</p>
+\tag{4.15}
+\]</span>
+In the context of this model:</p>
 <ul>
 <li>The expected bill length for an Adelie penguin with a body mass of 0
 grams is 26.99 mm.</li>
@@ -1121,7 +1179,7 @@ corresponding change in bill length by Adelie penguins.</li>
 <p>We now discuss construction of effect plots for a separate lines model,
 which has an interaction between a categorical and numeric predictor. In
 additional to the focal and fixed group predictors we have previously
-discussed, <span class="citation">Fox and Weisberg (<a href="#ref-fox2020predictor" role="doc-biblioref">2020</a>)</span> also discuss predictors in the
+discussed, <span class="citation">Fox and Weisberg (<a href="#ref-fox2020predictor">2020</a>)</span> also discuss predictors in the
 <strong>conditioning group</strong>, which is the set of predictors that interact
 with the focal predictor.</p>
 <p>When some predictors interact with the focal predictor, the effect plot
@@ -1144,23 +1202,24 @@ of a categorical predictor in the conditioning group.</li>
 </ul>
 <p>We provide examples of the effect plots for the <code>body_mass_g</code> and
 <code>species</code> predictors for the separate lines model fit to the <code>penguins</code>
-data and given in Equation <a href="#eq:sl-refit-interp">(<strong>??</strong>)</a>. We first run the
+data and given in Equation <a href="interp-chapter.html#eq:sl-refit-interp">(4.15)</a>. We first run the
 code below to fit the separate lines model previously fit in Section
 <a href="linear-model-estimation.html#s:penguins-mlr2">3.9</a>.</p>
-<div class="sourceCode" id="cb133"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb133-1"><a href="interp-chapter.html#cb133-1" aria-hidden="true" tabindex="-1"></a><span class="co"># fit separate lines model</span></span>
-<span id="cb133-2"><a href="interp-chapter.html#cb133-2" aria-hidden="true" tabindex="-1"></a>lmods <span class="ot">&lt;-</span> <span class="fu">lm</span>(bill_length_mm <span class="sc">~</span> body_mass_g <span class="sc">+</span> species <span class="sc">+</span> body_mass_g<span class="sc">:</span>species,</span>
-<span id="cb133-3"><a href="interp-chapter.html#cb133-3" aria-hidden="true" tabindex="-1"></a>            <span class="at">data =</span> penguins)</span>
-<span id="cb133-4"><a href="interp-chapter.html#cb133-4" aria-hidden="true" tabindex="-1"></a><span class="co"># extract estimated coefficients</span></span>
-<span id="cb133-5"><a href="interp-chapter.html#cb133-5" aria-hidden="true" tabindex="-1"></a><span class="fu">coef</span>(lmods)</span>
-<span id="cb133-6"><a href="interp-chapter.html#cb133-6" aria-hidden="true" tabindex="-1"></a><span class="do">##                  (Intercept)                  body_mass_g </span></span>
-<span id="cb133-7"><a href="interp-chapter.html#cb133-7" aria-hidden="true" tabindex="-1"></a><span class="do">##                26.9941391367                 0.0031878758 </span></span>
-<span id="cb133-8"><a href="interp-chapter.html#cb133-8" aria-hidden="true" tabindex="-1"></a><span class="do">##             speciesChinstrap                speciesGentoo </span></span>
-<span id="cb133-9"><a href="interp-chapter.html#cb133-9" aria-hidden="true" tabindex="-1"></a><span class="do">##                 5.1800537287                -0.2545906615 </span></span>
-<span id="cb133-10"><a href="interp-chapter.html#cb133-10" aria-hidden="true" tabindex="-1"></a><span class="do">## body_mass_g:speciesChinstrap    body_mass_g:speciesGentoo </span></span>
-<span id="cb133-11"><a href="interp-chapter.html#cb133-11" aria-hidden="true" tabindex="-1"></a><span class="do">##                 0.0012748183                 0.0009029956</span></span></code></pre></div>
+<div class="sourceCode" id="cb133"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb133-1"><a href="interp-chapter.html#cb133-1" tabindex="-1"></a><span class="co"># fit separate lines model</span></span>
+<span id="cb133-2"><a href="interp-chapter.html#cb133-2" tabindex="-1"></a>lmods <span class="ot">&lt;-</span> <span class="fu">lm</span>(bill_length_mm <span class="sc">~</span> body_mass_g <span class="sc">+</span> species <span class="sc">+</span> body_mass_g<span class="sc">:</span>species,</span>
+<span id="cb133-3"><a href="interp-chapter.html#cb133-3" tabindex="-1"></a>            <span class="at">data =</span> penguins)</span>
+<span id="cb133-4"><a href="interp-chapter.html#cb133-4" tabindex="-1"></a><span class="co"># extract estimated coefficients</span></span>
+<span id="cb133-5"><a href="interp-chapter.html#cb133-5" tabindex="-1"></a><span class="fu">coef</span>(lmods)</span>
+<span id="cb133-6"><a href="interp-chapter.html#cb133-6" tabindex="-1"></a><span class="do">##                  (Intercept)                  body_mass_g </span></span>
+<span id="cb133-7"><a href="interp-chapter.html#cb133-7" tabindex="-1"></a><span class="do">##                26.9941391367                 0.0031878758 </span></span>
+<span id="cb133-8"><a href="interp-chapter.html#cb133-8" tabindex="-1"></a><span class="do">##             speciesChinstrap                speciesGentoo </span></span>
+<span id="cb133-9"><a href="interp-chapter.html#cb133-9" tabindex="-1"></a><span class="do">##                 5.1800537287                -0.2545906615 </span></span>
+<span id="cb133-10"><a href="interp-chapter.html#cb133-10" tabindex="-1"></a><span class="do">## body_mass_g:speciesChinstrap    body_mass_g:speciesGentoo </span></span>
+<span id="cb133-11"><a href="interp-chapter.html#cb133-11" tabindex="-1"></a><span class="do">##                 0.0012748183                 0.0009029956</span></span></code></pre></div>
 <p>We previously determined in Section <a href="linear-model-estimation.html#s:penguins-mlr2">3.9</a> that the
 model simplifies depending on the level of species. Specifically, we
-have that <span class="math display">\[
+have that
+<span class="math display" id="eq:separate-lines-equations-effects-plot">\[
 \begin{aligned}
 &amp;\hat{E}(\mathtt{bill\_length\_mm} \mid \mathtt{body\_mass\_g}, \mathtt{species}=\mathtt{Adelie}) \\
 &amp;= 26.99 + 0.003 \mathtt{body\_mass\_g},\\
@@ -1169,11 +1228,11 @@ have that <span class="math display">\[
 &amp;\hat{E}(\mathtt{bill\_length\_mm} \mid \mathtt{body\_mass\_g}, \mathtt{species}=\mathtt{Chinstrap}) \\
 &amp;= 26.74 + 0.004 \mathtt{body\_mass\_g}.
 \end{aligned}
-(\#eq:separate-lines-equations-effects-plot)
+\tag{4.16}
 \]</span></p>
 <p>The effect plot of <code>body_mass_g</code> for the separate lines model will be a
 plot of each equation given in Equation
-<a href="#eq:separate-lines-equations-effects-plot">(<strong>??</strong>)</a>. Figure
+<a href="interp-chapter.html#eq:separate-lines-equations-effects-plot">(4.16)</a>. Figure
 <a href="interp-chapter.html#fig:effect-plot-body-mass-lmods">4.6</a> displays this effect plot, which
 was created using the code below. We use the <code>axes</code> argument to rotate
 the x-axis labels (otherwise the text overlaps) and the <code>lines</code>
@@ -1185,21 +1244,21 @@ for the Adelie and Gentoo penguins. Similarly, the Adelie penguins tend
 to have the smallest bill length for a fixed value of body mass and the
 bill length tends to increase more slowly as body mass increases
 compared to the other two types of penguins.</p>
-<div class="sourceCode" id="cb134"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb134-1"><a href="interp-chapter.html#cb134-1" aria-hidden="true" tabindex="-1"></a><span class="co"># effect plot of body mass for separate lines model</span></span>
-<span id="cb134-2"><a href="interp-chapter.html#cb134-2" aria-hidden="true" tabindex="-1"></a><span class="co"># axes ... rotates the x-axis labels 90 degrees</span></span>
-<span id="cb134-3"><a href="interp-chapter.html#cb134-3" aria-hidden="true" tabindex="-1"></a><span class="co"># lines ... plots the effect of body mass in one graphic</span></span>
-<span id="cb134-4"><a href="interp-chapter.html#cb134-4" aria-hidden="true" tabindex="-1"></a><span class="fu">plot</span>(<span class="fu">predictorEffect</span>(<span class="st">&quot;body_mass_g&quot;</span>, lmods),</span>
-<span id="cb134-5"><a href="interp-chapter.html#cb134-5" aria-hidden="true" tabindex="-1"></a>     <span class="at">axes =</span> <span class="fu">list</span>(<span class="at">x =</span> <span class="fu">list</span>(<span class="at">rotate =</span> <span class="dv">90</span>)),</span>
-<span id="cb134-6"><a href="interp-chapter.html#cb134-6" aria-hidden="true" tabindex="-1"></a>     <span class="at">lines =</span> <span class="fu">list</span>(<span class="at">multiline =</span> <span class="cn">TRUE</span>))</span></code></pre></div>
+<div class="sourceCode" id="cb134"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb134-1"><a href="interp-chapter.html#cb134-1" tabindex="-1"></a><span class="co"># effect plot of body mass for separate lines model</span></span>
+<span id="cb134-2"><a href="interp-chapter.html#cb134-2" tabindex="-1"></a><span class="co"># axes ... rotates the x-axis labels 90 degrees</span></span>
+<span id="cb134-3"><a href="interp-chapter.html#cb134-3" tabindex="-1"></a><span class="co"># lines ... plots the effect of body mass in one graphic</span></span>
+<span id="cb134-4"><a href="interp-chapter.html#cb134-4" tabindex="-1"></a><span class="fu">plot</span>(<span class="fu">predictorEffect</span>(<span class="st">&quot;body_mass_g&quot;</span>, lmods),</span>
+<span id="cb134-5"><a href="interp-chapter.html#cb134-5" tabindex="-1"></a>     <span class="at">axes =</span> <span class="fu">list</span>(<span class="at">x =</span> <span class="fu">list</span>(<span class="at">rotate =</span> <span class="dv">90</span>)),</span>
+<span id="cb134-6"><a href="interp-chapter.html#cb134-6" tabindex="-1"></a>     <span class="at">lines =</span> <span class="fu">list</span>(<span class="at">multiline =</span> <span class="cn">TRUE</span>))</span></code></pre></div>
 <div class="figure"><span style="display:block;" id="fig:effect-plot-body-mass-lmods"></span>
 <img src="A-Progessive-Introduction-to-Linear-Models_files/figure-html/effect-plot-body-mass-lmods-1.png" alt="Effect plot for body mass based on the equations in Equation \@ref(eq:separate-lines-equations-effects-plot)." width="672" />
 <p class="caption">
-Figure 4.6: Effect plot for body mass based on the equations in Equation <a href="#eq:separate-lines-equations-effects-plot">(<strong>??</strong>)</a>.
+Figure 4.6: Effect plot for body mass based on the equations in Equation <a href="interp-chapter.html#eq:separate-lines-equations-effects-plot">(4.16)</a>.
 </p>
 </div>
 <p>The effect plot of <code>species</code> for the separate lines model will be a plot
 of the estimated mean response in Equation
-<a href="#eq:separate-lines-equations-effects-plot">(<strong>??</strong>)</a> for each level of
+<a href="interp-chapter.html#eq:separate-lines-equations-effects-plot">(4.16)</a> for each level of
 <code>species</code> when varying <code>body_mass_g</code> over 5 discrete values. Figure
 <a href="interp-chapter.html#fig:effect-plot-species-lmods">4.7</a> displays this effect plot, which
 was created using the code below. By specifying
@@ -1211,16 +1270,16 @@ determine the effect of <code>species</code> on <code>bill_length_mm</code> when
 the values 2700, 3600, 4500, 5300, and 6300 g, we see greater changes in
 the estimated mean of <code>bill_lengh_mm</code> for Chinstrap penguins in
 comparison to Adelie and Gentoo penguins.</p>
-<div class="sourceCode" id="cb135"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb135-1"><a href="interp-chapter.html#cb135-1" aria-hidden="true" tabindex="-1"></a><span class="co"># effect plot of body mass for separate lines model</span></span>
-<span id="cb135-2"><a href="interp-chapter.html#cb135-2" aria-hidden="true" tabindex="-1"></a><span class="co"># axes ... rotates the x-axis labels 90 degrees</span></span>
-<span id="cb135-3"><a href="interp-chapter.html#cb135-3" aria-hidden="true" tabindex="-1"></a><span class="co"># lines ... plots the effect of species in one graphic</span></span>
-<span id="cb135-4"><a href="interp-chapter.html#cb135-4" aria-hidden="true" tabindex="-1"></a><span class="fu">plot</span>(<span class="fu">predictorEffect</span>(<span class="st">&quot;species&quot;</span>, lmods),</span>
-<span id="cb135-5"><a href="interp-chapter.html#cb135-5" aria-hidden="true" tabindex="-1"></a>     <span class="at">axes =</span> <span class="fu">list</span>(<span class="at">x =</span> <span class="fu">list</span>(<span class="at">rotate =</span> <span class="dv">90</span>)),</span>
-<span id="cb135-6"><a href="interp-chapter.html#cb135-6" aria-hidden="true" tabindex="-1"></a>     <span class="at">lines=</span><span class="fu">list</span>(<span class="at">multiline =</span> <span class="cn">FALSE</span>))</span></code></pre></div>
+<div class="sourceCode" id="cb135"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb135-1"><a href="interp-chapter.html#cb135-1" tabindex="-1"></a><span class="co"># effect plot of body mass for separate lines model</span></span>
+<span id="cb135-2"><a href="interp-chapter.html#cb135-2" tabindex="-1"></a><span class="co"># axes ... rotates the x-axis labels 90 degrees</span></span>
+<span id="cb135-3"><a href="interp-chapter.html#cb135-3" tabindex="-1"></a><span class="co"># lines ... plots the effect of species in one graphic</span></span>
+<span id="cb135-4"><a href="interp-chapter.html#cb135-4" tabindex="-1"></a><span class="fu">plot</span>(<span class="fu">predictorEffect</span>(<span class="st">&quot;species&quot;</span>, lmods),</span>
+<span id="cb135-5"><a href="interp-chapter.html#cb135-5" tabindex="-1"></a>     <span class="at">axes =</span> <span class="fu">list</span>(<span class="at">x =</span> <span class="fu">list</span>(<span class="at">rotate =</span> <span class="dv">90</span>)),</span>
+<span id="cb135-6"><a href="interp-chapter.html#cb135-6" tabindex="-1"></a>     <span class="at">lines=</span><span class="fu">list</span>(<span class="at">multiline =</span> <span class="cn">FALSE</span>))</span></code></pre></div>
 <div class="figure"><span style="display:block;" id="fig:effect-plot-species-lmods"></span>
 <img src="A-Progessive-Introduction-to-Linear-Models_files/figure-html/effect-plot-species-lmods-1.png" alt="Effect plot for species based on the equations in Equation \@ref(eq:separate-lines-equations-effects-plot)." width="672" />
 <p class="caption">
-Figure 4.7: Effect plot for species based on the equations in Equation <a href="#eq:separate-lines-equations-effects-plot">(<strong>??</strong>)</a>.
+Figure 4.7: Effect plot for species based on the equations in Equation <a href="interp-chapter.html#eq:separate-lines-equations-effects-plot">(4.16)</a>.
 </p>
 </div>
 <p>We refer the reader to the “Predictor effects gallery” vignette in the
@@ -1234,7 +1293,7 @@ different settings.</p>
 <h2><span class="header-section-number">4.4</span> Added-variable and leverage plots<a href="interp-chapter.html#added-variable-and-leverage-plots" class="anchor-section" aria-label="Anchor link to header"></a></h2>
 <p>An <strong>added-variable plot</strong> or <strong>partial regression plot</strong> displays the
 marginal effect of a regressor on the response after accounting for the
-other regressors in the model <span class="citation">(<a href="#ref-mt1977" role="doc-biblioref">Mosteller and Tukey 1977</a>)</span>. While an effect plot is a plot
+other regressors in the model <span class="citation">(<a href="#ref-mt1977">Mosteller and Tukey 1977</a>)</span>. While an effect plot is a plot
 of the estimated mean relationship between the response and a focal
 predictor while holding the model’s predictors at typical values, the
 added-variable plot is a plot of two sets of residuals against one
@@ -1262,7 +1321,7 @@ x-axis.</li>
 <p>Added-variable plots allow us to visualize the impact a regressor has
 when added to an existing regression model. We can use the
 added-variable plot for <span class="math inline">\(X_j\)</span> to visually estimate the partial slope
-<span class="math inline">\(\hat{\beta}_{j}\)</span> <span class="citation">(<a href="#ref-sheather2009modern" role="doc-biblioref">Sheather 2009</a>)</span>. In fact, the simple linear
+<span class="math inline">\(\hat{\beta}_{j}\)</span> <span class="citation">(<a href="#ref-sheather2009modern">Sheather 2009</a>)</span>. In fact, the simple linear
 regression line that minimizes the RSS for the added-variable plot of
 <span class="math inline">\(X_j\)</span> will have slope <span class="math inline">\(\hat{\beta}_j\)</span>.</p>
 <p>We can use an added-variable plot in several ways:</p>
@@ -1307,7 +1366,7 @@ an example of this situation.</li>
 Figure 4.8: Examples of added-variable plots
 </p>
 </div>
-<p>The <strong><code>car</code></strong> package <span class="citation">(<a href="#ref-R-car" role="doc-biblioref">Fox, Weisberg, and Price 2022</a>)</span> provides the <code>avPlot</code> and <code>avPlots</code>
+<p>The <strong><code>car</code></strong> package <span class="citation">(<a href="#ref-R-car">Fox, Weisberg, and Price 2023</a>)</span> provides the <code>avPlot</code> and <code>avPlots</code>
 functions for creating added-variable plots. The <code>avPlot</code> function will
 produce an added-variable plot for a single regressor while the
 <code>avPlots</code> function will produce added-variable plots for one or more
@@ -1345,17 +1404,17 @@ lot of additional response variation. The added-variable plot for
 relationship. The <code>flipper_length_mm</code> variable seems to have some
 additional explanatory power when added to the model regressing
 <code>bill_length_mm</code> on <code>body_mass_g</code>.</p>
-<div class="sourceCode" id="cb136"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb136-1"><a href="interp-chapter.html#cb136-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(car)</span>
-<span id="cb136-2"><a href="interp-chapter.html#cb136-2" aria-hidden="true" tabindex="-1"></a><span class="do">## </span></span>
-<span id="cb136-3"><a href="interp-chapter.html#cb136-3" aria-hidden="true" tabindex="-1"></a><span class="do">## Attaching package: &#39;car&#39;</span></span>
-<span id="cb136-4"><a href="interp-chapter.html#cb136-4" aria-hidden="true" tabindex="-1"></a><span class="do">## The following object is masked from &#39;package:dplyr&#39;:</span></span>
-<span id="cb136-5"><a href="interp-chapter.html#cb136-5" aria-hidden="true" tabindex="-1"></a><span class="do">## </span></span>
-<span id="cb136-6"><a href="interp-chapter.html#cb136-6" aria-hidden="true" tabindex="-1"></a><span class="do">##     recode</span></span>
-<span id="cb136-7"><a href="interp-chapter.html#cb136-7" aria-hidden="true" tabindex="-1"></a><span class="do">## The following object is masked from &#39;package:purrr&#39;:</span></span>
-<span id="cb136-8"><a href="interp-chapter.html#cb136-8" aria-hidden="true" tabindex="-1"></a><span class="do">## </span></span>
-<span id="cb136-9"><a href="interp-chapter.html#cb136-9" aria-hidden="true" tabindex="-1"></a><span class="do">##     some</span></span>
-<span id="cb136-10"><a href="interp-chapter.html#cb136-10" aria-hidden="true" tabindex="-1"></a><span class="co"># create added-variable plots for all regressors in mlmod</span></span>
-<span id="cb136-11"><a href="interp-chapter.html#cb136-11" aria-hidden="true" tabindex="-1"></a><span class="fu">avPlots</span>(mlmod)</span></code></pre></div>
+<div class="sourceCode" id="cb136"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb136-1"><a href="interp-chapter.html#cb136-1" tabindex="-1"></a><span class="fu">library</span>(car)</span>
+<span id="cb136-2"><a href="interp-chapter.html#cb136-2" tabindex="-1"></a><span class="do">## </span></span>
+<span id="cb136-3"><a href="interp-chapter.html#cb136-3" tabindex="-1"></a><span class="do">## Attaching package: &#39;car&#39;</span></span>
+<span id="cb136-4"><a href="interp-chapter.html#cb136-4" tabindex="-1"></a><span class="do">## The following object is masked from &#39;package:dplyr&#39;:</span></span>
+<span id="cb136-5"><a href="interp-chapter.html#cb136-5" tabindex="-1"></a><span class="do">## </span></span>
+<span id="cb136-6"><a href="interp-chapter.html#cb136-6" tabindex="-1"></a><span class="do">##     recode</span></span>
+<span id="cb136-7"><a href="interp-chapter.html#cb136-7" tabindex="-1"></a><span class="do">## The following object is masked from &#39;package:purrr&#39;:</span></span>
+<span id="cb136-8"><a href="interp-chapter.html#cb136-8" tabindex="-1"></a><span class="do">## </span></span>
+<span id="cb136-9"><a href="interp-chapter.html#cb136-9" tabindex="-1"></a><span class="do">##     some</span></span>
+<span id="cb136-10"><a href="interp-chapter.html#cb136-10" tabindex="-1"></a><span class="co"># create added-variable plots for all regressors in mlmod</span></span>
+<span id="cb136-11"><a href="interp-chapter.html#cb136-11" tabindex="-1"></a><span class="fu">avPlots</span>(mlmod)</span></code></pre></div>
 <div class="figure"><span style="display:block;" id="fig:avplots-mlmod"></span>
 <img src="A-Progessive-Introduction-to-Linear-Models_files/figure-html/avplots-mlmod-1.png" alt="The added-variable plots of all regressors for the model regressing `bill_length_mm` on `body_mass_g` and `flipper_length_mm`." width="672" />
 <p class="caption">
@@ -1367,12 +1426,14 @@ often show “clusters” of points related to the categorical predictors.
 These clusters aren’t anything to worry about unless the overall pattern
 of the points is non-linear. We use the code below to create the
 added-variable plots for all regressors in the parallel lines model
-previously fit to the <code>penguins</code> data. The fitted model was <span class="math display">\[
+previously fit to the <code>penguins</code> data. The fitted model was
+<span class="math display">\[
 \begin{aligned}
 &amp;\hat{E}(\mathtt{bill\_length\_mm} \mid \mathtt{body\_mass\_g}, \mathtt{species})\\
 &amp;= 24.92 + 0.004 \mathtt{body\_mass\_g} + 9.92 D_C + 3.56 D_G,
 \end{aligned}
-\]</span> where <span class="math inline">\(D_C\)</span> and <span class="math inline">\(D_G\)</span> are indicator variables for the Chinstrap and
+\]</span>
+where <span class="math inline">\(D_C\)</span> and <span class="math inline">\(D_G\)</span> are indicator variables for the Chinstrap and
 Gentoo penguin species (Adelie penguins are the reference species).
 Figure <a href="interp-chapter.html#fig:avplots-lmodp">4.10</a> displays the added-variable plots for
 the <code>body_mass_g</code> regressor and the indicator variables for Chinstrap
@@ -1383,7 +1444,7 @@ The other two variable plots are show a linear relationship. Clustering
 patterns are apparent in the added-variable plot for the Chinstrap
 penguins indicator variable (<code>speciesChinstrap</code>) but not for the Gentoo
 penguins indicator variable.</p>
-<div class="sourceCode" id="cb137"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb137-1"><a href="interp-chapter.html#cb137-1" aria-hidden="true" tabindex="-1"></a><span class="fu">avPlots</span>(lmodp)</span></code></pre></div>
+<div class="sourceCode" id="cb137"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb137-1"><a href="interp-chapter.html#cb137-1" tabindex="-1"></a><span class="fu">avPlots</span>(lmodp)</span></code></pre></div>
 <div class="figure"><span style="display:block;" id="fig:avplots-lmodp"></span>
 <img src="A-Progessive-Introduction-to-Linear-Models_files/figure-html/avplots-lmodp-1.png" alt="The added-variable plots for all regressors in the parallel lines model fit to the `penguins` data." width="672" />
 <p class="caption">
@@ -1404,7 +1465,7 @@ we can also consider regressors related to the interaction between
 two or more predictors, polynomial regressors, etc.</p>
 <p>A <strong>leverage plot</strong> is an extension of the added-variable plot that
 allows us to visualize the impact of multiple degrees-of-freedom terms.
-<span class="citation">Sall (<a href="#ref-sall1990leverage" role="doc-biblioref">1990</a>)</span> originally proposed leverage plots to visualize
+<span class="citation">Sall (<a href="#ref-sall1990leverage">1990</a>)</span> originally proposed leverage plots to visualize
 hypothesis tests of linear hypotheses. The interpretation of leverage
 plots is similar to the interpretation of added-variable plots, though
 we refer to “predictors” or “terms” instead regressors (which may be
@@ -1422,7 +1483,7 @@ explaining the behavior of <code>bill_length_mm</code> after accounting for
 a moderately strong linear relationship, so we expect <code>species</code> to have
 moderate value in explaining the behavior of <code>bill_length_mm</code> after
 accounting for <code>body_mass_g</code>.</p>
-<div class="sourceCode" id="cb138"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb138-1"><a href="interp-chapter.html#cb138-1" aria-hidden="true" tabindex="-1"></a><span class="fu">leveragePlots</span>(lmodp)</span></code></pre></div>
+<div class="sourceCode" id="cb138"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb138-1"><a href="interp-chapter.html#cb138-1" tabindex="-1"></a><span class="fu">leveragePlots</span>(lmodp)</span></code></pre></div>
 <div class="figure"><span style="display:block;" id="fig:leverageplot-lmodp"></span>
 <img src="A-Progessive-Introduction-to-Linear-Models_files/figure-html/leverageplot-lmodp-1.png" alt="Leverage plots for the predictors in the parallel lines model fit to the `penguins` data." width="672" />
 <p class="caption">
@@ -1430,18 +1491,20 @@ Figure 4.11: Leverage plots for the predictors in the parallel lines model fit t
 </p>
 </div>
 <p>We next examine the leverage plot for the separate lines model fit to
-the <code>penguins</code> data. The fitted separate lines model is<span class="math display">\[
+the <code>penguins</code> data. The fitted separate lines model is
+<span class="math display">\[
 \begin{aligned}
 &amp;\hat{E}(\mathtt{bill\_length\_mm} \mid \mathtt{body\_mass\_g}, \mathtt{species}) \\
 &amp;= 26.99 + 0.003 \mathtt{body\_mass\_g} + 5.18 D_C - 0.25 D_G \\
 &amp;\quad + 0.001 D_C \mathtt{body\_mass\_g} + 0.0009 D_G \mathtt{body\_mass\_g},
 \end{aligned}
-\]</span>which has 6 estimated coefficients. However, the fitted model has only
+\]</span>
+which has 6 estimated coefficients. However, the fitted model has only
 3 non-intercept terms. Recall the formula we fit for the separate lines
 model:</p>
-<div class="sourceCode" id="cb139"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb139-1"><a href="interp-chapter.html#cb139-1" aria-hidden="true" tabindex="-1"></a><span class="co"># function call for separate lines model</span></span>
-<span id="cb139-2"><a href="interp-chapter.html#cb139-2" aria-hidden="true" tabindex="-1"></a><span class="fu">lm</span>(<span class="at">formula =</span> bill_length_mm <span class="sc">~</span> body_mass_g <span class="sc">+</span> species <span class="sc">+</span> body_mass_g<span class="sc">:</span>species,</span>
-<span id="cb139-3"><a href="interp-chapter.html#cb139-3" aria-hidden="true" tabindex="-1"></a>   <span class="at">data =</span> penguins)</span></code></pre></div>
+<div class="sourceCode" id="cb139"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb139-1"><a href="interp-chapter.html#cb139-1" tabindex="-1"></a><span class="co"># function call for separate lines model</span></span>
+<span id="cb139-2"><a href="interp-chapter.html#cb139-2" tabindex="-1"></a><span class="fu">lm</span>(<span class="at">formula =</span> bill_length_mm <span class="sc">~</span> body_mass_g <span class="sc">+</span> species <span class="sc">+</span> body_mass_g<span class="sc">:</span>species,</span>
+<span id="cb139-3"><a href="interp-chapter.html#cb139-3" tabindex="-1"></a>   <span class="at">data =</span> penguins)</span></code></pre></div>
 <p>Thus, we have terms for <code>body_mass_g</code>, <code>species</code>, and the interaction
 term <code>body_mass_g:species</code>.</p>
 <p>We use the code below to create the leverage plots shown in Figure
@@ -1464,7 +1527,7 @@ interaction term <code>body_mass_g:species</code> , we see the points have only 
 weak linear relationship. Thus, we expect limited utility in adding the
 interaction term <code>body_mass_g:species</code> to the parallel lines regression
 model that regresses <code>bill_length_mm</code> on <code>body_mass_g</code> and <code>species</code>.</p>
-<div class="sourceCode" id="cb140"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb140-1"><a href="interp-chapter.html#cb140-1" aria-hidden="true" tabindex="-1"></a><span class="fu">leveragePlots</span>(lmods)</span></code></pre></div>
+<div class="sourceCode" id="cb140"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb140-1"><a href="interp-chapter.html#cb140-1" tabindex="-1"></a><span class="fu">leveragePlots</span>(lmods)</span></code></pre></div>
 <div class="figure"><span style="display:block;" id="fig:leverageplot-lmods"></span>
 <img src="A-Progessive-Introduction-to-Linear-Models_files/figure-html/leverageplot-lmods-1.png" alt="Leverage plots for the terms in the separate lines model fit to the `penguins` data." width="672" />
 <p class="caption">
@@ -1476,7 +1539,11 @@ Figure 4.12: Leverage plots for the terms in the separate lines model fit to the
 <h2><span class="header-section-number">4.5</span> Going deeper<a href="interp-chapter.html#going-deeper-1" class="anchor-section" aria-label="Anchor link to header"></a></h2>
 <div id="orthogonality" class="section level3 hasAnchor" number="4.5.1">
 <h3><span class="header-section-number">4.5.1</span> Orthogonality<a href="interp-chapter.html#orthogonality" class="anchor-section" aria-label="Anchor link to header"></a></h3>
-<p>Let <span class="math display">\[\mathbf{X}_{[j]}=[x_{1,j},\ldots,x_{n,j}]\]</span> denote the <span class="math inline">\(n\times 1\)</span>
+<p>Let
+<span class="math display">\[
+\mathbf{X}_{[j]}=[x_{1,j},\ldots,x_{n,j}]
+\]</span>
+denote the <span class="math inline">\(n\times 1\)</span>
 column vector of observed values for column <span class="math inline">\(j\)</span> of <span class="math inline">\(\mathbf{X}\)</span>. (We can’t use the
 notation <span class="math inline">\(\mathbf{x}_j\)</span> because that is the <span class="math inline">\(p\times 1\)</span> vector of
 regressor values for the <span class="math inline">\(j\)</span>th observation).</p>
@@ -1485,8 +1552,10 @@ regressor values for the <span class="math inline">\(j\)</span>th observation).<
 <span class="math inline">\(\mathbf{X}_{[j]}^T \mathbf{X}_{[k]}=0\)</span>.</p>
 <p>Let <span class="math inline">\(\boldsymbol{1}_{n\times1}\)</span> denote an <span class="math inline">\(n\times 1\)</span> column vector of
 1s. The definition of orthogonal vectors above implies that
-<span class="math inline">\(\mathbf{X}_{[j]}\)</span> is orthogonal to <span class="math inline">\(\boldsymbol{1}_{n\times1}\)</span> if <span class="math display">\[
-\mathbf{X}_{[j]}^T \boldsymbol{1}_{n\times1} = \sum_{i=1}^n x_{i,j} = 0,\]</span>
+<span class="math inline">\(\mathbf{X}_{[j]}\)</span> is orthogonal to <span class="math inline">\(\boldsymbol{1}_{n\times1}\)</span> if
+<span class="math display">\[
+\mathbf{X}_{[j]}^T \boldsymbol{1}_{n\times1} = \sum_{i=1}^n x_{i,j} = 0,
+\]</span>
 i.e., if the values in <span class="math inline">\(\mathbf{X}_{[j]}\)</span> sum to zero.</p>
 <p>Let <span class="math inline">\(\bar{x}_j = \frac{1}{n}\sum_{i=1}^n x_{i,j}\)</span> denote the sample mean
 of <span class="math inline">\(\mathbf{X}_{[j]}\)</span> and
@@ -1499,13 +1568,16 @@ column vector that repeats <span class="math inline">\(\bar{x}_j\)</span> <span 
 <strong>uncorrelated</strong> if they are orthogonal after being centered, i.e., if
 <span class="math display">\[
 (\mathbf{X}_{[j]} - \bar{\mathbf{x}}_j)^T (\mathbf{X}_{[k]} - \bar{\mathbf{x}}_k)=0.
-\]</span> Note that the sample covariance between vectors <span class="math inline">\(\mathbf{X}_{[j]}\)</span>
-and <span class="math inline">\(\mathbf{X}_{[k]}\)</span> is <span class="math display">\[
+\]</span>
+Note that the sample covariance between vectors <span class="math inline">\(\mathbf{X}_{[j]}\)</span>
+and <span class="math inline">\(\mathbf{X}_{[k]}\)</span> is
+<span class="math display">\[
 \begin{aligned}
 \widehat{\mathrm{cov}}(\mathbf{X}_{[j]}, \mathbf{X}_{[k]}) &amp;= \frac{1}{n-1}\sum_{i=1}^n (x_{i,j} - \bar{x}_j)(x_{i,k} - \bar{x}_k) \\
 &amp;= \frac{1}{n-1}(\mathbf{X}_{[j]} - \bar{\mathbf{x}}_j)^T (\mathbf{X}_{[k]} - \bar{\mathbf{x}}_k).
 \end{aligned}
-\]</span>Thus, two centered regressors are orthogonal if their covariance is
+\]</span>
+Thus, two centered regressors are orthogonal if their covariance is
 zero.</p>
 <p>It is a desirable to have orthogonal regressors in our fitted model
 because they simplify estimating the relationship between the regressors
@@ -1524,76 +1596,76 @@ column of 1s.</p>
 <li><code>X1</code> is a column vector of regressor values.</li>
 <li><code>X2</code> is a column vector of regressor values chosen to be orthogonal to <code>X1</code>.</li>
 </ul>
-<div class="sourceCode" id="cb141"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb141-1"><a href="interp-chapter.html#cb141-1" aria-hidden="true" tabindex="-1"></a>y <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="dv">1</span>, <span class="dv">4</span>, <span class="dv">6</span>, <span class="dv">8</span>, <span class="dv">9</span>)       <span class="co"># create an arbitrary response vector</span></span>
-<span id="cb141-2"><a href="interp-chapter.html#cb141-2" aria-hidden="true" tabindex="-1"></a>X1 <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="dv">7</span>, <span class="dv">5</span>, <span class="dv">5</span>, <span class="dv">7</span>, <span class="dv">7</span>)      <span class="co"># create regressor 1</span></span>
-<span id="cb141-3"><a href="interp-chapter.html#cb141-3" aria-hidden="true" tabindex="-1"></a>X2 <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="sc">-</span><span class="dv">1</span>, <span class="dv">2</span>, <span class="sc">-</span><span class="dv">3</span>, <span class="dv">1</span>, <span class="dv">5</span><span class="sc">/</span><span class="dv">7</span>)  <span class="co"># create regressor 2 to be orthogonal to X1</span></span></code></pre></div>
+<div class="sourceCode" id="cb141"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb141-1"><a href="interp-chapter.html#cb141-1" tabindex="-1"></a>y <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="dv">1</span>, <span class="dv">4</span>, <span class="dv">6</span>, <span class="dv">8</span>, <span class="dv">9</span>)       <span class="co"># create an arbitrary response vector</span></span>
+<span id="cb141-2"><a href="interp-chapter.html#cb141-2" tabindex="-1"></a>X1 <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="dv">7</span>, <span class="dv">5</span>, <span class="dv">5</span>, <span class="dv">7</span>, <span class="dv">7</span>)      <span class="co"># create regressor 1</span></span>
+<span id="cb141-3"><a href="interp-chapter.html#cb141-3" tabindex="-1"></a>X2 <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="sc">-</span><span class="dv">1</span>, <span class="dv">2</span>, <span class="sc">-</span><span class="dv">3</span>, <span class="dv">1</span>, <span class="dv">5</span><span class="sc">/</span><span class="dv">7</span>)  <span class="co"># create regressor 2 to be orthogonal to X1</span></span></code></pre></div>
 <p>Note that the <code>crossprod</code> function computes the cross product of two vectors or matrices, so that <code>crossprod(A, B)</code> computes <span class="math inline">\(\mathbf{A}^T B\)</span>, where the vectors or matrices must have the correct dimension for the multiplication to be performed.</p>
 <p>The regressor vectors <code>X1</code> and <code>X2</code> are orthogonal since their cross product <span class="math inline">\(\mathbf{X}_{[1]}^T \mathbf{X}_{[2]}\)</span> (in R, <code>crossprod(X1, X2)</code>) equals zero, as shown in the code below.</p>
-<div class="sourceCode" id="cb142"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb142-1"><a href="interp-chapter.html#cb142-1" aria-hidden="true" tabindex="-1"></a><span class="co"># cross product is zero, so X1 and X2 are orthogonal</span></span>
-<span id="cb142-2"><a href="interp-chapter.html#cb142-2" aria-hidden="true" tabindex="-1"></a><span class="fu">crossprod</span>(X1, X2)</span>
-<span id="cb142-3"><a href="interp-chapter.html#cb142-3" aria-hidden="true" tabindex="-1"></a><span class="do">##      [,1]</span></span>
-<span id="cb142-4"><a href="interp-chapter.html#cb142-4" aria-hidden="true" tabindex="-1"></a><span class="do">## [1,]    0</span></span></code></pre></div>
+<div class="sourceCode" id="cb142"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb142-1"><a href="interp-chapter.html#cb142-1" tabindex="-1"></a><span class="co"># cross product is zero, so X1 and X2 are orthogonal</span></span>
+<span id="cb142-2"><a href="interp-chapter.html#cb142-2" tabindex="-1"></a><span class="fu">crossprod</span>(X1, X2)</span>
+<span id="cb142-3"><a href="interp-chapter.html#cb142-3" tabindex="-1"></a><span class="do">##      [,1]</span></span>
+<span id="cb142-4"><a href="interp-chapter.html#cb142-4" tabindex="-1"></a><span class="do">## [1,]    0</span></span></code></pre></div>
 <p>In the code below, we regress <code>y</code> on <code>X1</code> without an intercept (<code>lmod1</code>). The estimated coefficient for <code>X1</code> is <span class="math inline">\(\hat{\beta}_1=0.893\)</span>.</p>
-<div class="sourceCode" id="cb143"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb143-1"><a href="interp-chapter.html#cb143-1" aria-hidden="true" tabindex="-1"></a><span class="co"># y regressed on X1 without an intercept</span></span>
-<span id="cb143-2"><a href="interp-chapter.html#cb143-2" aria-hidden="true" tabindex="-1"></a>lmod1 <span class="ot">&lt;-</span> <span class="fu">lm</span>(y <span class="sc">~</span> X1 <span class="sc">-</span> <span class="dv">1</span>)</span>
-<span id="cb143-3"><a href="interp-chapter.html#cb143-3" aria-hidden="true" tabindex="-1"></a><span class="fu">coef</span>(lmod1)</span>
-<span id="cb143-4"><a href="interp-chapter.html#cb143-4" aria-hidden="true" tabindex="-1"></a><span class="do">##       X1 </span></span>
-<span id="cb143-5"><a href="interp-chapter.html#cb143-5" aria-hidden="true" tabindex="-1"></a><span class="do">## 0.893401</span></span></code></pre></div>
+<div class="sourceCode" id="cb143"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb143-1"><a href="interp-chapter.html#cb143-1" tabindex="-1"></a><span class="co"># y regressed on X1 without an intercept</span></span>
+<span id="cb143-2"><a href="interp-chapter.html#cb143-2" tabindex="-1"></a>lmod1 <span class="ot">&lt;-</span> <span class="fu">lm</span>(y <span class="sc">~</span> X1 <span class="sc">-</span> <span class="dv">1</span>)</span>
+<span id="cb143-3"><a href="interp-chapter.html#cb143-3" tabindex="-1"></a><span class="fu">coef</span>(lmod1)</span>
+<span id="cb143-4"><a href="interp-chapter.html#cb143-4" tabindex="-1"></a><span class="do">##       X1 </span></span>
+<span id="cb143-5"><a href="interp-chapter.html#cb143-5" tabindex="-1"></a><span class="do">## 0.893401</span></span></code></pre></div>
 <p>Next, we then regress <code>y</code> on <code>X1</code> and <code>X2</code> without an intercept (<code>lmod2</code>). The estimated coefficients for <code>X1</code> and <code>X2</code> are <span class="math inline">\(\hat{\beta}_1=0.893\)</span> and <span class="math inline">\(\hat{\beta}_2=0.221\)</span>, respectively. Because <code>X1</code> and <code>X2</code> are orthogonal (and because there are no other regressors to consider in the model), the estimated coefficient for <code>X1</code> stays the
 same in both models.</p>
-<div class="sourceCode" id="cb144"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb144-1"><a href="interp-chapter.html#cb144-1" aria-hidden="true" tabindex="-1"></a><span class="co"># y regressed on X1 and X2 without an intercept</span></span>
-<span id="cb144-2"><a href="interp-chapter.html#cb144-2" aria-hidden="true" tabindex="-1"></a>lmod2 <span class="ot">&lt;-</span> <span class="fu">lm</span>(y <span class="sc">~</span> X1 <span class="sc">+</span> X2 <span class="sc">-</span> <span class="dv">1</span>)</span>
-<span id="cb144-3"><a href="interp-chapter.html#cb144-3" aria-hidden="true" tabindex="-1"></a><span class="fu">coef</span>(lmod2)</span>
-<span id="cb144-4"><a href="interp-chapter.html#cb144-4" aria-hidden="true" tabindex="-1"></a><span class="do">##        X1        X2 </span></span>
-<span id="cb144-5"><a href="interp-chapter.html#cb144-5" aria-hidden="true" tabindex="-1"></a><span class="do">## 0.8934010 0.2210526</span></span></code></pre></div>
+<div class="sourceCode" id="cb144"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb144-1"><a href="interp-chapter.html#cb144-1" tabindex="-1"></a><span class="co"># y regressed on X1 and X2 without an intercept</span></span>
+<span id="cb144-2"><a href="interp-chapter.html#cb144-2" tabindex="-1"></a>lmod2 <span class="ot">&lt;-</span> <span class="fu">lm</span>(y <span class="sc">~</span> X1 <span class="sc">+</span> X2 <span class="sc">-</span> <span class="dv">1</span>)</span>
+<span id="cb144-3"><a href="interp-chapter.html#cb144-3" tabindex="-1"></a><span class="fu">coef</span>(lmod2)</span>
+<span id="cb144-4"><a href="interp-chapter.html#cb144-4" tabindex="-1"></a><span class="do">##        X1        X2 </span></span>
+<span id="cb144-5"><a href="interp-chapter.html#cb144-5" tabindex="-1"></a><span class="do">## 0.8934010 0.2210526</span></span></code></pre></div>
 <p>The previous models (<code>lmod1</code> and <code>lmod2</code>) neglect an important characteristic of a typical linear model: we usually include an intercept coefficient (a columns of 1s as a regressor) in our model. If the regressors are not orthogonal to the column of 1s in our <span class="math inline">\(\mathbf{X}\)</span> matrix, then the coefficients for the other regressors in
 the model will change when the regressors are added or removed from the model because they are not orthogonal to the column of 1s.</p>
 <p>We create a vector <code>ones</code> that is simply a column of 1s.</p>
-<div class="sourceCode" id="cb145"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb145-1"><a href="interp-chapter.html#cb145-1" aria-hidden="true" tabindex="-1"></a>ones <span class="ot">&lt;-</span> <span class="fu">rep</span>(<span class="dv">1</span>, <span class="dv">5</span>)   <span class="co"># column of 1s</span></span></code></pre></div>
+<div class="sourceCode" id="cb145"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb145-1"><a href="interp-chapter.html#cb145-1" tabindex="-1"></a>ones <span class="ot">&lt;-</span> <span class="fu">rep</span>(<span class="dv">1</span>, <span class="dv">5</span>)   <span class="co"># column of 1s</span></span></code></pre></div>
 <p>Neither <code>X1</code> nor <code>X2</code> is orthogonal with the column of ones. We compute the cross product between <code>ones</code> and the two regressors <code>X1</code> and <code>X2</code>. Since the cross products are not zero, <code>X1</code> and <code>X2</code> are not orthogonal to the
 column of ones.</p>
-<div class="sourceCode" id="cb146"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb146-1"><a href="interp-chapter.html#cb146-1" aria-hidden="true" tabindex="-1"></a><span class="fu">crossprod</span>(ones, X1) <span class="co"># not zero, so not orthogonal</span></span>
-<span id="cb146-2"><a href="interp-chapter.html#cb146-2" aria-hidden="true" tabindex="-1"></a><span class="do">##      [,1]</span></span>
-<span id="cb146-3"><a href="interp-chapter.html#cb146-3" aria-hidden="true" tabindex="-1"></a><span class="do">## [1,]   31</span></span>
-<span id="cb146-4"><a href="interp-chapter.html#cb146-4" aria-hidden="true" tabindex="-1"></a><span class="fu">crossprod</span>(ones, X2) <span class="co"># not zero, so not orthogonal</span></span>
-<span id="cb146-5"><a href="interp-chapter.html#cb146-5" aria-hidden="true" tabindex="-1"></a><span class="do">##            [,1]</span></span>
-<span id="cb146-6"><a href="interp-chapter.html#cb146-6" aria-hidden="true" tabindex="-1"></a><span class="do">## [1,] -0.2857143</span></span></code></pre></div>
+<div class="sourceCode" id="cb146"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb146-1"><a href="interp-chapter.html#cb146-1" tabindex="-1"></a><span class="fu">crossprod</span>(ones, X1) <span class="co"># not zero, so not orthogonal</span></span>
+<span id="cb146-2"><a href="interp-chapter.html#cb146-2" tabindex="-1"></a><span class="do">##      [,1]</span></span>
+<span id="cb146-3"><a href="interp-chapter.html#cb146-3" tabindex="-1"></a><span class="do">## [1,]   31</span></span>
+<span id="cb146-4"><a href="interp-chapter.html#cb146-4" tabindex="-1"></a><span class="fu">crossprod</span>(ones, X2) <span class="co"># not zero, so not orthogonal</span></span>
+<span id="cb146-5"><a href="interp-chapter.html#cb146-5" tabindex="-1"></a><span class="do">##            [,1]</span></span>
+<span id="cb146-6"><a href="interp-chapter.html#cb146-6" tabindex="-1"></a><span class="do">## [1,] -0.2857143</span></span></code></pre></div>
 <p>We create <code>lmod3</code> by adding adding a column of ones to <code>lmod2</code> (i.e.,
 we include the intercept in the model). The the coefficients for both
 <code>X1</code> and <code>X2</code> change when going from <code>lmod2</code> to <code>lmod3</code> because these
 regressors are not orthogonal to the column of 1s. Comparing the
 coefficients <code>lmod2</code> above and <code>lmod3</code>, <span class="math inline">\(\hat{\beta}_1\)</span> changes from
 <span class="math inline">\(0.893\)</span> to <span class="math inline">\(0.397\)</span> and <span class="math inline">\(\hat{\beta}_2\)</span> changes from <span class="math inline">\(0.221\)</span> to <span class="math inline">\(0.279\)</span>.</p>
-<div class="sourceCode" id="cb147"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb147-1"><a href="interp-chapter.html#cb147-1" aria-hidden="true" tabindex="-1"></a><span class="fu">coef</span>(lmod2) <span class="co"># coefficients for lmod2</span></span>
-<span id="cb147-2"><a href="interp-chapter.html#cb147-2" aria-hidden="true" tabindex="-1"></a><span class="do">##        X1        X2 </span></span>
-<span id="cb147-3"><a href="interp-chapter.html#cb147-3" aria-hidden="true" tabindex="-1"></a><span class="do">## 0.8934010 0.2210526</span></span>
-<span id="cb147-4"><a href="interp-chapter.html#cb147-4" aria-hidden="true" tabindex="-1"></a><span class="co"># y regressed on X1 and X2 with an intercept</span></span>
-<span id="cb147-5"><a href="interp-chapter.html#cb147-5" aria-hidden="true" tabindex="-1"></a>lmod3 <span class="ot">&lt;-</span> <span class="fu">lm</span>(y <span class="sc">~</span> X1 <span class="sc">+</span> X2)</span>
-<span id="cb147-6"><a href="interp-chapter.html#cb147-6" aria-hidden="true" tabindex="-1"></a><span class="fu">coef</span>(lmod3) <span class="co"># coefficients for lmod3</span></span>
-<span id="cb147-7"><a href="interp-chapter.html#cb147-7" aria-hidden="true" tabindex="-1"></a><span class="do">## (Intercept)          X1          X2 </span></span>
-<span id="cb147-8"><a href="interp-chapter.html#cb147-8" aria-hidden="true" tabindex="-1"></a><span class="do">##   3.1547101   0.3969746   0.2791657</span></span></code></pre></div>
+<div class="sourceCode" id="cb147"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb147-1"><a href="interp-chapter.html#cb147-1" tabindex="-1"></a><span class="fu">coef</span>(lmod2) <span class="co"># coefficients for lmod2</span></span>
+<span id="cb147-2"><a href="interp-chapter.html#cb147-2" tabindex="-1"></a><span class="do">##        X1        X2 </span></span>
+<span id="cb147-3"><a href="interp-chapter.html#cb147-3" tabindex="-1"></a><span class="do">## 0.8934010 0.2210526</span></span>
+<span id="cb147-4"><a href="interp-chapter.html#cb147-4" tabindex="-1"></a><span class="co"># y regressed on X1 and X2 with an intercept</span></span>
+<span id="cb147-5"><a href="interp-chapter.html#cb147-5" tabindex="-1"></a>lmod3 <span class="ot">&lt;-</span> <span class="fu">lm</span>(y <span class="sc">~</span> X1 <span class="sc">+</span> X2)</span>
+<span id="cb147-6"><a href="interp-chapter.html#cb147-6" tabindex="-1"></a><span class="fu">coef</span>(lmod3) <span class="co"># coefficients for lmod3</span></span>
+<span id="cb147-7"><a href="interp-chapter.html#cb147-7" tabindex="-1"></a><span class="do">## (Intercept)          X1          X2 </span></span>
+<span id="cb147-8"><a href="interp-chapter.html#cb147-8" tabindex="-1"></a><span class="do">##   3.1547101   0.3969746   0.2791657</span></span></code></pre></div>
 <p>For orthogonality of our regressors to be most impactful, the model’s
 regressors should be orthogonal to each other and the column of 1s. In
 that context, adding or removing any of the regressors doesn’t impact
 the estimated coefficients of the other regressors. In the code below,
 we define centered regressors <code>X3</code> and <code>X4</code> to be uncorrelated, i.e.,
 <code>X3</code> and <code>X4</code> have sample mean zero and are orthogonal to each other.</p>
-<div class="sourceCode" id="cb148"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb148-1"><a href="interp-chapter.html#cb148-1" aria-hidden="true" tabindex="-1"></a>X3 <span class="ot">&lt;-</span>  <span class="fu">c</span>(<span class="dv">0</span>, <span class="sc">-</span><span class="dv">1</span>, <span class="dv">1</span>, <span class="dv">0</span>, <span class="dv">0</span>) <span class="co"># sample mean is zero</span></span>
-<span id="cb148-2"><a href="interp-chapter.html#cb148-2" aria-hidden="true" tabindex="-1"></a>X4 <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="dv">0</span>, <span class="dv">0</span>, <span class="dv">0</span>, <span class="dv">1</span>, <span class="sc">-</span><span class="dv">1</span>)  <span class="co"># sample mean is zero</span></span>
-<span id="cb148-3"><a href="interp-chapter.html#cb148-3" aria-hidden="true" tabindex="-1"></a><span class="fu">cov</span>(X3, X4)              <span class="co"># 0, so X3 and X4 are uncorrelated and orthogonal</span></span>
-<span id="cb148-4"><a href="interp-chapter.html#cb148-4" aria-hidden="true" tabindex="-1"></a><span class="do">## [1] 0</span></span></code></pre></div>
+<div class="sourceCode" id="cb148"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb148-1"><a href="interp-chapter.html#cb148-1" tabindex="-1"></a>X3 <span class="ot">&lt;-</span>  <span class="fu">c</span>(<span class="dv">0</span>, <span class="sc">-</span><span class="dv">1</span>, <span class="dv">1</span>, <span class="dv">0</span>, <span class="dv">0</span>) <span class="co"># sample mean is zero</span></span>
+<span id="cb148-2"><a href="interp-chapter.html#cb148-2" tabindex="-1"></a>X4 <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="dv">0</span>, <span class="dv">0</span>, <span class="dv">0</span>, <span class="dv">1</span>, <span class="sc">-</span><span class="dv">1</span>)  <span class="co"># sample mean is zero</span></span>
+<span id="cb148-3"><a href="interp-chapter.html#cb148-3" tabindex="-1"></a><span class="fu">cov</span>(X3, X4)              <span class="co"># 0, so X3 and X4 are uncorrelated and orthogonal</span></span>
+<span id="cb148-4"><a href="interp-chapter.html#cb148-4" tabindex="-1"></a><span class="do">## [1] 0</span></span></code></pre></div>
 <p>If we fit linear regression models with any combination of <code>ones</code>, <code>X3</code>,
 or <code>X4</code> as regressors, the associated regression coefficients will not
 change. To demonstrate this, we consider all possible combinations of
 the three variables in the models below. We do not run the code to save
 space, but we summarize the results below.</p>
-<div class="sourceCode" id="cb149"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb149-1"><a href="interp-chapter.html#cb149-1" aria-hidden="true" tabindex="-1"></a><span class="fu">coef</span>(<span class="fu">lm</span>(y <span class="sc">~</span> <span class="dv">1</span>))           <span class="co"># only column of 1s</span></span>
-<span id="cb149-2"><a href="interp-chapter.html#cb149-2" aria-hidden="true" tabindex="-1"></a><span class="fu">coef</span>(<span class="fu">lm</span>(y <span class="sc">~</span> X3 <span class="sc">-</span> <span class="dv">1</span>))      <span class="co"># only X3</span></span>
-<span id="cb149-3"><a href="interp-chapter.html#cb149-3" aria-hidden="true" tabindex="-1"></a><span class="fu">coef</span>(<span class="fu">lm</span>(y <span class="sc">~</span> X4 <span class="sc">-</span> <span class="dv">1</span>))      <span class="co"># only X4</span></span>
-<span id="cb149-4"><a href="interp-chapter.html#cb149-4" aria-hidden="true" tabindex="-1"></a><span class="fu">coef</span>(<span class="fu">lm</span>(y <span class="sc">~</span> X3))          <span class="co"># 1s and X3</span></span>
-<span id="cb149-5"><a href="interp-chapter.html#cb149-5" aria-hidden="true" tabindex="-1"></a><span class="fu">coef</span>(<span class="fu">lm</span>(y <span class="sc">~</span> X4))          <span class="co"># 1s and X4</span></span>
-<span id="cb149-6"><a href="interp-chapter.html#cb149-6" aria-hidden="true" tabindex="-1"></a><span class="fu">coef</span>(<span class="fu">lm</span>(y <span class="sc">~</span> X3 <span class="sc">+</span> X4 <span class="sc">-</span> <span class="dv">1</span>)) <span class="co"># X3 and X4</span></span>
-<span id="cb149-7"><a href="interp-chapter.html#cb149-7" aria-hidden="true" tabindex="-1"></a><span class="fu">coef</span>(<span class="fu">lm</span>(y <span class="sc">~</span> X3 <span class="sc">+</span> X4))     <span class="co"># 1s, X3, and X4</span></span></code></pre></div>
+<div class="sourceCode" id="cb149"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb149-1"><a href="interp-chapter.html#cb149-1" tabindex="-1"></a><span class="fu">coef</span>(<span class="fu">lm</span>(y <span class="sc">~</span> <span class="dv">1</span>))           <span class="co"># only column of 1s</span></span>
+<span id="cb149-2"><a href="interp-chapter.html#cb149-2" tabindex="-1"></a><span class="fu">coef</span>(<span class="fu">lm</span>(y <span class="sc">~</span> X3 <span class="sc">-</span> <span class="dv">1</span>))      <span class="co"># only X3</span></span>
+<span id="cb149-3"><a href="interp-chapter.html#cb149-3" tabindex="-1"></a><span class="fu">coef</span>(<span class="fu">lm</span>(y <span class="sc">~</span> X4 <span class="sc">-</span> <span class="dv">1</span>))      <span class="co"># only X4</span></span>
+<span id="cb149-4"><a href="interp-chapter.html#cb149-4" tabindex="-1"></a><span class="fu">coef</span>(<span class="fu">lm</span>(y <span class="sc">~</span> X3))          <span class="co"># 1s and X3</span></span>
+<span id="cb149-5"><a href="interp-chapter.html#cb149-5" tabindex="-1"></a><span class="fu">coef</span>(<span class="fu">lm</span>(y <span class="sc">~</span> X4))          <span class="co"># 1s and X4</span></span>
+<span id="cb149-6"><a href="interp-chapter.html#cb149-6" tabindex="-1"></a><span class="fu">coef</span>(<span class="fu">lm</span>(y <span class="sc">~</span> X3 <span class="sc">+</span> X4 <span class="sc">-</span> <span class="dv">1</span>)) <span class="co"># X3 and X4</span></span>
+<span id="cb149-7"><a href="interp-chapter.html#cb149-7" tabindex="-1"></a><span class="fu">coef</span>(<span class="fu">lm</span>(y <span class="sc">~</span> X3 <span class="sc">+</span> X4))     <span class="co"># 1s, X3, and X4</span></span></code></pre></div>
 <p>We simply note that in each of the previous models, because all of the
 regressors (and the column of 1s) are orthogonal to each other, adding
 or removing any regressor doesn’t impact the estimated coefficients for
@@ -1605,24 +1677,24 @@ and the intercept is to compute the cross product of the <span class="math inlin
 matrix for the largest set of regressors we are considering. Consider
 the matrix of cross products for the columns of 1s, <code>X1</code>, <code>X2</code>, <code>X3</code>, and
 <code>X4</code>.</p>
-<div class="sourceCode" id="cb150"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb150-1"><a href="interp-chapter.html#cb150-1" aria-hidden="true" tabindex="-1"></a><span class="fu">crossprod</span>(<span class="fu">model.matrix</span>(<span class="sc">~</span> X1 <span class="sc">+</span> X2 <span class="sc">+</span> X3 <span class="sc">+</span> X4))</span>
-<span id="cb150-2"><a href="interp-chapter.html#cb150-2" aria-hidden="true" tabindex="-1"></a><span class="do">##             (Intercept)  X1         X2 X3        X4</span></span>
-<span id="cb150-3"><a href="interp-chapter.html#cb150-3" aria-hidden="true" tabindex="-1"></a><span class="do">## (Intercept)   5.0000000  31 -0.2857143  0 0.0000000</span></span>
-<span id="cb150-4"><a href="interp-chapter.html#cb150-4" aria-hidden="true" tabindex="-1"></a><span class="do">## X1           31.0000000 197  0.0000000  0 0.0000000</span></span>
-<span id="cb150-5"><a href="interp-chapter.html#cb150-5" aria-hidden="true" tabindex="-1"></a><span class="do">## X2           -0.2857143   0 15.5102041 -5 0.2857143</span></span>
-<span id="cb150-6"><a href="interp-chapter.html#cb150-6" aria-hidden="true" tabindex="-1"></a><span class="do">## X3            0.0000000   0 -5.0000000  2 0.0000000</span></span>
-<span id="cb150-7"><a href="interp-chapter.html#cb150-7" aria-hidden="true" tabindex="-1"></a><span class="do">## X4            0.0000000   0  0.2857143  0 2.0000000</span></span></code></pre></div>
+<div class="sourceCode" id="cb150"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb150-1"><a href="interp-chapter.html#cb150-1" tabindex="-1"></a><span class="fu">crossprod</span>(<span class="fu">model.matrix</span>(<span class="sc">~</span> X1 <span class="sc">+</span> X2 <span class="sc">+</span> X3 <span class="sc">+</span> X4))</span>
+<span id="cb150-2"><a href="interp-chapter.html#cb150-2" tabindex="-1"></a><span class="do">##             (Intercept)  X1         X2 X3        X4</span></span>
+<span id="cb150-3"><a href="interp-chapter.html#cb150-3" tabindex="-1"></a><span class="do">## (Intercept)   5.0000000  31 -0.2857143  0 0.0000000</span></span>
+<span id="cb150-4"><a href="interp-chapter.html#cb150-4" tabindex="-1"></a><span class="do">## X1           31.0000000 197  0.0000000  0 0.0000000</span></span>
+<span id="cb150-5"><a href="interp-chapter.html#cb150-5" tabindex="-1"></a><span class="do">## X2           -0.2857143   0 15.5102041 -5 0.2857143</span></span>
+<span id="cb150-6"><a href="interp-chapter.html#cb150-6" tabindex="-1"></a><span class="do">## X3            0.0000000   0 -5.0000000  2 0.0000000</span></span>
+<span id="cb150-7"><a href="interp-chapter.html#cb150-7" tabindex="-1"></a><span class="do">## X4            0.0000000   0  0.2857143  0 2.0000000</span></span></code></pre></div>
 <p>Consider the sequence of models below.</p>
-<div class="sourceCode" id="cb151"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb151-1"><a href="interp-chapter.html#cb151-1" aria-hidden="true" tabindex="-1"></a><span class="fu">coef</span>(<span class="fu">lm</span>(y <span class="sc">~</span> <span class="dv">1</span>))</span>
-<span id="cb151-2"><a href="interp-chapter.html#cb151-2" aria-hidden="true" tabindex="-1"></a><span class="do">## (Intercept) </span></span>
-<span id="cb151-3"><a href="interp-chapter.html#cb151-3" aria-hidden="true" tabindex="-1"></a><span class="do">##         5.6</span></span></code></pre></div>
+<div class="sourceCode" id="cb151"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb151-1"><a href="interp-chapter.html#cb151-1" tabindex="-1"></a><span class="fu">coef</span>(<span class="fu">lm</span>(y <span class="sc">~</span> <span class="dv">1</span>))</span>
+<span id="cb151-2"><a href="interp-chapter.html#cb151-2" tabindex="-1"></a><span class="do">## (Intercept) </span></span>
+<span id="cb151-3"><a href="interp-chapter.html#cb151-3" tabindex="-1"></a><span class="do">##         5.6</span></span></code></pre></div>
 <p>The model with only an intercept has an estimated coefficient of
 <span class="math inline">\(\hat{\beta}_{0}=5.6\)</span>. If we add the <code>X1</code> to the model with an
 intercept, then the intercept coefficient changes because the column of 1s isn’t orthogonal to <code>X1</code>.</p>
-<div class="sourceCode" id="cb152"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb152-1"><a href="interp-chapter.html#cb152-1" aria-hidden="true" tabindex="-1"></a>lmod4 <span class="ot">&lt;-</span> <span class="fu">lm</span>(y <span class="sc">~</span> X1) <span class="co"># model with 1s and X1</span></span>
-<span id="cb152-2"><a href="interp-chapter.html#cb152-2" aria-hidden="true" tabindex="-1"></a><span class="fu">coef</span>(lmod4)</span>
-<span id="cb152-3"><a href="interp-chapter.html#cb152-3" aria-hidden="true" tabindex="-1"></a><span class="do">## (Intercept)          X1 </span></span>
-<span id="cb152-4"><a href="interp-chapter.html#cb152-4" aria-hidden="true" tabindex="-1"></a><span class="do">##         2.5         0.5</span></span></code></pre></div>
+<div class="sourceCode" id="cb152"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb152-1"><a href="interp-chapter.html#cb152-1" tabindex="-1"></a>lmod4 <span class="ot">&lt;-</span> <span class="fu">lm</span>(y <span class="sc">~</span> X1) <span class="co"># model with 1s and X1</span></span>
+<span id="cb152-2"><a href="interp-chapter.html#cb152-2" tabindex="-1"></a><span class="fu">coef</span>(lmod4)</span>
+<span id="cb152-3"><a href="interp-chapter.html#cb152-3" tabindex="-1"></a><span class="do">## (Intercept)          X1 </span></span>
+<span id="cb152-4"><a href="interp-chapter.html#cb152-4" tabindex="-1"></a><span class="do">##         2.5         0.5</span></span></code></pre></div>
 <p>If we add <code>X2</code> to <code>lmod4</code>, we might think that only <span class="math inline">\(\hat{\beta}_{0}\)</span>
 will change because <code>X1</code> and <code>X2</code> are orthogonal to each other. However,
 because <code>X2</code> is not orthogonal to all of the other regressors in the
@@ -1632,37 +1704,37 @@ at <code>lmod2</code> above with only <code>X1</code> and <code>X2</code>. When 
 to <code>lmod2</code>, both <span class="math inline">\(\hat{\beta}_1\)</span> and <span class="math inline">\(\hat{\beta}_2\)</span> will change because
 neither regressor is orthogonal to the column of 1s needed to include
 the intercept term.</p>
-<div class="sourceCode" id="cb153"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb153-1"><a href="interp-chapter.html#cb153-1" aria-hidden="true" tabindex="-1"></a><span class="fu">coef</span>(<span class="fu">lm</span>(y <span class="sc">~</span> X1 <span class="sc">+</span> X2))</span>
-<span id="cb153-2"><a href="interp-chapter.html#cb153-2" aria-hidden="true" tabindex="-1"></a><span class="do">## (Intercept)          X1          X2 </span></span>
-<span id="cb153-3"><a href="interp-chapter.html#cb153-3" aria-hidden="true" tabindex="-1"></a><span class="do">##   3.1547101   0.3969746   0.2791657</span></span></code></pre></div>
+<div class="sourceCode" id="cb153"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb153-1"><a href="interp-chapter.html#cb153-1" tabindex="-1"></a><span class="fu">coef</span>(<span class="fu">lm</span>(y <span class="sc">~</span> X1 <span class="sc">+</span> X2))</span>
+<span id="cb153-2"><a href="interp-chapter.html#cb153-2" tabindex="-1"></a><span class="do">## (Intercept)          X1          X2 </span></span>
+<span id="cb153-3"><a href="interp-chapter.html#cb153-3" tabindex="-1"></a><span class="do">##   3.1547101   0.3969746   0.2791657</span></span></code></pre></div>
 <p>However, note that <code>X3</code> is orthogonal to the column of 1s and <code>X1</code>.
 Thus, if we add <code>X3</code> to <code>lmod4</code>, which includes both a column of 1s and
 <code>X1</code>, <code>X3</code> will not change the estimated coefficients for the intercept
 or <code>X1</code>.</p>
-<div class="sourceCode" id="cb154"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb154-1"><a href="interp-chapter.html#cb154-1" aria-hidden="true" tabindex="-1"></a><span class="fu">coef</span>(<span class="fu">lm</span>(y <span class="sc">~</span> X1 <span class="sc">+</span> X3))</span>
-<span id="cb154-2"><a href="interp-chapter.html#cb154-2" aria-hidden="true" tabindex="-1"></a><span class="do">## (Intercept)          X1          X3 </span></span>
-<span id="cb154-3"><a href="interp-chapter.html#cb154-3" aria-hidden="true" tabindex="-1"></a><span class="do">##         2.5         0.5         1.0</span></span></code></pre></div>
+<div class="sourceCode" id="cb154"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb154-1"><a href="interp-chapter.html#cb154-1" tabindex="-1"></a><span class="fu">coef</span>(<span class="fu">lm</span>(y <span class="sc">~</span> X1 <span class="sc">+</span> X3))</span>
+<span id="cb154-2"><a href="interp-chapter.html#cb154-2" tabindex="-1"></a><span class="do">## (Intercept)          X1          X3 </span></span>
+<span id="cb154-3"><a href="interp-chapter.html#cb154-3" tabindex="-1"></a><span class="do">##         2.5         0.5         1.0</span></span></code></pre></div>
 <p>Additionally, since <code>X4</code> is orthogonal to the column of 1s, <code>X1</code>, and
 <code>X3</code>, adding <code>X4</code> to the previous model will not change the estimated
 coefficients for any of the other variables already in the model.</p>
-<div class="sourceCode" id="cb155"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb155-1"><a href="interp-chapter.html#cb155-1" aria-hidden="true" tabindex="-1"></a><span class="fu">coef</span>(<span class="fu">lm</span>(y <span class="sc">~</span> X1 <span class="sc">+</span> X3 <span class="sc">+</span> X4))</span>
-<span id="cb155-2"><a href="interp-chapter.html#cb155-2" aria-hidden="true" tabindex="-1"></a><span class="do">## (Intercept)          X1          X3          X4 </span></span>
-<span id="cb155-3"><a href="interp-chapter.html#cb155-3" aria-hidden="true" tabindex="-1"></a><span class="do">##         2.5         0.5         1.0        -0.5</span></span></code></pre></div>
+<div class="sourceCode" id="cb155"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb155-1"><a href="interp-chapter.html#cb155-1" tabindex="-1"></a><span class="fu">coef</span>(<span class="fu">lm</span>(y <span class="sc">~</span> X1 <span class="sc">+</span> X3 <span class="sc">+</span> X4))</span>
+<span id="cb155-2"><a href="interp-chapter.html#cb155-2" tabindex="-1"></a><span class="do">## (Intercept)          X1          X3          X4 </span></span>
+<span id="cb155-3"><a href="interp-chapter.html#cb155-3" tabindex="-1"></a><span class="do">##         2.5         0.5         1.0        -0.5</span></span></code></pre></div>
 <p>Lastly, if we can partition our <span class="math inline">\(\mathbf{X}\)</span> matrix such that
 <span class="math inline">\(\mathbf{X}^T \mathbf{X}\)</span> is a block diagonal matrix, then none of the
 blocks of variables will affect the estimated coefficients of the other
 variables.</p>
 <p>Define a new regressor <code>X5</code> below.</p>
-<div class="sourceCode" id="cb156"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb156-1"><a href="interp-chapter.html#cb156-1" aria-hidden="true" tabindex="-1"></a>X5 <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="dv">1</span>, <span class="dv">0</span>, <span class="dv">0</span>, <span class="sc">-</span><span class="dv">1</span>, <span class="dv">0</span>) <span class="co"># orthogonal to ones, X1, not X4</span></span></code></pre></div>
+<div class="sourceCode" id="cb156"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb156-1"><a href="interp-chapter.html#cb156-1" tabindex="-1"></a>X5 <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="dv">1</span>, <span class="dv">0</span>, <span class="dv">0</span>, <span class="sc">-</span><span class="dv">1</span>, <span class="dv">0</span>) <span class="co"># orthogonal to ones, X1, not X4</span></span></code></pre></div>
 <p><code>X5</code> is orthogonal to the column of
 1s and <code>X1</code>, but not <code>X4</code>, as evidenced in the code below.</p>
-<div class="sourceCode" id="cb157"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb157-1"><a href="interp-chapter.html#cb157-1" aria-hidden="true" tabindex="-1"></a><span class="co"># note block of 0s</span></span>
-<span id="cb157-2"><a href="interp-chapter.html#cb157-2" aria-hidden="true" tabindex="-1"></a><span class="fu">crossprod</span>(<span class="fu">cbind</span>(ones, X1, X4, X5))</span>
-<span id="cb157-3"><a href="interp-chapter.html#cb157-3" aria-hidden="true" tabindex="-1"></a><span class="do">##      ones  X1 X4 X5</span></span>
-<span id="cb157-4"><a href="interp-chapter.html#cb157-4" aria-hidden="true" tabindex="-1"></a><span class="do">## ones    5  31  0  0</span></span>
-<span id="cb157-5"><a href="interp-chapter.html#cb157-5" aria-hidden="true" tabindex="-1"></a><span class="do">## X1     31 197  0  0</span></span>
-<span id="cb157-6"><a href="interp-chapter.html#cb157-6" aria-hidden="true" tabindex="-1"></a><span class="do">## X4      0   0  2 -1</span></span>
-<span id="cb157-7"><a href="interp-chapter.html#cb157-7" aria-hidden="true" tabindex="-1"></a><span class="do">## X5      0   0 -1  2</span></span></code></pre></div>
+<div class="sourceCode" id="cb157"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb157-1"><a href="interp-chapter.html#cb157-1" tabindex="-1"></a><span class="co"># note block of 0s</span></span>
+<span id="cb157-2"><a href="interp-chapter.html#cb157-2" tabindex="-1"></a><span class="fu">crossprod</span>(<span class="fu">cbind</span>(ones, X1, X4, X5))</span>
+<span id="cb157-3"><a href="interp-chapter.html#cb157-3" tabindex="-1"></a><span class="do">##      ones  X1 X4 X5</span></span>
+<span id="cb157-4"><a href="interp-chapter.html#cb157-4" tabindex="-1"></a><span class="do">## ones    5  31  0  0</span></span>
+<span id="cb157-5"><a href="interp-chapter.html#cb157-5" tabindex="-1"></a><span class="do">## X1     31 197  0  0</span></span>
+<span id="cb157-6"><a href="interp-chapter.html#cb157-6" tabindex="-1"></a><span class="do">## X4      0   0  2 -1</span></span>
+<span id="cb157-7"><a href="interp-chapter.html#cb157-7" tabindex="-1"></a><span class="do">## X5      0   0 -1  2</span></span></code></pre></div>
 <p>Note the block of zeros in the lower left and upper right corners of the
 cross product matrix above. The block containing <code>ones</code> and <code>X1</code> is
 orthogonal to the block containing <code>X4</code> and <code>X5</code>. This means that if we
@@ -1672,30 +1744,30 @@ and <code>X5</code>, then the coefficients <span class="math inline">\(\hat{\bet
 are not impacted when <code>X4</code> and <code>X5</code> are added to the model. Similarly,
 <span class="math inline">\(\hat{\beta}_{4}\)</span> and <span class="math inline">\(\hat{\beta}_{5}\)</span> are not impacted when the column
 of 1s and <code>X1</code> are added to the model with <code>X4</code> and <code>X5</code>. See the output below.</p>
-<div class="sourceCode" id="cb158"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb158-1"><a href="interp-chapter.html#cb158-1" aria-hidden="true" tabindex="-1"></a><span class="fu">lm</span>(y <span class="sc">~</span> X1)           <span class="co"># model with 1s and X1</span></span>
-<span id="cb158-2"><a href="interp-chapter.html#cb158-2" aria-hidden="true" tabindex="-1"></a><span class="do">## </span></span>
-<span id="cb158-3"><a href="interp-chapter.html#cb158-3" aria-hidden="true" tabindex="-1"></a><span class="do">## Call:</span></span>
-<span id="cb158-4"><a href="interp-chapter.html#cb158-4" aria-hidden="true" tabindex="-1"></a><span class="do">## lm(formula = y ~ X1)</span></span>
-<span id="cb158-5"><a href="interp-chapter.html#cb158-5" aria-hidden="true" tabindex="-1"></a><span class="do">## </span></span>
-<span id="cb158-6"><a href="interp-chapter.html#cb158-6" aria-hidden="true" tabindex="-1"></a><span class="do">## Coefficients:</span></span>
-<span id="cb158-7"><a href="interp-chapter.html#cb158-7" aria-hidden="true" tabindex="-1"></a><span class="do">## (Intercept)           X1  </span></span>
-<span id="cb158-8"><a href="interp-chapter.html#cb158-8" aria-hidden="true" tabindex="-1"></a><span class="do">##         2.5          0.5</span></span>
-<span id="cb158-9"><a href="interp-chapter.html#cb158-9" aria-hidden="true" tabindex="-1"></a><span class="fu">lm</span>(y <span class="sc">~</span> X4 <span class="sc">+</span> X5 <span class="sc">-</span> <span class="dv">1</span>)  <span class="co"># model with X4 and X5 only</span></span>
-<span id="cb158-10"><a href="interp-chapter.html#cb158-10" aria-hidden="true" tabindex="-1"></a><span class="do">## </span></span>
-<span id="cb158-11"><a href="interp-chapter.html#cb158-11" aria-hidden="true" tabindex="-1"></a><span class="do">## Call:</span></span>
-<span id="cb158-12"><a href="interp-chapter.html#cb158-12" aria-hidden="true" tabindex="-1"></a><span class="do">## lm(formula = y ~ X4 + X5 - 1)</span></span>
-<span id="cb158-13"><a href="interp-chapter.html#cb158-13" aria-hidden="true" tabindex="-1"></a><span class="do">## </span></span>
-<span id="cb158-14"><a href="interp-chapter.html#cb158-14" aria-hidden="true" tabindex="-1"></a><span class="do">## Coefficients:</span></span>
-<span id="cb158-15"><a href="interp-chapter.html#cb158-15" aria-hidden="true" tabindex="-1"></a><span class="do">## X4  X5  </span></span>
-<span id="cb158-16"><a href="interp-chapter.html#cb158-16" aria-hidden="true" tabindex="-1"></a><span class="do">## -3  -5</span></span>
-<span id="cb158-17"><a href="interp-chapter.html#cb158-17" aria-hidden="true" tabindex="-1"></a><span class="fu">lm</span>(y <span class="sc">~</span> X1 <span class="sc">+</span> X4 <span class="sc">+</span> X5) <span class="co"># model with 1s, X1, X4, X5</span></span>
-<span id="cb158-18"><a href="interp-chapter.html#cb158-18" aria-hidden="true" tabindex="-1"></a><span class="do">## </span></span>
-<span id="cb158-19"><a href="interp-chapter.html#cb158-19" aria-hidden="true" tabindex="-1"></a><span class="do">## Call:</span></span>
-<span id="cb158-20"><a href="interp-chapter.html#cb158-20" aria-hidden="true" tabindex="-1"></a><span class="do">## lm(formula = y ~ X1 + X4 + X5)</span></span>
-<span id="cb158-21"><a href="interp-chapter.html#cb158-21" aria-hidden="true" tabindex="-1"></a><span class="do">## </span></span>
-<span id="cb158-22"><a href="interp-chapter.html#cb158-22" aria-hidden="true" tabindex="-1"></a><span class="do">## Coefficients:</span></span>
-<span id="cb158-23"><a href="interp-chapter.html#cb158-23" aria-hidden="true" tabindex="-1"></a><span class="do">## (Intercept)           X1           X4           X5  </span></span>
-<span id="cb158-24"><a href="interp-chapter.html#cb158-24" aria-hidden="true" tabindex="-1"></a><span class="do">##         2.5          0.5         -3.0         -5.0</span></span></code></pre></div>
+<div class="sourceCode" id="cb158"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb158-1"><a href="interp-chapter.html#cb158-1" tabindex="-1"></a><span class="fu">lm</span>(y <span class="sc">~</span> X1)           <span class="co"># model with 1s and X1</span></span>
+<span id="cb158-2"><a href="interp-chapter.html#cb158-2" tabindex="-1"></a><span class="do">## </span></span>
+<span id="cb158-3"><a href="interp-chapter.html#cb158-3" tabindex="-1"></a><span class="do">## Call:</span></span>
+<span id="cb158-4"><a href="interp-chapter.html#cb158-4" tabindex="-1"></a><span class="do">## lm(formula = y ~ X1)</span></span>
+<span id="cb158-5"><a href="interp-chapter.html#cb158-5" tabindex="-1"></a><span class="do">## </span></span>
+<span id="cb158-6"><a href="interp-chapter.html#cb158-6" tabindex="-1"></a><span class="do">## Coefficients:</span></span>
+<span id="cb158-7"><a href="interp-chapter.html#cb158-7" tabindex="-1"></a><span class="do">## (Intercept)           X1  </span></span>
+<span id="cb158-8"><a href="interp-chapter.html#cb158-8" tabindex="-1"></a><span class="do">##         2.5          0.5</span></span>
+<span id="cb158-9"><a href="interp-chapter.html#cb158-9" tabindex="-1"></a><span class="fu">lm</span>(y <span class="sc">~</span> X4 <span class="sc">+</span> X5 <span class="sc">-</span> <span class="dv">1</span>)  <span class="co"># model with X4 and X5 only</span></span>
+<span id="cb158-10"><a href="interp-chapter.html#cb158-10" tabindex="-1"></a><span class="do">## </span></span>
+<span id="cb158-11"><a href="interp-chapter.html#cb158-11" tabindex="-1"></a><span class="do">## Call:</span></span>
+<span id="cb158-12"><a href="interp-chapter.html#cb158-12" tabindex="-1"></a><span class="do">## lm(formula = y ~ X4 + X5 - 1)</span></span>
+<span id="cb158-13"><a href="interp-chapter.html#cb158-13" tabindex="-1"></a><span class="do">## </span></span>
+<span id="cb158-14"><a href="interp-chapter.html#cb158-14" tabindex="-1"></a><span class="do">## Coefficients:</span></span>
+<span id="cb158-15"><a href="interp-chapter.html#cb158-15" tabindex="-1"></a><span class="do">## X4  X5  </span></span>
+<span id="cb158-16"><a href="interp-chapter.html#cb158-16" tabindex="-1"></a><span class="do">## -3  -5</span></span>
+<span id="cb158-17"><a href="interp-chapter.html#cb158-17" tabindex="-1"></a><span class="fu">lm</span>(y <span class="sc">~</span> X1 <span class="sc">+</span> X4 <span class="sc">+</span> X5) <span class="co"># model with 1s, X1, X4, X5</span></span>
+<span id="cb158-18"><a href="interp-chapter.html#cb158-18" tabindex="-1"></a><span class="do">## </span></span>
+<span id="cb158-19"><a href="interp-chapter.html#cb158-19" tabindex="-1"></a><span class="do">## Call:</span></span>
+<span id="cb158-20"><a href="interp-chapter.html#cb158-20" tabindex="-1"></a><span class="do">## lm(formula = y ~ X1 + X4 + X5)</span></span>
+<span id="cb158-21"><a href="interp-chapter.html#cb158-21" tabindex="-1"></a><span class="do">## </span></span>
+<span id="cb158-22"><a href="interp-chapter.html#cb158-22" tabindex="-1"></a><span class="do">## Coefficients:</span></span>
+<span id="cb158-23"><a href="interp-chapter.html#cb158-23" tabindex="-1"></a><span class="do">## (Intercept)           X1           X4           X5  </span></span>
+<span id="cb158-24"><a href="interp-chapter.html#cb158-24" tabindex="-1"></a><span class="do">##         2.5          0.5         -3.0         -5.0</span></span></code></pre></div>
 
 </div>
 </div>
@@ -1709,7 +1781,7 @@ Faraway, Julian J. 2014. <em>Linear Models with r</em>. Second. Chapman; Hall/CR
 Fox, John, and Sanford Weisberg. 2020. <span>“Predictor Effects Graphics Gallery.”</span> <a href="https://cran.r-project.org/web/packages/effects/vignettes/predictor-effects-gallery.pdf">https://cran.r-project.org/web/packages/effects/vignettes/predictor-effects-gallery.pdf</a>.
 </div>
 <div id="ref-R-car" class="csl-entry">
-Fox, John, Sanford Weisberg, and Brad Price. 2022. <em>Car: Companion to Applied Regression</em>. <a href="https://CRAN.R-project.org/package=car">https://CRAN.R-project.org/package=car</a>.
+Fox, John, Sanford Weisberg, and Brad Price. 2023. <em>Car: Companion to Applied Regression</em>. <a href="https://CRAN.R-project.org/package=car">https://CRAN.R-project.org/package=car</a>.
 </div>
 <div id="ref-R-effects" class="csl-entry">
 Fox, John, Sanford Weisberg, Brad Price, Michael Friendly, and Jangman Hong. 2022. <em>Effects: Effect Displays for Linear, Generalized Linear, and Other Models</em>. <a href="https://CRAN.R-project.org/package=effects">https://CRAN.R-project.org/package=effects</a>.

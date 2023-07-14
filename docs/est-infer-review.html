@@ -6,7 +6,7 @@
   <meta http-equiv="X-UA-Compatible" content="IE=edge" />
   <title>C Review of Estimation and Inference | A Progressive Introduction to Linear Models</title>
   <meta name="description" content="A collection of material that progressively introduces how to fit and use linear models." />
-  <meta name="generator" content="bookdown 0.33 and GitBook 2.6.7" />
+  <meta name="generator" content="bookdown 0.34 and GitBook 2.6.7" />
 
   <meta property="og:title" content="C Review of Estimation and Inference | A Progressive Introduction to Linear Models" />
   <meta property="og:type" content="book" />
@@ -53,8 +53,8 @@
 <script src="libs/anchor-sections-1.1.0/anchor-sections.js"></script>
 <script src="libs/kePrint-0.0.1/kePrint.js"></script>
 <link href="libs/lightable-0.0.1/lightable.css" rel="stylesheet" />
-<script src="libs/htmlwidgets-1.6.1/htmlwidgets.js"></script>
-<script src="libs/plotly-binding-4.10.1/plotly.js"></script>
+<script src="libs/htmlwidgets-1.6.2/htmlwidgets.js"></script>
+<script src="libs/plotly-binding-4.10.2/plotly.js"></script>
 <script src="libs/typedarray-0.1/typedarray.min.js"></script>
 <link href="libs/crosstalk-1.2.0/css/crosstalk.min.css" rel="stylesheet" />
 <script src="libs/crosstalk-1.2.0/js/crosstalk.min.js"></script>
@@ -127,6 +127,10 @@ code span.vs { color: #4070a0; } /* VerbatimString */
 code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warning */
 </style>
 
+<style type="text/css">
+  
+  div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+</style>
 <style type="text/css">
 /* Used with Pandoc 2.11+ new --citeproc when CSL is used */
 div.csl-bib-body { }
@@ -307,27 +311,30 @@ div.csl-indent {
 <ul>
 <li class="chapter" data-level="6.1" data-path="inference.html"><a href="inference.html#overview-of-inference-and-prediction"><i class="fa fa-check"></i><b>6.1</b> Overview of inference and prediction</a></li>
 <li class="chapter" data-level="6.2" data-path="inference.html"><a href="inference.html#necessary-notation"><i class="fa fa-check"></i><b>6.2</b> Necessary notation</a></li>
-<li class="chapter" data-level="6.3" data-path="inference.html"><a href="inference.html#properties-betahat"><i class="fa fa-check"></i><b>6.3</b> Properties of the OLS estimator</a></li>
+<li class="chapter" data-level="6.3" data-path="inference.html"><a href="inference.html#properties-betahat"><i class="fa fa-check"></i><b>6.3</b> Assumptions and properties of the OLS estimator</a></li>
 <li class="chapter" data-level="6.4" data-path="inference.html"><a href="inference.html#parametric-confidence-intervals-for-regression-coefficients"><i class="fa fa-check"></i><b>6.4</b> Parametric confidence intervals for regression coefficients</a>
 <ul>
 <li class="chapter" data-level="6.4.1" data-path="inference.html"><a href="inference.html#tci"><i class="fa fa-check"></i><b>6.4.1</b> Standard <span class="math inline">\(t\)</span>-based confidence intervals</a></li>
-<li class="chapter" data-level="6.4.2" data-path="inference.html"><a href="inference.html#mcp"><i class="fa fa-check"></i><b>6.4.2</b> The multiple comparisons problem</a></li>
-<li class="chapter" data-level="6.4.3" data-path="inference.html"><a href="inference.html#adjusted-cis-betas"><i class="fa fa-check"></i><b>6.4.3</b> Adjusted confidence intervals for regression coefficients</a></li>
 </ul></li>
-<li class="chapter" data-level="6.5" data-path="inference.html"><a href="inference.html#prediction-mean-response-versus-new-response"><i class="fa fa-check"></i><b>6.5</b> Prediction: mean response versus new response</a></li>
-<li class="chapter" data-level="6.6" data-path="inference.html"><a href="inference.html#parametric-ci-mean-response"><i class="fa fa-check"></i><b>6.6</b> Confidence interval for the mean response</a></li>
-<li class="chapter" data-level="6.7" data-path="inference.html"><a href="inference.html#pi-new-response"><i class="fa fa-check"></i><b>6.7</b> Prediction interval for a new response</a></li>
-<li class="chapter" data-level="6.8" data-path="inference.html"><a href="inference.html#hypothesis-tests-for-a-single-regression-coefficient"><i class="fa fa-check"></i><b>6.8</b> Hypothesis tests for a single regression coefficient</a></li>
-<li class="chapter" data-level="6.9" data-path="inference.html"><a href="inference.html#hypothesis-tests-for-multiple-regression-coefficients"><i class="fa fa-check"></i><b>6.9</b> Hypothesis tests for multiple regression coefficients</a>
+<li class="chapter" data-level="6.5" data-path="inference.html"><a href="inference.html#mcp"><i class="fa fa-check"></i><b>6.5</b> The multiple comparisons problem</a>
 <ul>
-<li class="chapter" data-level="6.9.1" data-path="inference.html"><a href="inference.html#test-for-a-regression-relationship"><i class="fa fa-check"></i><b>6.9.1</b> Test for a regression relationship</a></li>
+<li class="chapter" data-level="6.5.1" data-path="inference.html"><a href="inference.html#adjusted-cis-betas"><i class="fa fa-check"></i><b>6.5.1</b> Adjusted confidence intervals for regression coefficients</a></li>
 </ul></li>
-<li class="chapter" data-level="6.10" data-path="inference.html"><a href="inference.html#going-deeper-2"><i class="fa fa-check"></i><b>6.10</b> Going deeper</a>
+<li class="chapter" data-level="6.6" data-path="inference.html"><a href="inference.html#prediction-mean-response-versus-new-response"><i class="fa fa-check"></i><b>6.6</b> Prediction: mean response versus new response</a></li>
+<li class="chapter" data-level="6.7" data-path="inference.html"><a href="inference.html#parametric-ci-mean-response"><i class="fa fa-check"></i><b>6.7</b> Confidence interval for the mean response</a></li>
+<li class="chapter" data-level="6.8" data-path="inference.html"><a href="inference.html#pi-new-response"><i class="fa fa-check"></i><b>6.8</b> Prediction interval for a new response</a></li>
+<li class="chapter" data-level="6.9" data-path="inference.html"><a href="inference.html#hypothesis-tests-for-a-single-regression-coefficient"><i class="fa fa-check"></i><b>6.9</b> Hypothesis tests for a single regression coefficient</a></li>
+<li class="chapter" data-level="6.10" data-path="inference.html"><a href="inference.html#hypothesis-tests-for-multiple-regression-coefficients"><i class="fa fa-check"></i><b>6.10</b> Hypothesis tests for multiple regression coefficients</a>
 <ul>
-<li class="chapter" data-level="6.10.1" data-path="inference.html"><a href="inference.html#manual-t-cis"><i class="fa fa-check"></i><b>6.10.1</b> Manual calculation of the standard <span class="math inline">\(t\)</span>-based confidence interval for a regression coefficient</a></li>
-<li class="chapter" data-level="6.10.2" data-path="inference.html"><a href="inference.html#mean-response-calculations"><i class="fa fa-check"></i><b>6.10.2</b> Details about estimation of the mean response</a></li>
-<li class="chapter" data-level="6.10.3" data-path="inference.html"><a href="inference.html#manual-calc-ci-mean-response"><i class="fa fa-check"></i><b>6.10.3</b> Manual calculation of confidence intervals for the mean response</a></li>
-<li class="chapter" data-level="6.10.4" data-path="inference.html"><a href="inference.html#new-response-pi-calculations"><i class="fa fa-check"></i><b>6.10.4</b> Details about prediction interval for a new response</a></li>
+<li class="chapter" data-level="6.10.1" data-path="inference.html"><a href="inference.html#test-for-a-regression-relationship"><i class="fa fa-check"></i><b>6.10.1</b> Test for a regression relationship</a></li>
+<li class="chapter" data-level="6.10.2" data-path="inference.html"><a href="inference.html#a-more-general-f-test"><i class="fa fa-check"></i><b>6.10.2</b> A more general F test</a></li>
+</ul></li>
+<li class="chapter" data-level="6.11" data-path="inference.html"><a href="inference.html#going-deeper-2"><i class="fa fa-check"></i><b>6.11</b> Going deeper</a>
+<ul>
+<li class="chapter" data-level="6.11.1" data-path="inference.html"><a href="inference.html#manual-t-cis"><i class="fa fa-check"></i><b>6.11.1</b> Manual calculation of the standard <span class="math inline">\(t\)</span>-based confidence interval for a regression coefficient</a></li>
+<li class="chapter" data-level="6.11.2" data-path="inference.html"><a href="inference.html#mean-response-calculations"><i class="fa fa-check"></i><b>6.11.2</b> Details about estimation of the mean response</a></li>
+<li class="chapter" data-level="6.11.3" data-path="inference.html"><a href="inference.html#manual-calc-ci-mean-response"><i class="fa fa-check"></i><b>6.11.3</b> Manual calculation of confidence intervals for the mean response</a></li>
+<li class="chapter" data-level="6.11.4" data-path="inference.html"><a href="inference.html#new-response-pi-calculations"><i class="fa fa-check"></i><b>6.11.4</b> Details about prediction interval for a new response</a></li>
 </ul></li>
 </ul></li>
 <li class="appendix"><span><b>Appendix</b></span></li>
@@ -384,7 +391,7 @@ div.csl-indent {
 <li class="chapter" data-level="B.3.5" data-path="prob-review.html"><a href="prob-review.html#covariance"><i class="fa fa-check"></i><b>B.3.5</b> Covariance</a></li>
 <li class="chapter" data-level="B.3.6" data-path="prob-review.html"><a href="prob-review.html#useful-facts-for-transformations-of-multiple-random-variables"><i class="fa fa-check"></i><b>B.3.6</b> Useful facts for transformations of multiple random variables</a></li>
 <li class="chapter" data-level="B.3.7" data-path="prob-review.html"><a href="prob-review.html#example-binomial"><i class="fa fa-check"></i><b>B.3.7</b> Example (Binomial)</a></li>
-<li class="chapter" data-level="B.3.8" data-path="prob-review.html"><a href="prob-review.html#example-continuous-bivariate-distribution"><i class="fa fa-check"></i><b>B.3.8</b> Example (Continuous bivariate distribution)</a></li>
+<li class="chapter" data-level="B.3.8" data-path="prob-review.html"><a href="prob-review.html#continuous-bivariate-distribution-example"><i class="fa fa-check"></i><b>B.3.8</b> Example (Continuous bivariate distribution)</a></li>
 </ul></li>
 <li class="chapter" data-level="B.4" data-path="prob-review.html"><a href="prob-review.html#random-vectors"><i class="fa fa-check"></i><b>B.4</b> Random vectors</a>
 <ul>
@@ -492,17 +499,17 @@ likely to be small, which makes us think <span class="math inline">\(H_a\)</span
 p-values. However, unless we know the <strong>power</strong> of our test, which is
 the probability that we reject <span class="math inline">\(H_0\)</span> when <span class="math inline">\(H_a\)</span> is true, then it is very
 difficult to assess how much evidence for <span class="math inline">\(H_a\)</span> a small p-value
-provides. <span class="citation">Gibson (<a href="#ref-gibson_pvalue" role="doc-biblioref">2021</a>)</span> point out the p-values can be
-interpreted naturally on a <span class="math inline">\(\log_{10}\)</span> scale. <span class="citation">Gibson (<a href="#ref-gibson_pvalue" role="doc-biblioref">2021</a>)</span> states:</p>
+provides. <span class="citation">Gibson (<a href="#ref-gibson_pvalue">2021</a>)</span> point out the p-values can be
+interpreted naturally on a <span class="math inline">\(\log_{10}\)</span> scale. <span class="citation">Gibson (<a href="#ref-gibson_pvalue">2021</a>)</span> states:</p>
 <blockquote>
 <p>The p-value can be expressed as <span class="math inline">\(p=c\times 10^{-k}\)</span> so that
 <span class="math inline">\(\log_{10}(p)=-\log_{10}(c)+k\)</span>, where <span class="math inline">\(c\)</span> is a constant and <span class="math inline">\(k\)</span> is an
 integer, which implies that only the magnitude <em>k</em> measures the actual
-strength of evidence <span class="citation">(<a href="#ref-boos_stefanski_2011_pvalues" role="doc-biblioref">Boos and Stefanski 2011</a>)</span>. <span class="math inline">\(\ldots\)</span> This
+strength of evidence <span class="citation">(<a href="#ref-boos_stefanski_2011_pvalues">Boos and Stefanski 2011</a>)</span>. <span class="math inline">\(\ldots\)</span> This
 would suggest that <span class="math inline">\(p=0.01\)</span> (<span class="math inline">\(k=2\)</span>) could be interpreted as twice the
 evidence [for <span class="math inline">\(H_a\)</span> as] <span class="math inline">\(p=0.10\)</span> (<span class="math inline">\(k=1\)</span>).</p>
 </blockquote>
-<p><span class="citation">Gibson (<a href="#ref-gibson_pvalue" role="doc-biblioref">2021</a>)</span> provides a thorough review of p-value interpretation.
+<p><span class="citation">Gibson (<a href="#ref-gibson_pvalue">2021</a>)</span> provides a thorough review of p-value interpretation.
 Table <a href="est-infer-review.html#tab:pvalue-interp">C.1</a> summarizes common strength of evidence
 interpretations for p-values.</p>
 <table class="table" style="width: auto !important; margin-left: auto; margin-right: auto;">
@@ -577,16 +584,16 @@ Z^*=\bar{Y}/(1/\sqrt{n})=\sqrt{n}\bar{Y}\sim \mathcal{N}(0, 1),
 <p>If <span class="math inline">\(\alpha=0.10\)</span>, then the 10% of test statistics that are most unlikely if <span class="math inline">\(H_0\)</span>
 is true (i.e., most supportive of <span class="math inline">\(H_a\)</span>) are more extreme than <span class="math inline">\(Z^{0.95}\)</span> and <span class="math inline">\(Z^{0.05}\)</span>, the 0.05 and 0.95 quantiles of a standard
 normal distribution, respectively. (The superscript in the quantile notation indicates the area to the right of the quantile in the CDF). The 0.05 quantile of the standard normal distribution is -1.65 and the 0.95 quantile is 1.65. In R, we can find these quantile using the <code>qnorm</code> function, where the first argument of <code>qnorm</code> is <code>p</code>, which is the vector of probabilities to the LEFT of the quantile. We verify these quantiles using the code below.</p>
-<div class="sourceCode" id="cb188"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb188-1"><a href="est-infer-review.html#cb188-1" aria-hidden="true" tabindex="-1"></a><span class="fu">qnorm</span>(<span class="fu">c</span>(<span class="fl">0.05</span>,<span class="fl">0.95</span>))</span>
-<span id="cb188-2"><a href="est-infer-review.html#cb188-2" aria-hidden="true" tabindex="-1"></a><span class="do">## [1] -1.644854  1.644854</span></span></code></pre></div>
+<div class="sourceCode" id="cb195"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb195-1"><a href="est-infer-review.html#cb195-1" tabindex="-1"></a><span class="fu">qnorm</span>(<span class="fu">c</span>(<span class="fl">0.05</span>,<span class="fl">0.95</span>))</span>
+<span id="cb195-2"><a href="est-infer-review.html#cb195-2" tabindex="-1"></a><span class="do">## [1] -1.644854  1.644854</span></span></code></pre></div>
 <p><span class="math inline">\(H_0\)</span> should be rejected when <span class="math inline">\(Z^*\)</span> is less than -1.65 or more than
 1.65, i.e., the rejection region is <span class="math inline">\((-\infty, -1.65)\cup(1.65,\infty)\)</span>.</p>
 <p>Alternatively, we could compute the p-value using the formula
 <span class="math inline">\(2P(Z\geq |Z^*|)\)</span> in order to make our choice between the hypotheses.</p>
 <p>Suppose <span class="math inline">\(z^*=1.74\)</span> and <span class="math inline">\(\alpha=0.10\)</span>. The test statistic is in the rejection region, so we would conclude that <span class="math inline">\(H_a\)</span>
 is true. The p-value is <span class="math inline">\(2P(Z\geq 1.74)=0.082\)</span>. Using the p-value approach we would conclude that <span class="math inline">\(H_a\)</span> is true. (Note that the rejection region and p-value approaches to deciding between hypotheses must agree). In R, we can compute the p-value using the code below.</p>
-<div class="sourceCode" id="cb189"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb189-1"><a href="est-infer-review.html#cb189-1" aria-hidden="true" tabindex="-1"></a><span class="dv">2</span><span class="sc">*</span>(<span class="dv">1</span> <span class="sc">-</span> <span class="fu">pnorm</span>(<span class="fl">1.74</span>))</span>
-<span id="cb189-2"><a href="est-infer-review.html#cb189-2" aria-hidden="true" tabindex="-1"></a><span class="do">## [1] 0.08185902</span></span></code></pre></div>
+<div class="sourceCode" id="cb196"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb196-1"><a href="est-infer-review.html#cb196-1" tabindex="-1"></a><span class="dv">2</span><span class="sc">*</span>(<span class="dv">1</span> <span class="sc">-</span> <span class="fu">pnorm</span>(<span class="fl">1.74</span>))</span>
+<span id="cb196-2"><a href="est-infer-review.html#cb196-2" tabindex="-1"></a><span class="do">## [1] 0.08185902</span></span></code></pre></div>
 <p>In straightforward language, our interpretation could be: there is weak evidence that the population mean differs from 0.</p>
 <p><strong>Simulation study</strong></p>
 <p>We provide a brief simulation study to better understand the null distribution and also how rejection regions are chosen to control the type I error rate.</p>
@@ -601,29 +608,29 @@ where <span class="math inline">\(s\)</span> is the sample standard deviation of
 <li>Draw <span class="math inline">\(B=1,000\)</span> samples of size <span class="math inline">\(n=10\)</span> from our <span class="math inline">\(\mathcal{N}(\mu,\sigma^2)\)</span> population assuming the null hypothesis is true, i.e., with <span class="math inline">\(\mu = 2\)</span>.</li>
 <li>Compute the test statistic for each sample.</li>
 </ol>
-<div class="sourceCode" id="cb190"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb190-1"><a href="est-infer-review.html#cb190-1" aria-hidden="true" tabindex="-1"></a><span class="co"># set number seed for reproducible results</span></span>
-<span id="cb190-2"><a href="est-infer-review.html#cb190-2" aria-hidden="true" tabindex="-1"></a><span class="fu">set.seed</span>(<span class="dv">12</span>)</span>
-<span id="cb190-3"><a href="est-infer-review.html#cb190-3" aria-hidden="true" tabindex="-1"></a><span class="co"># create matrix to store samples</span></span>
-<span id="cb190-4"><a href="est-infer-review.html#cb190-4" aria-hidden="true" tabindex="-1"></a>samples <span class="ot">&lt;-</span> <span class="fu">matrix</span>(<span class="at">nrow =</span> <span class="dv">10000</span>, <span class="at">ncol =</span> <span class="dv">10</span>)</span>
-<span id="cb190-5"><a href="est-infer-review.html#cb190-5" aria-hidden="true" tabindex="-1"></a><span class="co"># draw 10000 samples of size 10 from a N(4, 4^2)</span></span>
-<span id="cb190-6"><a href="est-infer-review.html#cb190-6" aria-hidden="true" tabindex="-1"></a><span class="cf">for</span> (i <span class="cf">in</span> <span class="dv">1</span><span class="sc">:</span><span class="dv">10000</span>) {</span>
-<span id="cb190-7"><a href="est-infer-review.html#cb190-7" aria-hidden="true" tabindex="-1"></a>  samples[i,] <span class="ot">&lt;-</span> <span class="fu">rnorm</span>(<span class="at">n =</span> <span class="dv">10</span>, <span class="at">mean =</span> <span class="dv">2</span>, <span class="at">sd =</span> <span class="dv">4</span>)</span>
-<span id="cb190-8"><a href="est-infer-review.html#cb190-8" aria-hidden="true" tabindex="-1"></a>}</span>
-<span id="cb190-9"><a href="est-infer-review.html#cb190-9" aria-hidden="true" tabindex="-1"></a><span class="co"># compute sample mean and sd for each sample</span></span>
-<span id="cb190-10"><a href="est-infer-review.html#cb190-10" aria-hidden="true" tabindex="-1"></a>means <span class="ot">&lt;-</span>  <span class="fu">rowMeans</span>(samples)</span>
-<span id="cb190-11"><a href="est-infer-review.html#cb190-11" aria-hidden="true" tabindex="-1"></a>sds <span class="ot">&lt;-</span> <span class="fu">apply</span>(samples, <span class="dv">1</span>, sd)</span>
-<span id="cb190-12"><a href="est-infer-review.html#cb190-12" aria-hidden="true" tabindex="-1"></a><span class="co"># compute test statistic for each sample</span></span>
-<span id="cb190-13"><a href="est-infer-review.html#cb190-13" aria-hidden="true" tabindex="-1"></a>tstats <span class="ot">&lt;-</span> (means <span class="sc">-</span> <span class="dv">2</span>)<span class="sc">/</span>(sds<span class="sc">/</span><span class="fu">sqrt</span>(<span class="dv">10</span>))</span></code></pre></div>
+<div class="sourceCode" id="cb197"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb197-1"><a href="est-infer-review.html#cb197-1" tabindex="-1"></a><span class="co"># set number seed for reproducible results</span></span>
+<span id="cb197-2"><a href="est-infer-review.html#cb197-2" tabindex="-1"></a><span class="fu">set.seed</span>(<span class="dv">12</span>)</span>
+<span id="cb197-3"><a href="est-infer-review.html#cb197-3" tabindex="-1"></a><span class="co"># create matrix to store samples</span></span>
+<span id="cb197-4"><a href="est-infer-review.html#cb197-4" tabindex="-1"></a>samples <span class="ot">&lt;-</span> <span class="fu">matrix</span>(<span class="at">nrow =</span> <span class="dv">10000</span>, <span class="at">ncol =</span> <span class="dv">10</span>)</span>
+<span id="cb197-5"><a href="est-infer-review.html#cb197-5" tabindex="-1"></a><span class="co"># draw 10000 samples of size 10 from a N(4, 4^2)</span></span>
+<span id="cb197-6"><a href="est-infer-review.html#cb197-6" tabindex="-1"></a><span class="cf">for</span> (i <span class="cf">in</span> <span class="dv">1</span><span class="sc">:</span><span class="dv">10000</span>) {</span>
+<span id="cb197-7"><a href="est-infer-review.html#cb197-7" tabindex="-1"></a>  samples[i,] <span class="ot">&lt;-</span> <span class="fu">rnorm</span>(<span class="at">n =</span> <span class="dv">10</span>, <span class="at">mean =</span> <span class="dv">2</span>, <span class="at">sd =</span> <span class="dv">4</span>)</span>
+<span id="cb197-8"><a href="est-infer-review.html#cb197-8" tabindex="-1"></a>}</span>
+<span id="cb197-9"><a href="est-infer-review.html#cb197-9" tabindex="-1"></a><span class="co"># compute sample mean and sd for each sample</span></span>
+<span id="cb197-10"><a href="est-infer-review.html#cb197-10" tabindex="-1"></a>means <span class="ot">&lt;-</span>  <span class="fu">rowMeans</span>(samples)</span>
+<span id="cb197-11"><a href="est-infer-review.html#cb197-11" tabindex="-1"></a>sds <span class="ot">&lt;-</span> <span class="fu">apply</span>(samples, <span class="dv">1</span>, sd)</span>
+<span id="cb197-12"><a href="est-infer-review.html#cb197-12" tabindex="-1"></a><span class="co"># compute test statistic for each sample</span></span>
+<span id="cb197-13"><a href="est-infer-review.html#cb197-13" tabindex="-1"></a>tstats <span class="ot">&lt;-</span> (means <span class="sc">-</span> <span class="dv">2</span>)<span class="sc">/</span>(sds<span class="sc">/</span><span class="fu">sqrt</span>(<span class="dv">10</span>))</span></code></pre></div>
 <p>We now use the code below to compute the empirical density of the computed test statistics and overlay a density for a <span class="math inline">\(t\)</span> random variable with 9 degrees of freedom.</p>
 <p>To draw our sample, we must choose a value of <span class="math inline">\(\sigma^2\)</span>. We will use <span class="math inline">\(\sigma^2 = 16\)</span>. The exact value isn’t important, but choosing a fixed number for <span class="math inline">\(\sigma^2\)</span> is critical for the example below. Figure <a href="est-infer-review.html#fig:tnullfigure">C.1</a> displays the results. We see that the two distributions match up very well.</p>
-<div class="sourceCode" id="cb191"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb191-1"><a href="est-infer-review.html#cb191-1" aria-hidden="true" tabindex="-1"></a><span class="co"># plot empirical null distribution</span></span>
-<span id="cb191-2"><a href="est-infer-review.html#cb191-2" aria-hidden="true" tabindex="-1"></a><span class="fu">plot</span>(<span class="fu">density</span>(tstats),</span>
-<span id="cb191-3"><a href="est-infer-review.html#cb191-3" aria-hidden="true" tabindex="-1"></a>     <span class="at">xlab =</span> <span class="st">&quot;test statistic&quot;</span>,</span>
-<span id="cb191-4"><a href="est-infer-review.html#cb191-4" aria-hidden="true" tabindex="-1"></a>     <span class="at">ylab =</span> <span class="st">&quot;density&quot;</span>,</span>
-<span id="cb191-5"><a href="est-infer-review.html#cb191-5" aria-hidden="true" tabindex="-1"></a>     <span class="at">main =</span> <span class="st">&quot;empirical versus true null distribution&quot;</span>)</span>
-<span id="cb191-6"><a href="est-infer-review.html#cb191-6" aria-hidden="true" tabindex="-1"></a><span class="co"># sequence to plot null density over</span></span>
-<span id="cb191-7"><a href="est-infer-review.html#cb191-7" aria-hidden="true" tabindex="-1"></a>s <span class="ot">&lt;-</span> <span class="fu">seq</span>(<span class="sc">-</span><span class="dv">5</span>, <span class="dv">5</span>, <span class="at">len =</span> <span class="dv">1000</span>)</span>
-<span id="cb191-8"><a href="est-infer-review.html#cb191-8" aria-hidden="true" tabindex="-1"></a><span class="fu">lines</span>(s, <span class="fu">dt</span>(s, <span class="at">df =</span> <span class="dv">9</span>), <span class="at">lty =</span> <span class="dv">2</span>, <span class="at">col =</span> <span class="st">&quot;blue&quot;</span>)</span></code></pre></div>
+<div class="sourceCode" id="cb198"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb198-1"><a href="est-infer-review.html#cb198-1" tabindex="-1"></a><span class="co"># plot empirical null distribution</span></span>
+<span id="cb198-2"><a href="est-infer-review.html#cb198-2" tabindex="-1"></a><span class="fu">plot</span>(<span class="fu">density</span>(tstats),</span>
+<span id="cb198-3"><a href="est-infer-review.html#cb198-3" tabindex="-1"></a>     <span class="at">xlab =</span> <span class="st">&quot;test statistic&quot;</span>,</span>
+<span id="cb198-4"><a href="est-infer-review.html#cb198-4" tabindex="-1"></a>     <span class="at">ylab =</span> <span class="st">&quot;density&quot;</span>,</span>
+<span id="cb198-5"><a href="est-infer-review.html#cb198-5" tabindex="-1"></a>     <span class="at">main =</span> <span class="st">&quot;empirical versus true null distribution&quot;</span>)</span>
+<span id="cb198-6"><a href="est-infer-review.html#cb198-6" tabindex="-1"></a><span class="co"># sequence to plot null density over</span></span>
+<span id="cb198-7"><a href="est-infer-review.html#cb198-7" tabindex="-1"></a>s <span class="ot">&lt;-</span> <span class="fu">seq</span>(<span class="sc">-</span><span class="dv">5</span>, <span class="dv">5</span>, <span class="at">len =</span> <span class="dv">1000</span>)</span>
+<span id="cb198-8"><a href="est-infer-review.html#cb198-8" tabindex="-1"></a><span class="fu">lines</span>(s, <span class="fu">dt</span>(s, <span class="at">df =</span> <span class="dv">9</span>), <span class="at">lty =</span> <span class="dv">2</span>, <span class="at">col =</span> <span class="st">&quot;blue&quot;</span>)</span></code></pre></div>
 <div class="figure"><span style="display:block;" id="fig:tnullfigure"></span>
 <img src="A-Progessive-Introduction-to-Linear-Models_files/figure-html/tnullfigure-1.png" alt="Comparison of empirical null distribution to theoretical null distribution. The empirical null distribution is shown by the solid black line and the theoretical null distribution by a dashed blue line." width="672" />
 <p class="caption">
@@ -632,8 +639,8 @@ Figure C.1: Comparison of empirical null distribution to theoretical null distri
 </div>
 <p>What should we takeaway from this example? The null distribution of a hypothesis test is the sampling distribution of the test statistic under the assumption that <span class="math inline">\(H_0\)</span> is true. We approximated the null distribution of our test statistic by drawing 10,000 samples from the population distribution under the assumption that <span class="math inline">\(H_0\)</span> was true.</p>
 <p>How does the null distribution relate to choosing the rejection region? First, the type I error rate is the probability of rejecting <span class="math inline">\(H_0\)</span> when <span class="math inline">\(H_0\)</span> is true. Since we know the null distribution, we know what behavior to expect from our test statistic if <span class="math inline">\(H_0\)</span> is true. Thus, we know what test statistics are most unlikely if <span class="math inline">\(H_0\)</span> is true. Let’s say we want to control the type I error at <span class="math inline">\(\alpha = 0.05\)</span>. For this upper-tailed test, we should reject <span class="math inline">\(H_0\)</span> when the test statistic is greater than <span class="math inline">\(t^{0.05}_9\)</span>, i.e., the 0.95 quantile of a <span class="math inline">\(t\)</span> distribution with 9 degrees of freedom. Why do we use this threshold? Because if <span class="math inline">\(H_0\)</span> is true, this will only lead to erroneous rejections of <span class="math inline">\(H_0\)</span> (i.e., a type I error) 5% of the time. In the code below, we compute the sample proportion of test statistics from our null distribution that are more than <span class="math inline">\(t^{0.05}_9\)</span>. Our sample proportion is very close to 0.05, and this number will converge to 0.05 as we increase the number samples used in our simulation.</p>
-<div class="sourceCode" id="cb192"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb192-1"><a href="est-infer-review.html#cb192-1" aria-hidden="true" tabindex="-1"></a><span class="fu">mean</span>(tstats <span class="sc">&gt;</span> <span class="fu">qt</span>(<span class="fl">0.95</span>, <span class="at">df =</span> <span class="dv">9</span>))</span>
-<span id="cb192-2"><a href="est-infer-review.html#cb192-2" aria-hidden="true" tabindex="-1"></a><span class="do">## [1] 0.0489</span></span></code></pre></div>
+<div class="sourceCode" id="cb199"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb199-1"><a href="est-infer-review.html#cb199-1" tabindex="-1"></a><span class="fu">mean</span>(tstats <span class="sc">&gt;</span> <span class="fu">qt</span>(<span class="fl">0.95</span>, <span class="at">df =</span> <span class="dv">9</span>))</span>
+<span id="cb199-2"><a href="est-infer-review.html#cb199-2" tabindex="-1"></a><span class="do">## [1] 0.0489</span></span></code></pre></div>
 </div>
 <div id="confidence-intervals" class="section level2 hasAnchor" number="9.3">
 <h2><span class="header-section-number">C.3</span> Confidence Intervals<a href="est-infer-review.html#confidence-intervals" class="anchor-section" aria-label="Anchor link to header"></a></h2>
@@ -656,35 +663,35 @@ If <span class="math inline">\(\bar{Y}=0.551\)</span> and <span class="math inli
 <p><strong>More discussion of confidence level</strong></p>
 <p>The CI formula given above is supposed to produce 95% confidence intervals (i.e., the confidence level of the procedure is 0.95). If produce 100 intervals from independent data sets, then about 95% of them would contain the true mean, but about 5% would not. To illustrate this further, we use a small simulation example below to produce 100 95% confidence intervals using a sample of size n = 10 for a <span class="math inline">\(\mathcal{N(0,1)}\)</span> population.</p>
 <p>First, we obtain 100 samples of size 10 from the population and then compute the sample mean of each sample. We do this in the code below.</p>
-<div class="sourceCode" id="cb193"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb193-1"><a href="est-infer-review.html#cb193-1" aria-hidden="true" tabindex="-1"></a><span class="co"># create matrix to store samples</span></span>
-<span id="cb193-2"><a href="est-infer-review.html#cb193-2" aria-hidden="true" tabindex="-1"></a>samples <span class="ot">&lt;-</span> <span class="fu">matrix</span>(<span class="dv">0</span>, <span class="at">nrow =</span> <span class="dv">100</span>, <span class="at">ncol =</span> <span class="dv">10</span>)</span>
-<span id="cb193-3"><a href="est-infer-review.html#cb193-3" aria-hidden="true" tabindex="-1"></a><span class="co"># obtain 100 samples from the population</span></span>
-<span id="cb193-4"><a href="est-infer-review.html#cb193-4" aria-hidden="true" tabindex="-1"></a><span class="cf">for</span> (i <span class="cf">in</span> <span class="dv">1</span><span class="sc">:</span><span class="dv">100</span>) {</span>
-<span id="cb193-5"><a href="est-infer-review.html#cb193-5" aria-hidden="true" tabindex="-1"></a>  samples[i,] <span class="ot">&lt;-</span> <span class="fu">rnorm</span>(<span class="at">n =</span> <span class="dv">10</span>, <span class="at">mean =</span> <span class="dv">0</span>, <span class="at">sd =</span> <span class="dv">1</span>)</span>
-<span id="cb193-6"><a href="est-infer-review.html#cb193-6" aria-hidden="true" tabindex="-1"></a>}</span>
-<span id="cb193-7"><a href="est-infer-review.html#cb193-7" aria-hidden="true" tabindex="-1"></a><span class="co"># calculate the sample mean for each sample</span></span>
-<span id="cb193-8"><a href="est-infer-review.html#cb193-8" aria-hidden="true" tabindex="-1"></a>means <span class="ot">=</span> <span class="fu">rowMeans</span>(samples) <span class="co">#calculates the mean of each row</span></span></code></pre></div>
+<div class="sourceCode" id="cb200"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb200-1"><a href="est-infer-review.html#cb200-1" tabindex="-1"></a><span class="co"># create matrix to store samples</span></span>
+<span id="cb200-2"><a href="est-infer-review.html#cb200-2" tabindex="-1"></a>samples <span class="ot">&lt;-</span> <span class="fu">matrix</span>(<span class="dv">0</span>, <span class="at">nrow =</span> <span class="dv">100</span>, <span class="at">ncol =</span> <span class="dv">10</span>)</span>
+<span id="cb200-3"><a href="est-infer-review.html#cb200-3" tabindex="-1"></a><span class="co"># obtain 100 samples from the population</span></span>
+<span id="cb200-4"><a href="est-infer-review.html#cb200-4" tabindex="-1"></a><span class="cf">for</span> (i <span class="cf">in</span> <span class="dv">1</span><span class="sc">:</span><span class="dv">100</span>) {</span>
+<span id="cb200-5"><a href="est-infer-review.html#cb200-5" tabindex="-1"></a>  samples[i,] <span class="ot">&lt;-</span> <span class="fu">rnorm</span>(<span class="at">n =</span> <span class="dv">10</span>, <span class="at">mean =</span> <span class="dv">0</span>, <span class="at">sd =</span> <span class="dv">1</span>)</span>
+<span id="cb200-6"><a href="est-infer-review.html#cb200-6" tabindex="-1"></a>}</span>
+<span id="cb200-7"><a href="est-infer-review.html#cb200-7" tabindex="-1"></a><span class="co"># calculate the sample mean for each sample</span></span>
+<span id="cb200-8"><a href="est-infer-review.html#cb200-8" tabindex="-1"></a>means <span class="ot">=</span> <span class="fu">rowMeans</span>(samples) <span class="co">#calculates the mean of each row</span></span></code></pre></div>
 <p>Next, we use the formula above to determine the lower and upper bound of the confidence interval associated with each interval. Since we want 95% confidence intervals, we use the 0.975 quantile of the standard normal distribution to construct our interval.</p>
-<div class="sourceCode" id="cb194"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb194-1"><a href="est-infer-review.html#cb194-1" aria-hidden="true" tabindex="-1"></a><span class="co">#calculate the lower and upper bounds for the 95% CIs</span></span>
-<span id="cb194-2"><a href="est-infer-review.html#cb194-2" aria-hidden="true" tabindex="-1"></a>lb <span class="ot">=</span> means <span class="sc">-</span> <span class="fu">qnorm</span>(.<span class="dv">975</span>) <span class="sc">*</span> <span class="dv">1</span><span class="sc">/</span><span class="fu">sqrt</span>(<span class="dv">10</span>)</span>
-<span id="cb194-3"><a href="est-infer-review.html#cb194-3" aria-hidden="true" tabindex="-1"></a>ub <span class="ot">=</span> means <span class="sc">+</span> <span class="fu">qnorm</span>(.<span class="dv">975</span>) <span class="sc">*</span> <span class="dv">1</span><span class="sc">/</span><span class="fu">sqrt</span>(<span class="dv">10</span>)</span></code></pre></div>
+<div class="sourceCode" id="cb201"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb201-1"><a href="est-infer-review.html#cb201-1" tabindex="-1"></a><span class="co">#calculate the lower and upper bounds for the 95% CIs</span></span>
+<span id="cb201-2"><a href="est-infer-review.html#cb201-2" tabindex="-1"></a>lb <span class="ot">=</span> means <span class="sc">-</span> <span class="fu">qnorm</span>(.<span class="dv">975</span>) <span class="sc">*</span> <span class="dv">1</span><span class="sc">/</span><span class="fu">sqrt</span>(<span class="dv">10</span>)</span>
+<span id="cb201-3"><a href="est-infer-review.html#cb201-3" tabindex="-1"></a>ub <span class="ot">=</span> means <span class="sc">+</span> <span class="fu">qnorm</span>(.<span class="dv">975</span>) <span class="sc">*</span> <span class="dv">1</span><span class="sc">/</span><span class="fu">sqrt</span>(<span class="dv">10</span>)</span></code></pre></div>
 <p>Next, we plot each interval. The intervals are orange if the
 interval doesn’t contain the true population mean, which is 0. Figure <a href="est-infer-review.html#fig:ci-interp-plot">C.2</a> displays our results.</p>
-<div class="sourceCode" id="cb195"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb195-1"><a href="est-infer-review.html#cb195-1" aria-hidden="true" tabindex="-1"></a><span class="co">#create blank plot</span></span>
-<span id="cb195-2"><a href="est-infer-review.html#cb195-2" aria-hidden="true" tabindex="-1"></a><span class="fu">plot</span>(<span class="fu">range</span>(<span class="fu">c</span>(lb, ub)), <span class="fu">c</span>(<span class="dv">1</span>,<span class="dv">100</span>),</span>
-<span id="cb195-3"><a href="est-infer-review.html#cb195-3" aria-hidden="true" tabindex="-1"></a>     <span class="at">xlab =</span> <span class="st">&quot;&quot;</span>, <span class="at">ylab =</span> <span class="st">&quot;interval&quot;</span>, <span class="at">type =</span> <span class="st">&quot;n&quot;</span>)</span>
-<span id="cb195-4"><a href="est-infer-review.html#cb195-4" aria-hidden="true" tabindex="-1"></a><span class="co"># title plot</span></span>
-<span id="cb195-5"><a href="est-infer-review.html#cb195-5" aria-hidden="true" tabindex="-1"></a><span class="fu">title</span>(<span class="st">&quot;Interpretation of a Confidence Interval&quot;</span>)</span>
-<span id="cb195-6"><a href="est-infer-review.html#cb195-6" aria-hidden="true" tabindex="-1"></a><span class="co"># plot true mean</span></span>
-<span id="cb195-7"><a href="est-infer-review.html#cb195-7" aria-hidden="true" tabindex="-1"></a><span class="fu">abline</span>(<span class="at">v =</span> <span class="dv">0</span>, <span class="at">col =</span> <span class="st">&quot;blue&quot;</span>)</span>
-<span id="cb195-8"><a href="est-infer-review.html#cb195-8" aria-hidden="true" tabindex="-1"></a><span class="co">#plot interval each sample</span></span>
-<span id="cb195-9"><a href="est-infer-review.html#cb195-9" aria-hidden="true" tabindex="-1"></a><span class="cf">for</span> (i <span class="cf">in</span> <span class="dv">1</span><span class="sc">:</span><span class="dv">100</span>) <span class="fu">lines</span>(<span class="fu">c</span>(lb[i], ub[i]), <span class="fu">c</span>(i, i))</span>
-<span id="cb195-10"><a href="est-infer-review.html#cb195-10" aria-hidden="true" tabindex="-1"></a><span class="co">#highlight intervals missing 0 in orange</span></span>
-<span id="cb195-11"><a href="est-infer-review.html#cb195-11" aria-hidden="true" tabindex="-1"></a><span class="cf">for</span> (i <span class="cf">in</span> <span class="dv">1</span><span class="sc">:</span><span class="dv">100</span>) {</span>
-<span id="cb195-12"><a href="est-infer-review.html#cb195-12" aria-hidden="true" tabindex="-1"></a>  <span class="cf">if</span> (lb[i] <span class="sc">&gt;</span> <span class="dv">0</span> <span class="sc">|</span> ub[i] <span class="sc">&lt;</span> <span class="dv">0</span> )   {</span>
-<span id="cb195-13"><a href="est-infer-review.html#cb195-13" aria-hidden="true" tabindex="-1"></a>    <span class="fu">lines</span>(<span class="fu">c</span>(lb[i],ub[i]), <span class="fu">c</span>(i,i), <span class="at">col =</span> <span class="st">&quot;orange&quot;</span>)</span>
-<span id="cb195-14"><a href="est-infer-review.html#cb195-14" aria-hidden="true" tabindex="-1"></a>  }</span>
-<span id="cb195-15"><a href="est-infer-review.html#cb195-15" aria-hidden="true" tabindex="-1"></a>}</span></code></pre></div>
+<div class="sourceCode" id="cb202"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb202-1"><a href="est-infer-review.html#cb202-1" tabindex="-1"></a><span class="co">#create blank plot</span></span>
+<span id="cb202-2"><a href="est-infer-review.html#cb202-2" tabindex="-1"></a><span class="fu">plot</span>(<span class="fu">range</span>(<span class="fu">c</span>(lb, ub)), <span class="fu">c</span>(<span class="dv">1</span>,<span class="dv">100</span>),</span>
+<span id="cb202-3"><a href="est-infer-review.html#cb202-3" tabindex="-1"></a>     <span class="at">xlab =</span> <span class="st">&quot;&quot;</span>, <span class="at">ylab =</span> <span class="st">&quot;interval&quot;</span>, <span class="at">type =</span> <span class="st">&quot;n&quot;</span>)</span>
+<span id="cb202-4"><a href="est-infer-review.html#cb202-4" tabindex="-1"></a><span class="co"># title plot</span></span>
+<span id="cb202-5"><a href="est-infer-review.html#cb202-5" tabindex="-1"></a><span class="fu">title</span>(<span class="st">&quot;Interpretation of a Confidence Interval&quot;</span>)</span>
+<span id="cb202-6"><a href="est-infer-review.html#cb202-6" tabindex="-1"></a><span class="co"># plot true mean</span></span>
+<span id="cb202-7"><a href="est-infer-review.html#cb202-7" tabindex="-1"></a><span class="fu">abline</span>(<span class="at">v =</span> <span class="dv">0</span>, <span class="at">col =</span> <span class="st">&quot;blue&quot;</span>)</span>
+<span id="cb202-8"><a href="est-infer-review.html#cb202-8" tabindex="-1"></a><span class="co">#plot interval each sample</span></span>
+<span id="cb202-9"><a href="est-infer-review.html#cb202-9" tabindex="-1"></a><span class="cf">for</span> (i <span class="cf">in</span> <span class="dv">1</span><span class="sc">:</span><span class="dv">100</span>) <span class="fu">lines</span>(<span class="fu">c</span>(lb[i], ub[i]), <span class="fu">c</span>(i, i))</span>
+<span id="cb202-10"><a href="est-infer-review.html#cb202-10" tabindex="-1"></a><span class="co">#highlight intervals missing 0 in orange</span></span>
+<span id="cb202-11"><a href="est-infer-review.html#cb202-11" tabindex="-1"></a><span class="cf">for</span> (i <span class="cf">in</span> <span class="dv">1</span><span class="sc">:</span><span class="dv">100</span>) {</span>
+<span id="cb202-12"><a href="est-infer-review.html#cb202-12" tabindex="-1"></a>  <span class="cf">if</span> (lb[i] <span class="sc">&gt;</span> <span class="dv">0</span> <span class="sc">|</span> ub[i] <span class="sc">&lt;</span> <span class="dv">0</span> )   {</span>
+<span id="cb202-13"><a href="est-infer-review.html#cb202-13" tabindex="-1"></a>    <span class="fu">lines</span>(<span class="fu">c</span>(lb[i],ub[i]), <span class="fu">c</span>(i,i), <span class="at">col =</span> <span class="st">&quot;orange&quot;</span>)</span>
+<span id="cb202-14"><a href="est-infer-review.html#cb202-14" tabindex="-1"></a>  }</span>
+<span id="cb202-15"><a href="est-infer-review.html#cb202-15" tabindex="-1"></a>}</span></code></pre></div>
 <div class="figure"><span style="display:block;" id="fig:ci-interp-plot"></span>
 <img src="A-Progessive-Introduction-to-Linear-Models_files/figure-html/ci-interp-plot-1.png" alt="A plot of 100 95% confidence intervals for a population mean produced from independent samples from a $\mathcal{N}(0,1)$ population." width="672" />
 <p class="caption">

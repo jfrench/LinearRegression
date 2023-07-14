@@ -6,7 +6,7 @@
   <meta http-equiv="X-UA-Compatible" content="IE=edge" />
   <title>A Overview of matrix facts | A Progressive Introduction to Linear Models</title>
   <meta name="description" content="A collection of material that progressively introduces how to fit and use linear models." />
-  <meta name="generator" content="bookdown 0.33 and GitBook 2.6.7" />
+  <meta name="generator" content="bookdown 0.34 and GitBook 2.6.7" />
 
   <meta property="og:title" content="A Overview of matrix facts | A Progressive Introduction to Linear Models" />
   <meta property="og:type" content="book" />
@@ -53,8 +53,8 @@
 <script src="libs/anchor-sections-1.1.0/anchor-sections.js"></script>
 <script src="libs/kePrint-0.0.1/kePrint.js"></script>
 <link href="libs/lightable-0.0.1/lightable.css" rel="stylesheet" />
-<script src="libs/htmlwidgets-1.6.1/htmlwidgets.js"></script>
-<script src="libs/plotly-binding-4.10.1/plotly.js"></script>
+<script src="libs/htmlwidgets-1.6.2/htmlwidgets.js"></script>
+<script src="libs/plotly-binding-4.10.2/plotly.js"></script>
 <script src="libs/typedarray-0.1/typedarray.min.js"></script>
 <link href="libs/crosstalk-1.2.0/css/crosstalk.min.css" rel="stylesheet" />
 <script src="libs/crosstalk-1.2.0/js/crosstalk.min.js"></script>
@@ -127,6 +127,10 @@ code span.vs { color: #4070a0; } /* VerbatimString */
 code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warning */
 </style>
 
+<style type="text/css">
+  
+  div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+</style>
 <style type="text/css">
 /* Used with Pandoc 2.11+ new --citeproc when CSL is used */
 div.csl-bib-body { }
@@ -307,27 +311,30 @@ div.csl-indent {
 <ul>
 <li class="chapter" data-level="6.1" data-path="inference.html"><a href="inference.html#overview-of-inference-and-prediction"><i class="fa fa-check"></i><b>6.1</b> Overview of inference and prediction</a></li>
 <li class="chapter" data-level="6.2" data-path="inference.html"><a href="inference.html#necessary-notation"><i class="fa fa-check"></i><b>6.2</b> Necessary notation</a></li>
-<li class="chapter" data-level="6.3" data-path="inference.html"><a href="inference.html#properties-betahat"><i class="fa fa-check"></i><b>6.3</b> Properties of the OLS estimator</a></li>
+<li class="chapter" data-level="6.3" data-path="inference.html"><a href="inference.html#properties-betahat"><i class="fa fa-check"></i><b>6.3</b> Assumptions and properties of the OLS estimator</a></li>
 <li class="chapter" data-level="6.4" data-path="inference.html"><a href="inference.html#parametric-confidence-intervals-for-regression-coefficients"><i class="fa fa-check"></i><b>6.4</b> Parametric confidence intervals for regression coefficients</a>
 <ul>
 <li class="chapter" data-level="6.4.1" data-path="inference.html"><a href="inference.html#tci"><i class="fa fa-check"></i><b>6.4.1</b> Standard <span class="math inline">\(t\)</span>-based confidence intervals</a></li>
-<li class="chapter" data-level="6.4.2" data-path="inference.html"><a href="inference.html#mcp"><i class="fa fa-check"></i><b>6.4.2</b> The multiple comparisons problem</a></li>
-<li class="chapter" data-level="6.4.3" data-path="inference.html"><a href="inference.html#adjusted-cis-betas"><i class="fa fa-check"></i><b>6.4.3</b> Adjusted confidence intervals for regression coefficients</a></li>
 </ul></li>
-<li class="chapter" data-level="6.5" data-path="inference.html"><a href="inference.html#prediction-mean-response-versus-new-response"><i class="fa fa-check"></i><b>6.5</b> Prediction: mean response versus new response</a></li>
-<li class="chapter" data-level="6.6" data-path="inference.html"><a href="inference.html#parametric-ci-mean-response"><i class="fa fa-check"></i><b>6.6</b> Confidence interval for the mean response</a></li>
-<li class="chapter" data-level="6.7" data-path="inference.html"><a href="inference.html#pi-new-response"><i class="fa fa-check"></i><b>6.7</b> Prediction interval for a new response</a></li>
-<li class="chapter" data-level="6.8" data-path="inference.html"><a href="inference.html#hypothesis-tests-for-a-single-regression-coefficient"><i class="fa fa-check"></i><b>6.8</b> Hypothesis tests for a single regression coefficient</a></li>
-<li class="chapter" data-level="6.9" data-path="inference.html"><a href="inference.html#hypothesis-tests-for-multiple-regression-coefficients"><i class="fa fa-check"></i><b>6.9</b> Hypothesis tests for multiple regression coefficients</a>
+<li class="chapter" data-level="6.5" data-path="inference.html"><a href="inference.html#mcp"><i class="fa fa-check"></i><b>6.5</b> The multiple comparisons problem</a>
 <ul>
-<li class="chapter" data-level="6.9.1" data-path="inference.html"><a href="inference.html#test-for-a-regression-relationship"><i class="fa fa-check"></i><b>6.9.1</b> Test for a regression relationship</a></li>
+<li class="chapter" data-level="6.5.1" data-path="inference.html"><a href="inference.html#adjusted-cis-betas"><i class="fa fa-check"></i><b>6.5.1</b> Adjusted confidence intervals for regression coefficients</a></li>
 </ul></li>
-<li class="chapter" data-level="6.10" data-path="inference.html"><a href="inference.html#going-deeper-2"><i class="fa fa-check"></i><b>6.10</b> Going deeper</a>
+<li class="chapter" data-level="6.6" data-path="inference.html"><a href="inference.html#prediction-mean-response-versus-new-response"><i class="fa fa-check"></i><b>6.6</b> Prediction: mean response versus new response</a></li>
+<li class="chapter" data-level="6.7" data-path="inference.html"><a href="inference.html#parametric-ci-mean-response"><i class="fa fa-check"></i><b>6.7</b> Confidence interval for the mean response</a></li>
+<li class="chapter" data-level="6.8" data-path="inference.html"><a href="inference.html#pi-new-response"><i class="fa fa-check"></i><b>6.8</b> Prediction interval for a new response</a></li>
+<li class="chapter" data-level="6.9" data-path="inference.html"><a href="inference.html#hypothesis-tests-for-a-single-regression-coefficient"><i class="fa fa-check"></i><b>6.9</b> Hypothesis tests for a single regression coefficient</a></li>
+<li class="chapter" data-level="6.10" data-path="inference.html"><a href="inference.html#hypothesis-tests-for-multiple-regression-coefficients"><i class="fa fa-check"></i><b>6.10</b> Hypothesis tests for multiple regression coefficients</a>
 <ul>
-<li class="chapter" data-level="6.10.1" data-path="inference.html"><a href="inference.html#manual-t-cis"><i class="fa fa-check"></i><b>6.10.1</b> Manual calculation of the standard <span class="math inline">\(t\)</span>-based confidence interval for a regression coefficient</a></li>
-<li class="chapter" data-level="6.10.2" data-path="inference.html"><a href="inference.html#mean-response-calculations"><i class="fa fa-check"></i><b>6.10.2</b> Details about estimation of the mean response</a></li>
-<li class="chapter" data-level="6.10.3" data-path="inference.html"><a href="inference.html#manual-calc-ci-mean-response"><i class="fa fa-check"></i><b>6.10.3</b> Manual calculation of confidence intervals for the mean response</a></li>
-<li class="chapter" data-level="6.10.4" data-path="inference.html"><a href="inference.html#new-response-pi-calculations"><i class="fa fa-check"></i><b>6.10.4</b> Details about prediction interval for a new response</a></li>
+<li class="chapter" data-level="6.10.1" data-path="inference.html"><a href="inference.html#test-for-a-regression-relationship"><i class="fa fa-check"></i><b>6.10.1</b> Test for a regression relationship</a></li>
+<li class="chapter" data-level="6.10.2" data-path="inference.html"><a href="inference.html#a-more-general-f-test"><i class="fa fa-check"></i><b>6.10.2</b> A more general F test</a></li>
+</ul></li>
+<li class="chapter" data-level="6.11" data-path="inference.html"><a href="inference.html#going-deeper-2"><i class="fa fa-check"></i><b>6.11</b> Going deeper</a>
+<ul>
+<li class="chapter" data-level="6.11.1" data-path="inference.html"><a href="inference.html#manual-t-cis"><i class="fa fa-check"></i><b>6.11.1</b> Manual calculation of the standard <span class="math inline">\(t\)</span>-based confidence interval for a regression coefficient</a></li>
+<li class="chapter" data-level="6.11.2" data-path="inference.html"><a href="inference.html#mean-response-calculations"><i class="fa fa-check"></i><b>6.11.2</b> Details about estimation of the mean response</a></li>
+<li class="chapter" data-level="6.11.3" data-path="inference.html"><a href="inference.html#manual-calc-ci-mean-response"><i class="fa fa-check"></i><b>6.11.3</b> Manual calculation of confidence intervals for the mean response</a></li>
+<li class="chapter" data-level="6.11.4" data-path="inference.html"><a href="inference.html#new-response-pi-calculations"><i class="fa fa-check"></i><b>6.11.4</b> Details about prediction interval for a new response</a></li>
 </ul></li>
 </ul></li>
 <li class="appendix"><span><b>Appendix</b></span></li>
@@ -384,7 +391,7 @@ div.csl-indent {
 <li class="chapter" data-level="B.3.5" data-path="prob-review.html"><a href="prob-review.html#covariance"><i class="fa fa-check"></i><b>B.3.5</b> Covariance</a></li>
 <li class="chapter" data-level="B.3.6" data-path="prob-review.html"><a href="prob-review.html#useful-facts-for-transformations-of-multiple-random-variables"><i class="fa fa-check"></i><b>B.3.6</b> Useful facts for transformations of multiple random variables</a></li>
 <li class="chapter" data-level="B.3.7" data-path="prob-review.html"><a href="prob-review.html#example-binomial"><i class="fa fa-check"></i><b>B.3.7</b> Example (Binomial)</a></li>
-<li class="chapter" data-level="B.3.8" data-path="prob-review.html"><a href="prob-review.html#example-continuous-bivariate-distribution"><i class="fa fa-check"></i><b>B.3.8</b> Example (Continuous bivariate distribution)</a></li>
+<li class="chapter" data-level="B.3.8" data-path="prob-review.html"><a href="prob-review.html#continuous-bivariate-distribution-example"><i class="fa fa-check"></i><b>B.3.8</b> Example (Continuous bivariate distribution)</a></li>
 </ul></li>
 <li class="chapter" data-level="B.4" data-path="prob-review.html"><a href="prob-review.html#random-vectors"><i class="fa fa-check"></i><b>B.4</b> Random vectors</a>
 <ul>
@@ -681,7 +688,7 @@ for every vector of real values <span class="math inline">\(\mathbf{a}\)</span> 
 <p>Let <span class="math inline">\(f(y)\)</span> be a function of a scalar value <span class="math inline">\(b\)</span> and <span class="math inline">\(\frac{df(y)}{dy}\)</span> denote the derivative of the function with respect to <span class="math inline">\(y\)</span>. Assume <span class="math inline">\(c \in \mathbb{R}\)</span> is a constant. Then the results in Table <a href="#tab:deriv-scalar"><strong>??</strong></a> are true.</p>
 <table class="table" style="margin-left: auto; margin-right: auto;">
 <caption>
-<span id="tab:unnamed-chunk-176">Table A.1: </span>Some basic calculus results for scalar functions taking scalar inputs.
+<span id="tab:unnamed-chunk-182">Table A.1: </span>Some basic calculus results for scalar functions taking scalar inputs.
 </caption>
 <thead>
 <tr>

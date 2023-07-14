@@ -347,37 +347,12 @@ Vectors and lists are considered one-dimensional objects. A list is technically 
 
 The relationship between dimensionality and data type for the basic data structures is summarized in Table \@ref(tab:datastructures2), which is based on a [table](https://adv-r.had.co.nz/Data-structures.html#data-structure) in the first edition of Hadley Wickham's *Advanced R* [(https://adv-r.had.co.nz/Data-structures.html#data-structure)](https://adv-r.had.co.nz/Data-structures.html#data-structure).
 
-<!-- # ```{r datastructures, echo=FALSE} -->
-
-<!-- # knitr::kable(data.frame(dimensionality = c("1", "2", "1 or more"), -->
-
-<!-- #                         homogeneous = c("atomic vector", "matrix", "array"), -->
-
-<!-- #                         heterogeneous = c("list", "data frame", ""), -->
-
-<!-- #                         caption = c("A table summarizing the relationship between dimensionality and homogeneity for the 5 basic data structures."), -->
-
-<!-- #                         col.names = c("number of dimensions", "single data type", "multiple data types"))) -->
-
-<!-- # ``` -->
-
 ```{r datastructures2, echo=FALSE}
-library(gt)
-object_df <- tibble(dimensions = c("1", "2", "1 or more"),
-                        homogeneous = c("atomic vector", "matrix", "array"),
-                        heterogeneous = c("list", "data frame", ""))
-obj_gt_tbl <- gt::gt(object_df, rowname_col = "dimensions",
-                     caption = "Classifying main object types by dimensionality and data type.") |>
-  tab_stubhead(label = "# of dimensions") |>
-   tab_spanner(
-    label = "data type",
-    columns = c(homogeneous, heterogeneous)
-  ) |>
-  tab_style(
-    style = cell_borders(sides = "right", col = "lightgray", weight = px(2)),
-    locations = cells_stubhead()
-  )
-obj_gt_tbl
+object_df <- tibble(`# of dimensions` = c("1", "2", "1 or more"),
+                    `homogeneous data` = c("atomic vector", "matrix", "array"),
+                    `heterogeneous data` = c("list", "data frame", ""))
+knitr::kable(object_df,
+             caption = "Classifying main object types by dimensionality and data type.")
 ```
 
 ## Vectors
