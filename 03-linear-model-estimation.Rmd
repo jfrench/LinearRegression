@@ -51,7 +51,7 @@ y <- mdh$daughter # daughters' heights
 plot(y ~ x, pch = 19, xlab = "mother's height (in)", ylab = "daughter's height (in)")
 ```
 
-A **regression analysis** is the process of building a model describing the typical relationship between a set of observed variables. A regression analysis builds the model using observed values of the variables for $n$ subjects sampled from a population. In the present context, we want to model the height of adult daughters using their height of their mothers. The model we build is known as a **regression model**.
+A **regression analysis** is the process of building a model describing the typical relationship between a set of observed variables. A regression analysis builds the model using observed values of the variables for $n$ subjects sampled from a population. In the present context, we want to model the height of adult daughters using the height of their mothers. The model we build is known as a **regression model**.
 
 The variables in a regression analysis may be divided into two types: the response variable and the predictor variables.
 
@@ -220,8 +220,8 @@ Define $\bar{x}=\frac{1}{n}\sum_{i=1}^n x_i$ and
 $\bar{Y} = \frac{1}{n}\sum_{i=1}^n Y_i$. The expression $\bar{x}$ is read "x bar", and it is the sample mean of the observed $x_i$ values. The OLS estimators of the simple linear regression coefficients that minimize the RSS are
 \[
 \begin{aligned}
-\hat{\beta}_1 &= \frac{\sum_{i=1}^n x_i Y_i - \frac{1}{n} \biggl(\sum_{i=1}^n x_i\biggr)\biggl(\sum_{i=1}^n Y_i\biggr)}{\sum_{i=1}^n x_i^2 - \frac{1}{n} \biggl(\sum_{i=1}^n x_i\biggr)^2} \notag \\
-&= \frac{\sum_{i=1}^n (x_i - \bar{x})(Y_i - \bar{Y})}{\sum_{i=1}^n (x_i - \bar{x})^2} \notag \\
+\hat{\beta}_1 &= \frac{\sum_{i=1}^n x_i Y_i - \frac{1}{n} \biggl(\sum_{i=1}^n x_i\biggr)\biggl(\sum_{i=1}^n Y_i\biggr)}{\sum_{i=1}^n x_i^2 - \frac{1}{n} \biggl(\sum_{i=1}^n x_i\biggr)^2} \\
+&= \frac{\sum_{i=1}^n (x_i - \bar{x})(Y_i - \bar{Y})}{\sum_{i=1}^n (x_i - \bar{x})^2} \\
 &= \frac{\sum_{i=1}^n (x_i - \bar{x})Y_i}{\sum_{i=1}^n (x_i - \bar{x})x_i}
 \end{aligned}
 (\#eq:slr-beta1hat)
