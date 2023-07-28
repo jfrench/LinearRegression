@@ -2,11 +2,11 @@
 title: Chapter 7 - Variable selection
 author: Joshua French
 date: ''
-format: html
-# format: ipynb
-# jupyter: ir
-# execute:
-#   output: false
+# format: html
+format: ipynb
+jupyter: ir
+execute:
+  output: false
 self-contained: true
 title-block-banner: true
 wrap: 'none'
@@ -257,9 +257,9 @@ The top row of the plot indicates the model that maximizes the adjusted $R^2$.
 A similar plot for the coefficient of determination, $R^2$, can be constructed by specifying `scale = "r2"` in the `plot` function.
 
 
-It is also common to visualize the results of a best subset search strategy by creating a scatter plot of the selection criterion for the best model for each value of $p_\mathcal{M}$ versus $p_\mathcal{M}$ or the number of regressors.
+It is also common to visualize the results of a best subset search strategy by creating a scatter plot of the selection criterion for the best model for each value of $p_{\mathcal{M}}$ versus $p_{\mathcal{M}}$ or the number of regressors.
 
-We can extract the best adjusted $R^2$ statistics for each value of $p_\mathcal{M}$ from the `summary` of `rs` and plot those statistics versus the number of regressors in the model.
+We can extract the best adjusted $R^2$ statistics for each value of $p_{\mathcal{M}}$ from the `summary` of `rs` and plot those statistics versus the number of regressors in the model.
 
 ```{r}
 srs <- summary(rs)
@@ -422,11 +422,13 @@ Kutner et al. (2005) summarize how to use Mallow's $C_p$ statistic.
 - If a model with $p_{\mathcal{M}}$ regression coefficients fits the data well and has little or no bias, then $E(C_{p_{\mathcal{M}}}) \approx p_{\mathcal{M}}$.
     - A model with a biased fit will have $C_{p_{\mathcal{M}}}$ much larger than $p_{\mathcal{M}}$.
     - Models with $C_{p_{\mathcal{M}}}$ less than $p_{\mathcal{M}}$ do not show evidence of bias.
-    - For the model with all regressors regression coefficients, then $C_p=p$ (the number of regressors in the complete model). This tells us nothing about the predictive ability of the model.
+    - Mathematically, $C_p=p$ always for the complete model that includes all regressors. This tells us nothing about the predictive ability of the model.
 
 To use Mallow's $C_p$ to select a model, we plot $C_{p_{\mathcal{M}}}$ versus $p_{\mathcal{M}}$ and compare this to the $45^{\circ}$ line $C_{p_{\mathcal{M}}}= p_{\mathcal{M}}$ .
 
 We favor models with smaller $p_{\mathcal{M}}$ and $C_{p_{\mathcal{M}}}$ close to $p_\mathcal{M}$.
+
+- Because $C_p = p$ for the full model, the Mallow's $C_p$ plot cannot provide evidence that the complete model is best. This plot doesn't provide us with information about that scenario. Never conclude the complete model is best based on the Mallow's $C_p$ statistic.
 
 **Mallow's $C_p$ `prostate` example**
 
