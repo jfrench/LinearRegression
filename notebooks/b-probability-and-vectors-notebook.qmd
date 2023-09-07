@@ -814,7 +814,7 @@ $$
 \begin{aligned}
 & \mathrm{var}(Y-X) \\
 &=\mathrm{var}(\mathbf{Az}) \\
-&=\mathbf{A}\mathbf{var}(\mathbf{z})\mathbf{A}^T \\
+&=\mathbf{A}\mathrm{var}(\mathbf{z})\mathbf{A}^T \\
 &=
 \begin{bmatrix}
 -1 & 1
@@ -880,8 +880,12 @@ $$
 \mathbf{y}=[Y_1, Y_2, \ldots,Y_n],
 $$
 
-be an $n\times 1$ vector of responses. It is common to assume that, $$ \mathbf{y}\sim \mathsf{N}(\mathbf{X}\boldsymbol{\beta}, \sigma^2 \mathbf{I}_{n\times n}).\,
-$$ where $\beta=[\beta_0,\beta_1,\ldots,\beta_{p-1}]$ is a $p$-dimensional vector of constants.
+be an $n\times 1$ vector of responses. It is common to assume that,
+
+$$
+\mathbf{y}\sim \mathsf{N}(\mathbf{X}\boldsymbol{\beta}, \sigma^2 \mathbf{I}_{n\times n}).\,
+$$
+where $\beta=[\beta_0,\beta_1,\ldots,\beta_{p-1}]$ is a $p$-dimensional vector of constants.
 
 The matrix $\mathbf{H}=\mathbf{X}(\mathbf{X}^T\mathbf{X})^{-1}\mathbf{X}^T$ projects $\mathbf{y}$ into the space spanned by the vectors in $\mathbf{X}$.
 
