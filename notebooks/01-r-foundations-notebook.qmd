@@ -9,12 +9,19 @@ execute:
   output: false
 self-contained: true
 title-block-banner: true
+engine: knitr
 ---
 
-To open this information in an interactive Colab notebook, click the Open in Colab graphic below.
+To open this information in an interactive Colab notebook, click or scan the QR code below. 
+
+<!-- click the Open in Colab graphic below or scan the QR code below. -->
+
+<!-- <a href="https://colab.research.google.com/github/jfrench/LinearRegression/blob/master/notebooks/01-r-foundations-notebook.ipynb"> -->
+<!--    <img src="https://colab.research.google.com/assets/colab-badge.svg"> -->
+<!-- </a> -->
 
 <a href="https://colab.research.google.com/github/jfrench/LinearRegression/blob/master/notebooks/01-r-foundations-notebook.ipynb">
-   <img src="https://colab.research.google.com/assets/colab-badge.svg">
+   <img src="./pictures/qr-01-r-foundations.png">
 </a>
 
 ---
@@ -23,42 +30,47 @@ To open this information in an interactive Colab notebook, click the Open in Col
 
 R is a programming language and environment designed for statistical computing. [(https://www.r-project.org/about.html)](https://www.r-project.org/about.html)
 
-Some important facts about R are that:
+R is free, open source, and runs on many different types of computers (Windows, Mac, Linux, and others).
 
--   R is free, open source, and runs on many different types of computers (Windows, Mac, Linux, and others).
--   R is an interactive programming language.
-    -   You type and run a command in the Console for immediate feedback, in contrast to a compiled programming language, which compiles a program that is then executed.
--   R is highly extendable.
-    -   Many user-created packages are available to extend the functionality beyond what is installed by default.
-    -   Users can write their own functions and easily add software libraries to R.
+R is an interactive programming language.
+
+- We type and run a command in the Console for immediate feedback, in contrast to a compiled programming language, which compiles a program that is then executed.
+
+
+R is highly extendable.
+
+- We can extend the functionality of R beyond what is available by default by installing user-created packages.
+- We can write our own functions to create additional capabilities in R.
 
 # Installing R and RStudio
 
 Install R by downloading an installer program from the R Project's website [(https://www.r-project.org/)](https://www.r-project.org/).
 
-RStudio Desktop is a free "front end" for R that makes doing data analysis with R much easier by adding an Integrated Development Environment (IDE) and providing many other features. Currently, you may download RStudio at <https://posit.co/download/rstudio-desktop/>.
+RStudio Desktop is a free "front end" for R that makes doing data analysis with R easier by adding an Integrated Development Environment (IDE) and providing many other features. Currently, we can download RStudio at <https://posit.co/download/rstudio-desktop/>.
 
 **RStudio Layout**
 
 RStudio Desktop has four panes:
 
-1.  Console: the pane where commands are run.
-2.  Source: the pane where you prepare commands to be run.
-3.  Environment/History: the pane where you can see all the objects in your workspace, your command history, and other information.
-4.  The Files/Plot/Packages/Help: the pane where you navigate between directories, where plots can be viewed, where you can see the packages available to be loaded, and where you can get help.
+1.  Console: the pane where we run commands.
+2.  Source: the pane where we prepare commands to run.
+3.  Environment/History: the pane where we can see all the objects in our workspace, our command history, and other information.
+4.  The Files/Plot/Packages/Help: the pane where we navigate between directories, where plots can be viewed, where we can see the packages available to be loaded, and where we can get help.
 
-Tip: Change your R Studio environment so that it doesn't save your workspace.
+<img src="./pictures/rstudio_panes.png">
+
+Tip: Change the R Studio environment so that it doesn't save the workspace when exiting the application.
 
 # Running code, scripts, and comments
 
-You can run code in R by typing it in the Console next to the `>` symbol and pressing the Enter key.
+We can run code in R by typing it in the Console next to the `>` symbol and pressing the Enter key.
 
-It's better to write your commands in a "Script" file, save the Script, and then run your commands from the Script. The commands in a Script file are generically referred to as "code".
+It's better to write our commands in a "Script" file, save the Script, and then run our commands from the Script. The commands in a Script file are generically referred to as "code".
 
 Script files make it easy to:
 
--   Reproduce your data analysis without retyping all your commands.
--   Share your code with others.
+-   Reproduce our data analysis without retyping all our commands.
+-   Share our code with others.
 
 A new Script file can be obtained by:
 
@@ -67,8 +79,8 @@ A new Script file can be obtained by:
 
 To run code from a Script file:
 
--   Highlight the code you want to run and click the Run button at the top of the Script pane.
--   Highlight the code you want to run and press "Ctrl + Enter" on your keyboard. If you don't highlight anything, by default, RStudio runs the command the cursor currently lies on.
+-   Highlight the code we want to run and click the Run button at the top of the Script pane.
+-   Highlight the code we want to run and press "Ctrl + Enter" on our keyboard. If we don't highlight anything, by default, RStudio runs the command the cursor currently lies on.
 
 To save a Script file:
 
@@ -79,7 +91,7 @@ A comment is a set of text ignored by R when submitted to the Console.
 
 A comment is indicated by the `#` symbol. Nothing to the right of the `#` is executed by the Console.
 
-To comment (or uncomment) multiple lines of code in the Source pane of RStudio, highlight the code you want to comment and press `Ctrl + Shift + c` on a PC or `Cmd + Shift + c` on a Mac.
+We can comment (or uncomment) multiple lines of code in the Source pane of RStudio by highlighting the code we want to comment and pressing `Ctrl + Shift + c` on a PC or `Cmd + Shift + c` on a Mac.
 
 **Your turn**
 
@@ -87,11 +99,11 @@ Perform the following tasks:
 
 1.  Type `1+1` in the Console and press Enter.
 2.  Open a new Script in RStudio.
-3.  Type `mean(1:3)` in your Script file.
-4.  Type `# mean(1:3)` in your Script file.
+3.  Type `mean(1:3)` in the Script file.
+4.  Type `# mean(1:3)` in the Script file.
 5.  Run the commands from the Script using an approach mentioned above.
-6.  Save your Script file.
-7.  Use the keyboard shortcut to "comment out" some of the lines of your Script file.
+6.  Save the Script file.
+7.  Use the keyboard shortcut to "comment out" some of the lines of the Script file.
 
 ```{r}
 # type your commands here
@@ -107,14 +119,14 @@ Some comments:
 
 -   In general, both `<-` and `=` can be used for assignment.
 -   Pressing `Alt + -` on a PC or `Option + -` on a Mac will insert `<-` into the R Console and Script files.
-    -   If you are creating an R Markdown file, then this shortcut will only insert `<-` if you are in an R code block.
--   `<-` and `=` are NOT synonyms, but can be used identically most of the time.
+    -   If we are creating an R Markdown or Quarto file, then this shortcut will only insert `<-` if we are in a code block.
+-   `<-` and `=` are NOT synonyms but can be used identically most of the time.
 
 # Functions
 
-To use a function, you type the function's name in the Console (or Script) and then supply the function's "arguments" between parentheses, `()`.
+We use a function by typing the function's name in the Console (or Script), supplying the function's "arguments" between parentheses, `()`, and then pressing Enter.
 
-The arguments of a function are pieces of data or information the function needs to perform the requested task (i.e., the function "inputs"). Each argument you supply is separated by a comma, `,`.
+The arguments of a function are pieces of data or information the function needs to perform the requested task (i.e., the function "inputs"). Each argument we supply is separated by a comma, `,`.
 
 **Your turn**
 
@@ -157,7 +169,7 @@ if (!require("tidyverse")){
 }
 ```
 
-After you install **tidyverse**, load the package by running the command below.
+After we install **tidyverse**, we can load the package by running the command below.
 
 ```{r}
 library(tidyverse)
@@ -168,20 +180,21 @@ library(tidyverse)
 There are many ways to get help in R.
 
 -   To get help for a function named `command`, run `?command` to access the documentation
-
     -   The Documentation will provide information on the function use, arguments, usage examples, and more.
-
 -   Running `??topic` will search the documentation for any occurrence of the word "topic" and provide a list of relevant documentation to consider.
-
 -   Stack Overflow (<https://www.stackoverflow.com>) is a great resource to find solutions.
+- AI chatbots like ChatGPT and Gemini are becoming better at suggesting and correcting computer code.
 
 **Your turn**
 
-Let's get help on the `lm` function.
+Let's get help on the `lm` function through the R console.
 
 ```{r}
+#| eval: false
 ?lm
 ```
+
+Next, try the following search in an AI chatbot: "How do I create a scatter plot in R?" Was the information useful?
 
 # Data Types and Structures
 
@@ -190,21 +203,21 @@ Let's get help on the `lm` function.
 
 R has 6 basic vector types:
 
-1.  character: collections of characters. E.g., `"a"`, `"hello world!"`.
-2.  double: decimal numbers. e.g., `1.2`, `1.0`.
-3.  integer: whole numbers. In R, you must add `L` to the end of a number to specify it as an integer. E.g., `1L` is an integer but `1` is a double.
-4.  logical: boolean values, `TRUE` and `FALSE`.
-5.  complex: complex numbers. E.g., `1+3i`.
-6.  raw: a type to hold raw bytes.
+1.  `character`: collections of characters. E.g., `"a"`, `"hello world!"`.
+2.  `double`: decimal numbers. e.g., `1.2`, `1.0`.
+3.  `integer`: whole numbers. In R, we must add `L` to the end of a number to declare it as an integer. E.g., `1L` is an integer but `1` is a double.
+4.  `logical`: boolean values, `TRUE` and `FALSE`.
+5.  `complex`: complex numbers. E.g., `1+3i`.
+6.  `raw`: a type to hold raw bytes.
 
 **Other important object types**
---
+---
 
--   **Numeric**: An object is `numeric` if it is of type `integer` or `double`. In that case, it's `mode` is said to be `numeric`.
--   **NULL**: `NULL` is a special object to indicate an object is absent.
+-   `numeric`: An object is `numeric` if it is of type `integer` or `double`. In that case, it's `mode` is said to be `numeric`.
+-   `NULL`: `NULL` is a special object to indicate an object is absent.
     -   An object having a length of zero is not the same thing as an object being absent.
--   **NA**: A "missing value" occurs when the value of something isn't known. R uses the special object `NA` to represent a missing value.
-    -   If you have a missing value, you should represent that value as `NA`. Note: `"NA"` is not the same thing as `NA`.
+-   `NA`: A "missing value" occurs when the value of something isn't known. R uses the special object `NA` to represent a missing value.
+    -   If we have a missing value, we should represent that value as `NA`. Note: `"NA"` is not the same thing as `NA`.
 
 # Data structures
 
@@ -266,7 +279,6 @@ c(TRUE, TRUE, FALSE, TRUE)
 ```
 
 ```{r}
-# sequences of values
 seq(1, 10)
 ```
 
@@ -286,7 +298,6 @@ seq(10, 20, len = 100)
 -   What does the `len` argument of the `seq` function control?
 
 ```{r}
-# replicated values
 rep(1:3, times = 3)
 ```
 
@@ -315,7 +326,7 @@ new # print the combined vector
 
 Categorical data should be stored as a `factor` in R.
 
-We create same `factor` variables below.
+We create some `factor` variables below.
 
 ```{r}
 f1 <- factor(rep(1:6, times = 3))
@@ -331,9 +342,9 @@ A printed `factor` object lists the `Levels` (i.e., unique categories) of the ob
 
 Some additional comments:
 
--   `factor` objects aren't technically vectors but behave like vectors, which is why they are included here.
--   The `is.factor` function can be used to determine whether an object is a `factor`.
--   You can create `factor` objects with specific orderings of categories using the `level` and `ordered` arguments of the `factor` function (see `?factor` for more details).
+-   `factor` objects aren't technically vectors but behave like vectors, which is why we discuss them here.
+-   We can use the `is.factor` function to determine whether an object is a `factor`.
+-   We can create `factor` objects with specific orderings of categories using the `level` and `ordered` arguments of the `factor` function (see `?factor` for more details).
 
 ```{r}
 size <- c("small", "medium", "small", "large", "medium", "medium", "large")
@@ -349,7 +360,7 @@ factor(size, levels = c("small", "medium", "large"), ordered = TRUE)
 
 Attempt to complete the following tasks:
 
-1.  Create a vector named `grp` that has two levels: `a` and `b`, where the first 7 values are `a` and the second 4 values are `b`.
+1.  Create a `factor` vector named `grp` that has two levels: `a` and `b`, where the first 7 values are `a` and the second 4 values are `b`.
 2.  Run `is.factor(grp)` in the Console.
 3.  Run `is.vector(grp)` in the Console.
 4.  Run `typeof(grp)` in the Console.
@@ -370,10 +381,10 @@ a <- seq(2, 16, by = 2)
 a[c(2, 4, 6)]
 ```
 
-Supplying a negative index vector indicates the values you want to exclude from your selection.
+Supplying a negative index vector indicates the values we want to exclude from our result.
 
 ```{r}
-a[-c(2, 4, 6)] # select all but element 2, 4, 6
+a[-c(2, 4, 6)] # select all but elements 2, 4, 6
 ```
 
 ```{r}
@@ -491,16 +502,51 @@ a[(a < 6)|(a == 10)]
 
 ```{r}
 #| eval: false
-# common functions
 x <- rexp(100) # sample 100 iid values from an Exponential(1) distribution
+```
+
+```{r}
+#| eval: false
 length(x) # length of x
+```
+
+```{r}
+#| eval: false
 sum(x) # sum of x
+```
+
+```{r}
+#| eval: false
 mean(x) # sample mean of x
+```
+
+```{r}
+#| eval: false
 var(x) # sample variance of x
+```
+
+```{r}
+#| eval: false
 sd(x) # sample standard deviation of x
+```
+
+```{r}
+#| eval: false
 range(x) # range of x
+```
+
+```{r}
+#| eval: false
 log(x) # logarithm of x
+```
+
+```{r}
+#| eval: false
 summary(x) # summary of x
+```
+
+```{r}
+#| eval: false
 str(x) # structure of x
 ```
 
@@ -555,6 +601,9 @@ Data frames are:
 -   two-dimensional data objects.
 -   each column of a data frame is a vector.
 
+**Data Frame Creation**
+---
+
 Data frames are directly created by passing vectors into the `data.frame` function.
 
 ```{r}
@@ -574,7 +623,7 @@ names(df) <- c("ID", "Color", "Passed")
 df
 ```
 
-The columns of a data frame can be named when you are first creating the data frame by using `name =` for each vector of data.
+We can initially name The columns of a data frame when we create the data frame by using `name =` for each vector of data.
 
 ```{r}
 # create data frame with better column names
@@ -585,14 +634,14 @@ df2
 **Importing Data**
 ---
 
-In practice, you are likely to have a file that contains the data you want to analyze and you want to import the data into R.
+In practice, the data we want to analyze is saved in a file, and we can import the data from the file into R.
 
 The `read.table` function imports data in table format from file into R as a data frame.
 
--   `file` is the file path and name of the file you want to import into R.
-    -   If you don't know the file path, setting `file = file.choose()` will bring up a dialog box asking you to locate the file you want to import.
+-   `file` is the file path and name of the file we want to import into R.
+    -   If we don't know the file path, we can use `file = file.choose()` to launch a dialog box asking us to locate the file we want to import.
 -   `header` specifies whether the data file has a header (variable labels for each column of data in the first row of the data file).
-    -   If you don't specify this option in R or use `header = FALSE`, then R will assume the file doesn't have any headings.
+    -   If we don't specify this option in R or use `header = FALSE`, then R will assume the file doesn't have any headings.
     -   `header = TRUE` tells R to read in the data as a data frame with column names taken from the first row of the data file.
 -   `sep` specifies the delimiter separating elements in the file.
     -   If each column of data in the file is separated by a space, then use `sep = " "`.
@@ -630,7 +679,7 @@ mtcars$mpg
 Another way to extract a variable from a data frame uses a `df[rows, columns]` style syntax.
 
 -   `rows` and `columns` indicate the desired rows or columns.
--   if either the `rows` or `columns` are left blank, then all `rows` or `columns`, respectively, are extracted.
+-   If either the `rows` or `columns` are left blank, then all `rows` or `columns`, respectively, are extracted.
 
 ```{r}
 mtcars[,"mpg"]
@@ -642,7 +691,7 @@ To select multiple variables in a data frame, we can provide a character vector 
 mtcars[c("mpg", "cyl")]
 ```
 
-You can also use numeric indices to directly indicate the rows or columns of the data frame that you would like to extract.
+We can also use numeric indices to directly indicate the rows or columns of the data frame that we would like to extract.
 
 ```{r}
 mtcars[c(1, 2)]
@@ -671,31 +720,30 @@ We can make the logical expression more complicated.
 ```{r}
 # return rows with `cyl == 8` and `mpg > 17`
 # return columns mpg, cyl, disp, hp
-mtcars[mtcars$cyl == 8 & mtcars$mpg > 17,
-       c("mpg", "cyl", "disp", "hp")]
+mtcars[mtcars$cyl == 8 & mtcars$mpg > 17, c("mpg", "cyl", "disp", "hp")]
 ```
 
-***Modifying Data Frames***
+**Modifying Data Frames**
 ---
 
-Columns can be added to a data frame using the `$` and assignment operator.
+We can add columns to a data frame by combining the `$` and assignment operators.
 
 ```{r}
-mtcars$kpg <- mtcars$mpg*1.6
+mtcars$kpg <- mtcars$mpg * 1.6
 ```
 
-***Extraction using the `subset` function***
+**Extraction using the `subset` function**
 ---
 
 The `subset` function returns the part of a data frame that meets the specified conditions.
 
 The basic usage of this function is: `subset(x, subset, select, drop = FALSE)`
 
--   `x` is the object you want to subset.
+-   `x` is the object we want to subset.
     -   `x` can be a vector, matrix, or data frame.
 -   `subset` is a logical expression that indicates the elements or rows of `x` to keep (`TRUE` means keep).
 -   `select` is a vector that indicates the columns to keep.
--   `drop` is a logical value indicating whether the data frame should "drop" into a vector if only a single row or column is kept. The default is `FALSE.`.
+-   `drop` is a logical value indicating whether the data frame should "drop" into a vector if only a single row or column is kept. The default is `FALSE`.
 
 **Your turn**
 
@@ -717,7 +765,7 @@ subset(mtcars, subset = gear > 4, select = c(disp, hp, gear))
 
 # Using the pipe operator
 
-R's native pipe operator (`|>`) allows you to "pipe" the object on the left side of the operator into the first argument of the function on the right side of the operator. The pipe operator is a convenient way to string together numerous steps in a string of commands.
+R's native pipe operator (`|>`) allows us to "pipe" the object on the left side of the operator into the first argument of the function on the right side of the operator. The pipe operator is a convenient way to string together numerous steps in a string of commands.
 
 When reading code with pipes, the pipe can be thought of as the word "then".
 
@@ -736,7 +784,7 @@ mtcars |>
   subset(select = c(mpg, disp, hp))
 ```
 
-Here is a complicated sequence of piped commands. What do you think is happening?
+Here is a complicated sequence of piped commands. What are the commands doing?
 
 ```{r}
 # create new variable, select columns, extract first 5 rows
