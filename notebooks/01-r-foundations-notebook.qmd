@@ -34,7 +34,7 @@ R is an interactive programming language.
 R is highly extendable.
 
 - We can extend the functionality of R beyond what is available by default by installing user-created packages.
-- We can write our own functions to create additional capabilities in R.
+- We can write our own functions to add additional capabilities in R.
 
 # Installing R and RStudio
 
@@ -49,7 +49,7 @@ RStudio Desktop has four panes:
 1.  Console: the pane where we run commands.
 2.  Source: the pane where we prepare commands to run.
 3.  Environment/History: the pane where we can see all the objects in our workspace, our command history, and other information.
-4.  The Files/Plot/Packages/Help: the pane where we navigate between directories, where plots can be viewed, where we can see the packages available to be loaded, and where we can get help.
+4.  The Files/Plot/Packages/Help: the pane where we navigate between directories, view plots, see the packages available to be loaded, or get help.
 
 <img src="https://raw.githubusercontent.com/jfrench/LinearRegression/ba73f4ffa2c6eec30e425352e89154a92e4a0fb8/images/rstudio_panes_new.png" width="800">
 
@@ -87,7 +87,7 @@ A comment is indicated by the `#` symbol. Nothing to the right of the `#` is exe
 
 We can comment (or uncomment) multiple lines of code in the Source pane of RStudio by highlighting the code we want to comment and pressing `Ctrl + Shift + c` on a PC or `Cmd + Shift + c` on a Mac.
 
-**Your turn**
+**Hands-on Practice**
 
 Perform the following tasks:
 
@@ -100,7 +100,7 @@ Perform the following tasks:
 7.  Use the keyboard shortcut to "comment out" some of the lines of the Script file.
 
 ```{r}
-# type your commands here
+# type code here
 ```
 
 # Assignment in R
@@ -122,7 +122,7 @@ We use a function by typing the function's name in the Console (or Script), supp
 
 The arguments of a function are pieces of data or information the function needs to perform the requested task (i.e., the function "inputs"). Each argument we supply is separated by a comma, `,`.
 
-**Your turn**
+**Hands-on Practice**
 
 Run the following commands in the Console.
 
@@ -154,7 +154,7 @@ R packages can be installed using the `install.packages` function and loaded usi
 
 The **tidyverse** package (actually, a collection of packages) contains data and some useful functions we will be using later in the course.
 
-**Your turn**
+**Hands-on Practice**
 
 ```{r}
 # install tidyverse if it's not already installed
@@ -179,7 +179,7 @@ There are many ways to get help in R.
 -   Stack Overflow (<https://www.stackoverflow.com>) is a great resource to find solutions.
 - AI chatbots like ChatGPT and Gemini are becoming better at suggesting and correcting computer code.
 
-**Your turn**
+**Hands-on Practice**
 
 Let's get help on the `lm` function through the R console.
 
@@ -256,7 +256,7 @@ Multiple vectors can be combined into a new vector object using the `c` function
 
 -   E.g., `c(v1, v2, v3)` would combine vectors `v1`, `v2`, and `v3`.
 
-**Your turn**
+**Hands-on Practice**
 
 Run the commands below in the Console.
 
@@ -350,7 +350,7 @@ factor(size)
 factor(size, levels = c("small", "medium", "large"), ordered = TRUE)
 ```
 
-**Your Turn**
+**Hands-on Practice**
 
 Attempt to complete the following tasks:
 
@@ -360,7 +360,7 @@ Attempt to complete the following tasks:
 4.  Run `typeof(grp)` in the Console.
 
 ```{r}
-# type your code here
+# type code here
 ```
 
 **Extracting parts of a vector**
@@ -405,7 +405,7 @@ We can create more complicated logical expressions using the "and", "or", and "n
 -   `|`: or.
 -   `!`: not, i.e., not true
 
-**Your turn**
+**Hands-on Practice**
 
 Run the following commands in R.
 
@@ -468,7 +468,7 @@ FALSE | FALSE | FALSE
 
 We can pass logical expressions within the square brackets to access part of a data structure. This syntax will return each element of the object for which the expression is `TRUE`.
 
-**Your turn**
+**Hands-on Practice**
 
 Run the following commands in R and see what is printed.
 
@@ -555,7 +555,7 @@ Suppose that a random variable $X$ has the `dist` distribution. The function tem
 -   `r[dist](n, ...)`: returns an independent and identically distributed random sample of size `n` having the same distribution as $X$.
 -   The `...` indicates that additional arguments describing the parameters of the distribution may be required.
 
-**Your turn**
+**Hands-on Practice**
 
 Run the following commands in R to see the output.
 
@@ -739,7 +739,7 @@ The basic usage of this function is: `subset(x, subset, select, drop = FALSE)`
 -   `select` is a vector that indicates the columns to keep.
 -   `drop` is a logical value indicating whether the data frame should "drop" into a vector if only a single row or column is kept. The default is `FALSE`.
 
-**Your turn**
+**Hands-on Practice**
 
 Run the following commands in the Console to use the `subset` function to extract parts of the `mtcars` data frame.
 
