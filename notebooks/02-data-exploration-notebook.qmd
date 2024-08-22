@@ -2,6 +2,7 @@
 title: "Chapter 2 - Data Cleaning and Exploration"
 author: Joshua French
 date: ''
+engine: knitr
 # format: html
 format: ipynb
 jupyter: ir
@@ -11,39 +12,62 @@ self-contained: true
 title-block-banner: true
 ---
 
-To open this information in an interactive Colab notebook, click the Open in Colab graphic below.
+To open this information in an interactive Colab notebook, click or scan the QR code below. 
 
-<a href="https://colab.research.google.com/github/jfrench/LinearRegression/blob/master/notebooks/02-data-exploration-notebook.ipynb">
-   <img src="https://colab.research.google.com/assets/colab-badge.svg">
+<a href="https://colab.research.google.com/github/jfrench/LinearRegression/blob/master/notebooks/01-r-foundations-notebook.ipynb">
+   <img src="https://raw.githubusercontent.com/jfrench/LinearRegression/9d0559b9fa7bdecc94158ebb6a0395c9139648d7/images/qr-02-data-exploration.png">
 </a>
+
+::: {.content-visible when-format="ipynb"}
+
+We run the code below to ensure that all necessary packages are installed in our Jupyter environment.
+
+```{r}
+if(!require(palmerpenguins, quietly = TRUE)) {
+  install.packages("palmerpenguins", repos = "https://cran.rstudio.com/")
+}
+if(!require(ggplot2, quietly = TRUE)) {
+  install.packages("ggplot2", repos = "https://cran.rstudio.com/")
+}
+if(!require(plotly, quietly = TRUE)) {
+  install.packages("ggplot2", repos = "https://cran.rstudio.com/")
+}
+if(!require(dplyr, quietly = TRUE)) {
+  install.packages("ggplot2", repos = "https://cran.rstudio.com/")
+}
+```
+:::
+
 
 # Introduction
 
-You should explore every data set numerically and visually prior to modeling it. The data exploration process will help you:
+We should explore every data set numerically and visually prior to modeling it. The data exploration process will help us:
 
--   Find errors in your data
--   Locate missing values
--   Identify outliers and unusual observations
--   Find patterns in your data
--   Decide on a modeling approach
+-   Find errors in our data.
+-   Locate missing values.
+-   Identify outliers and unusual observations.
+-   Find patterns in our data.
+-   Decide on a modeling approach.
 -   Etc.
 
 When we receive a data set for the first time, we often need to:
 
 -   Restructure the data set so that each row is an observation and each column is a variable.
 -   Convert the variables to an appropriate type.
--   Improve the name of the variables.
+-   Improve the names of the variables.
 -   Etc.
 
 The process of preparing the data into a friendly format is known as "cleaning".
 
 # Raw Palmer penguins data
 
-We will systematically explore the `penguins_raw` data set from the **palmerpenguins** package. To use the data:
+We will systematically explore the `penguins_raw` data set from the **palmerpenguins** package. 
 
--   Load the data into memory using the `data` function.ins
--   Specify the `name` of the data set to be loaded.
--   Specify the package that contains the data.
+To attach a data set from an R package into our working environment, we:
+
+1. Run the `data` function.
+2. Specify the `name` of the data set we want to attach.
+3. Specify the package that contains the data.
 
 ```{r data_penguins}
 data(penguins, package = "palmerpenguins")
@@ -52,33 +76,33 @@ data(penguins, package = "palmerpenguins")
 This command actually loads two data sets:
 
 -   `penguins_raw`: the data set we will be looking at.
--   `penguins`: a simplified version.
+-   `penguins`: a simplified, clean version of `penguins_raw`.
 
 The `penguins_raw` data set provides data related to various penguin species measured in the Palmer Archipelago (Antarctica).
 
 The data set includes 344 observations of 17 variables. The variables are:
 
--   `studyName`: a `character` variable indicating the expedition from which the data were collected.
--   `Sample Number`: a `numeric` variable denoting the continuous number sequence for each sample.
--   `Species`: a `character` variable indicating the penguin species.
--   `Region`: a `character` variable denoting the region of the Palmer LTER sampling grid the sample was obtained.
--   `Island`: a `character` variable indicating the island on which the penguin was observed.
--   `Stage`: a `character` variable indicating the reproductive stage of the observation.
--   `Individual ID`: a `character` variable indicating the unique identification number for each individual in the data set.
--   `Clutch Completion`: a `character` variable indicating whether the study nest was observed with a "full clutch" of 2 eggs.
--   `Date Egg`: a `Date` variable indicating the date that the study nest was observed with 1 egg.
--   `Culman Length (mm)`: a `numeric` variable indicating the length of the dorsal ridge of the penguin's bill in millimeters.
--   `Culmen Depth (mm)`: a `numeric` variable indicating the indicating the depth of the dorsal ridge of the penguin's bill in millimeters.
--   `Flipper Length (mm)`: a `numeric` variable indicating the penguin's flipper length in millimeters.
--   `Body Mass (g)`: a `numeric` variable indicating the penguin's body mass in grams.
--   `Sex`: a `character` variable indicating the penguin's sex (`FEMALE`, `MALE`)
--   `Delta 15 N (o/oo)`: a `numeric` variable indicating the ratio of stable isotopes 15N:14N.
--   `Delta 13 C (o/oo)`: a `numeric` variable indicating the ratio of stable isotopes 15C:12C.
--   `Comments`: a `character` variable providing additional information about the observation.
+-   `studyName`: the expedition from which the data were collected (`character`).
+-   `Sample Number`: the continuous number sequence for each sample (`numeric`).
+-   `Species`: the penguin's species (`character`).
+-   `Region`: the region of the Palmer LTER sampling grid the sample was obtained (`character`).
+-   `Island`: the island on which the penguin was observed (`character`).
+-   `Stage`: the reproductive stage of the observation (`character`).
+-   `Individual ID`: the unique identification number of the observations (`character`).
+-   `Clutch Completion`: whether the study nest was observed with a "full clutch" of 2 eggs (`character`).
+-   `Date Egg`: the date that the study nest was observed with 1 egg (`Date`).
+-   `Culman Length (mm)`: the length of the dorsal ridge of the penguin's bill in millimeters (`numeric`).
+-   `Culmen Depth (mm)`: the depth of the dorsal ridge of the penguin's bill in millimeters (`numeric`).
+-   `Flipper Length (mm)`: the penguin's flipper length in millimeters (`numeric`).
+-   `Body Mass (g)`: the penguin's body mass in grams (`numeric`).
+-   `Sex`: the penguin's sex (`character`).
+-   `Delta 15 N (o/oo)`: the ratio of stable isotopes 15N:14N (`numeric`).
+-   `Delta 13 C (o/oo)`: the ratio of stable isotopes 15C:12C (`numeric`).
+-   `Comments`: additional information about the observation (`character`).
 
 # Initial data cleaning
 
-The `str` function provides a general overview of the data's structure.
+The `str` function provides a general overview of an object's structure.
 
 ```{r str-penguins-raw}
 str(penguins_raw, give.attr = FALSE)
@@ -109,10 +133,10 @@ penguins_clean <-
                     "Culmen Depth (mm)", "Flipper Length (mm)", "Body Mass (g)", "Sex"))
 ```
 
-To rename the columns of `penguins_clean`, we use the `names` function.
+We use the `names` function to rename the variables in `penguins_clean`.
 
 ```{r}
-# access column names and replace with new names
+# access variable names and replace with new names
 names(penguins_clean) <- c("species",
                            "island",
                            "bill_length",
@@ -120,15 +144,13 @@ names(penguins_clean) <- c("species",
                            "flipper_length",
                            "body_mass",
                            "sex")
-# look at new column names
+# look at new variable names
 names(penguins_clean)
 ```
 
-Notable remaining issues with `penguins_clean`:
+The `species`, `island`, and `sex` variables are categorical but are represented as `character` vectors instead of `factor`.
 
--   `species`, `island`, and `sex` variables are categorical, but are represented as `character` vectors.
--   These variables should each be converted to a `factor`.
--   We use the `transform` function to convert the each variable to a `factor`.
+We use the `transform` function to convert the each variable to a `factor`.
 
 ```{r}
 # convert species, island, and sex variables
@@ -139,7 +161,7 @@ penguins_clean <-
             island = factor(island),
             sex = factor(sex))
 # view structure
-dplyr::glimpse(penguins_clean)
+str(penguins_clean)
 ```
 
 The levels of of `species`, `island`, and `sex` are not formatted well.
@@ -157,7 +179,7 @@ We now change the levels of each variable in the same order they are printed abo
 levels(penguins_clean$species) <- c("adelie", "chinstrap", "gentoo")
 levels(penguins_clean$sex) <- c("female", "male")
 # confirm that changes took effect
-dplyr::glimpse(penguins_clean)
+str(penguins_clean)
 ```
 
 # Numerical summarization of data
@@ -184,7 +206,7 @@ Numerical exploration of a set of `numeric` values usually focuses on determinin
 2.  spread
 3.  quantiles (less common).
 
-It can also be useful to compute the correlation between two `numeric` variables.
+Computing the correlation between two `numeric` variables can also be useful.
 
 ### Measures of center
 
@@ -198,7 +220,7 @@ The sample mean or average is:
 
 The sample median is:
 
--   The middle value of an ordered set of values (the actual middle value for when the number of values is odd and the average of the two middle values if there are an even number of values).
+-   The middle value of an ordered set of values (the actual middle value when the number of values is odd and the average of the two middle values when the number of values is even).
 -   Identical to the 0.5 quantile of the data.
 -   More "resistant" than the mean because it is not so greatly affected by outliers.
 -   Computed in R using `median`.
@@ -209,7 +231,7 @@ We compute the mean of the `body_mass` variable of the `penguins_clean` data in 
 mean(penguins_clean$body_mass)
 ```
 
-Why is the result `NA` instead of a number?
+**Question:** Why is the result `NA` instead of a number?
 
 ```{r}
 # compute sample mean and median body_mass, ignoring NAs
@@ -217,17 +239,17 @@ mean(penguins_clean$body_mass, na.rm = TRUE)
 median(penguins_clean$body_mass, na.rm = TRUE)
 ```
 
-**Question:** The median is less than the mean (i.e., large values are pulling the mean in the positive direction), what *might* this tell us about the distribution?
+**Question:** The median is less than the mean (i.e., large values are pulling the mean in the positive direction). What *might* this tell us about the distribution?
 
 ### Quantiles
 
-The *p*th quantile (where $0\leq p \leq 1$) of a set of values is the value that separates the smallest $100 p$% of the values from the upper $100(1-p)$% of the values.
+The $p$th quantile ($0\leq p \leq 1$) of a set of values is the value that separates the smallest $100 p$% of the values from the upper $100(1-p)$% of the values.
 
 -   The 0.25 sample quantile (often called Q1) of a set of values is the value that separates the smallest 25% of the values from the largest 75% of the values.
 
 The `quantile` function is used to compute sample quantiles.
 
-Quantiles are useful quantifying:
+Quantiles are useful for quantifying:
 
 -   Center (median).
 -   Spread (minimum and maximum or interquartile range = Q3 - Q1).
@@ -244,7 +266,7 @@ quantile(penguins_clean$body_mass,
 
 Spread is related to how far values are from each other.
 
-The sample variance of a set of values is:
+The sample variance of a set of values $x_1, x_2, \ldots, x_n$ is:
 
 -   The (approximate) average of the squared deviation of each observation from the sample mean.
 -   $s^2 = \frac{1}{n-1}\sum_{i=1}^n (x_i - \bar{x})^2$.
@@ -276,10 +298,8 @@ var(penguins_clean$body_mass, na.rm = TRUE)
 # sample standard deviation
 sd(penguins_clean$body_mass, na.rm = TRUE)
 # interquartile range (names = FALSE removes text above the results)
-quantile(penguins_clean$body_mass, probs = 0.75,
-         na.rm = TRUE, names = FALSE) -
-  quantile(penguins_clean$body_mass, probs = 0.25,
-           na.rm = TRUE, names = FALSE)
+quantile(penguins_clean$body_mass, probs = 0.75, na.rm = TRUE, names = FALSE) -
+  quantile(penguins_clean$body_mass, probs = 0.25, na.rm = TRUE, names = FALSE)
 # minimum
 min(penguins_clean$body_mass, na.rm = TRUE)
 # maximum
@@ -290,25 +310,27 @@ max(penguins_clean$body_mass, na.rm = TRUE)
 
 The correlation between two `numeric` variables quantifies the strength and direction of their linear relationship.
 
-The most common correlation statistic is Pearson's correlation statistic. If $x_1, x_2, x_n$ and $y_1, y_2, \ldots, y_n$ are two sets of `numeric` values, then the sample correlation statistic is computed as 
+The most common correlation statistic is Pearson's correlation statistic. If $x_1, x_2, \ldots, x_n$ and $y_1, y_2, \ldots, y_n$ are two sets of `numeric` values, then the sample correlation statistic is computed as 
 
 $$r = \frac{1}{n-1}\sum_{i=1}^n\left(\frac{x_i - \bar{x}}{s_x}\right)\left(\frac{y_i - \bar{y}}{s_y}\right),$$
 
 where:
 
 -   $\bar{x}$ and $s_x$ denote the sample mean and standard deviation of the $x$'s.
--   $\bar{y}$ and $s_y$ denoting the same thing for the $y$'s.
--   $r$ must be between -1 and 1.
--   The `cor` function can be used to compute the sample correlation between two `numeric` variables.
+-   $\bar{y}$ and $s_y$ denote the same thing for the $y$'s.
+
+$r$ must be between -1 and 1.
+
+The `cor` function can be used to compute the sample correlation between two `numeric` variables.
 
 **Interpretation**
 
--   The closer $r$ is to -1 or 1, the closer the data values fall to a straight line.
+-   The closer $r$ is to -1 or 1, the closer the data values are to a straight line.
 -   $r$ values close to 0 indicate that there is no linear relationship between the two variables.
 -   Negative $r$ values indicate a negative relationship between the two variables (as values for one variable increase, the values for the other variable tend to decrease).
 -   Positive $r$ values indicate a positive linear relationship between the two variables (as values for one variable increase, the values of the other variable also tend to increase).
 
-In the code below, we compute the sample correlation between all `numeric` variables in `penguins_clean`. We set `use = "pairwise.complete.obs"` so that all non-`NA` pairs of values are used in the calculation.
+In the code below, we compute the sample correlation between all `numeric` variables in `penguins_clean`. We set the `use` argument to `"pairwise.complete.obs"` so that all non-`NA` pairs of values are used in the calculation.
 
 ```{r}
 # determine whether each variable is numeric
@@ -316,32 +338,37 @@ num_col <- unlist(lapply(penguins_clean, is.numeric))
 # observe results
 num_col
 # compute correlation of numeric variables
-cor(penguins_clean[, num_col],
-    use = "pairwise.complete.obs")
+cor(penguins_clean[, num_col], use = "pairwise.complete.obs")
 ```
 
 -   The values of each variable are perfectly correlated with themselves.
--   The correlation between `bill_length` and `body_mass` is 0.87, so the larger a penguin is, the larger its bill tends to be.
--   Perhaps surprisingly, the correlation between `bill_length` and `bill_depth` is -0.24, so the longer a bill becomes, the shallower (narrower) we expect the depth to be.
--   The correlation between `bill_depth` and `body_mass` is -0.47, so larger penguins tend to have narrower bills.
+-   The correlation between `bill_length` and `body_mass` is 0.87, so heavier penguins tend to have longer bills.
+-   Perhaps surprisingly, the correlation between `bill_length` and `bill_depth` is -0.24, so penguins with longer bills tend to have shallower (narrower) bill depth.
+-   The correlation between `bill_depth` and `body_mass` is -0.47, so heavier penguins tend to have narrower bills.
 
 ## Categorical data
 
-A frequency distribution or relative frequency distribution are useful numeric summaries of categorical data.
+Frequency distributions and relative frequency distributions are useful numeric summaries of categorical data.
 
-The `table` function returns a contingency table summarizing the number of observations having each level. Note that by default, the table ignores `NA` values.
+A frequency distribution summarizes the number of observations having each level of a categorical variable.
+
+The `table` function produces a frequency distribution (contingency table) summarizing the number of observations for each level of a categorical variable.
+
+- By default, `table` ignores `NA` values.
 
 ```{r}
 table(penguins_clean$sex)
 ```
 
-To count the `NA` values (if present), we can set the `useNA` argument of `table` to `"ifany"`.
+To count the `NA` values (if present), we set the `useNA` argument of `table` to `"ifany"`.
 
 ```{r}
 table(penguins_clean$sex, useNA = "ifany")
 ```
 
-A relative frequency distribution summarizes the proportion or percentage of observation with each level of a categorical variable. To compute the relative frequency distribution of a variable, we must divide the frequency distribution by the number of observations.
+A relative frequency distribution summarizes the proportion or percentage of observation with each level of a categorical variable.
+
+To compute the relative frequency distribution of a variable, we must divide the frequency distribution by the number of observations.
 
 ```{r}
 # divide the frequence distribution of sex by the number of non-NA values
@@ -369,7 +396,7 @@ summary(penguins_clean)
 Visual summaries (i.e., plots) of data help us:
 
 -   Spot errors in our data, unusual observations, and simple patterns.
--   Communicate the results of your analysis.
+-   Communicate the results of our analysis.
 
 The two most popular packages for producing graphics in R are:
 
@@ -392,7 +419,7 @@ The two most popular packages for producing graphics in R are:
 
 There are 4 main components needed to produce a graphic using **ggplot2**.
 
-1.  A data frame containing your data.
+1.  A data frame containing our data.
     -   Each column should be a variable and each row should be an observation of data.
 2.  A `ggplot` object.
     -   This is initialized using the `ggplot` function.
@@ -413,7 +440,7 @@ A univariate plot is a plot that only involves a single variable.
 
 ### Bar plots
 
-A bar plot (or bar chart) displays the number or proportion of observations in each category of a categorical variable (or using R terminology, each `level` of a `factor` variable).
+A bar plot (or bar chart) displays the number or proportion of observations having each category of a categorical variable (or using R terminology, each `level` of a `factor` variable).
 
 The simplest way to create a bar plot in base R is using the `plot` function on a `factor`.
 
@@ -421,22 +448,24 @@ The simplest way to create a bar plot in base R is using the `plot` function on 
 plot(penguins_clean$island, main = "distribution of island")
 ```
 
+There are about 170 penguins from Biscoe island, about 125 from Dream island, and 50 from Torgerson island.
+
 Alternatively, we can combine `barplot` with the `table` function.
 
 ```{r}
-barplot(table(penguins_clean$sex, useNA = "ifany"),
-        names.arg = c("female", "male", "NA"))
+barplot(table(penguins_clean$sex, useNA = "ifany"), names.arg = c("female", "male", "NA"))
 ```
 
 To create a relatively frequency bar plot, we should divide the results of `table` by the number of relevant observations.
 
 ```{r}
-barplot(table(penguins_clean$sex, useNA = "ifany") /
-          length(penguins_clean$sex),
+barplot(table(penguins_clean$sex, useNA = "ifany") / length(penguins_clean$sex), 
         names.arg = c("female", "male", "NA"))
 ```
 
-To create a bar plot with **ggplot2**, we first create a basic `ggplot` object containing our data. Make sure to load the **ggplot2** package prior to creating the plot, otherwise you'll get errors!
+About 48% of the penguins are female, 49% are male, and 3% have an unknown sex.
+
+To create a bar plot with **ggplot2**, we first create a basic `ggplot` object containing our data. We must make sure to load the **ggplot2** package prior to creating the plot, otherwise we'll get errors!
 
 ```{r}
 # load ggplot2 package
@@ -454,6 +483,8 @@ To create a bar plot, we add the geom `geom_bar` and map the `species` variable 
 gg_penguin + geom_bar(aes(x = species))
 ```
 
+Our data set contains slightly more than 150 Adelie penguins, about 70 Chinstrap penguins, and 125 Gentoo penguins.
+
 ### Box plots
 
 A box plot indicates:
@@ -463,9 +494,9 @@ A box plot indicates:
 -   0.75 quantile (Q3)
 -   extend bars to the largest and smallest observations that are not outliers.
 
-Outliers are usually marked with starts or dots.
+Outliers are usually marked with stars or dots.
 
--   The standard definition of an outlier in the context of box plots is an value that is more than Q3 + 1.5 (Q3 - Q1) and less than Q1 - 1.5 (Q3 - Q1).
+-   The standard definition of an outlier in the context of box plots is any value that is greater than Q3 + 1.5 (Q3 - Q1) or less than Q1 - 1.5 (Q3 - Q1).
 
 Box plots:
 
@@ -476,14 +507,23 @@ Box plots:
 The `boxplot` function is the easiest approach for producing a box plot using base R.
 
 ```{r}
-boxplot(penguins_clean$body_mass,
-        main = "distribution of body mass")
+boxplot(penguins_clean$body_mass, main = "distribution of body mass")
 ```
+
+Conclusions we can draw from the boxplot above:
+
+- The median body mass of the penguins is a little more than 4,000 grams.
+- The 0.25 quantile is about 3,500 grams
+- The 0.75 quantile is about 4,750 grams.
+- The lightest penguin is about 2,700 grams. 
+- The heaviest penguin is about 6,300 grams.
+- There are no outliers.
+- The data are slightly positively skewed since the upper whisker is longer than the lower whisker.
 
 **Questions:**
 
 -   Are there any outliers?
--   Is there evidence the variable is skewed?
+-   Is there evidence the masses are skewed?
 
 To create a box plot using **ggplot2**, we use `geom_boxplot`.
 
@@ -493,8 +533,10 @@ gg_penguin + geom_boxplot(aes(y = bill_length))
 
 **Questions:**
 
--   Are there outliers?
--   Is there evidence the variable is skewed?
+- What is the median bill length?
+- What are the 0.25 and 0.75 quantiles of the bill lengths?
+- Are there outliers?
+- Is there evidence the variable is skewed?
 
 ### Histograms
 
@@ -659,7 +701,7 @@ How do we deal with NAs in facetting?
 gg_penguin +
   geom_density(aes(x = body_mass)) +
   facet_grid(~ sex)
-# to remove NA facet, you must remove NAs
+# to remove the NA facet, we must remove NAs
 # only do this for relevant columns to retain
 # as much data as possible
 penguins_temp <-
@@ -716,11 +758,11 @@ ggplotly(ggi2)
 
 1.  Import or create the data set.
 2.  Use the `str` or `dplyr::glimpse` function to get an idea of the initial structure. Look for problems with variable names and types, etc.
-3.  Clean the variable names based on your preferences.
+3.  Clean the variable names based on our preferences.
 4.  Convert the variables to the appropriate type (e.g., categorical variables to `factor`).
-5.  Run the `summary` function on your data frame. Take note of `NAs`, impossible values that are data entry errors, etc. Perhaps perform some additional cleaning based on this information.
+5.  Run the `summary` function on our data frame. Take note of `NAs`, impossible values that are data entry errors, etc. Perhaps perform some additional cleaning based on this information.
 6.  Compute any additional numeric summaries of the different variables, as desired.
-7.  Create univariate plots of all variables you are considering.
+7.  Create univariate plots of all variables we are considering.
 
 -   Use histograms for discrete `numeric` variables
 -   Use density plots for continuous `numeric` variables.
@@ -734,13 +776,13 @@ ggplotly(ggi2)
 -   Or use histograms of the `numeric` variable facetted by the `factor` variable.
 -   Or use density plots of the `numeric` variables filled with different colors by the `factor` variable.
 
-9.  Create multivariate and interactive graphics based on what you learned in the previous steps.
+9.  Create multivariate and interactive graphics based on what we learned in the previous steps.
 
 ## Final notes on missing or erroneous data
 
 Correct erroneous data entries, when possible. If that's not possible, replace them with `NA` values.
 
-What should you do about `NA`s?
+What should we do about `NA`s?
 
 -   If there is no systematic reason why the data are missing, then ignoring the observations with missing data isn't a terrible approach.
 -   If there is a systematic reason why the data are missing (such as individuals not wanting to answer a sensitive question, subjects dying for a specific reason) then ignoring that data can lead to erroneous conclusions.
