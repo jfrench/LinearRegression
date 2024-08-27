@@ -244,7 +244,7 @@ The `seq` (sequence) function is used to create an equidistant series of numeric
 
 -   `seq(1, 10)` or `1:10` creates a sequence of numbers from 1 to 10 in increments of 1.
 -   `seq(1, 20, by = 2)` creates a sequence of numbers from 1 to 20 in increments of 2.
--   `seq(10, 20, len = 100)` creates a sequence of numbers from 10 to 20 of length 100.
+-   `seq(10, 20, len = 10)` creates a sequence of numbers from 10 to 20 of length 10.
 
 The `rep` (replicate) function can be used to create a vector by replicating values.
 
@@ -285,7 +285,7 @@ seq(1, 20, by = 2)
 ```
 
 ```{r}
-seq(10, 20, len = 100)
+seq(10, 20, len = 10)
 ```
 
 -   What does the `by` argument of the `seq` function control?
@@ -583,12 +583,12 @@ dexp(1, rate = 2)
 
 ```{r}
 #| eval: false
-rchisq(100, df = 5)
+rchisq(10, df = 5)
 ```
 
 # Data Frames
 
-Data frames are a *fundamental* data structure used by most of R's modeling software.
+Data frames are a *fundamental* data structure used by most of R's modeling functions.
 
 Data frames are:
 
@@ -642,14 +642,15 @@ The `read.table` function imports data in table format from file into R as a dat
     -   If each column of data in the file is separated by a comma, then use `sep = ","`.
     -   If each column of data in the file is separated by a tab, then use `sep = "\t"`.
 
-Consider reading in a csv (comma separated file) with a header. The file in question contains information related to COVID-19 cases and deaths as of December 4, 2020.
+Consider importing a csv (comma separated file) with a header directly from GitHub. This file contains crime-related information for U.S. states for the year 2009.
 
 ```{r}
+# specify file path
+path <- "https://raw.githubusercontent.com/jfrench/api2lm/main/inst/extdata/crime2009.csv"
 # import data as data frame
-dtf <- read.table(file = "https://raw.githubusercontent.com/jfrench/DataWrangleViz/master/data/covid_dec4.csv",
-                  header = TRUE,
-                  sep = ",")
-str(dtf)
+crime2009 <- read.table(file = path, header = TRUE, sep = ",")
+# view data structure
+str(crime2009)
 ```
 
 **Extracting parts of a data frame**
