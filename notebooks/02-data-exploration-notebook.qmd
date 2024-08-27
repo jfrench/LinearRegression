@@ -448,7 +448,7 @@ The simplest way to create a bar plot in base R is using the `plot` function on 
 plot(penguins_clean$island, main = "distribution of island")
 ```
 
-There are about 170 penguins from Biscoe island, about 125 from Dream island, and 50 from Torgerson island.
+There are approximately 170 penguins from Biscoe island, 125 from Dream island, and 50 from Torgerson island.
 
 Alternatively, we can combine `barplot` with the `table` function.
 
@@ -463,7 +463,7 @@ barplot(table(penguins_clean$sex, useNA = "ifany") / length(penguins_clean$sex),
         names.arg = c("female", "male", "NA"))
 ```
 
-About 48% of the penguins are female, 49% are male, and 3% have an unknown sex.
+Approxiately 48% of the penguins are female, 49% are male, and 3% have an unknown sex.
 
 To create a bar plot with **ggplot2**, we first create a basic `ggplot` object containing our data. We must make sure to load the **ggplot2** package prior to creating the plot, otherwise we'll get errors!
 
@@ -483,7 +483,7 @@ To create a bar plot, we add the geom `geom_bar` and map the `species` variable 
 gg_penguin + geom_bar(aes(x = species))
 ```
 
-Our data set contains slightly more than 150 Adelie penguins, about 70 Chinstrap penguins, and 125 Gentoo penguins.
+Our data set contains slightly more than 150 Adelie penguins, approxiately 70 Chinstrap penguins, and 125 Gentoo penguins.
 
 ### Box plots
 
@@ -543,9 +543,10 @@ gg_penguin + geom_boxplot(aes(y = bill_length))
 A histogram:
 
 -   Displays the distribution of a `numeric` variable.
--   Counts the number of values falling into (usually) equal-sized "bins". - are used to assess skewness, modality (the number of clear "peaks" in the plot), and to some extent, outliers.
+-   Counts the number of values falling into (usually) equal-sized "bins".
+- Is used to assess skewness, modality (the number of clear "peaks" in the plot), and to some extent, outliers.
 
-The `hist` function is used create a histogram of a `numeric` variable.
+We use the `hist` function to create a histogram of a `numeric` variable.
 
 ```{r}
 hist(penguins_clean$bill_length,
@@ -557,8 +558,8 @@ hist(penguins_clean$bill_length,
 **Questions:**
 
 -   Is the variable unimodal?
--   What does this say about the skew?
--   What does this tell us that numeric summaries did not?
+-   What can we learn about the skewness of the data from this plot?
+-   What does this historgram tell us that numeric summaries did not?
 
 We use `geom_histogram` to create a histogram using **ggplot2**.
 
@@ -573,9 +574,9 @@ gg_penguin + geom_histogram(aes(x = flipper_length))
 A density plot is similar to a smoothed histogram.
 
 -   The area under the smoothed curve must equal 1.
--   Density plots sometimes have problems near the edges of a variable with a fixed upper or lower bound because it is difficult to know how to smooth the data in that case.
+-   Density plots sometimes have problems near the edges of a variable with a fixed upper or lower bound because it is difficult to know how to smooth the data in those regions.
 
-The `plot` and `density` function can be combined to construct a density plot using **base** R.
+We combine the `plot` and `density` functions to construct a density plot using **base** R.
 
 ```{r}
 plot(density(penguins_clean$bill_depth,
@@ -593,7 +594,7 @@ gg_penguin + geom_density(aes(x = body_mass))
 
 **Questions:**
 
--   Is the `body_mass` variable is unimodal?
+-   Is the `body_mass` variable unimodal?
 -   Is there evidence the variable is skewed?
 
 ## Bivariate plots
@@ -608,38 +609,37 @@ We use the `plot` function to create a scatter plot.
 
 ```{r}
 # xlab and ylab are used to customize the x-axis and y-axis labels
-plot(bill_length ~ body_mass,
-     data = penguins_clean,
-     xlab = "body mass (g)",
-     ylab = "bill length (mm)")
+plot(bill_length ~ body_mass, data = penguins_clean,
+     xlab = "body mass (g)", ylab = "bill length (mm)")
 ```
 
 **Questions:**
 
 -   Is there a linear relationship between `body_mass` and `bill length`?
--   Is it positive or negative?
+-   If so, is the linear relationship positive or negative?
 
 The `geom_point` function can be used to create a scatter plot with **ggplot2**.
 
 ```{r}
-gg_penguin +
-  geom_point(aes(x = bill_depth, y = bill_length))
+gg_penguin + geom_point(aes(x = bill_depth, y = bill_length))
 ```
 
 **Question:** What can we conclude from this plot?
 
 ### Parallel box plots
 
-A parallel box plot:
+Parallel box plots:
 
--   Is used to display the distribution of a `numeric` variable whose values are grouped based on each `level` of a `factor` variable.
+-   Draw a box plot for the `numeric` values of a variable for each `level` of a `factor` variable.
 -   Are useful for determining if the distribution of a `numeric` variable substantially changes based on whether an observation has a certain `level` of a `factor`.
+
+We use the `plot` function to draw a parallel box plot by associating a `numeric` variable with a `factor` variable.
 
 ```{r}
 plot(body_mass ~ sex, data = penguins_clean)
 ```
 
-We can produce something similar with **ggplot2** by specifying both the `y` and `x` aesthetics of for `geom_boxplot`.
+We can produce something similar with **ggplot2** by specifying both the `y` and `x` aesthetics of `geom_boxplot`.
 
 ```{r}
 gg_penguin + 
@@ -663,7 +663,7 @@ gg_penguin +
                  color = species))
 ```
 
-We use a colorblind-friendly palette and some additional customizations below. An excellent resource for choosing a color palette is [https://colorbrewer2.org](https://colorbrewer2.org%5D(https://colorbrewer2.org)).
+We use a colorblind-friendly palette and some additional customizations below. The website [https://colorbrewer2.org](https://colorbrewer2.org%5D(https://colorbrewer2.org)) is an excellent resource for choosing an effective color palette.
 
 ```{r}
 gg_penguin +
@@ -690,45 +690,43 @@ The key functions to do this with **ggplot2** are:
 ```{r}
 # simple facetting example
 gg_penguin +
-  geom_point(aes(x = bill_depth, y = bill_length)) +
-  facet_grid(~ species)
+  geom_point(aes(x = bill_depth, y = bill_length)) + facet_grid(~ species)
 ```
 
 How do we deal with NAs in facetting?
 
 ```{r}
 # facetting with NA facet!
-gg_penguin +
-  geom_density(aes(x = body_mass)) +
-  facet_grid(~ sex)
+gg_penguin + geom_density(aes(x = body_mass)) + facet_grid(~ sex)
+```
+
+```{r}
 # to remove the NA facet, we must remove NAs
-# only do this for relevant columns to retain
-# as much data as possible
+# only do this for relevant columns to retain as much data as possible
 penguins_temp <-
   penguins_clean |>
   subset(select = c(body_mass, sex, species)) |>
   na.omit()
 # new plot from "clean" data
-ggplot(penguins_temp) +
-  geom_density(aes(x = body_mass)) +
-  facet_grid(~ sex)
+ggplot(penguins_temp) + geom_density(aes(x = body_mass)) + facet_grid(~ sex)
 ```
 
 Here's another facetting example that uses transparency.
 
 ```{r}
 ggplot(data = penguins_temp) +
-  geom_density(aes(x = body_mass, fill = sex),
-               alpha = 0.5) +
+  geom_density(aes(x = body_mass, fill = sex), alpha = 0.5) +
   facet_grid(~ species)
 ```
 
 ### Interactive graphics
 
-The **`plotly`** package is an R package to provide the capabilities of plotly \[<https://plotly.com/>\].
+The **plotly** package provides the capabilities of plotly \[<https://plotly.com/>\] using R.
 
 -   plotly is a well-known tool for creating interactive graphics.
--   The `ggplotly` function will instantly make a `ggplot` interactive.
+-   The `ggplotly` function  in the **plotly** will instantly make a `ggplot` interactive.
+
+We create an interactive grouped scatter plot using this approach.
 
 ```{r}
 # load plotly package
@@ -736,14 +734,15 @@ library(plotly)
 # create grouped scatter plot
 ggi <-
   gg_penguin +
-  geom_point(aes(x = body_mass, y = flipper_length,
-                 color = species, shape = species)) +
+  geom_point(aes(x = body_mass, y = flipper_length, color = species, shape = species)) +
   scale_color_brewer(type = "qual", palette = "Dark2") +
   xlab("body mass (g)") + ylab("flipper length (mm)") +
   ggtitle("body mass versus flipper length by species")
 # make plot interactive
 ggplotly(ggi)
 ```
+
+Next, we create an interactive parallel box plot using this approach.
 
 ```{r}
 # create parallel box plots
@@ -757,11 +756,11 @@ ggplotly(ggi2)
 ## A plan for data cleaning and exploration
 
 1.  Import or create the data set.
-2.  Use the `str` or `dplyr::glimpse` function to get an idea of the initial structure. Look for problems with variable names and types, etc.
-3.  Clean the variable names based on our preferences.
+2.  Use the `str` or `dplyr::glimpse` functions to get an idea of the initial structure. Look for problems with variable names and types, etc.
+3.  Clean the variable names (preferably, all lowercase letters, no spaces or periods, use underscore when necessary).
 4.  Convert the variables to the appropriate type (e.g., categorical variables to `factor`).
 5.  Run the `summary` function on our data frame. Take note of `NAs`, impossible values that are data entry errors, etc. Perhaps perform some additional cleaning based on this information.
-6.  Compute any additional numeric summaries of the different variables, as desired.
+6.  Compute additional numeric summaries of the different variables, as desired.
 7.  Create univariate plots of all variables we are considering.
 
 -   Use histograms for discrete `numeric` variables
@@ -772,7 +771,7 @@ ggplotly(ggi2)
 8.  Create bivariate plots of any pairs of variables.
 
 -   Use scatter plots for two `numeric` variables.
--   Or use parallel box plots for `numeric` and `factor` variables.
+-   Use parallel box plots for `numeric` and `factor` variable pairs.
 -   Or use histograms of the `numeric` variable facetted by the `factor` variable.
 -   Or use density plots of the `numeric` variables filled with different colors by the `factor` variable.
 
