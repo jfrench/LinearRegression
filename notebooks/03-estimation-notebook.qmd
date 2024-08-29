@@ -1,10 +1,15 @@
 ---
-title: Chapter 3 - Linear Model Estimation
+title: Chapter 3 - Estimation
 author: Joshua French
 date: ''
+engine: knitr
 # format: html
 format: ipynb
-jupyter: ir
+jupyter:
+  kernelspec:
+    display_name: R
+    language: R
+    name: ir
 execute:
   output: false
 self-contained: true
@@ -14,11 +19,15 @@ wrap: 'none'
 
 To open this information in an interactive Colab notebook, click the Open in Colab graphic below.
 
-<a href="https://colab.research.google.com/github/jfrench/LinearRegression/blob/master/notebooks/03-linear-model-estimation-notebook.ipynb">
-   <img src="https://colab.research.google.com/assets/colab-badge.svg">
+<a href="https://colab.research.google.com/github/jfrench/LinearRegression/blob/master/notebooks/03-estimation-notebook.ipynb">
+   <img src="https://raw.githubusercontent.com/jfrench/LinearRegression/9d0559b9fa7bdecc94158ebb6a0395c9139648d7/images/qr-03-estimation.png">
 </a>
 
 ---
+
+::: {.content-visible when-format="ipynb"}
+
+We run the code below to ensure that all necessary packages are installed in our Jupyter environment.
 
 ```{r}
 if(!require(palmerpenguins, quietly = TRUE)) {
@@ -30,6 +39,7 @@ if(!require(ggplot2, quietly = TRUE)) {
   library(ggplot2)
 }
 ```
+:::
 
 # A simple motivating example
 
@@ -1382,7 +1392,7 @@ $SS_{reg}=TSS-RSS$.
 
 - SS~reg~ measures the reduction in RSS when comparing the fitted model to the constant mean model.
 
-**Equivalent expressiongs for $R^2$**
+**Equivalent expressions for $R^2$**
 ---
 
 Some equivalent expressions for $R^2$ are
