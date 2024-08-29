@@ -17,7 +17,7 @@ title-block-banner: true
 wrap: 'none'
 ---
 
-To open this information in an interactive Colab notebook, click the Open in Colab graphic below.
+To open this information in an interactive Colab notebook, click or scan the QR code below. 
 
 <a href="https://colab.research.google.com/github/jfrench/LinearRegression/blob/master/notebooks/03-estimation-notebook.ipynb">
    <img src="https://raw.githubusercontent.com/jfrench/LinearRegression/e4a326bec8ab0be642909f8a081610df05370801/images/qr-03-estimation.png">
@@ -61,32 +61,33 @@ y <- c(61.5, 63.5, 63.5, 66.5, 66.5) # daughters' heights
 plot(y ~ x, pch = 19, xlab = "mother's height (in)", ylab = "daughter's height (in)")
 ```
 
-**What is regression?**
----
+## What is regression?
 
 A **regression analysis** is the process of building a model describing the typical relationship between a set of observed variables. 
 
-- A regression analysis builds the model using observed values of the variables for $n$ subjects sampled from a population.
-- In our example, we want to build a **regression** model for the height of adult daughters using their height of their mothers.
+We build a **regression model** using observed values of the available variables using $n$ observations sampled from a population.
 
-**Response versus predictor variables**
----
+In our example, we want to build a regression model for the height of adult daughters using their height of their mothers.
+
+## Response versus predictor variables
 
 The variables in a regression analysis may be divided into two types: 
 
 - The response variable.
 - The predictor variables.
 
-The outcome variable we are trying to predict is known as the **response variable**.
+The **response variable** is the outcome variable we are trying to predict.
 
-- Response variables are also known as **outcome**, **output**, or **dependent** variables.
-- The response variable is denoted by $Y$.
+- They are also called **outcome**, **output**, or **dependent** variables.
+- $Y$ denotes the response variable.
 - $Y_i$ denotes the value of $Y$ for observation $i$. 
 
-The variables available to model the response variable are known as **predictors variables**:
+**Predictor variables** are the variables available to model the response variable.
 
 - They are also called **explanatory**, **regressor**, **input**, **independent** variables or simply as **features**. 
-- Following the convention of Weisberg (2014), we use the term **regressor** to refer to the variables used in our regression model, whether that is the original predictor variable, some transformation of a predictor, some combination of predictors, etc.
+
+Following the convention of Weisberg (2014), we use the term **regressor** to refer to the variables used in our regression model, whether that is the original predictor variable, some transformation of a predictor, some combination of predictors, etc.
+
 - Every predictor can be a regressor but not all regressors are a predictor.
 - The regressor variables are denoted as $X_1, X_2, \ldots, X_{p-1}$.
 - $x_{i,j}$ denotes the value of $X_j$ for observation $i$
@@ -104,8 +105,7 @@ with $(x_i, Y_i)$ denoting the data for observation $i$.
 - $Y_i$ denotes the daughter's height for
 observation $i$. 
 
-**Selecting the best model**
----
+## Selecting the best model
 
 Suppose we want to find the straight line that best fits the plot of mother and daughter heights.
 
@@ -144,40 +144,22 @@ The most common parameter estimation method for linear models is the **least squ
 
 OLS estimation estimates the regression coefficients with the values that minimize the residual sum of squares (RSS), which we will define shortly.
 
-**Defining a simple linear regression model**
----
+## Defining a simple linear regression model
 
 The regression model for $Y$ as a function of $X$, denoted $E(Y \mid X)$, is the expected value of $Y$ conditional on the regressor $X$. 
 
 The **simple linear regression model** for a response variable assumes the mean of $Y$ conditional on a single regressor $X$ is
 
-::: {.content-visible unless-format="pdf"}
-</br>  
-</br>  
-</br>  
-:::
-::: {.content-hidden unless-format="pdf"}
 $$
 E(Y\mid X) = \beta_0 + \beta_1 X.
 $$
-:::
-
 The response variable $Y$ is modeled as
-
-::: {.content-visible unless-format="pdf"}
-</br>  
-</br>  
-</br>  
-:::
-::: {.content-hidden unless-format="pdf"}
 $$
 \begin{aligned}
 Y &= E(Y \mid X) + \epsilon \\
 &= \beta_0 + \beta_1 X + \epsilon,
 \end{aligned}
 $$
-:::
-
 where $\epsilon$ is known as the model error.
 
 The error term $\epsilon$ is literally the deviation of the response variable from its mean.
