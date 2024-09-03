@@ -523,6 +523,8 @@ $$
 E(Y\mid \mathbb{X}) = \sum_{j=0}^{p-1} g_j(\mathbb{X})\beta_j.
 $$
 
+The key feature of the linear regression model is that the model is a linear combination of the regression coefficients.
+
 ## Examples of a linear model
 
 A model is linear because of its *form* not the shape it produces. 
@@ -558,7 +560,7 @@ $$
 
 ## Using matrix notation to represent a linear model
 
-We can simplify the linear model system of equations using using matrix notation.
+We can simplify the linear model system of equations using matrix notation.
 
 We use the following notation:
 
@@ -575,32 +577,37 @@ $$
 $$
 
 -   $\boldsymbol{\beta} = [\beta_0, \beta_1, \ldots, \beta_{p-1}]$ denotes the column vector containing the $p$ regression coefficients.
--   $\boldsymbol{\epsilon} = [\epsilon_1, \epsilon_2, \ldots, \epsilon_n]$ denotes the column vector contained the $n$ errors.
+-   $\boldsymbol{\epsilon} = [\epsilon_1, \epsilon_2, \ldots, \epsilon_n]$ denotes the column vector contained the $n$ model errors.
 
 The system of equations defining the linear model in can be written as
 
 $$
 \mathbf{y} = \mathbf{X}\boldsymbol{\beta} + \boldsymbol{\epsilon}.
 $$
+
 ## Matrix definitions of residuals, fitted values, and RSS for multiple linear regression
 
-The vector of estimated values for the coefficients contained in $\boldsymbol{\beta}$ is denoted
+The column vector of estimated values for the coefficients contained in $\boldsymbol{\beta}$ is denoted
 
 $$
 \hat{\boldsymbol{\beta}}=[\hat{\beta}_0,\hat{\beta}_1,\ldots,\hat{\beta}_{p-1}].
 $$
 
-The vector of regressor values for the $i\text{th}$ observation is denoted
+The column vector of regressor values for the $i\text{th}$ observation is denoted
 
 $$
 \mathbf{x}_i=[1,x_{i,1},\ldots,x_{i,p-1}].
 $$
 
-**Question:**
+**Question:** Why does $\mathbf{x}_i$ include a $1$ in its first position?
 
-- Why do we include a $1$ in our vector?
+The $i\text{th}$ **fitted value** is defined as 
 
-The $i\text{th}$ **fitted value** in the context of multiple linear regression is defined as
+$$
+\hat{Y}_i = \hat{E}(Y \mid \mathbb{X} = \mathbf{x}_i) \\
+$$
+
+and can also be written as 
 
 $$
 \begin{aligned}
@@ -621,7 +628,7 @@ $$
 \end{aligned}
 $$
 
-The $i\text{th}$ **residual** in the context of multiple linear regression can be written as
+The $i\text{th}$ **residual** is defined as
 
 $$
 \begin{aligned}
@@ -647,15 +654,16 @@ RSS(\hat{\boldsymbol{\beta}}) &= \sum_{i=1}^n \hat{\epsilon}_i^2 \\
 &= \hat{\boldsymbol{\epsilon}}^T \hat{\boldsymbol{\epsilon}} \\
 &= (\mathbf{y} - \hat{\mathbf{y}})^T (\mathbf{y} - \hat{\mathbf{y}}) \\
 & = (\mathbf{y} - \mathbf{X}\hat{\boldsymbol{\beta}})^T (\mathbf{y} - \hat{\boldsymbol{\beta}}).
-\end{aligned} (\#eq:def-rss-matrix)
-$$
+\end{aligned}
+$$ {#eq-def-rss-matrix}
+
 ## OLS estimator in matrix form
 
 The OLS estimator of the regression coefficient vector, $\boldsymbol{\beta}$, is
 
 $$
-\hat{\boldsymbol{\beta}} = (\mathbf{X}^T\mathbf{X})^{-1}\mathbf{X}^T\mathbf{y}. (\#eq:betahat)
-$$
+\hat{\boldsymbol{\beta}} = (\mathbf{X}^T\mathbf{X})^{-1}\mathbf{X}^T\mathbf{y}.
+$$ {#eq-betahat}
 
 This solution for $\hat{\boldsymbol{\beta}}$ assumes $\mathbf{X}$ has full-rank ($n>p$ and none of the columns of $\mathbf{X}$ are linear combinations of other columns in $\mathbf{X}$).
 
@@ -667,31 +675,36 @@ $$
 
 # Penguins multiple linear regression example
 
-We will fit a multiple linear regression model regressing `bill_length_mm` on `body_mass_g` and `flipper_length_mm`, and will once again do so using the `lm` function.
+We will use the `lm` function to fit a multiple linear regression model regressing `bill_length_mm` on `body_mass_g` and `flipper_length_mm`.
 
 ## Formula notation
 
-Before we do that, we provide some additional discussion of the of the `formula` argument of the `lm` function. This will be very important as we discuss more complicated models. Assume `y` is the response variable and `x`, `x1`, `x2`, `x3` are available numeric predictors. Then:
+We provide further discussion of the `formula` argument of the `lm` function's `formula` argument. Assume `y` is the response variable and `x`, `x1`, `x2`, `x3` are available numeric predictors. Then:
 
 -   `y ~ x` describes the simple linear regression model $E(Y|X)=\beta_0+\beta_1 X$.
 -   `y ~ x1 + x2` describes the multiple linear regression model $E(Y|X_1, X_2)=\beta_0+\beta_1 X_1 + \beta_2 X_2$.
 -   `y ~ x1 + x2 + x1:x2` and `y ~ x1 * x2` describe the multiple linear regression model
   $E(Y|X_1, X_2)=\beta_0+\beta_1 X_1 + \beta_2 X_2 + \beta_3 X_1 X_2$.
--   `y ~ -1 + x1 + x2` describe a multiple linear regression model without an intercept, in this case,
-  $E(Y|X_1, X_2)=\beta_1 X_1 + \beta_2 X_2$. The `-1` tells R not to include an intercept in the fitted model.
--   `y ~ x + I(x^2)` describe the multiple linear regression model $E(Y|X)=\beta_0+\beta_1 X + \beta_2 X^2$. The `I()` function is a special function that tells R to create a regressor based on the syntax inside the `()` and include that regressor in the model.
+-   `y ~ -1 + x1 + x2` describes a multiple linear regression model without an intercept, in this case,
+  $E(Y|X_1, X_2)=\beta_1 X_1 + \beta_2 X_2$. 
+    - The `-1` tells R not to include an intercept in the fitted model.
+-   `y ~ x + I(x^2)` describes the multiple linear regression model $E(Y|X)=\beta_0+\beta_1 X + \beta_2 X^2$.
+    - The `I()` function is a special function that tells R to create a regressor based on the syntax inside the `()` and include that regressor in the model.
 
 ## Fitting a model
 
 We fit the linear model regressing `bill_length_mm` on `body_mass_g` and `flipper_length_mm` and extract some statistics.
 
 ```{r}
-# fit model
-mlmod <- lm(bill_length_mm ~ body_mass_g + flipper_length_mm, data = penguins)
-# extract estimated coefficients
-coef(mlmod)
-# extract RSS
-deviance(mlmod)
+mlmod <- lm(bill_length_mm ~ body_mass_g + flipper_length_mm, data = penguins) # fit model
+```
+
+```{r}
+coef(mlmod) # extract estimated coefficients
+```
+
+```{r}
+deviance(mlmod) # extract RSS
 ```
 
 The fitted model is
@@ -700,7 +713,10 @@ $$
 \widehat{\mathtt{bill\_length\_mm}}=-3.44+0.0007 \,\mathtt{body\_mass\_g}+0.22\,\mathtt{flipper\_length\_mm}.
 $$
 
-- **Question:** What is the RSS? How does it compare to the simple linear regression model we used before?
+**Questions:**
+
+- What is the value of the RSS?
+- How does it compare to the RSS of the simple linear regression model we used before?
 
 # Types of linear models
 
@@ -755,7 +771,7 @@ $$
 Some examples of indicator functions:
 
 - $I_{\{2,3\}}(2) = 1$.
-- $I_{\{2,3\}}(2.5) = 1$.
+- $I_{\{2,3\}}(2.5) = 0$.
 - $I_{[2,3]}(2.5) = 1$, where $[2,3]$ is the interval from 2 to 3 and not the set containing only the numbers 2 and 3.
 - $I_{\{\text{red},\text{green}\}}(\text{green}) = 1$.
 
@@ -801,7 +817,7 @@ E(Y\mid X, C) =
 \end{cases}
 $$
 
-- **Question:** What will the vertical distance between the lines be?
+**Question:** What will the vertical distance between the lines be?
 
 The separate lines regression model is
 
@@ -819,16 +835,21 @@ E(Y\mid X, C) =
 \end{cases}
 $$
 
+**Questions:**
+
+- What is the vertical distance between the separate lines when $X = 0$?
+- What is the difference in the rate of change of the separate lines?
+
 ## More complex models with categorical predictors
 
-If you had a categorical predictor $C$ with $K$ levels $L_1, L_2, \ldots, L_K$:
+If we have a categorical predictor $C$ with $K$ levels $L_1, L_2, \ldots, L_K$:
 
 - We can add indicator variables $D_2, D_3, \ldots, D_K$ to a simple linear regression model to create a parallel lines model for each level of $C$.
-- We can add regressors $D_2, D_3, \ldots, D_K, X D_2, X D_3, \ldots, X D_K$ to a simple linear regression model to create a separate lines model for each level of $C$.
+- We can add regressors $D_2, D_3, \ldots, D_K$, and $X D_2, X D_3, \ldots, X D_K$ to a simple linear regression model to create a separate lines model for each level of $C$.
 
 It is easy to imagine using multiple categorical predictors in a model, interacting one or more categorical predictors with one or more numeric regressors in model, etc. 
 
-These models can be fit easily using R but are more difficult to interpret.
+We can easily fit these more complex models using R, but they are more difficult to interpret.
 
 ## Avoiding collinearity
 
@@ -849,7 +870,7 @@ Consider a categorical variable $C$ with two only levels $L_1$ and $L_2$.
 
 For a categorical predictor with $K$ levels, we only need indicator variables for $K-1$ levels of the categorical predictor.
 
-- The level without an indicator variable in the regression model is known as the **reference level**.
+- The **reference level** is the level of our categorical variable that doesn't have an indicator variable in the regression model.
 - R automatically chooses the first level of a categorical (`factor`) variable to be the reference level, so we adopt that convention.
 
 # Penguins example with categorical predictor
@@ -865,9 +886,10 @@ ggplot(data = penguins) +
   xlab("body mass (g)") + ylab("bill length (mm)")
 ```
 
-**Question:** 
+**Questions:**
 
 - Does the relationship between bill length and body mass change depending on the species of penguin?
+- Should we fit a parallel or separate lines to this data?
 
 ## Using a categorical variable in the `lm` function
 
