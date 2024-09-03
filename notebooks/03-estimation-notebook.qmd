@@ -1,5 +1,5 @@
 ---
-title: Chapter 3 - Estimation
+title: Chapter 3 - Parameter Estimation and Model Fitting
 author: Joshua French
 date: ''
 engine: knitr
@@ -43,7 +43,7 @@ if(!require(ggplot2, quietly = TRUE)) {
 
 # A simple motivating example
 
-Suppose you observe data related to the heights (in) of 5 mothers and their adult daughters. The data are in the table below. 
+We observe data related to the heights (in) of 5 mothers and their adult daughters. The data are in the table below. 
 
 | observation| mother| daughter|
 |-----------:|------:|--------:|
@@ -53,7 +53,7 @@ Suppose you observe data related to the heights (in) of 5 mothers and their adul
 |           4|   66.5|     66.5|
 |           5|   69.5|     66.5|
 
-Would it be reasonable to use a mother's height to predict the height of her adult daughter? Consider the plot below.
+Is it reasonable to use the mother's height to predict her daughter's height? Consider the plot below.
 
 ```{r}
 x <- c(57.5, 50.5, 63.5, 66.5, 69.5) # mothers' heights
@@ -63,11 +63,11 @@ plot(y ~ x, pch = 19, xlab = "mother's height (in)", ylab = "daughter's height (
 
 ## What is regression?
 
-A **regression analysis** is the process of building a model describing the typical relationship between a set of observed variables. 
+A **regression model** is a model describing the typical relationship between a set of variables. 
 
-We build a **regression model** using observed values of the available variables using $n$ observations sampled from a population.
+A **regression analysis** is the process of building a regression model using a set of variables based on $n$ observations of these variables sampled from a population.
 
-In our example, we want to build a regression model for the height of adult daughters using their height of their mothers.
+In our example, we want to build a regression model for the height of adult daughters using the height of their mothers.
 
 ## Response versus predictor variables
 
@@ -76,15 +76,15 @@ The variables in a regression analysis may be divided into two types:
 - The response variable.
 - The predictor variables.
 
-The **response variable** is the outcome variable we are trying to predict.
+The **response variable** is the outcome variable we want to predict.
 
-- They are also called **outcome**, **output**, or **dependent** variables.
+- It is also called the **outcome**, **output**, or **dependent** variable.
 - $Y$ denotes the response variable.
 - $Y_i$ denotes the value of $Y$ for observation $i$. 
 
 **Predictor variables** are the variables available to model the response variable.
 
-- They are also called **explanatory**, **regressor**, **input**, **independent** variables or simply as **features**. 
+- They are also called **explanatory**, **regressor**, **input**, or **independent** variables or simply as **features**. 
 
 Following the convention of Weisberg (2014), we use the term **regressor** to refer to the variables used in our regression model, whether that is the original predictor variable, some transformation of a predictor, some combination of predictors, etc.
 
@@ -133,7 +133,7 @@ abline(a = coef_lad[1], b = coef_lad[2], col = "grey")
 
 **Parameter estimation** is the process of using observed data to estimate model parameters.
 
-There are many different methods of parameter estimation in statistics: 
+There are many different methods for parameter estimation in statistics: 
 
 - Method-of-moments.
 - Maximum likelihood.
@@ -146,9 +146,9 @@ OLS estimation estimates the regression coefficients with the values that minimi
 
 ## Defining a simple linear regression model
 
-The regression model for $Y$ as a function of $X$, denoted $E(Y \mid X)$, is the expected value of $Y$ conditional on the regressor $X$. 
+The regression model for $Y$ as a function of $X$, denoted $E(Y \mid X)$, is the expected value of $Y$ conditional on the value of the regressor $X$. 
 
-The **simple linear regression model** for a response variable assumes the mean of $Y$ conditional on a single regressor $X$ is
+The **simple linear regression model** for a response variable assumes the mean of $Y$, conditional on the value of a single regressor $X$, is
 
 $$
 E(Y\mid X) = \beta_0 + \beta_1 X.
@@ -160,7 +160,7 @@ Y &= E(Y \mid X) + \epsilon \\
 &= \beta_0 + \beta_1 X + \epsilon,
 \end{aligned}
 $$
-where $\epsilon$ is known as the model error.
+where $\epsilon$ is the model error.
 
 The error term $\epsilon$ is literally the deviation of the response variable from its mean.
 
@@ -169,97 +169,49 @@ The error term $\epsilon$ is literally the deviation of the response variable fr
 
 The observed data are modeled as
 
-::: {.content-visible unless-format="pdf"}
-</br>  
-</br>  
-</br>  
-:::
-::: {.content-hidden unless-format="pdf"}
 $$
 \begin{aligned}
 Y_i &= \beta_0 + \beta_1 x_i + \epsilon_i \\
 &= E(Y\mid X = x_i) + \epsilon_i,
 \end{aligned}
 $$
-:::
-
 for $i=1$, $2$,$\ldots$,$n$, where $\epsilon_i$ denotes the error for observation $i$.
 
-**Important terminology**
----
+## Important terminology
+
 
 The **estimated regression model** or **fitted model** is defined as
 
-::: {.content-visible unless-format="pdf"}
-</br>  
-</br>  
-</br>  
-:::
-::: {.content-hidden unless-format="pdf"}
 $$
 \hat{E}(Y|X) = \hat{\beta}_0 + \hat{\beta}_1 X,
 $$
-:::
 
 where $\hat{\beta}_0$ and $\hat{\beta}_1$ are the estimated value of our regression parameters.
 
 The $i\text{th}$ **fitted value** is defined as
 
-::: {.content-visible unless-format="pdf"}
-</br>  
-</br>  
-</br>  
-:::
-::: {.content-hidden unless-format="pdf"}
 $$
 \hat{Y}_i = \hat{E}(Y|X = x_i) = \hat{\beta}_0 + \hat{\beta}_1 x_i. $$
-:::
 
 - The $i\text{th}$ fitted value is the estimated mean of $Y$ when the regressor $X=x_i$. 
 
 The $i\text{th}$ **residual** is defined as
 
-::: {.content-visible unless-format="pdf"}
-</br>  
-</br>  
-</br>  
-:::
-::: {.content-hidden unless-format="pdf"}
 $$
 \hat{\epsilon}_i = Y_i - \hat{Y}_i.
 $$
-:::
 
 - The $i\text{th}$ residual is the difference between the response and estimated
 mean response of observation $i$.
 
 The **residual sum of squares (RSS)** of a regression model is the sum of its squared residuals. The RSS for a simple linear regression model, as a function of the estimated regression coefficients $\hat{\beta}_0$ and $\hat{\beta}_1$, is defined as
 
-::: {.content-visible unless-format="pdf"}
-</br>  
-</br>  
-</br>  
-:::
-::: {.content-hidden unless-format="pdf"}
 $$
 RSS(\hat{\beta}_0, \hat{\beta}_1) = \sum_{i=1}^n \hat{\epsilon}_i^2.
 $$
-:::
 
 Using the various objects defined above, there are many equivalent expressions for the RSS.
 
-::: {.content-visible unless-format="pdf"}
-</br>  
-</br>  
-</br>  
-</br>  
-</br>  
-</br>  
-</br>  
-</br>  
-</br>  
-:::
-::: {.content-hidden unless-format="pdf"}
 $$
 \begin{aligned}
 RSS(\hat{\beta}_0, \hat{\beta}_1) &= \sum_{i=1}^n \hat{\epsilon}_i^2 \\
@@ -268,28 +220,19 @@ RSS(\hat{\beta}_0, \hat{\beta}_1) &= \sum_{i=1}^n \hat{\epsilon}_i^2 \\
 &= \sum_{i=1}^n (Y_i - (\hat{\beta}_0 + \hat{\beta}_1 x_i))^2.
 \end{aligned}
 $$
-:::
 
 The **fitted model** is the estimated model that minimizes the RSS, and is written as
 
-::: {.content-visible unless-format="pdf"}
-</br>  
-</br>  
-</br>  
-:::
-::: {.content-hidden unless-format="pdf"}
 $$
 \hat{Y}=\hat{E}(Y|X) = \hat{\beta}_0 + \hat{\beta}_1 X.
 $$
-:::
 
 - $\hat{Y}$ is used for brevity.
 - $\hat{E}(Y|X)$ is used for clarity.
 
 In a simple linear regression context, the fitted model is known as the **line of best fit**.
 
-**Visualizing terms**
----
+## Visualizing terms
 
 ```{r}
 #| echo: false
@@ -321,8 +264,7 @@ In the graphic above, we visualize the response values, fitted values, residuals
 -   The residuals, shown as solid orange lines, indicate the distance and direction between the observed responses and their corresponding fitted value. If the response is larger than the fitted value then the residual is positive, otherwise it is negative.
 -   The RSS is the sum of the squared vertical distances between the response and fitted values.
 
-**OLS estimators of the simple linear regression parameters**
----
+## OLS estimators of the simple linear regression parameters
 
 The estimators of $\beta_0$ and $\beta_1$ that minimize the RSS for a simple linear regression model can be obtained analytically using basic calculus (as long as $x_1,\ldots,x_n$ are not all equal to the same number).
 
@@ -333,21 +275,6 @@ Define:
 
 The OLS estimators of the simple linear regression coefficients that minimize the RSS are
 
-::: {.content-visible unless-format="pdf"}
-</br>  
-</br>  
-</br>  
-</br>  
-</br>  
-</br>  
-</br>  
-</br>  
-</br>  
-</br>  
-</br>  
-</br>  
-:::
-::: {.content-hidden unless-format="pdf"}
 $$
 \begin{aligned}
 \hat{\beta}_1 &= \frac{\sum_{i=1}^n x_i Y_i - \frac{1}{n} \biggl(\sum_{i=1}^n x_i\biggr)\biggl(\sum_{i=1}^n Y_i\biggr)}{\sum_{i=1}^n x_i^2 - \frac{1}{n} \biggl(\sum_{i=1}^n x_i\biggr)^2} \notag \\
@@ -355,25 +282,18 @@ $$
 &= \frac{\sum_{i=1}^n (x_i - \bar{x})Y_i}{\sum_{i=1}^n (x_i - \bar{x})x_i}
 \end{aligned}
 $$
+
 and
+
 $$
 \hat{\beta}_0 = \bar{Y} - \hat{\beta}_1 \bar{x}.
 $$
-:::
 
 The most common estimator of the error variance is
 
-::: {.content-visible unless-format="pdf"}
-</br>  
-</br>  
-</br>  
-:::
-
-::: {.content-hidden unless-format="pdf"}
 $$
 \hat{\sigma}^2 = \frac{RSS}{\mathrm{df}_{RSS}}.
 $$
-:::
 
 - $\mathrm{df}_{RSS}$ is the **degrees of freedom** of the RSS.
 - For simple linear regression, $\mathrm{df}_{RSS}=n-2$.
@@ -390,15 +310,14 @@ head(penguins)
 The data set includes 344 observations of
 8 variables. The variables are:
 
--   `species`: a `factor` indicating the penguin species.
--   `island`: a `factor` indicating the island the penguin was observed.
--   `bill_length_mm`: a `numeric` variable indicating the bill length in millimeters.
--   `bill_depth_mm`: a `numeric` variable indicating the bill depth in millimeters.
--   `flipper_length_mm`: an `integer` variable indicating the flipper
-    length in millimeters
--   `body_mass_g`: an `integer` variable indicating the body mass in grams.
--   `sex`: a `factor` indicating the penguin sex (`female`, `male`).
--   `year`: an integer denoting the study year the penguin was observed (`2007`, `2008`, or `2009`).
+-   `species`: the penguin species (`factor`).
+-   `island`: the island on which the penguin was observed (`factor`).
+-   `bill_length_mm`: the penguin's bill length in millimeters (`numeric`).
+-   `bill_depth_mm`: the penguin's bill depth in millimeters (`numeric`).
+-   `flipper_length_mm`: the penguin's flipper length in millimeters (`integer`).
+-   `body_mass_g`: the penguin's body mass in grams (`integer`).
+-   `sex`: the penguin's sex (`factor`).
+-   `year`: the study year the penguin was observed (`integer`).
 
 We begin by creating a scatter plot of `bill_length_mm` versus `body_mass_g`.
 
@@ -423,15 +342,15 @@ $$
 
 The `lm` function uses OLS estimation to fit a linear model to data. The function has two main arguments:
 
+- `formula`: a Wilkinson and Rogers (1973) style formula describing the linear regression model. For complete details, run `?stats::formula` in the Console. If `y` is the response variable and `x` is an available numeric predictor, then `formula = y ~ x` tells `lm` to fit the simple linear regression model $E(Y|X)=\beta_0+\beta_1 X$.
 -   `data`: the data frame in which the model variables are stored. This can be omitted if the variables are already stored in memory.
--   `formula`: a Wilkinson and Rogers (1973) style formula describing the linear regression model. For complete details, run `?stats::formula` in the Console. If `y` is the response variable and `x` is an available numeric predictor, then `formula = y ~ x` tells `lm` to fit the simple linear regression model $E(Y|X)=\beta_0+\beta_1 X$.
 
 ```{r}
 lmod <- lm(bill_length_mm ~ body_mass_g, data = penguins) # fit model
 class(lmod) # class of lmod
 ```
 
-The `summary` function is commonly used to summarize the results of our fitted model. 
+The `summary` function summarizes the results of our fitted model. 
 
 When an `lm` object is supplied to the `summary` function, it returns:
 
@@ -439,7 +358,7 @@ When an `lm` object is supplied to the `summary` function, it returns:
 - `Residuals`: A 5-number summary of the $\hat{\epsilon}_1, \ldots, \hat{\epsilon}_n$.
 - `Coefficients`: A table that lists:
     - The regressors in the fitted model.
-    - `Estimate`:  the estimated coefficient for each regressor.
+    - `Estimate`:  the estimated coefficient of each regressor.
     - `Std. Error`: the *estimated* standard error of the estimated coefficients.
     - `t value`: the computed test statistic associated with testing $H_0: \beta_j = 0$ versus $H_a: \beta_j \neq 0$ for each regression coefficient in the model.
     - `Pr(>|t|)`: the associated p-value of each test.
@@ -447,7 +366,7 @@ When an `lm` object is supplied to the `summary` function, it returns:
     - `Residual standard error` is the value of $\hat{\sigma}$, the estimate of the error standard deviation. The degrees of freedom is $\mathrm{df}_{RSS}$, the number of observations minus the number of estimated coefficients in the model.
     - `Multiple R-squared` is an estimate of model fit.
     - `Adjusted R-squared` is a modified version of `Multiple R-squared`.
-    - `F-statistic` is the test statistic for the test that compares the model with an only an intercept to the fitted model. The `DF` (degrees of freedom) values relate to the statistic under the null hypothesis, and the `p-value` is the p-value for the test.
+    - `F-statistic` is the test statistic of the test that compares the model with an only an intercept to the fitted model. The `DF` (degrees of freedom) values relate to the statistic under the null hypothesis, and the `p-value` is the p-value of the test.
 
 We use the `summary` function on `lmod` to produce the output below.
 
@@ -460,16 +379,9 @@ Using the output above, we see that the estimated parameters are $\hat{\beta}_0=
 
 Our fitted model is
 
-::: {.content-visible unless-format="pdf"}
-</br>  
-</br>  
-</br>  
-:::
-::: {.content-hidden unless-format="pdf"}
 $$
 \widehat{\mathtt{bill\_length\_mm}}=26.9+0.004 \,\mathtt{body\_mass\_g}.
 $$
-:::
 
 In the context of a simple linear regression model:
 
@@ -478,18 +390,8 @@ In the context of a simple linear regression model:
 
 Thus, based on the model we fit to the `penguins` data, we can make the following interpretations:
 
-::: {.content-visible unless-format="pdf"}
-</br>  
-</br>  
-</br>  
-</br>  
-</br>  
-</br>  
-:::
-::: {.content-hidden unless-format="pdf"}
 -   $\hat{\beta}_1$: If a penguin has a body mass 1 gram larger than another penguin, we expect the larger penguin's bill length to be 0.004 millimeters longer.
 -   $\hat{\beta}_0$: A penguin with a body mass of 0 grams is expected to have a bill length of 26.9 millimeters.
-:::
 
 **Question:** 
 
@@ -498,71 +400,71 @@ Thus, based on the model we fit to the `penguins` data, we can make the followin
 The `abline` function can be used to automatically overlay the fitted model on the observed data. 
 
 ```{r}
-plot(bill_length_mm ~ body_mass_g,
-     data = penguins, main = "Penguin size measurements",
+plot(bill_length_mm ~ body_mass_g, data = penguins, main = "Penguin size measurements",
      ylab = "bill length (mm)", xlab = "body mass (g)")
-# draw fitted line of plot
+# draw fitted line on plot
 abline(lmod)
 ```
 
-R provides many additional methods (generic functions that do something specific when applied to a certain type of object) for `lm` objects. Commonly used ones include:
+R provides many additional methods (generic functions that do something specific when applied to a certain type of object) for `lm` objects.
 
 We now use some of the methods to extract important characteristics of our fitted model.
 
-We extract the estimated regression coefficients, $\hat{\beta}_0$ and $\hat{\beta}_1$, using the `coef` function.
+The `coef` function extracts the estimated regression coefficients, $\hat{\beta}_0$ and $\hat{\beta}_1$, from the fitted model.
 
 ```{r}
 (coeffs <- coef(lmod)) # extract, assign, and print coefficients
 ```
 
-We extract the vector of residuals, $\hat{\epsilon}_1,\ldots, \hat{\epsilon}_n$, using the `residuals` function.
+The `residuals` function extracts the vector of residuals, $\hat{\epsilon}_1,\ldots, \hat{\epsilon}_n$ from the fitted model. 
 
 ```{r}
 ehat <- residuals(lmod) # extract and assign residuals
 head(ehat) # first few residuals
 ```
 
-We extract the vector of fitted values, $\hat{Y}_1,\ldots, \hat{Y}_n$, using the `fitted` function.
+The `fitted` function extracts the vector of fitted values, $\hat{Y}_1,\ldots, \hat{Y}_n$, from the fitted model.
 
 ```{r}
 yhat <- fitted(lmod) # extract and assign fitted values
 head(yhat) # first few fitted values
 ```
 
-We can also extract the vector of fitted values using the `predict` function.
+The `predict` function also extracts the vector of fitted values from the fitted model. It can be also used to predict the response of an observation for arbitrary values of the predictors.
 
 ```{r}
 yhat2 <- predict(lmod) # compute and assign fitted values
 head(yhat2) # first few fitted values
 ```
 
-We extract the RSS of the model using the `deviance` function.
+The `deviance` function extracts the RSS of the fitted model.
 
 ```{r}
 (rss <- deviance(lmod)) # extract, assign, and print rss
 ```
 
-We extract the residual degrees of freedom using the `df.residual` function.
+The `df.residual` function extracts the residual degrees of freedom from the fitted model.
 
 ```{r}
 (dfr <- df.residual(lmod)) # extract n - p
 ```
 
-We extract the estimated error standard deviation, $\hat{\sigma}=\sqrt{\hat{\sigma}^2}$, using the `sigma` function. In the code below, we square $\hat{\sigma}$ to estimate the error variance, $\hat{\sigma}^2$.
+The `sigma` function extracts the estimated error standard deviation, $\hat{\sigma}=\sqrt{\hat{\sigma}^2}$, from the fitted model. In the code below, we square $\hat{\sigma}$ to estimate the error variance, $\hat{\sigma}^2$.
 
 ```{r}
 (sigmasqhat <- sigma(lmod)^2) # estimated error variance
 ```
 
-**Question:**
+**Questions:**
 
 - What are the first three fitted values?
 - What is the RSS of the fitted model?
+- What is the residual degrees of freedom?
+- What is the estimated error variance of the fitted model?
 
 # Defining a linear model
 
-**Defining terms (again)**
----
+## Defining terms (again)
 
 - $Y$ denotes the response variable.
     - The response variable is treated as a random variable.
@@ -581,10 +483,9 @@ We extract the estimated error standard deviation, $\hat{\sigma}=\sqrt{\hat{\sig
     - The error is treated as a random variable.
     - The error is assumed to have mean 0 for all values of the regressors, i.e., $E(\epsilon \mid \mathbb{X}) = 0$.
     - The variance of the errors is assumed to be a constant value for all values of the regressors, i.e.,$\mathrm{var}(\epsilon \mid \mathbb{X})=\sigma^2$.
-    - The error is never observable (except in the context of a simulation study where the experimenter literally defines the true model).
+    - The error is not observable.
 
-**Standard definition of linear model**
----
+## Standard definition of linear model
 
 In general, a linear regression model can have an arbitrary number of regressors. 
 
@@ -592,12 +493,6 @@ A **multiple linear regression** model has two or more regressors.
 
 A **linear model** for $Y$ is defined by the equation
 
-::: {.content-visible unless-format="pdf"}
-</br>  
-</br>  
-</br>  
-:::
-::: {.content-hidden unless-format="pdf"}
 $$
 \begin{aligned}
 Y &= \beta_0 + \beta_1 X_1 + \beta_2 X_2 + \cdots + \beta_{p-1}
@@ -605,7 +500,6 @@ X_{p-1} + \epsilon \\
 &= E(Y \mid \mathbb{X}) + \epsilon.
 \end{aligned}
 $$
-:::
 
 Notice:
 
@@ -629,8 +523,7 @@ $$
 E(Y\mid \mathbb{X}) = \sum_{j=0}^{p-1} g_j(\mathbb{X})\beta_j.
 $$
 
-**Examples of a linear model**
----
+## Examples of a linear model
 
 A model is linear because of its *form* not the shape it produces. 
 
@@ -663,8 +556,7 @@ $$
 Y_i = \beta_0 + \beta_1 x_{i,1} + \beta_2 x_{i,2} + \cdots + \beta_{p-1} x_{i,p-1} + \epsilon_i,\quad i=1,2,\ldots,n.
 $$
 
-**Using matrix notation to represent a linear model**
----
+## Using matrix notation to represent a linear model
 
 We can simplify the linear model system of equations using using matrix notation.
 
@@ -687,45 +579,22 @@ $$
 
 The system of equations defining the linear model in can be written as
 
-::: {.content-visible unless-format="pdf"}
-</br>  
-</br>  
-</br>  
-:::
-::: {.content-hidden unless-format="pdf"}
 $$
 \mathbf{y} = \mathbf{X}\boldsymbol{\beta} + \boldsymbol{\epsilon}.
 $$
-:::
-
-**Matrix definitions of residuals, fitted values, and RSS* for multiple linear regression**
----
+## Matrix definitions of residuals, fitted values, and RSS for multiple linear regression
 
 The vector of estimated values for the coefficients contained in $\boldsymbol{\beta}$ is denoted
 
-::: {.content-visible unless-format="pdf"}
-</br>  
-</br>  
-</br>  
-:::
-::: {.content-hidden unless-format="pdf"}
 $$
 \hat{\boldsymbol{\beta}}=[\hat{\beta}_0,\hat{\beta}_1,\ldots,\hat{\beta}_{p-1}].
 $$
-:::
 
 The vector of regressor values for the $i\text{th}$ observation is denoted
 
-::: {.content-visible unless-format="pdf"}
-</br>  
-</br>  
-</br>  
-:::
-::: {.content-hidden unless-format="pdf"}
 $$
 \mathbf{x}_i=[1,x_{i,1},\ldots,x_{i,p-1}].
 $$
-:::
 
 **Question:**
 
@@ -733,12 +602,6 @@ $$
 
 The $i\text{th}$ **fitted value** in the context of multiple linear regression is defined as
 
-::: {.content-visible unless-format="pdf"}
-</br>  
-</br>  
-</br>  
-:::
-::: {.content-hidden unless-format="pdf"}
 $$
 \begin{aligned}
 \hat{Y}_i &= \hat{E}(Y \mid \mathbb{X} = \mathbf{x}_i) \\
@@ -746,7 +609,6 @@ $$
 &= \mathbf{x}_i^T\hat{\boldsymbol{\beta}}.
 \end{aligned}
 $$
-:::
 
 The notation "$\mathbb{X} = \mathbf{x}_i$" is a concise way of saying "$X_0 = 1, X_1=x_{i,1}, \ldots, X_{p-1}=x_{i,p-1}$".
 
@@ -761,18 +623,11 @@ $$
 
 The $i\text{th}$ **residual** in the context of multiple linear regression can be written as
 
-::: {.content-visible unless-format="pdf"}
-</br>  
-</br>  
-</br>  
-:::
-::: {.content-hidden unless-format="pdf"}
 $$
 \begin{aligned}
 \hat{\epsilon}_i = Y_i - \hat{Y}_i=Y_i-\mathbf{x}_i^T\hat{\boldsymbol{\beta}},
 \end{aligned}
 $$
-:::
 
 The column vector of residuals is defined as
 $$
@@ -780,28 +635,12 @@ $$
 
 Equivalent expressions for the residual vector are
 
-::: {.content-visible unless-format="pdf"}
-</br>  
-</br>  
-</br>  
-:::
-::: {.content-hidden unless-format="pdf"}
 $$
 \hat{\boldsymbol{\epsilon}}=\mathbf{y}-\hat{\mathbf{y}}=\mathbf{y}-\mathbf{X}\hat{\boldsymbol{\beta}}.
 $$
-:::
 
 The RSS for a multiple linear regression model, as a function of the estimated regression coefficients, is
 
-::: {.content-visible unless-format="pdf"}
-</br>  
-</br>  
-</br>  
-</br>  
-</br>  
-</br>  
-:::
-::: {.content-hidden unless-format="pdf"}
 $$
 \begin{aligned}
 RSS(\hat{\boldsymbol{\beta}}) &= \sum_{i=1}^n \hat{\epsilon}_i^2 \\
@@ -810,45 +649,27 @@ RSS(\hat{\boldsymbol{\beta}}) &= \sum_{i=1}^n \hat{\epsilon}_i^2 \\
 & = (\mathbf{y} - \mathbf{X}\hat{\boldsymbol{\beta}})^T (\mathbf{y} - \hat{\boldsymbol{\beta}}).
 \end{aligned} (\#eq:def-rss-matrix)
 $$
-:::
-
-**OLS estimator in matrix form**
----
+## OLS estimator in matrix form
 
 The OLS estimator of the regression coefficient vector, $\boldsymbol{\beta}$, is
 
-::: {.content-visible unless-format="pdf"}
-</br>  
-</br>  
-</br>  
-:::
-::: {.content-hidden unless-format="pdf"}
 $$
 \hat{\boldsymbol{\beta}} = (\mathbf{X}^T\mathbf{X})^{-1}\mathbf{X}^T\mathbf{y}. (\#eq:betahat)
 $$
-:::
 
 This solution for $\hat{\boldsymbol{\beta}}$ assumes $\mathbf{X}$ has full-rank ($n>p$ and none of the columns of $\mathbf{X}$ are linear combinations of other columns in $\mathbf{X}$).
 
 The general estimator of the $\sigma^2$ in the context of multiple linear regression is
 
-::: {.content-visible unless-format="pdf"}
-</br>  
-</br>  
-</br>  
-:::
-::: {.content-hidden unless-format="pdf"}
 $$
 \hat{\sigma}^2 = \frac{RSS}{n-p},
 $$
-:::
 
 # Penguins multiple linear regression example
 
 We will fit a multiple linear regression model regressing `bill_length_mm` on `body_mass_g` and `flipper_length_mm`, and will once again do so using the `lm` function.
 
-**Formula notation**
----
+## Formula notation
 
 Before we do that, we provide some additional discussion of the of the `formula` argument of the `lm` function. This will be very important as we discuss more complicated models. Assume `y` is the response variable and `x`, `x1`, `x2`, `x3` are available numeric predictors. Then:
 
@@ -860,8 +681,7 @@ Before we do that, we provide some additional discussion of the of the `formula`
   $E(Y|X_1, X_2)=\beta_1 X_1 + \beta_2 X_2$. The `-1` tells R not to include an intercept in the fitted model.
 -   `y ~ x + I(x^2)` describe the multiple linear regression model $E(Y|X)=\beta_0+\beta_1 X + \beta_2 X^2$. The `I()` function is a special function that tells R to create a regressor based on the syntax inside the `()` and include that regressor in the model.
 
-**Fitting a model**
----
+## Fitting a model
 
 We fit the linear model regressing `bill_length_mm` on `body_mass_g` and `flipper_length_mm` and extract some statistics.
 
@@ -876,16 +696,9 @@ deviance(mlmod)
 
 The fitted model is
 
-::: {.content-visible unless-format="pdf"}
-</br>  
-</br>  
-</br>  
-:::
-::: {.content-hidden unless-format="pdf"}
 $$
 \widehat{\mathtt{bill\_length\_mm}}=-3.44+0.0007 \,\mathtt{body\_mass\_g}+0.22\,\mathtt{flipper\_length\_mm}.
 $$
-:::
 
 - **Question:** What is the RSS? How does it compare to the simple linear regression model we used before?
 
@@ -915,8 +728,7 @@ We discuss two basic linear regression models that have categorical predictors:
 - **Separate lines regression model**, which adds an interaction term between the numeric regressor and categorical predictor of the parallel lines regression model.
   - The model produces separate lines for each level of the categorical variable.
 
-**Indicator variables**
----
+## Indicator variables
 
 In order to compute $\hat{\boldsymbol{\beta}}$ both $\mathbf{X}$ and $\mathbf{y}$ must contain numeric values. 
 
@@ -963,8 +775,7 @@ $$
 
 - $d_{i,j}$ is 1 if $c_i$ has factor level $L_j$ and 0 otherwise.
 
-**Parallel and separate lines models**
----
+## Parallel and separate lines models
 
 Assume we want to build a linear regression model using a single numeric regressor $X$ and a two-level categorical predictor $C$.
 
@@ -1008,8 +819,7 @@ E(Y\mid X, C) =
 \end{cases}
 $$
 
-**More complex models with categorical predictors**
----
+## More complex models with categorical predictors
 
 If you had a categorical predictor $C$ with $K$ levels $L_1, L_2, \ldots, L_K$:
 
@@ -1020,8 +830,7 @@ It is easy to imagine using multiple categorical predictors in a model, interact
 
 These models can be fit easily using R but are more difficult to interpret.
 
-**Avoiding collinearity**
----
+## Avoiding collinearity
 
 Consider the setting where $C$ has only 2 levels. 
 
@@ -1060,8 +869,7 @@ ggplot(data = penguins) +
 
 - Does the relationship between bill length and body mass change depending on the species of penguin?
 
-**Using a categorical variable in the `lm` function**
----
+## Using a categorical variable in the `lm` function
 
 How do you use a categorical variable in R's `lm` function?
 
@@ -1078,8 +886,7 @@ Our categorical predictor `species` has the levels `Adelie`, `Chinstrap`, and `G
 
 Let $D_C$ denote the indicator variable for the `Chinstrap` level and $D_G$ denote the indicator variable for the `Gentoo` level. 
 
-**Fitting a parallel lines model**
----
+## Fitting a parallel lines model
 
 We fit the parallel lines regression model 
 $$
@@ -1095,30 +902,17 @@ coef(lmodp)
 ```
 The fitted parallel lines model is
 
-::: {.content-visible unless-format="pdf"}
-</br>  
-</br>  
-</br>  
-:::
-::: {.content-hidden unless-format="pdf"}
 $$
 \begin{aligned}
 &\hat{E}(\mathtt{bill\_length\_mm} \mid \mathtt{body\_mass\_g}, \mathtt{species}) \\
 &= 24.92 + 0.004 \mathtt{body\_mass\_g} + 9.92 D_C + 3.56 D_G.
 \end{aligned}
 $$
-:::
 
 Note that $D_C$ is `speciesChinstrap` and $D_G$ is `speciesGentoo`.
 
 When an observation has `species` level `Adelie`, then the model simplifies to
 
-::: {.content-visible unless-format="pdf"}
-</br>  
-</br>  
-</br>  
-:::
-::: {.content-hidden unless-format="pdf"}
 $$
 \begin{aligned}
 &\hat{E}(\mathtt{bill\_length\_mm} \mid \mathtt{body\_mass\_g}, \mathtt{species}=\mathtt{Adelie}) \\
@@ -1126,16 +920,8 @@ $$
 &= 24.92 + 0.004 \mathtt{body\_mass\_g}.
 \end{aligned}
 $$
-:::
-
 When an observation has `species` level `Chinstrap`, then the model simplifies to
 
-::: {.content-visible unless-format="pdf"}
-</br>  
-</br>  
-</br>  
-:::
-::: {.content-hidden unless-format="pdf"}
 $$
 \begin{aligned}
 &\hat{E}(\mathtt{bill\_length\_mm} \mid \mathtt{body\_mass\_g}, \mathtt{species}=\mathtt{Chinstrap}) \\
@@ -1143,16 +929,9 @@ $$
 &= 34.84 + 0.004 \mathtt{body\_mass\_g}.
 \end{aligned}
 $$
-:::
 
 When an observation has `species` level `Gentoo`, then the model simplifies to
 
-::: {.content-visible unless-format="pdf"}
-</br>  
-</br>  
-</br>  
-:::
-::: {.content-hidden unless-format="pdf"}
 $$
 \begin{aligned}
 &\hat{E}(\mathtt{bill\_length\_mm} \mid \mathtt{body\_mass\_g}, \mathtt{species}=\mathtt{Gentoo}) \\
@@ -1160,7 +939,6 @@ $$
 &= 28.48 + 0.004 \mathtt{body\_mass\_g}.
 \end{aligned}
 $$
-:::
 
 We add our fitted lines for each `species` to our scatter plot.
 
@@ -1211,8 +989,7 @@ ggplot(data = penguins) +
   geom_line(aes(x = body_mass_g, y = pl_fitted, color = species))
 ```
 
-**Fitting a separate lines model**
----
+## Fitting a separate lines model
 
 We now fit the separate lines regression model
 
@@ -1234,12 +1011,6 @@ coef(lmods)
 
 The fitted separate lines model is
 
-::: {.content-visible unless-format="pdf"}
-</br>  
-</br>  
-</br>  
-:::
-::: {.content-hidden unless-format="pdf"}
 $$
 \begin{aligned}
 &\hat{E}(\mathtt{bill\_length\_mm} \mid \mathtt{body\_mass\_g}, \mathtt{species}) \\
@@ -1247,16 +1018,9 @@ $$
 &\quad + 0.001 \mathtt{body\_mass\_g} D_C + 0.0009 \mathtt{body\_mass\_g} D_G, (\#eq:sl-model-penguins)
 \end{aligned}
 $$
-:::
 
 When an observation has `species` level `Adelie`, then the model simplifies to
 
-::: {.content-visible unless-format="pdf"}
-</br>  
-</br>  
-</br>  
-:::
-::: {.content-hidden unless-format="pdf"}
 $$
 \begin{aligned}
 &\hat{E}(\mathtt{bill\_length\_mm} \mid \mathtt{body\_mass\_g}, \mathtt{species}=\mathtt{Adelie}) \\
@@ -1265,6 +1029,7 @@ $$
 &= 26.99 + 0.003 \mathtt{body\_mass\_g}.
 \end{aligned}
 $$
+
 When an observation has `species` level `Chinstrap`, then the equation simplifies to
 $$
 \begin{aligned}
@@ -1278,12 +1043,6 @@ $$
 
 When an observation has `species` level `Gentoo`, the model simplifies to
 
-::: {.content-visible unless-format="pdf"}
-</br>  
-</br>  
-</br>  
-:::
-::: {.content-hidden unless-format="pdf"}
 $$
 \begin{aligned}
 &\hat{E}(\mathtt{bill\_length\_mm} \mid \mathtt{body\_mass\_g}, \mathtt{species}=\mathtt{Chinstrap}) \\
@@ -1292,7 +1051,6 @@ $$
 &= 26.74 + 0.004 \mathtt{body\_mass\_g}.
 \end{aligned}
 $$
-:::
 
 We use the code below to display the fitted lines for the separate lines model on the `penguins` data.
 
@@ -1316,8 +1074,7 @@ ggplot(data = penguins) +
 
 # Evaluating model fit
 
-**The coefficient of determination**
----
+## The coefficient of determination
 
 The most basic statistic measuring the fit of a regression model is the **coefficient of determination**, which is defined as
 
@@ -1327,8 +1084,7 @@ $$
 
 where $\bar{Y}$ is the sample mean of the observed response values.
 
-**Some sum-of-squares statistics**
----
+## Some sum-of-squares statistics
 
 To interpret this statistic, we need to introduce some new "sum-of-squares" statistics similar to the RSS.
 
@@ -1374,27 +1130,10 @@ $SS_{reg}=TSS-RSS$.
 
 - SS~reg~ measures the reduction in RSS when comparing the fitted model to the constant mean model.
 
-**Equivalent expressions for $R^2$**
----
+## Equivalent expressions for $R^2$
 
 Some equivalent expressions for $R^2$ are
 
-::: {.content-visible unless-format="pdf"}
-</br>  
-</br>  
-</br>  
-</br>  
-</br>  
-</br>  
-</br>  
-</br>  
-</br>  
-</br>  
-</br>  
-</br>  
-:::
-
-::: {.content-hidden unless-format="pdf"}
 $$
 \begin{aligned}
 R^2 &= 1-\frac{\sum_{i=1}^n (Y_i-\hat{Y}_i)^2}{\sum_{i=1}^n (Y_i-\bar{Y})^2} \\
@@ -1404,14 +1143,11 @@ R^2 &= 1-\frac{\sum_{i=1}^n (Y_i-\hat{Y}_i)^2}{\sum_{i=1}^n (Y_i-\bar{Y})^2} \\
 &= [\mathrm{cor}(\mathbf{y}, \hat{\mathbf{y}})]^2.
 \end{aligned}
 $$
-:::
-
 The last expression is the squared sample correlation between the observed and fitted values, and is a helpful way to express the coefficient of determination because it extends to regression models that are not linear.
 
 *The coefficient of determination is the proportional reduction in RSS when comparing the fitted model to the constant mean model*.
 
-**Comments about the coefficient of determination**
----
+## Comments about the coefficient of determination
 
 - $0\leq R^2 \leq 1$.
 - $R^2=0$ for the constant mean model.
@@ -1421,8 +1157,7 @@ The last expression is the squared sample correlation between the observed and f
 - The `Multiple R-squared` value printed by the `summary` of an `lm` object is $R^2$.
 - To extract $R^2$ from a fitted model, you can use the syntax `summary(lmod)$r.squared`, where `lmod` is your fitted model.
 
-**Examples of $R^2$**
----
+## Examples of $R^2$
 
 Consider the examples below relating $R^2$ to various fitted simple linear regression models.
 
@@ -1473,8 +1208,7 @@ summary(lmodp)$r.squared
 
 By adding the `body_mass_g` regressor and `species` predictor to the constant mean model of `bill_length_mm`, we reduced the RSS by 81%.
 
-**Cautions about $R^2$**
----
+## Cautions about $R^2$
 
 It is not wise to use $R^2$ to choose between models:
 
@@ -1497,8 +1231,7 @@ summary(lmod_silly)$r.squared
 
 The $R^2$ value increased from 0.8080 to 0.8088!
 
-**Anscombe's Quartet**
----
+## Anscombe's Quartet
 
 Anscombe (1973) provides a canonical data set known as "Anscombe's quartet" that illustrates how $R^2$ can mislead you into thinking an inappropriate model fits better than it actually does.
 
@@ -1586,8 +1319,7 @@ ggplot(adf, aes(x = x, y = y, group = set, col = set)) +
 - If not, comment on the deficiencies of the poorly fitting models.
 
 
-**Adjusted R-squared**
----
+## Adjusted R-squared
 
 Ezekiel (1930) proposed the adjusted R-squared statistic as a better statistic for measuring model fit. The adjusted $R^2$ statistic is defined as
 
@@ -1664,43 +1396,14 @@ Assume a simple linear regression model with $n$ observations.
 
 The residual sum of squares for the simple linear  regression model is
 
-::: {.content-visible unless-format="pdf"}
-</br>  
-</br>  
-</br>  
-:::
-::: {.content-hidden unless-format="pdf"}
 $$
 RSS(\hat\beta_0, \hat\beta_1) = \sum_{i=1}^n(Y_i - \hat\beta_0 - \hat\beta_1x_i)^2.
 $$
-:::
 
-**OLS estimator of $\beta_0$**
+## OLS estimator of $\beta_0$
 
 First, we take the partial derivative of the RSS with respect to $\hat\beta_0$ and simplify.
 
-::: {.content-visible unless-format="pdf"}
-</br>  
-</br>  
-</br>  
-</br>  
-</br>  
-</br>  
-</br>  
-</br>  
-</br>  
-</br>  
-</br>  
-</br>  
-</br>  
-</br>  
-</br>  
-</br>  
-</br>  
-</br>  
-</br>  
-:::
-::: {.content-hidden unless-format="pdf"}
 $$
 \begin{aligned}
 \frac{\partial RSS(\hat\beta_0, \hat\beta_1)}{\partial \hat\beta_0} &= \frac{\partial}{\partial \hat\beta_0}\sum_{i=1}^n(Y_i - \hat\beta_0 - \hat\beta_1x_i)^2 & \tiny\text{ (substituting the formula for the RSS)} \\
@@ -1719,29 +1422,11 @@ n\hat\beta_0 &= \sum_{i=1}^n Y_i-\hat{\beta}_1\sum_{i=1}^nx_i. &\tiny\text{ (alg
 \hat\beta_0 &= \bar Y-\hat\beta_1\bar x &
 \end{aligned}
 $$
-:::
 
-**OLS Estimator of $\beta_1$**
+## OLS Estimator of $\beta_1$
 
 We start by taking the partial derivative of the RSS with respect to $\hat{\beta}_1$ and simplify.
 
-::: {.content-visible unless-format="pdf"}
-</br>  
-</br>  
-</br>  
-</br>  
-</br>  
-</br>  
-</br>  
-</br>  
-</br>  
-</br>  
-</br>  
-</br>  
-</br>  
-</br>  
-:::
-::: {.content-hidden unless-format="pdf"}
 $$
 \begin{aligned}
 \frac{\partial RSS(\hat\beta_0, \hat\beta_1)}{\partial \hat\beta_1} &= \frac{\partial}{\partial \hat\beta_1}\sum_{i=1}^n (Y_i - \hat\beta_0 - \hat\beta_1x_i)^2 & \tiny\text{ (substitute formula for RSS)} \\
@@ -1770,11 +1455,12 @@ $$
 \hat\beta_1\left(\sum_{i=1}^n x_i^2-\frac{1}{n}\left(\sum_{i=1}^n  x_i\right)^2\right)&=\sum_{i=1}^n x_iY_i -\frac{1}{n}\sum_{i=1}^n x_i\sum_{i=1}^n  Y_i, & \tiny\text{(factoring)}\\
 \end{aligned}
 $$
+
 which allows us to obtain
+
 $$
 \hat\beta_1=\frac{\sum_{i=1}^n x_iY_i -\frac{1}{n}\sum_{i=1}^n x_i\sum_{i=1}^n  Y_i}{\sum_{i=1}^n x_i^2-\frac{1}{n}\left(\sum_{i=1}^n  x_i\right)^2}.
 $$
-:::
 
 ## Unbiasedness of OLS estimators
 
@@ -1787,40 +1473,6 @@ We want to show that
 $$
 E(\hat{\beta}_0\mid \mathbf{X})=\beta_0.
 $$
-
-::: {.content-visible unless-format="pdf"}
-</br>  
-</br>  
-</br>  
-</br>  
-</br>  
-</br>  
-</br>  
-</br>  
-</br>  
-</br>  
-</br>  
-</br>  
-</br>  
-</br>  
-</br>  
-</br>  
-</br>  
-</br>  
-</br>  
-</br>  
-</br>  
-</br>  
-</br>  
-</br>  
-</br>  
-</br>  
-</br>  
-</br>  
-</br>  
-</br>  
-:::
-::: {.content-hidden unless-format="pdf"}
 
 We start by determining $E(Y_i\mid X=x_i)$.
 
@@ -1835,6 +1487,7 @@ E(Y_i\mid X=x_i) &= E(\beta_0 + \beta_1 x_i +\epsilon_i\mid X = x_i) & \tiny\tex
 $$
 
 Next, we note:
+
 $$
 \begin{aligned}
 E\left(\sum x_iY_i \biggm| \mathbf{X} \right) &= \sum E(x_iY_i \mid \mathbf{X}) &\tiny\text{ (by the linearity of the expectation operator)}\\
@@ -1844,7 +1497,9 @@ E\left(\sum x_iY_i \biggm| \mathbf{X} \right) &= \sum E(x_iY_i \mid \mathbf{X}) 
 &=\beta_0\sum x_i+\beta_1\sum x_i^2.&\tiny\text{(factor out constants)}
 \end{aligned}
 $$
+
 Also,
+
 $$
 \begin{aligned}
 E(\bar Y\mid \mathbf{X})
@@ -1859,9 +1514,11 @@ E(\bar Y\mid \mathbf{X})
 $$
 
 To simplify our derivation below, define
+
 $$
 SSX = \sum x_i^2-\frac{1}{n}\left(\sum  x_i\right)^2.
 $$
+
 Thus,
 
 $$
@@ -1885,6 +1542,7 @@ $$
 Therefore, $\hat\beta_1$ is an unbiased estimator of $\beta_1$.
 
 Next, we show that $\hat\beta_0$ is unbiased:
+
 $$
 \begin{aligned}
 E(\hat\beta_0\mid \mathbf{X}) &= E(\bar Y - \hat{\beta}_1\bar x\mid \mathbf{X}) &\tiny\text{(OLS estimator of }\beta_0) \\
@@ -1896,33 +1554,11 @@ E(\hat\beta_0\mid \mathbf{X}) &= E(\bar Y - \hat{\beta}_1\bar x\mid \mathbf{X}) 
 $$
 
 Therefore, $\hat\beta_0$ is an unbiased estimator of $\beta_0$.
-:::
 
 ## Derivation of the OLS estimator for the multiple linear regression model coefficients
 
-::: {.content-visible unless-format="pdf"}
-</br>  
-</br>  
-</br>  
-</br>  
-</br>  
-</br>  
-</br>  
-</br>  
-</br>  
-</br>  
-</br>  
-</br>  
-</br>  
-</br>  
-</br>  
-</br>  
-</br>  
-</br>  
-</br>  
-:::
-::: {.content-hidden unless-format="pdf"}
 We want to determine the value of $\hat{\boldsymbol{\beta}}$ that will minimize
+
 $$
 \begin{aligned}
 RSS(\hat{\boldsymbol{\beta}}) &=\sum_{i=1}^n \hat{\epsilon_i}^2 \\
@@ -1930,39 +1566,47 @@ RSS(\hat{\boldsymbol{\beta}}) &=\sum_{i=1}^n \hat{\epsilon_i}^2 \\
 &= (\mathbf{y} - \mathbf{X}\hat{\boldsymbol{\beta}})^T(\mathbf{y} - \mathbf{X}\hat{\boldsymbol{\beta}}) \\
 &= \mathbf{y}^T\mathbf{y}-2\hat{\boldsymbol{\beta}}^T\mathbf{X}^T\mathbf{y}+\hat{\boldsymbol{\beta}}^T\mathbf{X}^T\mathbf{X}\hat{\boldsymbol{\beta}},
 \end{aligned}
+
 $$
 where the second term in the last line comes from the fact that $\hat{\boldsymbol{\beta}}^T\mathbf{X}^T\mathbf{y}$ is a $1\times 1$ matrix, and is thus symmetric. Consequently, $\hat{\boldsymbol{\beta}}^T\mathbf{X}^T\mathbf{y}=(\hat{\boldsymbol{\beta}}^T\mathbf{X}^T\mathbf{y})^T=\mathbf{y}^T\mathbf{X}\hat{\boldsymbol{\beta}}$.
 
 To find the local extrema of $RSS(\hat{\boldsymbol{\beta}})$, we set its derivative with respect to $\hat{\boldsymbol{\beta}}$ equal to 0, and solve for $\hat{\boldsymbol{\beta}})$.
 
 We see that
+
 $$
 \frac{\partial RSS(\hat{\boldsymbol{\beta}})}{\partial\hat{\boldsymbol{\beta}}} = -2\mathbf{X}^T\mathbf{y} + 2\mathbf{X}^T\mathbf{X}\hat{\boldsymbol{\beta}}.
 $$
+
 Setting $\partial RSS(\hat{\boldsymbol{\beta}})/\partial\hat{\boldsymbol{\beta}}=0$ and using some simple algebra, we derive the **normal equations**
+
 $$
 \mathbf{X}^T\mathbf{X}\hat{\boldsymbol{\beta}}=\mathbf{X}^T\mathbf{y}.
 $$
+
 Assuming the $\mathbf{X}^T\mathbf{X}$ is invertible, which it will be when $\mathbf{X}$ is full-rank, our solution is
+
 $$
 \hat{\boldsymbol{\beta}}=(\mathbf{X}^T\mathbf{X})^{-1}\mathbf{X}^T\mathbf{y}.
 $$
 
 To show that the OLS estimator of $\boldsymbol{\beta}$ minimizes $RSS(\hat{\boldsymbol{\beta}})$, we technically need to show that the Hessian matrix of $RSS(\hat{\boldsymbol{\beta}})$, the matrix of second-order partial derivatives, is positive definite. In our context, the Hessian matrix is
+
 $$
 \begin{aligned}
 \frac{\partial^2 RSS(\hat{\boldsymbol{\beta}})}{\partial \hat{\boldsymbol{\beta}}^2} &= \frac{\partial}{\partial \hat{\boldsymbol{\beta}}}(-2\mathbf{X}^T\mathbf{y} + 2\mathbf{X}^T\mathbf{X}\hat{\boldsymbol{\beta}}) \\
 &= 2\mathbf{X}^T\mathbf{X}.
 \end{aligned}
 $$
+
 The $p\times p$ matrix $2\mathbf{X}^T\mathbf{X}$ is positive definite, but it is beyond the scope of the course to prove this.
 
 Therefore, the OLS estimator of $\boldsymbol{\beta}$,
 $$
 \hat{\boldsymbol{\beta}}=(\mathbf{X}^T\mathbf{X})^{-1}\mathbf{X}^T\mathbf{y}
+
 $$
 minimizes the RSS.
-:::
 
 # References
 
