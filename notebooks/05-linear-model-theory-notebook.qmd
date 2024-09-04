@@ -36,7 +36,6 @@ $$
 \mathbf{y} = \mathbf{X}\boldsymbol{\beta}+\boldsymbol{\epsilon}.
 $$
 
-
 # Standard assumptions
 
 We assume that the components of our linear model have the characteristics previously described in Chapter 3. We also need to make several specific assumptions about the errors. 
@@ -114,9 +113,101 @@ In summary, our error assumptions are:
 1. $\mathrm{cov}(\epsilon_i,\epsilon_j\mid \mathbf{X})=0$ for $i\neq j$ with $i,j=1,2,\ldots,n$.
 1. $\epsilon_i$ has a normal distribution for $i=1,2,\ldots,n$.
 
-**Summary of results**
+# Unbiasedness of OLS estimators of simple linear regression model coefficients
 
----
+We now show that the OLS estimators of the simple linear regression coefficients are unbiased.
+
+An estimator is unbiased if the expected value is equal to the parameter it is estimating.
+
+We want to show that
+
+$$
+E(\hat{\beta}_0\mid \mathbf{X})=\beta_0.
+$$
+
+We start by determining $E(Y_i\mid X=x_i)$.
+
+$$
+\begin{aligned}
+E(Y_i\mid X=x_i) &= E(\beta_0 + \beta_1 x_i +\epsilon_i\mid X = x_i) & \tiny\text{(substiute definition of $Y_i$)} \\
+&= E(\beta_0\mid X=x_i) + E(\beta_1 x_i \mid X = X_i) +E(\epsilon_i | X=x_i) & \tiny\text{(linearity property of expectation)} \\
+&= \beta_0+\beta_1x_i +E(\epsilon_i | X=x_i) & \tiny\text{(the $\beta$s and $x_i$ are non-random values)} \\
+&= \beta_0+\beta_1x_i + 0 & \tiny\text{(assumption about errors)} \\
+&= \beta_0+\beta_1x_i. &
+\end{aligned}
+$$
+
+Next, we note:
+
+$$
+\begin{aligned}
+E\left(\sum x_iY_i \biggm| \mathbf{X} \right) &= \sum E(x_iY_i \mid \mathbf{X}) &\tiny\text{ (by the linearity of the expectation operator)}\\
+&=\sum x_iE(Y_i\mid \mathbf{X})&\tiny(x_i\text{ is a fixed value, so it can be brought out})\\
+&=\sum x_i(\beta_0+\beta_1 x_i)&\tiny\text{(substitute expected value of }Y_i)\\
+&=\sum x_i\beta_0+\sum x_i\beta_1 x_i&\tiny\text{(distribute sum)}\\
+&=\beta_0\sum x_i+\beta_1\sum x_i^2.&\tiny\text{(factor out constants)}
+\end{aligned}
+$$
+
+Also,
+
+$$
+\begin{aligned}
+E(\bar Y\mid \mathbf{X})
+&= E\left(\frac{1}{n}\sum Y_i\Biggm|\mathbf{X} \right)&\tiny\text{(definition of sample mean)}\\
+&= \frac{1}{n}E\left(\sum Y_i \Bigm| \mathbf{X}\right)&\tiny\text{(factor out constant)}\\
+&= \frac{1}{n}\sum E\left(Y_i \mid \mathbf{X}\right)&\tiny\text{(linearity of expectation)}\\
+&= \frac{1}{n}\sum(\beta_0+\beta_1 x_i)&\tiny\text{(substitute expected value of }Y_i)\\
+&= \frac{1}{n}\left(\sum\beta_0+\sum\beta_1 x_i\right)&\tiny\text{(distribute sum)}\\
+&= \frac{1}{n}\left(n\beta_0+\beta_1\sum x_i\right)&\tiny\text{(simplify, factor out constant)}\\
+&= \beta_0+\beta_1\bar x. &\tiny\text{(simplify)}
+\end{aligned}
+$$
+
+To simplify our derivation below, define
+
+$$
+SSX = \sum x_i^2-\frac{1}{n}\left(\sum  x_i\right)^2.
+$$
+
+Thus,
+
+$$
+\begin{aligned}
+&E(\hat\beta_1 \mid \mathbf{X}) &\\
+&= E\left(\frac{\sum x_iY_i -\frac{1}{n}\sum x_i\sum Y_i}{\sum x_i^2-\frac{1}{n}\left(\sum  x_i\right)^2} \Biggm| \mathbf{X} \right) &\tiny\text{(substitute OLS estimator)} \\
+&= \frac{1}{SSX}E\left(\sum x_iY_i-\frac{1}{n}\sum x_i\sum Y_i \biggm| \mathbf{X}\right)&\tiny\text{(factor out constant denominator, substitute }SSX\text{)} \\
+&= \frac{1}{SSX}\left[E\left(\sum x_iY_i\Bigm|\mathbf{X}\right)-E\left(\frac{1}{n}\sum x_i\sum Y_i\biggm|\mathbf{X}\right)\right]&\tiny\text{(linearity of expectation)}\\
+&= \frac{1}{SSX}\left[E\left(\sum x_iY_i\Bigm|\mathbf{X}\right)-\left(\sum x_i\right)E\left(\bar Y\mid \mathbf{X}\right)\right]&\tiny\text{(factor out constant }\sum x_i\text{, use definition of}\bar{Y})\\
+&= \frac{1}{SSX}\left[\left(\beta_0\sum x_i + \beta_1\sum x_i^2\right)-\left(\sum x_i\right)(\beta_0+\beta_1\bar x)\right]&\tiny\text{(substitute previous derivations
+)}\\
+&= \frac{1}{SSX}\left[\beta_0\sum x_i+\beta_1\sum x_i^2-\beta_0\sum x_i-\beta_1\bar x\sum x_i\right]&\tiny\text{(expand product and reorder)} \\
+&= \frac{1}{SSX}\left[\beta_1\sum x_i^2-\beta_1\bar x\sum x_i\right]&\tiny\text{(cancel terms)}\\
+&= \frac{1}{SSX}\left[\beta_1\sum x_i^2-\beta_1\frac{1}{n}\sum x_i\sum x_i\right]&\tiny\text{(using definition of sample mean)}\\
+&= \frac{1}{SSX}\beta_1\left[\sum x_i^2-\frac{1}{n}\left(\sum x_i\right)^2\right]&\tiny\text{(factor out }\beta_1\text{, simplify})\\
+&= \frac{1}{SSX}\beta_1[SSX]&\tiny\text{(substitute }SSX\text{)} \\
+&=\beta_1. &\tiny\text{(simplify)}
+\end{aligned}
+$$
+
+Therefore, $\hat\beta_1$ is an unbiased estimator of $\beta_1$.
+
+Next, we show that $\hat\beta_0$ is unbiased:
+
+$$
+\begin{aligned}
+E(\hat\beta_0\mid \mathbf{X}) &= E(\bar Y - \hat{\beta}_1\bar x\mid \mathbf{X}) &\tiny\text{(OLS estimator of }\beta_0) \\
+&= E(\bar{Y}\mid \mathbf{X}) - E(\hat\beta_1\bar{x}\mid \mathbf{X}) &\tiny\text{(linearity of expectation})\\
+&= E(\bar{Y}\mid \mathbf{X}) - \bar{x}E(\hat\beta_1\mid \mathbf{X}) &\tiny\text{(factor out constant})\\
+&= \beta_0 +\beta_1\bar x-\bar x\beta_1 &\tiny\text{(substitute previous derivations})\\
+&= \beta_0. &\tiny\text{(cancel terms})\\
+\end{aligned}
+$$
+
+Therefore, $\hat\beta_0$ is an unbiased estimator of $\beta_0$.
+
+
+# Summary of results
 
 Combining these results with our linear model, we have:
 
@@ -127,9 +218,7 @@ Combining these results with our linear model, we have:
 
 We prove these results in the sections below. To simplify the derivations below, we let $\mathbf{I}=\mathbf{I}_{n\times n}$.
 
-**Results for $\mathbf{y}$**
-
----
+## Results for $\mathbf{y}$
 
 For our given linear model and under the assumptions summarized previously, our response variable has mean
 
@@ -229,9 +318,7 @@ Since $\mathbf{y}$ is a linear function of the multivariate normal vector $\bold
 $\vphantom{blank}$
 
 
-**Results for $\hat{\boldsymbol{\beta}}$**
-
----
+## Results for $\hat{\boldsymbol{\beta}}$
 
 The OLS estimator for $\boldsymbol{\beta}$ is
 
@@ -350,9 +437,7 @@ $$
 
 :::
 
-**Results for the residuals**
-
----
+## Results for the residuals
 
 The residual vector can be expressed in various equivalent ways, such as
 
