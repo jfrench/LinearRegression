@@ -1,0 +1,256 @@
+---
+title: Chapter 11 - Collinearity diagnostics
+author: Joshua French
+date: ''
+format: html
+# format: ipynb
+# jupyter: ir
+# execute:
+#   output: false
+self-contained: true
+title-block-banner: true
+wrap: 'none'
+---
+
+To open this information in an interactive Colab notebook, click the Open in Colab graphic below.
+
+<a href="https://colab.research.google.com/github/jfrench/LinearRegression/blob/master/notebooks/11-collinearity-diagnostics-notebook.ipynb">
+   <img src="https://colab.research.google.com/assets/colab-badge.svg">
+</a>
+
+---
+
+```{r}
+if(!require(api2lm, quietly = TRUE)) {
+  install.packages("api2lm",
+                   repos = "https://cran.rstudio.com/")
+  library(api2lm)
+}
+```
+
+We adjust some printing options for clarity. 
+
+```{r}
+options(digits = 5, scipen = 2)
+```
+
+# Collinearity and its effects {#sec-effects-of-collinearity}
+
+*Collinearity* or *multicollinearity* in a fitted regression model occurs when the the regressor variables in our model are linearly dependent. In general, our model suffers from collinearity when the regressor variables are approximately linearly dependent.
+
+Collinearity leads to many undesirable issues with our fitted model.
+
+- The parameter estimates can change dramatically for small changes in the observed response values.
+- The signs of the estimated coefficients can be wrong, leading to erroneous conclusions.
+- The standard error of the estimates can be very large, which leads to insignificant tests for single regression coefficients.
+- The F test for a regression relationship can be significant even though t tests for individual regression coefficients are insignificant.
+- It becomes difficult to interpret the association between the regressors and the response.
+
+Practically, when a group of variables are strongly related to one another, then the fitted model has difficultly distinguishing their effects from one another. 
+
+# Exact versus practical collinearity
+
+Exact collinearity occurs when two or more regressors are perfect linear combinations of each other, which means the columns of our matrix of regressors, $\mathbf{X}$, are linearly dependent.
+
+When regressors in our model are exactly collinear, $\mathbf{X}^T\mathbf{X}$ isn't invertible and there isn't a unique solution for the estimated regression coefficients that minimizes the RSS.
+
+Exact collinearity only occurs when we have poorly chosen the set of regressors to include in our model.
+
+- We can correct for exactly collinearity by sequentially removing collinear regressors until our $\mathbf{X}$ matrix has linearly independent columns.
+
+We should be more concerned with practical collinearity, which leads to the problems mentioned above even when the columns of $\mathbf{X}$ are not exactly collinear. 
+
+# The `seatpos` data set
+
+The `seatpos` data set in the **faraway** package provides data related car seat positioning of drivers and is useful for how to identify and address collinearity. The data were obtained by researchers at the HuMoSim laboratory at the University of Michigan. The data set includes 38 observations of 9 variables. The variables measured for each driver are:
+
+- `hipcenter` (`numeric`): the horizontal distance of the midpoint of the driver's hips from a fixed location in the car (mm).
+-   `Age` (`integer`): age (years). 
+-   `Weight` (`integer`): weight (lbs).
+-   `HtShoes`: height when wearing shoes (cm).
+-   `Ht` (`numeric`): height without shoes (cm).
+-   `Seated` (`numeric`): seated height (cm).
+-   `Arm` (`numeric`): lower arm length (cm).
+-   `Thigh` (`numeric`): thigh length (cm).
+-   `Leg` (`numeric`): lower leg length (cm).
+
+We start attaching the `seatpos` data set to our R session.
+
+```{r}
+data(seatpos, package = "faraway")
+```
+
+# Detecting collinearity
+
+Collinearity is often described as occurring when:
+
+- Regressors are highly correlated with each other.
+- Two or more regressors are approximately linear combinations of each other.
+
+These descriptions are helpful, though incomplete, because collinearity issues can sometimes still occur even when there are no regressors that have high correlation or are close to linear dependence. However, they do suggest some approaches for detecting collinearity.
+
+We discuss several approaches for detecting collinearity below.
+
+## Contradictory significance results
+
+A clear indicator of a collinearity problem in our fitted model is when the test for a regression relationship is significant and the hypothesis tests for individual regression coefficients are all insignificant. We demonstrate this issue using the `seatpos` data.
+
+We fit a model regressing `hipcenter` on all the other variables contained in `seatpos`.
+
+```{r}
+lmod <- lm(hipcenter ~ ., data = seatpos)
+```
+
+We use the `summary` function to see our results.
+
+```{r}
+summary(lmod)
+```
+
+In this context, our set of regressors is $\mathbb{X} = \{\mathtt{Age}, \mathtt{Weight}, \ldots, \mathtt{Leg}\}$. The test for a regression relationship decides between
+
+$$
+\begin{aligned}
+&H_0: E(Y \mid \mathbb{X}) = \beta_0 \\
+&H_a: E(Y\mid \mathbb{X}) = \beta_0 + \beta_1 \mathtt{Age} + \cdots + \beta_{8} \mathtt{Leg}.
+\end{aligned}
+$$
+
+The test statistic for this test is 7.94 with an associated p-value of approximately 0.000013 (based on an F distribution with 8 numerator degrees of freedom and 29 denominator degrees of freedom). Thus, we conclude that at least one of the regression coefficients for the regressors in our model differs from zero.
+
+In contradiction, the hypothesis tests for whether the individual coefficients differ from zero assuming the other regressors are in the model are all insignificant. The p-value for the test associated with $\beta_{\mathtt{Age}}$ is 0.1843, with $\beta_{\mathtt{Weight}}$ is 0.9372, etc. In fact, outside of the intercept coefficient, all of the tests for the individual regression coefficients are insignificant.
+
+We have a contradiction in our testing results. We have concluded that:
+
+- At least one of the regression coefficients for our regressors differs from zero using the test for a regression relationship.
+- None of the regression coefficients for our regressors differs from zero based on the individual tests for a single regression coefficients.
+
+These contradictory results will occur when our regressors exhibit collinearity.
+
+## Pairwise correlation
+
+The simplest approach for identifying a potential issue with collinearity is by computing the matrix of pairwise correlations among the *predictors* in our model. 
+
+
+
+# examine pairwise correlation of predictors
+round(cor(seatpos), 3) # There are several large pairwise correlations between predictors and between predictors and the response.
+
+# calculate the vifs
+vif(lm1)
+
+# condition indices of scaled X (with intercept
+# but not centered)
+library(perturb)
+colldiag(lm1)
+
+set.seed(1) # allows us to reproduce results
+# add a little measurement error and see how coefficients change
+lm2 <- lm(hipcenter + 10 * rnorm(38) ~ ., data = seatpos)
+sumary(lm2)
+
+# compare coefficients after
+# noise added to response
+library(car)
+compareCoefs(lm1, lm2, se = FALSE)
+
+# identifying problem predictors
+# same diagnostic with variance decomposition proportions
+# If a large condition index is associated
+# two or more variables with large variance
+# decomposition proportions, these variables may
+# be causing collinearity problems.
+# Belsley et al suggest that a large proportion
+# is 50 percent or more.
+# D. Belsley, E. Kuh, and R. Welsch (1980). Regression Diagnostics. Wiley.
+
+colldiag(lm1)
+# compute variance proportion manually
+X = model.matrix(lm1)
+X = scale(X, center = FALSE)
+svdX <- svd(X)
+Phi = svdX$v %*% diag(1/svdX$d)
+Phi <- t(Phi^2)
+round(prop.table(Phi, 2), 3)
+
+# amputate some of the predictors
+lm3 = update(lm1, . ~ . - HtShoes)
+summary(lm3)
+# recheck condition indices
+colldiag(lm3)
+
+lm4 = update(lm3, . ~ . - Seated)
+summary(lm4)
+# recheck condition indices
+colldiag(lm4)
+
+lm5 = update(lm4, . ~ . - Arm)
+# recheck condition indices
+colldiag(lm5)
+
+lm6 = update(lm5, . ~ . - Leg)
+summary(lm6)
+# recheck condition indices
+colldiag(lm6)
+
+lm7 = update(lm6, . ~ . - Weight)
+# recheck condition indices
+colldiag(lm7)
+
+lm8 = update(lm7, . ~ . - Thigh)
+# recheck condition indices
+colldiag(lm8)
+summary(lm8)
+
+
+
+
+# Summary of methods
+
+**Outlier detection**
+
+- Index plot of studentized residuals.
+    - Compare residuals to the thresholds $\pm t^{\alpha/2n}_{p, n-p}$.
+    - Use the `outlier_plot` function in the **api2lm** package.
+- Outlier test based on the $t$ distribution.
+    - Use the `outlier_test` function in the **api2lm** package.
+
+**Leverage point detection**
+
+- Index plot of leverage values.
+    - Compare leverage values to the threshold 0.5 or $2p/n$.
+    - Use the `leverage_plot` function in the **api2lm** package.
+
+**Influential observation detection**
+
+- Index plots of DFBETAS statistics.
+    - Compare the DFBETAS statistics to the thresholds $\pm 1$.
+    - Use the `dfbetas_plot` function in the **api2lm** package.
+- Index plot of DFFITS statistics.
+    - Compare the DFFITS statistics to the thresholds $\pm 2\sqrt{p/n}$.
+    - Use the `dffits_plot` function in the **api2lm** package.
+- Index plot of Cook’s distances.
+    - Compare the Cook's distances to the threshold $F^{0.5}_{p, n-p}$.
+    - Use the `cooks_plot` function in the **api2lm** package.
+- Influence plot.
+    - Look for observations with large residuals, leverage values, or Cook's distance/DFFITS statistics.
+    - Use the `influence_plot` function in the **api2lm** package.
+
+**Additional influence-related R functions**
+
+- `rstudent(lmod)` extracts the studentized residuals from a fitted model.
+- `hatvalues(lmod)` extracts the leverage values from a fitted model.
+- `dfbetas` extracts the DFBETAS matrix from a fitted model.
+- `dffits` extracts the DFFITS statistics from a fitted model.
+- `cooks.distance` extracts the Cook’s distances from a fitted model.
+- `influence(lmod)` computes several leave-one-out-related measures of observational influence.
+
+# References
+
+Belsley, D. A., Kuh, E., & Welsch, R. E. (2005). Regression diagnostics: Identifying influential data and sources of collinearity. John Wiley & Sons.
+
+Cook, R. D. (1977). Detection of Influential Observation in Linear Regression. Technometrics, 19(1), 15–18. https://doi.org/10.2307/1268249
+
+Kutner, Michael H, Christopher J Nachtsheim, John Neter, and William Li. 2005. Applied Linear Statistical Models, 5th Edition. McGraw-Hill/Irwin, New York.
+
+Welsch, R. E., & Kuh, E. (1977). Linear regression diagnostics (No. w0173). National Bureau of Economic Research.
