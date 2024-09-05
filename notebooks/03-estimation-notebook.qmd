@@ -204,13 +204,12 @@ $$
 - The $i\text{th}$ residual is the difference between the response and estimated
 mean response of observation $i$.
 
-The **residual sum of squares (RSS)** of a regression model is the sum of its squared residuals. The RSS for a simple linear regression model, as a function of the estimated regression coefficients $\hat{\beta}_0$ and $\hat{\beta}_1$, is defined as
-
+The **residual sum of squares (RSS)** of a regression model is the sum of its squared residuals. Generically, 
 $$
-RSS(\hat{\beta}_0, \hat{\beta}_1) = \sum_{i=1}^n \hat{\epsilon}_i^2.
+RSS = \sum_{i=1}^n \hat{\epsilon}_i^2.
 $$
 
-Using the various objects defined above, there are many equivalent expressions for the RSS.
+The RSS for a simple linear regression model, as a function of the estimated regression coefficients $\hat{\beta}_0$ and $\hat{\beta}_1$, can be written as
 
 $$
 \begin{aligned}
@@ -393,10 +392,10 @@ Thus, based on the model we fit to the `penguins` data, we can make the followin
 -   $\hat{\beta}_1$: If a penguin has a body mass 1 gram larger than another penguin, we expect the larger penguin's bill length to be 0.004 millimeters longer.
 -   $\hat{\beta}_0$: A penguin with a body mass of 0 grams is expected to have a bill length of 26.9 millimeters.
 
-**Question:** 
+**Questions:** 
 
 - Does the intercept term make sense physically?
-
+- If not, why is that the case?
 The `abline` function can be used to automatically overlay the fitted model on the observed data. 
 
 ```{r}
