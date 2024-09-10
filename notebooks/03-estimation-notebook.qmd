@@ -354,7 +354,7 @@ The `summary` function summarizes the results of our fitted model.
 When an `lm` object is supplied to the `summary` function, it returns:
 
 - `Call`: the function call used to fit the model.
-- `Residuals`: A 5-number summary of the $\hat{\epsilon}_1, \ldots, \hat{\epsilon}_n$.
+- `Residuals`: A 5-number summary of $\hat{\epsilon}_1, \ldots, \hat{\epsilon}_n$.
 - `Coefficients`: A table that lists:
     - The regressors in the fitted model.
     - `Estimate`:  the estimated coefficient of each regressor.
@@ -363,7 +363,7 @@ When an `lm` object is supplied to the `summary` function, it returns:
     - `Pr(>|t|)`: the associated p-value of each test.
 - Various summary statistics:
     - `Residual standard error` is the value of $\hat{\sigma}$, the estimate of the error standard deviation. The degrees of freedom is $\mathrm{df}_{RSS}$, the number of observations minus the number of estimated coefficients in the model.
-    - `Multiple R-squared` is an estimate of model fit.
+    - `Multiple R-squared` is a measure of model fit.
     - `Adjusted R-squared` is a modified version of `Multiple R-squared`.
     - `F-statistic` is the test statistic of the test that compares the model with an only an intercept to the fitted model. The `DF` (degrees of freedom) values relate to the statistic under the null hypothesis, and the `p-value` is the p-value of the test.
 
@@ -652,7 +652,7 @@ $$
 RSS(\hat{\boldsymbol{\beta}}) &= \sum_{i=1}^n \hat{\epsilon}_i^2 \\
 &= \hat{\boldsymbol{\epsilon}}^T \hat{\boldsymbol{\epsilon}} \\
 &= (\mathbf{y} - \hat{\mathbf{y}})^T (\mathbf{y} - \hat{\mathbf{y}}) \\
-& = (\mathbf{y} - \mathbf{X}\hat{\boldsymbol{\beta}})^T (\mathbf{y} - \hat{\boldsymbol{\beta}}).
+& = (\mathbf{y} - \mathbf{X}\hat{\boldsymbol{\beta}})^T (\mathbf{y} - \mathbf{X}\hat{\boldsymbol{\beta}}).
 \end{aligned}
 $$
 
@@ -669,7 +669,7 @@ This solution for $\hat{\boldsymbol{\beta}}$ assumes $\mathbf{X}$ has full-rank 
 The general estimator of the $\sigma^2$ in the context of multiple linear regression is
 
 $$
-\hat{\sigma}^2 = \frac{RSS}{n-p},
+\hat{\sigma}^2 = \frac{RSS}{n-p}.
 $$
 
 # Penguins multiple linear regression example
@@ -792,7 +792,7 @@ $$
 
 ## Parallel and separate lines models
 
-We will three linear regression models using a single numeric regressor $X$ and a two-level categorical predictor $C$.
+We will fit three linear regression models using a single numeric regressor $X$ and a two-level categorical predictor $C$.
 
 The standard simple linear regression model is
 
