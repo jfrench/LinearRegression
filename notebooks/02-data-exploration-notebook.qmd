@@ -282,7 +282,7 @@ The sample standard deviation is:
 -   A more useful measure of spread because it is has the same units as the original data.
 -   Computed using the `sd` function.
 
-The larger the standard deviation or variance of a set of values, the more they vary from their sample mean.
+The larger the standard deviation or variance of a set of values, the more the values vary from their sample mean.
 
 The sample standard deviation and variance can be greatly affected by outliers.
 
@@ -290,7 +290,7 @@ The interquartile range is the difference between the 0.75 and 0.25 quantiles of
 
 -   It is more resistant to outliers than the sample variance or standard deviation.
 
-The minimum and maximum (in relation to the sample mean or median) can also be used to ascertain the spread of a data set.
+The minimum and maximum of a set of values (in relation to their sample mean or median) can also be used to ascertain the spread of a data set.
 
 -   Computed using the `min` and `max` functions.
 
@@ -331,8 +331,8 @@ The `cor` function can be used to compute the sample correlation between two `nu
 
 -   The closer $r$ is to -1 or 1, the closer the data values are to a straight line.
 -   $r$ values close to 0 indicate that there is no linear relationship between the two variables.
--   Negative $r$ values indicate a negative relationship between the two variables (as values for one variable increase, the values for the other variable tend to decrease).
--   Positive $r$ values indicate a positive linear relationship between the two variables (as values for one variable increase, the values of the other variable also tend to increase).
+-   Negative $r$ values indicate a negative relationship between the two variables (as values of one variable increase, the values of the other variable tend to decrease).
+-   Positive $r$ values indicate a positive relationship between the two variables (as values of one variable increase, the values of the other variable also tend to increase).
 
 In the code below, we compute the sample correlation between all `numeric` variables in `penguins_clean`. We set the `use` argument to `"pairwise.complete.obs"` so that all non-`NA` pairs of values are used in the calculation.
 
@@ -370,7 +370,7 @@ To count the `NA` values (if present), we set the `useNA` argument of `table` to
 table(penguins_clean$sex, useNA = "ifany")
 ```
 
-A relative frequency distribution summarizes the proportion or percentage of observation with each level of a categorical variable.
+A relative frequency distribution summarizes the proportion or percentage of observations with each level of a categorical variable.
 
 To compute the relative frequency distribution of a variable, we must divide the frequency distribution by the number of observations.
 
@@ -385,7 +385,7 @@ If we want to include the `NA` values in our table, we can use the code below.
 table(penguins_clean$sex, useNA = "ifany")/length(penguins_clean$sex)
 ```
 
-We do not know the `sex` of approximately 3% of the penguins observations.
+We do not know the `sex` of approximately 3% of the observed penguins.
 
 ## The `summary` function
 
@@ -429,7 +429,7 @@ There are 4 main components needed to produce a graphic using **ggplot2**.
     -   This is initialized using the `ggplot` function.
 3.  A geometric object.
     -   These are called "geoms" for short.
-    -   geoms indicate the geometric object used to visualize the data. E.g., points, lines, polygons etc. More generally, geoms indicate the type of plot that is desired, e.g., histogram, density, or box plot, which aren't exactly a simple geometric argument.
+    -   geoms indicate the geometric object used to visualize the data. E.g., points, lines, polygons etc. More generally, geoms indicate the type of plot that is desired, e.g., histogram, density, or box plot, which are complex geometric objects.
 4.  An aesthetic.
     -   An aesthetic mapping indicates what role a variable plays in the plot.
     -   e.g., which variable will play the "x" variable in the plot, the "y" variable in the plot, control the "color" of the observations, etc.
@@ -444,9 +444,9 @@ A univariate plot is a plot that only involves a single variable.
 
 ### Bar plots
 
-A bar plot (or bar chart) displays the number or proportion of observations having each category of a categorical variable (or using R terminology, each `level` of a `factor` variable).
+A bar plot (or bar chart) displays the number or proportion of observations having each category of a categorical variable (or using R terminology, each level of a `factor` variable).
 
-The simplest way to create a bar plot in base R is using the `plot` function on a `factor`.
+The simplest way to create a bar plot in **base** R is using the `plot` function on a `factor` variable.
 
 ```{r}
 plot(penguins_clean$island, main = "distribution of island")
@@ -460,21 +460,21 @@ Alternatively, we can combine `barplot` with the `table` function.
 barplot(table(penguins_clean$sex, useNA = "ifany"), names.arg = c("female", "male", "NA"))
 ```
 
-To create a relatively frequency bar plot, we should divide the results of `table` by the number of relevant observations.
+To create a relative frequency bar plot, we divide the results of `table` by the number of relevant observations.
 
 ```{r}
 barplot(table(penguins_clean$sex, useNA = "ifany") / length(penguins_clean$sex), 
         names.arg = c("female", "male", "NA"))
 ```
 
-Approxiately 48% of the penguins are female, 49% are male, and 3% have an unknown sex.
+Approximately 48% of the penguins are female, 49% are male, and 3% have an unknown sex.
 
-To create a bar plot with **ggplot2**, we first create a basic `ggplot` object containing our data. We must make sure to load the **ggplot2** package prior to creating the plot, otherwise we'll get errors!
+To create a bar plot with **ggplot2**, we first create a basic `ggplot` object containing our data frame. We must make sure to load the **ggplot2** package prior to creating the plot, otherwise we'll get errors!
 
 ```{r}
 # load ggplot2 package
 library(ggplot2)
-# create generic ggplot object with our data
+# create generic ggplot object with our data frame
 gg_penguin <- ggplot(data = penguins_clean)
 ```
 
@@ -491,12 +491,13 @@ Our data set contains slightly more than 150 Adelie penguins, approxiately 70 Ch
 
 ### Box plots
 
-A box plot indicates:
+A box plot provides the following information for a data set:
 
--   median
--   0.25 quantile (Q1)
--   0.75 quantile (Q3)
--   extend bars to the largest and smallest observations that are not outliers.
+-   median.
+-   0.25 quantile (Q1).
+-   0.75 quantile (Q3).
+-   bars that extend to the largest and smallest observations that are not outliers.
+-   outliers.
 
 Outliers are usually marked with stars or dots.
 
@@ -508,7 +509,7 @@ Box plots:
 -   throw away a lot of information.
     -   be cautious in making conclusions about skewness and modality.
 
-The `boxplot` function is the easiest approach for producing a box plot using base R.
+The `boxplot` function is the easiest approach for producing a box plot using **base** R.
 
 ```{r}
 boxplot(penguins_clean$body_mass, main = "distribution of body mass")
@@ -550,7 +551,7 @@ A histogram:
 -   Counts the number of values falling into (usually) equal-sized "bins".
 - Is used to assess skewness, modality (the number of clear "peaks" in the plot), and to some extent, outliers.
 
-We use the `hist` function to create a histogram of a `numeric` variable.
+The `hist` function creates a histogram of a `numeric` variable.
 
 ```{r}
 hist(penguins_clean$bill_length,
@@ -603,11 +604,11 @@ gg_penguin + geom_density(aes(x = body_mass))
 
 ## Bivariate plots
 
-A `bivariate` plot is a plot involving two variables.
+A bivariate plot is a plot involving two variables.
 
 ### Scatter plots
 
-Scatter plots can be used to identify the relationship between two `numeric` variables.
+Scatter plots can be used to examine the relationship between two `numeric` variables.
 
 We use the `plot` function to create a scatter plot.
 
@@ -622,7 +623,7 @@ plot(bill_length ~ body_mass, data = penguins_clean,
 -   Is there a linear relationship between `body_mass` and `bill length`?
 -   If so, is the linear relationship positive or negative?
 
-The `geom_point` function can be used to create a scatter plot with **ggplot2**.
+The `geom_point` function creates a scatter plot with **ggplot2**.
 
 ```{r}
 gg_penguin + geom_point(aes(x = bill_depth, y = bill_length))
@@ -634,8 +635,8 @@ gg_penguin + geom_point(aes(x = bill_depth, y = bill_length))
 
 Parallel box plots:
 
--   Draw a box plot for the `numeric` values of a variable for each `level` of a `factor` variable.
--   Are useful for determining if the distribution of a `numeric` variable substantially changes based on whether an observation has a certain `level` of a `factor`.
+-   Draw a box plot for the `numeric` values of a variable for each level of a `factor` variable.
+-   Are useful for determining if the distribution of a `numeric` variable substantially changes based on whether an observation has a certain level of a `factor`.
 
 We use the `plot` function to draw a parallel box plot by associating a `numeric` variable with a `factor` variable.
 
@@ -643,7 +644,7 @@ We use the `plot` function to draw a parallel box plot by associating a `numeric
 plot(body_mass ~ sex, data = penguins_clean)
 ```
 
-We can produce something similar with **ggplot2** by specifying both the `y` and `x` aesthetics of `geom_boxplot`.
+We can produce something similar with **ggplot2** by mapping the `numeric` variable to the `y` aesthetic and the `factor` variable to the `x` aesthetic inside `geom_boxplot`.  
 
 ```{r}
 gg_penguin + 
@@ -652,13 +653,13 @@ gg_penguin +
 
 ## Multivariate plots
 
-A multivariate plot displays relationships between 2 or more variables.
+A multivariate plot displays relationships between two or more variables.
 
-Multivariate plots are more easily created using **ggplot2** than **base**.
+It is easier to create informative multivariate graphics with **ggplot2** compared to **base** R.
 
 ### Grouped scatter plot
 
-A grouped scatter plot is a scatter plot that uses colors or symbols (or both) to indicate the `level` of a `factor` variable that each point corresponds to.
+A grouped scatter plot is a scatter plot that uses colors or symbols (or both) to indicate the level of a `factor` variable that each point corresponds to.
 
 ```{r}
 gg_penguin +
@@ -725,10 +726,10 @@ ggplot(data = penguins_temp) +
 
 ### Interactive graphics
 
-The **plotly** package provides the capabilities of plotly \[<https://plotly.com/>\] using R.
+The **plotly** package provides the capabilities of plotly \[<https://plotly.com/>\] through R.
 
 -   plotly is a well-known tool for creating interactive graphics.
--   The `ggplotly` function  in the **plotly** will instantly make a `ggplot` interactive.
+-   The `ggplotly` function  in **plotly** will instantly make a `ggplot` interactive.
 
 We create an interactive grouped scatter plot using this approach.
 
@@ -779,7 +780,7 @@ ggplotly(ggi2)
 -   Or use histograms of the `numeric` variable facetted by the `factor` variable.
 -   Or use density plots of the `numeric` variables filled with different colors by the `factor` variable.
 
-9.  Create multivariate and interactive graphics based on what we learned in the previous steps.
+9.  Create multivariate and interactive graphics based on what we learn in the previous steps.
 
 ## Final notes on missing or erroneous data
 
