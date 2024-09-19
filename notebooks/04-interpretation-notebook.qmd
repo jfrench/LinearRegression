@@ -87,17 +87,6 @@ $$
 Using the assumption of mean zero errors, we have:
 
 
-::: {.content-visible unless-format="pdf"}
-</br>
-</br>
-</br>
-</br>
-</br>
-</br>
-</br>
-:::
-
-::: {.content-hidden unless-format="pdf"}
 $$
 \begin{aligned}
 & E(Y\mid X_1, X_2, \ldots, X_{p-1}) \\
@@ -107,8 +96,6 @@ $$
 &=\beta_0+\beta_1 X_1 +\ldots + \beta_{p-1}X_{p-1}.
 \end{aligned}
 $$
-:::
-
 Note: All the coefficient $\beta_i$ terms are fixed, non-random.
 
 
@@ -132,45 +119,24 @@ The interpretations of the coefficients are:
 
 The intercept term $\beta_0$ is the expected value of the response when $X= 0$.
 
-
-::: {.content-visible unless-format="pdf"}
-</br>
-</br>
-</br>
-:::
-
-::: {.content-hidden unless-format="pdf"}
 $$
 \begin{aligned}
 E(Y\mid X = 0) &= \beta_0 + \beta_1 \cdot 0 \\
 &= \beta_0.
 \end{aligned}
 $$
-:::
 
 **Interpretation of Slope**
 ---
 
 Similarly, for $\beta_1$, we notice that
 
-::: {.content-visible unless-format="pdf"}
-</br>
-</br>
-</br>
-</br>
-</br>
-</br>
-</br>
-:::
-
-::: {.content-hidden unless-format="pdf"}
 $$
 \begin{aligned}
 E(Y\mid X=x^*+1)-E(Y\mid X=x^*) &= [\beta_0 + \beta_1 (x^* + 1)] - [\beta_0 + \beta_1 x^*] \\
 &= \beta_1.
 \end{aligned}
 $$
-:::
 
 Thus, $\beta_1$ literally equals the change in the expected response
 when the regressor increases by 1 unit.
@@ -187,25 +153,11 @@ $$
 
 Some basic interpretations of the coefficients are:
 
-
-
-::: {.content-visible unless-format="pdf"}
-</br>
-</br>
-</br>
-</br>
-</br>
-</br>
-</br>
-:::
-
-::: {.content-hidden unless-format="pdf"}
 -   Intercept: The expected bill length of a penguin with a body mass of
     0 grams is 26.9 mm.
 -   `body_mass_g`: A penguin 1 gram heavier than another penguin is
     expected to have a bill length 0.004 mm longer than the smaller
     penguin.
-:::
 
 **Rescaling Predictors to aid Interpretation**
 ---
@@ -518,89 +470,36 @@ associated with.
 When an observation has level $L_1$ and $X=0$, then the expected
 response is
 
-::: {.content-visible unless-format="pdf"}
-</br>
-</br>
-</br>
-</br>
-</br>
-</br>
-</br>
-:::
-
-::: {.content-hidden unless-format="pdf"}
 $$
 \begin{aligned}
 E(Y|X = 0, C=L_1) &= \beta_{int} + \beta_X \cdot 0 + \beta_{L_2} \cdot 0 + \beta_{L_3} \cdot 0 \\
 &= \beta_{int}.
 \end{aligned}
 $$
-:::
 
 Thus, $\beta_{int}$ is the expected response for an observation with
 level $L_1$ when $X=0$.
 
 When an observation has a fixed level $L_j$ and $X$ increases from $x^*$ to $x^*+1$, then the change in the expected response is
 
-::: {.content-visible unless-format="pdf"}
-</br>
-</br>
-</br>
-</br>
-</br>
-</br>
-</br>
-:::
-
-::: {.content-hidden unless-format="pdf"}
 $$
 E(Y|X = x^* + 1, C=L_j) - E(Y|X = x^*, C=L_j)= \beta_X.
 $$
-:::
 
 Thus, $\beta_X$ is the expected change in the response for an
 observation with fixed level $L_j$ when $X$ increases by 1 unit.
 
 When an observation has level $L_2$, the expected response is
 
-::: {.content-visible unless-format="pdf"}
-</br>
-</br>
-</br>
-</br>
-</br>
-</br>
-</br>
-</br>
-</br>
-</br>
-:::
-
-::: {.content-hidden unless-format="pdf"}
 $$
 \begin{aligned}
 E(Y\mid X = x^*, C=L_2) &= \beta_{int} + \beta_X x^* + \beta_{L_2} \cdot 1 + \beta_{L_3} \cdot 0 \\
 &= \beta_{int} + \beta_X x^* + \beta_{L_2}.
 \end{aligned}
 $$
-:::
 
 What is the difference in the expected response when comparing an observation with level $L_2$ compared to an observation with level $L_1$, assuming that $X$ is the same for both observations?
 
-::: {.content-visible unless-format="pdf"}
-</br>
-</br>
-</br>
-</br>
-</br>
-</br>
-</br>
-</br>
-</br>
-</br>
-:::
-
-::: {.content-hidden unless-format="pdf"}
 $$
 \begin{aligned}
 & E(Y\mid X=x^*, C=L_2) - E(Y\mid X=x^*, C=L_1) \\
@@ -608,7 +507,6 @@ $$
 &=  \beta_{L_2}.
 \end{aligned}
 $$
-:::
 
 Thus, $\beta_{L_2}$ is the expected change in the response for a
 fixed value of $X$ when comparing on observation having level $L_1$ to
@@ -765,17 +663,6 @@ $$
 When an observation has level $L_1$ and $X=x^*$, then the expected
 response is
 
-::: {.content-visible unless-format="pdf"}
-</br>
-</br>
-</br>
-</br>
-</br>
-</br>
-</br>
-:::
-
-::: {.content-hidden unless-format="pdf"}
 $$
 \begin{aligned}
 &E(Y\mid X = x^*, C=L_1) \\
@@ -783,7 +670,6 @@ $$
 &= \beta_{int} + \beta_X x^*.
 \end{aligned}
 $$
-:::
 
 We can verify that:
 
@@ -792,17 +678,6 @@ We can verify that:
 
 Similarly, when $C=L_2$,
 
-::: {.content-visible unless-format="pdf"}
-</br>
-</br>
-</br>
-</br>
-</br>
-</br>
-</br>
-:::
-
-::: {.content-hidden unless-format="pdf"}
 $$
 \begin{aligned}
 & E(Y|X = x^*, C=L_2) \\
@@ -811,7 +686,6 @@ $$
 &= (\beta_{int} + \beta_{L_2}) + (\beta_X + \beta_{XL_2})x^*
 \end{aligned}
 $$
-:::
 
 Following this same pattern, when $C=L_3$ we have
 
