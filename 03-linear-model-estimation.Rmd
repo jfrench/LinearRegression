@@ -289,7 +289,7 @@ class(lmod) # class of lmod
 The `summary` function is commonly used to summarize the results of our fitted model. When an `lm` object is supplied to the `summary` function, it returns:
 
 - `Call`: the function call used to fit the model.
-- `Residuals`: A 5-number summary of the $\hat{\epsilon}_1, \ldots, \hat{\epsilon}_n$.
+- `Residuals`: A 5-number summary of $\hat{\epsilon}_1, \ldots, \hat{\epsilon}_n$.
 - `Coefficients`: A table that lists:
     - The regressors in the fitted model.
     - `Estimate`:  the estimated coefficient for each regressor.
@@ -298,7 +298,7 @@ The `summary` function is commonly used to summarize the results of our fitted m
     - `Pr(>|t|)`: the associated p-value of each test.
 - Various summary statistics:
     - `Residual standard error` is the value of $\hat{\sigma}$, the estimate of the error standard deviation. The degrees of freedom is $\mathrm{df}_{RSS}$, the number of observations minus the number of estimated coefficients in the model.
-    - `Multiple R-squared` is an estimate of model fit discussed in Section \@ref(evaluating-model-fit).
+    - `Multiple R-squared` is a measure of model fit discussed in Section \@ref(evaluating-model-fit).
     - `Adjusted R-squared` is a modified version of `Multiple R-squared`.
     - `F-statistic` is the test statistic for the test that compares the model with an only an intercept to the fitted model. The `DF` (degrees of freedom) values relate to the statistic under the null hypothesis, and the `p-value` is the p-value for the test.
 
@@ -855,7 +855,7 @@ When an observation has `species` level `Chinstrap`, then Equation \@ref(eq:sl-m
 &\hat{E}(\mathtt{bill\_length\_mm} \mid \mathtt{body\_mass\_g}, \mathtt{species}=\mathtt{Chinstrap}) \\
 &=26.99 + 0.003 \mathtt{body\_mass\_g} + 5.18 \cdot 1 - 0.25 \cdot 0 \\
 &\quad + 0.001 \cdot \mathtt{body\_mass\_g} \cdot 1 + 0.0009 \cdot \mathtt{body\_mass\_g} \cdot 0 \\
-&= 31.17 + 0.004 \mathtt{body\_mass\_g}.
+&= 32.17 + 0.004 \mathtt{body\_mass\_g}.
 \end{aligned}
 \]
 When an observation has `species` level `Gentoo`, then Equation \@ref(eq:sl-model-penguins) simplifies to
