@@ -6,7 +6,7 @@
   <meta http-equiv="X-UA-Compatible" content="IE=edge" />
   <title>B Overview of probability, random variables, and random vectors | A Progressive Introduction to Linear Models</title>
   <meta name="description" content="A collection of material that progressively introduces how to fit and use linear models." />
-  <meta name="generator" content="bookdown 0.34 and GitBook 2.6.7" />
+  <meta name="generator" content="bookdown 0.40 and GitBook 2.6.7" />
 
   <meta property="og:title" content="B Overview of probability, random variables, and random vectors | A Progressive Introduction to Linear Models" />
   <meta property="og:type" content="book" />
@@ -53,18 +53,19 @@
 <script src="libs/anchor-sections-1.1.0/anchor-sections.js"></script>
 <script src="libs/kePrint-0.0.1/kePrint.js"></script>
 <link href="libs/lightable-0.0.1/lightable.css" rel="stylesheet" />
-<script src="libs/htmlwidgets-1.6.2/htmlwidgets.js"></script>
-<script src="libs/plotly-binding-4.10.2/plotly.js"></script>
+<link href="libs/htmltools-fill-0.5.8.1/fill.css" rel="stylesheet" />
+<script src="libs/htmlwidgets-1.6.4/htmlwidgets.js"></script>
+<script src="libs/plotly-binding-4.10.4/plotly.js"></script>
 <script src="libs/typedarray-0.1/typedarray.min.js"></script>
-<link href="libs/crosstalk-1.2.0/css/crosstalk.min.css" rel="stylesheet" />
-<script src="libs/crosstalk-1.2.0/js/crosstalk.min.js"></script>
+<link href="libs/crosstalk-1.2.1/css/crosstalk.min.css" rel="stylesheet" />
+<script src="libs/crosstalk-1.2.1/js/crosstalk.min.js"></script>
 <link href="libs/plotly-htmlwidgets-css-2.11.1/plotly-htmlwidgets.css" rel="stylesheet" />
 <script src="libs/plotly-main-2.11.1/plotly-latest.min.js"></script>
 
 
 <style type="text/css">
 pre > code.sourceCode { white-space: pre; position: relative; }
-pre > code.sourceCode > span { display: inline-block; line-height: 1.25; }
+pre > code.sourceCode > span { line-height: 1.25; }
 pre > code.sourceCode > span:empty { height: 1.2em; }
 .sourceCode { overflow: visible; }
 code.sourceCode > span { color: inherit; text-decoration: inherit; }
@@ -136,6 +137,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 div.csl-bib-body { }
 div.csl-entry {
   clear: both;
+  margin-bottom: 0em;
 }
 .hanging div.csl-entry {
   margin-left:2em;
@@ -618,11 +620,11 @@ assuming the sum is well-defined.</p>
 <p><span class="math inline">\(Y\)</span> is a <strong>continuous</strong> random variable if there exists a function <span class="math inline">\(f_Y (y)\)</span> such that:</p>
 <ol style="list-style-type: decimal">
 <li><span class="math inline">\(f_Y (y)\geq 0\)</span> for all <span class="math inline">\(y\)</span>,</li>
-<li><span class="math inline">\(\int_{-\infty}^\infty f_Y (y) dy = 1\)</span>,</li>
-<li><span class="math inline">\(a\leq b\)</span>, <span class="math inline">\(P(a&lt;Y&lt;b)=\int_a^b f_Y (y) dy\)</span>.</li>
+<li><span class="math inline">\(\int_{-\infty}^\infty f_Y (y)  dy = 1\)</span>,</li>
+<li><span class="math inline">\(a\leq b\)</span>, <span class="math inline">\(P(a&lt;Y&lt;b)=\int_a^b f_Y (y)  dy\)</span>.</li>
 </ol>
 <p>The function <span class="math inline">\(f_Y\)</span> is called the <strong>probability density function (pdf)</strong>.</p>
-<p>Additionally, <span class="math inline">\(F_Y (y)=\int_{-\infty}^y f_Y (y) dy\)</span> and <span class="math inline">\(f_Y (y)=F&#39;_Y(y)\)</span> for any point <span class="math inline">\(y\)</span> at which <span class="math inline">\(F_Y\)</span> is differentiable.</p>
+<p>Additionally, <span class="math inline">\(F_Y (y)=\int_{-\infty}^y f_Y (y)  dy\)</span> and <span class="math inline">\(f_Y (y)=F&#39;_Y(y)\)</span> for any point <span class="math inline">\(y\)</span> at which <span class="math inline">\(F_Y\)</span> is differentiable.</p>
 <p>The <strong>mean</strong> of a continuous random variables <span class="math inline">\(Y\)</span> is defined as
 <span class="math display">\[
 E(Y) =

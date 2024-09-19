@@ -6,7 +6,7 @@
   <meta http-equiv="X-UA-Compatible" content="IE=edge" />
   <title>Chapter 3 Linear model estimation | A Progressive Introduction to Linear Models</title>
   <meta name="description" content="A collection of material that progressively introduces how to fit and use linear models." />
-  <meta name="generator" content="bookdown 0.34 and GitBook 2.6.7" />
+  <meta name="generator" content="bookdown 0.40 and GitBook 2.6.7" />
 
   <meta property="og:title" content="Chapter 3 Linear model estimation | A Progressive Introduction to Linear Models" />
   <meta property="og:type" content="book" />
@@ -53,18 +53,19 @@
 <script src="libs/anchor-sections-1.1.0/anchor-sections.js"></script>
 <script src="libs/kePrint-0.0.1/kePrint.js"></script>
 <link href="libs/lightable-0.0.1/lightable.css" rel="stylesheet" />
-<script src="libs/htmlwidgets-1.6.2/htmlwidgets.js"></script>
-<script src="libs/plotly-binding-4.10.2/plotly.js"></script>
+<link href="libs/htmltools-fill-0.5.8.1/fill.css" rel="stylesheet" />
+<script src="libs/htmlwidgets-1.6.4/htmlwidgets.js"></script>
+<script src="libs/plotly-binding-4.10.4/plotly.js"></script>
 <script src="libs/typedarray-0.1/typedarray.min.js"></script>
-<link href="libs/crosstalk-1.2.0/css/crosstalk.min.css" rel="stylesheet" />
-<script src="libs/crosstalk-1.2.0/js/crosstalk.min.js"></script>
+<link href="libs/crosstalk-1.2.1/css/crosstalk.min.css" rel="stylesheet" />
+<script src="libs/crosstalk-1.2.1/js/crosstalk.min.js"></script>
 <link href="libs/plotly-htmlwidgets-css-2.11.1/plotly-htmlwidgets.css" rel="stylesheet" />
 <script src="libs/plotly-main-2.11.1/plotly-latest.min.js"></script>
 
 
 <style type="text/css">
 pre > code.sourceCode { white-space: pre; position: relative; }
-pre > code.sourceCode > span { display: inline-block; line-height: 1.25; }
+pre > code.sourceCode > span { line-height: 1.25; }
 pre > code.sourceCode > span:empty { height: 1.2em; }
 .sourceCode { overflow: visible; }
 code.sourceCode > span { color: inherit; text-decoration: inherit; }
@@ -136,6 +137,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 div.csl-bib-body { }
 div.csl-entry {
   clear: both;
+  margin-bottom: 0em;
 }
 .hanging div.csl-entry {
   margin-left:2em;
@@ -713,7 +715,7 @@ E(\mathtt{bill\_length\_mm}\mid \mathtt{body\_mass\_g})=\beta_0+\beta_1\,\mathtt
 <p>The <code>summary</code> function is commonly used to summarize the results of our fitted model. When an <code>lm</code> object is supplied to the <code>summary</code> function, it returns:</p>
 <ul>
 <li><code>Call</code>: the function call used to fit the model.</li>
-<li><code>Residuals</code>: A 5-number summary of the <span class="math inline">\(\hat{\epsilon}_1, \ldots, \hat{\epsilon}_n\)</span>.</li>
+<li><code>Residuals</code>: A 5-number summary of <span class="math inline">\(\hat{\epsilon}_1, \ldots, \hat{\epsilon}_n\)</span>.</li>
 <li><code>Coefficients</code>: A table that lists:
 <ul>
 <li>The regressors in the fitted model.</li>
@@ -725,7 +727,7 @@ E(\mathtt{bill\_length\_mm}\mid \mathtt{body\_mass\_g})=\beta_0+\beta_1\,\mathtt
 <li>Various summary statistics:
 <ul>
 <li><code>Residual standard error</code> is the value of <span class="math inline">\(\hat{\sigma}\)</span>, the estimate of the error standard deviation. The degrees of freedom is <span class="math inline">\(\mathrm{df}_{RSS}\)</span>, the number of observations minus the number of estimated coefficients in the model.</li>
-<li><code>Multiple R-squared</code> is an estimate of model fit discussed in Section <a href="linear-model-estimation.html#evaluating-model-fit">3.10</a>.</li>
+<li><code>Multiple R-squared</code> is a measure of model fit discussed in Section <a href="linear-model-estimation.html#evaluating-model-fit">3.10</a>.</li>
 <li><code>Adjusted R-squared</code> is a modified version of <code>Multiple R-squared</code>.</li>
 <li><code>F-statistic</code> is the test statistic for the test that compares the model with an only an intercept to the fitted model. The <code>DF</code> (degrees of freedom) values relate to the statistic under the null hypothesis, and the <code>p-value</code> is the p-value for the test.</li>
 </ul></li>
@@ -1275,7 +1277,7 @@ using the code below, using the <code>coef</code> function to extract the estima
 &amp;\hat{E}(\mathtt{bill\_length\_mm} \mid \mathtt{body\_mass\_g}, \mathtt{species}=\mathtt{Chinstrap}) \\
 &amp;=26.99 + 0.003 \mathtt{body\_mass\_g} + 5.18 \cdot 1 - 0.25 \cdot 0 \\
 &amp;\quad + 0.001 \cdot \mathtt{body\_mass\_g} \cdot 1 + 0.0009 \cdot \mathtt{body\_mass\_g} \cdot 0 \\
-&amp;= 31.17 + 0.004 \mathtt{body\_mass\_g}.
+&amp;= 32.17 + 0.004 \mathtt{body\_mass\_g}.
 \end{aligned}
 \]</span>
 When an observation has <code>species</code> level <code>Gentoo</code>, then Equation <a href="linear-model-estimation.html#eq:sl-model-penguins">(3.26)</a> simplifies to
@@ -2092,7 +2094,7 @@ minimizes the RSS.</p>
 </div>
 </div>
 <h3>References<a href="references.html#references" class="anchor-section" aria-label="Anchor link to header"></a></h3>
-<div id="refs" class="references csl-bib-body hanging-indent">
+<div id="refs" class="references csl-bib-body hanging-indent" entry-spacing="0">
 <div id="ref-anscombe1973graphs" class="csl-entry">
 Anscombe, Francis J. 1973. <span>“Graphs in Statistical Analysis.”</span> <em>The American Statistician</em> 27 (1): 17–21.
 </div>
@@ -2103,7 +2105,7 @@ Ezekiel, Mordecai. 1930. <span>“Methods of Correlation Analysis.”</span>
 Gorman, Kristen B., Tony D. Williams, and William R. Fraser. 2014. <span>“Ecological Sexual Dimorphism and Environmental Variability Within a Community of Antarctic Penguins (Genus Pygoscelis).”</span> <em>PLOS ONE</em> 9 (3): 1–14. <a href="https://doi.org/10.1371/journal.pone.0090081">https://doi.org/10.1371/journal.pone.0090081</a>.
 </div>
 <div id="ref-R-palmerpenguins" class="csl-entry">
-Horst, Allison, Alison Hill, and Kristen Gorman. 2022. <em>Palmerpenguins: Palmer Archipelago (Antarctica) Penguin Data</em>. <a href="https://CRAN.R-project.org/package=palmerpenguins">https://CRAN.R-project.org/package=palmerpenguins</a>.
+Horst, Allison, Alison Hill, and Kristen Gorman. 2022. <em>Palmerpenguins: Palmer Archipelago (Antarctica) Penguin Data</em>. <a href="https://allisonhorst.github.io/palmerpenguins/">https://allisonhorst.github.io/palmerpenguins/</a>.
 </div>
 <div id="ref-alr4" class="csl-entry">
 Weisberg, Sanford. 2014. <em>Applied Linear Regression</em>. Fourth. Hoboken <span>NJ</span>: Wiley. <a href="http://z.umn.edu/alr4ed">http://z.umn.edu/alr4ed</a>.
