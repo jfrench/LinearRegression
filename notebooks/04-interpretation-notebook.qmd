@@ -67,8 +67,7 @@ $$
 * The error term is treated as a random variable
 * Consequently, the response variable is also a random variable.
 
-**Random Error Assumption**
----
+## Random Error Assumption
 
 We assume that the errors all have mean 0, conditional on the values of the regressor variables.
 
@@ -81,8 +80,7 @@ $$
 E(\epsilon \mid \mathbb{X})=0.
 $$
 
-**Expected Value of Response**
----
+## Expected Value of Response
 
 Using the assumption of mean zero errors, we have:
 
@@ -96,13 +94,14 @@ $$
 &=\beta_0+\beta_1 X_1 +\ldots + \beta_{p-1}X_{p-1}.
 \end{aligned}
 $$
-Note: All the coefficient $\beta_i$ terms are fixed, non-random.
+
+Note: All the $\beta_j$ terms are treated as fixed, non-random values.
 
 
-**Interpretation for simple linear regression**
----
+# Interpretation for simple linear regression
 
-Suppose we have a simple linear regression model, so that
+Suppose we have the simple linear regression model
+
 $$
 E(Y\mid X)=\beta_0 + \beta_1 X.
 $$
@@ -114,8 +113,7 @@ The interpretations of the coefficients are:
     increases 1 unit, i.e., $\beta_1=E(Y\mid X=x^*+1)-E(Y\mid X=x^*)$,
     where $x^*$ is a fixed, real number.
 
-**Interpretation of Intercept**
----
+## Interpretation of Intercept
 
 The intercept term $\beta_0$ is the expected value of the response when $X= 0$.
 
@@ -126,8 +124,7 @@ E(Y\mid X = 0) &= \beta_0 + \beta_1 \cdot 0 \\
 \end{aligned}
 $$
 
-**Interpretation of Slope**
----
+## Interpretation of Slope
 
 Similarly, for $\beta_1$, we notice that
 
@@ -142,7 +139,7 @@ Thus, $\beta_1$ literally equals the change in the expected response
 when the regressor increases by 1 unit.
 
 It may not make sense to say "we increase $X$ by 1
-unit" or "when $X$ increases by 1 unit". For example??
+unit" or "when $X$ increases by 1 unit" when we cannot easily change the value of $X$.
 
 To illustrate the interpretations given above, we interpret the simple
 linear regression model fit to the `penguins` data. The fitted simple linear regression model of `body_mass_g` regressed on
@@ -159,11 +156,11 @@ Some basic interpretations of the coefficients are:
     expected to have a bill length 0.004 mm longer than the smaller
     penguin.
 
-**Rescaling Predictors to aid Interpretation**
----
+## Rescaling Predictors to aid Interpretation
 
-* A weight difference of 1 gram is negligible in the context of penguin weights.
-* A bill length change of 0.004 mm is unlikely to be noticed.
+A weight difference of 1 gram is negligible in the context of penguin weights.
+
+A bill length change of 0.004 mm is unlikely to be noticed.
 
 In the code below, we divide the `body_mass_g` variable by 1000 to convert the variable from grams to kilograms.
 
@@ -181,9 +178,7 @@ slmod_scaled <- lm(bill_length_mm ~ body_mass_kg, data = penguins)
 coefficients(slmod_scaled)
 ```
 
-**Question**
-
-- How do we reinterpret the model in the context of kilograms?
+**Question:** How do we reinterpret the model in the context of kilograms?
 
 Dividing `body_mass_g` by 1000 resulted in the estimated
 coefficient changing by a factor of 1000.
@@ -194,8 +189,7 @@ regressor $(X_j + a)/c$ will have an estimated coefficient of
 $c\hat{\beta}_j$, where $a$ and $c$ are fixed, real numbers and assuming
 nothing else in the fitted model changes.
 
-**Interpretation for first-order multiple linear regression models**
----
+# Interpretation for first-order multiple linear regression models
 
 Suppose we have a multiple linear regression model with $p-1$ *numeric*
 regressors, so that
@@ -208,7 +202,7 @@ Relying on the definition of $\mathbb{X}$, we denote the set of
 regressors without $X_j$ as
 $\mathbb{X}_{-j} = \mathbb{X}\setminus\{X_j\}$.
 
-The interpretations of the coefficients from the model in Equation are:
+The interpretations of the coefficients from the model above are:
 
 -   $\beta_0$ is the expected response when all regressors are 0, i.e.,
     $\beta_0=E(Y\mid X_1=0,\ldots,X_{p-1}=0)$.
@@ -232,13 +226,12 @@ E(Y\mid X_1=0,\ldots,X_{p-1}=0) &= \beta_0 + \beta_1 \cdot 0 + \cdots + \beta_{p
 \end{aligned}
 $$
 
-**Question:**
+**Questions:**
 
 - Does the interpretation of the intercept always make sense?
 - What if $X_1$ was heart rate?
 
-**Issues Interpreting Polynomial Models**
----
+## Issues Interpreting Polynomial Models
 
 In multiple regression models, a single predictor can be used more than once in the model.
 
@@ -248,7 +241,7 @@ $$E(Y\mid X) = \beta_0 + \beta_1 X + \beta_2 X^2,$$
 
 $X$ is used in both the second and third terms.
 
-**Questions**
+**Questions:**
 
 * How does this affect the interpretation of $\beta_1$?
 * Is is possible to increase $X$ while keeping $X^2$ fixed?
@@ -257,8 +250,7 @@ The standard interpretation we discussed is applicable to first-order linear reg
 
 *First-order linear regression model:* no regressor is a function of any other regressor.
 
-**Penguins Example Revisited**
----
+## Penguins Example Revisited
 
 We interpret the first-order multiple linear regression model fit to the `penguins` data. The fitted multiple linear regression
 model is:
@@ -277,26 +269,24 @@ Some basic interpretations of the coefficients are:
 -   `body_mass_g`: For two penguins that have the same flipper length but one penguin has a body mass 1 gram larger, we expect the heavier penguin to have a bill length 0.0007 mm longer than the other penguin.
 -   `flipper_length_mm`: For two penguins with the same body mass but whose flipper lengths differ by 1 mm, we expect the penguin with longer flippers to have a bill length 0.22 mm longer than the other penguin.
 
-**Roles of regressor variables**
----
+# Roles of regressor variables
 
 Did you notice that the estimated coefficients for the intercept and the
-`body_mass_g` regressor changed between the simple model and the multiple regression model?
+`body_mass_g` regressor changed between the simple model and the multiple regression model? Why?
 
 |Regression Model | Intercept Coef.| Body Mass Coef.|
 |:----------------|---------------:|---------------:|
 |Simple Linear    |           26.90|           0.004|
 |Multiple         |           -3.44|           0.0007|
 
-* Why?
-
 The role a regressor plays in a regression model depends on what other
 regressors are in the model.
 
-- Generally, we can't provide a definitive interpretation of a
+Generally, we can't provide a definitive interpretation of a
 regressor's role in a fitted model without knowing what other regressors
 are in the model.
-- When interpreting a regressor, it is common to
+
+When interpreting a regressor, it is common to
 include something like *after accounting for the other variables in
 the model*.
 
@@ -334,8 +324,7 @@ An *effect plot* is a plot of the estimated mean response as a function of a *fo
 - A *predictor* variable is a variable available to model the response variable.
 - A *regressor* variable is a variable used in our regression model, whether that is an unmodified predictor variable, some transformation of a predictor, some combination of predictors, etc.
 
-**First-Order Model Effect Plot**
----
+## First-Order Model Effect Plot
 
 In a first-order linear model, none of the regressors interact, i.e., none of the regressors are functions of each other.
 
@@ -401,11 +390,13 @@ $$
 
 as a function of $\mathtt{flipper\_length\_mm}$.
 
-The `effects` R package can be used to generate effect
+The **effects** R package can be used to generate effect
 plots for the predictors of a fitted linear model.
 
-- We use the `effects::predictorEffect` function to compute the information needed to draw the plot.
-- We use the `plot` function to display the information.
+
+The `effects::predictorEffect` function computes the information needed to draw the effect plot.
+
+The `plot` function uses the output from `effects::predictorEffect` to draw the effect plot.
 
 The `predictorEffect` function computes the estimated mean response for
 different values of the focal predictor while holding the other
@@ -420,6 +411,7 @@ The main arguments of `predictorEffect` are:
 We load the **effects** package.
 
 ```{r}
+#| message: false
 library(effects)
 ```
 
@@ -431,7 +423,7 @@ plot(predictorEffect("body_mass_g", mlmod))
 
 There is a clear positive association between `body_mass_g` and `bill_length_mm` after accounting for the `flipper_length_mm` variable.
 
-The shaded area indicates the 95% confidence interval bands for the estimated mean response.
+The shaded area indicates the 95% confidence interval bands for the mean response for that value of `body_mass_g`.
 
 We next create an effect plot for `flipper_length_mm` using the code below.
 
@@ -451,20 +443,24 @@ plot(allEffects(mlmod))
 
 # Interpretation for categorical predictors
 
-**Coefficient interpretation for parallel lines models**
----
+## Coefficient interpretation for parallel lines models
 
-Consider a parallel lines model with numeric regressor $X$ and
-categorical predictor $C$ with levels $L_1$, $L_2$, and $L_3$. Predictor $C$
+Consider a parallel lines model with a numeric regressor $X$ and
+a categorical predictor $C$ with levels $L_1$, $L_2$, and $L_3$.
+
+The predictor variable $C$
 must be transformed into two indicator variables, $D_2$ and $D_3$, for
 category levels $L_2$ and $L_3$, to be included in our linear model.
-$L_1$ is the reference level. The parallel lines model is formulated as
+
+- $L_1$ is the reference level.
+
+The parallel lines model is formulated as
 $$
-E(Y \mid X, C) = \beta_{int} + \beta_{X} X + \beta_{L_2} D_2 +  \beta_{L_3} D_3
+E(Y \mid X, C) = \beta_{int} + \beta_{X} X + \beta_{L_2} D_2 +  \beta_{L_3} D_3.
 $$
 
 We replaced the usual $\beta_0$, $\beta_1$, $\beta_2$, and
-$\beta_3$ with notation the indicates the regressor each coefficient is
+$\beta_3$ with notation that indicates the regressor each coefficient is
 associated with.
 
 When an observation has level $L_1$ and $X=0$, then the expected
@@ -524,7 +520,9 @@ To summarize, assuming categorical predictor $C$ has $K$ levels instead of 3:
     the response when comparing observations having level $L_1$ and
     $L_j$ with $X$ fixed at the same value.
 
-We previously fit a parallel lines model to the `penguins` data that used both `body_mass_g` and `species` to explain the behavior of `bill_length_mm`. Letting $D_C$ denote the indicator variable for the `Chinstrap` level and $D_G$ denote the indicator variable for the `Gentoo` level, the fitted parallel lines model was
+We previously fit a parallel lines model to the `penguins` data that used both `body_mass_g` and `species` to explain the behavior of `bill_length_mm`.
+
+Letting $D_C$ denote the indicator variable for the `Chinstrap` level and $D_G$ denote the indicator variable for the `Gentoo` level, the fitted parallel lines model was
 
 $$
 \begin{aligned}
@@ -545,8 +543,7 @@ In the context of this model:
 -   A Gentoo penguin is expected to have a bill length 3.56 mm longer
     than an Adelie penguin, assuming their body mass is the same.
 
-**Effect plots for fitted models with non-interacting categorical predictors**
----
+### Effect plots for fitted models with non-interacting categorical predictors
 
 How do we create an effect plot for a numeric focal predictor when a
 non-interacting categorical predictor is in the model (such as for the
@@ -615,7 +612,7 @@ fixed group predictors), is a plot of the estimated mean response for
 each level of the categorical variable when the fixed group
 predictors are held at their sample mean.
 
-The sample mean of the obsered `body_mass_g` values is:
+The sample mean of the observed `body_mass_g` values is 4,201.75 grams.
 
 ```{r}
 # sample mean of body_mass_g variable used to fit lmodp
@@ -642,25 +639,28 @@ And,
 
 $$\hat{E}(\mathtt{bill\_length\_mm} \mid \mathtt{body\_mass\_g} = 4201.75, \mathtt{species}=\mathtt{Gentoo}) = 28.48 + 0.004(4201.75) = 44.23$$
 
-The code below produces the effect plot for `species`. The confidence bands for the estimated mean response are shown by the vertical bars.
+The code below produces the effect plot for `species`. The confidence intervals of the mean response for each level of `species` are indicated by the vertical bars.
 
 ```{r}
 plot(predictorEffect("species", lmodp))
 ```
 
-**Coefficient interpretation for separate lines models**
----
+### Coefficient interpretation for separate lines models
 
-Consider a separate lines model with numeric regressor $X$ and
-categorical predictor $C$ with levels $L_1$, $L_2$, and $L_3$. The
+Consider a separate lines model with a numeric regressor $X$ and
+a categorical predictor $C$ with levels $L_1$, $L_2$, and $L_3$.
+
+The
 predictor $C$ will be transformed into two indicator variables, $D_2$
 and $D_3$, for category levels $L_2$ and $L_3$, with $L_1$ being the
-reference level. The separate lines model is formulated as:
+reference level.
+
+The separate lines model is formulated as:
 $$
 E(Y \mid X, C) = \beta_{int} + \beta_{X} X + \beta_{L_2} D_2 +  \beta_{L_3} D_3 + \beta_{XL_2} XD_2+\beta_{XL_3}XD_3
 $$
 
-When an observation has level $L_1$ and $X=x^*$, then the expected
+When an observation has level $L_1$ and $X=x^*$, the expected
 response is
 
 $$
@@ -751,8 +751,7 @@ In the context of this model:
     length by Gentoo penguins to be 0.0009 mm larger than the
     corresponding change in bill length by Adelie penguins.
 
-**Effect plots for interacting categorical predictors**
----
+### Effect plots for interacting categorical predictors
 
 We now discuss construction of effect plots for a separate lines model,
 which has an interaction between a categorical and numeric predictor.
@@ -804,7 +803,7 @@ $$
 
 The effect plot of `body_mass_g` for the separate lines model is displayed using the code below.
 
-- The `axes` argument to rotates the x-axis labels (otherwise the text overlaps)
+- The `axes` argument rotates the x-axis labels (otherwise the text overlaps)
 - The `lines` argument displays all three lines in one graphic instead of a
 separate panel for each level of `species`.
 
@@ -854,8 +853,7 @@ vignette("predictor-effects-gallery", package = "effects")
 
 # Added-variable and leverage plots
 
-**Added-variable plots**
----
+## Added-variable plots
 
 As we saw before, an *effect plot* is a plot
 of the estimated mean relationship between the response and a focal
@@ -871,12 +869,12 @@ way:
 1.  Compute the residuals of the model regressing the response $Y$ on
     all regressors except $X_j$. We denote these residuals
     $\hat{\boldsymbol{\epsilon}}(Y\mid \mathbb{X}_{-j})$. These
-    residuals represent the part of the response variable not explained
+    residuals represent the variation in the response variable not explained
     by the regressors in $\mathbb{X}_{-j}$.
 2.  Compute the residuals of the model regressing the regressor $X_j$ on
     all regressors except $X_j$. We denote these residuals
     $\hat{\boldsymbol{\epsilon}}(X_j \mid \mathbb{X}_{-j})$. These
-    residuals represent the part of the $X_j$ not explained by the
+    residuals represent the variation in $X_j$ not explained by the
     regressors in $\mathbb{X}_{-j}$. Alternatively, these residuals
     represent the amount of additional information $X_j$ provides after
     accounting for the regressors in $\mathbb{X}_{-j}$.
@@ -913,7 +911,7 @@ In regards to point 1 and 2:
 -   If the points in an added-variable plot for $X_j$ are curved, it
     indicates that that there is a deficiency in the fitted model
     (likely because we need to include one or more additional regressors
-    to the model).
+    in the model).
 
 ```{r}
 #| echo: false
@@ -937,9 +935,7 @@ title("(c)")
 par(mfrow = c(1, 1))
 ```
 
-**Question**
-
-- What do the three plots tell us about our model?
+**Question:** What do the three plots tell us about our model?
 
 From the **car** package, the `avPlot` function will
 produce an added-variable plot for a single regressor while the
@@ -966,17 +962,23 @@ plot for each term).
 We now create and interpret added-variable plots for the model
 regressing `bill_length_mm` on `body_mass_g` and `flipper_length_mm`.
 
+We first load the **car** package.
+
 ```{r}
+#| message: false
 library(car)
+```
+
+We then create the added-variable plots for our fitted model.
+
+```{r}
 # create added-variable plots for all regressors in mlmod
 avPlots(mlmod)
 ```
 
 The blue line is the simple linear regression model that minimizes the RSS of the points.
 
-**Question:**
-
-- Which variable seems to have more explanatory power?
+**Question:** Which variable seems to have more explanatory power?
 
 
 To create the added-variable plots for all regressors in the parallel lines model from `penguins` data, we use the fitted model:
@@ -996,13 +998,12 @@ avPlots(lmodp)
 ```
 
 
-**Question:**
+**Questions:**
 
 - How should we interpret the relative strength of the linear relationships?
 - Is there any clustering apparent?
 
-**Leverage Plots**
----
+## Leverage Plots
 
 It sometimes doesn't make sense to talk about the effect of adding a single regressor when all of the other regressors are in the model.
 
@@ -1060,8 +1061,7 @@ model:
 #| eval: false
 #| output: true
 # function call for separate lines model
-lm(formula = bill_length_mm ~ body_mass_g + species + body_mass_g:species,
-   data = penguins)
+lm(formula = bill_length_mm ~ body_mass_g + species + body_mass_g:species, data = penguins)
 ```
 
 Thus, we have terms for `body_mass_g`, `species`, and the interaction
@@ -1086,12 +1086,11 @@ utility because the leverage plot includes the influence of the
 interaction term `body_mass_g:species`.
     - We are unlikely to fit a model that includes the interaction term without also including the `species` term directly. Instead it makes more sense to judge the utility of adding `species` to the model regressing `bill_length_mm` on
 `body_mass_g` alone, which we already considered.
-- Examining the leverage plot for the interaction term `body_mass_g:species` , we see the points have only a weak linear relationship. Thus, we expect limited utility in adding the interaction term `body_mass_g:species` to the parallel lines regression model that regresses `bill_length_mm` on `body_mass_g` and `species`.
+- Examining the leverage plot for the interaction term `body_mass_g:species`, we see the points have only a weak linear relationship. Thus, we expect limited utility in adding the interaction term `body_mass_g:species` to the parallel lines regression model that regresses `bill_length_mm` on `body_mass_g` and `species`.
 
 # Going deeper
 
-**Orthogonality**
----
+## Orthogonality
 
 Let
 
@@ -1116,18 +1115,18 @@ i.e., if the values in $\mathbf{X}_{[j]}$ sum to zero.
 
 Let $\bar{x}_j = \frac{1}{n}\sum_{i=1}^n x_{i,j}$ denote the sample mean
 of $\mathbf{X}_{[j]}$ and
-$\bar{\mathbf{x}}_j = \bar{x}_j \boldsymbol{1}_{n\times 1}$ denote the
+$\bar{\mathbf{X}}_{[j]} = \bar{x}_j \boldsymbol{1}_{n\times 1}$ denote the
 column vector that repeats $\bar{x}_j$ $n$ times.
 
 *Centering* $\mathbf{X}_{[j]}$ involves subtracting the sample mean of
 $\mathbf{X}_{[j]}$ from $\mathbf{X}_{[j]}$, i.e.,
-$\mathbf{X}_{[j]} - \bar{\mathbf{x}}_j$.
+$\mathbf{X}_{[j]} - \bar{\mathbf{X}}_{[j]}$.
 
 Regressors $\mathbf{X}_{[j]}$ and $\mathbf{X}_{[k]}$ are
 *uncorrelated* if they are orthogonal after being centered, i.e., if
 
 $$
-(\mathbf{X}_{[j]} - \bar{\mathbf{x}}_j)^T (\mathbf{X}_{[k]} - \bar{\mathbf{x}}_k)=0.
+(\mathbf{X}_{[j]} - \bar{\mathbf{X}}_{[j]})^T (\mathbf{X}_{[k]} - \bar{\mathbf{X}}_{[k]})=0.
 $$
 
 Note that the sample covariance between vectors $\mathbf{X}_{[j]}$
@@ -1136,7 +1135,7 @@ and $\mathbf{X}_{[k]}$ is
 $$
 \begin{aligned}
 \widehat{\mathrm{cov}}(\mathbf{X}_{[j]}, \mathbf{X}_{[k]}) &= \frac{1}{n-1}\sum_{i=1}^n (x_{i,j} - \bar{x}_j)(x_{i,k} - \bar{x}_k) \\
- &= \frac{1}{n-1}(\mathbf{X}_{[j]} - \bar{\mathbf{x}}_j)^T (\mathbf{X}_{[k]} - \bar{\mathbf{x}}_k).
+ &= \frac{1}{n-1}(\mathbf{X}_{[j]} - \bar{\mathbf{X}}_{[j]})^T (\mathbf{X}_{[k]} - \bar{\mathbf{X}}_{[k]}).
 \end{aligned}
 $$
 
@@ -1174,7 +1173,7 @@ X2 <- c(-1, 2, -3, 1, 5/7)  # create regressor 2 to be orthogonal to X1
 
 Note that the `crossprod` function computes the cross product of two
 vectors or matrices, so that `crossprod(A, B)` computes
-$\mathbf{A}^T B$, where the vectors or matrices must have the correct
+$\mathbf{A}^T \mathbf{B}$, where the vectors or matrices must have the correct
 dimension for the multiplication to be performed.
 
 The regressor vectors `X1` and `X2` are orthogonal since their
