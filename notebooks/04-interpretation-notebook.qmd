@@ -142,7 +142,7 @@ It may not make sense to say "we increase $X$ by 1
 unit" or "when $X$ increases by 1 unit" when we cannot easily change the value of $X$.
 
 To illustrate the interpretations given above, we interpret the simple
-linear regression model fit to the `penguins` data. The fitted simple linear regression model of `body_mass_g` regressed on
+linear regression model fit to the `penguins` data. The fitted simple linear regression model of `bill_length_mm` regressed on
 `body_mass_g` is
 $$
 \hat{E}(\mathtt{bill\_length\_mm}\mid \mathtt{body\_mass\_g})=26.9+0.004 \,\mathtt{body\_mass\_g}.
@@ -191,7 +191,7 @@ nothing else in the fitted model changes.
 
 # Interpretation for first-order multiple linear regression models
 
-Suppose we have a multiple linear regression model with $p-1$ *numeric*
+Suppose we have a multiple linear regression model with $p-1$ first-order
 regressors, so that
 
 $$
@@ -209,7 +209,7 @@ The interpretations of the coefficients from the model above are:
 -   $\beta_j$, $j = 1,\ldots,p-1$, represents the expected change in the
     response when regressor $j$ increases 1 unit and the other
     regressors stay the same, i.e.,
-    $\beta_j=E(Y\mid \mathbb{X}_{-j} = \mathbf{x}^*_{-j}, X_{j+1} = x_{j}^*+1)-E(Y\mid \mathbb{X}_{-j} = \mathbf{x}^*_{-j}, X_{j+1} = x_{j}^*)$
+    $\beta_j=E(Y\mid \mathbb{X}_{-j} = \mathbf{x}^*_{-j}, X_{j} = x_{j}^*+1)-E(Y\mid \mathbb{X}_{-j} = \mathbf{x}^*_{-j}, X_{j} = x_{j}^*)$
     where
     $\mathbf{x}_{-j}^*=[x^*_1,\ldots,x_{j-1}^*,x_{j+1}^*,\ldots,x_{p-1}^*]\in \mathbb{R}^{p-2}$
     is a vector with $p-2$ fixed values (the number of regressors
