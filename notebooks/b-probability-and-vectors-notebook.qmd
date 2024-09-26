@@ -2,18 +2,26 @@
 title: "Appendix B: Probability and Vectors"
 author: Joshua French
 date: ''
-# format: pdf
+engine: knitr
+# format: html
+jupyter:
+  kernelspec:
+    display_name: R
+    language: R
+    name: ir
 format: ipynb
-jupyter: ir
 execute:
   output: false
 self-contained: true
 title-block-banner: true
+wrap: 'none'
 ---
 
 To open this information in an interactive Colab notebook, click the Open in Colab graphic below.
 
-<a href="https://colab.research.google.com/github/jfrench/LinearRegression/blob/master/notebooks/b-probability-and-vectors-notebook.ipynb"> <img src="https://colab.research.google.com/assets/colab-badge.svg"/> </a>
+<a href="https://colab.research.google.com/github/jfrench/LinearRegression/blob/master/notebooks/b-probability-and-vectors-notebook.ipynb">
+<img src="https://raw.githubusercontent.com/jfrench/LinearRegression/f6de270d2ff34af455fe2897e3e0f6e5705c849f/images/qr-probability-and-vectors.png">
+</a>
 
 # Overview of probability, random variables, and random vectors
 
@@ -215,11 +223,11 @@ $$
 
 #### Example (Exponential distribution)
 
-A random variable $Y$ is said to have an exponential distribution rate parameter $\lambda$, denoted with $Y \sim \mathsf{Exp}(\lambda)$ if $\mathcal{S} = \{y\in \mathbb{R}:y\geq 0\}$ and has distribution,
+A random variable $Y$ is said to have an exponential distribution with rate parameter $\lambda$, written as $Y \sim \mathsf{Exp}(\lambda)$, if $\mathcal{S} = \{y\in \mathbb{R}:y\geq 0\}$ and has the density function
 
 **Exponential PDF:**
 
-$$f_Y(y)=\lambda\exp(-\lambda y)$$
+$$f_Y(y)=\lambda\exp(-\lambda y).$$
 
 Determine the mean and variance of $Y$.
 
@@ -235,7 +243,8 @@ Determine the mean and variance of $Y$.
 :::
 
 ::: {.content-hidden unless-format="pdf"}
-**Mean:** $$
+**Mean:**
+$$
 \begin{aligned}
 E(Y)&=\int_{0}^{\infty} y\lambda \exp(-\lambda y)\;dy\\
 &=-\exp(-\lambda y)(\lambda^{-1}+y)\biggr]^{\infty}_{0}\\
@@ -369,7 +378,7 @@ If $Y$ and $Z$ are also independent, then:
 In general, if $Y_1, Y_2, \ldots, Y_n$ are a set of random variables, then:
 
 -   $E(\sum_{i=1}^n Y_i) = \sum_{i=1}^n E(Y_i)$, i.e., the expectation of the sum of random variables is the sum of the expectation of the random variables.
--   $\mathrm{var}(\sum_{i=1}^n Y_i) = \sum_{i=1}^n \mathrm{var}(Y_i) + \sum_{j=1}^n\sum_{1\leq i<j\leq n}2\mathrm{cov}(Y_i, Y_j)$, i.e., the variance of the sum of random variables is the sum fo the variables' variances plus the sum of twice all possible pairwise covariances.
+-   $\mathrm{var}(\sum_{i=1}^n Y_i) = \sum_{i=1}^n \mathrm{var}(Y_i) + \sum_{j=1}^n\sum_{1\leq i<j\leq n}2\mathrm{cov}(Y_i, Y_j)$, i.e., the variance of the sum of random variables is the sum of the variables' variances plus the sum of twice all possible pairwise covariances.
 
 If in addition, $Y_1, Y_2, \ldots, Y_n$ are all independent of each other, then:
 
@@ -428,17 +437,17 @@ Similarly, since $Y_1, Y_2, \ldots, Y_n$ are i.i.d., we see that
 
 $$
 \begin{aligned}
-\mathrm{var}(Y) &= \mathrm{var}(\sum_{i=1}^n Y_i) \\
+\mathrm{var}(Y) &= \mathrm{var}\Biggl(\sum_{i=1}^n Y_i\Biggr) \\
 &= \sum_{i=1}^n\mathrm{var}(Y_i)\\
 &=\sum_{i=1}^n \theta(1-\theta) \\
-&= n\theta(1-\theta)
+&= n\theta(1-\theta).
 \end{aligned}
 $$
 :::
 
 ### Example (Continuous bivariate distribution)
 
-Hydration is important for health. Like many people, the author has a water bottle he uses to say hydrated through the day and drinks several liters of water per day. Let's say the author refills his water bottle every 3 hours.
+Hydration is important for health. Like many people, the author has a water bottle he uses to stay hydrated throughout the day and drinks several liters of water per day. Let's say the author refills his water bottle every 3 hours.
 
 -   Let $Y$ denote the proportion of the water bottle filled with water at the beginning of the 3-hour window.
 -   Let $X$ denote the amount of water the author consumes in the 3-hour window (measured in the the proportion of total water bottle capacity).
@@ -451,7 +460,7 @@ $$ and 0 otherwise.
 
 We answer a series of questions about this distribution.
 
-**Q1: Determine** $P(0.5\leq X\leq 1, 0.75\leq Y)$.
+**Q1: Determine** $P(1/2\leq X\leq 1, 3/4\leq Y)$.
 
 ::: {.content-visible unless-format="pdf"}
 </br>\
@@ -471,7 +480,6 @@ We answer a series of questions about this distribution.
 ::: {.content-hidden unless-format="pdf"}
 $$
 \begin{aligned}
-&\int_{3/4}^{1} \int_{0.5}^{y} 4y^2\;dx\;dy \\
 &= \int_{3/4}^{1} 4y^2x\bigg]_{1/2}^y\;dy \\
 &= \int_{3/4}^{1} 4y^4 - 2y^2\;dy\\
 &=y^4-\frac{2}{3}y^3\bigg]_{3/4}^1\\=\
@@ -594,10 +602,6 @@ E(X^2) &=\int_{0}^1 x^2\biggl(\frac{4}{3}(1-x^3)\biggr)\;dx \\
 $$
 
 Second,
-
-$$
-E(Y^2) =\int_{0}^1 y^2(4y^3)\;dy = \frac{2}{3}
-$$ Thus,
 
 $$
 \begin{aligned}
@@ -785,7 +789,8 @@ Determine $E(Y-X)$ and $\mathrm{var}(Y-X)$.
 :::
 
 ::: {.content-hidden unless-format="pdf"}
-Define $\mathbf{A}=[-1, 1]^T$ (the ROW vector with 1 and -1). Then, $$
+Define $\mathbf{A}=[-1, 1]^T$ (the ROW vector with 1 and -1). Then,
+$$
 \mathbf{Az}=\begin{bmatrix}-1 & 1\end{bmatrix}
 \begin{bmatrix}
 X\\
@@ -794,7 +799,7 @@ Y
 =Y-X
 $$
 
-and,
+and
 
 $$
 \begin{aligned}
@@ -883,7 +888,7 @@ $$
 be an $n\times 1$ vector of responses. It is common to assume that,
 
 $$
-\mathbf{y}\sim \mathsf{N}(\mathbf{X}\boldsymbol{\beta}, \sigma^2 \mathbf{I}_{n\times n}).\,
+\mathbf{y}\sim \mathsf{N}(\mathbf{X}\boldsymbol{\beta}, \sigma^2 \mathbf{I}_{n\times n}),
 $$
 where $\beta=[\beta_0,\beta_1,\ldots,\beta_{p-1}]$ is a $p$-dimensional vector of constants.
 
@@ -907,4 +912,25 @@ Determine the distribution of $\mathbf{Hy}.$
 :::
 
 ::: {.content-hidden unless-format="pdf"}
+$$
+\mathbf{Hy}\sim \mathsf{N}(\mathbf{HX}\boldsymbol{\beta}, \sigma^2 \mathbf{H}\mathbf{I}_{n\times n}\mathbf{H}^T).
+$$
+
+Notice that
+
+$$
+\begin{aligned}
+\mathbf{HX}\boldsymbol{\beta}&=\mathbf{X}(\mathbf{X}^T\mathbf{X})^{-1}\mathbf{X}^T\mathbf{X}\boldsymbol{\beta} \\
+&=\mathbf{X}\mathbf{I}_{p\times p}\boldsymbol{\beta} \\
+&=\mathbf{X}\boldsymbol{\beta}.
+\end{aligned}
+$$
+Additionally,
+
+$$
+\begin{aligned}
+\mathbf{H}\sigma^2 \mathbf{I}_{n\times n} \mathbf{\mathbf{H^T}} &= \sigma^2 \mathbf{H}\mathbf{H}^T\\
+&=\sigma^2 \mathbf{H}.
+\end{aligned}
+$$
 :::
