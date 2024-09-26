@@ -75,7 +75,7 @@ div.sourceCode { overflow: auto; }
 }
 @media print {
 pre > code.sourceCode { white-space: pre-wrap; }
-pre > code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
+pre > code.sourceCode > span { display: inline-block; text-indent: -5em; padding-left: 5em; }
 }
 pre.numberSource code
   { counter-reset: source-line 0; }
@@ -534,7 +534,7 @@ that the mathematics of our model supports our conclusions.</p>
 <p>To illustrate the interpretations given above, we interpret the simple
 linear regression model fit to the <code>penguins</code> data in Section
 <a href="linear-model-estimation.html#s:penguins-slr">3.3</a>. From Section <a href="linear-model-estimation.html#s:penguins-slr">3.3</a>, the fitted
-simple linear regression model of <code>body_mass_g</code> regressed on
+simple linear regression model of <code>bill_length_mm</code> regressed on
 <code>body_mass_g</code> is
 <span class="math display" id="eq:slr-penguin-orig">\[
 \hat{E}(\mathtt{bill\_length\_mm}\mid \mathtt{body\_mass\_g})=26.9+0.004 \tag{4.4} \,\mathtt{body\_mass\_g}.
@@ -586,8 +586,7 @@ nothing else in the fitted model changes.</p>
 </div>
 <div id="interp-1st-order-ml" class="section level3 hasAnchor" number="4.1.2">
 <h3><span class="header-section-number">4.1.2</span> Interpretation for first-order multiple linear regression models<a href="interp-chapter.html#interp-1st-order-ml" class="anchor-section" aria-label="Anchor link to header"></a></h3>
-<p>Suppose we have a multiple linear regression model with <span class="math inline">\(p-1\)</span> <em>numeric</em>
-regressors, so that
+<p>Suppose we have a multiple linear regression model with <span class="math inline">\(p-1\)</span> first-order regressors, so that
 <span class="math display" id="eq:mlr-equation">\[
 E(Y\mid X_1,\ldots,X_{p-1})=\beta_0 + \beta_1 X_1 + \cdots + \beta_{p-1} X_{p-1}.\tag{4.6}
 \]</span>
@@ -1140,7 +1139,7 @@ the response when comparing observations having level <span class="math inline">
 <span class="math inline">\(L_j\)</span> with <span class="math inline">\(X=0\)</span>.</li>
 <li><span class="math inline">\(\beta_X\)</span> represents the expected change in the response when <span class="math inline">\(X\)</span>
 increases by 1 unit for observations having the reference level.</li>
-<li><span class="math inline">\(\beta_X L_j\)</span>, for <span class="math inline">\(j=2,\ldots,K\)</span>, represents the difference in the
+<li><span class="math inline">\(\beta_{X L_j}\)</span>, for <span class="math inline">\(j=2,\ldots,K\)</span>, represents the difference in the
 expected response between observations having the reference level in
 comparison to level <span class="math inline">\(L_j\)</span> when <span class="math inline">\(X\)</span> increases by 1 unit. More simply,
 these terms represent the difference in the rate of change for
@@ -1442,7 +1441,7 @@ the <code>body_mass_g</code> regressor and the indicator variables for Chinstrap
 and Gentoo penguins. The added-variable plot for <code>body_mass_g</code> has a
 moderately strong linear relationship, so adding <code>body_mass_g</code> to the
 model regressing <code>bill_length_mm</code> on <code>species</code> seems to be beneficial.
-The other two variable plots are show a linear relationship. Clustering
+The other two variable plots also show a linear relationship. Clustering
 patterns are apparent in the added-variable plot for the Chinstrap
 penguins indicator variable (<code>speciesChinstrap</code>) but not for the Gentoo
 penguins indicator variable.</p>
