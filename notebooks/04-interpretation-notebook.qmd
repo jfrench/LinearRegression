@@ -796,7 +796,7 @@ $$
 &= 26.99 + 0.003 \mathtt{body\_mass\_g},\\
 &\hat{E}(\mathtt{bill\_length\_mm} \mid \mathtt{body\_mass\_g}, \mathtt{species}=\mathtt{Chinstrap}) \\
 &= 31.17 + 0.004 \mathtt{body\_mass\_g},\\
-&\hat{E}(\mathtt{bill\_length\_mm} \mid \mathtt{body\_mass\_g}, \mathtt{species}=\mathtt{Chinstrap}) \\
+&\hat{E}(\mathtt{bill\_length\_mm} \mid \mathtt{body\_mass\_g}, \mathtt{species}=\mathtt{Gentoo}) \\
 &= 26.74 + 0.004 \mathtt{body\_mass\_g}.
 \end{aligned}
 $$
@@ -853,6 +853,8 @@ vignette("predictor-effects-gallery", package = "effects")
 
 # Added-variable and leverage plots
 
+In this section, we will use visual displays to assess the impact of a predictor after accounting for the impact of other predictors already in the model.
+
 ## Added-variable plots
 
 As we saw before, an *effect plot* is a plot
@@ -899,40 +901,67 @@ We can use an added-variable plot in several ways:
 4.  To identify outliers and observations influential in determining the
     estimated partial slope.
 
-In regards to point 1 and 2:
-
--   If the added-variable plot for $X_j$ is essentially a scatter of
-    points with slope zero, then $X_j$ can do little to explain $Y$
-    after accounting for the other regressors.
--   If the points in an added-variable plot for $X_j$ have a linear
-    relationship, then adding $X_j$ to the model regressing $Y$ on
-    $\mathbb{X}_{-j}$ is expected to improve our model's ability to
-    predict the behavior of $Y$.
--   If the points in an added-variable plot for $X_j$ are curved, it
-    indicates that that there is a deficiency in the fitted model
-    (likely because we need to include one or more additional regressors
-    in the model).
-
 ```{r}
 #| echo: false
 #| eval: true
 #| output: true
-par(mfrow = c(1, 3), pty = "s")
 set.seed(71)
 x <- runif(30, -1, 1)
 y1 <- rnorm(30)
 y2 <- 0.2 + 0.3 * x + rnorm(30, sd = 0.05)
 y3 <- 0.2 + 0.6 * x + 0.6 * x^2 + rnorm(30, sd = 0.1)
+y4 <- y2
+sx <- sort(x) + 5
+sy4 <- sort(y4)
+sy4[2] <- sy4[29]
+```
+
+If the added-variable plot for $X_j$ is essentially a scatter of
+    points with slope zero, then $X_j$ can do little to explain $Y$
+    after accounting for the other regressors. The added-variable plot below illustrates this.
+    
+```{r}
+#| echo: false
+#| eval: true
+#| output: true
 plot(y1 ~ x, ylab = "Y | others",
      xlab = expression(paste(X[j], " | others")))
-title("(a)")
+abline(coef(lm(y1 ~ x)))
+```
+    
+If the points in an added-variable plot for $X_j$ have a linear relationship, then adding $X_j$ to the model regressing $Y$ on    $\mathbb{X}_{-j}$ is expected to improve our model's ability to predict the behavior of $Y$. The plot below depicts this.
+
+```{r} 
+#| echo: false
+#| eval: true
+#| output: true
 plot(y2 ~ x, ylab = "Y | others",
      xlab = expression(paste(X[j], " | others")))
-title("(b)")
+abline(coef(lm(y2 ~ x)))
+```
+
+If the points in an added-variable plot for $X_j$ are curved or show a non-linear relationship, it     indicates that that there is a deficiency in the fitted model (likely because we need to include one or more additional regressors in the model). An added-variable plot for this kind of scenario is shown below.
+    
+```{r}
+#| echo: false
+#| eval: true
+#| output: true
 plot(y3 ~ x, ylab = "Y | others",
      xlab = expression(paste(X[j], " | others")))
 title("(c)")
-par(mfrow = c(1, 1))
+abline(coef(lm(y3 ~ x)))
+```
+
+If certain points in the added-variable plot seem to "pull" the fitted line toward themselves so that the line doesn't fit the bulk of the data, that indicates the presence of influential observations that are substantially influencing the fit of the model to the data. We illustrate this below.
+
+```{r}
+#| echo: false
+#| eval: true
+#| output: true
+plot(sy4 ~ sx, ylab = "Y | others",
+     xlab = expression(paste(X[j], " | others")))
+title("(d)")
+abline(-0.3, .1)
 ```
 
 **Question:** What do the three plots tell us about our model?
