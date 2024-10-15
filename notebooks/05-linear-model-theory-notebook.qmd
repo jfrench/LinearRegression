@@ -1,10 +1,15 @@
 ---
-title: Chapter 5 - Linear Model Theory
+title: Chapter 5 - Basic theoretical results
 author: Joshua French
 date: ''
+engine: knitr
 # format: html
+jupyter:
+  kernelspec:
+    display_name: R
+    language: R
+    name: ir
 format: ipynb
-jupyter: ir
 execute:
   output: false
 self-contained: true
@@ -12,10 +17,10 @@ title-block-banner: true
 wrap: 'none'
 ---
 
-To open this information in an interactive Colab notebook, click the Open in Colab graphic below.
+To open this information in an interactive Colab notebook, click or scan the QR code below.
 
 <a href="https://colab.research.google.com/github/jfrench/LinearRegression/blob/master/notebooks/05-linear-model-theory-notebook.ipynb">
-   <img src="https://colab.research.google.com/assets/colab-badge.svg">
+   <img src="https://raw.githubusercontent.com/jfrench/LinearRegression/3d1b80d7964e80507900220afb30957eb9d40457/images/qr-linear-model-theory.svg">
 </a>
 
 ---
@@ -27,7 +32,7 @@ In this chapter we discuss many basic theoretical results for linear models.
 We assume the responses can be modeled as
 
 $$
-Y_i=\beta_0+\beta_1 x_{i,1} +\ldots + \beta_{p-1}x_{i,-1}+\epsilon_i,\quad i=1,2,\ldots,n,
+Y_i=\beta_0+\beta_1 x_{i,1} +\ldots + \beta_{p-1}x_{i,p-1}+\epsilon_i,\quad i=1,2,\ldots,n,
 $$
 
 or using matrix formulation, as
@@ -115,7 +120,7 @@ In summary, our error assumptions are:
 
 # Unbiasedness of OLS estimators of simple linear regression model coefficients
 
-We now show that the OLS estimators of the simple linear regression coefficients are unbiased.
+We now show that the OLS estimators of the simple linear regression coefficients are unbiased. We start here because no matrices are involved, which makes the proof for accessible.
 
 An estimator is unbiased if the expected value is equal to the parameter it is estimating.
 
@@ -129,9 +134,9 @@ We start by determining $E(Y_i\mid X=x_i)$.
 
 $$
 \begin{aligned}
-E(Y_i\mid X=x_i) &= E(\beta_0 + \beta_1 x_i +\epsilon_i\mid X = x_i) & \tiny\text{(substiute definition of $Y_i$)} \\
-&= E(\beta_0\mid X=x_i) + E(\beta_1 x_i \mid X = X_i) +E(\epsilon_i | X=x_i) & \tiny\text{(linearity property of expectation)} \\
-&= \beta_0+\beta_1x_i +E(\epsilon_i | X=x_i) & \tiny\text{(the $\beta$s and $x_i$ are non-random values)} \\
+E(Y_i\mid X=x_i) &= E(\beta_0 + \beta_1 x_i +\epsilon_i\mid X = x_i) & \tiny\text{(substitute definition of $Y_i$)} \\
+&= E(\beta_0\mid X=x_i) + E(\beta_1 x_i \mid X = X_i) +E(\epsilon_i \mid X=x_i) & \tiny\text{(linearity property of expectation)} \\
+&= \beta_0+\beta_1x_i +E(\epsilon_i \mid X=x_i) & \tiny\text{(the $\beta$s and $x_i$ are non-random values)} \\
 &= \beta_0+\beta_1x_i + 0 & \tiny\text{(assumption about errors)} \\
 &= \beta_0+\beta_1x_i. &
 \end{aligned}
@@ -141,8 +146,8 @@ Next, we note:
 
 $$
 \begin{aligned}
-E\left(\sum x_iY_i \biggm| \mathbf{X} \right) &= \sum E(x_iY_i \mid \mathbf{X}) &\tiny\text{ (by the linearity of the expectation operator)}\\
-&=\sum x_iE(Y_i\mid \mathbf{X})&\tiny(x_i\text{ is a fixed value, so it can be brought out})\\
+E\left(\sum x_iY_i \Bigm\vert \mathbf{X} \right) &= \sum E(x_iY_i \mid \mathbf{X}) &\tiny\text{ (by the linearity of the expectation operator)}\\
+&=\sum x_iE(Y_i\mid \mathbf{X})&\tiny(x_i\text{ is a fixed value, so it can be factored out of the expectation})\\
 &=\sum x_i(\beta_0+\beta_1 x_i)&\tiny\text{(substitute expected value of }Y_i)\\
 &=\sum x_i\beta_0+\sum x_i\beta_1 x_i&\tiny\text{(distribute sum)}\\
 &=\beta_0\sum x_i+\beta_1\sum x_i^2.&\tiny\text{(factor out constants)}
@@ -154,8 +159,8 @@ Also,
 $$
 \begin{aligned}
 E(\bar Y\mid \mathbf{X})
-&= E\left(\frac{1}{n}\sum Y_i\Biggm|\mathbf{X} \right)&\tiny\text{(definition of sample mean)}\\
-&= \frac{1}{n}E\left(\sum Y_i \Bigm| \mathbf{X}\right)&\tiny\text{(factor out constant)}\\
+&= E\left(\frac{1}{n}\sum Y_i \Bigm\vert  \mathbf{X} \right)&\tiny\text{(definition of sample mean)}\\
+&= \frac{1}{n}E\left(\sum Y_i \Bigm\vert  \mathbf{X}\right)&\tiny\text{(factor out constant)}\\
 &= \frac{1}{n}\sum E\left(Y_i \mid \mathbf{X}\right)&\tiny\text{(linearity of expectation)}\\
 &= \frac{1}{n}\sum(\beta_0+\beta_1 x_i)&\tiny\text{(substitute expected value of }Y_i)\\
 &= \frac{1}{n}\left(\sum\beta_0+\sum\beta_1 x_i\right)&\tiny\text{(distribute sum)}\\
@@ -175,10 +180,10 @@ Thus,
 $$
 \begin{aligned}
 &E(\hat\beta_1 \mid \mathbf{X}) &\\
-&= E\left(\frac{\sum x_iY_i -\frac{1}{n}\sum x_i\sum Y_i}{\sum x_i^2-\frac{1}{n}\left(\sum  x_i\right)^2} \Biggm| \mathbf{X} \right) &\tiny\text{(substitute OLS estimator)} \\
-&= \frac{1}{SSX}E\left(\sum x_iY_i-\frac{1}{n}\sum x_i\sum Y_i \biggm| \mathbf{X}\right)&\tiny\text{(factor out constant denominator, substitute }SSX\text{)} \\
-&= \frac{1}{SSX}\left[E\left(\sum x_iY_i\Bigm|\mathbf{X}\right)-E\left(\frac{1}{n}\sum x_i\sum Y_i\biggm|\mathbf{X}\right)\right]&\tiny\text{(linearity of expectation)}\\
-&= \frac{1}{SSX}\left[E\left(\sum x_iY_i\Bigm|\mathbf{X}\right)-\left(\sum x_i\right)E\left(\bar Y\mid \mathbf{X}\right)\right]&\tiny\text{(factor out constant }\sum x_i\text{, use definition of}\bar{Y})\\
+&= E\left(\frac{\sum x_iY_i -\frac{1}{n}\sum x_i\sum Y_i}{\sum x_i^2-\frac{1}{n}\left(\sum  x_i\right)^2} \Biggm\vert \mathbf{X} \right) &\tiny\text{(substitute OLS estimator)} \\
+&= \frac{1}{SSX}E\left(\sum x_iY_i-\frac{1}{n}\sum x_i\sum Y_i \Bigm\vert \mathbf{X}\right)&\tiny\text{(factor out constant denominator, substitute }SSX\text{)} \\
+&= \frac{1}{SSX}\left[E\left(\sum x_iY_i\Bigm\vert\mathbf{X}\right)-E\left(\frac{1}{n}\sum x_i\sum Y_i\Bigm\vert\mathbf{X}\right)\right]&\tiny\text{(linearity of expectation)}\\
+&= \frac{1}{SSX}\left[E\left(\sum x_iY_i\Bigm\vert\mathbf{X}\right)-\left(\sum x_i\right)E\left(\bar Y\mid \mathbf{X}\right)\right]&\tiny\text{(factor out constant }\sum x_i\text{, use definition of}\bar{Y})\\
 &= \frac{1}{SSX}\left[\left(\beta_0\sum x_i + \beta_1\sum x_i^2\right)-\left(\sum x_i\right)(\beta_0+\beta_1\bar x)\right]&\tiny\text{(substitute previous derivations
 )}\\
 &= \frac{1}{SSX}\left[\beta_0\sum x_i+\beta_1\sum x_i^2-\beta_0\sum x_i-\beta_1\bar x\sum x_i\right]&\tiny\text{(expand product and reorder)} \\
@@ -209,7 +214,7 @@ Therefore, $\hat\beta_0$ is an unbiased estimator of $\beta_0$.
 
 # Summary of results
 
-Combining these results with our linear model, we have:
+Applying the Standard Assumptions to our linear model, we have:
 
 1. $\mathbf{y}\mid \mathbf{X}\sim \mathsf{N}(\mathbf{X}\boldsymbol{\beta}, \sigma^2 \mathbf{I}_{n\times n})$.
 1. $\hat{\boldsymbol{\beta}}\mid \mathbf{X}\sim \mathsf{N}(\boldsymbol{\beta}, \sigma^2(\mathbf{X}^T\mathbf{X})^{-1})$.
@@ -228,63 +233,30 @@ $$
 
 *Proof:*
 
-::: {.content-visible unless-format="pdf"}
-</br>  
-</br>  
-</br>  
-</br>  
-</br>  
-</br>  
-</br>  
-</br>  
-</br>  
-:::
-::: {.content-hidden unless-format="pdf"}
-
 $$
 \begin{aligned}
-E(\mathbf{y}|\mathbf{X})&=E(\mathbf{X}\boldsymbol{\beta}+\boldsymbol\epsilon|\mathbf{X})&\tiny\text{(by definition)}\\
-&=E(\mathbf{X}\boldsymbol{\beta}|\mathbf{X})+E(\boldsymbol\epsilon|\mathbf{X})&\tiny\text{(linearity of expectation)}\\
-&=E(\mathbf{X}\boldsymbol{\beta}|\mathbf{X})+\mathbf{0}_{n\times 1}&\tiny\text{(by assumption about }\epsilon)\\
+E(\mathbf{y}\mid\mathbf{X})&=E(\mathbf{X}\boldsymbol{\beta}+\boldsymbol\epsilon\mid\mathbf{X})&\tiny\text{(by definition)}\\
+&=E(\mathbf{X}\boldsymbol{\beta}\mid\mathbf{X})+E(\boldsymbol\epsilon\mid\mathbf{X})&\tiny\text{(linearity of expectation)}\\
+&=E(\mathbf{X}\boldsymbol{\beta} \mid \mathbf{X})+\mathbf{0}_{n\times 1}&\tiny\text{(by assumption about }\epsilon)\\
 &=\mathbf{X}\boldsymbol{\beta}.&\tiny\text{(since }\mathbf{X}\text{ and } \boldsymbol{\beta} \text{ are constant})
 \end{aligned}
 $$
-
-:::
-
-$\vphantom{blank}$
 
 For the variance of the response: 
 
 $$
 \mathrm{var}(\mathbf{y}\mid \mathbf{X})=\sigma^2 \mathbf{I}.
 $$
-*Proof:*
 
-::: {.content-visible unless-format="pdf"}
-</br>  
-</br>  
-</br>  
-</br>  
-</br>  
-</br>  
-</br>  
-</br>  
-</br>  
-:::
-::: {.content-hidden unless-format="pdf"}
+*Proof:*
 
 $$
 \begin{aligned}
-\text{var}(\mathbf{y}|\mathbf{X})&=\text{var}(\mathbf{X}\boldsymbol{\beta}+\boldsymbol\epsilon|\mathbf{X})&\tiny\text{(by definition)}\\
-&=\text{var}(\boldsymbol\epsilon|\mathbf{X})&\tiny(\mathbf{X}\boldsymbol{\beta}\text{ is constant)}\\
+\text{var}(\mathbf{y}\mid\mathbf{X})&=\text{var}(\mathbf{X}\boldsymbol{\beta}+\boldsymbol\epsilon\mid\mathbf{X})&\tiny\text{(by definition)}\\
+&=\text{var}(\boldsymbol\epsilon\mid\mathbf{X})&\tiny(\mathbf{X}\boldsymbol{\beta}\text{ is constant)}\\
 &=\sigma^2\mathbf{I}.&\tiny\text{(by assumption)}
 \end{aligned}
 $$
-
-:::
-
-$\vphantom{blank}$
 
 The response variable has the following distribution: 
 
@@ -294,29 +266,12 @@ $$
 
 *Proof:*
 
-::: {.content-visible unless-format="pdf"}
-</br>  
-</br>  
-</br>  
-</br>  
-</br>  
-</br>  
-</br>  
-</br>  
-</br>  
-:::
-::: {.content-hidden unless-format="pdf"}
-
 We have shown that: 
 
 * $E(\mathbf{y}\mid \mathbf{X}) = \mathbf{X}\boldsymbol{\beta}$.
-* $\mathrm{var}(\mathbf{y}\mathbf{X}) = \sigma^2 \mathbf{I}$.
+* $\mathrm{var}(\mathbf{y}\mid\mathbf{X}) = \sigma^2 \mathbf{I}$.
 
-Since $\mathbf{y}$ is a linear function of the multivariate normal vector $\boldsymbol{\epsilon}$, then $\mathbf{y}$ must also have a multivariate normal distribution.
-:::
-
-$\vphantom{blank}$
-
+Since $\mathbf{y}$ is a linear function of the multivariate normal vector $\boldsymbol{\epsilon}$, then $\mathbf{y}$ must also have a multivariate normal distribution. Therefore, $\mathbf{y}\mid \mathbf{X}\sim \mathsf{N}(\mathbf{X}\boldsymbol{\beta}, \sigma^2 \mathbf{I})$.
 
 ## Results for $\hat{\boldsymbol{\beta}}$
 
@@ -334,43 +289,27 @@ $$
 
 *Proof:*
 
-::: {.content-visible unless-format="pdf"}
-</br>  
-</br>  
-</br>  
-</br>  
-</br>  
-</br>  
-</br>  
-</br>  
-</br>  
-:::
-::: {.content-hidden unless-format="pdf"}
 We previously derived the following results,
 
 $$
-E(\mathbf{y}|\mathbf{X})=\mathbf{X}\boldsymbol\beta.
+E(\mathbf{y}\mid\mathbf{X})=\mathbf{X}\boldsymbol\beta.
 $$
 
 $$
-\text{var}(\mathbf{y}|\mathbf{X})=\sigma^2\mathbf{I}.
+\text{var}(\mathbf{y}\mid\mathbf{X})=\sigma^2\mathbf{I}.
 $$
 
 Then,
 
 $$
 \begin{aligned}
-E(\hat{\boldsymbol{\beta}}|\mathbf{X})&=E((\mathbf{X}^T\mathbf{X})^{-1}\mathbf{X}^T\mathbf{y}|\mathbf{X})&\tiny\text{(substitute OLS formula)}\\
-&=(\mathbf{X}^T\mathbf{X})^{-1}\mathbf{X}^TE(\mathbf{y}|\mathbf{X})&\tiny(\text{factor non-random terms)}\\
+E(\hat{\boldsymbol{\beta}}\mid\mathbf{X})&=E((\mathbf{X}^T\mathbf{X})^{-1}\mathbf{X}^T\mathbf{y}\mid\mathbf{X})&\tiny\text{(substitute OLS formula)}\\
+&=(\mathbf{X}^T\mathbf{X})^{-1}\mathbf{X}^TE(\mathbf{y}\mid\mathbf{X})&\tiny(\text{factor non-random terms)}\\
 &=(\mathbf{X}^T\mathbf{X})^{-1}\mathbf{X}^T\mathbf{X}\boldsymbol{\beta}&\tiny\text{(previous result)}\\
 &=\mathbf{I}_{p\times p}\boldsymbol\beta&\tiny\text{(property of inverse matrices)}\\
 &=\boldsymbol\beta.
 \end{aligned}
 $$
-
-:::
-
-$\vphantom{blah}$
 
 The OLS estimator $\hat{\boldsymbol{\beta}}$ has variance
 
@@ -380,32 +319,16 @@ $$
 
 *Proof:*
 
-::: {.content-visible unless-format="pdf"}
-</br>  
-</br>  
-</br>  
-</br>  
-</br>  
-</br>  
-</br>  
-</br>  
-</br>  
-:::
-::: {.content-hidden unless-format="pdf"}
-
 $$
 \begin{aligned}
-\text{var}(\hat{\boldsymbol\beta}|\mathbf{X})&=\text{var}((\mathbf{X}^T\mathbf{X})^{-1}\mathbf{X}^T\mathbf{y}|\mathbf{X})&\tiny\text{(by OLS formula)}\\
-&=(\mathbf{X}^T\mathbf{X})^{-1}\mathbf{X}^T\text{var}(\mathbf{y}|\mathbf{X})((\mathbf{X}^T\mathbf{X})^{-1}\mathbf{X}^T)^T&\tiny\text{(pull constants out of variance)}\\
-&=(\mathbf{X}^T\mathbf{X})^{-1}\mathbf{X}^T\text{var}(\mathbf{y}|\mathbf{X})\mathbf{X}(\mathbf{X}^T\mathbf{X})^{-1}&\tiny\text{(simplification)}\\
+\text{var}(\hat{\boldsymbol\beta}\mid\mathbf{X})&=\text{var}((\mathbf{X}^T\mathbf{X})^{-1}\mathbf{X}^T\mathbf{y}\mid\mathbf{X})&\tiny\text{(by OLS formula)}\\
+&=(\mathbf{X}^T\mathbf{X})^{-1}\mathbf{X}^T\text{var}(\mathbf{y}\mid\mathbf{X})((\mathbf{X}^T\mathbf{X})^{-1}\mathbf{X}^T)^T&\tiny\text{(pull constant terms out of variance)}\\
+&=(\mathbf{X}^T\mathbf{X})^{-1}\mathbf{X}^T\text{var}(\mathbf{y}\mid\mathbf{X})\mathbf{X}(\mathbf{X}^T\mathbf{X})^{-1}&\tiny\text{(simplification)}\\
 &=(\mathbf{X}^T\mathbf{X})^{-1}\mathbf{X}^T(\sigma^2\mathbf{I})\mathbf{X}(\mathbf{X}^T\mathbf{X})^{-1}&\tiny\text{(previous result)}\\
 &=\sigma^2(\mathbf{X}^T\mathbf{X})^{-1}\mathbf{X}^T\mathbf{X}(\mathbf{X}^T\mathbf{X})^{-1}&\tiny(\sigma^2 \text{ is a scalar)}\\
 &=\sigma^2(\mathbf{X}^T\mathbf{X})^{-1}.&\tiny\text{(simplification)}
 \end{aligned}
 $$
-
-:::
-$\vphantom{blah}$
 
 The OLS estimator $\hat{\boldsymbol{\beta}}$ has the following distribution:
 
@@ -416,26 +339,11 @@ $$
 
 *Proof:*
 
-::: {.content-visible unless-format="pdf"}
-</br>  
-</br>  
-</br>  
-</br>  
-</br>  
-</br>  
-</br>  
-</br>  
-</br>  
-:::
-::: {.content-hidden unless-format="pdf"}
-
 Since $\hat{\boldsymbol\beta}=(\mathbf{X}^T\mathbf{X})^{-1}\mathbf{X}^T\mathbf{y}$ is a linear combination of $\mathbf{y}$, and $\mathbf{y}$ is a multivariate normal random vector, then $\hat{\boldsymbol\beta}$ is also a multivariate normal random vector. Using the previous two results for the expectation and variance, 
 
 $$
-\hat{\boldsymbol\beta}|\mathbf{X} \sim N(\boldsymbol\beta,\sigma^2(\mathbf{X}^T\mathbf{X})^{-1}).
+\hat{\boldsymbol\beta}\mid\mathbf{X} \sim N(\boldsymbol\beta,\sigma^2(\mathbf{X}^T\mathbf{X})^{-1}).
 $$
-
-:::
 
 ## Results for the residuals
 
@@ -471,18 +379,6 @@ The hat matrix $\mathbf{H}$ is symmetric and idempotent.
 
 *Proof:*
 
-::: {.content-visible unless-format="pdf"}
-</br>  
-</br>  
-</br>  
-</br>  
-</br>  
-</br>  
-</br>  
-</br>  
-</br>  
-:::
-::: {.content-hidden unless-format="pdf"}
 Notice that:
 
 $$
@@ -503,7 +399,7 @@ Additionally:
 $$
 \begin{aligned}
 \mathbf{H}\mathbf{H}&=(\mathbf{X}(\mathbf{X}^T\mathbf{X})^{-1}\mathbf{X}^T)(\mathbf{X}(\mathbf{X}^T\mathbf{X})^{-1}\mathbf{X}^T)&\tiny\text{(definition of }\mathbf{H}\text{)}\\
-&=\mathbf{X}(\mathbf{X}^T\mathbf{X})^{-1}(\mathbf{X}^T\mathbf{X})(\mathbf{X}^T\mathbf{X})^{-1}\mathbf{X}^t&\tiny\text{(associative property of matrices)}\\
+&=\mathbf{X}(\mathbf{X}^T\mathbf{X})^{-1}(\mathbf{X}^T\mathbf{X})(\mathbf{X}^T\mathbf{X})^{-1}\mathbf{X}^T&\tiny\text{(associative property of matrices)}\\
 &=\mathbf{X}\mathbf{I}_{p\times p}(\mathbf{X}^T\mathbf{X})^{-1}\mathbf{X}^T&\tiny\text{(property of inverse matrices)}\\
 &=\mathbf{X}(\mathbf{X}^T\mathbf{X})^{-1}\mathbf{X}^T&\tiny\text{(simplification)}\\
 &=\mathbf{H}.
@@ -512,24 +408,9 @@ $$
 
 Therefore, $\mathbf{H}$ is idempotent.
 
-:::
-
 The matrix $\mathbf{I} - \mathbf{H}$ is symmetric and idempotent.
 
 *Proof:*
-
-::: {.content-visible unless-format="pdf"}
-</br>  
-</br>  
-</br>  
-</br>  
-</br>  
-</br>  
-</br>  
-</br>  
-</br>  
-:::
-::: {.content-hidden unless-format="pdf"}
 
 First, notice that:
 
@@ -553,7 +434,6 @@ $$
 $$
 
 Thus, $\mathbf{I}-\mathbf{H}$ is idempotent.
-:::
 
 Under the assumptions we discussed previously, the residuals have mean
 
@@ -564,23 +444,10 @@ $$
 
 *Proof:*
 
-::: {.content-visible unless-format="pdf"}
-</br>  
-</br>  
-</br>  
-</br>  
-</br>  
-</br>  
-</br>  
-</br>  
-</br>  
-:::
-::: {.content-hidden unless-format="pdf"}
-
 $$
 \begin{aligned}
-E(\hat{\boldsymbol{\epsilon}}|\mathbf{X})&=E((\mathbf{I}-\mathbf{H})\mathbf{y}|\mathbf{X})\\
-&=(\mathbf{I}-\mathbf{H})E(\mathbf{y}|\mathbf{X})&\tiny(\mathbf{I}-\mathbf{H}\text{ is non-random)}\\
+E(\hat{\boldsymbol{\epsilon}}\mid\mathbf{X})&=E((\mathbf{I}-\mathbf{H})\mathbf{y}\mid\mathbf{X})\\
+&=(\mathbf{I}-\mathbf{H})E(\mathbf{y}\mid\mathbf{X})&\tiny(\mathbf{I}-\mathbf{H}\text{ is non-random)}\\
 &=(\mathbf{I}-\mathbf{H})\mathbf{X}\boldsymbol\beta&\tiny\text{(earlier result)}\\
 &=\mathbf{X}\boldsymbol\beta-\mathbf{HX}\boldsymbol\beta&\tiny\text{(distribute the product)}\\
 &=\mathbf{X}\boldsymbol\beta-\mathbf{X}^T(\mathbf{X}^T\mathbf{X})^{-1}\mathbf{X}^T\mathbf{X}\boldsymbol\beta&\tiny\text{(definition of H)}\\
@@ -589,11 +456,6 @@ E(\hat{\boldsymbol{\epsilon}}|\mathbf{X})&=E((\mathbf{I}-\mathbf{H})\mathbf{y}|\
 &=\mathbf{0}_{n\times1}.&\tiny\text{(simplification)}
 \end{aligned}
 $$
-
-:::
-
-$\vphantom{blank}$
-
 
 The residuals have variance
 
@@ -604,31 +466,15 @@ $$
 
 *Proof:*
 
-::: {.content-visible unless-format="pdf"}
-</br>  
-</br>  
-</br>  
-</br>  
-</br>  
-</br>  
-</br>  
-</br>  
-</br>  
-:::
-::: {.content-hidden unless-format="pdf"}
-
 $$
 \begin{aligned}
-\text{var}(\hat{\boldsymbol{\epsilon}}|\mathbf{X})&=\text{var}((\mathbf{I}-\mathbf{H})\mathbf{y}|\mathbf{X})\\
-&=(\mathbf{I}-\mathbf{H})\text{var}(\mathbf{y}|\mathbf{X})(\mathbf{I}-\mathbf{H})^T&\tiny(\mathbf{I}-\mathbf{H}\text{ is nonrandom)}\\
+\text{var}(\hat{\boldsymbol{\epsilon}}\mid\mathbf{X})&=\text{var}((\mathbf{I}-\mathbf{H})\mathbf{y}\mid\mathbf{X})\\
+&=(\mathbf{I}-\mathbf{H})\text{var}(\mathbf{y}\mid\mathbf{X})(\mathbf{I}-\mathbf{H})^T&\tiny(\mathbf{I}-\mathbf{H}\text{ is nonrandom, factor out of var)}\\
 &=(\mathbf{I}-\mathbf{H})\sigma^2(\mathbf{I}-\mathbf{H})^T&\tiny\text{(earlier result)}\\
 &=\sigma^2(\mathbf{I}-\mathbf{H})(\mathbf{I}-\mathbf{H})&\tiny(\mathbf{I}-\mathbf{H}\text{ is symmetric)}\\
 &=\sigma^2(\mathbf{I}-\mathbf{H}).&\tiny(\mathbf{I}-\mathbf{H}\text{ is idempotent)}
 \end{aligned}
 $$
-
-:::
-
 The residuals have the following distribution:
 
 $$
@@ -639,24 +485,7 @@ $$
 
 *Proof:*
 
-::: {.content-visible unless-format="pdf"}
-</br>  
-</br>  
-</br>  
-</br>  
-</br>  
-</br>  
-</br>  
-</br>  
-</br>  
-:::
-::: {.content-hidden unless-format="pdf"}
-
 Since $\hat{\boldsymbol{\epsilon}}$  is a linear combination of multivariate normal vectors, and using previous results, it has mean $\mathbf{0}_{n\times1}$ and variance matrix $\sigma^2(\mathbf{I}-\mathbf{H})$.
-:::
-
-$\vphantom{blank}$
-
 
 The RSS can be represented as
 
@@ -667,19 +496,6 @@ $$
 
 *Proof:*
 
-::: {.content-visible unless-format="pdf"}
-</br>  
-</br>  
-</br>  
-</br>  
-</br>  
-</br>  
-</br>  
-</br>  
-</br>  
-:::
-::: {.content-hidden unless-format="pdf"}
-
 $$
 \begin{aligned}
 RSS &= \hat{\boldsymbol{\epsilon}}^T\hat{\boldsymbol{\epsilon}}&\tiny\text{(matrix representation of RSS)}\\
@@ -689,8 +505,6 @@ RSS &= \hat{\boldsymbol{\epsilon}}^T\hat{\boldsymbol{\epsilon}}&\tiny\text{(matr
 &=\mathbf{y}^T(\mathbf{I}-\mathbf{H})\mathbf{y}.&\tiny(\mathbf{I}-\mathbf{H} \text{ is idempotent)}\\
 \end{aligned}
 $$
-
-:::
 
 # The Gauss-Markov Theorem
 
