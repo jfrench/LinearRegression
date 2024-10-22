@@ -1,31 +1,11 @@
----
-title: Appendix A - Matrix Facts
-author: Joshua French
-date: ''
-engine: knitr
-# format: html
-jupyter:
-  kernelspec:
-    display_name: R
-    language: R
-    name: ir
-format: ipynb
-execute:
-  output: false
-self-contained: true
-title-block-banner: true
-wrap: 'none'
----
+```{r, include=FALSE}
+# change Console output behavior
+# knitr::opts_chunk$set(comment = "#>", collapse = TRUE)
+knitr::opts_chunk$set(collapse = TRUE)
+library(kableExtra)
+```
 
-To open this information in an interactive Colab notebook, click or scan the QR code below.
-
-<a href="https://colab.research.google.com/github/jfrench/LinearRegression/blob/master/notebooks/a-matrix-facts.ipynb">
-   <img src="https://raw.githubusercontent.com/jfrench/LinearRegression/88c43eee5f12de29b6cb6e0f19ae98ce582a30bb/images/qr-matrix-facts.svg">
-</a>
-
----
-
-# Overview of matrix definitions, properties, algebra, etc.
+# Overview of matrix facts
 
 In this chapter we provide an overview of vectors, matrices, and matrix operations that are useful for data modeling (though their application will not be discussed here).
 
@@ -34,16 +14,13 @@ A **matrix** is a two-dimensional array of values, symbols, or other objects (de
 ## Notation
 
 Matrices are commonly denoted by bold capital letters like $\mathbf{A}$ or $\mathbf{B}$, but this will sometimes be simplified to capital letters like $A$ or $B$. A matrix $\mathbf{A}$ with $m$ rows and $n$ columns (an $m\times n$ matrix) will be denoted as 
-
-$$
-\mathbf{A} = 
-\begin{bmatrix}
+\[\mathbf{A} = \begin{bmatrix}
 \mathbf{A}_{1,1} & \mathbf{A}_{2,1} & \cdots & \mathbf{A}_{1,n} \\
 \mathbf{A}_{2,1} & \mathbf{A}_{2,1} & \cdots & \mathbf{A}_{2,n} \\
 \vdots & \vdots & \ddots & \vdots \\
 \mathbf{A}_{m,1} & \mathbf{A}_{m,2} & \cdots & \mathbf{A}_{m,n} \\
 \end{bmatrix},
-$$
+\]
 
 where $\mathbf{A}_{i,j}$ denotes the element in row $i$ and column $j$ of matrix $\mathbf{A}$.
 
@@ -52,12 +29,12 @@ A **column vector** is a matrix with a single column. A **row vector** is a matr
 * Vectors are commonly denoted with bold lowercase letters such as $\mathbf{a}$ or $\mathbf{b}$, but this may be simplified to lowercase letters such as $a$ or $b$.
 
 A $p\times 1$ column vector $\mathbf{a}$ may constructed as 
-$$
+\[
 \mathbf{a} = [a_1, a_2, \ldots, a_p] = 
 \begin{bmatrix}
 a_1 \\ a_2 \\ \vdots \\ a_p
 \end{bmatrix}.
-$$
+\]
 
 A vector is assumed to be a column vector unless otherwise indicated.
 
@@ -69,19 +46,15 @@ Consider matrices $\mathbf{A}$ and $\mathbf{B}$ with identical sizes $m\times n$
 
 We add $\mathbf{A}$ and $\mathbf{B}$ by adding the element in position $i,j$ of $\mathbf{B}$ with the element in position $i,j$ of $A$, i.e.,
 
-$$
-(\mathbf{A} + \mathbf{B})_{i,j} = \mathbf{A}_{i,j} + \mathbf{B}_{i,j}.
-$$
+\[(\mathbf{A} + \mathbf{B})_{i,j} = \mathbf{A}_{i,j} + \mathbf{B}_{i,j}.\]
 
 Similarly, if we subtract $\mathbf{B}$ from matrix $\mathbf{A}$, then we subtract the element in position $i,j$ of $\mathbf{B}$ from the element in position $i,j$ of $\mathbf{A}$, i.e., 
 
-$$
-(\mathbf{A} - \mathbf{B})_{i,j} = \mathbf{A}_{i,j} - \mathbf{B}_{i,j}.
-$$
+\[(\mathbf{A} - \mathbf{B})_{i,j} = \mathbf{A}_{i,j} - \mathbf{B}_{i,j}.\]
 
 Example:
 
-$$
+\[
 \begin{bmatrix}
 1 & 2 & 3 \\
 4 & 5 & 6 \\
@@ -94,9 +67,9 @@ $$
 3 & 11 & 4 \\
 5 & 8 & 7 \\
 \end{bmatrix}.
-$$
+\]
 
-$$
+\[
 \begin{bmatrix}
 1 & 2 & 3 \\
 4 & 5 & 6 \\
@@ -109,16 +82,14 @@ $$
 -1 & -7 & 2 \\
 3 & 2 & 5 \\
 \end{bmatrix}.
-$$
+\]
 
 ### Scalar multiplication
 
-A matrix multiplied by a scalar value $c\in\mathbb{R}$ is the matrix obtained by multiplying each element of the matrix by $c$. If $\mathbf{A}$ is a matrix and $c\in \mathbb{R}$, then
-$$
-(c\mathbf{A})_{i,j} = c\mathbf{A}_{i,j}.
-$$
-Example:
-$$
+A matrix multiplied by a scalar value $c\in\mathbb{R}$ is the matrix obtained by multiplying each element of the matrix by $c$. If $\mathbf{A}$ is a matrix and $c\in \mathbb{R}$, then 
+\[(c\mathbf{A})_{i,j} = c\mathbf{A}_{i,j}.\]
+Example: 
+\[
 3\begin{bmatrix}
 1 & 2 & 3 \\
 4 & 5 & 6 \\
@@ -131,22 +102,16 @@ $$
 3 & 6 & 9 \\
 12 & 15 & 18 \\
 \end{bmatrix}.
-$$
+\]
 
 ### Matrix multiplication
 
-Consider two matrices $\mathbf{A}$ and $\mathbf{B}$.
+Consider two matrices $\mathbf{A}$ and $\mathbf{B}$. The matrix product $\mathbf{AB}$ is only defined if the number of columns in $\mathbf{A}$ matches the number of rows in $\mathbf{B}$. 
 
-The matrix product $\mathbf{AB}$ is only defined if the number of columns in $\mathbf{A}$ matches the number of rows in $\mathbf{B}$.
+Assume $\mathbf{A}$ is an $m\times n$ matrix and $\mathbf{B}$ is an $n\times p$ matrix. $\mathbf{AB}$ will be an $m\times p$ matrix and \[(\mathbf{AB})_{i,j} = \sum_{k=1}^{n} \mathbf{A}_{i,k}\mathbf{B}_{k,j}.\]
 
-Assume $\mathbf{A}$ is an $m\times n$ matrix and $\mathbf{B}$ is an $n\times p$ matrix. $\mathbf{AB}$ will be an $m\times p$ matrix and
-
-$$
-(\mathbf{AB})_{i,j} = \sum_{k=1}^{n} \mathbf{A}_{i,k}\mathbf{B}_{k,j}.
-$$
-
-Example:
-$$
+Example: 
+\[
 \begin{bmatrix}
 1 & 2 & 3 \\
 4 & 5 & 6
@@ -164,24 +129,24 @@ $$
 14 & 32\\
 32 & 77\\
 \end{bmatrix}.
-$$
+\]
 
 ### Transpose
 
 The **transpose** of a matrix $\mathbf{A}$, denoted $\mathbf{A}^T$, exchanges the rows and columns of the matrix. More formally, the $i,j$ element of $\mathbf{A}^T$ is the $j,i$ element of $\mathbf{A}$, i.e., $(\mathbf{A}^T)_{i,j} = \mathbf{A}_{j,i}$.
 
 Example:
-$$
+\[
 \begin{bmatrix}
 2 & 9 & 3 \\
 4 & 5 & 6
-\end{bmatrix}^T =
+\end{bmatrix}^T = 
 \begin{bmatrix}
 2 & 4\\
 9 & 5\\
 3 & 6
 \end{bmatrix}.
-$$
+\]
 
 ## Basic mathematical properties
 
@@ -189,33 +154,23 @@ $$
 
 Addition and multiplication satisfy the associative property for matrices. Assuming that the matrices $\mathbf{A}$, $\mathbf{B}$, and $\mathbf{C}$ have the sizes required to do the operations below, then
 
-$$
-(\mathbf{A} + \mathbf{B}) + \mathbf{C} = \mathbf{A} + (\mathbf{B} + \mathbf{C})
-$$
+\[(\mathbf{A} + \mathbf{B}) + \mathbf{C} = \mathbf{A} + (\mathbf{B} + \mathbf{C})\]
 and
-$$
-(\mathbf{AB})\mathbf{C}=\mathbf{A}(\mathbf{BC}).
-$$
+\[(\mathbf{AB})\mathbf{C}=\mathbf{A}(\mathbf{BC}).\]
 
 ### Distributive property
 
 Matrix operations satisfy the distributive property. Assuming that the matrices $\mathbf{A}$, $\mathbf{B}$, and $\mathbf{C}$ have the sizes required to do the operations below, then
 
-$$
-\mathbf{A}(\mathbf{B}+\mathbf{C})=\mathbf{AB} + \mathbf{AC}\quad\mathrm{and}\quad (\mathbf{A}+\mathbf{B})\mathbf{C} = \mathbf{AC} + \mathbf{BC}.
-$$
+\[\mathbf{A}(\mathbf{B}+\mathbf{C})=\mathbf{AB} + \mathbf{AC}\quad\mathrm{and}\quad (\mathbf{A}+\mathbf{B})\mathbf{C} = \mathbf{AC} + \mathbf{BC}.\]
 
 ### No commutative property
-
-In general, matrix multiplication does not satisfy the commutative property, i.e.,
-$$
-\mathbf{AB} \neq \mathbf{BA},
-$$
-even when the matrix sizes allow the operation to be performed.
+In general, matrix multiplication does not satisfy the commutative property, i.e., 
+\[\mathbf{AB} \neq \mathbf{BA},\] even when the matrix sizes allow the operation to be performed.
 
 Example:
 
-$$
+\[
 \begin{bmatrix}
 1 & 2
 \end{bmatrix}
@@ -227,9 +182,9 @@ $$
 \begin{bmatrix}
 5
 \end{bmatrix}
-$$
+\]
 while
-$$
+\[
 \begin{bmatrix}
 1\\
 2
@@ -242,7 +197,7 @@ $$
 1 & 2\\
 2 & 4
 \end{bmatrix}.
-$$
+\]
 
 ### Transpose-related properties
 
@@ -250,10 +205,10 @@ Assume that the matrices $\mathbf{A}$, $\mathbf{B}$, and $\mathbf{C}$ have the s
 
 The following properties are true:
 
-- $c^T = c$.
-- $(\mathbf{A} + \mathbf{B})^T = \mathbf{A}^T + \mathbf{B}^T$.
-- $(\mathbf{AB})^T = \mathbf{B}^T \mathbf{A}^T$, which can be extended to $(\mathbf{ABC})^T=\mathbf{C}^T \mathbf{B}^T \mathbf{A}^T$, etc.
-- $(\mathbf{A}^T)^T=\mathbf{A}$.
+* $c^T = c$.
+* $(\mathbf{A} + \mathbf{B})^T = \mathbf{A}^T + \mathbf{B}^T$.
+* $(\mathbf{AB})^T = \mathbf{B}^T \mathbf{A}^T$, which can be extended to $(\mathbf{ABC})^T=\mathbf{C}^T \mathbf{B}^T \mathbf{A}^T$, etc.
+* $(\mathbf{A}^T)^T=\mathbf{A}$.
 
 ## Special matrices
 
@@ -268,25 +223,25 @@ The $n\times n$ identity matrix $\mathbf{I}_{n\times n}$ is 1 for its diagonal e
 
 Example:
 
-$$
+\[
 \mathbf{I}_{3\times 3} = \begin{bmatrix}
 1 & 0 & 0 \\
 0 & 1 & 0 \\
 0 & 0 & 1
 \end{bmatrix}.
-$$
+\]
 
 ### Diagonal matrices
 
 A square matrix $\mathbf{A}$ is **diagonal** if all its off-diagonal elements are zero. A $3\times 3$ diagonal matrix and will look something like
-$$
+\[
 \begin{bmatrix}
 1 & 0 & 0\\
 0 & -1 & 0\\
 0 & 0 & 5
 \end{bmatrix},
-$$
-where the non-zero values can be replaced by any real numbers.
+\]
+where the non-zero values coudl be replaced by any real number.
 
 ### Symmetric matrices
 
@@ -302,10 +257,8 @@ An idempotent matrix must be square.
 
 ### Positive definite matrices
 
-A matrix $\mathbf{A}$ is positive definite if
-$$
-\mathbf{a}^T \mathbf{Aa} > 0,
-$$
+A matrix $\mathbf{A}$ is positive definite if 
+\[\mathbf{a}^T \mathbf{Aa} > 0,\]
 for every vector of real values $\mathbf{a}$ whose values are not identically 0.
 
 ### Inverse matrix
@@ -323,76 +276,53 @@ Some other properties related to the inverse operator:
 
 We start with some basic calculus results.
 
-Let $f(y)$ be a function of a scalar value $b$ and $\frac{df(y)}{dy}$ denote the derivative of the function with respect to $y$. Assume $c \in \mathbb{R}$ is a constant. Then the results in @tbl-deriv-scalar are true.
+Let $f(y)$ be a function of a scalar value $b$ and $\frac{df(y)}{dy}$ denote the derivative of the function with respect to $y$. Assume $c \in \mathbb{R}$ is a constant. Then the results in Table \@ref(tab:deriv-scalar) are true.
 
-::: {.content-visible unless-format="ipynb"}
-```{r}
-#| echo: false
-#| label: tbl-deriv-scalar
-#| tbl-cap: Some basic calculus results for scalar functions taking scalar inputs.
-#| filters:
-#| - parse-latex
+```{r, echo = FALSE}
 deriv_df = data.frame(
   f = c("$cy$", "$y^2$", "$c y^2$"),
   df = c("$c$", "$2y$", "$2cy$")
 )
-knitr::kable(deriv_df,
+kableExtra::kbl(deriv_df,
                 col.names = c("$f(y)$", "$\\frac{df(y)}{dy}$"),
-                align = c("c", "c"))
+                align = c("c", "c"),
+                caption = "Some basic calculus results for scalar functions taking scalar inputs.",
+                label = "deriv-scalar",
+                escape = FALSE) |>
+  kableExtra::kable_styling()
 ```
-:::
-
-::: {.content-visible when-format="ipynb"}
-| $f(y)$  | $\frac{df(y)}{dy}$ |
-|:-------:|:------------------:|
-|  $cy$   |        $c$         |
-|  $y^2$  |        $2y$        |
-| $c y^2$ |       $2cy$        |
-: Some basic calculus results for scalar functions taking scalar inputs. {#tbl-deriv-scalar}
-:::
 
 Now let's look at the derivative of a scalar function $f$ with respect to a vector (i.e., the function takes a vector of values and produces a single real number).
 
-Let $f(\mathbf{y})$ be a function of a $p\times 1$ column vector $\mathbf{y}=[y_1, y_2, \ldots,  y_p]^T$. The derivative of $f(\mathbf{y})$ with respect to $\mathbf{y}$ is denoted $\frac{\partial f(\mathbf{y})}{\partial \mathbf{y}}$ and
-$$
+Let $f(\mathbf{y})$ be a function of a $p\times 1$ column vector $\mathbf{y}=[y_1, y_2, \ldots,  y_p]^T$. The derivative of $f(\mathbf{y})$ with respect to $\mathbf{y}$ is denoted $\frac{\partial f(\mathbf{y})}{\partial \mathbf{y}}$ and 
+\[
 \frac{\partial f(\mathbf{y})}{\partial \mathbf{y}} = \begin{bmatrix}
 \frac{\partial f(\mathbf{y})}{\partial y_1}\\
 \frac{\partial f(\mathbf{y})}{\partial y_2}\\
 \vdots \\
 \frac{\partial f(\mathbf{y})}{\partial y_p}
 \end{bmatrix}.
-$$
+\]
 
-In words, the derivative of a scalar function with respect to its input vector is the vector of partial derivatives with respect to the elements of the input vector.
+In words, the derivative of a scalar function with respect to its input vector is the vector of partial derivatives with respect the elements of the input vector.
 
-Assume $\mathbf{A}$ is an $m\times p$ matrix of constant values. Then the results in @tbl-deriv-vector are true.
+Assume $\mathbf{A}$ is an $m\times p$ matrix of constant values. Then the results in Table \@ref(tab:deriv-vector) are true.
 
-::: {.content-visible unless-format="ipynb"}
-```{r}
-#| echo: false
-#| label: tbl-deriv-vector
-#| tbl-cap: Some basic calculus results for scalar functions taking vector inputs.
-#| filters:
-#| - parse-latex
+```{r, echo = FALSE}
 deriv_df2 = data.frame(
   f = c("$\\mathbf{y}^T \\mathbf{A}$", "$\\mathbf{y}^T \\mathbf{y}$", "$\\mathbf{y}^T \\mathbf{A} \\mathbf{y}$"),
   df = c("$\\mathbf{A}$", "$2\\mathbf{y}$", "$2\\mathbf{A}\\mathbf{y}$")
 )
-knitr::kable(deriv_df2,
-            col.names = c("$f(\\mathbf{y})$", "$\\frac{df(\\mathbf{y})}{d\\mathbf{y}}$"))
+kableExtra::kbl(deriv_df2,
+                col.names = c("$f(\\mathbf{y})$", "$\\frac{df(\\mathbf{y})}{d\\mathbf{y}}$"),
+                align = c("c", "c"),
+                caption = "Some basic calculus results for scalar functions taking vector inputs.",
+                escape = FALSE,
+                label = "deriv-vector")  |>
+  kableExtra::kable_styling()
 ```
-:::
 
-::: {.content-visible when-format="ipynb"}
-|$f(\mathbf{y})$                      |$\frac{df(\mathbf{y})}{d\mathbf{y}}$ |
-|:------------------------------------|:------------------------------------|
-|$\mathbf{y}^T \mathbf{A}$            |$\mathbf{A}$                         |
-|$\mathbf{y}^T \mathbf{y}$            |$2\mathbf{y}$                        |
-|$\mathbf{y}^T \mathbf{A} \mathbf{y}$ |$2\mathbf{A}\mathbf{y}$              |
-: Some basic calculus results for scalar functions taking vector inputs. {#tbl-deriv-vector}
-:::
-
-Comparing Tables @tbl-deriv-scalar and @tbl-deriv-vector, we can make parallels with the derivative results from the two contexts.
+Comparing Tables \@ref(tab:deriv-scalar) and \@ref(tab:deriv-vector), one can make parallels with the derivative results from the two contexts.
 
 ## Additional topics
 
@@ -402,16 +332,15 @@ The determinant of a matrix is a special function that is applied to a square ma
 
 ### Linearly independent vectors
 
-Let $\mathbf{x}_1, \mathbf{x}_2, \ldots, \mathbf{x}_n$ be a set of $n$ vectors of size $p\times 1$.
+Let $\mathbf{x}_1, \mathbf{x}_2, \ldots, \mathbf{x}_n$ be a set of $n$ vectors of size $p\times 1$. 
 
-Then $\mathbf{x}_1, \mathbf{x}_2, \ldots, \mathbf{x}_n$ are **linearly dependent** if there exists $\mathbf{a}=[a_1, a_2, \ldots, a_n]\neq \boldsymbol{0}_{n\times 1}$ such
+Then $\mathbf{x}_1, \mathbf{x}_2, \ldots, \mathbf{x}_n$ are **linearly dependent** if there exists $\mathbf{a}=[a_1, a_2, \ldots, a_m)]\neq 0_{n\times 1}$ such 
 \[
-a_1 \mathbf{x}_1 + a_2 \mathbf{x}_2 + \cdots + a_p \mathbf{x}_p = \boldsymbol{0}_{p\times 1},
+a_1 \mathbf{x}_1 + a_2 \mathbf{x}_2 + \cdots + a_n \mathbf{x}_n = 0_{p\times 1}.
 \]
-where $\boldsymbol{0}_{p\times 1}$ defines an $p\times 1$ column vector of zeros.
 
-Let $\mathbf{X}$ be an $n\times p$ matrix such that $\mathbf{x}_1^T, \mathbf{x}_2^T, \ldots, \mathbf{x}_n^T$ make up its $n$ rows and vectors $\mathbf{X}_{[1]}, \mathbf{X}_{[2]}, \ldots, \mathbf{X}_{[p]}$ make up its columns, so that
-$$
+Let $\mathbf{X}$ be an $n\times p$ matrix such that $\mathbf{x_1}, \mathbf{x_2}, \ldots, \mathbf{x_n}$ make up its $n$ rows and vectors $\mathbf{X}_{[1]}, \mathbf{X}_{[2]}, \ldots, \mathbf{X}_{[p]}$ make up its columns, so that 
+\[
 \mathbf{X}=
 \begin{bmatrix}
 \mathbf{x}_1^T\\
@@ -422,17 +351,17 @@ $$
 \begin{bmatrix}
 \mathbf{X}_{[1]} & \mathbf{X}_{[1]} & \cdots & \mathbf{X}_{[p]}
 \end{bmatrix}.
-$$
+\]
 
-The columns vectors of $\mathbf{X}$ are linearly independent if there is no $\mathbf{a}=[a_1,a_2,\ldots,a_p]\neq \boldsymbol{0}_{p\times 1}$ such that
-$$
-a_1 \mathbf{X}_{[1]} + a_2 \mathbf{X}_{[2]} + \cdots + a_p \mathbf{X}_{[p]} = \boldsymbol{0}_{n\times 1}.
-$$
+The columns vectors of $\mathbf{X}$ are linearly independent if there is no $\mathbf{a}=[a_1,a_2,\ldots,a_p]\neq 0_{p\times 1}$ such that
+\[
+a_1 \mathbf{X}_{[1]} + a_2 \mathbf{X}_{[2]} + \cdots + a_p \mathbf{X}_{[p]} = 0_{p\times 1}.
+\]
 
-The rows of $\mathbf{X}$ are linearly independent if there is no $\mathbf{a}=[a_1,a_2,\ldots,a_n]\neq \boldsymbol{0}_{n\times 1}$ such that
-$$
-a_1 \mathbf{x}_{1} + a_2 \mathbf{x}_{2} + \cdots + a_n \mathbf{x}_{n} = \boldsymbol{0}_{p\times 1}.
-$$
+The row vectors of $\mathbf{X}$ are linearly independent if there is no $\mathbf{a}=[a_1,a_2,\ldots,a_n]\neq 0_{n\times 1}$ such that
+\[
+a_1 \mathbf{x}_{1} + a_2 \mathbf{x}_{2} + \cdots + a_n \mathbf{x}_{n} = 0_{n\times 1}.
+\]
 
 You can learn more about linear independence at [https://en.wikipedia.org/wiki/Linear_independence]([https://en.wikipedia.org/wiki/Linear_independence]).
 
@@ -440,6 +369,6 @@ You can learn more about linear independence at [https://en.wikipedia.org/wiki/L
 
 The **rank** of a matrix is the number of linearly independent columns of the matrix.
 
-If $\mathbf{X}$ is an $n\times p$ matrix with linearly dependent columns but removing a single column results in a linearly independent matrix, then the rank of $\mathbf{X}$ is $p-1$.
+If $\mathbf{X}$ is an $n\times p$ matrix that has linearly dependent columns, but removing a single column results in a linearly independent matrix, then the rank of $\mathbf{X}$ would be $p-1$.
 
-An $n\times p$ matrix has **full rank** if its rank equals $\min(n, p)$, i.e., the smaller of its number of rows and columns.
+An $n\times p$ matrix has **full rank** its rank equals $\min(n, p)$, i.e., the smallers of its number of rows and columns. 
