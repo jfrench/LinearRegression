@@ -263,6 +263,7 @@ interpretations for p-values.
 ```{r}
 #| echo: false
 #| label: tbl-pvalue-interp
+#| output: true
 #| tbl-cap: A summary of common strength-of-evidence interpretations for p-values.
 interp_df <- cbind(pvalue = c("$> 0.10$",
                               "$\\leq 0.10$",
@@ -417,6 +418,7 @@ Suppose $z^*=1.74$ and $\alpha=0.10$.  The test statistic is in the rejection re
 ```{r}
 #| label: fig-rejection-region
 #| echo: false
+#| execute: true
 #| eval: true
 #| output: true
 #| fig-cap: A plot of the rejection region for a two-tailed alternative hypothesis.
@@ -449,6 +451,7 @@ Visually, the p-value is the sum of the area to the left of -1.74 and the area t
 ```{r}
 #| label: fig-pvalue
 #| echo: false
+#| execute: true
 #| eval: true
 #| output: true
 #| fig-cap: A plot of the area used to compute the p-value based on a two-tailed alternative hypothesis.
@@ -542,6 +545,7 @@ Next, we plot each interval. An interval is orange if the interval doesn't conta
 ```{r}
 #| label: fig-ci-interp-plot
 #| echo: false
+#| execute: true
 #| eval: true
 #| output: true
 #| fig-cap: A plot of 100 95% confidence intervals for a population mean produced from independent samples from a $\mathsf{N}(0,1)$ population
@@ -592,3 +596,7 @@ We reject $H_0$ for any hypothesized values of $c$ less than -0.070 or more than
 A confidence interval provides us with much of the same information as a hypothesis test, but it doesn't provide the p-value or allow us to do hypothesis tests at different significance levels.
 
 Confidence intervals are often preferred over hypothesis tests because they provide additional information in the form of plausible parameters values while giving us enough information to perform a hypothesis test.
+
+::: {.content-visible when-format="ipynb"}
+**References**
+:::
