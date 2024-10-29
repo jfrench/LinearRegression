@@ -35,9 +35,7 @@ so we discuss them together.
 > computer science, is the process of using data to infer
 > the distribution that generated the data.
 
-In short, statistical inference is the process by which we
-use a sample of data to draw conclusions about some aspect
-of the population distribution from which the sample came.
+In short, statistical inference focusus on drawing conclusions about the data-generating distribution.
 
 There are two primary types of statistical inference:
 
@@ -62,7 +60,7 @@ We will also introduce and discuss solutions for the
 multiple comparisons problem, which arises when we make
 multiple inferences or predictions simultaneously.
 
-## Necessary notation
+## Some relevant distributions
 
 We briefly introduce some notation related to random
 variables and distributions that we will need in our
@@ -165,13 +163,11 @@ used to derive a confidence interval
 A confidence interval for $\beta_j$ with confidence level
 $1-\alpha$ is given by the expression
 $$
-\hat{\beta}_j \pm t^{\alpha/2}_{n-p} \hat{\mathrm{se}}(\hat{\beta}_j),\quad j=0,2,\ldots,p-1.
+\hat{\beta}_j \pm t^{\alpha/2}_{n-p} \hat{\mathrm{se}}(\hat{\beta}_j),\quad j=0,1,\ldots,p-1.
 (\#eq:t-ci-betas)
 $$
 It is critical to note that the $1-\alpha$ confidence
-level refers to the procedure for a single interval, not the
-family of intervals we can produce for all $p$ coefficients.
-We discuss this issue in more detail in Section \@ref(mcp).
+level refers to the procedure for a single interval. The confidence level for a procedure producing a family of intervals will be less than $1-\alpha$ without proper adjustment. We discuss this issue in more detail in Section \@ref(mcp).
 
 The `confint` function returns confidence intervals for the
 regression coefficients of a fitted model. Technically, the
@@ -311,7 +307,7 @@ Suppose that we construct a family of $k$ confidence
 intervals with individual confidence level $1-\alpha/k$ (and
 all assumptions are satisfied.) Then the probability that
 the confidence interval procedure for a specific interval
-doesn't contain the target parameter is $\alpha/k$. Then $$
+doesn't produce an interval containing the target parameter is $\alpha/k$. Then $$
 \begin{aligned}
 & P(\mbox{All }k\mbox{ intervals contain the target parameter}) \\
 & = 1 - P(\mbox{At least one of the }k\mbox{ intervals misses the target parameter}) \\
@@ -348,8 +344,8 @@ confint(mlmod, level = 1 - 0.05/3)
 ```
 
 Alternatively, we can use the `confint_adjust` function from
-the **api2lm** package [@R-api2lm] to construct this
-interval. The `confint_adjust` function works identically to
+the **api2lm** package [@R-api2lm] to construct these
+intervals. The `confint_adjust` function works identically to
 the `confint` function except that it has an additional
 argument to indicate the type of adjustment to make when
 constructing the confidence intervals. Specifying
@@ -376,7 +372,7 @@ The Working-Hotelling procedure guarantees that if we
 construct the individual confidence intervals in the
 following way, then the family-wise confidence level will be
 at least $1-\alpha$: $$
-\hat{\beta}_j \pm \sqrt{p F^\alpha_{p,n-p}} \hat{\mathrm{se}}(\hat{\beta}_j),\quad j=0,2,\ldots,p-1. (\#eq:wh-ci-betas)
+\hat{\beta}_j \pm \sqrt{p F^\alpha_{p,n-p}} \hat{\mathrm{se}}(\hat{\beta}_j),\quad j=0,1,\ldots,p-1. (\#eq:wh-ci-betas)
 $$
 
 The `confint_adjust` function from the **api2lm** package
@@ -438,7 +434,7 @@ If we averaged the monthly rent or asking price of all the
 dwellings matching our specifications, then that would be an
 approximation of the mean response for that combination of specifications (i.e., regressors). We would need all the
 possible dwellings matching those characteristics to get the
-true average. This average would give us an idea of the
+true mean. This average would give us an idea of the
 "typical" price of dwellings with those characteristics. On
 the other hand, we likely want to know the price of the
 dwelling we actually end up in. This is the "new response"
@@ -538,7 +534,7 @@ response. The primary arguments to the `lm` method for
     $\hat{\mathrm{se}}(\mathbf{x}_0^T \hat{\boldsymbol{\beta}})$ for
     each estimate.
 -   `interval`: The type of interval to compute. The default
-    is `none`, meaning no interval is provided. Setting
+    is `"none"`, meaning no interval is provided. Setting
     `interval = "confidence"` will return a confidence
     interval for the mean response associated with each row
     of `newdata`. Setting `interval = "prediction"` will
@@ -551,9 +547,9 @@ about this function.
 
 We will estimate the mean response for the parallel lines
 model previously fit to the `penguins` data. We do this to
-emphasize the fact that the `predict` function asks you to
+emphasize the fact that the `predict` function asks us to
 specify the values of the *predictor* variables for each
-estimate you want to make, not the complete set of
+estimate we want to make, not the complete set of
 regressors.
 
 Recall that in Section \@ref(s:penguins-mlr2), we fit a
@@ -617,7 +613,7 @@ of 0.29 mm. A Gentoo penguin with a body mass of 5076.02 g
 is estimated to have a mean bill length of 47.50 mm with
 an estimated standard error of 0.22 mm.
 
-To compute the 98% confidence intervals for the mean
+To compute the 98% confidence intervals of the mean
 response for each combination of predictors, we specify
 `level = 0.98` and `interval = "confidence"` in the
 `predict` function in the code below.
@@ -643,7 +639,7 @@ all Adelie penguins. Similarly, the 98% confidence interval
 for the mean bill length of Chinstrap penguins with a
 body mass of 3733.09 g is [48.15, 49.52] mm. Lastly, the mean
 flipper length of Gentoo penguins with a body mass of
-5076.02 g is [46.99, 48.02] mm.
+5076.02 g is [46.99, 48.02] mm, with 98% confidence.
 
 We provide details about manually computing confidence
 intervals for the mean response in Section
@@ -709,9 +705,7 @@ best predictor of a new response is $$
 $$
 
 We want to create a prediction interval for
-$Y(\mathbf{x}_0)$. A prediction interval is basically the
-same thing as a confidence interval, but the interval
-estimator is for a random variable instead of a parameter.
+$Y(\mathbf{x}_0)$. A prediction interval is similar to a confidence interval, but the interval estimator is for a random variable ($Y(\mathbf{x}_0)$) instead of a parameter ($E(Y\mid \mathbf{x}_0)$).
 If we divide the estimation error of the new response, i.e.,
 $Y(\mathbf{x}_0)-\hat{Y}(\mathbf{x}_0)$, by its estimated
 standard deviation,
@@ -807,7 +801,7 @@ confident that a new Adelie penguins with a body mass of
 bill length of a new Chinstrap penguin with a body mass
 of 3733.09 g is [48.56, 55.11] mm. The flipper length of a new
 Gentoo penguin with a body mass of 5076.02 g is between
-41.25 and 53.75 mm with a confidence level of 0.99.
+41.25 and 53.76 mm with a confidence level of 0.99.
 
 Since we are making 3 predictions, our inferences suffer
 from the multiple comparisons problem. To control the
@@ -970,7 +964,7 @@ We want to compare the Complete Model to a "Reduced Model". The Reduced Model is
 
 The most common examples of Reduced Model are:
 
-1.  All of the coefficients except the intercept are set to
+1.  All the coefficients except the intercept are set to
     zero.
 2.  Some of the coefficients are set to zero.
 
@@ -1046,7 +1040,7 @@ $$
 \end{aligned}
 $$
 
-Notice that the RM in $H_0$ is a special case of the CM in $H_a$ with all of the regression coefficients set equal to zero except for the intercept term. Notice that we specifically
+Notice that the RM in $H_0$ is a special case of the CM in $H_a$ with all the regression coefficients set equal to zero except for the intercept term. Notice that we specifically
 conditioned our hypotheses on the intercept coefficient,
 $\beta_0$, being included in both models we are comparing.
 

@@ -6,7 +6,7 @@
   <meta http-equiv="X-UA-Compatible" content="IE=edge" />
   <title>Chapter 6 Linear model inference and prediction | A Progressive Introduction to Linear Models</title>
   <meta name="description" content="A collection of material that progressively introduces how to fit and use linear models." />
-  <meta name="generator" content="bookdown 0.40 and GitBook 2.6.7" />
+  <meta name="generator" content="bookdown 0.41 and GitBook 2.6.7" />
 
   <meta property="og:title" content="Chapter 6 Linear model inference and prediction | A Progressive Introduction to Linear Models" />
   <meta property="og:type" content="book" />
@@ -312,7 +312,7 @@ div.csl-indent {
 <li class="chapter" data-level="6" data-path="inference.html"><a href="inference.html"><i class="fa fa-check"></i><b>6</b> Linear model inference and prediction</a>
 <ul>
 <li class="chapter" data-level="6.1" data-path="inference.html"><a href="inference.html#overview-of-inference-and-prediction"><i class="fa fa-check"></i><b>6.1</b> Overview of inference and prediction</a></li>
-<li class="chapter" data-level="6.2" data-path="inference.html"><a href="inference.html#necessary-notation"><i class="fa fa-check"></i><b>6.2</b> Necessary notation</a></li>
+<li class="chapter" data-level="6.2" data-path="inference.html"><a href="inference.html#some-relevant-distributions"><i class="fa fa-check"></i><b>6.2</b> Some relevant distributions</a></li>
 <li class="chapter" data-level="6.3" data-path="inference.html"><a href="inference.html#properties-betahat"><i class="fa fa-check"></i><b>6.3</b> Assumptions and properties of the OLS estimator</a></li>
 <li class="chapter" data-level="6.4" data-path="inference.html"><a href="inference.html#parametric-confidence-intervals-for-regression-coefficients"><i class="fa fa-check"></i><b>6.4</b> Parametric confidence intervals for regression coefficients</a>
 <ul>
@@ -450,9 +450,7 @@ so we discuss them together.</p>
 computer science, is the process of using data to infer
 the distribution that generated the data.</p>
 </blockquote>
-<p>In short, statistical inference is the process by which we
-use a sample of data to draw conclusions about some aspect
-of the population distribution from which the sample came.</p>
+<p>In short, statistical inference focusus on drawing conclusions about the data-generating distribution.</p>
 <p>There are two primary types of statistical inference:</p>
 <ol style="list-style-type: decimal">
 <li>Confidence intervals</li>
@@ -474,8 +472,8 @@ process, though this isn’t required.</p>
 multiple comparisons problem, which arises when we make
 multiple inferences or predictions simultaneously.</p>
 </div>
-<div id="necessary-notation" class="section level2 hasAnchor" number="6.2">
-<h2><span class="header-section-number">6.2</span> Necessary notation<a href="inference.html#necessary-notation" class="anchor-section" aria-label="Anchor link to header"></a></h2>
+<div id="some-relevant-distributions" class="section level2 hasAnchor" number="6.2">
+<h2><span class="header-section-number">6.2</span> Some relevant distributions<a href="inference.html#some-relevant-distributions" class="anchor-section" aria-label="Anchor link to header"></a></h2>
 <p>We briefly introduce some notation related to random
 variables and distributions that we will need in our
 discussion below.</p>
@@ -567,13 +565,11 @@ used to derive a confidence interval</p>
 <p>A confidence interval for <span class="math inline">\(\beta_j\)</span> with confidence level
 <span class="math inline">\(1-\alpha\)</span> is given by the expression
 <span class="math display" id="eq:t-ci-betas">\[
-\hat{\beta}_j \pm t^{\alpha/2}_{n-p} \hat{\mathrm{se}}(\hat{\beta}_j),\quad j=0,2,\ldots,p-1.
+\hat{\beta}_j \pm t^{\alpha/2}_{n-p} \hat{\mathrm{se}}(\hat{\beta}_j),\quad j=0,1,\ldots,p-1.
 \tag{6.4}
 \]</span>
 It is critical to note that the <span class="math inline">\(1-\alpha\)</span> confidence
-level refers to the procedure for a single interval, not the
-family of intervals we can produce for all <span class="math inline">\(p\)</span> coefficients.
-We discuss this issue in more detail in Section <a href="inference.html#mcp">6.5</a>.</p>
+level refers to the procedure for a single interval. The confidence level for a procedure producing a family of intervals will be less than <span class="math inline">\(1-\alpha\)</span> without proper adjustment. We discuss this issue in more detail in Section <a href="inference.html#mcp">6.5</a>.</p>
 <p>The <code>confint</code> function returns confidence intervals for the
 regression coefficients of a fitted model. Technically, the
 <code>confint</code> function is a generic function that has methods
@@ -699,7 +695,7 @@ family-wise confidence level of our confidence intervals at
 intervals with individual confidence level <span class="math inline">\(1-\alpha/k\)</span> (and
 all assumptions are satisfied.) Then the probability that
 the confidence interval procedure for a specific interval
-doesn’t contain the target parameter is <span class="math inline">\(\alpha/k\)</span>. Then <span class="math display">\[
+doesn’t produce an interval containing the target parameter is <span class="math inline">\(\alpha/k\)</span>. Then <span class="math display">\[
 \begin{aligned}
 &amp; P(\mbox{All }k\mbox{ intervals contain the target parameter}) \\
 &amp; = 1 - P(\mbox{At least one of the }k\mbox{ intervals misses the target parameter}) \\
@@ -734,8 +730,8 @@ confidence intervals using the code below.</p>
 <span id="cb162-5"><a href="inference.html#cb162-5" tabindex="-1"></a><span class="do">## body_mass_g       -7.024372e-04 0.002026874</span></span>
 <span id="cb162-6"><a href="inference.html#cb162-6" tabindex="-1"></a><span class="do">## flipper_length_mm  1.440377e-01 0.299693234</span></span></code></pre></div>
 <p>Alternatively, we can use the <code>confint_adjust</code> function from
-the <strong>api2lm</strong> package <span class="citation">(<a href="#ref-R-api2lm">French 2023</a>)</span> to construct this
-interval. The <code>confint_adjust</code> function works identically to
+the <strong>api2lm</strong> package <span class="citation">(<a href="#ref-R-api2lm">French 2023</a>)</span> to construct these
+intervals. The <code>confint_adjust</code> function works identically to
 the <code>confint</code> function except that it has an additional
 argument to indicate the type of adjustment to make when
 constructing the confidence intervals. Specifying
@@ -766,7 +762,7 @@ family-wise confidence level will be at least <span class="math inline">\(1-\alp
 construct the individual confidence intervals in the
 following way, then the family-wise confidence level will be
 at least <span class="math inline">\(1-\alpha\)</span>: <span class="math display">\[
-\hat{\beta}_j \pm \sqrt{p F^\alpha_{p,n-p}} \hat{\mathrm{se}}(\hat{\beta}_j),\quad j=0,2,\ldots,p-1. (\#eq:wh-ci-betas)
+\hat{\beta}_j \pm \sqrt{p F^\alpha_{p,n-p}} \hat{\mathrm{se}}(\hat{\beta}_j),\quad j=0,1,\ldots,p-1. (\#eq:wh-ci-betas)
 \]</span></p>
 <p>The <code>confint_adjust</code> function from the <strong>api2lm</strong> package
 will produce these intervals when setting the <code>method</code>
@@ -830,7 +826,7 @@ If we averaged the monthly rent or asking price of all the
 dwellings matching our specifications, then that would be an
 approximation of the mean response for that combination of specifications (i.e., regressors). We would need all the
 possible dwellings matching those characteristics to get the
-true average. This average would give us an idea of the
+true mean. This average would give us an idea of the
 “typical” price of dwellings with those characteristics. On
 the other hand, we likely want to know the price of the
 dwelling we actually end up in. This is the “new response”
@@ -915,7 +911,7 @@ mean, i.e.,
 <span class="math inline">\(\hat{\mathrm{se}}(\mathbf{x}_0^T \hat{\boldsymbol{\beta}})\)</span> for
 each estimate.</li>
 <li><code>interval</code>: The type of interval to compute. The default
-is <code>none</code>, meaning no interval is provided. Setting
+is <code>"none"</code>, meaning no interval is provided. Setting
 <code>interval = "confidence"</code> will return a confidence
 interval for the mean response associated with each row
 of <code>newdata</code>. Setting <code>interval = "prediction"</code> will
@@ -927,9 +923,9 @@ we will discuss in the next section.</li>
 about this function.</p>
 <p>We will estimate the mean response for the parallel lines
 model previously fit to the <code>penguins</code> data. We do this to
-emphasize the fact that the <code>predict</code> function asks you to
+emphasize the fact that the <code>predict</code> function asks us to
 specify the values of the <em>predictor</em> variables for each
-estimate you want to make, not the complete set of
+estimate we want to make, not the complete set of
 regressors.</p>
 <p>Recall that in Section <a href="linear-model-estimation.html#s:penguins-mlr2">3.9</a>, we fit a
 parallel lines model to the <code>penguins</code> data that used both
@@ -1001,7 +997,7 @@ bill length of 48.83 mm with an estimated standard error
 of 0.29 mm. A Gentoo penguin with a body mass of 5076.02 g
 is estimated to have a mean bill length of 47.50 mm with
 an estimated standard error of 0.22 mm.</p>
-<p>To compute the 98% confidence intervals for the mean
+<p>To compute the 98% confidence intervals of the mean
 response for each combination of predictors, we specify
 <code>level = 0.98</code> and <code>interval = "confidence"</code> in the
 <code>predict</code> function in the code below.</p>
@@ -1025,7 +1021,7 @@ all Adelie penguins. Similarly, the 98% confidence interval
 for the mean bill length of Chinstrap penguins with a
 body mass of 3733.09 g is [48.15, 49.52] mm. Lastly, the mean
 flipper length of Gentoo penguins with a body mass of
-5076.02 g is [46.99, 48.02] mm.</p>
+5076.02 g is [46.99, 48.02] mm, with 98% confidence.</p>
 <p>We provide details about manually computing confidence
 intervals for the mean response in Section
 <a href="inference.html#manual-calc-ci-mean-response">6.11.3</a>.</p>
@@ -1102,9 +1098,7 @@ best predictor of a new response is <span class="math display">\[
 \end{aligned}
 \]</span></p>
 <p>We want to create a prediction interval for
-<span class="math inline">\(Y(\mathbf{x}_0)\)</span>. A prediction interval is basically the
-same thing as a confidence interval, but the interval
-estimator is for a random variable instead of a parameter.
+<span class="math inline">\(Y(\mathbf{x}_0)\)</span>. A prediction interval is similar to a confidence interval, but the interval estimator is for a random variable (<span class="math inline">\(Y(\mathbf{x}_0)\)</span>) instead of a parameter (<span class="math inline">\(E(Y\mid \mathbf{x}_0)\)</span>).
 If we divide the estimation error of the new response, i.e.,
 <span class="math inline">\(Y(\mathbf{x}_0)-\hat{Y}(\mathbf{x}_0)\)</span>, by its estimated
 standard deviation,
@@ -1201,7 +1195,7 @@ confident that a new Adelie penguins with a body mass of
 bill length of a new Chinstrap penguin with a body mass
 of 3733.09 g is [48.56, 55.11] mm. The flipper length of a new
 Gentoo penguin with a body mass of 5076.02 g is between
-41.25 and 53.75 mm with a confidence level of 0.99.</p>
+41.25 and 53.76 mm with a confidence level of 0.99.</p>
 <p>Since we are making 3 predictions, our inferences suffer
 from the multiple comparisons problem. To control the
 family-wise confidence level of our intervals, we can use
@@ -1367,7 +1361,7 @@ model as the “Complete Model”.</p>
 <p>We want to compare the Complete Model to a “Reduced Model”. The Reduced Model is a special case of the Complete Model. Alternatively, we can say the Reduced Model is <em>nested</em> in the Complete Model. We use the abbreviations RM to indicate the Reduced Model and CM to indicate the Complete Model.</p>
 <p>The most common examples of Reduced Model are:</p>
 <ol style="list-style-type: decimal">
-<li>All of the coefficients except the intercept are set to
+<li>All the coefficients except the intercept are set to
 zero.</li>
 <li>Some of the coefficients are set to zero.</li>
 </ol>
@@ -1428,7 +1422,7 @@ coefficients differ from zero. This test is known as the “test for a regressio
 &amp;H_a: \beta_1 \in \mathbb{R}  \text{ or } \ldots  \text{ or } \beta_{p-1}\in \mathbb{R} \mid \beta_0 \in \mathbb{R}.
 \end{aligned}
 \]</span></p>
-<p>Notice that the RM in <span class="math inline">\(H_0\)</span> is a special case of the CM in <span class="math inline">\(H_a\)</span> with all of the regression coefficients set equal to zero except for the intercept term. Notice that we specifically
+<p>Notice that the RM in <span class="math inline">\(H_0\)</span> is a special case of the CM in <span class="math inline">\(H_a\)</span> with all the regression coefficients set equal to zero except for the intercept term. Notice that we specifically
 conditioned our hypotheses on the intercept coefficient,
 <span class="math inline">\(\beta_0\)</span>, being included in both models we are comparing.</p>
 <p>The <span class="math inline">\(F\)</span> statistic in Equation <a href="inference.html#eq:f-stat-lh">(6.10)</a> used for
@@ -2024,7 +2018,7 @@ Horst, Allison, Alison Hill, and Kristen Gorman. 2022. <em>Palmerpenguins: Palme
 Kutner, Michael H, Christopher J Nachtsheim, John Neter, and William Li. 2005. <em>Applied Linear Statistical Models, 5th Edition</em>. McGraw-Hill/Irwin, New York.
 </div>
 <div id="ref-bon_vs_scheffe" class="csl-entry">
-Mi, Jie, and Allan R. Sampson. 1993. <span>“A Comparison of the Bonferroni and Scheffé Bounds.”</span> <em>Journal of Statistical Planning and Inference</em> 36 (1): 101–5. https://doi.org/<a href="https://doi.org/10.1016/0378-3758(93)90105-F">https://doi.org/10.1016/0378-3758(93)90105-F</a>.
+Mi, Jie, and Allan R. Sampson. 1993. <span>“A Comparison of the Bonferroni and Scheffé Bounds.”</span> <em>Journal of Statistical Planning and Inference</em> 36 (1): 101–5. <a href="https://doi.org/10.1016/0378-3758(93)90105-F">https://doi.org/10.1016/0378-3758(93)90105-F</a>.
 </div>
 <div id="ref-wasserman2004all" class="csl-entry">
 Wasserman, Larry. 2004. <em>All of Statistics: A Concise Course in Statistical Inference</em>. Vol. 26. Springer.

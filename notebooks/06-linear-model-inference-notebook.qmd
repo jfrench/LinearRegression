@@ -2,23 +2,31 @@
 title: Chapter 6 - Linear Model Inference
 author: Joshua French
 date: ''
-format: html
-# format: ipynb
-# jupyter: ir
-# execute:
-#   output: false
+engine: knitr
+# format: html
+jupyter:
+  kernelspec:
+    display_name: R
+    language: R
+    name: ir
+format: ipynb
+execute:
+  output: false
 self-contained: true
 title-block-banner: true
 wrap: 'none'
+bibliography: book.bib
 ---
 
-To open this information in an interactive Colab notebook, click the Open in Colab graphic below.
+To open this information in an interactive Colab notebook, click or scan the QR code below.
 
-<a href="https://colab.research.google.com/github/jfrench/LinearRegression/blob/master/notebooks/06-linear-model-inference-notebook.ipynb">
-   <img src="https://colab.research.google.com/assets/colab-badge.svg">
+<a href="https://colab.research.google.com/github/jfrench/LinearRegression/blob/master/notebooks/d-estimation-inference-review-notebook.ipynb">
+   <img src="https://raw.githubusercontent.com/jfrench/LinearRegression/68b90703718e3dc214dedfa7b0c22b6604c29327/images/qr-inference.svg">
 </a>
 
 ---
+
+::: {.content-visible when-format="ipynb"}
 
 ```{r}
 if(!require(palmerpenguins, quietly = TRUE)) {
@@ -30,6 +38,7 @@ if(!require(api2lm, quietly = TRUE)) {
   library(api2lm)
 }
 ```
+:::
 
 We adjust some printing options for clarity. 
 
@@ -55,7 +64,7 @@ Inference and prediction are often intertwined, so we discuss them together.
 We will also introduce and discuss solutions for the multiple
 comparisons problem, which arises when we make multiple inferences or predictions simultaneously.
 
-# Necessary notation
+# Some relevant distributions
 
 ---
 
@@ -141,10 +150,10 @@ pivotal quantity with a $t$ distribution, and it can be used to derive a confide
 A confidence interval for $\beta_j$ with confidence level $1-\alpha$ is given by the expression: 
 
 $$
-\hat{\beta}_j \pm t^{\alpha/2}_{n-p} \hat{\mathrm{se}}(\hat{\beta}_j),\quad j=0,2,\ldots,p-1.
+\hat{\beta}_j \pm t^{\alpha/2}_{n-p} \hat{\mathrm{se}}(\hat{\beta}_j),\quad j=0,1,\ldots,p-1.
 $$
 
-It is critical to note that the $1-\alpha$ confidence level refers to the procedure for a single interval, not the family of intervals we can produce for all $p$ coefficients.
+It is critical to note that the $1-\alpha$ confidence level refers to the procedure for a single interval. The confidence level for a procedure producing a family of intervals will be less than $1-\alpha$ without proper adjustment.
 
 The `confint` function returns confidence intervals for the regression
 coefficients of a fitted model. 
@@ -179,8 +188,7 @@ We estimate the parameters of this model in R.
 # load data
 data(penguins, package = "palmerpenguins")
 # fit model
-mlmod <- lm(bill_length_mm ~ body_mass_g + flipper_length_mm,
-            data = penguins)
+mlmod <- lm(bill_length_mm ~ body_mass_g + flipper_length_mm, data = penguins)
 ```
 
 We obtain the 95% confidence intervals for the 3 regression coefficients.
@@ -205,8 +213,7 @@ confint(mlmod, parm = 3, level = 0.90)
 ```
 
 ```{r}
-confint(mlmod, parm = "flipper_length_mm",
-        level = 0.90)
+confint(mlmod, parm = "flipper_length_mm", level = 0.90)
 ```
 
 # The multiple comparisons problem
@@ -217,7 +224,7 @@ Our linear models typically have multiple regression coefficients.
 
 - We typically want to construct confidence intervals for all of the coefficients.
 
-The confidence level of the procedure described above is only valid for a single interval.
+The confidence level of the procedure described in the previous section is only valid for a single interval.
 
 Since we are constructing multiple intervals, the simultaneous confidence level of the procedure for the family of intervals is less than $1-\alpha$.
 
@@ -241,11 +248,11 @@ A **multiple comparisons procedure** is a procedure designed to adjust for multi
 
 ---
 
-Bonferroni (1936) proposed a simple multiple comparisons procedure that is applicable in many contexts. This general procedure is known as the **Bonferroni correction**.
+@bonferroni1936 proposed a simple multiple comparisons procedure that is applicable in many contexts. This general procedure is known as the **Bonferroni correction**.
 
 Suppose we are constructing $k$ confidence intervals simultaneously. We control the family-wise confidence level of our intervals at $1-\alpha$ if we construct the individual confidence intervals with the level $1-\alpha/k$. We sketch a proof of this below.
 
-Boole's inequality (Boole, 1847) states that for a countable set of events $A_1, A_2, A_3 \ldots$,
+Boole's inequality [@boole] states that for a countable set of events $A_1, A_2, A_3 \ldots$,
 
 $$P(\cup_{j=1}^\infty A_j) \leq \sum_{j=1}^\infty P(A_j).$$
 
@@ -259,8 +266,7 @@ for two events $A$ and $B$.
 
 Suppose that we construct a family of $k$ confidence intervals with individual confidence level $1-\alpha/k$ (and all assumptions are satisfied.)
 
-- The probability that the confidence interval procedure for a specific interval doesn't contain the target parameter is
-$\alpha/k$.
+- The probability that the confidence interval procedure for a specific interval doesn't produce an interval containing the target parameter is $\alpha/k$.
 
 Then: 
 
@@ -297,7 +303,6 @@ We construct the Bonferroni-adjusted confidence intervals using the code below.
 confint(mlmod, level = 1 - 0.05/3)
 ```
 
-Alternatively, we can use the `confint_adjust` function from the **api2lm** package to construct this interval.
 
 The `confint_adjust` function works almost identically to the `confint` function.
 
@@ -308,14 +313,14 @@ The `confint_adjust` function works almost identically to the `confint` function
 confint_adjust(mlmod, method = "bonferroni")
 ```
 
-Working and Hotelling (1929) developed another multiple comparisons procedure that can be used to preserve the family-wise confidence level of the intervals at $1-\alpha$.
+@workinghotelling developed another multiple comparisons procedure that can be used to preserve the family-wise confidence level of the intervals at $1-\alpha$.
 
-The Working-Hotelling multiple comparisons procedure is valid for ALL linear combinations of the regression coefficients, meaning that we can construct an arbitrarily large number of confidence intervals for linear combinations of the regression coefficients with this procedure and the family-wise confidence level will be at least $1-\alpha$ (Weisberg, 2014).
+The Working-Hotelling multiple comparisons procedure is valid for ALL linear combinations of the regression coefficients, meaning that we can construct an arbitrarily large number of confidence intervals for linear combinations of the regression coefficients with this procedure and the family-wise confidence level will be at least $1-\alpha$ [@alr4].
 
 The Working-Hotelling procedure guarantees that if we construct the individual confidence intervals in the following way, then the family-wise confidence level will be at least $1-\alpha$:
 
 $$
-\hat{\beta}_j \pm \sqrt{p F^\alpha_{p,n-p}} \hat{\mathrm{se}}(\hat{\beta}_j),\quad j=0,2,\ldots,p-1.
+\hat{\beta}_j \pm \sqrt{p F^\alpha_{p,n-p}} \hat{\mathrm{se}}(\hat{\beta}_j),\quad j=0,1,\ldots,p-1.
 $$
 
 The `confint_adjust` function from the **api2lm** package will produce these intervals when setting the `method` argument to `"wh"`. 
@@ -327,7 +332,7 @@ confint_adjust(mlmod, method = "wh")
 
 In this example, the Bonferroni-adjusted intervals are narrower than the Working-Hotelling-adjusted intervals.
 
-The Working-Hotelling intervals tends to be narrower for small $p$ (e.g., $p=1$ or $2$) and small $n-p$ (e.g., $n-p = 1$ or $2$) (Mi and Sampson, 1993).
+The Working-Hotelling intervals tends to be narrower for small $p$ (e.g., $p=1$ or $2$) and small $n-p$ (e.g., $n-p = 1$ or $2$) [@bon_vs_scheffe].
 
 As the number of intervals increases, the Working-Hotelling intervals will eventually be narrower than the Bonferroni-adjusted intervals.
 
@@ -359,7 +364,7 @@ $Y(\mathbf{x}_0)$ represents the actual response we will observe for a new obser
 Suppose we want to rent a new apartment or buy a new house. If we look through the available listings, we will likely filter our search results by certain characteristics. We might limit our search to dwellings with 3 bedrooms, 2 bathrooms, that are within a certain distance of public transportation, and have a certain amount of square footage.
 
 - If we averaged the monthly rent or asking price of all the dwellings matching our specifications, then that would be an approximation of the mean response for that combination of specifications (i.e., regressors).
-    - We would need all the possible dwellings matching those characteristics to get the true average.
+    - We would need all the possible dwellings matching those characteristics to get the true mean.
     - This average would give us an idea of the "typical" price of dwellings with those characteristics.
 - On the other hand, we likely want to know the price of the dwelling we actually end up in. This is the "new response" we want to predict.
 
@@ -439,8 +444,7 @@ The primary arguments to the `lm` method for `predict` are:
     compute the standard errors of each estimated mean, i.e.,
     $\hat{\mathrm{se}}(\mathbf{x}_0^T \hat{\boldsymbol{\beta}})$ for each estimate.
 -   `interval`: The type of interval to compute. 
-    - The default is `none`,
-    meaning no interval is provided.
+    - The default is `"none"`, meaning no interval is provided.
     - Setting `interval = "confidence"`
     will return a confidence interval for the mean response associated
     with each row of `newdata`.
@@ -454,8 +458,8 @@ function.
 
 We will estimate the mean response for the parallel lines model previously fit to the `penguins` data.
 
-- This is to emphasize that the `predict` function asks you to specify the values of the
-*predictor* variables for each estimate you want to make, not the complete set of regressors.
+- This is to emphasize that the `predict` function asks us to specify the values of the
+*predictor* variables for each estimate we want to make, not the complete set of regressors.
 
 Recall we fit a parallel lines model to the `penguins` data that used both `body_mass_g` and `species` to explain the behavior of `bill_length_mm`. Letting $D_C$ denote the indicator variable for the `Chinstrap` level and $D_G$ denote the indicator variable for the `Gentoo` level, the fitted parallel lines model was:
 
@@ -502,11 +506,10 @@ A Chinstrap penguin with a body mass of 3733.09 g is estimated to have a mean bi
 
 A Gentoo penguin with a body mass of 5076.02 g is estimated to have a mean bill length of 47.50 mm with an estimated standard error of 0.22 mm.
 
-To compute the 98% confidence intervals for the mean response for each combination of predictors, we specify `level = 0.98` and `interval = "confidence"` in the `predict` function in the code below.
+To compute the 98% confidence intervals of the mean response for each combination of predictors, we specify `level = 0.98` and `interval = "confidence"` in the `predict` function in the code below.
 
 ```{r}
-predict(lmodp, newdata = newpenguins,
-        level = 0.98, interval = "confidence")
+predict(lmodp, newdata = newpenguins, level = 0.98, interval = "confidence")
 ```
 
 The 98% confidence interval for the mean bill length of an Adelie penguin with a body mass of 3700.662 g is [38.33, 39.25] mm. We are 98% confident that the mean bill length of Adelie penguins with a body mass of 3700.662 g is between 38.33 and 39.25 mm. Note: we are constructing a confidence interval for the mean bill length of ALL
@@ -520,7 +523,7 @@ which is an unknown characteristic of the population of all Adelie penguins.
 
 Similarly, the 98% confidence interval for the mean bill length of Chinstrap penguins with a body mass of 3733.09 g is [48.15, 49.52] mm.
 
-Lastly, the mean bill length of Gentoo penguins with a body mass of 5076.02 g is [46.99, 48.02] mm.
+Lastly, the mean bill length of Gentoo penguins with a body mass of 5076.02 g is [46.99, 48.02] mm, with 98% confidence.
 
 We are once again faced with a multiple comparisons problem because we are making 3 inferences. To control the family-wise confidence level of our intervals, we can use the Bonferroni or Working-Hotelling corrections previously discussed. 
 
@@ -589,7 +592,7 @@ This is the best prediction because:
 
 We want to create a prediction interval for $Y(\mathbf{x}_0)$. 
 
-- A prediction interval is similar to a confidence interval, but the interval estimator is for a random variable instead of a parameter.
+- A prediction interval is similar to a confidence interval, but the interval estimator is for a random variable ($Y(\mathbf{x}_0)$) instead of a parameter ($E(Y\mid \mathbf{x}_0)$).
 
 
 We can use the $t$-distributed pivotal quantity:
@@ -615,7 +618,7 @@ $$
 Comparing $\hat{\mathrm{se}}(\mathbf{x}_0^T\hat{\boldsymbol{\beta}})$  and $\widehat{\mathrm{sd}}(Y(\mathbf{x}_0)-\hat{Y}(\mathbf{x}_0))$, we notice that 
 
 $$
-\hat{\mathrm{sd}}(Y(\mathbf{x}_0)-\hat{Y}(\mathbf{x}_0)) = \hat{\sigma} + \hat{\mathrm{se}}(\hat{E}(Y\mid \mathbf{x}_0) - E(Y\mid \mathbf{x}_0)).
+\hat{\mathrm{sd}}(Y(\mathbf{x}_0)-\hat{Y}(\mathbf{x}_0)) = \hat{\sigma} + \hat{\mathrm{se}}(\mathbf{x}_0^T\hat{\boldsymbol{\beta}}).
 $$
 
 *Prediction intervals for a new response are always wider than a confidence interval for the mean response* when considering the same regressor values, $\mathbf{x}_0$, and confidence level.
@@ -645,13 +648,13 @@ A new Adelie penguin with a body mass of 3700.662 g is predicted to have a bill 
 
 Similarly, the 99% prediction interval for the bill length of a new Chinstrap penguin with a body mass of 3733.09 g is [48.56, 55.11] mm.
 
-The bill length of a new Gentoo penguin with a body mass of 5076.02 g is between 41.25 and  53.75 mm with a confidence level of 0.99.
+The bill length of a new Gentoo penguin with a body mass of 5076.02 g is between 41.25 and  53.76 mm with a confidence level of 0.99.
 
 Since we are making 3 predictions, our inferences suffer from the multiple comparisons problem.
 
 To control the family-wise confidence level of our intervals, we can use the Bonferroni correction with $k=3$.
 
-The Working-Hotelling correction does not apply to new responses. A similar adjustment proposed by Scheff&#233; does apply (Kutner et al., 2005).
+The Working-Hotelling correction does not apply to new responses. A similar adjustment proposed by Scheff&#233; does apply [@alsm2005].
 
 - The prediction interval multiplier used for a single prediction interval with confidence level $1-\alpha$ changes from $t^{\alpha/2}_{n-p}$ to $\sqrt{k F^{\alpha}_{k,n-p}}$ to control the family-wise confidence level at $1-\alpha$ for a family of $k$ prediction intervals.
     - The Working-Hotelling multiplier was $\sqrt{p F^{\alpha}_{p,n-p}}$.
@@ -754,7 +757,7 @@ summary(mlmod)$coefficients
 ```
 
 - The first column (no name) indicates the coefficient term under consideration.
-- The second column (`Estimate`) provides the estimated coefficients.
+- The second column (`Estimate`) provides the estimate coefficients.
 - The third column (`Std. Error`) provides the estimated standard error (i.e., $\hat{\mathrm{se}}(\hat{\beta}_j)$) for each coefficient.
 - The fourth column (`t value`) provides the test statistic associated with testing $H_0: \beta_j = 0 \mid \boldsymbol{\beta}_{-j} \in \mathbb{R}^{p-1}$ versus a suitable alternative for each coefficient.
 - The final column (`Pr(>|t|)`) provides the two-tailed p-value associated with this test.
@@ -776,12 +779,12 @@ We want to compare the Complete Model to a "Reduced Model".
 
 - The Reduced Model is a special case of the Complete Model.
 - Alternatively, we can say the Reduced Model is *nested* in the Complete Model.
-- RM is the abbreviation for the Reduced Model. 
-- CM is the abbreviation for the Complete Model.
+- We use RM as the abbreviation for the Reduced Model. 
+- We use CM as the abbreviation for the Complete Model.
 
 The most common examples of Reduced Model are:
 
-1. All of the coefficients except the intercept are set to zero.
+1. All the coefficients except the intercept are set to zero.
 2. Some of the coefficients are set to zero.
 
 Other examples of a RM set certain coefficients equal to each other or place other restrictions on the coefficients.
@@ -852,10 +855,7 @@ $$
 \end{aligned}
 $$
 
-$H_0: \beta_1 = \cdots = \beta_{p-1} = 0 \mid \beta_0 \in \mathbb{R}$
-$H_a: \beta_0 \in \mathbb{R}, \beta_1 \in \mathbb{R}, \ldots, \beta_{p-1}\in \mathbb{R}$.
-
-The RM in $H_0$ is a special case of the CM in $H_a$ with all of the regression coefficients set equal to zero except for the intercept term.
+The RM in $H_0$ is a special case of the CM in $H_a$ with all the regression coefficients set equal to zero except for the intercept term.
 
 The $F$ statistic simplifies dramatically when performing a test for a regression relationship.
 
@@ -1025,19 +1025,7 @@ The test statistic for this test is 1.62 with an associated p-value of 0.20.
 
 It appears that for the model regressing `bill_length_mm` on `body_mass_g` and `species`, the parallel lines model is adequate and we do not need the additional complexity of the separate lines model.
 
+::: {.content-visible when-format="ipynb"}
 # References
-
-Bonferroni, Carlo. 1936. "Teoria Statistica Delle Classi e Calcolo Delle Probabilita." Pubblicazioni Del R Istituto Superiore Di Scienze Economiche e Commericiali Di Firenze 8: 3–62.
-
-Boole, George. 1847. The Mathematical Analysis of Logic. Philosophical Library.
-
-Kutner, Michael H, Christopher J Nachtsheim, John Neter, and William Li. 2005. Applied Linear Statistical Models, 5th Edition. McGraw-Hill/Irwin, New York.
-
-Mi, Jie, and Allan R. Sampson. 1993. "A Comparison of the Bonferroni and Scheffé Bounds." Journal of Statistical Planning and Inference 36 (1): 101–5. [https://doi.org/https://doi.org/10.1016/0378-3758(93)90105-F](https://doi.org/https://doi.org/10.1016/0378-3758(93)90105-F).
-
-Wasserman, Larry. 2004. All of Statistics: A Concise Course in Statistical Inference. Vol. 26. Springer.
-
-Weisberg, Sanford. 2014. Applied Linear Regression. Fourth. Hoboken NJ: Wiley. [http://z.umn.edu/alr4ed](http://z.umn.edu/alr4ed).
-
-Working, Holbrook, and Harold Hotelling. 1929. "Applications of the Theory of Error to the Interpretation of Trends." Journal of the American Statistical Association 24 (165A): 73–85. [https://doi.org/10.1080/01621459.1929.10506274](https://doi.org/10.1080/01621459.1929.10506274).
+:::
 

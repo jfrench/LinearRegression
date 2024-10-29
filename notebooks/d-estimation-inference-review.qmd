@@ -21,7 +21,7 @@ bibliography: book.bib
 To open this information in an interactive Colab notebook, click or scan the QR code below.
 
 <a href="https://colab.research.google.com/github/jfrench/LinearRegression/blob/master/notebooks/d-estimation-inference-review-notebook.ipynb">
-   <img src="https://raw.githubusercontent.com/jfrench/LinearRegression/3e668cdd00feb7e8eed6fa0ff7af469e40e4c6a1/images/qr-estimation-inference-review.svg">
+   <img src="https://raw.githubusercontent.com/jfrench/LinearRegression/88c43eee5f12de29b6cb6e0f19ae98ce582a30bb/images/qr-matrix-facts.svg">
 </a>
 
 ---
@@ -68,10 +68,7 @@ The **standard error of an estimator** is the standard deviation of the estimato
 $$
 \mathrm{se}(\hat{\theta})\equiv\mathrm{sd}(\hat{\theta})=\sqrt{\mathrm{var}(\hat{\theta})}.
 $$
-
-Typically, we cannot compute the standard error of an estimator because it is a function of parameters that we do not know. 
-
-Instead, we use the sample data to estimate the standard error. When we hear or read the term "standard error", we must carefully determine whether the "standard error" presented is the theoretical standard error or the estimated standard error (and it's nearly always the latter).
+Typically, we cannot compute the standard error of an estimator because it is a function of parameters that we do not know. Instead, we use the sample data to estimate the standard error. When we hear or read the term "standard error", we must carefully determine whether the "standard error" presented is the theoretical standard error or the estimated standard error (and it's nearly always the latter).
 
 The **mean square error** of a point estimator is
 $$
@@ -90,35 +87,7 @@ Let $Y_1, Y_2, \ldots, Y_n \stackrel{i.i.d.}{\sim} \mathsf{N}(\mu, \sigma^2)$.
 
 Determine the mean and variance of the estimator $\hat{\mu}=\bar{Y}$.
 
-The mean of the estimator is 
-
-$$
-\begin{aligned}
-E(\bar{Y}) &= E\biggl(\frac{1}{n}\sum_{i=1}^n Y_i \biggr) & \tiny\text{(substitute definition of $\bar{Y}$)} \\
-&= \frac{1}{n}E\biggl(\sum_{i=1}^n Y_i \biggr) & \tiny\text{(factor constant)} \\
-&= \frac{1}{n}\sum_{i=1}^n E(Y_i) & \tiny\text{(linearity of expectation)} \\
-&= \frac{1}{n}\sum_{i=1}^n \mu  & \tiny\text{(assumption about mean of $Y_i$ for $i=1,2,\ldots,n$)} \\
-&= \frac{n}{n} \mu  & \tiny\text{(sum $\mu$ $n$ times)} \\
-&= \mu. &
-\end{aligned}
-$$
-
-
-The variance of the estimator is 
-
-$$
-\begin{aligned}
-\mathrm{var}(\bar{Y}) &= \mathrm{var}\biggl(\frac{1}{n}\sum_{i=1}^n Y_i \biggr) & \tiny\text{(substitute definition of $\bar{Y}$)} \\
-&= \frac{1}{n^2}\mathrm{var}\biggl(\sum_{i=1}^n Y_i \biggr) & \tiny\text{(factor constant out of $\mathrm{var}$)} \\
-&= \frac{1}{n^2}\sum_{i=1}^n \mathrm{var}(Y_i) & \tiny\text{(linearity of variance for independent random variables)} \\
-&= \frac{1}{n^2}\sum_{i=1}^n \sigma^2  & \tiny\text{(assumption about variance of $Y_i$ for $i=1,2,\ldots,n$)} \\
-&= \frac{n}{n^2} \sigma^2  & \tiny\text{(sum $\sigma^2$ $n$ times)} \\
-&= \frac{\sigma^2}{n}. &
-\end{aligned}
-$$
-Is the sample median a better or worse estimator of $\mu$ than the sample mean in this context?
-
-To prove this, we would have to consider order statistics, which we will not do. Instead, we will investigate this using a simulation experiment.
+Is the sample median a better or worse estimator of $\mu$ than the sample mean? To prove this, we would have to consider order statistics, which we will not do. Instead, we will investigate this numerically.
 
 We will sample 100 values from our population assuming $\mu=0$ and $\sigma^2 = 100$ and compare the properties of the sample mean and sample median for 10,000 independent samples.
 
@@ -142,7 +111,7 @@ for (i in seq_len(nsamples)) {
 }
 ```
 
-We now plot the approximate sampling distributions of the sample mean and median using relative frequency histograms of their values from the 10,000 samples.
+We now plot the sampling distributions of the sample mean and median using a relative frequency histogram of their values from the 10,000 samples.
 
 - Setting the `probability` argument of the `hist` function to `TRUE` will produce a relative frequency histogram instead of the default frequency histogram.
 - We also set the `breaks` argument to `100` to ask the `hist` function to use approximately 100 bins.
@@ -160,16 +129,16 @@ Both sampling distributions appear to be approximately normal (and from statisti
 
 We compute the sample mean and standard deviation of the two sets of statistics to approximate the expected value (mean) and standard error, respectively, of the statistics.
 
-The estimated mean of the sampling distribution of the sample mean is 0.01, as shown below. We showed that the theoretical mean is 0, so this is a good approximation.
+The estimated mean of the sampling distribution of the sample mean is 0.01, as shown below. Recall that the theoretical mean is 0.
 
 ```{r}
-mean(sample_means) # estimated mean of statistic
+mean(sample_means) # estimated mean of sampling distribution
 ```
 
-The estimated standard error of the sampling distribution of the sample mean is 1.00, as shown below. Recall that the theoretical standard error is 1 ($\sigma^2/n = 100/100 = 1$), so this is a good approximation.
+The estimated standard error of the sampling distribution of the sample mean is 1.00, as shown below. Recall that the theoretical standard error is 1.
 
 ```{r}
-sd(sample_means) # estimated standard error of statistic
+sd(sample_means)
 ```
 
 The estimated mean of the sampling distribution of the sample median is 0.01, as shown below. The theoretical mean is 0.
@@ -178,26 +147,26 @@ The estimated mean of the sampling distribution of the sample median is 0.01, as
 mean(sample_meds)
 ```
 
-The estimated standard error of the sampling distribution of the sample median is 1.24, as shown below. The asymptotic standard error is 1.2533, i.e., the theoretical standard error as $n\rightarrow\infty$ [see @wackerly2008mathematical, Section 9.2].
+The estimated standard error of the sampling distribution of the sample median is 1.24, as shown below. The asymptotic standard error is 1.2533 [see @wackerly2008mathematical, Section 9.2] (i.e., the theoretical standard error as $n\rightarrow\infty$).
 
 ```{r}
 sd(sample_meds)
 ```
 
-Since both estimators are unbiased and the standard error of the sample mean is smaller than the sample median, this demonstrates that the sample mean is a more efficient estimator than the sample median in this context.
+This demonstrates that the sample mean is a more efficient estimator than the sample median in this context.
 
-We overlay a normal curve (the solid orange lines) on each sampling distribution, using the mean and standard errors computed above for the mean and standard deviation, respectively, of the normal curve. Both curves fit well.
+We overlay a normal curve on each sampling distribution, using the mean and standard errors computed above for the mean and standard deviation, respectively of the normal curve. Both curves fit well.
 
 ```{r}
 par(mfrow = c(1, 2)) # side-by-side histograms
 s <- seq(-10, 10, len = 10000) # sequence for plotting
-hist(sample_means, probability = TRUE, breaks = 100, col = "lightgrey",
+hist(sample_means, probability = TRUE, breaks = 100,
      main = "sampling distribution of\n the sample means")
 # normal curve with estimated mean and standard error
-lines(s, dnorm(s, mean = mean(sample_means), sd = sd(sample_means)), col = "orange", lwd = 2)
-hist(sample_meds, probability = TRUE, breaks = 100, col = "lightgrey",
+lines(s, dnorm(s, mean = mean(sample_means), sd = sd(sample_means)))
+hist(sample_meds, probability = TRUE, breaks = 100,
      main = "sampling distribution of\n the sample medians")
-lines(s, dnorm(s, mean = mean(sample_meds), sd = sd(sample_meds)), col = "orange", lwd = 2)
+lines(s, dnorm(s, mean = mean(sample_meds), sd = sd(sample_meds)))
 par(mfrow = c(1, 1))
 ```
 
@@ -263,7 +232,6 @@ interpretations for p-values.
 ```{r}
 #| echo: false
 #| label: tbl-pvalue-interp
-#| output: true
 #| tbl-cap: A summary of common strength-of-evidence interpretations for p-values.
 interp_df <- cbind(pvalue = c("$> 0.10$",
                               "$\\leq 0.10$",
@@ -413,12 +381,12 @@ $H_0$ should be rejected when $Z^*$ is less than -1.645 or more than
 Alternatively, we could compute the p-value using the formula
 $2P(Z\geq |Z^*|)$ in order to make our choice between the hypotheses.
 
-Suppose $z^*=1.74$ and $\alpha=0.10$.  The test statistic is in the rejection region, so we would conclude that $H_a$ is true. We demonstrate this visually in the graphic below, shading the rejection region in grey. We represent the observed test statistic with a vertical line.
+Suppose $z^*=1.74$ and $\alpha=0.10$.  The test statistic is in the rejection region, so we would conclude that $H_a$ is true. We demonstrate this visually below, shading the rejection region in grey. We represent the observed test statistic with a vertical line.
 
 ```{r}
 #| echo: false
-#| eval: true
-#| output: true
+#| execute: true
+#| fig-cap: A plot of the rejection region for a two-tailed alternative hypothesis.
 # sequence of values to plot
 s <- seq(-5, 5, len = 10000)
 plot(s, dt(s, df = 9), type = "l",
@@ -443,12 +411,12 @@ In R, we can compute the p-value using the code below.
 2 * (1 - pnorm(1.74))
 ```
 
-Visually, the p-value is the sum of the area to the left of -1.74 and the area to the right of 1.74 because test statistics with those values are at least as supportive of $H_a$ as the observed statistic. We display this in the graphic below.
+Visually, the p-value is the sum of the area to the left of -1.74 and the area to the right of 1.74 because test statistics with those values are at least as supportive of $H_a$ as the observed statistic. This is shown below.
 
 ```{r}
 #| echo: false
-#| eval: true
-#| output: true
+#| execute: true
+#| fig-cap: A plot of the area used to compute the p-value based on a two-tailed alternative hypothesis.
 # sequence of values to plot
 s <- seq(-5, 5, len = 10000)
 plot(s, dt(s, df = 9), type = "l",
@@ -488,9 +456,9 @@ A **pivotal quantity** is a function of the data and the target parameter whose 
 
 **Example:**
 
-Suppose $Y_1,Y_2,\ldots,Y_n \stackrel{i.i.d.}{\sim} \mathsf{N}(\mu, 1)$.
+Suppose $Y_1,Y_2,\ldots,Y_n \stackrel{i.i.d.}{\sim} \mathcal{N}(\mu, 1)$.
 
-The random variable $Z=(\bar{Y}-\mu)/(1/\sqrt{n})\sim \mathsf{N}(0,1)$ is a pivotal quantity.
+The random variable $Z=(\bar{Y}-\mu)/(1/\sqrt{n})\sim \mathcal{N}(0,1)$ is a pivotal quantity.
 
 Since $P(-1.96\leq Z\leq 1.96)=0.95$, we can derive that
 $$
@@ -514,7 +482,6 @@ To illustrate this further, we use a small simulation example to produce 100 95%
 First, we obtain 100 samples of size 10 from the population $\mathsf{N(0,1)}$ and then compute the sample mean of each sample. We do this in the code below.
 
 ```{r}
-set.seed(33) # set number seed for reproducibility
 # create vector to store sample means
 means <- numeric(100)
 # perform experiment 100 times
@@ -534,12 +501,13 @@ lb = means - qnorm(.975) * 1/sqrt(10)
 ub = means + qnorm(.975) * 1/sqrt(10)
 ```
 
-Next, we plot each interval in the graphic below. An interval is orange if the interval doesn't contain the true population mean, which is 0.
+Next, we plot each interval. An interval is orange if the interval doesn't contain the true population mean, which is 0. We display our results below.
 
 ```{r}
+#| label: fig-ci-interp-plot
 #| echo: false
-#| eval: true
-#| output: true
+#| execute: true
+#| fig-cap: A plot of 100 95% confidence intervals for a population mean produced from independent samples from a $\mathsf{N}(0,1)$ population
 #create blank plot
 plot(range(c(lb, ub)), c(1,100),
      xlab = "", ylab = "interval", type = "n")
@@ -552,12 +520,12 @@ for (i in 1:100) lines(c(lb[i], ub[i]), c(i, i))
 #highlight intervals missing 0 in orange
 for (i in 1:100) {
   if (lb[i] > 0 | ub[i] < 0 )   {
-    lines(c(lb[i],ub[i]), c(i,i), col = "orange", lwd = 2)
+    lines(c(lb[i],ub[i]), c(i,i), col = "orange")
   }
 }
 ```
 
-In this example, 94 out of 100 intervals for the population mean contained the true population mean of 0. As we construct more intervals, the proportion of intervals containing the true mean of 0 should get closer to 95%, on average.
+In this example, 96 out of 100 intervals for the population mean contained the true population mean of 0.
 
 Notice how the intervals move around. This is because each sample provides us with slightly different values, so the intervals move around because of the samples obtained. 
 
@@ -587,7 +555,3 @@ We reject $H_0$ for any hypothesized values of $c$ less than -0.070 or more than
 A confidence interval provides us with much of the same information as a hypothesis test, but it doesn't provide the p-value or allow us to do hypothesis tests at different significance levels.
 
 Confidence intervals are often preferred over hypothesis tests because they provide additional information in the form of plausible parameters values while giving us enough information to perform a hypothesis test.
-
-::: {.content-visible when-format="ipynb"}
-# References
-:::
