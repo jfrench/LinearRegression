@@ -1,0 +1,196 @@
+---
+title: Appendix C - Random Variables
+author: Joshua French
+date: ''
+engine: knitr
+# format: html
+jupyter:
+  kernelspec:
+    display_name: R
+    language: R
+    name: ir
+format: ipynb
+execute:
+  output: false
+self-contained: true
+title-block-banner: true
+wrap: 'none'
+---
+
+To open this information in an interactive Colab notebook, click or scan the QR code below.
+
+<a href="https://colab.research.google.com/github/jfrench/LinearRegression/blob/master/notebooks/c-random-variables-notebook.ipynb">
+<img src="https://raw.githubusercontent.com/jfrench/LinearRegression/952c4e103fa0ea5b44ac7a460bfe1970e913ac5f/images/qr-probability-and-vectors.svg">
+</a>
+
+# Random Variables
+
+A **random variable** $Y$ is a mapping/function
+
+$$
+Y:\Omega\to\mathbb{R}
+$$
+
+that assigns a real number $Y(\omega)$ to each outcome $\omega$. (We typically drop the $(\omega)$ notation for simplicity.)
+
+The **cumulative distribution function (CDF)** of $Y$, $F_Y$, is a function $F_Y:\mathbb{R}\to [0,1]$ defined by
+
+$$
+F_Y (y)=P(Y \leq y).
+$$
+
+The subscript of $F$ indicates the random variable the CDF describes. E.g., $F_X$ denotes the CDF of the random variable $X$ and $F_Y$ denotes the CDF of the random variable $Y$. The subscript can be dropped when the context makes it clear what random variable the CDF describes. An $F$-distributed random variable is one that has the $F$ distribution.
+
+The **support** of $Y$, $\mathcal{S}$, is the smallest set such that $P(Y\in \mathcal{S})=1$.
+
+## Discrete random variables
+
+$Y$ is a **discrete** random variable if it takes countably many values $\{y_1, y_2, \dots \} = \mathcal{S}$.
+
+The **probability mass function (pmf)** for $Y$ is $f_Y (y)=P(Y=y)$, where $y\in \mathbb{R}$, and must have the following properties:
+
+1.  $0 \leq f_Y(y) \leq 1$.
+2.  $\sum_{y\in \mathcal{S}} f_Y(y) = 1$.
+
+Additionally, the following statements are true:
+
+-   $F_Y(c) = P(Y \leq c) = \sum_{y\in \mathcal{S}:y \leq c} f_Y(y)$.
+-   $P(Y \in A) = \sum_{y \in A} f_Y(y)$ for some event $A$.
+-   $P(a \leq Y \leq b) = \sum_{y\in\mathcal{S}:a\leq y\leq b} f_Y(y)$.
+
+The **expected value**, **mean**, or first moment of $Y$ is defined as
+
+$$ E(Y) = \sum_{y\in \mathcal{S}} y f_Y(y), $$
+
+assuming the sum is well-defined.
+
+The **variance** of $Y$ is defined as
+
+$$
+\begin{aligned}
+\mathrm{var}(Y)&=E(Y-E(Y))^2 \\
+&=\sum_{y\in \mathcal{S}} (y - E(Y))^2 f_Y(y).\
+\end{aligned}
+$$
+
+Note that $\mathrm{var}(Y)=E(Y-E(Y))^2=E(Y^2)-[E(Y)]^2$. The last expression is often easier to compute.
+
+The **standard deviation** of Y is
+
+$$SD(Y)=\sqrt{\mathrm{var}(Y)  }.$$
+
+### Example (Bernoulli)
+
+A random variable $Y$ is said to have a Bernoulli distribution with probability $\theta$, denoted $Y\sim \mathsf{Bernoulli}(\theta)$, if:
+
+-   $\mathcal{S} = \{0, 1\}$
+-   $P(Y = 1) = \theta$, where $\theta\in (0,1)$.
+
+The pmf of a Bernoulli random variable is
+
+$$f_Y(y) = \theta^y (1-\theta)^{(1-y)},\quad y\in \{0, 1\}, \theta \in (0, 1).$$
+
+**Determine the mean and variance of $Y$.**
+
+The mean is computed as
+
+$$E(Y)=0(1-\theta )+1(\theta)=\theta.$$
+
+The variance is computed as
+
+$$
+\begin{aligned}\mathrm{var}(Y)&=(0-\theta)^2(1-\theta)+(1-\theta)^2\theta \\
+&= \theta(1-\theta).
+\end{aligned}
+$$
+
+## Continuous random variables
+
+$Y$ is a **continuous** random variable if there exists a function $f_Y (y)$ such that:
+
+1.  $f_Y (y)\geq 0$ for all $y$,
+2.  $\int_{-\infty}^\infty f_Y (y) dy = 1$,
+3.  $a\leq b$, $P(a<Y<b)=\int_a^b f_Y (y) dy$.
+
+The function $f_Y$ is called the **probability density function (pdf)**.
+
+Additionally, $F_Y (y)=\int_{-\infty}^y f_Y (y) dy$ and $f_Y (y)=F'_Y(y)$ for any point $y$ at which $F_Y$ is differentiable.
+
+The **mean** of a continuous random variables $Y$ is defined as
+
+$$
+E(Y) =
+\int_{-\infty}^{\infty} y f_Y(y)  dy =
+\int_{y\in\mathcal{S}} y f_Y(y).
+$$
+
+assuming the integral is well-defined.
+
+The **variance** of a continuous random variable $Y$ is defined by
+
+$$
+\mathrm{var}(Y)=
+E(Y-E(Y))^2\\=\int_{-\infty}^{\infty} (y - E(Y))^2 f_Y(y)  dy \\
+=\int_{y\in\mathcal{S}} (y - E(Y))^2 f_Y(y) dy
+$$
+
+### Example (Uniform distribution)
+
+A random variable $Y$ is said to have an uniform distribution with parameters $a<b$, written as $Y \sim \mathsf{U}(a, b)$, if $\mathcal{S} = \{y\in \mathbb{R}:a\leq y \leq b\}$ and has the density function
+
+$$f(y) = \frac{1}{b-a}, \quad a\leq y \leq b, a < b.$$
+
+**Determine the mean and variance of $Y$.**
+
+The mean is computed as
+
+$$
+\begin{aligned}
+E(Y)&=\int_{a}^{b} y\frac{1}{b-a}\;dy\\
+&=\frac{y^2}{2}\frac{1}{b-a}\biggr]^{b}_{a}\\
+&=\frac{1}{2}\frac{b^2-a^2}{b-a} \\
+&=\frac{1}{2}\frac{(b-a)(b+a)}{b-a} \\
+&=\frac{b+a}{2}.
+\end{aligned}
+$$
+Additionally, 
+$$
+\begin{aligned}
+E(Y^2)&=\int_{a}^{b} y^2\frac{1}{b-a}\;dy\\
+&=\frac{y^3}{3}\frac{1}{b-a}\biggr]^{b}_{a}\\
+&=\frac{1}{3}\frac{b^3-a^3}{b-a} \\
+&=\frac{1}{3}\frac{(b-a)(b^2+ab+a^2)}{b-a} \\
+&=\frac{b^2+ab+a^2}{3}.
+\end{aligned}
+$$
+
+Thus, the variance is 
+
+$$
+\begin{aligned}
+\mathrm{var}(Y)&=
+E(Y^2)-[E(Y)]^2\\
+&=\frac{b^2+ab+a^2}{3}-\biggl[\frac{(b+a)}{2}\biggr]^2\\
+&=\frac{4b^2+4ab+4a^2}{12}-\frac{3b^2 +6ab + 3a^2}{12}\\
+&=\frac{b^2-2ab-a^2}{12}\\
+&=\frac{(b-a)^2}{12}.
+\end{aligned}
+$$
+
+## Useful facts for transformations of random variables
+
+Let $Y$ be a random variable and $a\in\mathbb{R}$ be a constant. Then:
+
+-   $E(a) = a$.
+-   $E(aY) = a E(Y)$.
+-   $E(a + Y) = a + E(Y)$.
+-   $\mathrm{var}(a) = 0$.
+-   $\mathrm{var}(aY) = a^2 \mathrm{var}(Y)$.
+-   $\mathrm{var}(a + Y) = \mathrm{var}(Y)$.
+-   For a discrete random variable and a function $g$,
+$$E(g(Y))=\sum_{y\in\mathcal{S}}g(y)f_Y(y),$$
+assuming the sum is well-defined.
+
+- For a continuous random variable and a function $g$,
+$$E(g(Y))=\int_{y\in\mathcal{S}}g(y)f_Y(y)\;dy,$$
+assuming the integral is well-defined.
