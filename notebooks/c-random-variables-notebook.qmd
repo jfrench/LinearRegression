@@ -79,6 +79,10 @@ The **standard deviation** of Y is
 
 $$SD(Y)=\sqrt{\mathrm{var}(Y)  }.$$
 
+More generally, for a discrete random variable $Y$ and a real-valued function $g$,
+$$E(g(Y))=\sum_{y\in\mathcal{S}}g(y)f_Y(y),$$
+assuming the sum is well-defined.
+
 ### Example (Bernoulli)
 
 A random variable $Y$ is said to have a Bernoulli distribution with probability $\theta$, denoted $Y\sim \mathsf{Bernoulli}(\theta)$, if:
@@ -134,6 +138,10 @@ E(Y-E(Y))^2\\=\int_{-\infty}^{\infty} (y - E(Y))^2 f_Y(y)  dy \\
 =\int_{y\in\mathcal{S}} (y - E(Y))^2 f_Y(y) dy
 $$
 
+More generally, for a continuous random variable $Y$ and a real-valued function $g$,
+$$E(g(Y))=\int_{y\in\mathcal{S}}g(y)f_Y(y)\;dy,$$
+assuming the integral is well-defined.
+
 ### Example (Uniform distribution)
 
 A random variable $Y$ is said to have an uniform distribution with parameters $a<b$, written as $Y \sim \mathsf{U}(a, b)$, if $\mathcal{S} = \{y\in \mathbb{R}:a\leq y \leq b\}$ and has the density function
@@ -187,10 +195,3 @@ Let $Y$ be a random variable and $a\in\mathbb{R}$ be a constant. Then:
 -   $\mathrm{var}(a) = 0$.
 -   $\mathrm{var}(aY) = a^2 \mathrm{var}(Y)$.
 -   $\mathrm{var}(a + Y) = \mathrm{var}(Y)$.
--   For a discrete random variable and a function $g$,
-$$E(g(Y))=\sum_{y\in\mathcal{S}}g(y)f_Y(y),$$
-assuming the sum is well-defined.
-
-- For a continuous random variable and a function $g$,
-$$E(g(Y))=\int_{y\in\mathcal{S}}g(y)f_Y(y)\;dy,$$
-assuming the integral is well-defined.
