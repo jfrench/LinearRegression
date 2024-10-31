@@ -25,13 +25,15 @@ To open this information in an interactive Colab notebook, click or scan the QR 
 
 # Random Variables
 
-A **random variable** $Y$ is a mapping/function
+A **random variable** $Y$ is a function mapping outcomes from a sample space, $\Omega$, to the real numbers, which is indicated by the notation
 
 $$
-Y:\Omega\to\mathbb{R}
+Y:\Omega\to\mathbb{R}.
 $$
 
-that assigns a real number $Y(\omega)$ to each outcome $\omega$. (We typically drop the $(\omega)$ notation for simplicity.)
+The function $Y$ assigns a real number $Y(\omega)$ to each outcome $\omega\in \Omega$.
+
+- We typically drop the $(\omega)$ notation for simplicity.
 
 The **cumulative distribution function (CDF)** of $Y$, $F_Y$, is a function $F_Y:\mathbb{R}\to [0,1]$ defined by
 
@@ -39,13 +41,17 @@ $$
 F_Y (y)=P(Y \leq y).
 $$
 
-The subscript of $F$ indicates the random variable the CDF describes. E.g., $F_X$ denotes the CDF of the random variable $X$ and $F_Y$ denotes the CDF of the random variable $Y$. The subscript can be dropped when the context makes it clear what random variable the CDF describes. An $F$-distributed random variable is one that has the $F$ distribution.
+- The subscript of $F$ indicates the random variable the CDF describes.
+- E.g., $F_X$ denotes the CDF of the random variable $X$ and $F_Y$ denotes the CDF of the random variable $Y$. The subscript can be dropped when the context makes it clear what random variable the CDF describes.
+- An $F$-distributed random variable is one that has the $F$ distribution.
 
 The **support** of $Y$, $\mathcal{S}$, is the smallest set such that $P(Y\in \mathcal{S})=1$.
 
 ## Discrete random variables
 
-$Y$ is a **discrete** random variable if it takes countably many values $\{y_1, y_2, \dots \} = \mathcal{S}$.
+$Y$ is a **discrete** random variable if it takes countably many values.
+
+- $\mathcal{S} = \{y_1, y_2, \dots \}$
 
 The **probability mass function (pmf)** for $Y$ is $f_Y (y)=P(Y=y)$, where $y\in \mathbb{R}$, and must have the following properties:
 
@@ -58,14 +64,11 @@ Additionally, the following statements are true:
 -   $P(Y \in A) = \sum_{y \in A} f_Y(y)$ for some event $A$.
 -   $P(a \leq Y \leq b) = \sum_{y\in\mathcal{S}:a\leq y\leq b} f_Y(y)$.
 
-The **expected value**, **mean**, or first moment of $Y$ is defined as
-
-$$ E(Y) = \sum_{y\in \mathcal{S}} y f_Y(y), $$
-
+The **expected value**, **mean**, or first moment of $Y$, is defined as
+$$E(Y) = \sum_{y\in \mathcal{S}} y f_Y(y),$$
 assuming the sum is well-defined.
 
 The **variance** of $Y$ is defined as
-
 $$
 \begin{aligned}
 \mathrm{var}(Y)&=E(Y-E(Y))^2 \\
@@ -73,11 +76,12 @@ $$
 \end{aligned}
 $$
 
-Note that $\mathrm{var}(Y)=E(Y-E(Y))^2=E(Y^2)-[E(Y)]^2$. The last expression is often easier to compute.
+Note that $\mathrm{var}(Y)=E(Y-E(Y))^2=E(Y^2)-[E(Y)]^2$. This formula is often easier to compute.
 
-The **standard deviation** of Y is
-
-$$SD(Y)=\sqrt{\mathrm{var}(Y)  }.$$
+The **standard deviation** of $Y$ is defined as
+$$
+SD(Y)=\sqrt{\mathrm{var}(Y)}.
+$$
 
 More generally, for a discrete random variable $Y$ and a real-valued function $g$,
 $$E(g(Y))=\sum_{y\in\mathcal{S}}g(y)f_Y(y),$$
@@ -85,23 +89,24 @@ assuming the sum is well-defined.
 
 ### Example (Bernoulli)
 
-A random variable $Y$ is said to have a Bernoulli distribution with probability $\theta$, denoted $Y\sim \mathsf{Bernoulli}(\theta)$, if:
+A random variable $Y$ has a Bernoulli distribution with probability $\theta$, denoted $Y\sim \mathsf{Bernoulli}(\theta)$, if:
 
 -   $\mathcal{S} = \{0, 1\}$
 -   $P(Y = 1) = \theta$, where $\theta\in (0,1)$.
 
 The pmf of a Bernoulli random variable is
-
-$$f_Y(y) = \theta^y (1-\theta)^{(1-y)},\quad y\in \{0, 1\}, \theta \in (0, 1).$$
+$$
+f_Y(y) = \theta^y (1-\theta)^{(1-y)},\quad y\in \{0, 1\}, \theta \in (0, 1).
+$$
 
 **Determine the mean and variance of $Y$.**
 
 The mean is computed as
-
-$$E(Y)=0(1-\theta )+1(\theta)=\theta.$$
+$$
+E(Y)=0(1-\theta )+1(\theta)=\theta.
+$$
 
 The variance is computed as
-
 $$
 \begin{aligned}\mathrm{var}(Y)&=(0-\theta)^2(1-\theta)+(1-\theta)^2\theta \\
 &= \theta(1-\theta).
@@ -121,13 +126,11 @@ The function $f_Y$ is called the **probability density function (pdf)**.
 Additionally, $F_Y (y)=\int_{-\infty}^y f_Y (y) dy$ and $f_Y (y)=F'_Y(y)$ for any point $y$ at which $F_Y$ is differentiable.
 
 The **mean** of a continuous random variables $Y$ is defined as
-
 $$
 E(Y) =
 \int_{-\infty}^{\infty} y f_Y(y)  dy =
 \int_{y\in\mathcal{S}} y f_Y(y).
 $$
-
 assuming the integral is well-defined.
 
 The **variance** of a continuous random variable $Y$ is defined by
@@ -145,13 +148,13 @@ assuming the integral is well-defined.
 ### Example (Uniform distribution)
 
 A random variable $Y$ is said to have an uniform distribution with parameters $a<b$, written as $Y \sim \mathsf{U}(a, b)$, if $\mathcal{S} = \{y\in \mathbb{R}:a\leq y \leq b\}$ and has the density function
-
-$$f(y) = \frac{1}{b-a}, \quad a\leq y \leq b, a < b.$$
+$$
+f(y) = \frac{1}{b-a}, \quad a\leq y \leq b, a < b.
+$$
 
 **Determine the mean and variance of $Y$.**
 
-The mean is computed as
-
+The mean of $Y$ is computed as
 $$
 \begin{aligned}
 E(Y)&=\int_{a}^{b} y\frac{1}{b-a}\;dy\\
@@ -172,7 +175,7 @@ E(Y^2)&=\int_{a}^{b} y^2\frac{1}{b-a}\;dy\\
 \end{aligned}
 $$
 
-Thus, the variance is 
+Thus, the variance of $Y$ is 
 
 $$
 \begin{aligned}
