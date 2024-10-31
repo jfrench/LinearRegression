@@ -1,0 +1,222 @@
+---
+title: Appendix E - Random Vectors
+author: Joshua French
+date: ''
+engine: knitr
+format: html
+# jupyter:
+#   kernelspec:
+#     display_name: R
+#     language: R
+#     name: ir
+# format: ipynb
+# execute:
+#   output: false
+self-contained: true
+title-block-banner: true
+wrap: 'none'
+---
+
+To open this information in an interactive Colab notebook, click or scan the QR code below.
+
+<a href="https://colab.research.google.com/github/jfrench/LinearRegression/blob/master/notebooks/e-random-vectors-notebook.ipynb">
+<img src="https://raw.githubusercontent.com/jfrench/LinearRegression/3053cf06d8f1cbed7df57ee3a2c7816729f8d12a/images/qr-mult-dists-and-random-vectors.svg">
+</a>
+
+# Random vectors
+
+## Definition
+
+A **random vector** is a vector of random variables. A random vector is assumed to be a column vector unless otherwise specified.
+
+Additionally, a **random matrix** is a matrix of random variables.
+
+## Mean, variance, and covariance
+
+Let $\mathbf{y}=[Y_1,Y_2,\dots,Y_n]$ be an $n\times 1$ random column vector.
+
+The mean of a random column vector is the column vector containing the means of the random variables in the vector. More specifically, the mean of $\mathbf{y}$ is defined as
+
+$$
+E(\mathbf{y})=\begin{bmatrix}E(Y_1)\\E(Y_2)\\\vdots\\E(Y_n)\end{bmatrix}.
+$$
+
+The variance of a random column vector isn't a number. Instead, it is the matrix of covariances of all pairs of random variables in the random vector. The variance of $\mathbf{y}$ is
+
+$$
+\begin{aligned}
+\mathrm{var}(\mathbf{y}) &= E(\mathbf{y}\mathbf{y}^T )-E(\mathbf{y})E(\mathbf{y})^T\\
+&= \begin{bmatrix}\mathrm{var}(Y_1) & \mathrm{cov}(Y_1,Y_2) &\dots &\mathrm{cov}(Y_1,Y_n)\\\mathrm{cov}(Y_2,Y_1 )&\mathrm{var}(Y_2)&\dots&\mathrm{cov}(Y_2,Y_n)\\\vdots&\vdots&\vdots&\vdots\\
+\mathrm{cov}(Y_n,Y_1)&\mathrm{cov}(Y_n,Y_2)&\dots&\mathrm{var}(Y_n)\end{bmatrix}.
+\end{aligned}
+$$
+
+Alternatively, the variance of $\mathbf{y}$ is called the **covariance matrix** of $\mathbf{y}$ or the **variance-covariance matrix** of $\mathbf{y}$.
+
+*Note:* $\mathrm{var}(\mathbf{y})=\mathrm{cov}(\mathbf{y}, \mathbf{y})$.
+
+Let $\mathbf{x} = [X_1, X_2, \ldots, X_n]$ be an $n\times 1$ random vector.
+
+The covariance matrix between $\mathbf{x}$ and $\mathbf{y}$ is defined as
+
+$$
+\mathrm{cov}(\mathbf{x}, \mathbf{y}) = E(\mathbf{x}\mathbf{y}^T) - E(\mathbf{x}) E(\mathbf{y})^T.
+$$
+
+## Properties of transformations of random vectors
+
+Define:
+
+-   $\mathbf{a}$ to be an $m\times 1$ vector of real numbers.
+-   $\mathbf{A}$ to be an $m\times n$ matrix of real numbers.
+-   $\mathbf{x}=[X_1,X_2,\ldots,X_n]$ to be an $n\times 1$ random vector.
+-   $\mathbf{y}=[Y_1,Y_2,\ldots,Y_n]$ to be an $n\times 1$ random vector.
+-   $\mathbf{z}=[Z_1,Z_2,\ldots,Z_n]$ to be an $n\times 1$ random vector.
+-   $0_{m\times n}$ to be an $m\times n$ matrix of zeros.
+
+Then:
+
+-   $E(\mathbf{A}\mathbf{y})=\mathbf{A}E(\mathbf{y})$.
+-   $E(\mathbf{y}\mathbf{A}^T )=E(\mathbf{y}) \mathbf{A}^T$.
+-   $E(\mathbf{x}+\mathbf{y})=E(\mathbf{x})+E(\mathbf{y})$.
+-   $\mathrm{var}(\mathbf{A}\mathbf{y})=\mathbf{A}\mathrm{var}(\mathbf{y}) \mathbf{A}^T$.
+-   $\mathrm{cov}(\mathbf{x}+\mathbf{y},\mathbf{z})=\mathrm{cov}(\mathbf{x},\mathbf{z})+\mathrm{cov}(\mathbf{y},\mathbf{z})$.
+-   $\mathrm{cov}(\mathbf{x},\mathbf{y}+\mathbf{z})=\mathrm{cov}(\mathbf{x},\mathbf{y})+\mathrm{cov}(\mathbf{x},\mathbf{z})$.
+-   $\mathrm{cov}(\mathbf{A}\mathbf{x},\mathbf{y})=\mathbf{A}\ \mathrm{cov}(\mathbf{x},\mathbf{y})$.
+-   $\mathrm{cov}(\mathbf{x},\mathbf{A}\mathbf{y})=\mathrm{cov}(\mathbf{x},\mathbf{y}) \mathbf{A}^T$.
+-   $\mathrm{var}(\mathbf{a})= 0_{n\times n}$.
+-   $\mathrm{cov}(\mathbf{a},\mathbf{y})=0_{n\times n}$.
+-   $\mathrm{var}(\mathbf{a}+\mathbf{y})=\mathrm{var}(\mathbf{y})$.
+
+## Example (Continuous bivariate distribution continued)
+
+Using the definitions we introduced, we want to answer **Q7** of the hydration example. Summarizing only the essential details, we have a random column vector $\mathbf{z}=[X, Y]$ with mean $E(\mathbf{z})=[2/5, 4/5]$ and covariance matrix
+
+$$
+\mathrm{var}(\mathbf{z})=
+\begin{bmatrix}
+14/225 & 1/75 \\
+1/75 & 2/75
+\end{bmatrix}.
+$$
+
+Determine $E(Y-X)$ and $\mathrm{var}(Y-X)$.
+
+Define $\mathbf{A}=[-1, 1]^T$ (the ROW vector with 1 and -1). Then,
+$$
+\mathbf{Az}=\begin{bmatrix}-1 & 1\end{bmatrix}
+\begin{bmatrix}
+X\\
+Y
+\end{bmatrix}
+=Y-X
+$$
+
+and
+
+$$
+\begin{aligned}
+E(Y-X)&=E(\mathbf{Az})\\
+&=\begin{bmatrix}-1 & 1\end{bmatrix}
+\begin{bmatrix}
+2/5\\
+4/5
+\end{bmatrix}\\
+&=-2/5+4/5\\&=2/5.
+\end{aligned}
+$$
+
+Additionally,
+
+$$
+\begin{aligned}
+& \mathrm{var}(Y-X) \\
+&=\mathrm{var}(\mathbf{Az}) \\
+&=\mathbf{A}\mathrm{var}(\mathbf{z})\mathbf{A}^T \\
+&=
+\begin{bmatrix}
+-1 & 1
+\end{bmatrix}
+\begin{bmatrix}
+14/225 & 1/75 \\
+1/75 & 2/75
+\end{bmatrix}
+\begin{bmatrix}
+-1 \\ 1
+\end{bmatrix} \\
+&= \begin{bmatrix}
+-14/225+1/75 & -1/75+2/75
+\end{bmatrix}
+\begin{bmatrix}
+-1 \\ 1
+\end{bmatrix} \\
+&= 14/225 + 2/75 - 2(1/75) \\
+&=14/225.
+\end{aligned}
+$$
+
+
+## Linear transformation of a multivariate normal random vector
+
+Assume the following:
+
+- The random vector $\mathbf{y}\sim \mathsf{N}(\boldsymbol{\mu},\boldsymbol{\Sigma}).$
+- $\mathbf{a}$ is an $m\times 1$ column vector of real numbers.
+- $\mathbf{A}$ is an $m\times n$ matrix of real numbers.
+
+A linear transformation of a multivariate normal random vector of the form $\mathbf{a}+\mathbf{A}\mathbf{y}$ is also multivariate normal random vector.
+
+- Note: the result could collapse to a single random variable if $\mathbf{A}$ is a $1\times n$ vector).
+
+**Application**: Suppose that $\mathbf{y}\sim \mathsf{N}(\boldsymbol{\mu},\boldsymbol{\Sigma})$. For an $m\times n$ matrix of constants $\mathbf{A}$, $\mathbf{A}\mathbf{y}\sim \mathsf{N}(\mathbf{A}\boldsymbol{\mu},\mathbf{A}\boldsymbol{\Sigma} \mathbf{A}^T)$.
+
+The most common estimators used in linear regression are linear combinations of a (typically) multivariate normal random vectors, meaning that many of the estimators also have a (multivariate) normal distribution.
+
+## Example (OLS matrix form)
+
+Ordinary least squares regression is a method for fitting a linear regression model to data. Suppose that we have observed variables $X_1, X_2, X_3, \ldots, X_{p-1}, Y$ for each of $n$ subjects from some population, with $X_{i,j}$ denoting the value of $X_j$ for observation $i$ and $Y_i$ denoting the value of $Y$ for observation $i$. In general, we want to use $X_1, \ldots, X_{p-1}$ to predict the value of $Y$. Let, $$
+\mathbf{X} =
+\begin{bmatrix}
+1 & X_{1,1} & X_{1,2} & \cdots & X_{1,p-1} \\
+1 & X_{2,1} & X_{2,2} & \cdots & X_{2,p-1} \\
+\vdots & \vdots & \vdots & \vdots & \vdots \\
+1 & X_{n,1} & X_{n,2} & \cdots & X_{n,p-1}
+\end{bmatrix}
+$$
+be a full-rank matrix of size $n\times p$ and
+$$
+\mathbf{y}=[Y_1, Y_2, \ldots,Y_n],
+$$
+be an $n\times 1$ column vector of responses. 
+
+We assume that,
+$$
+\mathbf{y}\sim \mathsf{N}(\mathbf{X}\boldsymbol{\beta}, \sigma^2 \mathbf{I}_{n\times n}).
+$$
+
+- $\boldsymbol{\beta}=[\beta_0,\beta_1,\ldots,\beta_{p-1}]$ is a $p$-dimensional column vector of constants.
+
+The matrix $\mathbf{H}=\mathbf{X}(\mathbf{X}^T\mathbf{X})^{-1}\mathbf{X}^T$ projects $\mathbf{y}$ into the space spanned by the vectors in $\mathbf{X}$.
+
+Determine the distribution of $\mathbf{Hy}.$
+
+$$
+\mathbf{Hy}\sim \mathsf{N}(\mathbf{HX}\boldsymbol{\beta}, \sigma^2 \mathbf{H}\mathbf{I}_{n\times n}\mathbf{H}^T).
+$$
+
+Notice that
+$$
+\begin{aligned}
+\mathbf{HX}\boldsymbol{\beta}&=\mathbf{X}(\mathbf{X}^T\mathbf{X})^{-1}\mathbf{X}^T\mathbf{X}\boldsymbol{\beta} \\
+&=\mathbf{X}\mathbf{I}_{p\times p}\boldsymbol{\beta} \\
+&=\mathbf{X}\boldsymbol{\beta}.
+\end{aligned}
+$$
+
+Additionally,
+$$
+\begin{aligned}
+\mathbf{H}\sigma^2 \mathbf{I}_{n\times n} \mathbf{\mathbf{H^T}} &= \sigma^2 \mathbf{H}\mathbf{H}^T\\
+&=\sigma^2 \mathbf{H}.
+\end{aligned}
+$$
