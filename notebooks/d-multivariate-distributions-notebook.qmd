@@ -1,0 +1,314 @@
+---
+title: Appendix D - Multivariate Distributions
+author: Joshua French
+date: ''
+engine: knitr
+format: html
+# jupyter:
+#   kernelspec:
+#     display_name: R
+#     language: R
+#     name: ir
+# format: ipynb
+# execute:
+#   output: false
+self-contained: true
+title-block-banner: true
+wrap: 'none'
+---
+
+To open this information in an interactive Colab notebook, click or scan the QR code below.
+
+<a href="https://colab.research.google.com/github/jfrench/LinearRegression/blob/master/notebooks/d-multivariate-distributions-and-random-vectors-notebook.ipynb">
+<img src="https://raw.githubusercontent.com/jfrench/LinearRegression/3053cf06d8f1cbed7df57ee3a2c7816729f8d12a/images/qr-mult-dists-and-random-vectors.svg">
+</a>
+
+# Multivariate distributions
+
+## Basic properties
+
+Let $Y_1,Y_2,\ldots,Y_n$ denote $n$ random variables with supports $\mathcal{S}_1,\mathcal{S}_2,\ldots,\mathcal{S}_n$, respectively.
+
+If the random variables are **jointly discrete** (i.e., all discrete), then the joint pmf $f(y_1,\ldots,y_n)=P(Y_1=y_1,\ldots,Y_n=y_n)$ satisfies the following properties:
+
+1.  $0\leq f(y_1,\ldots,y_n )\leq 1$,
+2.  $\sum_{y_1\in\mathcal{S}_1}\cdots \sum_{y_n\in\mathcal{S}_n} f(y_1,\ldots,y_n ) = 1$,
+3.  $P((Y_1,\ldots,Y_n)\in A)=\sum_{(y_1,\ldots,y_n) \in A} f(y_1,\ldots,y_n)$.
+
+In this context,
+
+$$
+E(Y_1 \cdots Y_n)=\sum_{y_1\in\mathcal{S}_1} \cdots \sum_{y_n\in\mathcal{S}_n}y_1 \cdots y_n  f(y_1,\ldots,y_n).
+$$
+
+In general,
+
+$$
+E(g(Y_1,\ldots,Y_n))=\sum_{y_1\in\mathcal{S}_1} \cdots \sum_{y_n\in\mathcal{S}_n} g(y_1, \ldots, y_n) f(y_1,\ldots,y_n),
+$$
+
+where $g$ is a function of the random variables.
+
+If the random variables are **jointly continuous**, then $f(y_1,\ldots,y_n)$ is the joint pdf if it satisfies the following properties:
+
+1.  $f(y_1,\ldots,y_n ) \geq 0$,
+2.  $\int_{y_1\in\mathcal{S}_1}\cdots \int_{y_n\in\mathcal{S}_n} f(y_1,\ldots,y_n ) dy_n \cdots dy_1 = 1$,
+3.  $P((Y_1,\ldots,Y_n)\in A)=\int \cdots \int_{(y_1,\ldots,y_n) \in A} f(y_1,\ldots,y_n) dy_n\ldots dy_1$.
+
+In this context,
+
+$$
+E(Y_1 \cdots Y_n)=\int_{y_1\in\mathcal{S}_1} \cdots \int_{y_n\in\mathcal{S}_n} y_1 \cdots y_n  f(y_1,\ldots,y_n) dy_n \ldots dy_1.
+$$
+
+In general,
+
+$$
+E(g(Y_1,\ldots,Y_n))=\int_{y_1\in\mathcal{S}_1} \cdots \int_{y_n\in\mathcal{S}_n} g(y_1, \ldots, y_n) f(y_1,\ldots,y_n) dy_n \cdots dy_1,
+$$
+
+where $g$ is a function of the random variables.
+
+## Marginal distributions
+
+If the random variables are jointly discrete, then the marginal pmf of $Y_1$ is obtained by summing over the other variables $Y_2, ..., Y_n$:
+
+$$f_{Y_1}(y_1)=\sum_{y_2\in\mathcal{S}_2}\cdots \sum_{y_n\in\mathcal{S}_n} f(y_1,\ldots,y_n).$$
+
+Similarly, if the random variables are jointly continuous, then the marginal pdf of $Y_1$ is obtained by integrating over the other variables $Y_2, ..., Y_n$:
+
+$$f_{Y_1}(y_1)=\int_{y_2\in\mathcal{S}_2}\cdots \int_{y_n\in\mathcal{S}_n} f(y_1,\ldots,y_n) dy_n \cdots dy_2.
+$$
+
+## Independence of random variables
+
+Random variables $X$ and $Y$ are independent if $$F(x, y) = F_X(x) F_Y(y).$$
+
+Alternatively, $X$ and $Y$ are independent if $$f(x, y) = f_X(x)f_Y(y).$$
+
+## Conditional distributions
+
+Let $X$ and $Y$ be random variables. Then assuming $f_Y(y)>0$, the conditional distribution of $X$ given $Y = y$, denoted $X|Y=y$ comes from Bayes' formula: $$f(x|y) = \frac{f(x, y)}{f_{Y}(y)}, \quad f_Y(y)>0.$$
+
+## Covariance
+
+The covariance between random variables $X$ and $Y$ is
+
+$$\mathrm{cov}(X,Y)=E[(X-E(X))(Y-E(Y))]\\=E(XY)-E(X)E(Y).$$
+
+## Useful facts for transformations of multiple random variables
+
+Let $a$ and $b$ be scalar constants. Let $Y$ and $Z$ be random variables. Then:
+
+-   $E(aY+bZ)=aE(Y)+bE(Z)$.
+-   $\mathrm{var}(Y+Z)=\mathrm{var}(Y)+\mathrm{var}(Z)+2\mathrm{cov}(Y, Z)$.
+-   $\mathrm{cov}(a,Y)=0$.
+-   $\mathrm{cov}(Y,Y)=\mathrm{var}(Y)$.
+-   $\mathrm{cov}(aY, bZ)=ab\mathrm{cov}(Y, Z)$.
+-   $\mathrm{cov}(a + Y,b + Z)=\mathrm{cov}(Y, Z)$.
+
+If $Y$ and $Z$ are also independent, then:
+
+-   $E(YZ)=E(Y)E(Z)$.
+-   $\mathrm{cov}(Y, Z)=0$.
+
+In general, if $Y_1, Y_2, \ldots, Y_n$ are a set of random variables, then:
+
+-   $E(\sum_{i=1}^n Y_i) = \sum_{i=1}^n E(Y_i)$, i.e., the expectation of the sum of random variables is the sum of the expectation of the random variables.
+-   $\mathrm{var}(\sum_{i=1}^n Y_i) = \sum_{i=1}^n \mathrm{var}(Y_i) + \sum_{j=1}^n\sum_{1\leq i<j\leq n}2\mathrm{cov}(Y_i, Y_j)$, i.e., the variance of the sum of random variables is the sum of the variables' variances plus the sum of twice all possible pairwise covariances.
+
+If in addition, $Y_1, Y_2, \ldots, Y_n$ are all independent of each other, then:
+
+-   $\mathrm{var}(\sum_{i=1}^n Y_i) = \sum_{i=1}^n \mathrm{var}(Y_i)$ since all pairwise covariances are 0.
+
+## Example (Binomial distribution)
+
+A random variable $Y$ is said to have a Binomial distribution with $n$ trials and probability of success $\theta$, denoted $Y\sim \mathsf{Bin}(n,\theta)$ when $\mathcal{S}=\{0,1,2,\ldots,n\}$ and the pmf is:
+
+**Binomial PMF:**
+
+$$f(y\mid\theta) = \binom{n}{y} \theta^y (1-\theta)^{(n-y)}.$$
+
+An alternative explanation of a Binomial random variable is that it is the sum of $n$ independent and identically-distributed Bernoulli random variables. Alternatively, let $Y_1,Y_2,\ldots,Y_n\stackrel{i.i.d.}{\sim} \mathsf{Bernoulli}(\theta)$, where i.i.d. stands for independent and identically distributed, i.e., $Y_1, Y_2, \ldots, Y_n$ are independent random variables with identical distributions. Then $Y=\sum_{i=1}^n Y_i \sim \mathsf{Bin}(n,\theta)$.
+
+A Binomial random variable with $\theta = 0.5$ models the question: what is the probability of flipping $y$ heads in $n$ flips?
+
+**Determine the mean and variance of $Y$.**
+
+Recall that $E(Y_i) = \theta$ for $i=1,2,\ldots,n$, and 
+
+$\mathrm{var}(Y_i)=\theta(1-\theta)$ for $i=1,2,\ldots,n$.
+
+We determine that
+
+$$
+\begin{aligned}
+E(Y)&=E\biggl(\sum_{i=1}^n Y_i\biggr)\\
+&=\sum_{i=1}^n E(Y_i) \\
+&= \sum_{i=1}^n \theta \\
+&= n\theta.
+\end{aligned}
+$$
+
+Similarly, since $Y_1, Y_2, \ldots, Y_n$ are i.i.d., we see that
+
+$$
+\begin{aligned}
+\mathrm{var}(Y) &= \mathrm{var}\Biggl(\sum_{i=1}^n Y_i\Biggr) \\
+&= \sum_{i=1}^n\mathrm{var}(Y_i)\\
+&=\sum_{i=1}^n \theta(1-\theta) \\
+&= n\theta(1-\theta).
+\end{aligned}
+$$
+
+## Example (Continuous bivariate distribution)
+
+Hydration is important for health. Like many people, the author has a water bottle he uses to stay hydrated throughout the day and drinks several liters of water per day. Let's say the author refills his water bottle every 3 hours.
+
+-   Let $Y$ denote the proportion of the water bottle filled with water at the beginning of the 3-hour window.
+-   Let $X$ denote the amount of water the author consumes in the 3-hour window (measured in the the proportion of total water bottle capacity).
+
+We know that $0\leq X \leq Y \leq 1$. The joint density of the random variables is
+
+$$
+f(x,y)=4y^2,\quad 0 \leq x\leq y\leq 1,
+$$ and 0 otherwise.
+
+We answer a series of questions about this distribution.
+
+**Q1: Determine** $P(1/2\leq X\leq 1, 3/4\leq Y)$.
+
+$$
+\begin{aligned}
+&= \int_{3/4}^{1} 4y^2x\bigg]_{1/2}^y\;dy \\
+&= \int_{3/4}^{1} 4y^3 - 2y^2\;dy\\
+&=y^4-\frac{2}{3}y^3\bigg]_{3/4}^1\\=\
+&=\left(1-\frac{2}{3}\right)-\left(\frac{81}{256}-\frac{2(27)}{3(64)}\right)\\
+&=229/768\approx 0.30.
+\end{aligned}
+$$
+
+**Q2: Determine the marginal distributions of** $X$ and $Y$.
+
+$$
+\begin{aligned}
+f_X(x) &=\int_{x}^1 4y^2\;dy \\
+&=\frac{4}{3}y^3\bigg]_x^1 \\
+&=\frac{4}{3}(1-x^3),\quad 0\leq x \leq 1.
+\end{aligned}
+$$
+
+$$
+\begin{aligned}
+f_Y(y) &=\int_{0}^y 4y^2\;dx \\
+&=4y^2x\bigg]_0^y\\
+&=4y^3,\quad 0\leq y \leq 1.
+\end{aligned}
+$$
+
+**Q3: Determine the means of** $X$ and $Y$.
+
+The mean of $X$ is the integral of $x f_X(x)$ over the support of $X$, i.e.,
+
+$$
+\begin{aligned}
+E(X) &=\int_{0}^1 x\biggl(\frac{4}{3}(1-x^3)\biggr)\;dx \\
+&= \frac{2}{3}x^2-\frac{4}{15}x^4\bigg]_0^1\\
+&=\frac{2}{3}-\frac{4}{15} \\
+&= \frac{10}{15}-\frac{4}{15} \\
+&= \frac{2}{5}.
+\end{aligned}
+$$
+
+Similarly,
+
+$$
+\begin{aligned}
+E(Y) &=\int_{0}^1 y(4y^3)\;dy \\
+&= \frac{4}{5}y^5\bigg]_0^1\\
+&= \frac{4}{5}.
+\end{aligned}
+$$
+**Q4: Determine the variances of** $X$ and $Y$.
+
+We use the formula $\mathrm{var}(X)=E(X^2)-[E(X)^2]$ to compute the variances. First,
+
+$$
+\begin{aligned}
+E(X^2) &=\int_{0}^1 x^2\biggl(\frac{4}{3}(1-x^3)\biggr)\;dx \\
+&= \int_{0}^1\frac{4}{3}x^2-\frac{4}{3}x^5\;dx\\
+&= \frac{4}{9}x^3-\frac{4}{18}x^6\bigg]_0^1\\
+&=\frac{4}{9}-\frac{4}{18} \\
+&= \frac{8}{18}-\frac{4}{18} \\
+&= \frac{4}{18}\\
+&= \frac{2}{9}.
+\end{aligned}
+$$
+
+Second,
+
+$$
+\begin{aligned}
+E(Y^2) &=\int_{0}^1 y^2(4y^3)\;dy \\
+&= \frac{4}{6}y^6\bigg]_0^1\\
+&= \frac{4}{6}\\
+&= \frac{2}{3}.
+\end{aligned}
+$$
+
+$$\mathrm{var}(X)=2/9-(2/5)^2=\frac{14}{225}.$$ $$\mathrm{var}(Y)=2/3-(4/5)^2=\frac{2}{75}.$$
+
+**Q5: Determine the mean of** $XY$.
+
+$$
+\begin{aligned}
+E(XY) &=\int_{0}^{1}\int_{0}^{y} xy(4y^2)\;dx\;dy\\
+&=\int_{0}^{1}2x^2y^3\bigg]_0^y\;dy\\
+&=\int_{0}^{1}2y^5\;dy\\
+&=\frac{2}{6}y^6\bigg]_0^1\\
+&=\frac{2}{6} \\
+&=\frac{1}{3}.
+\end{aligned}
+$$
+
+**Q6: Determine the covariance of** $X$ and $Y$.
+
+Using our previous work, we see that, $$
+\begin{aligned}
+\mathrm{cov}(X,Y)&=E(XY) - E(X)E(Y)\\
+&=1/3-(2/5)(4/5)\\
+&=\frac{1}{3}-\frac{8}{25}\\
+&=\frac{25}{75}-\frac{24}{75}\\
+&=\frac{1}{75}.
+\end{aligned}
+$$
+
+**Q7: Determine the mean and variance of** $Y-X$, i.e., the average amount of water remaining after a 3-hour window and the variability of that amount.
+
+$$
+\begin{aligned}
+E(Y-X)&=E(Y)-E(X)\\&=4/5-2/5\\&=\frac{2}{5}
+\end{aligned}
+$$
+
+$$
+\begin{aligned}
+\mathrm{var}(Y-X)&=\mathrm{var}(Y)+\mathrm{var}(X)-2\mathrm{cov}(Y,X)\\
+&=2/75+14/225-2(1/75)\\
+&=14/225.
+\end{aligned}
+$$
+
+## Multivariate normal (Gaussian) distribution
+
+The random (column) vector $\mathbf{y}=[Y_1,\dots,Y_n]$ has a multivariate normal distribution with mean $E(\mathbf{y})=\boldsymbol{\mu}$ (an $n\times 1$ column vector) and covariance matrix $\mathrm{var}(\mathbf{y})=\boldsymbol{\Sigma}$ (an $n\times n$ matrix) if its joint pdf is,
+
+$$
+f(\mathbf{y})=\frac{1}{(2\pi)^{n/2} |\boldsymbol{\Sigma}|^{1/2} }  \exp\left(-\frac{1}{2} (\mathbf{y}-\boldsymbol{\mu})^T \boldsymbol{\Sigma}^{-1} (\mathbf{y}-\boldsymbol{\mu})\right),
+$$
+
+where $|\boldsymbol{\Sigma}|$ is the determinant of $\boldsymbol{\Sigma}$. Note that $\boldsymbol{\Sigma}$ must be symmetric and positive definite.
+
+In this case, we would denote the distribution of $\mathbf{y}$ as
+
+$$\mathbf{y}\sim \mathsf{N}(\boldsymbol{\mu},\boldsymbol{\Sigma}).$$
