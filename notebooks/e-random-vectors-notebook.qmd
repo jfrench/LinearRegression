@@ -44,24 +44,23 @@ $$
 E(\mathbf{y})=\begin{bmatrix}E(Y_1)\\E(Y_2)\\\vdots\\E(Y_n)\end{bmatrix}.
 $$
 
-The variance of a random vector isn't a number. Instead, it is the matrix of covariances of all pairs of random variables in the random vector.
+The variance of a random vector isn't a number or a vector of numbers. Instead, it is the matrix of covariances of all pairs of random variables in the random vector.
 
 The variance matrix of $\mathbf{y}$ is defined as
 $$
 \begin{aligned}
 \mathrm{var}(\mathbf{y}) &= E\Bigl[(\mathbf{y} - E(\mathbf{y}))(\mathbf{y} - E(\mathbf{y}))^T\Bigr]\\
 &= \begin{bmatrix}\mathrm{cov}(Y_1, Y_1) & \mathrm{cov}(Y_1,Y_2) &\dots &\mathrm{cov}(Y_1,Y_n)\\\mathrm{cov}(Y_2,Y_1 )&\mathrm{cov}(Y_2, Y_2)&\dots&\mathrm{cov}(Y_2,Y_n)\\\vdots&\vdots&\vdots&\vdots\\
-\mathrm{cov}(Y_n,Y_1)&\mathrm{cov}(Y_n,Y_2)&\dots&\mathrm{cov}(Y_n, Y_n)\end{bmatrix}
+\mathrm{cov}(Y_n,Y_1)&\mathrm{cov}(Y_n,Y_2)&\dots&\mathrm{cov}(Y_n, Y_n)\end{bmatrix}.
 \end{aligned}
 $$
 
-Alternatively, the variance matrix of $\mathbf{y}$ is called the **covariance matrix** or **variance-covariance matrix** of $\mathbf{y}$.
-
-The variance matrix of $\mathbf{y}$ can also be computed as $$
+The variance matrix of $\mathbf{y}$ can also be computed as 
+$$
 \mathrm{var}(\mathbf{y}) = E(\mathbf{y}\mathbf{y}^T)-E(\mathbf{y})E(\mathbf{y})^T.
 $$
 
-Also, noting that $\mathrm{cov}(Y, Y) = \mathrm{var}(Y)$ for a random variable $Y$, we can write the covariance matrix of $\mathbf{y}$ as
+Also, noting that $\mathrm{cov}(Y, Y) = \mathrm{var}(Y)$ for a random variable $Y$, we can write the variance matrix of $\mathbf{y}$ as
 $$
 \begin{aligned}
 \mathrm{var}(\mathbf{y}) &= \begin{bmatrix}\mathrm{var}(Y_1) & \mathrm{cov}(Y_1,Y_2) &\dots &\mathrm{cov}(Y_1,Y_n)\\
@@ -71,7 +70,7 @@ $$
 \end{aligned}
 $$
 
-Note: $\mathrm{var}(\mathbf{y})=\mathrm{cov}(\mathbf{y}, \mathbf{y})$.
+The variance matrix of $\mathbf{y}$ is also called the **covariance matrix** or **variance-covariance matrix** of $\mathbf{y}$.
 
 Let $\mathbf{x} = [X_1, X_2, \ldots, X_n]$ be an $n\times 1$ random vector.
 
@@ -93,6 +92,8 @@ The covariance matrix between $\mathbf{x}$ and $\mathbf{y}$ may also be computed
 $$
 \mathrm{cov}(\mathbf{x}, \mathbf{y}) = E(\mathbf{x}\mathbf{y}^T) - E(\mathbf{x}) E(\mathbf{y})^T.
 $$
+
+Note: $\mathrm{var}(\mathbf{y})=\mathrm{cov}(\mathbf{y}, \mathbf{y})$.
 
 ## Properties of transformations of random vectors
 
@@ -192,13 +193,26 @@ $$
 \end{aligned}
 $$
 
+## Multivariate normal (Gaussian) distribution
+
+The random vector $\mathbf{y}=[Y_1,\dots,Y_n]$ has a multivariate normal distribution with mean $E(\mathbf{y})=\boldsymbol{\mu}$ (an $n\times 1$ vector) and covariance matrix $\mathrm{var}(\mathbf{y})=\boldsymbol{\Sigma}$ (an $n\times n$ matrix) if its joint pdf is,
+$$
+f(\mathbf{y})=\frac{1}{(2\pi)^{n/2} |\boldsymbol{\Sigma}|^{1/2} }  \exp\left(-\frac{1}{2} (\mathbf{y}-\boldsymbol{\mu})^T \boldsymbol{\Sigma}^{-1} (\mathbf{y}-\boldsymbol{\mu})\right),
+$$
+
+where $|\boldsymbol{\Sigma}|$ is the determinant of $\boldsymbol{\Sigma}$. Note that $\boldsymbol{\Sigma}$ must be symmetric and positive definite.
+
+We denote the distribution of $\mathbf{y}$ as
+$$
+\mathbf{y}\sim \mathsf{N}(\boldsymbol{\mu},\boldsymbol{\Sigma}).
+$$
 
 ## Linear transformation of a multivariate normal random vector
 
 Assume the following:
 
 - $\mathbf{y}$ is an $n\times 1$ random vector and $\mathbf{y}\sim \mathsf{N}(\boldsymbol{\mu},\boldsymbol{\Sigma}).$
-- $\mathbf{a}$ is an $m\times 1$ column vector of real numbers.
+- $\mathbf{a}$ is an $m\times 1$ vector of real numbers.
 - $\mathbf{A}$ is an $m\times n$ matrix of real numbers.
 
 A linear transformation of a multivariate normal random vector of the form $\mathbf{a}+\mathbf{A}\mathbf{y}$ is also a multivariate normal random vector.

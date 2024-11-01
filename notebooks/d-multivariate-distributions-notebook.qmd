@@ -3,15 +3,15 @@ title: Appendix D - Multivariate Distributions
 author: Joshua French
 date: ''
 engine: knitr
-format: html
-# jupyter:
-#   kernelspec:
-#     display_name: R
-#     language: R
-#     name: ir
-# format: ipynb
-# execute:
-#   output: false
+# format: html
+jupyter:
+  kernelspec:
+    display_name: R
+    language: R
+    name: ir
+format: ipynb
+execute:
+  output: false
 self-contained: true
 title-block-banner: true
 wrap: 'none'
@@ -298,17 +298,3 @@ $$
 &=14/225.
 \end{aligned}
 $$
-
-## Multivariate normal (Gaussian) distribution
-
-The random (column) vector $\mathbf{y}=[Y_1,\dots,Y_n]$ has a multivariate normal distribution with mean $E(\mathbf{y})=\boldsymbol{\mu}$ (an $n\times 1$ column vector) and covariance matrix $\mathrm{var}(\mathbf{y})=\boldsymbol{\Sigma}$ (an $n\times n$ matrix) if its joint pdf is,
-
-$$
-f(\mathbf{y})=\frac{1}{(2\pi)^{n/2} |\boldsymbol{\Sigma}|^{1/2} }  \exp\left(-\frac{1}{2} (\mathbf{y}-\boldsymbol{\mu})^T \boldsymbol{\Sigma}^{-1} (\mathbf{y}-\boldsymbol{\mu})\right),
-$$
-
-where $|\boldsymbol{\Sigma}|$ is the determinant of $\boldsymbol{\Sigma}$. Note that $\boldsymbol{\Sigma}$ must be symmetric and positive definite.
-
-In this case, we would denote the distribution of $\mathbf{y}$ as
-
-$$\mathbf{y}\sim \mathsf{N}(\boldsymbol{\mu},\boldsymbol{\Sigma}).$$
