@@ -121,9 +121,7 @@ Under these assumptions, we have already shown that
 # Parametric confidence intervals for regression coefficients
 
 
-**Standard $t$-based confidence intervals**
-
----
+## Standard $t$-based confidence intervals**
 
 Under the assumptions above, we can prove (though we won't) that
 
@@ -169,9 +167,7 @@ The `confint` function has 3 main arguments:
 We once again use the `penguins` data from the **palmerpenguins**
 package to illustrate what we have learned.
 
-**Penguins example**
-
----
+## Penguins example
 
 Consider the regression model: 
 
@@ -218,8 +214,6 @@ confint(mlmod, parm = "flipper_length_mm", level = 0.90)
 
 # The multiple comparisons problem
 
----
-
 Our linear models typically have multiple regression coefficients.
 
 - We typically want to construct confidence intervals for all of the coefficients.
@@ -244,9 +238,7 @@ A **multiple comparisons procedure** is a procedure designed to adjust for multi
 
 - E.g., a multiple comparisons procedure will produce a family of intervals that have a family-wise confidence level above some threshold.
 
-**Adjusted confidence intervals for regression coefficients** 
-
----
+## Adjusted confidence intervals for regression coefficients
 
 @bonferroni1936 proposed a simple multiple comparisons procedure that is applicable in many contexts. This general procedure is known as the **Bonferroni correction**.
 
@@ -288,9 +280,7 @@ The Bonferroni correction is known to be conservative, which means that the fami
 - Conservative methods can have low power.
 - i.e., Our intervals are much wider than they need to be, so we aren't able to draw precise conclusions about the plausible values of our regression coefficients.
 
-**Penguins example (continued)**
-
----
+## Penguins example (continued)
 
 Let's construct simultaneous confidence intervals for our `penguins` example using the Bonferroni correction.
 
@@ -829,9 +819,7 @@ $$
 
 We consider two common uses for this test below.
 
-**Test for a regression relationship**
-
----
+## Test for a regression relationship
 
 The most common test involving multiple parameters is to test whether *any* of the non-intercept regression coefficients differ from zero.
 
@@ -922,9 +910,7 @@ There is very strong evidence that at least one of the regression coefficients f
 
 Alternatively, the model regressing `bill_length_mm` on the intercept, `body_mass_g`, and `flipper_length_mm` is preferred to the model that has only an intercept.
 
-**A more general F test**
-
----
+## A more general F test
 
 Let us consider a more general F test where multiple regression coefficients are set to zero.
 
