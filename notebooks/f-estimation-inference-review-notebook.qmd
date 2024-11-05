@@ -3,15 +3,15 @@ title: Appendix F - Review of Estimation and Inference
 author: Joshua French
 date: ''
 engine: knitr
-format: html
-# jupyter:
-#   kernelspec:
-#     display_name: R
-#     language: R
-#     name: ir
-# format: ipynb
-# execute:
-#   output: false
+# format: html
+jupyter:
+  kernelspec:
+    display_name: R
+    language: R
+    name: ir
+format: ipynb
+execute:
+  output: false
 self-contained: true
 title-block-banner: true
 wrap: 'none'
@@ -266,9 +266,9 @@ knitr::kable(interp_df,
 
 We provide a brief simulation study to better understand the null distribution and also how rejection regions are chosen to control the type I error rate.
 
-Assume that we sample $n=10$ values from a $\mathsf{N}(\mu, \sigma^2)$ population but that we don't know the mean or the standard deviation.
+Assume that we sample $n=10$ values from a $\mathsf{N}(\mu, \sigma^2)$ population but do not know the mean or standard deviation of the population.
 
-Assume the hypotheses we want to test are $H_0: \mu = 2$ versus $H_a: \mu > 2$ (implicitly, the null hypothesis is $H_0: \mu \leq 2$).
+We want to test are $H_0: \mu = 2$ versus $H_a: \mu > 2$ (implicitly, the null hypothesis is $H_0: \mu \leq 2$).
 
 In this context, it is common to use the test statistic
 $$
@@ -280,9 +280,11 @@ If the null hypothesis is true, $\mu=2$, and statistical theory tells us that $T
 
 - Since $n=10$, our test statistic has a $t$ distribution with 9 degrees of freedom if the null hypothesis is true.
 
-Recall that the null distribution of a test statistic is its sampling distribution under the assumption that the null hypothesis is true. 
+We now discuss our simulation experiment.
 
-To draw our sample, we must choose a value of $\sigma^2$. We will use $\sigma^2 = 4^2$. The exact value isn't important, but choosing a fixed number for $\sigma^2$ is critical for the example below. 
+To draw our sample, we must choose a value of $\sigma^2$. We will use $\sigma^2 = 4^2$.
+
+- The exact value isn't important, but choosing a fixed number for $\sigma^2$ is critical for the example below. 
 
 In the code below, we:
 
@@ -303,7 +305,9 @@ for (i in seq_len(10000)) {
 }
 ```
 
-We now use the code below to compute the empirical density of the computed test statistics and overlay the density of a $t$ distribution with 9 degrees of freedom.
+Recall that the null distribution of a test statistic is its sampling distribution under the assumption that the null hypothesis is true. 
+
+We use the code below to compute the empirical density of the computed test statistics and overlay the density of a $t$ distribution with 9 degrees of freedom.
 
 We see that the two distributions match up very well.
 
@@ -330,14 +334,14 @@ The type I error rate is the probability of rejecting $H_0$ when $H_0$ is true.
 - Since we know the null distribution, we know what behavior to expect from our test statistic if $H_0$ is true.
 - Specifically, we know what test statistics are most unlikely if $H_0$ is true.
 
-Let's say we want to control the type I error at $\alpha = 0.05$. 
+Assume we want to control the type I error at $\alpha = 0.05$. 
 
 For this upper-tailed test, we should reject $H_0$ when the test statistic is greater than $t^{0.05}_9$, i.e., the 0.95 quantile of a $t$ distribution with 9 degrees of freedom. 
 
 Why do we use this threshold?
 
-- Because if $H_0$ is true, this will only lead to erroneous rejections of $H_0$ (i.e., a type I error) 5% of the time. 
-
+- If $H_0$ is true, this will only lead to erroneous rejections of $H_0$ (i.e., a type I error) 5% of the time. 
+- Tthe test statistics in the rejection are the ones least compatible with the $H_0$ if in fact the $H_0$ is true.
 
 In the code below, we compute the sample proportion of test statistics from our null distribution that are more than $t^{0.05}_9$. Our sample proportion is very close to 0.05, and this number will converge to 0.05 as we increase the number samples used in our simulation.
 
@@ -348,24 +352,23 @@ mean(tstats > qt(0.95, df = 9))
 **Example**
 
 Suppose that $Y_1,\ldots,Y_n$ is a random sample (in other words,
-an independent and identically distributed sample) from a population having
-a normal distribution with unknown mean $\mu$ and variance $\sigma^2=1$.
+an independent and identically distributed sample) from a population having a normal distribution with unknown mean $\mu$ and variance $\sigma^2=1$.
 
 We would like to decide between the following two hypotheses:
 $H_0:\mu=0$ and $H_a:\mu\neq 0$.
 
-Consider the statistic $\bar{Y} = \frac{1}{n} \sum_{i=1}^n Y_i$.
-
-If $H_0$ is true, then $\bar{Y} \sim \mathsf{N}(0,1/n)$ and the test statistic
+If $H_0$ is true, then
 $$
 Z^*=\bar{Y}/(1/\sqrt{n})=\sqrt{n}\bar{Y}\sim \mathsf{N}(0, 1),
 $$
-
 i.e., the null distribution of $Z^*$ is $\mathsf{N}(0,1)$.
 
-If $\alpha=0.10$, then the 10% of test statistics that are most unlikely if $H_0$
-is true (i.e., most supportive of $H_a$) are more extreme than $Z^{0.95}$ and $Z^{0.05}$, the 0.05 and 0.95 quantiles of a standard
-normal distribution, respectively.
+This follows from recognizing that:
+
+1. $\bar{Y} \sim \mathsf{N}(0,1/n)$.
+2. $Z^*$ is simply standardizing $\bar{Y}$.
+
+If $\alpha=0.10$, then the 10% of test statistics that are most unlikely if $H_0$ is true (i.e., most supportive of $H_a$) are more extreme than $Z^{0.95}$ and $Z^{0.05}$, the 0.05 and 0.95 quantiles of a standard normal distribution, respectively.
 
 - The superscript in the quantile notation indicates the area to the right of the quantile in the CDF).
 
@@ -383,7 +386,11 @@ $H_0$ should be rejected when $Z^*$ is less than -1.645 or more than
 Alternatively, we could compute the p-value using the formula
 $2P(Z\geq |Z^*|)$ in order to make our choice between the hypotheses.
 
-Suppose $z^*=1.74$ and $\alpha=0.10$.  The test statistic is in the rejection region, so we would conclude that $H_a$ is true. We demonstrate this visually below, shading the rejection region in grey. We represent the observed test statistic with a vertical line.
+Suppose $z^*=1.74$ and $\alpha=0.10$.
+
+- The test statistic is in the rejection region, so we would conclude that $H_a$ is true.
+
+We demonstrate this visually below, shading the rejection region in grey. We represent the observed test statistic with a vertical line.
 
 ```{r}
 #| echo: false
@@ -436,9 +443,9 @@ polygon(s3, y3, col = "grey")
 
 Using the p-value approach with $\alpha = 0.10$, we conclude that $H_a$ is true. 
 
-Note: the rejection region and p-value approaches to deciding between hypotheses will always agree. 
-
 In straightforward language, our interpretation could be: there is weak evidence that the population mean differs from 0.
+
+Note: the rejection region and p-value approaches to deciding between hypotheses will always agree. 
 
 ## Confidence Intervals
 
@@ -493,17 +500,17 @@ for (i in seq_len(100)) {
 }
 ```
 
-Next, we use the formula above to determine the lower and upper bound of the confidence interval associated with each interval.
-
-Since we want 95% confidence intervals, we use the 0.975 quantile of the standard normal distribution to construct our interval.
+Next, we use the procedure above to determine the lower and upper bound of the confidence interval associated with each interval.
 
 ```{r}
 #calculate the lower and upper bounds for the 95% CIs
-lb = means - qnorm(.975) * 1/sqrt(10)
-ub = means + qnorm(.975) * 1/sqrt(10)
+lb = means - 1.96 * 1/sqrt(10)
+ub = means + 1.96 * 1/sqrt(10)
 ```
 
-Next, we plot each interval. An interval is orange if the interval doesn't contain the true population mean, which is 0. We display our results below.
+Next, we plot each interval.
+
+- An interval is orange if the interval doesn't contain the true population mean, which is 0.
 
 ```{r}
 #| label: fig-ci-interp-plot
@@ -527,7 +534,9 @@ for (i in 1:100) {
 }
 ```
 
-In this example, 96 out of 100 intervals for the population mean contained the true population mean of 0.
+In this example, 94 out of 100 intervals for the population mean contained the true population mean of 0.
+
+As we construct more intervals, the proportion of intervals containing the true mean of 0 will typically get closer to 95%.
 
 Notice how the intervals move around. This is because each sample provides us with slightly different values, so the intervals move around because of the samples obtained. 
 
@@ -545,6 +554,10 @@ $\alpha$.
 
 Similar relationships hold for one-sided CIs and hypothesis tests.
 
+A confidence interval provides us with much of the same information as a hypothesis test, but it doesn't provide the p-value or allow us to do hypothesis tests at different significance levels.
+
+Confidence intervals are often preferred over hypothesis tests because they provide additional information in the form of plausible parameters values while giving us enough information to perform a hypothesis test.
+
 **Example:**
 
 Consider the 95% confidence interval for $\mu$ we previously
@@ -552,8 +565,10 @@ constructed: [-0.070,1.171].
 
 That interval is conceptually linked to the statistical test of $H_0:\mu = c$ versus $H_a:\mu \neq c$ using $\alpha =0.05$.
 
-We reject $H_0$ for any hypothesized values of $c$ less than -0.070 or more than 1.171. We fail to reject $H_0$ for any values of $c$ between -0.070 and 1.171.
+We reject $H_0$ for any hypothesized values of $c$ less than -0.070 or more than 1.171.
 
-A confidence interval provides us with much of the same information as a hypothesis test, but it doesn't provide the p-value or allow us to do hypothesis tests at different significance levels.
+We fail to reject $H_0$ for any values of $c$ between -0.070 and 1.171.
 
-Confidence intervals are often preferred over hypothesis tests because they provide additional information in the form of plausible parameters values while giving us enough information to perform a hypothesis test.
+::: {.content-visible when-format="ipynb"}
+# References
+:::
