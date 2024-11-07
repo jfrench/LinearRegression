@@ -2,24 +2,31 @@
 title: Chapter 7 - Variable selection
 author: Joshua French
 date: ''
+engine: knitr
 # format: html
+jupyter:
+  kernelspec:
+    display_name: R
+    language: R
+    name: ir
 format: ipynb
-jupyter: ir
 execute:
   output: false
 self-contained: true
 title-block-banner: true
 wrap: 'none'
+bibliography: book.bib
 ---
 
-To open this information in an interactive Colab notebook, click the Open in Colab graphic below.
+To open this information in an interactive Colab notebook, click or scan the QR code below.
 
 <a href="https://colab.research.google.com/github/jfrench/LinearRegression/blob/master/notebooks/07-variable-selection-notebook.ipynb">
-   <img src="https://colab.research.google.com/assets/colab-badge.svg">
+   <img src="https://raw.githubusercontent.com/jfrench/LinearRegression/ca710f0fdb00102805333e9407b5cc271da0d59f/images/qr-variable-selection.svg">
 </a>
 
 ---
 
+::: {.content-visible when-format="ipynb"}
 ```{r}
 if(!require(faraway, quietly = TRUE)) {
   install.packages("faraway",
@@ -34,6 +41,7 @@ if(!require(caret, quietly = TRUE)) {
   library(caret)
 }
 ```
+:::
 
 We adjust some printing options for clarity. 
 
@@ -43,30 +51,39 @@ options(digits = 7, scipen = 2)
 
 # Choosing our regressors
 
-We usually do not know what model we should fit to our data when we start the analysis process.
+We do not know what model we should fit to our data when we start the analysis process.
 
-We use the initial data exploration process to give us insight into what variables and relationships we might need to capture with our fitted linear model.
+We use the initial data exploration process to give us insight into which variables and relationships we might need to capture with our fitted model.
 
 *Variable selection* is the process of selecting the regressors that should be included in our regression model.
 
 - The variable selection process guides us in objectively identifying the "best" subset of regressors to include in our model.
     - What is meant by "best"?
 
-Why do we need to perform variable selection? Wouldn't it be better to include all regressors in our model?
+Why do we need to perform variable selection?
 
-Including all available regressors in our model may be a bad decision: 
+- Wouldn't it be better to include all regressors in our model?
 
-- The more parameters we need to estimate the less precise our estimates tend to be.
-    - The data can only provide a limited amount of information and that information must be divided among more parameters, leaving less information to make the estimates precise.
-- Adding additional regressors to our model makes the model more complex.
-    - Interpreting the effect of a regressor in a complex model will be more challenging since it may interact with the other regressors in the model.
-- Data collection can be an expensive, non-trivial task.
-    - Including unnecessary predictors in our model can waste time and money.
-- Many data sets have more regressors than observations.
-    - The model will be non-identifiable if we use all regressors and we will not be able to estimate the parameters of the model using OLS.
-    - We must reduce the number of regressors in order to do statistical analysis.
+Including all available regressors in our model may be a bad decision.
 
-Similar to what has been suggested by Chaterjee and Hadi (2013) and Faraway (2014), we will attempt to find the simplest model that adequately explains the data.
+The more parameters we need to estimate the less precise our estimates tend to be.
+
+- The data can only provide a limited amount of information and that information must be divided among more parameters, leaving less information to make the estimates precise.
+
+Adding additional regressors to our model makes the model more complex.
+
+- Interpreting the effect of a regressor in a complex model will be more challenging since it may interact with the other regressors in the model.
+
+Data collection can be an expensive, non-trivial task.
+
+- Including unnecessary predictors in our data set can waste time and money.
+
+Many data sets have more regressors than observations.
+
+- The model will be non-identifiable if we use all regressors, and we will not be able to estimate the parameters of the model using OLS.
+- We must reduce the number of regressors in order to do statistical analysis.
+
+Similar to what has been suggested by @rabe2015 and @lmwr2, we will attempt to find the simplest model that adequately explains the data.
 
 - The principle of parsimony.
 - Occam's razor.
@@ -114,8 +131,7 @@ data(prostate, package = "faraway")
 The `svi` variable is a factor, so we convert it to a factor with appropriate levels.
 
 ```{r}
-prostate$svi <- factor(prostate$svi,
-                       labels = c("non-invasive", "invasive"))
+prostate$svi <- factor(prostate$svi, labels = c("non-invasive", "invasive"))
 ```
 
 # Search strategies
@@ -124,35 +140,29 @@ There are three main search strategies frequently used to pick a best model.
 
 ## Exhaustive search
 
----
-
 An *exhaustive search* fits possible models using all combinations of the available regressors.
 
 - If the number of available regressors is $p$ (including the intercept-related regressor), there are $2^p$ possible models.
 - An exhaustive search is not feasible unless the number of regressors is relatively small.
     - "Relatively small" continues to become larger as our computers become more powerful.
-    - Approaches for reducing the computational cost of the exhaustive approach are available, e.g., Schatzoff et al. (1968) and Furnival (1971).
+    - Approaches for reducing the computational cost of the exhaustive approach are available, e.g., @schatzoff1968 and @furnival1971.
 
 ## Best subset regression
-
----
 
 We use the following notation:
 
 - $\mathcal{M}$: a specific regression model.
 - $RSS_{\mathcal{M}}$: the RSS for fitted model $\mathcal{M}$.
-- $p_{\mathcal{M}}$: the estimated number of regression coefficients for model $\mathcal{M}$.
+- $p_{\mathcal{M}}$: the number of estimated regression coefficients for model $\mathcal{M}$.
 
-The *best subset* search strategy determines the model $\mathcal{M}$ that minimizes the $RSS_{\mathcal{M}}$ for each value, $1\leq p_{\mathcal{M}} \leq p$ (Hastie et al., 2020).
+The *best subset* search strategy determines the model $\mathcal{M}$ that minimizes the $RSS_{\mathcal{M}}$ for each value of $p_{\mathcal{M}}$, where $1\leq p_{\mathcal{M}} \leq p$ [@hastie_tibs_tibs_2020].
 
 - The is helpful because the selection criterion for a specific value of $p_{\mathcal{M}}$ is often optimized by the model that minimizes the RSS for that value of $p_{\mathcal{M}}$. 
-- Furnival and Wilson (1971) proposed a "leaps and bounds" algorithm to efficiently perform best subset selection.
+- @furnival1974 proposed a "leaps and bounds" algorithm to efficiently perform best subset selection.
 
 An efficient best subset search is implemented in the `regsubsets` function in the **leaps** package.
 
 ## Stepwise regression
-
----
 
 The *stepwise regression* search strategy adds or removes a regressor from a model based on whether it optimizes the selection criterion under consideration.
 
@@ -161,7 +171,7 @@ The *stepwise regression* search strategy adds or removes a regressor from a mod
 - *Stepwise selection* starts with the complete model and then sequentially removes or adds the regressor that improves the selection criterion the most.
     - It is similar to backward elimination but can also re-add a regressor that has already been removed from the model.
     - It can also be implemented with a forward selection approach, but R uses the backward elimination-based approach.
-- A stepwise regression search strategy terminates when the selection criterion cannot be improved by adding or removing (depending on the context) a single regressor.
+- A stepwise regression search strategy terminates when the selection criterion cannot be improved by adding or removing a single regressor.
 
 Stepwise regression is implemented in the `step` function in the **stats** package (which is bundled with the base version of R). 
 
@@ -186,7 +196,6 @@ We favor regression models with larger values of $R^2_{\mathcal{M}}$.
 Recall that the adjusted coefficient of determination modifies the $R^2$ statistic to account for model complexity.
 
 The formula for $R^2_a$ for model $\mathcal{M}$, $R^2_{a,\mathcal{M}}$, is 
-
 $$
 R^2_{a,\mathcal{M}} = 1 - \frac{RSS_\mathcal{M}/(n-p_\mathcal{M})}{TSS/(n-1)}.
 $$
@@ -205,16 +214,14 @@ $$
 
 For models with a fixed value of $p_\mathcal{M}$ (i.e., the same number of regressors), the $R^2_\mathcal{M}$, $R^2_{a,\mathcal{M}}$, and $\hat{\sigma}^2_\mathcal{M}$ statistics are all optimized by finding the model that minimizes the RSS, so best subset selection is an excellent search strategy for these statistics.
 
-**Best subset $R^2_a$ `prostate` example**
-
----
+## Best subset $R^2_a$ `prostate` example
 
 We now use a best subset regression approach to identify the "best" model based on the $R^2_a$ statistic.
 
 To perform the initial best subsets regression we use the `regsubsets` function in the **leaps** package. The main arguments of `regsubsets` are:
 
 - `x`: A model formula describing the largest model (in terms of regressors) to consider (preferable) or the $\mathbf{X}$ matrix of the largest model to consider.
-- `data`: The data frame containing the data we are fitting our model to. This is needed if the formula in `x` relies on variables in `data`.
+- `data`: The data frame containing the data. We must include this argument if the formula in `x` relies on variables in `data`.
 - `nvmax`: The maximum number of subsets to consider (i.e., the number of regressors, excluding the intercept, in the model).
     - The default value of `nvmax` is 8, so this must be increased if we want to consider more than 8 regressors.
 - `force.in`: columns of $\mathbf{X}$ that must be kept in each model.
@@ -244,7 +251,7 @@ The `plot` method for `regsubsets` objects can be used to easily identify the mo
 - We change the `scale` argument to indicate the statistic we want to plot.
 - The options include `"bic"`, `"Cp"`, `"adjr2"`, and `"r2"`.
 
-To determine the model the maximizes the adjusted $R^2$ statistic, we change the `scale` argument of the `plot` method to `"adjr2"`.
+To determine the model the maximizes the $R^2_a$ statistic, we change the `scale` argument of the `plot` method to `"adjr2"`.
 
 ```{r}
 plot(rs, scale = "adjr2")
@@ -252,7 +259,7 @@ plot(rs, scale = "adjr2")
 
 The top row of the plot indicates the model that maximizes the adjusted $R^2$.
 
-- The model with an intercept, `lcavol`, `lweight`, `lpbh`, `sviinvasive` (the indicator variable for the `invasive` level of `svi`), `lcp`, and `pgg45` is the model that maximizes the adjusted $R^2$.
+- The model with an intercept, `lcavol`, `lweight`, `age`, `lpbh`, `sviinvasive` (the indicator variable for the `invasive` level of `svi`), `lcp`, and `pgg45` is the model that maximizes the adjusted $R^2$.
 
 A similar plot for the coefficient of determination, $R^2$, can be constructed by specifying `scale = "r2"` in the `plot` function.
 
@@ -263,9 +270,7 @@ We can extract the best adjusted $R^2$ statistics for each value of $p_{\mathcal
 
 ```{r}
 srs <- summary(rs)
-plot(srs$adjr2 ~ seq_along(srs$adjr2),
-     xlab = "number of regressors", 
-     ylab = "Adjusted R-squared")
+plot(srs$adjr2 ~ seq_along(srs$adjr2), xlab = "number of regressors", ylab = "Adjusted R-squared")
 ```
 
 As before, we can see that the best model has 7 regressors. We must match this information with the information presented by the `summary` function to identify the regressors in the model that optimizes the selection criterion.
@@ -275,9 +280,9 @@ As before, we can see that the best model has 7 regressors. We must match this i
 *Information criteria* are statistics meant to measure how well a model fits the observed data while also accounting for the complexity of the model.
 
 - An adjustment is needed because we can almost always make our model fit the data "better" by making the model more complex.
-- To make comparisons between the models fair we need to also account for complexity.
+- To make comparisons between the models fair, we must account for complexity in addition to how well they fit.
 
-Akaike (1973) proposed the most famous information criterion, which is now known as the Akaike Information Criterion (AIC).
+@aic proposed the most famous information criterion, which is now known as the Akaike Information Criterion (AIC).
 
 The AIC statistic is computed for model $\mathcal{M}$ as
 
@@ -307,7 +312,7 @@ $p_{\mathcal{M}}$ is a measure of the model complexity.
 
 When using the AIC statistic to evaluate model fit, we prefer models with a smaller AIC statistic.
 
-Schwarz (1978) proposed the Bayesian Information Criterion (BIC), which is very similar to the AIC statistic. 
+@bic proposed the Bayesian Information Criterion (BIC), which is very similar to the AIC statistic. 
 
 For a specific model $\mathcal{M}$, the BIC statistic is computed as
 
@@ -323,9 +328,7 @@ The BIC statistic tends to favor simpler models than the AIC statistic.
 
 For models with a fixed value of $p_\mathcal{M}$ (i.e., the same number of regressors), both the AIC and BIC statistics are optimized by finding the model that minimizes the RSS, so best subset regression is an excellent search strategy for these selection criteria.
 
-**Best subset BIC `prostate` example**
-
----
+## Best subset BIC `prostate` example
 
 We continue our previous example of the `prostate` data and attempt to find the model that minimizes the BIC statistic.
 
@@ -337,9 +340,7 @@ plot(rs, scale = "bic")
 
 The model that includes the intercept, `lcavol`, `lweight`, and `sviinvasive` minimizes the BIC criterion.
 
-**Stepwise selection and forward selection with AIC and BIC `prostate` example**
-
----
+## Stepwise selection and forward selection with AIC and BIC `prostate` example
 
 The `regsubsets` function doesn't compute the `AIC` statistic.
 
@@ -417,7 +418,7 @@ C_{p_{\mathcal{M}}} = \frac{\mbox{RSS}_{\mathcal{M}}}{\hat{\sigma}^2} + 2p_{\mat
 $$
 where $\hat{\sigma}^2$ is the estimated error variance for the complete model.
 
-Kutner et al. (2005) summarize how to use Mallow's $C_p$ statistic.
+@alsm2005 summarize how to use Mallow's $C_p$ statistic.
 
 - If a model with $p_{\mathcal{M}}$ regression coefficients fits the data well and has little or no bias, then $E(C_{p_{\mathcal{M}}}) \approx p_{\mathcal{M}}$.
     - A model with a biased fit will have $C_{p_{\mathcal{M}}}$ much larger than $p_{\mathcal{M}}$.
@@ -430,9 +431,7 @@ We favor models with smaller $p_{\mathcal{M}}$ and $C_{p_{\mathcal{M}}}$ close t
 
 - Because $C_p = p$ for the full model, the Mallow's $C_p$ plot cannot provide evidence that the complete model is best. This plot doesn't provide us with information about that scenario. Never conclude the complete model is best based on the Mallow's $C_p$ statistic.
 
-**Mallow's $C_p$ `prostate` example**
-
----
+## Mallow's $C_p$ `prostate` example
 
 We can use the output of the `summary` function for our `regsubsets` object, `rs`, to identify the best model with respect to Mallow's $C_p$.
 
@@ -470,9 +469,7 @@ Test statistics and p-values should not be used as selection criterion unless a 
 
 However, we illustrate using this selection criterion below.
 
-**Backward elimination with test statistics `prostate` example**
-
----
+## Backward elimination with test statistics `prostate` example
 
 We will perform backward elimination on the `prostate` data using p-values with $\alpha_v = 0.10$.
 
@@ -540,21 +537,21 @@ The final model includes the intercept and the regressors `lcavol`, `lweight`, a
 
 The most best known regularization methods are ridge regression, LASSO, and the elastic net. 
 
-*Ridge regression* (Hoerl and Kennard, 1970) seeks to choose the estimated coefficients that minimizes the objective function 
+*Ridge regression* [@ridge] seeks to choose the estimated coefficients that minimizes the objective function 
 
 $$
 \sum_{i=1}^n (Y_i - \hat{\beta}_0 - \sum_{j=1}^{p-1} x_{i,j} \hat{\beta}_j)^2 + \lambda\sum_{j=0}^{p-1} \hat{\beta}_j^2,
 $$
 for $\lambda \geq 0$.
 
-The LASSO (least absolute shrinkage and selection operator) method proposed by Tibshirani (1996) seeks to minimize the objective function
+The LASSO (least absolute shrinkage and selection operator) method proposed by @lasso seeks to minimize the objective function
 
 $$
 \sum_{i=1}^n (Y_i - \hat{\beta}_0 - \sum_{j=1}^{p-1} x_{i,j} \hat{\beta}_j)^2 + \lambda\sum_{j=0}^{p-1} |\hat{\beta}_j|,
 $$
 for $\lambda \geq 0$.
 
-The elastic net (Zou and Hastie, 2005) is a compromise between the ridge and LASSO regression methods and seeks to minimize 
+The elastic net [@elasticnet] is a compromise between the ridge and LASSO regression methods and seeks to minimize 
 
 $$
 \sum_{i=1}^n (Y_i - \hat{\beta}_0 - \sum_{j=1}^{p-1} x_{i,j} \hat{\beta}_j)^2 + \lambda_1\sum_{j=0}^{p-1} |\hat{\beta}_j| + \lambda_2\sum_{j=0}^{p-1} \hat{\beta}_j^2,
@@ -749,28 +746,9 @@ Combining the observed RMSE or MAE selection criterion with cross-validation wil
 
 - We often use one of the other selection criteria/search strategies to narrow down the possible models to a few final candidate models and then use cross-validation to make a final decision.
 
+::: {.content-visible when-format="ipynb"}
 # References
+:::
 
-Akaike, H. (1973), "Information theory and an extension of the maximum likelihood principle", in Petrov, B. N.; Csáki, F. (eds.), 2nd International Symposium on Information Theory, Tsahkadsor, Armenia, USSR, September 2-8, 1971, Budapest: Akadémiai Kiadó, pp. 267–281
 
-Chaterjee, S., and Hadi, A. S. (2013). Regression Analysis By Example (5th ed.) Wiley.
 
-Faraway, J.J. (2014). Linear Models with R (2nd ed.). Chapman and Hall/CRC. [https://doi.org/10.1201/b17144](https://doi.org/10.1201/b17144)
-
-Furnival, G. M. (1971). All Possible Regressions with Less Computation. Technometrics, 13(2), 403–408. [https://doi.org/10.2307/1266801](https://doi.org/10.2307/1266801)
-
-Furnival, G. M., & Wilson, R. W. (1974). Regressions by Leaps and Bounds. Technometrics, 16(4), 499–511. [https://doi.org/10.2307/1267601](https://doi.org/10.2307/1267601)
-
-Arthur E. Hoerl & Robert W. Kennard (1970) Ridge Regression: Biased Estimation for Nonorthogonal Problems, Technometrics, 12:1, 55-67, [https://doi.org/10.1080/00401706.1970.10488634](https://doi.org/10.1080/00401706.1970.10488634).
-
-Trevor Hastie. Robert Tibshirani. Ryan Tibshirani. "Best Subset, Forward Stepwise or Lasso? Analysis and Recommendations Based on Extensive Comparisons." Statist. Sci. 35 (4) 579 - 592, November 2020. [https://doi.org/10.1214/19-STS733] (https://doi.org/10.1214/19-STS733)
-
-Kutner, Michael H, Christopher J Nachtsheim, John Neter, and William Li. 2005. Applied Linear Statistical Models, 5th Edition. McGraw-Hill/Irwin, New York.
-
-Schatzoff, M., Tsao, R., & Fienberg, S. (1968). Efficient Calculation of All Possible Regressions. Technometrics, 10(4), 769–779. [https://doi.org/10.2307/1267458](https://doi.org/10.2307/1267458)
-
-Schwarz, Gideon E. (1978), "Estimating the dimension of a model", Annals of Statistics, 6 (2): 461–464
-
-Tibshirani, R. (1996). Regression Shrinkage and Selection via the Lasso. Journal of the Royal Statistical Society. Series B (Methodological), 58(1), 267–288. [http://www.jstor.org/stable/2346178](http://www.jstor.org/stable/2346178)
-
-Hui Zou, Trevor Hastie, Regularization and Variable Selection Via the Elastic Net, Journal of the Royal Statistical Society Series B: Statistical Methodology, Volume 67, Issue 2, April 2005, Pages 301–320, [https://doi.org/10.1111/j.1467-9868.2005.00503.x](https://doi.org/10.1111/j.1467-9868.2005.00503.x)

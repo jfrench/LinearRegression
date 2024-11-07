@@ -678,14 +678,17 @@ $$ We want to predict a new response for a specific
 combination of regressor values, $\mathbf{x}_0$. The new
 response will be the mean response for that combination of
 regressors, $E(Y\mid \mathbf{x}_0)$, plus the error for that
-observation, $\epsilon(\mathbf{x}_0)$, i.e., $$
+observation, $\epsilon(\mathbf{x}_0)$, i.e., 
+$$
 Y(\mathbf{x}_0)=E(Y\mid \mathbf{x}_0) + \epsilon(\mathbf{x}_0).
 $$
 
-Thus, our predicted new response, $\hat{Y}(\mathbf{x})$ is
-the estimated mean plus the estimated error, i.e., $$
+Thus, our predicted new response, $\hat{Y}(\mathbf{x}_0)$ is
+the estimated mean plus the estimated error, i.e., 
+$$
 \hat{Y}(\mathbf{x}_0)=\hat{E}(Y\mid \mathbf{x}_0) + \hat{\epsilon}(\mathbf{x}_0).
-$$ We have already used
+$$ 
+We have already used
 $\hat{E}(Y\mid \mathbf{x}_0)=\mathbf{x}_0^T\hat{\boldsymbol{\beta}}$
 as the estimator for $E(Y\mid \mathbf{x}_0)$ since it is the
 best linear unbiased estimator according to the Gauss-Markov
@@ -696,7 +699,8 @@ $\epsilon_1, \epsilon_2,\ldots, \epsilon_n, \epsilon(\mathbf{x}_0)$
 are uncorrelated and have a normal distribution with mean zero, our best guess is the mean value of the
 errors, which is zero. This is not true when the errors are
 correlated, but we do not discuss that in detail. Thus, the
-best predictor of a new response is $$
+best predictor of a new response is 
+$$
 \begin{aligned}
 \hat{Y}(\mathbf{x}_0) &=\hat{E}(Y\mid \mathbf{x}_0) + \hat{\epsilon}(\mathbf{x}_0)\\
 &= \mathbf{x}_0^T\hat{\boldsymbol{\beta}} + 0 \\

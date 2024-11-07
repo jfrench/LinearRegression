@@ -3,18 +3,19 @@ title: Chapter 3 - Parameter Estimation and Model Fitting
 author: Joshua French
 date: ''
 engine: knitr
-# format: html
-format: ipynb
-jupyter:
-  kernelspec:
-    display_name: R
-    language: R
-    name: ir
-execute:
-  output: false
+format: html
+# format: ipynb
+# jupyter:
+#   kernelspec:
+#     display_name: R
+#     language: R
+#     name: ir
+# execute:
+#   output: false
 self-contained: true
 title-block-banner: true
 wrap: 'none'
+bibliography: book.bib
 ---
 
 To open this information in an interactive Colab notebook, click or scan the QR code below. 
@@ -41,27 +42,19 @@ if(!require(ggplot2, quietly = TRUE)) {
 ```
 :::
 
-# A simple motivating example
+# What is regression?
 
-We observe data related to the heights (in) of 5 mothers and their adult daughters. The data are in the table below. 
+@pearson1897 and @pearson_and_lee_1903 collected a classical data set that measures the heights of mothers and their adult daughters.
 
-| observation| mother| daughter|
-|-----------:|------:|--------:|
-|           1|   57.5|     61.5|
-|           2|   60.5|     63.5|
-|           3|   63.5|     63.5|
-|           4|   66.5|     66.5|
-|           5|   69.5|     66.5|
+The plot below displays a scatter plot of 5 randomly selected observations from that data set.
 
-Is it reasonable to use the mother's height to predict her daughter's height? Consider the plot below.
+Is it be reasonable to use a mother's height to predict the height of her adult daughter?
 
 ```{r}
 x <- c(57.5, 60.5, 63.5, 66.5, 69.5) # mothers' heights
 y <- c(61.5, 63.5, 63.5, 66.5, 66.5) # daughters' heights
 plot(y ~ x, pch = 19, xlab = "mother's height (in)", ylab = "daughter's height (in)")
 ```
-
-## What is regression?
 
 A **regression model** is a model describing the typical relationship between a set of variables. 
 
@@ -86,7 +79,7 @@ The **response variable** is the outcome variable we want to predict.
 
 - They are also called **explanatory**, **regressor**, **input**, or **independent** variables or simply as **features**. 
 
-Following the convention of Weisberg (2014), we use the term **regressor** to refer to the variables used in our regression model, whether that is the original predictor variable, some transformation of a predictor, some combination of predictors, etc.
+Following the convention of @alr4, we use the term **regressor** to refer to the variables used in our regression model, whether that is the original predictor variable, some transformation of a predictor, some combination of predictors, etc.
 
 - Every predictor can be a regressor but not all regressors are a predictor.
 - The regressor variables are denoted as $X_1, X_2, \ldots, X_{p-1}$.
@@ -133,7 +126,7 @@ abline(a = coef_lad[1], b = coef_lad[2], col = "grey")
 
 **Parameter estimation** is the process of using observed data to estimate model parameters.
 
-There are many different methods for parameter estimation in statistics: 
+There are many different methods of parameter estimation in statistics: 
 
 - Method-of-moments.
 - Maximum likelihood.
@@ -299,7 +292,7 @@ $$
 
 # Penguins simple linear regression example 
 
-The `penguins` data set provides data related to various penguin species measured in the Palmer Archipelago (Antarctica), originally provided by Gorman et al. (2014). We start by loading the data into memory.
+The `penguins` data set provides data related to various penguin species measured in the Palmer Archipelago (Antarctica), originally provided by @GormanEtAl2014. We start by loading the data into memory.
 
 ```{r}
 data(penguins, package = "palmerpenguins")
@@ -341,7 +334,7 @@ $$
 
 The `lm` function uses OLS estimation to fit a linear model to data. The function has two main arguments:
 
-- `formula`: a Wilkinson and Rogers (1973) style formula describing the linear regression model. For complete details, run `?stats::formula` in the Console. If `y` is the response variable and `x` is an available numeric predictor, then `formula = y ~ x` tells `lm` to fit the simple linear regression model $E(Y|X)=\beta_0+\beta_1 X$.
+- `formula`: a @wilkinsonrogers1973 style formula describing the linear regression model. For complete details, run `?stats::formula` in the Console. If `y` is the response variable and `x` is an available numeric predictor, then `formula = y ~ x` tells `lm` to fit the simple linear regression model $E(Y|X)=\beta_0+\beta_1 X$.
 -   `data`: the data frame in which the model variables are stored. This can be omitted if the variables are already stored in memory.
 
 ```{r}
@@ -1269,7 +1262,7 @@ The $R^2$ value increased from 0.8080 to 0.8088!
 
 ## Anscombe's Quartet
 
-Anscombe (1973) provides a canonical data set known as "Anscombe's quartet" that illustrates how $R^2$ can mislead us into thinking an inappropriate model fits better than it actually does.
+@anscombe1973graphs provides a canonical data set known as "Anscombe's quartet" that illustrates how $R^2$ can mislead us into thinking an inappropriate model fits better than it actually does.
 
 - The data set is comprised of 4 different data sets.
 - When a simple linear regression model is fit to each data set:
@@ -1354,7 +1347,7 @@ ggplot(adf, aes(x = x, y = y, group = set, col = set)) +
 
 ## Adjusted R-squared
 
-Ezekiel (1930) proposed the adjusted R-squared statistic as a better statistic for measuring model fit. The adjusted $R^2$ statistic is defined as
+@ezekiel1930methods proposed the adjusted R-squared statistic as a better statistic for measuring model fit. The adjusted $R^2$ statistic is defined as
 
 $$
 R^2_a=1-(1-R^2)\frac{n-1}{n-p}=1-\frac{RSS/(n-p)}{TSS/(n-1)}.
@@ -1548,14 +1541,7 @@ $$
 $$
 minimizes the RSS.
 
+
+::: {.content-visible when-format="ipynb"}
 # References
-
-Anscombe, Francis J. 1973. "Graphs in Statistical Analysis." The American Statistician 27 (1): 17–21.
-
-Ezekiel, Mordecai. 1930. "Methods of Correlation Analysis."
-
-Gorman, Kristen B., Tony D. Williams, and William R. Fraser. 2014. "Ecological Sexual Dimorphism and Environmental Variability Within a Community of Antarctic Penguins (Genus Pygoscelis)." PLOS ONE 9 (3): 1–14. [https://doi.org/10.1371/journal.pone.0090081](https://doi.org/10.1371/journal.pone.0090081).
-
-Weisberg, Sanford. 2014. Applied Linear Regression. Fourth. Hoboken NJ: Wiley. [http://z.umn.edu/alr4ed](http://z.umn.edu/alr4ed).
-
-Wilkinson, GN, and CE Rogers. 1973. "Symbolic Description of Factorial Models for Analysis of Variance." Journal of the Royal Statistical Society: Series C (Applied Statistics) 22 (3): 392–99.
+:::
