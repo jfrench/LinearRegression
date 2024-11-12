@@ -2,20 +2,26 @@
 title: Chapter 8 - Assumptions Stated and Prioritized
 author: Joshua French
 date: ''
+engine: knitr
 # format: html
+jupyter:
+  kernelspec:
+    display_name: R
+    language: R
+    name: ir
 format: ipynb
-jupyter: ir
 execute:
   output: false
 self-contained: true
 title-block-banner: true
 wrap: 'none'
+bibliography: book.bib
 ---
 
 To open this information in an interactive Colab notebook, click the Open in Colab graphic below.
 
 <a href="https://colab.research.google.com/github/jfrench/LinearRegression/blob/master/notebooks/08-assumptions-stated-notebook.ipynb">
-   <img src="https://colab.research.google.com/assets/colab-badge.svg">
+   <img src="https://raw.githubusercontent.com/jfrench/LinearRegression/3ea768f0aeb55d8a92b1e9b25123ddd761a421a3/images/qr-assumptions.svg">
 </a>
 
 ---
@@ -117,7 +123,7 @@ Influential observations can make it difficult to determine whether Assumptions 
 
 The assumptions previously stated are not equally important.
 
-Faraway (2014, Chapter 6) ranks the consequences of violating our assumptions; some consequences are more severe than others. We build on that discussion.
+@lmwr2 ranks the consequences of violating our assumptions; some consequences are more severe than others. We build on that discussion.
 
 The order of importance for the stated assumptions is:
 
@@ -144,6 +150,6 @@ The order of importance for the stated assumptions is:
     - If our regressors are practically collinear then we will struggle to interpret their role in the model because the estimates can change dramatically with small changes in our data.
     - The estimated standard error of our estimates can dramatically increase, making it difficult to precisely estimate the effect of the associated variables in our model.
 
+::: {.content-visible when-format="ipynb"}
 # References
-
-Faraway, J.J. (2014). Linear Models with R (2nd ed.). Chapman and Hall/CRC. [https://doi.org/10.1201/b17144](https://doi.org/10.1201/b17144)
+:::
