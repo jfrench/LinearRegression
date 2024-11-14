@@ -100,7 +100,7 @@ observation $i$.
 
 ## Selecting the best model
 
-Suppose we want to find the straight line that best fits the plot of mother and daughter heights.
+Suppose we want to find the straight line that best fits the points in the plot of mother and daughter heights.
 
 How do we determine the "best fitting" model?
 
@@ -141,11 +141,11 @@ OLS estimation estimates the regression coefficients with the values that minimi
 
 The regression model for $Y$ as a function of $X$, denoted $E(Y \mid X)$, is the expected value of $Y$ conditional on the value of the regressor $X$. 
 
-The **simple linear regression model** for a response variable assumes the mean of $Y$, conditional on the value of a single regressor $X$, is
-
+The **simple linear regression model** assumes the mean of the response variable $Y$, conditional on a single regressor $X$, is
 $$
 E(Y\mid X) = \beta_0 + \beta_1 X.
 $$
+
 The response variable $Y$ is modeled as
 $$
 \begin{aligned}
@@ -249,11 +249,10 @@ legend("topleft",
 
 In the graphic above, we visualize the response values, fitted values, residuals, and fitted model in a simple linear regression context. Note that:
 
--   The fitted model is shown as the dashed grey line and minimizes the RSS.
-- The response values, shown as black dots, are the observed values of $Y$.
--   The fitted values, shown as blue x's, are the values returned by evaluating the fitted
-    model at the observed regressor values.
--   The residuals, shown as solid orange lines, indicate the distance and direction between the observed responses and their corresponding fitted value. If the response is larger than the fitted value then the residual is positive, otherwise it is negative.
+- The fitted model is shown as the dashed grey line and minimizes the RSS.
+- The observed values of the response variable, $Y$, are shown as black dots.
+- The fitted values, shown as blue x's, are the values returned by evaluating the fitted model at the observed regressor values.
+- The residuals, shown as solid orange lines, indicate the distance and direction between the observed responses and their corresponding fitted value. If the response is larger than the fitted value then the residual is positive, otherwise it is negative.
 -   The RSS is the sum of the squared vertical distances between the response and fitted values.
 
 ## OLS estimators of the simple linear regression parameters
@@ -499,7 +498,6 @@ Notice:
 - $E(Y \mid \mathbb{X}) = \beta_0 + \beta_1 X_1 + \beta_2 X_2 + \cdots + \beta_{p-1} X_{p-1}$.
 
 A linear regression model can be written as
-
 $$
 E(Y \mid \mathbb{X}) = \sum_{j=0}^{p-1} c_j \beta_j.
 $$
@@ -517,7 +515,7 @@ $$
 
 The key feature of the linear regression model is that the model is a linear combination of the regression coefficients.
 
-## Examples of a linear model
+## Examples of linear models
 
 A model is linear because of its *form* not the shape it produces. 
 
@@ -539,7 +537,6 @@ Some examples of non-linear regression models are:
 # Estimation of the multiple linear regression model
 
 We want to estimate the parameters of the model
-
 $$
 Y=\beta_0 + \beta_1 X_1 + \cdots + \beta_{p-1} X_{p-1} + \epsilon.
 $$
@@ -556,26 +553,26 @@ We can simplify the linear model system of equations using matrix notation.
 
 We use the following notation:
 
--   $\mathbf{y} = [Y_1, Y_2, \ldots, Y_n]$ denotes the column vector containing the $n$ observed response values.
--   $\mathbf{X}$ denotes the matrix containing a column of 1s and the observed regressor values for $X_1, X_2, \ldots, X_{p-1}$. This may be written as
-
+-   $\mathbf{y} = [Y_1, Y_2, \ldots, Y_n]$ denotes the $n\times 1$ column vector containing the $n$ observed response values.
+-   $\mathbf{X}$ denotes the $n\times p$ matrix containing a column of 1s and the observed regressor values for $X_1, X_2, \ldots, X_{p-1}$. This may be written as
 $$
-\mathbf{X} = \begin{bmatrix}
+    \mathbf{X} = \begin{bmatrix}
     1 & x_{1,1} & x_{1,2} & \cdots & x_{1,p-1} \\
     1 & x_{2,1} & x_{2,2} & \cdots & x_{2,p-1} \\
     \vdots & \vdots & \vdots & \vdots & \vdots \\
     1 & x_{n,1} & x_{n,2} & \cdots & x_{n,p-1}
     \end{bmatrix}.
 $$
+-   $\boldsymbol{\beta} = [\beta_0, \beta_1, \ldots, \beta_{p-1}]$ denotes the $p\times 1$ column vector containing the $p$ regression coefficients.
+-   $\boldsymbol{\epsilon} = [\epsilon_1, \epsilon_2, \ldots, \epsilon_n]$ denotes the $n\times 1$ column vector containing the $n$ model errors.
 
--   $\boldsymbol{\beta} = [\beta_0, \beta_1, \ldots, \beta_{p-1}]$ denotes the column vector containing the $p$ regression coefficients.
--   $\boldsymbol{\epsilon} = [\epsilon_1, \epsilon_2, \ldots, \epsilon_n]$ denotes the column vector contained the $n$ model errors.
-
-The system of equations defining the linear model in can be written as
-
+The system of equations defining the linear model can be written as
 $$
 \mathbf{y} = \mathbf{X}\boldsymbol{\beta} + \boldsymbol{\epsilon}.
 $$
+
+A regression model that cannot be represented as a system of linear equations using matrices is not a linear model.
+
 
 ## Matrix definitions of residuals, fitted values, and RSS for multiple linear regression
 

@@ -2,24 +2,31 @@
 title: Chapter 9 - Basic structure and error assumption diagnostics
 author: Joshua French
 date: ''
-format: html
-# format: ipynb
-# jupyter: ir
-# execute:
-#   output: false
+engine: knitr
+# format: html
+jupyter:
+  kernelspec:
+    display_name: R
+    language: R
+    name: ir
+format: ipynb
+execute:
+  output: false
 self-contained: true
 title-block-banner: true
 wrap: 'none'
+bibliography: book.bib
 ---
 
-To open this information in an interactive Colab notebook, click the Open in Colab graphic below.
+To open this information in an interactive Colab notebook, click or scan the QR code below.
 
 <a href="https://colab.research.google.com/github/jfrench/LinearRegression/blob/master/notebooks/09-basic-structure-and-error-assumption-diagnostics-notebook.ipynb">
-   <img src="https://colab.research.google.com/assets/colab-badge.svg">
+   <img src="https://raw.githubusercontent.com/jfrench/LinearRegression/23b6bb9f948afab5075d92556502a31665bac25b/images/qr-structure-error-diagnostics.svg">
 </a>
 
 ---
 
+::: {.content-visible when-format="ipynb"}
 ```{r}
 if(!require(faraway, quietly = TRUE)) {
   install.packages("faraway",
@@ -40,6 +47,7 @@ if(!require(lmtest, quietly = TRUE)) {
   library(lmtest)
 }
 ```
+:::
 
 We adjust some printing options for clarity. 
 
@@ -47,9 +55,9 @@ We adjust some printing options for clarity.
 options(digits = 7, scipen = 2)
 ```
 
-We discuss basic, but effective approaches for assessing the validity of several of the assumptions discussed in the previous notebook.
+We discuss basic but effective approaches for assessing the validity of several of the assumptions discussed in the previous notebook.
 
-We will focus on assessing assumptions related:
+We will focus on assessing assumptions related to:
 
 - Model structure.
 - The distribution of the errors.
@@ -60,13 +68,11 @@ These assumptions tend to be checked in similar ways.
 
 To facilitate our discussion we will consider two main data sets. 
 
-**The `prostate` data set**
-
----
+## The `prostate` data set
 
 The first data set we will consider is the `prostate` data set, which is available in the **faraway** R package. The data set provides information about 97 men who were going to receive a radical prostatectomy.
 
-The `prostate` data set is a data frame has 97 rows and 9 columns. The **faraway** package provides the following descriptions of the variables:
+The `prostate` data set is a data frame with 97 rows and 9 columns. The **faraway** package provides the following descriptions of the variables:
 
 - `lcavol`: log(cancer volume).
 - `lweight`: log(prostate weight).
@@ -87,33 +93,30 @@ data(prostate, package = "faraway")
 The `svi` variable is a factor, so we convert it to a factor with appropriate levels.
 
 ```{r}
-prostate$svi <- factor(prostate$svi,
-                       labels = c("non-invasive", "invasive"))
+prostate$svi <- factor(prostate$svi, labels = c("non-invasive", "invasive"))
 ```
 
-**The `home_prices` data set**
-
----
+## The `home_prices` data set
 
 We will also use the `home_prices` data set from the **KingCountyHouses** package. 
 
 The `home_prices` data set contains the sales prices of homes sold in King County, WA between 2014-05-02 and 2015-05-27. The data set is a data frame (tibble) with 21,613 rows and 19 columns. A subset of the relevant variables includes:
 
-- `date_sold`: date of sale.
-- `price`: sale price (log10 units).
-- `bedrooms`: number of bedrooms.
-- `bathrooms`: number of bathrooms.
-- `sqft_living`: size of living space.
-- `sqft_lot`: size of property.
-- `floors`: number of floors.
+- `date_sold`: date of sale (`date`).
+- `price`: sale price (log10 units, `numeric`).
+- `bedrooms`: number of bedrooms (`numeric`).
+- `bathrooms`: number of bathrooms (`numeric`).
+- `sqft_living`: size of living space (`numeric`).
+- `sqft_lot`: size of property (`numeric`).
+- `floors`: number of floors (`numeric`).
 - `waterfront`: indicator variable for a waterfront view.
-- `view`: a numeric rating of the quality of the home's view.
-- `condition`: a factor variable indicating the condition of the house (poor to very good).
-- `sqft_above`: size of living space above ground.
-- `sqft_basement` (numeric):size of living space below ground.
-- `yr_built`: year the home was built.
-- `year_renovated`: the year renovated and, if not renovated, the year built.
-- `zip_code`: the zip code of the home.
+- `view`: a numeric rating of the quality of the home's view (`numeric`).
+- `condition`: a factor variable indicating the condition of the house (poor to very good, `factor`).
+- `sqft_above`: size of living space above ground (`numeric`).
+- `sqft_basement` :size of living space below ground (`numeric`).
+- `yr_built`: year the home was built (`numeric`).
+- `year_renovated`: the year renovated and, if not renovated, the year built (`numeric`).
+- `zip_code`: the zip code of the home (`factor`).
 
 We load the data below.
 
@@ -139,15 +142,13 @@ Lastly, we remove the `date_sold` variable from `home_prices` since it isn't in 
 home_prices <- home_prices[, -1]
 ```
 
-**Initial fitted models**
+## Initial fitted models
 
----
-
-The validity of our assumptions depend on the model fit to the data.
+The validity of our assumptions depends on the model fit to the data.
 
 For the prostate data we will regress `lpsa` on all the remaining variables in the `prostate` data frame. 
 
-- A shortcut for this is to use the formula `y ~ .`, where `y` is the response and `.` indicates to use all of the variables in the data frame containing `y`.
+- A shortcut for fitting this model is the formula `y ~ .`, where `y` is the response and `.` indicates that all other variables in the data frame should be included as regressors.
 
 ```{r}
 lmod_prostate <- lm(lpsa ~ ., data = prostate)
@@ -167,19 +168,20 @@ As mentioned in the previous chapter, the most important assumption we make for 
 
 Technically, this assumption is impossible to verify.
 
-- Instead, we can verify that the model does an adequate job of approximating the behavior of the observed data.
-- If the model is unable to mimick the behavior of the observed data, then we can say this this assumption is violated.
+Instead, we verify that the model does an adequate job of approximating the behavior of the observed data.
 
-**Residual plot**
+If the model is unable to mimick the behavior of the observed data, then the correct model structure assumption is violated.
 
----
+## Residual plot
 
 The most basic approach for assessing whether the structural assumption is satisfied uses a plot of the residuals versus fitted values.
 
-- This assumption is satisfied (technically, not violated) if the residuals appear to be randomly and symmetrically scattered around a horizontal line running through 0 on the y-axis.
-- This assumption is violated if the residuals appear to have a mean different from zero for certain fitted values because one of our assumptions is that the errors have mean 0 for any combination of regressors.
-    - A violation will often appear as a systematic trend or curve in the residual plot.
-    - In general, for certain contiguous subsets of the fitted values most of the residuals are positive and for other contiguous subsets of the fitted values most of the residuals are negative.
+This assumption is satisfied (technically, not violated) if the residuals appear to be randomly and symmetrically scattered around a horizontal line running through 0 on the y-axis.
+
+This assumption is violated if the residuals appear to have a mean different from zero for certain fitted values because one of our assumptions is that the errors have mean 0 for any combination of regressors.
+
+- A violation will often appear as a systematic trend or curve in the residual plot.
+- In general, this assumption is violated if the residuals have streaks of mostly positive or negative values for continuous subsets of the fitted values.
 
 Consider the residual plot below.
 
@@ -199,7 +201,7 @@ plot(residuals(lmod1a) ~ fitted(lmod1a),
 abline(h = 0, lty = 2, col = "grey")
 ```
 
-The residual plot above is consistent with an appropriate model structure.
+The residual plot above is consistent with a correct model structure.
 
 - The residuals are randomly scattered and symmetric around the horizontal line running through the y-axis at 0.
 - A moving average of the residuals appears to be close to 0 as we move from left to right along the x-axis.
@@ -215,36 +217,32 @@ plot(residuals(lmod3a) ~ fitted(lmod3a),
 abline(h = 0, lty = 2, col = "grey")
 ```
 
-
 The plot above shows evidence of a structural problem.
 
 - The data systematically curve as we move from left to right along the x-axis.
 - The mean of the residuals is clearly positive when the fitted values are less than 2.5, negative between 2.5 and 5.75, and positive for fitted values greater than 5.75.
-- In this particular example, we are missing a needed quadratic regressor in our model.
+- In this second example, we are missing a needed quadratic regressor in our model.
 
-**Intuition behind the residual plot**
-
---- 
+## Intuition behind the residual plot
 
 Why does the residual plot approach work for assessing a structural problem in our fitted model?
 
 - We assume that the errors have mean zero for any combination of our predictors.
-- If our fitted model adequately captures the mean of the data, then the residuals will have the same property.
-- We expect our residuals to randomly fluctuate above and below 0 with no systematic pattern related to a specific combination of regressors. 
+- If our fitted model adequately captures the mean of the data, then the residuals will have the same property. We proved this in the Basic Theoretical Results notebook.
+- We expect our residuals to randomly fluctuate above and below 0 with no systematic pattern related to a specific combination of regressors (and specific combinations of regressors are used to determine the fitted values). 
 
-Note: assessing whether the structure of the model is correct is difficult to separate from assessing the validity of the assumption that the mean of the errors is zero. 
+Assessing whether the structure of the model is correct is difficult to separate from assessing the validity of the assumption that the mean of the errors is zero. 
 
-- Even if the errors didn't have mean zero (but the model was correct), then our regression model would be non-identifiable because we wouldn't be able to separate the mean of the errors from the mean of the other components of the model.
+- If the errors didn't have mean zero but the model was correct, then our regression model would be non-identifiable because we wouldn't be able to separate the mean of the errors from the mean of the other components of the model.
+- This is why we assume the mean of the errors is zero.
 
 A related approach for assessing the validity of the structural assumption is to examine plots of the residuals versus each predictor.
 
 - The structural assumption isn't violated as long as the residuals appear to be randomly and symmetrically scattered around a horizontal line running through 0 on the y-axis .
 
-**Structural check for `prostate` data**
+## Structural check for `prostate` data
 
----
-
-We examine a plot of the residuals versus fitted values for the model fitted to the `prostate` data.
+We examine a plot of the residuals versus fitted values for the model we fit to the `prostate` data.
 
 The `residualPlot` function in the **car** package is a convenient way of producing a plot of the residuals versus fitted values for a fitted model.
 
@@ -266,9 +264,9 @@ We examine the residual plots for the model fit to the `prostate` data below. Be
 ```{r}
 residualPlots(lmod_prostate, 
               terms = ~ lcavol + age + svi + gleason,
-              tests = FALSE, quadratic = FALSE, fitted = FALSE)
+              tests = FALSE, quadratic = FALSE, fitted = FALSE,
+              smooth = TRUE)
 ```
-
 
 The residual plots associated with `lcavol` and `age` look relatively symmetric around 0 with no clear patterns.
 
@@ -276,13 +274,10 @@ For a categorical predictor like `svi`, we want the box plot of the residuals to
 
 Looking at the residual plot for the `gleason` predictor, the residual values tend to be lower for larger values of `gleason`. 
 
-- This may be something to explore further.
 - There are relatively few observations with high `gleason` values, so it is difficult to draw a definitive conclusion. This is not clear evidence of a structural problem.
+- This may be something to explore further.
 
-
-**Structural check for `home_prices` data**
-
----
+## Structural check for `home_prices` data
 
 We now examine a plot of the residuals versus fitted values for the `home_prices` data.
 
@@ -290,13 +285,13 @@ We now examine a plot of the residuals versus fitted values for the `home_prices
 residualPlot(lmod_homes, quadratic = FALSE)
 ```
 
-There are many more points in this plot compared to the residual plot for the `prostate` data, making it a bit more difficult to assess this assumption.
+There are many more points in this plot compared to the residual plot for the `prostate` data, making it more difficult to assess this assumption.
 
 The bulk of the data between the fitted values 5.25 and 6.25 is approximately symmetric around zero (as far as we can tell). 
 
 There is one unusual point in the upper left part of the plot.
 
-- This is an *outlier*.
+- This is an **outlier**.
 - Since this is only a single unusual point in a data set with many observations, this is not something to be concerned about.
 
 However, the residuals begin to systematically fall below 0 when the fitted values are above 6.25.
@@ -313,21 +308,19 @@ However, it is important to note that even if the errors have constant variance,
 
 Even if the variance of the errors is constant,
 
-$$\mathrm{var}(\hat{\epsilon}_i) = \sigma^2(1-h_i), \quad i = 1,2,\ldots,n,$$
+$$\mathrm{var}(\hat{\epsilon}_i \mid \mathbf{X}) = \sigma^2(1-h_i), \quad i = 1,2,\ldots,n,$$
 
 where $h_i=\mathbf{H}_{i,i}$ is $i$th diagonal element of the hat matrix $\mathbf{H}=\mathbf{X}(\mathbf{X}^T\mathbf{X})^{-1}\mathbf{X}^T$.
 
-- $h_1, h_2, \ldots, h_n$ are known as the set of *leverage* or *hat values*. 
+- $h_1, h_2, \ldots, h_n$ are known as the set of **leverage** or **hat values**. 
 
-It is recommended that instead of assessing the validity of this assumption with the ordinary residuals, $\hat{\epsilon}_1, \ldots, \hat{\epsilon}_n$, we instead use the *standardized residuals* given by the equation
+It is recommended that instead of assessing the validity of this assumption with the ordinary residuals, $\hat{\epsilon}_1, \ldots, \hat{\epsilon}_n$, we instead use the **standardized residuals** given by the equation
 
 $$r_i = \frac{\hat{\epsilon}_i}{\hat{\sigma}\sqrt{1-h_i}}, \quad i=1,2,\ldots,n.$$
 
 Under the standard assumptions, the standardized residuals have mean 0 and variance 1.
 
-**Standardized residual plot**
-
----
+## Standardized residual plot
 
 The constant error variance assumption can be assessed using plots of the standardized residuals versus the fitted values or predictors.
 
@@ -335,7 +328,7 @@ The constant error variance assumption can be assessed using plots of the standa
 
 Consider the 4 plots below:
 
-- Panel (a) shows data that perfectly satisfy this assumption. However, the plot itself doesn't have perfect constant thickness as we move from left to right along the axis.
+- Panel (a) shows data that perfectly satisfy this assumption. However, the plot itself doesn't have perfect constant thickness as we move from left to right along the x-axis.
 - Panel (b) shows data with increasing variability as we move from left to right across the x-axis. This is difficult to see in the plot because the variability increases but then appears to decease.
 - Panel (c) shows data that has slightly decreasing variability as we move from left to right along the x-axis. However, this is difficult to see in the plot..
 - Panel (d) shows data that has a structural issue (notice the curve in the data compared to the 0-line) while the points also increase in variability as we move from left to right along the x-axis.
@@ -375,27 +368,27 @@ abline(0, 0, lty = 2)
 par(mfrow = c(1, 1))
 ```
 
-What should we do if the plots are inconclusive? 
+The examples in the graphic above show that our plots can be inconclusive or difficult to interpret, even when the constant error variance assumption is technically satisfied (Panel (a)) or violated (Panels (b) and (c)).
+
+What should we do if the standardized residual plots are inconclusive for testing the constant error variance assumption? 
 
 - We don't conclude an assumption is violated unless the violation is clear.
 - Try to use a different method.
 
-**Scale-location plot**
+## Scale-location plot
 
----
+A scale-location plot can be used to assess whether the error variance is constant when the standardized residual plot is inconclusive AND the structural assumption doesn't appear to be violated.
 
-A scale-location plot can be used to assess whether the variance is constant when the standardized residual plot is inconclusive AND the structural assumption doesn't appear to be violated.
-
-A *scale-location* plot is a plot of $\sqrt{|\hat{\boldsymbol{\epsilon}}|}$) versus $\hat{\mathbf{y}}$, i.e., a plot of the square root of the absolute value of the residuals versus the fitted values.
+A **scale-location** plot is a plot of $\sqrt{|\hat{\boldsymbol{\epsilon}}|}$) versus $\hat{\mathbf{y}}$, i.e., a plot of the square root of the absolute value of the residuals versus the fitted values.
 
 - If the constant error variance assumption is satisfied (i.e., not clearly violated), then the points of this plot should should have constant thickness as we move from left to right along the x-axis.
 
-Recall that in panel (c) of the previous plot that we thought there was a slight decrease in the variability of the residuals as we moved from left-to-right across the x-axis. 
+Recall that in panel (c) of the previous plot, we thought there was a slight decrease in the variability of the residuals as we moved from left-to-right across the x-axis. 
 
-We produce a scale-location plot for panel (c) above.
+We produce a scale-location plot for the data in panel (c) of the plot above. That scale-location plot is shown below.
 
 - The red line is a visual indication of how the variability changes from left to right and should be approximately flat if this assumption is not violated. 
-- The red line clearly decreases in our plot indicating a violation of the constant error variance assumption.
+- The red line goes down from left-to-right in our plot, which indicates a violation of the constant error variance assumption.
 
 ```{r}
 #| echo: false
@@ -404,7 +397,7 @@ We produce a scale-location plot for panel (c) above.
 plot(lmod3, which = 3)
 ```
 
-**Constant variance check for `prostate` data**
+## Constant variance check for `prostate` data
 
 We now assess the validity of the constant error variance assumption for the `prostate` data. 
 
@@ -433,7 +426,7 @@ residualPlots(lmod_prostate, type = "rstandard",
               tests = FALSE, quadratic = FALSE, fitted = FALSE)
 ```
 
-**Constant variance check for `home_prices` data**
+## Constant variance check for `home_prices` data
 
 We now assess the validity of the constant error variance assumption for the `home_prices` data. 
 
@@ -463,26 +456,24 @@ Focusing on the fitted values less than 6.25, we do see the absolute value of th
 
 # Checking normality
 
-A key assumption of many of our tests and confidence intervals is that the errors are normally distributed.
+A key assumption of many of our hypothesis tests and confidence intervals is that the errors are normally distributed.
 
-We have previously shown that if our errors are normal that our residuals are also normal.
+We have previously shown our residuals are normal if the errors are normal.
 
-- If our errors have mean zero, then the residuals also have mean zero.
+- Our residuals also have mean 0 if the errors have mean zero.
 
-**The Q-q plot**
+## The Q-q plot
 
----
+To assess whether the assumption of normally-distributed errors is reasonable, we will visually compare the residuals to the quantiles we would expect to get from the same number of i.i.d. normally-distributed observations with mean 0 and variance 1.
 
-To assess whether the assumption of normally-distributed errors is reasonable, we will compare the residuals to the quantiles we would expect to get from the same number of i.i.d. normally-distributed observations with mean 0 and variance 1.
-
+- This plot is called a quantile-quantile or **q-q plot**.
 - If the normality assumption is satisfied, then a a plot of the observed values compared to the theoretical quantiles will fall approximately in a straight line.
-- This plot is called a quantile-quantile or *q-q plot*.
 
 The `qqnorm` function can be used to create a q-q plot of data we believe to come from a normal distribution.
 
-We provide an example below of a q-q plot for normally-distributed data with a mean of 0 and a variance of 1.
+We can add a reference line to our q-q plot using the `qqline` function to see how closely the points fall to a straight line.
 
-- We can use the `qqline` function to add a reference line to see how closely the points fall to a straight line.
+We provide a q-q plot example below when the data are independent, identically-distributed (i.i.d.) normal normal random variables with a mean of 0 and a variance of 1.
 
 ```{r}
 set.seed(19)
@@ -491,7 +482,7 @@ qqnorm(e)
 qqline(e)
 ```
 
-The points of the q-q plot fall fairly close to a straight line, which is what we expect when the sample observations are a sample from a normal distribution.
+The points of the q-q plot fall fairly close to a straight line, which is what we expect when the sample observations are a i.i.d. sample from a normal distribution.
 
 There tends to be more variability in the tails of a q-q plot (i.e., for the smallest and largest quantiles) so those points tend to fall a little farther from a straight line.
 
@@ -500,7 +491,7 @@ Observations that deviate substantially from normality will result in a q-q plot
 Consider a q-q plot of data sampled from a chi-square distribution with 5 degrees of freedom.
 
 - This distribution is positively skewed.
-- The points of the q-q plot do not fall that closely to a straight line.
+- The points of the q-q plot are curved and do not follow an approximately straight line.
 
 ```{r}
 set.seed(22)
@@ -512,25 +503,23 @@ qqline(e2)
 Q-q plots are generally constructed under the assumption that the data are independent and identically distributed. 
 
 - Ordinary residuals do not have constant variance.
--     We should scale the residuals to have constant variance prior to constructing a q-q plot.
+- We should scale the residuals to have constant variance prior to constructing a q-q plot.
 - Though the residuals are not independent, the correlation is typically weak and can be ignored when constructing a q-q plot.
 
-The standardized residuals are one form of scaled residuals with variance equal to 1.
+The **standardized residuals** are one form of scaled residuals with variance equal to 1.
 
-The studentized residuals are another form of residuals scaled to have a variance of 1.
+The **studentized residuals** are another form of scaled residuals with variance of 1.
 
-- The denominator uses a different estimate of the error variance, $\sigma^2$, than the standardized residuals. We do not discuss those details here.
+- The denominator used to scale the studentized residuals uses a different estimate of the error variance, $\sigma^2$, than the standardized residuals. We do not discuss those details here.
 - The studentized residuals should be have a $t$ distribution with $n-p-1$ degrees of freedom under the standard assumptions, assuming our model has $p$ estimated regression coefficients.
 
 Standardized or studentized residuals should be used to assess the normality assumption.
 
-The `qqPlot` function in the **car** packages produced q-q plots of the studentized residuals.
+The `qqPlot` function in the **car** packages produces q-q plots of the *studentized* residuals along with confidence intervals that quantify how much variability in the residuals is expected with a specified confidence level.
 
-**The Shapiro-Wilk test**
+## The Shapiro-Wilk test
 
----
-
-Another approach to assess normality is the Shapiro-Wilk test (Shapiro and Wilk, 1965).
+Another approach to assess normality is the Shapiro-Wilk test [@shapirowilk].
 
 The null hypothesis for this test is that the data are a random sample from a normal distribution.
 
@@ -538,13 +527,13 @@ The alternative hypothesis is that the data are not a random sample from a norma
 
 The test statistic is a complicated function of order statistics, and is not directly needed for our purposes, so we do not provide its formula.
 
-If the p-value of the test is less then the desired significance level, then we conclude that the data are not a random sample from a normal distribution. Otherwise, we fail to reject the null hypothesis that the data are a random sample from a normal distribution.
+If the p-value of the Shapiro-Wilk test is less then the specified significance level, then we conclude that the data are not a random sample from a normal distribution.
+
+Otherwise, we fail to reject the null hypothesis that the data are a random sample from a normal distribution.
 
 The Shapiro-Wilk test can be applied to a vector of data using the `shapiro.test` function.
 
-**Normality check for `prostate` data**
-
----
+## Normality check for `prostate` data
 
 We now use the `qqPlot` function to create a q-q plot of the studentized residuals for the model fitted to the prostate data.
 
@@ -569,9 +558,7 @@ shapiro.test(rstandard(lmod_prostate))
 Since our p-value is large, we believe our residuals (and by proxy, our errors) are a sample from a normal distribution.
 
 
-**Normality check for `home_prices` data**
-
----
+## Normality check for `home_prices` data
 
 We start with a q-q plot of the studentized residuals of the fitted model for the `home_prices` data.
 
@@ -587,8 +574,8 @@ We could confirm our beliefs using the Shapiro-Wilk test, but the R function tak
 
 Even though the normal error assumption appears to be violated for our fitted model, this may not be an issue in practice.
 
-- The Central Limit Theorem applies to our estimated coefficients, so our confidence and hypothesis test should still be approximately valid.
-- Our prediction intervals are very sensitive to the normality assumption, so that type of inference should not be trusted in this setting.
+- The Central Limit Theorem applies to our estimated coefficients, so our confidence interval and hypothesis test procedures should still be approximately valid.
+- Our prediction intervals are very sensitive to the normality assumption, so that type of inference should not be trusted when the normal error assumption is violated.
 
 # Checking for correlated errors
 
@@ -596,13 +583,19 @@ Our errors are supposed to be uncorrelated.
 
 This assumption is impractical to check unless our data are time series or longitudinal data (observations observed over a series of time) or spatial data (the observations are associated with a specific geographic location).
 
-- We will examine how to assess this assumption for time series data.
+We will learn how to assess this assumption for time series data.
 
 If the data are not time series or spatial data then we don't need to bother checking this assumption.
 
-If the errors $\boldsymbol\epsilon$ are uncorrelated, then the residuals $\hat{\boldsymbol\epsilon}$ are typically close to uncorrelated, so we will use them as a proxy to assess the validity of this assumption.
+If the errors, $\boldsymbol\epsilon$, are uncorrelated, then the residuals, $\hat{\boldsymbol\epsilon}$, are typically close to uncorrelated.
 
-We will illustrate checking this assumption using a classic data set provided by Box et al. (1975) of the monthly total of international airline passengers in thousands from 1949 to 1960. The data are available in the `AirPassengers` data set in the **datasets** package.
+Conversely, if the residuals are highly correlated, then it is unlikely that the errors are uncorrelated.
+
+We will use the residuals as a proxy to assess whether the errors are temporally correlated.
+
+We will illustrate checking this assumption using the monthly total of international airline passengers in thousands from 1949 to 1960, which is a classic data set provided by @airpassengers.
+
+- The data are available in the `AirPassengers` data set in the **datasets** package.
 
 We first convert the data to a more usable form for our purposes. We will let month 1 be January of 1949 and month 144 be December of 1960 (the 12th month of the 12th year)
 
@@ -620,7 +613,7 @@ The passenger totals are clearly increasing over time and also increasing in var
 
 We take the `log` of `passengers` to correct for the increasing variability of that variable over time.
 
-- The transformed data doesn't appear to have the same issue.
+- The transformed data have more constant variance over time.
 
 ```{r}
 plot(log(passengers) ~ month, data = air)
@@ -632,30 +625,26 @@ We will regress `log(passengers)` on `month` and then discuss diagnostics to ass
 lmod_air <- lm(log(passengers) ~ month, data = air)
 ```
 
+## Residuals versus time plot
 
-**Residuals versus time plot**
+The easiest way to check for temporally correlated residuals in time series data is to plot the residuals sequentially over time.
 
----
+- If the residuals tend to cluster with sequences of positive or negative residuals, then the data have a positive temporal correlation.
 
-The easiest way to check for correlated residuals in time series data is to plot the residuals versus the time variable.
-
-- If the residuals tend to cluster with sequences of positive or negative residuals, then the data have a positive correlation.
-
-We create a scatter plot of the residuals versus month for the model fitted to the passengers data.
+We create a scatter plot of the residuals versus month for the model fit to the passengers data.
 
 - We add a horizontal reference line at $y = 0$.
 
 ```{r}
-plot(residuals(lmod_air) ~ month, data = air,
-     ylab = "residuals")
+plot(residuals(lmod_air) ~ month, data = air, ylab = "residuals")
 abline(0, 0)
 ```
 
-The pattern is a bit difficult to see because there is so much data.
+The pattern is difficult to identify because there are so many points in our plot.
 
-If we focus in on the first 24 months of data, we can clearly see sequences of times where the residuals are almost all positive or almost all negative.
+If we focus on the first 24 months of data, we can clearly see sequences of times where the residuals are almost all positive or almost all negative.
 
-- The residuals appear to have non-negligible positive correlation.
+- The residuals appear to have a positive temporal correlation.
 
 ```{r}
 plot(residuals(lmod_air) ~ month, data = air,
@@ -663,9 +652,7 @@ plot(residuals(lmod_air) ~ month, data = air,
 abline(0, 0)
 ```
 
-**Successive residual pairs plot**
-
----
+## Successive residual pairs plot
 
 A better way to assess whether there is strong temporal correlation in the residuals is to plot pairs of successive residuals versus each other, i.e., to plot $\hat{\epsilon}_{i+1}$ versus $\hat{\epsilon}_i$ for $i=1,2,\ldots,n-1$.
 
@@ -673,7 +660,7 @@ A better way to assess whether there is strong temporal correlation in the resid
 - If the successive residuals show a positive trend then there is positive temporal correlation in the residuals.
 - If the successive residuals show a negative trend then there is negative temporal correlation in the residuals.
     - Negative correlation is very difficult to see visually when looking at a plot of the residuals over time because the pattern will look random.
-- If the successive residuals appear to be a random scatter around 0 then there is no evidence of temporal correlation in the residuals.
+- If the successive residuals appear to be a random scatter around 0, then there is no evidence of temporal correlation in the residuals.
 
 To construct a plot of successive residual pairs we can use the following code.
 
@@ -692,36 +679,31 @@ The remaining code adds horizontal and vertical reference lines at $y=0$ and $x=
 
 Since the successive residual pairs plot has a positive trend, there is clear evidence of positive temporal correlation among the residuals (and by proxy, the errors).
 
-If either of the previous plots do not provide a satisfactory conclusion, then we can use the Durbin-Watson to draw a definitive conclusion. 
+If either of the previous plots do not provide a satisfactory conclusion, then we can use the Durbin-Watson test to draw a definitive conclusion. 
 
-**The Durbin-Watson test**
+## The Durbin-Watson test
 
----
+The **Durbin-Watson test** [@durbinwatson1, @durbinwatson2] is a formal test for assessing whether the residuals are temporally correlated.
 
-A formal test for temporal correlation between residuals can be performed using the *Durbin-Watson test*.
+Let $\rho$ denote the temporal correlation for a  "population of residuals".
 
-Let $\rho$ denote the temporal correlation for "population of residuals".
-
-- Our observed residuals are treated as a random sample from that
+- Our observed residuals are treated as a random sample from that population.
 
 The null hypothesis of the Durbin-Watson test is 
-
 $$
 H_0: \text{The residuals are uncorrelated over time}, \rho = 0.
 $$
 The alternative hypothesis of the Durbin-Watson test is
-
 $$
 H_a: \text{The residuals are correlated over time in some way}, (\rho \neq 0, \rho > 0, \text{ or }\rho < 0).
 $$
 
-The test statistic for the Durbin-Watson test relies on comparing successive residuals and is given by the formula
-
+The test statistic for the Durbin-Watson test relies on comparing successive residuals and is given by the expression
 $$
 DW = \frac{\sum_{i=2}^n(\hat{\epsilon}_i - \hat{\epsilon}_{i-1})^2}{\sum_{i=1}^n \hat{\epsilon}_i^2}.
 $$
 
-If we apply the Durbin-Watson test to our residuals and get a small p-value then it indicates that the residuals have a significant correlation across time.
+If we apply the Durbin-Watson test to our residuals and get a small p-value then it indicates that the residuals have a significant temporal correlation across time.
 
 The `dwtest` function in the **lmtest** package can be used to apply the Durbin-Watson test to a fitted model.
 
@@ -734,7 +716,7 @@ We perform an upper-tailed Durbin-Watson test on the model we fit to the airline
 dwtest(lmod_air, alternative = "greater")
 ```
 
-The p-value for this test is close to 0, so we conclude that there is positive  correlation among the residuals over time.
+The p-value for this test is close to 0, so we conclude that there is positive temporal correlation among the residuals over time.
 
 # Summary of Methods for Checking Error Assumptions
 
@@ -756,31 +738,29 @@ The p-value for this test is close to 0, so we conclude that there is positive  
     
 **Normal error assumption**
 
-- Q-q plot of (standardized or studentized) residuals.
-    - The points should follow approximately a straight line if the data are consistent normally-distributed errors.
+- Q-q plot of standardized or studentized residuals.
+    - The points should follow approximately a straight line if the data are consistent with normally-distributed errors.
 - Shapiro-Wilk test.
-    - If the p-value is large, then the residuals are consistent with a sample coming from a normal distribution.
-    - If the p-value is small, then the residuals are not consistent with a sample from a normal distribution and the assumption of normal errors appears to be violated.
+    - If the p-value is large, then the residuals are consistent with a random sample coming from a normal distribution.
+    - If the p-value is small, then the residuals are not consistent with being a random sample from a normal distribution, and the assumption of normal errors appears to be violated.
 
 **Uncorrelated errors**
 
 This only needs to be checked for time series/longitudinal data or geographically-referenced data.
 
-For assessing temporal autocorrelation:
+For assessing temporal correlation:
 
 - Plot of residuals versus time.
-    - The plot should be a random scatter of points with no clear pattern if the residuals aren't (positively) correlated over time..
-    - If there are sequences where there are many positive residuals or many negative residuals, then this assumption is violated and the residuals exhibit positive temporal correlation.
+    - The plot should be a random scatter of points with no clear pattern if the residuals aren't (positively) correlated over time.
+    - If there are sequences where there are many positive residuals or many negative residuals, then this assumption is violated, and the residuals exhibit positive temporal correlation.
 - Plot of successive residuals pairs.
     - A positive trend indicates positive temporal correlation among our residuals.
     - A negative trend indicates negative temporal correlation among our residuals.
     - A random scatter indicates the residuals are consistent with being uncorrelated over time.
 - Durbin-Watson test applied to the residuals.
     - A large p-value indicates the residuals are compatible with being uncorrelated over time.
-    - A small p-value indicates the residuals are temporally correlated, with the type of correlation detected being associated with the alternative hypothesis used for the test.
+    - A small p-value indicates the residuals are temporally correlated, with the type of correlation detected being consistent with the alternative hypothesis used for the test.
 
+::: {.content-visible when-format="ipynb"}
 # References
-
-Box, G. E. P., Jenkins, G. M. and Reinsel, G. C. (1976). "Time Series Analysis, Forecasting and Control". Third Edition. Holden-Day. Series G.
-
-Shapiro, S. S. and Wilk, M. B. (1965). "An analysis of variance test for normality (complete samples)". Biometrika. 52(3–4): 591–611.
+:::
