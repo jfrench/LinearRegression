@@ -3,15 +3,15 @@ title: Chapter 9 - Basic structure and error assumption diagnostics
 author: Joshua French
 date: ''
 engine: knitr
-# format: html
-jupyter:
-  kernelspec:
-    display_name: R
-    language: R
-    name: ir
-format: ipynb
-execute:
-  output: false
+format: html
+# jupyter:
+#   kernelspec:
+#     display_name: R
+#     language: R
+#     name: ir
+# format: ipynb
+# execute:
+#   output: false
 self-contained: true
 title-block-banner: true
 wrap: 'none'
@@ -264,8 +264,7 @@ We examine the residual plots for the model fit to the `prostate` data below. Be
 ```{r}
 residualPlots(lmod_prostate, 
               terms = ~ lcavol + age + svi + gleason,
-              tests = FALSE, quadratic = FALSE, fitted = FALSE,
-              smooth = TRUE)
+              tests = FALSE, quadratic = FALSE, fitted = FALSE)
 ```
 
 The residual plots associated with `lcavol` and `age` look relatively symmetric around 0 with no clear patterns.
@@ -306,11 +305,16 @@ Similar to the check of structure, we can check this assumption through residual
 
 However, it is important to note that even if the errors have constant variance, the residuals do not.
 
-Even if the variance of the errors is constant,
+We previously derived that 
+$$\mathrm{var}(\hat{\boldsymbol{\epsilon}} \mid \mathbf{X}) = \sigma^2(\mathbf{I}_{n\times n} - \mathbf{H}),$$
+where $\mathbf{H}=\mathbf{X}(\mathbf{X}^T\mathbf{X})^{-1}\mathbf{X}^T$ is the hat matrix, under the assumption that $\mathrm{var}(\mathbf{y}\mid \mathbf{X}) = \sigma^2 \mathbf{I}_{n\times n}$. 
 
+The key detail in the expression above is that the off-diagonal elements are not zero, meaning that the residuals are correlated even if the errors are uncorrelated.
+
+Under standard assumptions, 
 $$\mathrm{var}(\hat{\epsilon}_i \mid \mathbf{X}) = \sigma^2(1-h_i), \quad i = 1,2,\ldots,n,$$
 
-where $h_i=\mathbf{H}_{i,i}$ is $i$th diagonal element of the hat matrix $\mathbf{H}=\mathbf{X}(\mathbf{X}^T\mathbf{X})^{-1}\mathbf{X}^T$.
+where $h_i=\mathbf{H}_{i,i}$ is $i$th diagonal element of $\mathbf{H}$.
 
 - $h_1, h_2, \ldots, h_n$ are known as the set of **leverage** or **hat values**. 
 
@@ -379,7 +383,7 @@ What should we do if the standardized residual plots are inconclusive for testin
 
 A scale-location plot can be used to assess whether the error variance is constant when the standardized residual plot is inconclusive AND the structural assumption doesn't appear to be violated.
 
-A **scale-location** plot is a plot of $\sqrt{|\hat{\boldsymbol{\epsilon}}|}$) versus $\hat{\mathbf{y}}$, i.e., a plot of the square root of the absolute value of the residuals versus the fitted values.
+A **scale-location** plot is a plot of $\sqrt{|\hat{\boldsymbol{\epsilon}}|}$ versus $\hat{\mathbf{y}}$, i.e., a plot of the square root of the absolute value of the residuals versus the fitted values.
 
 - If the constant error variance assumption is satisfied (i.e., not clearly violated), then the points of this plot should should have constant thickness as we move from left to right along the x-axis.
 
@@ -532,6 +536,10 @@ If the p-value of the Shapiro-Wilk test is less then the specified significance 
 Otherwise, we fail to reject the null hypothesis that the data are a random sample from a normal distribution.
 
 The Shapiro-Wilk test can be applied to a vector of data using the `shapiro.test` function.
+
+We prefer using q-q plots to the Shapiro-Wilk test when assessing the normality of the residuals because the Shapiro-Wilk test is sensitive to departures from normality when the sample size is large. 
+
+However, when we have a large data set, departures from normality by the errors is less impactful, so it is not as concerning in that scenario.
 
 ## Normality check for `prostate` data
 
