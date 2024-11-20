@@ -261,7 +261,7 @@ Alternatively, we can make a relative comparison of the leverage values to deter
 
 We seek to identify the leverage points of the `home_sales` data based on our fitted model.
 
-The `leverage_plot` function creates an index plot of the leverage values.
+The `leverage_plot` function from the **api2lm** package creates an index plot of the leverage values.
 
 The main arguments of the `leverage_plot` function are:
 
@@ -401,10 +401,11 @@ $$
 r_i = \frac{\hat{\epsilon}_i}{\widehat{\sigma}\sqrt{1-h_i}}.
 $$
 
-Cook's distance combines information related to both:
+Cook's distance blends information about whether an observation both an outlier and a leverage point into a single statistic. 
 
-- How much of an outlier the observation is (as measured by the standardized residual).
-- The leverage (as measured by the hat value $h_i$).
+The Cook's distance increases in magnitude if the observation is an outlier since the standardized residual, $r_i$, will become large.
+
+The Cook's distance increases in magnitude if the observation is a leverage point since $h_i/(1-h_i)$ will become large.
 
 Unlike the DFFITS statistic, the Cook's distance quantifies the amount of influence potential an observation has across all $n$ fitted values instead of only a single fitted value [@alsm2005].
 
