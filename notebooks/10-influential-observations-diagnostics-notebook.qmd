@@ -188,7 +188,9 @@ plot(rstudent(lmod), ylab = "studentized residuals")
 
 We see that there are a few outlying observations, though it is difficult to identify them.
 
-The `outlier_plot` function from the **api2lm** package offers a more convenient way to identify outliers using an index plot of the studentized residuals. The main arguments of the `outlier_plot` function are:
+The `outlier_plot` function from the **api2lm** package offers a more convenient way to identify outliers using an index plot of the studentized residuals.
+
+The main arguments of the `outlier_plot` function are:
 
 - `model`: the fitted model.
 - `id_n`: the number of points to identify with labels. 
@@ -299,7 +301,6 @@ We will now discuss several other measures of influence.
 The **DFBETA** measure of influence is an $n\times p$ matrix of statistics that measures the change in the estimated regression coefficients when we fit the model using all $n$ observations versus when we fit the model leaving one observation out at a time.
 
 The $i$th row of DFBETA is
-
 $$
 \text{DFBETA}_i = \hat{\boldsymbol{\beta}} - \hat{\boldsymbol{\beta}}_{(i)}.
 $$
@@ -385,7 +386,7 @@ We see that observations 33, 179, and 214 all have particularly extreme DFFITS s
 
 We have already discussed how unusual these observations are with respect to a combination of their response and predictor values.
 
-## Cook's Distance
+## Cook's distance
 
 @cook1977 proposed the **Cook’s distance** to summarize the potential influence of an observation with a single statistic.
 
@@ -395,6 +396,7 @@ $$D_i=\frac{\sum_{k=1}^n (Y_k - \hat{Y}_{k(i)})^2}{p \widehat{\sigma}^2} = \frac
 
 - $\hat{Y}_{k(i)}$ is the predicted response for observation $k$ when observation $i$ is not included in the analysis (this is a type of LOO prediction).
 - The **standardized residual** for observation $i$ is
+
 $$
 r_i = \frac{\hat{\epsilon}_i}{\widehat{\sigma}\sqrt{1-h_i}}.
 $$
@@ -463,8 +465,6 @@ It is best to work through a series of diagnostic steps to decide what to do.
 
 **Should the influential observations be in the data set?**
 
----
-
 First, are the influential observations in the data set mistakenly?
 
 Is an observation influential because it is a data entry error?
@@ -491,14 +491,12 @@ Observations 33 and 214 are houses with massive lot sizes of over 7 acres. In fa
 
 **Are our goals affected?**
 
----
-
 Second, after making sure an influential observation isn't mistakenly in our data set, we should ask ourselves whether an influential observation practically affects the goals of our analysis.
 
 If the purpose of our analysis is to identify the general relationship between a predictor and response after adjusting for some other variables, then perhaps the influential observations don't practically change our results.
 
 - Does the estimated coefficient change from significant to insignificant?
-- Does the sign of the coefficient change based on whether the observation is included.
+- Does the sign of the coefficient change based on whether the observation is included?
 
 If the answer to these last two questions is no, then perhaps the influential observations are not problematic.
 
@@ -555,8 +553,6 @@ Since `price` is in log base 10 units, this amounts to a 2.8% increase on the or
 On either scale, the influential observations may not impact the predicted response enough for us to be concerned.
 
 **What if our influential observations are problematic?**
-
----
 
 What if certain influential observations can't be removed from analysis and negatively impact the goals of our analysis?
 
