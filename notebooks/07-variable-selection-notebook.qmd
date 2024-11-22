@@ -724,11 +724,51 @@ LOO cross-validation results are unique because there is only one way to success
 
 We should respect hierarchy in models when it is naturally present.
 
-- A lower order term should be retained if a higher order term is retained to increase the flexibility.
-- In polynomial models, $X^2$ is a higher order term than $X$.
-- The model $E(Y\mid X) =\beta_0+\beta_2 X^2$, the maximum/minimum value MUST occur $X=0$.
-  - For the model $E(Y\mid X)=\beta_0+\beta_1 X+\beta_2 X^2$, the maximum/minimum value can occur anywhere along the real line (depending on what the data suggest the parameters should be).
+- A lower-order regressor (e.g., $X$) should be retained if a higher-order regressor (e.g., $X^2$) is retained to increase the flexibility.
+- If an interaction regressor is present in a model (e.g., $X_1 X_2$), then the individual regressors should also be included in the model (e.g., both $X_1$ and $X_2$ should be included as regressors in the model).
+
+In polynomial models, $X^2$ is a higher order term than $X$, so $X$ should be included in a model anytime $X^2$ is included the model.
+
+- For the model $E(Y\mid X) =\beta_0+\beta_2 X^2$, the maximum/minimum value MUST occur at $X=0$.
+- For the model $E(Y\mid X)=\beta_0+\beta_1 X+\beta_2 X^2$, the maximum/minimum value can occur anywhere along the real line (depending on what the data suggest the parameters should be).
 - If we fit the model $E(Y\mid X) =\beta_0+\beta_1 X+\beta_2 X^2$ and $\beta_1$ is not significant, it would not make philosophical sense to remove $X$ from the model but still keep $X^2$.
+
+Another situation where this is relevant is when we are deciding to include a categorical predictor with three or more levels in a model.
+
+We either include or exclude the whole categorical predictor from a model, not individual levels of the categorical predictor.
+
+Assume the categorical predictor $C$ has three levels, $L_1$, $L_2$, and $L_3$ and that we are fitting the regression model 
+$$E(Y \mid X, C) = \beta_0 + \beta_1 X + \beta_2 D_2 + \beta_3 D_3,$$
+where $D_2$ and $D_3$ are indicator variables for $L_2$ and $L_3$ respectively.
+
+- We must not consider a regression model that drops $D_2$ or $D_3$ alone from the model.
+- E.g., dropping $D_2$ from the model and keeping $D_3$ in the model would have the practical impact of reassigning observations with level $L_2$ to level $L_1$ since there would be no difference in the predicted response for the two levels for a fixed level of $X$.
+- We either include all levels of the categorical predictor in the model (excluding the reference level to avoid a non-identifiable model) or we completely exclude the categorical predictor from our model.
+
+Here are some examples of acceptable and unaccepted modes from a model hierarchy standpoint.
+
+- Assume $X, X_1, X_2$ are numeric predictors.
+- Assume $C$ is a categorical predictor with three levels and $D_2$ and $D_3$ are the indicator variables associated with levels $L_2$ and $L_3$, respectively.
+
+Example 1:
+
+- Acceptable: $E(Y \mid X) = \beta_0 + \beta_1 X + \beta_2 X^2 + \beta_3 X^3$.
+- Unacceptable: $E(Y \mid X) = \beta_0 + \beta_1 X + \beta_3 X^3$.
+
+Example 2: 
+
+- Acceptable: $E(Y \mid X_1, X_2) = \beta_0 + \beta_1 X_1 + \beta_2 X_2 + \beta_3 X_1 X_2$.
+- Acceptable: $E(Y \mid X_1, X_2) = \beta_0 + \beta_1 X_1 + \beta_2 X_2 + \beta_3 X_1 X_2 + \beta_4 X_1^2$.
+- Acceptable: $E(Y \mid X_1, X_2) = \beta_0 + \beta_1 X_1 + \beta_2 X_2 + \beta_3 X_1 X_2 + \beta_4 X_1^2 + \beta_5 X_2^2$.
+- Unacceptable: $E(Y \mid X_1, X_2) = \beta_0 + \beta_1 X_1 + \beta_2 X_2 + \beta_4 X_1^2 + \beta_5 X_2^2$.
+- Unacceptable: $E(Y \mid X_1, X_2) = \beta_0 + \beta_2 X_2 + \beta_3 X_1 X_2 + \beta_4 X_1^2 + \beta_5 X_2^2$.
+
+Example 3:
+
+- Acceptable: $E(Y \mid X_1, X_2, C) = \beta_0 + \beta_1 X_1 + \beta_2 X_2 + \beta_3 D_2 + \beta_4 D_3$.
+- Acceptable: $E(Y \mid X_1, X_2, C) = \beta_0 + \beta_1 X_1 + \beta_2 X_2 + \beta_3 D_2 + \beta_4 D_3 + \beta_5 X_1 D_2 + \beta_6 X_1 D_3$.
+- Unacceptable: $E(Y \mid X_1, X_2, C) = \beta_0 + \beta_1 X_1 + \beta_2 X_2 + \beta_3 D_2 + \beta_4 D_3 + \beta_6 X_1 D_3$.
+- Unacceptable: $E(Y \mid X_1, X_2, C) = \beta_0 + \beta_1 X_1 + \beta_2 X_2 + \beta_3 D_2 + \beta_4 D_3 + \beta_5 X_1 D_2 + \beta_6 X_2 D_3$.
 
 Best subset and stepwise regression search strategies do not intrinsically respect model hierarchy, so we need to be careful in using the results of a variable selection procedure.
 
