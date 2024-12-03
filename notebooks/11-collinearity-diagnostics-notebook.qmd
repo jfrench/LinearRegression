@@ -224,6 +224,26 @@ We see that the variances of `HtShoes` and `Ht` are extremely inflated and well 
 
 There appears to be a multicollinearity problem in our data set.
 
+We can verify the VIF for the `Age` coefficient.
+
+We regress `Age` on all the other regressors in the model.
+
+```{r}
+lmod_Age <- lm(Age ~ Weight + HtShoes + Ht + Seated + Arm +  Thigh + Leg,
+             data = seatpos)
+```
+
+We then extract the $R^2$ for that model, which is 0.49948.
+
+```{r}
+(rsq_Age <- summary(lmod_Age)$r.squared)
+```
+The VIF for the `Age` coefficient can be manually computed using the code below, which matches with the previously computed value of 1.9979.
+
+```{r}
+1/(1 - 0.49948)
+```
+
 VIF is not an appropriate statistic for assessing collinearity for sets of related regressors like dummy-variable regressors or polynomial regressors.
 
 - The **generalized VIF** should be used in these cases.
