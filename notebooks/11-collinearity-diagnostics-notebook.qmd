@@ -44,6 +44,12 @@ We adjust some printing options for clarity.
 options(digits = 5, scipen = 2)
 ```
 
+::: {.content-visible when-format="ipynb"}
+An explicit `print` function is used in many of the examples below so that the output will render correctly in this Jupyter notebook. 
+
+Generally, an explicit call to the `print` function is not needed.
+:::
+
 # Collinearity and its effects {#sec-effects-of-collinearity}
 
 **Collinearity** or **multicollinearity** occurs in a fitted regression model when the model's regressor variables are linearly dependent.
@@ -161,9 +167,17 @@ The function will only print the values with magnitudes of at least 0.7 (or some
 We use `cor_stats` to identify pairs of regressors with high
 correlation for the model we fit to the `seatpos` data.
 
+::: {.content-visible unless-format="ipynb"}
 ```{r}
 cor_stats(lmod)
 ```
+:::
+
+::: {.content-visible when-format="ipynb"}
+```{r}
+print(cor_stats(lmod))
+```
+:::
 
 - The `Ht` and `HtShoes` variables have a correlation of 1 (when rounded to 2 decimal places).
 - The `Ht` and `Weight` variables have a correlation of 0.83.
@@ -216,9 +230,16 @@ As a side note, the equation above for $\mathrm{var}(\hat{\beta}_j)$ tells us th
 
 We can use the `vif_stats` function in the **api2lm** package to identify collinear regressors.
 
+::: {.content-visible unless-format="ipynb"}
 ```{r}
-vif(lmod)
+vif_stats(lmod)
 ```
+:::
+::: {.content-visible when-format="ipynb"}
+```{r}
+print(vif_stats(lmod))
+```
+:::
 
 We see that the variances of `HtShoes` and `Ht` are extremely inflated and well above the threshold of 10.
 
@@ -287,8 +308,8 @@ Even better, use the `poly` function to create orthogoal polynomial regressors.
 
 Combining the collinear regressors into a single regressor means they can't be collinear in our model.
 
-- The is essentially what happens in Principal Component Analysis, which results in a set of orthogonal regressors.
-- The new regressor will have a novel interpretation.
+- This is what happens in Principal Component Analysis, which results in a set of orthogonal regressors.
+- The new "combined" regressor will have a novel interpretation.
 
 ## Correction example
 
@@ -296,19 +317,37 @@ We address the collinearity issue in the model we fit to the `seatpos` data be r
 
 We start by removing `Ht`, which had the largest variance inflation.
 
+::: {.content-visible unless-format="ipynb"}
 ```{r}
 lmod2 <- update(lmod, . ~ . - Ht)
-vif(lmod2)
+vif_stats(lmod2)
 ```
+:::
+::: {.content-visible when-format="ipynb"}
+```{r}
+lmod2 <- update(lmod, . ~ . - Ht)
+print(vif_stats(lmod2))
+```
+:::
+
 
 Seeing that `HtShoes` still has an inflated variance, we choose to remove it from our model also.
 
 - Conceptually, the subject's preferred seating position is more impacted by their seated height than their standing height.
 
+
+::: {.content-visible unless-format="ipynb"}
 ```{r}
 lmod3 <- update(lmod2, . ~ . - HtShoes)
-vif(lmod3)
+vif_stats(lmod3)
 ```
+:::
+::: {.content-visible when-format="ipynb"}
+```{r}
+lmod3 <- update(lmod2, . ~ . - HtShoes)
+print(vif_stats(lmod3))
+```
+:::
 
 None of our remaining predictors are associated with variance inflation.
 
@@ -319,6 +358,10 @@ summary(lmod)$r.squared
 ```
 
 Our simplified model, `lmod3`, has an $R^2$ value of 0.679 while having 2 fewer regressors.
+
+```{r}
+summary(lmod3)$r.squared
+```
 
 The simplified model explains nearly as much response variation as the original model while not having any apparent issues with collinearity.
 
